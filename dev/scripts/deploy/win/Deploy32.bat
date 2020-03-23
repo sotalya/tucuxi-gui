@@ -1,0 +1,1 @@
+call deploy.bat 32 Release

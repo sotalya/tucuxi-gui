@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.6" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>Sylvain Goutelle</name>
+      <institution>CHUV</institution>
+      <email>sylvain.goutelle@chuv.ch</email>
+      <date>2017-08-03</date>
+      <comments>
+          <comment lang="en">Based on article of Staatz et al : Population pharmacokinetic modelling of gentamicin and vancomycin in patients with unstable renal function following cardiothoracic surgery</comment>
+        <comment lang="en">
+        Age range : 29-83 years
+        Weight range : 39-138 kg
+        Disease : Adult patients with cardiothoracic surgery
+        </comment>
+        </comments>
+    </creator>
+	<revisions/>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>J01XA01</atc>
+      <drugid>gentamicin</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.gentamicin adult 1CP</drugmodelid>
+      <pkmodelid>ezechiel.model.linear.1comp.infus.clv</pkmodelid>
+      <drugnames>
+        <name lang="en">Gentamicin</name>
+        <name lang="fr">Gentamicin</name>
+      </drugnames>
+      <domainnames>
+        <name lang="en">Adult  patients</name>
+        <name lang="fr">Patients adultes </name>
+      </domainnames>
+      <studynames>
+        <name lang="en">Population pharmacokinetic modelling of gentamicin and vancomycin in patients with unstable renal function following cardiothoracic surgery</name>
+      </studynames>
+      <references>
+      </references>
+      <descs>
+        <desc lang="en">...</desc>
+        <desc lang="fr">...</desc>
+      </descs>
+      <brands>
+        <brand>Gentamicin</brand>
+      </brands>
+      <comments/>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>infu</intake>
+      <distribution>2</distribution>
+      <elimination>linear</elimination>
+      <comments/>
+    </adme>
+
+    <!-- Drug half-life -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>3</value>
+      <multiplier>10</multiplier>
+      <comments/>
+    </halflife>
+
+    <!-- Drug units and conversions -->
+
+    <conversions>
+      <units>
+        <concentration>mg/l</concentration>
+        <result>mg/l</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>0</molarmass>
+      <comments>
+			<comment lang="en">No conversion</comment>
+			<comment lang="fr">Pas de conversion</comment>
+        </comments>
+    </conversions>
+
+    <!-- Drug dosages -->
+
+    <dosages>
+      <doses default="300" unit="mg" any="true" from="100" to="1000" step="20">
+      </doses>
+      <intervals default="12" unit="h" any="false">
+        <interval>6</interval>
+        <interval>8</interval>
+        <interval>12</interval>
+        <interval>16</interval>
+        <interval>24</interval>
+        <interval>30</interval>
+        <interval>36</interval>
+        <interval>42</interval>
+        <interval>48</interval>
+        <interval>60</interval>
+        <interval>72</interval>
+      </intervals>
+      <infusions default="30" unit="min" any="false">
+        <infusion>5</infusion>
+        <infusion>10</infusion>
+        <infusion>15</infusion>
+        <infusion>30</infusion>
+        <infusion>45</infusion>
+        <infusion>60</infusion>
+		<infusion>75</infusion>
+		<infusion>90</infusion>
+		<infusion>105</infusion>
+		<infusion>120</infusion>
+      </infusions>
+      <comments>
+			</comments>
+    </dosages>
+
+    <!-- Drug targets -->
+
+    <targets>
+    <target>
+        <type>peak</type>
+        <concentrations unit="mg/l">
+          <min>
+            <value>20</value>
+            <formula/>
+          </min>
+          <max>
+            <value>50</value>
+            <formula/>
+          </max>
+          <best>
+            <value>35</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <times unit="h">
+          <min>
+            <value>0.5</value>
+            <formula/>
+          </min>
+          <max>
+            <value>1.5</value>
+            <formula/>
+          </max>
+          <best>
+            <value>1</value>
+            <formula/>
+          </best>
+        </times>
+        <comments/>
+      </target>
+		<target>
+        <type>residual</type>
+        <concentrations unit="mg/l">
+          <min>
+            <value>0.01</value>
+            <formula/>
+          </min>
+          <max>
+            <value>1</value>
+            <formula/>
+          </max>
+          <best>
+            <value>0.5</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <comments>
+			</comments>
+      </target>
+    </targets>
+
+    <!-- Drug covariates -->
+
+    <covariates>
+      <covariate>
+        <id>CLcr</id>
+        <names>
+          <name lang="en">Clearance of creatinine</name>
+          <name lang="fr">Clairance de la créatinine</name>
+        </names>
+        <descs>
+          <desc lang="en">Clearance of creatinine</desc>
+          <desc lang="fr">Clairance de la créatinine</desc>
+        </descs>
+        <unit>ml/min</unit>
+        <type>double</type>
+        <defaultvalue>57</defaultvalue>
+        <comments>
+				<comment lang="en">Median value in patients (building pop)</comment>
+			</comments>
+      </covariate>
+      <covariate>
+        <id>bodyweight</id>
+        <names>
+          <name lang="en">Total Body Weight</name>
+          <name lang="fr">Poids total</name>
+        </names>
+        <descs>
+          <desc lang="en">Total body weight of patient, in kilogramms</desc>
+          <desc lang="fr">Poids total du patient, en kilogramme</desc>
+        </descs>
+        <unit>kg</unit>
+        <type>double</type>
+        <defaultvalue>72</defaultvalue>
+        <comments>
+				<comment lang="en">Median value in patients (building pop)</comment>
+			</comments>
+      </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+
+    <errormodel>
+      <additive>0.08</additive>
+      <proportional>0.25</proportional>
+      <comments>
+			</comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>2.82</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.27</proportional>
+        </bsv>
+        <min>0</min>
+        <max>100</max>
+        <step>0.01</step>
+        <comments>
+				<comment lang="en">Typical clearance calculated for a patients with CCR = median</comment>
+			</comments>
+      </parameter>
+      <parameter>
+        <id>V1</id>
+        <unit>l</unit>
+        <value>17.5</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0</min>
+        <max>200</max>
+        <step>0.01</step>
+        <comments>
+				<comment lang="en">Typical volume calculated for an infected patient with weight = 72 kg = 0.243 * 72</comment>
+			</comments>
+      </parameter>
+
+     <parameter>
+        <id>Q</id>
+        <unit>l/h</unit>
+        <value>1.73</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0</min>
+        <max>100</max>
+        <step>0.01</step>
+        <comments/>
+      </parameter>
+
+
+	<parameter>
+        <id>V2</id>
+        <unit>l</unit>
+        <value>12.0</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.96</proportional>
+        </bsv>
+        <min>0</min>
+        <max>400</max>
+        <step>0.01</step>
+        <comments>
+				<comment lang="en">Typical volume calculated for an infected patient with weight = 72 kg = 0.166 * 72</comment>
+			</comments>
+      </parameter>
+
+	</parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+    </correlations>
+
+    <!-- Drug operations -->
+
+      <!-- SG: on choisit de ne pas inclure la covariable delta CCR (change from baseline) car peu pratique en routine et effet limité-->
+
+    <operations>
+      <operation>
+        <parameter>CL</parameter>
+        <formula><![CDATA[
+CCR = covariate_CLcr
+
+theta_1 = 2.82;
+theta_2 = 0.0151
+
+TVCL = theta_1 * (1+theta_2*(CCR-57));
+return TVCL;
+        ]]></formula>
+        <comments/>
+      </operation>
+      <operation>
+        <parameter>V</parameter>
+        <formula><![CDATA[
+theta_3 = 0.243;
+BW = covariate_bodyweight
+
+TVV1 = theta_3*BW;
+return TVV1;
+        ]]></formula>
+        <comments/>
+      </operation>
+
+      <operation>
+        <parameter>V2</parameter>
+        <formula><![CDATA[
+theta_4 = 0.166;
+BW = covariate_bodyweight
+
+TVV2 = theta_4*BW;
+return TVV2;
+        ]]></formula>
+        <comments/>
+      </operation>
+    </operations>
+
+    <!-- Drug general comments -->
+
+    <comments>
+		</comments>
+
+  </drug>
+</model>

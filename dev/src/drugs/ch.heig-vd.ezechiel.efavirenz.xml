@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.6" xsi:noNamespaceSchemaLocation="drug.xsd">
+  <!-- Drug History-->
+  <history>
+    <creator>
+      <name>Nathalie Rohrbach et Pierre Destraz</name>
+      <institution>HEIG-VD</institution>
+      <email>nathalie.rohrbach@heig-vd.ch</email>
+      <date>2014-06-06</date>
+      <comments>
+          <comment lang="fr">
+            Basé sur le modèle de population pharmacogénétique par M Arab-Alameddine,
+            J Di Iulio, T Buclin, M Rotger, R Lubomirov, M Cavassini, A Fayet,
+            LA Décosterd, CB Eap, J Biollaz, A Telenti and C Csajka; the Swiss HIV Cohort Study.
+            Cet article visait à identifier les principales covariables pour mesurer la clearance
+            des patients atteints de VIH.
+          </comment>
+          <comment lang="en">
+            Pharmacogenetics-Based Population, pharmacokinetic Analysis of Efavirenz in HIV-1-Infected Individuals.
+            This article's aim was to seek a general approach combining genetic and demographic covariates.
+          </comment>
+        </comments>
+    </creator>
+    <revisions>
+	<revision>
+	    <name>Robert Hooper</name>
+      <institution>HEIG-VD // REDS</institution>
+      <email>robert.hooper@heig-vd.ch</email>
+      <date>2014-07-15</date>
+      <comments/>
+	</revision>
+	<revision>
+        <name>Robert Hooper</name>
+      <institution>HEIG-VD // REDS</institution>
+      <email>robert.hooper@heig-vd.ch</email>
+      <date>2014-07-30</date>
+      <comments/>
+    </revision>
+	<revision>
+        <name>Severine Petitprez</name>
+      <institution>CHUV</institution>
+      <email>severine.petitprez@chuv.ch</email>
+      <date>2016-05-30</date>
+      <comments/>
+    </revision>
+    <revision>
+        <name>Sylvain Goutelle</name>
+      <institution>CHUV</institution>
+      <email>sylvain.goutelle@chuv.ch</email>
+      <date>2017-08-30</date>
+      <comments><comment lang="en">
+      Age range : 30-73
+      Weight range : 44-101
+      Disease. : HIV infection
+      </comment></comments>
+    </revision>
+    <revision>
+        <name>Yann Thoma</name>
+      <institution>HEIG-VD</institution>
+      <email>yann.thoma@heig-vd.ch</email>
+      <date>2017-09-08</date>
+      <comments><comment lang="en">
+      Corrected the CL script
+    </comment></comments>
+    </revision>
+    </revisions>
+
+  </history>
+
+  <!-- Drug data -->
+  <drug>
+    <!--Drug description-->
+    <head>
+      <atc>J05AG03</atc>
+      <drugid>efavirenz</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.efavirenz</drugmodelid>
+      <pkmodelid>ezechiel.model.linear.1comp.extra.clv</pkmodelid>
+      <drugnames>
+        <name lang="en">Efavirenz</name>
+        <name lang="fr">Efavirenz</name>
+      </drugnames>
+      <domainnames>
+        <name lang="en">Adults</name>
+        <name lang="fr">Adultes</name>
+      </domainnames>
+      <studynames>
+        <name lang="fr">Basé sur le modèle de population pharmacogénétique  par M Arab-Alameddine, J Di Iulio, T Buclin, M Rotger, R Lubomirov, M Cavassini, A Fayet, LA Décosterd, CB Eap, J Biollaz, A Telenti and C Csajka; the Swiss HIV Cohort Study</name>
+        <name lang="en">Pharmacogenetics-Based Population, Pharmacokinetic Analysis of Efavirenz in HIV-1-Infected Individuals</name>
+      </studynames>
+      <references>
+          <reference type='bibtex'>@article{arab-alameddine_pharmacogenetics-based_2009,
+	title = {Pharmacogenetics-Based Population Pharmacokinetic Analysis of Efavirenz in {HIV}-1-Infected Individuals},
+	volume = {85},
+	issn = {0009-9236, 1532-6535},
+	url = {http://www.nature.com/doifinder/10.1038/clpt.2008.271},
+	doi = {10.1038/clpt.2008.271},
+	number = {5},
+	urldate = {2014-10-23},
+	journal = {Clinical Pharmacology \%26\%2338; Therapeutics},
+	author = {Arab-Alameddine, M and Di Iulio, J and Buclin, T and Rotger, M and Lubomirov, R and Cavassini, M and Fayet, A and Décosterd, La and Eap, Cb and Biollaz, J and Telenti, A and Csajka, C},
+	month = may,
+	year = {2009},
+	pages = {485--494},
+	file = {2011_Arab_alameddine_Efavirenz.pdf:/home/rob/.zotero/zotero/iv5zqg2p.default/zotero/storage/6DZP9D4E/2011_Arab_alameddine_Efavirenz.pdf:application/pdf}
+}
+	</reference>
+	</references>
+	<descs>
+        <desc lang="en">Description of the drug</desc>
+        <desc lang="fr">Description du médicament</desc>
+      </descs>
+      <brands>
+        <brand>Efavirenz</brand><!-- No brands cited in the article-->
+      </brands>
+      <comments>
+          <comment lang="fr">
+            La population test est atteinte du VIH.
+            L'âge de la population d'étude se situe entre (30-73) ans et concerne donc les adultes.
+          </comment>
+          <comment lang="en">
+            HIV infected patients.
+            Age of the population study is between (30-73) years and therefore concerns adults.
+          </comment>
+        </comments>
+    </head>
+
+
+    <!-- Drug adme and intake-->
+    <adme>
+      <intake>extra</intake>
+      <distribution>1</distribution>
+      <elimination>linear</elimination>
+      <comments>
+          <comment lang="fr">
+            Ce médicament se prend par voie orale.
+            Il arrive directement dans l'estomac et on considère donc un modèle à un compartiment.
+            Son élimination se fait principalement par le foie des patients et est considérée comme linéaire.
+          </comment>
+          <comment lang="en">
+            This medicine is administred only orally.
+            A one-compartment model with first-order absorption from the gastrointestinal tract
+            fitted the data appropriately.
+            Its elimination is mostly done by the patients' liver and is considered linear.
+          </comment>
+        </comments>
+
+    </adme>
+
+    <!-- Drug half-life -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>50</value>
+      <multiplier>10</multiplier>
+      <comments/>
+    </halflife>
+
+    <!-- Drug units and conversions-->
+    <conversions>
+      <units>
+        <concentration>ug/l</concentration>
+        <result>ug/l</result>
+      </units>
+      <factors>
+        <concentration>0</concentration> <!--unknown-->
+        <result>0</result> <!--unknown-->
+      </factors>
+      <molarmass>0</molarmass> <!--unknown-->
+      <comments>
+          <comment lang="fr">
+            En ng/ml dans l'article donné.
+          </comment>
+          <comment lang="en">
+            In ng/ml in the given article.
+          </comment>
+        </comments>
+    </conversions>
+
+    <!-- Drug dosages -->
+    <dosages>
+      <doses default="600" unit="mg" any="false">
+        <dose>200</dose>
+        <dose>400</dose>
+        <dose>600</dose>
+        <dose>800</dose>
+      </doses>
+
+      <intervals default="24" unit="h" any="false">
+        <interval>12</interval>
+        <interval>24</interval>
+      </intervals>
+      <infusions default="0" unit="min" any="false"/>
+      <comments>
+          <comment lang="en">
+            Standard dose for this study was 600mg/day.
+            The dosage is required to be reduced to 200 mg/day of EFV in individuals
+            with impaired CYP2B6 function
+          </comment>
+          <comment lang="fr">Pour l'étude, la dose standard était de 600mg/jour.
+          Cette dose doit être réduite à 200mg/jour pour les patients atteints
+          d'une altération de la fonction de l'enzyme CYP2B6
+        </comment>
+        </comments>
+    </dosages>
+
+    <!-- Drug targets-->
+    <targets>
+    </targets>
+
+    <!-- Drug covariates -->
+    <covariates>
+      <covariate>
+        <id>bodyweight</id>
+        <names>
+          <name lang="en">Body weight</name>
+          <name lang="fr">Poids</name>
+        </names>
+        <descs>
+          <desc lang="en">Body weight of the patient, in kilograms</desc>
+          <desc lang="fr">Poids du patient, en kilogrammes</desc>
+        </descs>
+        <unit>kg</unit><!-- in kilograms -->
+        <type>double</type>
+        <defaultvalue>78</defaultvalue>
+        <comments>
+            <comment lang="en">
+              The default value represents the study's subjects' median body weight.
+              Pharmacogenetics fully accounted for ethnicity, leaving body weight as
+              the only significant demographic factor influencing CL.
+            </comment>
+            <comment lang="fr">
+              La valeur par défaut représente le poids médian des sujets de l'étude.
+              Le poids est la seule covariable démographique significative car la
+              pharmacogénétique prend déjà en compte les différences ethniques.
+            </comment>
+          </comments>
+      </covariate>
+
+      <covariate>
+        <id>p</id>
+        <names>
+          <name lang="en">CYP2B6</name>
+        </names>
+        <descs>
+          <desc lang="en">Enzyme CYP2B6</desc>
+        </descs>
+        <unit>--</unit> <!-- No unit for this value-->
+        <type>double</type> <!-- Int for A solution but can be double for B and C solutions-->
+        <defaultvalue>2</defaultvalue> <!-- For A solutions can be 0, 1, 2 or 3-->
+        <comments>
+            <comment lang="en">
+              Number of functional alleles of an enzyme: 0=Hom-LOF 1=Het-LOF, 2 = Hom-Ref, 3 = Het-GOF.
+              Hom: homozygous. LOF: loss of function. Het: heterozygous. Ref: reference allele. GOF: Gain of function.
+            </comment>
+            <comment lang="fr">
+              Nombre d'allèles fonctionnelles d'une enzyme: 0=Hom-LOF 1=Het-LOF, 2 = Hom-Ref, 3 = Het-GOF.
+              Hom: homozygote. LOF: perte de fonction. Het: hétérozygote. Ref: allèle de référence. GOF: Gain de fonction.
+            </comment>
+          </comments>
+      </covariate>
+
+      <covariate>
+        <id>q</id>
+        <names>
+          <name lang="en">CYP2A6</name>
+        </names>
+        <descs>
+          <desc lang="en">Enzyme CYP2A6</desc>
+        </descs>
+        <unit>--</unit> <!-- No unit for this value-->
+        <type>double</type> <!-- Int for A solution but can be double for B and C solutions-->
+        <defaultvalue>2</defaultvalue> <!-- For A solutions can be 0, 1, 2 or 3-->
+        <comments>
+            <comment lang="en">
+              Number of functional alleles of an enzyme: 0=Hom-LOF 1=Het-LOF, 2 = Hom-Ref
+              Hom: homozygous. LOF: loss of function. Het: heterozygous. Ref: reference allele
+            </comment>
+            <comment lang="fr">
+              Nombre d'allèles fonctionnelles d'une enzyme: 0=Hom-LOF 1=Het-LOF, 2 = Hom-Ref
+              Hom: homozygote. LOF: perte de fonction. Het: hétérozygote. Ref: allèle de référence.
+            </comment>
+          </comments>
+      </covariate>
+
+      <covariate>
+        <id>r</id>
+        <names>
+          <name lang="en">CYP3A4</name>
+        </names>
+        <descs>
+          <desc lang="en">Enzyme CYP3A4</desc>
+        </descs>
+        <unit>--</unit> <!-- No unit for this value-->
+        <type>double</type> <!-- Int for A solution but can be double for B and C solutions-->
+        <defaultvalue>2</defaultvalue> <!-- For A solutions can be 0, 1, 2 or 3-->
+        <comments>
+            <comment lang="en">
+              Number of functional alleles of an enzyme: 0=Hom-LOF 1=Het-LOF, 2 = Hom-Ref
+              Hom: homozygous. LOF: loss of function. Het: heterozygous. Ref: reference allele. GOF
+            </comment>
+            <comment lang="fr">
+              Nombre d'allèles fonctionnelles d'une enzyme: 0=Hom-LOF 1=Het-LOF, 2 = Hom-Ref
+              Hom: homozygote. LOF: perte de fonction. Het: hétérozygote. Ref: allèle de référence.
+            </comment>
+          </comments>
+      </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+    <errormodel>
+      <additive>0</additive>
+      <proportional>0.308</proportional>
+      <!-- means 30.8 % -->
+      <comments>
+          <comment lang="en">
+            Residual intrapatient variability
+          </comment>
+          <comment lang="fr">
+            Variance résiduelle intrapatient
+          </comment>
+        </comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>14.07</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.278</proportional> <!-- means 27.8 %-->
+        </bsv>
+        <min>0.001</min>
+        <max>100000</max>
+        <step>1</step>
+        <comments>
+            <comment lang="en">Calculate clearance for average weight and wild-tzype genotype, with Hom-REF genotypes for the three genes</comment>
+          </comments>
+      </parameter>
+
+      <parameter>
+        <id>V</id>
+        <unit>l</unit>
+        <value>332</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0.1</min>
+        <max>50000</max>
+        <step>5</step>
+        <comments>
+          </comments>
+      </parameter>
+
+      <parameter>
+        <id>Ka</id>
+        <unit>h-1</unit>
+        <value>0.6</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0.01</min>
+        <max>10</max>
+        <step>0.01</step>
+        <comments>
+          </comments>
+      </parameter>
+
+      <parameter>
+        <id>F</id>
+        <unit></unit>
+        <value>1</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>1</max>
+        <step>0.01</step>
+        <comments>
+            <comment lang="fr">
+              Ce paramètre a dû être ajouté car la concentration était beaucoup trop élevée dans les graphiques Ezechiel. Doit être ajouté pour les prises extravasculaires
+            </comment>
+            <comment lang="en">
+              This parameter had to be added as we have an extravascular case.
+            </comment>
+          </comments>
+      </parameter>
+
+    </parameters>
+
+    <!-- Drug correlations -->
+    <correlations>
+
+    </correlations>
+
+    <!-- Drug operations -->
+    <operations>
+      <operation>
+        <parameter>CL</parameter>
+        <formula><![CDATA[
+theta1 = 1.3;
+theta2 = 7.3;
+theta3 = 0.7;
+theta4 = 1.03;
+theta5 = 0.7;
+
+TVCL = theta1*(1+ theta5 * (covariate_bodyweight / 78)) + theta2 * Math.sqrt(covariate_p) + theta3 * Math.sqrt(covariate_q) + theta4* Math.sqrt(covariate_r);
+return TVCL;
+        ]]></formula>
+        <comments>
+          </comments>
+      </operation>
+    </operations>
+
+    <!-- Drug general comments -->
+    <comments/>
+
+  </drug>
+</model>

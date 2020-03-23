@@ -1,0 +1,387 @@
+
+/**************************************************************************************************
+* The page media rule
+**************************************************************************************************/
+
+@page {
+  size: A4;
+  margin: 20mm 10mm 20mm 10mm;
+}
+
+/**************************************************************************************************
+* The global display rules
+**************************************************************************************************/
+
+/*
+ * The html rule defines the background color surrounding the report's page itself, as well as the
+ * default font family and default font size. The background color represent a typical widget's
+ * background color. The default font size is set to 10px (62.5% of 16 pixel), which is usefull for
+ * converting top-level em values as well as rem values to pixels.
+ */
+
+@media screen {
+  html {
+    background-color: #d3d3d3;          /* Sets the background color outside of the page borders */
+    font-size: 62.5%;                   /* Sets the default font size to 10px                    */
+    font-family: Verdana, Geneva, Kalimati, sans-serif;
+  }
+}
+
+@media print {
+  html {
+    font-size: 62.5%;
+    font-family: Verdana, Geneva, Kalimati, sans-serif;
+  }
+}
+
+/*
+ * The body rule defines the report's page size, margins, color and border. The width is set to
+ * an A4 page's width, that is 210mm. It is actually set to 190mm to take into account the left and
+ * right padding (2*10mm) that acts as the A4 actual left and right margins. The margin property is
+ * itself set to auto in order to center the report's page on the QWebView in which the report is
+ * displayed. Finally, a thin frame is applied around the report's page to give the impression of a
+ * real page inside the QWebView.
+ */
+
+@media screen {
+  body {
+    background-color: #FFF;             /* White paper                                           */
+    margin: auto;                       /* Auto margins to center the report in the QWebView     */
+    padding: 20mm 10mm 20mm 10mm;       /* A4 default margin                                     */
+    width: 190mm;                       /* A4 width (210mm minus the left/right padding)         */
+    border: 1px solid black;            /* Frame around the report page                          */
+  }
+}
+
+/**************************************************************************************************
+* The headers rules
+**************************************************************************************************/
+
+header {
+  overflow: hidden;
+}
+
+@media print {
+  header {
+    page-break-inside: avoid;
+  }
+}
+
+header > * {
+  width: 45%;
+  overflow: hidden;
+  font-size: 1.2rem;
+  padding: 5px;
+  margin-bottom: 30px;
+}
+
+header .recipient {
+  float: right;
+  font-size: 1.8rem;
+  margin-top: 25mm;
+}
+
+header .contact {
+  clear: both;
+  float: left;
+  font-size: 1rem;
+}
+
+header .contact:last-child {
+  clear: none;
+  float: right;
+}
+
+header > div > .field\.expanding {
+  margin: 3px;
+}
+
+header > div > .field\.expanding:nth-child(1) {
+  font-weight: bold;
+}
+
+/**************************************************************************************************
+* The sections rules
+**************************************************************************************************/
+
+section {
+  clear:both;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+@media print {
+  section {
+    page-break-inside: avoid;
+  }
+}
+
+section .label, section .label\.short, section .label\.long, section .label\.expanding {
+  font-weight: bold;
+}
+
+section .field, section .field\.short, section .field\.long, section .field\.expanding {
+  margin-right: 4px;
+}
+
+.section\.title, .section\.content {
+  overflow: hidden;
+  padding: 5px;
+}
+
+.section\.title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  background-color: #1A9B33;
+  padding-left: 15px;
+  margin-bottom: 5px;
+}
+
+@media print {
+  [data-hidden="true"] {
+    display: none;
+  }
+}
+
+/**************************************************************************************************
+* The tables rules
+**************************************************************************************************/
+
+table {
+  width: 100%;
+  text-shadow: 1px 1px 0px #fff;
+  background: #eaebec;
+  border: #777777 1px solid;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px #d1d1d1;
+}
+
+table th {
+  padding: 6px;
+  background: #ededed;
+  border-top:    1px solid #fafafa;
+  border-bottom: 1px solid #B7B7B7;
+}
+
+table th:first-child {
+  padding-left: 20px;
+  text-align: left;
+}
+
+table tr:first-child th:first-child {
+  border-top-left-radius: 3px;
+}
+
+table tr:first-child th:last-child {
+  border-top-right-radius: 3px;
+}
+
+table tr {
+  text-align: center;
+  padding-left: 6px;
+}
+
+table td:first-child {
+  text-align: left;
+  padding: 10px;
+  border-left: 0;
+}
+
+table td {
+  color: #353535;
+  padding: 6px;
+  background: #fafafa;
+  border-top:    1px solid #ffffff;
+  border-bottom: 1px solid #B7B7B7;
+  border-left:   1px solid #B7B7B7;
+}
+
+table tr:last-child td {
+  border-bottom: 0;
+}
+
+/**************************************************************************************************
+* The framed elements
+**************************************************************************************************/
+
+.section\.title, .section\.content, #titleSection {
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+/**************************************************************************************************
+* The line rules
+**************************************************************************************************/
+
+.line, .line\.empty, .legend {
+  clear: both;
+  vertical-align: middle;
+  padding-left:   1px;
+  padding-right:  1px;
+  padding-top:    1px;
+  padding-bottom: 2px;
+}
+
+.line\.empty {
+  height: 1em;
+}
+
+.line\.separator {
+  border-bottom: 1px solid #777777;
+  margin: 0.5em 0 0.5em;
+}
+
+/**************************************************************************************************
+* The labels rules
+**************************************************************************************************/
+
+.label, .label\.short, .label\.long, .label\.expanding {
+  display: block;
+  float: left;
+  margin-right: 4px;
+  text-align: right;
+}
+
+.label\.short {
+  width: 6em;
+}
+
+.label\.long {
+  width: 12em;
+}
+
+.label\.expanding {
+  float: none;
+  overflow: hidden;
+}
+
+/**************************************************************************************************
+* The fields rules
+**************************************************************************************************/
+
+.field, .field\.short, .field\.long, .field\.expanding {
+  display: block;
+  float: left;
+  padding-left:  6px;
+  padding-right: 6px;
+}
+
+.field\.short {
+  min-width: 6em;
+  max-width: 6em;
+}
+
+.field\.long {
+  min-width: 12em;
+  max-width: 12em;
+}
+
+.field\.expanding {
+  float: none;
+  overflow: hidden;
+}
+
+/**************************************************************************************************
+* The images rules
+**************************************************************************************************/
+
+.legend {
+  font-size: 0.8em;
+  font-style: italic;
+  text-align: center;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.legend [contentEditable="true"] {
+  min-height: 0.5em;
+}
+
+/**************************************************************************************************
+* The editable elements rules
+**************************************************************************************************/
+
+@media screen {
+  [contentEditable="true"] {
+    font-weight: normal;
+    overflow: hidden;
+    width: auto;
+    min-height: 1em;
+    padding-left:  6px;
+    padding-right: 6px;
+    border: 1px dashed #DAA;
+    border-radius: 8px;
+  }
+
+  [contentEditable="true"]:hover {
+    background-color: #DDD;
+  }
+}
+
+@media print {
+  [contentEditable="true"] {
+    font-weight: normal;
+    overflow: hidden;
+    width: auto;
+    min-height: 1em;
+  }
+}
+
+/**************************************************************************************************
+* The single line rules
+**************************************************************************************************/
+
+.ellipsis {
+  text-overflow: ellipsis;
+}
+
+.singleLine {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+[contenteditable="true"].singleLine br {
+  display: none;
+}
+
+[contenteditable="true"].singleLine * {
+  display:inline;
+  white-space:nowrap;
+}
+
+/**************************************************************************************************
+* The specific rules
+**************************************************************************************************/
+
+#creationDateSection {
+  font-size: 1.2rem;
+  text-align: right;
+  margin-bottom: 30px;
+}
+
+#referenceSection {
+  font-size: 1.2rem;
+  overflow: hidden;
+}
+
+#titleSection {
+  font-size: 2.4rem;
+  clear:both;
+  padding: 1px;
+  margin-bottom: 30px;
+}
+
+@media print {
+  #titleSection {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+}
+
+#chart\.image {
+  width: 100%;
+  height: auto;
+}
+

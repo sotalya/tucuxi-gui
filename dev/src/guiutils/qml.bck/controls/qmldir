@@ -1,0 +1,8 @@
+module guiutils.qml.controls
+Chart 1.0 Chart.qml
+TimePicker 1.0 TimePicker.qml
+DatePicker 1.0 DatePicker.qml
+depends QtQuick 2.5
+depends QtQuick.Controls 1.4
+depends QtQuick.Controls.Styles 1.1
+depends QtQuick.Layouts 1.2

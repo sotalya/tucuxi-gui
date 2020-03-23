@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="ezechiel-default.css" media="screen, print" />
+         <script src="qrc:/controls/jquery-3.1.1.js"></script>
+         <script src="qrc:/controls/jquery-ui.js"></script>
+        <link rel="stylesheet" type="text/css" href="qrc:/controls/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="qrc:/controls/jquery-ui.structure.css">
+         <script src="qrc:/controls/qwebchannel.js"></script>
+  </head>
+
+  <body>
+        <script type="text/javascript">
+            var incNumber = 1;
+
+            function enumerate(list, callback)
+            {
+                list.size(function(size) {
+                    for (var i = 0; i < size; ++i) {
+                        list.objat(i, function(obj) {
+                            callback(obj);
+                        });
+                    }
+                });
+            }
+
+            function updateFields(channel)
+            {
+                var interp = channel.objects.interpretation;
+                var treat = interp.drugResponseAnalysis.treatment;
+
+                drugvariates = channel.objects.info.drugvariates;
+                parameters = channel.objects.info.parameters;
+                measures = channel.objects.info.measures;
+                patientvariates = channel.objects.info.patientvariates;
+                dosages = channel.objects.info.dosages;
+                aPrioriParams = JSON.parse(channel.objects.info.aPrioriParameters);
+                aPosterioriParams = JSON.parse(channel.objects.info.aPosterioriParameters);
+
+                var date = new Date();
+                $('#creation\\.display').html(date.toDateString());
+
+                $('#title').html("Interpretation for " +
+                    "<br/>" + treat.patient.person.firstname +
+                    " " + treat.patient.person.name +
+                    "<br/>(" + treat.drug.substanceId + ")");
+
+                $('#recipient\\.fullname').html(treat.patient.person.firstname + " " + treat.patient.person.name);
+                $('#recipient\\.fulladdress').html(treat.patient.person.location.address);
+
+                $('#institute\\.name').html(interp.analyst.institute.name);
+                $('#institute\\.fulladdress').html(interp.analyst.institute.location.address);
+
+                $('#analyst\\.fullname').html(interp.analyst.person.firstname + " " + interp.analyst.person.name);
+                $('#analyst\\.fulladdress').html(interp.analyst.person.location.address);
+
+                $('#patient\\.fullname').html(treat.patient.person.firstname + " " + treat.patient.person.name);
+                $('#patient\\.birthdate\\.display').html(treat.patient.person.birthday);
+
+                var gender = "Undefined";
+                if (treat.patient.person.gender == 1) gender = "Male";
+                if (treat.patient.person.gender == 0) gender = "Female";
+                $('#patient\\.gender\\.display').html(gender);
+
+                $('#interpretation\\.indication').html(interp.analysis.expectedness);
+                $('#interpretation\\.comedication').html(interp.analysis.warning);
+                $('#interpretation\\.response').html(interp.analysis.remonitoring);
+                $('#interpretation\\.afterEffect').html(interp.analysis.prediction);
+                $('#interpretation\\.comments').html(interp.analysis.suitability);
+
+                $('#treatment\\.drug').html(treat.drug.substanceId);
+
+                $('#sample\\.external').html(channel.objects.info.sampleId);
+                $('#sample\\.date\\.display').html(channel.objects.info.sampleDate);
+                $('#sample\\.display').html(channel.objects.info.sampleValue);
+
+                $('#dosage\\.display').html(channel.objects.info.lastDosage);
+                $('#dosage\\.date\\.display').html(channel.objects.info.lastDosageDate);
+
+                $('#proposedPosology').html(channel.objects.info.posology.replace("\r\n", "<br>"));
+                $('#nextControl').html(channel.objects.info.nextControl);
+
+                $('#parameters\\.table > tbody').empty();
+                if (interp.drugResponseAnalysis.drugModel.parameters) {
+                    enumerate(interp.drugResponseAnalysis.drugModel.parameters.parameters, function(obj) {
+                        aPrioriParam = (obj.name in aPrioriParams ? aPrioriParams[obj.name] : "");
+                        aPosterioriParam = (obj.name in aPosterioriParams ? aPosterioriParams[obj.name] : "");
+                        $('#parameters\\.table > tbody').append("<tr>" + "<td>" + obj.name + "</td>" + "<td>" + aPosterioriParam + "</td>" + "<td>" + aPrioriParam + "</td>" +"<td>" + obj.quantity.dbvalue + "</td>"+"</tr>");
+                    });
+                }
+                $('#drugvariates\\.table > tbody').empty();
+                enumerate(interp.drugResponseAnalysis.drugModel.covariates, function(obj) {
+//                    $('#drugvariates\\.table > tbody').append("<tr>" + "<td>" + obj.name + "</td>" + "<td>" + obj.quantity.dbvalue + "</td>" + "<td>" + obj.description + "</td>"+"</tr>");
+                    $('#drugvariates\\.table > tbody').append("<tr>" + "<td>" + obj.name + "</td>" + "<td>" + obj.quantity.dbvalue + "</td>" + "</tr>");
+                });
+                $('#covariates\\.table > tbody').empty();
+                enumerate(treat.covariates, function(obj) {
+//                    $('#covariates\\.table > tbody').append("<tr>" + "<td>" + obj.name + "</td>" + "<td>" + obj.quantity.dbvalue + "</td>" + "<td>" + obj.description + "</td>"+"</tr>");
+                    $('#covariates\\.table > tbody').append("<tr>" + "<td>" + obj.name + "</td>" + "<td>" + obj.quantity.dbvalue + "</td>" + "</tr>");
+                });
+
+                // Set the source of the graph's image
+                incNumber = incNumber+1;
+                $("#chart-image").attr("src", channel.objects.info.graphPath + "?" + incNumber);
+            }
+
+            document.addEventListener("DOMContentLoaded", function ()
+            {
+                new QWebChannel(qt.webChannelTransport, function (channel) {
+                    channel.objects.info.dataUpdated.connect(function() {
+                        updateFields(channel);
+                    });
+                    updateFields(channel);
+             });
+         });
+    </script>
+
+    <!-- The header -->
+    <header>
+<!--
+      <div class="recipient">
+        <div id="recipient.fullname" class="field.expanding data" contenteditable="true" onInput="" >Recipient Name</div>
+        <div id="recipient.fulladdress" class="field.expanding data" contenteditable="true" onInput="">Recipient Address</div>
+      </div>
+
+      <div class="institute" >
+        <div id="institute.name" class="field.expanding data" contenteditable="true" onInput="" >Institute Name</div>
+        <div id="institute.fulladdress" class="field.expanding data" contenteditable="true" onInput="">Institute Address</div>
+      </div>
+
+      <div class="team">
+        <div id="team.name" class="field.expanding data" contenteditable="true" onInput="" >Therapeutic Drug Monitoring Unit</div>
+        <div id="team.members" class="field.expanding data" contenteditable="true" onInput="">Members list</div>
+      </div>
+
+      <div class="analyst">
+        <div id="analyst.fullname" class="field.expanding data" contenteditable="true" onInput="" >Analyst Name</div>
+        <div id="analyst.fulladdress" class="field.expanding data" contenteditable="true" onInput="">Analyst Address</div>
+      </div>
+
+      <div class="contact">
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.phone" >Phone:</div>
+          <div id="analyst.phone" class="field.expanding singleLine data" contenteditable="true" onInput="" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.fax" >Fax:</div>
+          <div id="analyst.fax" class="field.expanding singleLine data" contenteditable="true" onInput="" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.mail" >Mail:</div>
+          <div id="analyst.mail" class="field.expanding singleLine data" contenteditable="true" onInput="" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.website" >Website:</div>
+          <div id="analyst.website" class="field.expanding singleLine data" contenteditable="true" onInput="" ></div>
+        </div>
+      </div>
+
+      <div class="contact">
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.phone" >Phone:</div>
+          <div id="recipient.phone" class="field.expanding singleLine data" contenteditable="true" onInput="" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.fax" >Fax:</div>
+          <div id="recipient.fax" class="field.expanding singleLine data" contenteditable="true" onInput="" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.mail" >Mail:</div>
+          <div id="recipient.mail" class="field.expanding singleLine data" contenteditable="true" onInput="" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.website" >Website:</div>
+          <div id="recipient.website" class="field.expanding singleLine data" contenteditable="true" onInput="" ></div>
+        </div>
+      </div>
+-->
+    </header>
+
+    <!-- The creation date section -->
+    <div id="creationDateSection" >
+      <div id="creation.display" class="field.expanding singleLine ellipsis data" contentEditable="false" onInput="" >Creation date</div>
+    </div>
+
+    <!-- The report section -->
+    <div id="titleSection">
+      <div id="title" class="field.expanding data" contenteditable="false" onInput="" ></div>
+    </div>
+
+    <!-- The reference section -->
+    <div id="referenceSection" >
+      <div id="translatable.reference" class="label" >Reference:</div>
+      <div id="reference" class="field.expanding singleLine ellipsis data" contenteditable="true" onInput="" ></div>
+    </div>
+
+    <!-- The patient section -->
+    <section id="patientSection" data-hidden="false" >
+      <div class="section.title" id="translatable.patient.title" onClick="" >Patient</div>
+      <div class="section.content" >
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.patient.name" >Name:</div>
+          <div class="field.expanding singleLine data" id="patient.fullname" onInput="" contentEditable="false" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.patient.birthdate" >Birthdate:</div>
+          <div class="field.long singleLine data" id="patient.birthdate.display" onInput="" contentEditable="false" ></div>
+        </div>
+<!--
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.patient.age" >Age:</div>
+          <div class="field.long singleLine data" id="patient.age" onInput="" contentEditable="false" ></div>
+        </div>
+-->
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.patient.gender" >Gender:</div>
+          <div class="field.long singleLine data" id="patient.gender.display" onInput="" contentEditable="false" ></div>
+        </div>
+<!--
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.patient.weight" >Weight:</div>
+          <div class="field.long singleLine data" id="patient.weight" onInput="" contentEditable="false" ></div>
+        </div>
+-->
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.interpretation.indication" >Expectedness:</div>
+          <div class="field.expanding data" id="interpretation.indication" onInput="" contentEditable="false" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.interpretation.comedication" >Warning:</div>
+          <div class="field.expanding data" id="interpretation.comedication" onInput="" contentEditable="false" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.interpretation.response" >Remonitoring:</div>
+          <div class="field.expanding data" id="interpretation.response" onInput="" contentEditable="false" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.interpretation.afterEffect" >Prediction:</div>
+          <div class="field.expanding data" id="interpretation.afterEffect" onInput="" contentEditable="false" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis translatable.comments" >Suitability:</div>
+          <div class="field.expanding data" id="interpretation.comments" onInput="" contentEditable="false" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The sample section -->
+    <section id="sampleSection" data-hidden="false" >
+      <div class="section.title" id="translatable.sample.title" onClick="" >Sample</div>
+      <div class="section.content" >
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.sample.drug" >Treatment:</div>
+          <div class="field.expanding singleLine data" id="treatment.drug" onInput="" contentEditable="false" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.sample.external" >Sample ID:</div>
+          <div class="field.expanding singleLine data" id="sample.external" onInput="" contentEditable="false" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.sample.date.display" >Sample date:</div>
+          <div class="field.expanding singleLine data" id="sample.date.display" onInput="" contentEditable="false" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.dosage.date.display" >Last dose:</div>
+          <div class="field.expanding singleLine data" id="dosage.date.display" onInput="" contentEditable="false" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis translatable.comments" >Comments:</div>
+          <div class="field.expanding data" id="sample.comments" onInput="" contentEditable="true" ></div>
+        </div>
+        <div class="line.empty" ></div>
+        <div class="line" >
+          <table>
+            <tr>
+              <th id="translatable.dosage.display">Current posology</th>
+<!--              <th id="translatable.interval.display">Interval</th>-->
+              <th id="translatable.sample.display">Observed concentration</th>
+<!--              <th id="translatable.extrapolated.display">Extrapolated Residual Concentration</th>-->
+            </tr>
+            <tr>
+              <td class="data" id="dosage.display" onInput="" contentEditable ="true" ></td>
+<!--              <td class="data" id="interval.display" onInput="" contentEditable ="true" ></td>-->
+              <td class="data" id="sample.display" onInput="" contentEditable ="true" ></td>
+<!--              <td class="data" id="extrapolated.display" onInput="" contentEditable ="true" ></td>-->
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- The interpretation section -->
+
+    <section id="interpretationSection" data-hidden="false" >
+      <div class="section.title" id="translatable.interpretation.title" onClick="" >Interpretation</div>
+      <div class="section.content" >
+        <div class="line" >
+          <div class="label singleLine ellipsis" id="translatable.proposedPosology" >Proposed dosage:</div>
+        </div>
+        <div class="line" >
+            <div class="field.expanding data" id="proposedPosology" onInput="" contentEditable="false" ></div>
+        </div>
+        <div class="line" >
+          <div class="label singleLine ellipsis" >Comments:</div>
+        </div>
+        <div class="line" >
+          <div class="field.expanding data" id="interpretation" onInput="" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The next control section -->
+
+    <section id="nextControlSection" data-hidden="false" >
+      <div class="section.title" id="translatable.nextControl.title" onClick="" >Next control</div>
+      <div class="section.content" >
+        <div class="line" >
+          <div class="field.expanding data" id="nextControl" onInput="" contentEditable="false" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The chart section -->
+
+    <section id="chartSection" data-hidden="false" >
+      <div class="section.title" id="translatable.chart.title" onClick="" >Concentration prediction</div>
+      <div class="section.content" >
+        <div class="line" >
+          <img class="image" id="chart-image" style="width:100%;height:auto" />
+        </div>
+<!--
+        <div class="legend" >
+          <div class="field.expanding singleLine ellipsis data" id="chart.name" onInput="" contentEditable="true" ></div>
+        </div>
+-->
+        <div class="line" >
+          <div class="label singleLine ellipsis translatable.comments" >Comments:</div>
+          <div class="field.expanding data" id="chart.comments" onInput="" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The covariate section -->
+
+    <section id="covariateSection" data-hidden="false" >
+      <div class="section.title" id="translatable.covariates.title" onClick="" >Covariates</div>
+      <div class="section.content" >
+        <div class="line" >
+          <table id="drugvariates.table">
+            <thead>
+                <tr>
+                  <th id="translatable.drugvariates.name">Drug Variate</th>
+                  <th id="translatable.drugvariates.value">Default Value</th>
+<!--                  <th id="translatable.drugvariates.description">Description</th> -->
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <div class="line" >
+          <table id="covariates.table">
+            <thead>
+              <tr>
+                <th id="translatable.covariates.name">Covariate</th>
+                <th id="translatable.covariates.value">Value</th>
+<!--                                  <th id="translatable.covariates.description">Description</th> -->
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <div class="line" >
+          <div class="label singleLine ellipsis translatable.comments" >Comments:</div>
+          <div class="field.expanding data" id="covariates.comments" onInput="" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The parameters section -->
+
+    <section id="parametersSection" data-hidden="false" >
+      <div class="section.title" id="translatable.parameters.title" onClick="" >Parameters</div>
+      <div class="section.content" >
+        <div class="line" >
+          <table id="parameters.table">
+            <thead>
+              <tr>
+                <th id="translatable.parameters.identifier" >Parameter</th>
+                <th id="translatable.parameters.patient" >A posteriori</th>
+                <th id="translatable.parameters.reference" >A priori</th>
+                <th id="translatable.parameters.population" >Typical patient</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <div class="line" >
+          <div class="label singleLine ellipsis translatable.comments" >Comments:</div>
+          <div class="field.expanding data" id="parameters.comments" onInput="" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The references section -->
+
+    <section id="referencesSection" data-hidden="false" >
+      <div class="section.title"  id="translatable.references.title" onClick="" >References</div>
+      <div class="section.content" >
+        <div class="line" >
+          <div class="field.expanding data" id="references" onInput="" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+  </body>
+</html>

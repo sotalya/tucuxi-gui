@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/drugs">
+        <file alias="ch.tucuxi.imatinib.tdd">drugfiles/ch.tucuxi.imatinib.tdd</file>
+        <file alias="ch.tucuxi.busulfan.children.tdd">drugfiles/ch.tucuxi.busulfan.children.tdd</file>
+        <file alias="ch.vancomycin.ill.tdd">drugfiles/ch.tucuxi.vancomycin.ill.tdd</file>
+    </qresource>
+    <qresource prefix="/requests">
+        <file alias="List.xml">requests/List.xml</file>
+        <file alias="Req_1.xml">requests/Req_1.xml</file>
+        <file alias="Req_2.xml">requests/Req_2.xml</file>
+    </qresource>
+</RCC>

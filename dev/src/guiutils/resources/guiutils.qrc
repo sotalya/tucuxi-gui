@@ -1,0 +1,117 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="checked.png">icons/validator/checked.png</file>
+        <file alias="error.png">icons/validator/error.png</file>
+        <file alias="warning.png">icons/validator/warning.png</file>
+        <file alias="logo.png">icons/logo.png</file>
+        <file alias="padlock.png">icons/padlock.png</file>
+        <file alias="unlock.png">icons/unlock.png</file>
+        <file alias="splash/new-patient.png">icons/splash/new-patient.png</file>
+        <file alias="splash/new-patient-hover.png">icons/splash/new-patient-hover.png</file>
+        <file alias="splash/patients.png">icons/splash/patients.png</file>
+        <file alias="splash/patients-hover.png">icons/splash/patients-hover.png</file>
+        <file alias="splash/pending-requests.png">icons/splash/pending-requests.png</file>
+        <file alias="splash/pending-requests-hover.png">icons/splash/pending-requests-hover.png</file>
+        <file alias="splash/shutdown.png">icons/splash/shutdown.png</file>
+        <file alias="splash/shutdown-hover.png">icons/splash/shutdown-hover.png</file>
+        <file alias="splash/facebook-hover.png">icons/splash/facebook_hover.png</file>
+        <file alias="splash/link.png">icons/splash/link.png</file>
+        <file alias="splash/link-hover.png">icons/splash/link_hover.png</file>
+        <file alias="splash/mail.png">icons/splash/mail.png</file>
+        <file alias="splash/mail-hover.png">icons/splash/mail_hover.png</file>
+        <file alias="splash/facebook.png">icons/splash/facebook.png</file>
+    </qresource>
+    <qresource prefix="/icons/buttons">
+        <file alias="add.png">icons/buttons/add.png</file>
+        <file alias="add_disabled.png">icons/buttons/add_disabled.png</file>
+        <file alias="add_hover.png">icons/buttons/add_hover.png</file>
+        <file alias="calendar.png">icons/buttons/calendar.png</file>
+        <file alias="calendar_disabled.png">icons/buttons/calendar_disabled.png</file>
+        <file alias="calendar_hover.png">icons/buttons/calendar_hover.png</file>
+        <file alias="check.png">icons/buttons/check.png</file>
+        <file alias="check_disabled.png">icons/buttons/check_disabled.png</file>
+        <file alias="check_hover.png">icons/buttons/check_hover.png</file>
+        <file alias="remove.png">icons/buttons/remove.png</file>
+        <file alias="remove_disabled.png">icons/buttons/remove_disabled.png</file>
+        <file alias="remove_hover.png">icons/buttons/remove_hover.png</file>
+        <file alias="edit.png">icons/buttons/edit.png</file>
+    </qresource>
+    <qresource prefix="/icons/flow">
+        <file alias="adjustments.png">icons/flow/adjustments.png</file>
+        <file alias="adjustments_disabled.png">icons/flow/adjustments_disabled.png</file>
+        <file alias="adjustments_hover.png">icons/flow/adjustments_hover.png</file>
+        <file alias="covariates.png">icons/flow/covariates.png</file>
+        <file alias="covariates_disabled.png">icons/flow/covariates_disabled.png</file>
+        <file alias="covariates_hover.png">icons/flow/covariates_hover.png</file>
+        <file alias="dosages.png">icons/flow/dosages.png</file>
+        <file alias="dosages_disabled.png">icons/flow/dosages_disabled.png</file>
+        <file alias="dosages_hover.png">icons/flow/dosages_hover.png</file>
+        <file alias="drugs.png">icons/flow/drugs.png</file>
+        <file alias="drugs_disabled.png">icons/flow/drugs_disabled.png</file>
+        <file alias="drugs_hover.png">icons/flow/drugs_hover.png</file>
+        <file alias="graph.png">icons/flow/graph.png</file>
+        <file alias="graph_disabled.png">icons/flow/graph_disabled.png</file>
+        <file alias="graph_hover.png">icons/flow/graph_hover.png</file>
+        <file alias="measures.png">icons/flow/measures.png</file>
+        <file alias="measures_disabled.png">icons/flow/measures_disabled.png</file>
+        <file alias="measures_hover.png">icons/flow/measures_hover.png</file>
+        <file alias="patient.png">icons/flow/patient.png</file>
+        <file alias="patient_disabled.png">icons/flow/patient_disabled.png</file>
+        <file alias="patient_hover.png">icons/flow/patient_hover.png</file>
+        <file alias="targets.png">icons/flow/targets.png</file>
+        <file alias="targets_disabled.png">icons/flow/targets_disabled.png</file>
+        <file alias="targets_hover.png">icons/flow/targets_hover.png</file>
+        <file alias="validation.png">icons/flow/validation.png</file>
+        <file alias="validation_disabled.png">icons/flow/validation_disabled.png</file>
+        <file alias="validation_hover.png">icons/flow/validation_hover.png</file>
+        <file alias="dosages_disabled_mini.png">icons/flow/dosages_disabled_mini.png</file>
+        <file alias="covariates_disabled_mini.png">icons/flow/covariates_disabled_mini.png</file>
+        <file alias="targets_disabled_mini.png">icons/flow/targets_disabled_mini.png</file>
+    </qresource>
+    <qresource prefix="/icons/other">
+        <file alias="drug.png">icons/other/drug.png</file>
+        <file alias="gender_female.png">icons/other/gender_female.png</file>
+        <file alias="gender_male.png">icons/other/gender_male.png</file>
+    </qresource>
+    <qresource prefix="/icons/states">
+        <file alias="complete.png">icons/states/complete.png</file>
+        <file alias="invalid.png">icons/states/invalid.png</file>
+        <file alias="valid.png">icons/states/valid.png</file>
+    </qresource>
+    <qresource prefix="/icons/toolbar">
+        <file alias="file.png">icons/toolbar/file.png</file>
+        <file alias="file_hover.png">icons/toolbar/file_hover.png</file>
+        <file alias="folder.png">icons/toolbar/folder.png</file>
+        <file alias="folder_hover.png">icons/toolbar/folder_hover.png</file>
+        <file alias="folder_patient.png">icons/toolbar/folder_patient.png</file>
+        <file alias="folder_patient_add.png">icons/toolbar/folder_patient_add.png</file>
+        <file alias="folder_patient_add_hover.png">icons/toolbar/folder_patient_add_hover.png</file>
+        <file alias="folder_patient_hover.png">icons/toolbar/folder_patient_hover.png</file>
+        <file alias="requests.png">icons/toolbar/requests.png</file>
+        <file alias="requests_hover.png">icons/toolbar/requests_hover.png</file>
+        <file alias="save.png">icons/toolbar/save.png</file>
+        <file alias="save_hover.png">icons/toolbar/save_hover.png</file>
+        <file alias="shutdown.png">icons/toolbar/shutdown.png</file>
+        <file alias="shutdown_hover.png">icons/toolbar/shutdown_hover.png</file>
+        <file alias="file_disabled.png">icons/toolbar/file_disabled.png</file>
+    </qresource>
+    <qresource prefix="/text">
+        <file alias="demo_startup_text.txt">text/demo_startup_text.txt</file>
+        <file alias="startup_text.txt">text/startup_text.txt</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file alias="Tucuxi_accueil.png">images/Tucuxi_accueil.png</file>
+        <file alias="Tucuxi_fond_pictos.png">images/Tucuxi_fond_pictos.png</file>
+        <file alias="Tucuxi_fond_pictos-hover.png">images/Tucuxi_fond_pictos-hover.png</file>
+        <file alias="Tucuxi_fond-vagues.png">images/Tucuxi_fond-vagues.png</file>
+        <file alias="Tucuxi_logo-blanc.png">images/Tucuxi_logo-blanc.png</file>
+    </qresource>
+    <qresource prefix="/report">
+        <file alias="fieldmapping.js">../reports/fieldmapping.js</file>
+        <file alias="jquery-3.1.1.js">../reports/jquery-3.1.1.js</file>
+        <file alias="logo.jpeg">../reports/logo.jpeg</file>
+        <file alias="moment.js">../reports/moment.js</file>
+        <file alias="qwebchannel.js">../reports/qwebchannel.js</file>
+        <file alias="report.html">../reports/report.html</file>
+    </qresource>
+</RCC>

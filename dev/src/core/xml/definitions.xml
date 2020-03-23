@@ -1,0 +1,144 @@
+<definitions version='0.2'>
+
+   <!-- Intakes definition -->
+
+  <intakes>
+    <intake>
+      <id>bolus</id>
+      <names>
+        <name lang='en'>Bolus</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Administration of a drug in the form of a single dose.</description>
+      </descriptions>
+    </intake>
+    <intake>
+      <id>infu</id>
+      <names>
+        <name lang='en'>Infusion</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Introduction of fluid other than blood into a vein.</description>
+      </descriptions>
+    </intake>
+    <intake>
+      <id>extra</id>
+      <names>
+        <name lang='en'>Extravascular</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Administration of a solution occurring outside a blood or lymph vessel.</description>
+      </descriptions>
+    </intake>
+  </intakes>
+
+  <!-- Targets definition -->
+
+  <targets>
+    <target>
+      <id>peak</id>
+      <names>
+        <name lang='en'>Concentration peak</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Target for the drug concentration peak.</description>
+      </descriptions>
+    </target>
+    <target>
+      <id>residual</id>
+      <names>
+        <name lang='en'>Residual concentration</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Target for the drug residual concentration.</description>
+      </descriptions>
+    </target>
+    <target>
+      <id>mean</id>
+      <names>
+        <name lang='en'>Concentration mean</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Target for the drug concentration mean.</description>
+      </descriptions>
+    </target>
+  </targets>
+
+  <!-- Covariates definition -->
+
+  <covariates>
+  </covariates>
+
+  <!-- Clinicals definition -->
+
+  <clinicals>
+    <clinical>
+      <id>diagnosis</id>
+      <names>
+        <name lang='en'>Diagnosis</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Interpretation of the sample</description>
+      </descriptions>
+    </clinical>
+    <clinical>
+      <id>indication</id>
+      <names>
+        <name lang='en'>Indication</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Reasons for the current treatment</description>
+      </descriptions>
+    </clinical>
+    <clinical>
+      <id>response</id>
+      <names>
+        <name lang='en'>Response</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Response of the patient to the treatment</description>
+      </descriptions>
+    </clinical>
+    <clinical>
+      <id>toxicity</id>
+      <names>
+        <name lang='en'>Toxicity</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Toxicity of the current treatment</description>
+      </descriptions>
+    </clinical>
+    <clinical>
+      <id>adverseEffect</id>
+      <names>
+        <name lang='en'>Adverse Effects</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Observed adverse effects</description>
+      </descriptions>
+    </clinical>
+    <clinical>
+      <id>comedication</id>
+      <names>
+        <name lang='en'>Comedication</name>
+      </names>
+      <descriptions>
+        <description lang='en'>Treatments administered in parallel with the current treatment</description>
+      </descriptions>
+    </clinical>
+  </clinicals>
+
+  <!-- Intervals definition -->
+
+  <intervals>
+    <interval>2</interval> <!-- Times always in hours -->
+    <interval>4</interval> <!-- Times always in hours -->
+    <interval>6</interval> <!-- Times always in hours -->
+    <interval>8</interval> <!-- Times always in hours -->
+    <interval>10</interval> <!-- Times always in hours -->
+    <interval>12</interval> <!-- Times always in hours -->
+    <interval>18</interval> <!-- Times always in hours -->
+    <interval>24</interval> <!-- Times always in hours -->
+  </intervals>
+
+</definitions>

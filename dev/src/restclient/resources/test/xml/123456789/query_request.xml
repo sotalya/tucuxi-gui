@@ -1,0 +1,5 @@
+<data version='0.2' lang='en' type='query_request' controlId='66' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="eep.xsd">
+  <requestId>123456789</requestId>
+  <patientId>123456789</patientId>
+  <drugId>ch.heig-vd.ezechiel.tobramycin</drugId>
+</data>

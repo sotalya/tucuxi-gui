@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/schemas">
+        <file alias="drug.xsd">schemas/drug.xsd</file>
+        <file alias="import.xsd">schemas/import.xsd</file>
+        <file alias="export.xsd">schemas/export.xsd</file>
+        <file alias="exchange.xsd">schemas/exchange.xsd</file>
+    </qresource>
+</RCC>

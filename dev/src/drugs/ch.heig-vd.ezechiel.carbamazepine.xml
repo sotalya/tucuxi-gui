@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model version='0.6' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>Miguel Schwander and Marc Flueckiger</name>
+      <institution>HEIG-VD</institution>
+      <email>marc.fluckiger@heig-vd.ch</email>
+      <date>2014-06-06</date>
+      <comments></comments>
+    </creator>
+    <revisions>
+      <revision>
+        <name>Miguel Schwander and Marc Flueckiger</name>
+        <institution>HEIG-VD</institution>
+        <email>marc.fluckiger@heig-vd.ch</email>
+        <date>2014-06-06</date>
+        <comments></comments>
+      </revision>
+    <revision>
+        <name>Sylvain Goutelle</name>
+        <institution>CHUV</institution>
+        <email>sylvain.goutelle@chuv.ch</email>
+        <date>2017-08-02</date>
+        <comments><comment lang="en">
+        Age range : 60-96 years
+        Weight range.: 50-129
+        Disease : Elderly patients with seizures (epilepsy)
+        Drug formulation : immediate release
+        </comment>
+        </comments>
+      </revision>
+    </revisions>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>L01XE01</atc>
+      <drugid>carbamazepine</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.punyawudho_carbamazepine</drugmodelid>
+      <!--Model extra because absorbsion constant k mean it is extra-->
+      <pkmodelid>ezechiel.model.linear.1comp.extra.clv</pkmodelid>
+      <drugnames>
+        <name lang='en'>Carbamazepine</name>
+        <name lang='fr'>Carbamazepine</name>
+      </drugnames>
+      <domainnames>
+        <name lang='en'>Standard</name>
+        <name lang='fr'>Standard</name>
+      </domainnames>
+      <studynames>
+        <name lang='en'>Carbamazepine concentrations collected from 121 patients aged 60 years or older were used to develop a population pharmacokinetic model</name>
+        <name lang='fr'>Concentrations de carbamazépine recueillies auprès de 121 patients âgés de 60 ans ou plus ont été utilisés pour développer un modèle pharmacocinétique de population</name>
+      </studynames>
+      <references></references>
+      <descs>
+        <desc lang='en'>...</desc>
+        <desc lang='fr'>...</desc>
+      </descs>
+      <brands>
+        <brand>Glivec</brand>
+      </brands>
+      <comments></comments>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>extra</intake>
+      <distribution>1</distribution>
+      <elimination>linear</elimination>
+      <comments></comments>
+    </adme>
+
+  <!-- Drug half-life -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>10</value>
+      <multiplier>10</multiplier>
+      <comments/>
+    </halflife>
+
+
+    <!-- Drug units and conversions -->
+
+    <conversions>
+      <units>
+        <concentration>ug/ml</concentration>
+        <result>ug/ml</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>0</molarmass>
+      <comments></comments>
+    </conversions>
+
+    <!-- Drug dosages -->
+
+    <dosages>
+      <doses default='200' unit='mg' any='false'>
+        <dose>100</dose>
+        <dose>200</dose>
+        <dose>300</dose>
+        <dose>400</dose>
+        <dose>500</dose>
+        <dose>600</dose>
+      </doses>
+      <intervals default='12' unit='h' any='false'>
+        <interval>8</interval>
+        <interval>12</interval>
+        <interval>24</interval>
+        <interval>48</interval>
+      </intervals>
+      <infusions default='0' unit='min' any='false'>
+      </infusions>
+      <comments>
+      </comments>
+    </dosages>
+
+    <!-- Drug targets -->
+
+    <targets>
+      <target>
+        <type>residual</type>
+        <concentrations unit='ug/ml'>
+          <min>
+            <value>4</value>
+            <formula></formula>
+          </min>
+          <max>
+            <value>12</value>
+            <formula></formula>
+          </max>
+          <best>
+            <value>8</value>
+            <formula></formula>
+          </best>
+        </concentrations>
+        <comments>
+        </comments>
+      </target>
+    </targets>
+
+    <!-- Drug covariates -->
+
+    <covariates>
+      <covariate>
+        <id>phenytoin</id>
+        <names>
+          <name lang='en'>Phenytoin</name>
+          <name lang='fr'>Phenytoin</name>
+        </names>
+        <descs>
+          <desc lang='en'>Phenytoin</desc>
+          <desc lang='fr'>Phenytoin</desc>
+        </descs>
+        <unit></unit>
+        <type>bool</type>
+        <defaultvalue>0</defaultvalue>
+        <comments></comments>
+      </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+
+    <errormodel>
+      <additive>0</additive>
+      <proportional>0.251</proportional>
+      <comments>
+      </comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>3.59</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.181</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>100000</max>
+        <step>1</step>
+        <comments></comments>
+      </parameter>
+      <parameter>
+        <id>V</id>
+        <unit>l</unit>
+        <value>102</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.747</proportional>
+        </bsv>
+        <min>0.1</min>
+        <max>50000</max>
+        <step>1</step>
+        <comments></comments>
+      </parameter>
+      <parameter>
+        <id>Ka</id>
+        <unit>h-1</unit>
+        <value>0.197</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0</proportional>
+        </bsv>
+        <min>0.01</min>
+        <max>10</max>
+        <step>1</step>
+        <comments></comments>
+      </parameter>
+       <parameter>
+        <id>F</id>
+        <unit>%</unit>
+        <value>0.8</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0</proportional>
+        </bsv>
+        <min>1</min>
+        <max>1</max>
+        <step>1</step>
+        <comments><comment lang="fr">
+				F estimée entre 75 et 85% d'après Patsalos et al Antiepileptic drugs best practice guidelines. Epilepsia 2008
+        </comment>
+        </comments>
+      </parameter>
+    </parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+    </correlations>
+
+    <!-- Drug operations -->
+
+    <operations>
+      <operation>
+        <parameter>CL</parameter>
+        <formula><![CDATA[
+  theta1=parameter_CL;
+  theta2 = 0.23;
+
+if (covariate_phenytoin)
+  PHEN=1;
+else
+  PHEN=0;
+
+PHEN = covariate_phenytoin;
+
+TVCL = theta1*(1+theta2*(PHEN));
+return TVCL
+
+        ]]></formula>
+        <comments><comment lang="en">
+        CL multiplied by 1.23 if Phenytoin co-administered
+        </comment>
+        </comments>
+      </operation>
+    </operations>
+    <!-- Drug general comments -->
+
+    <comments>
+    </comments>
+
+  </drug>
+</model>

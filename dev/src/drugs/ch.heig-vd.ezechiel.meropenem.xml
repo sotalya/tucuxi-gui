@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.6" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>Augagneur Louis et Binggeli Kevin</name>
+      <institution>HEIG-VD // REDS</institution>
+      <email>louis.augagneur@heig-vd.ch</email>
+      <date>2013-04-24</date>
+      <comments>
+          <comment lang="en">Based on Chonghua Li, Josph Kuti, Charles Nightingale, David Nicolau work</comment>
+          <comment lang="fr">Basé sur le travail de: Chonghua Li, Josph Kuti, Charles Nightingale, David Nicolau </comment>
+        </comments>
+    </creator>
+    <revisions>
+	<revision>
+		<name>Robert Hooper</name>
+      <institution>HEIG-VD // REDS</institution>
+      <email>robert.hooper@heig-vd.ch</email>
+      <date>2014-07-17</date>
+      <comments/>
+	</revision>
+	<revision>
+        <name>Robert Hooper</name>
+      <institution>HEIG-VD // REDS</institution>
+      <email>robert.hooper@heig-vd.ch</email>
+      <date>2014-07-30</date>
+      <comments/>
+    </revision>
+    <revision>
+        <name>Sylvain Goutelle</name>
+      <institution>CHUV</institution>
+      <email>sylvain.goutelle@chuv.ch</email>
+      <date>2017-07-27</date>
+      <comments><comment lang="en">
+      Age range : 18-93 years
+      Weight range : 40-127 kg
+      Disease.: clinical trials in patients with intra-abdominal infections, community-acquired pneumonia,or ventilator-associated pneumonia
+      </comment></comments>
+    </revision>
+    </revisions>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>J01DH02</atc>
+      <drugid>meropenem</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.meropenem</drugmodelid>
+      <pkmodelid>ezechiel.model.linear.2comp.infus.clv</pkmodelid>
+      <drugnames>
+        <name lang="en">Meropenem</name>
+        <name lang="fr">Meropeneme</name>
+      </drugnames>
+      <domainnames>
+        <name lang="en">adults</name>
+        <name lang="fr">adultes</name>
+      </domainnames>
+      <studynames>
+        <name lang="en"> Population Pharmacokinetic Analysis and Dosing Regimen Optimization of Meropenem in Adult Patients</name>
+        <name lang="fr">Pharmacocinétique de population chez les adultes du Meropeneme</name>
+      </studynames>
+      <references>
+          <reference type='bibtex'>@article{li_population_2006,
+	title = {Population Pharmacokinetic Analysis and Dosing Regimen Optimization of Meropenem in Adult Patients},
+	volume = {46},
+	issn = {00912700},
+	url = {http://doi.wiley.com/10.1177/0091270006291035},
+	doi = {10.1177/0091270006291035},
+	language = {en},
+	number = {10},
+	urldate = {2014-10-23},
+	journal = {The Journal of Clinical Pharmacology},
+	author = {Li, Chonghua and Kuti, Joseph L. and Nightingale, Charles H. and Nicolau, David P.},
+	month = oct,
+	year = {2006},
+	pages = {1171--1178},
+	file = {2006_Li_Meropenem.pdf:/home/rob/.zotero/zotero/iv5zqg2p.default/zotero/storage/FSKHKR6K/2006_Li_Meropenem.pdf:application/pdf}
+}
+	</reference>
+	</references>
+	<descs>
+        <desc lang="en">...</desc>
+        <desc lang="fr">...</desc>
+      </descs>
+      <brands>
+        <brand>Meronem</brand>
+      </brands>
+      <comments/>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>infu</intake>
+      <distribution>2</distribution>
+      <elimination>linear</elimination>
+      <comments>
+          <comment lang="en">Seen on the pdf, infusion, 2 compartiments and linear</comment>
+          <comment lang="fr"> Vu dans le pdf, infusion, 2 compartiments et linéaire </comment>
+        </comments>
+    </adme>
+
+    <!-- Drug half-life -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>2</value>
+      <multiplier>10</multiplier>
+      <comments/>
+    </halflife>
+
+    <!-- Drug units and conversions -->
+
+    <conversions>
+      <units>
+        <concentration>mg/l</concentration>
+        <result>mg/l</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>0</molarmass>
+      <comments>
+          <comment lang="en">Did not find any molar mass</comment>
+          <comment lang="fr"> Pas trouvé de masse molaire du principe actif	 </comment>
+        </comments>
+    </conversions>
+
+    <!-- Drug dosages -->
+
+    <dosages>
+      <doses default="1000" unit="mg" any="true" from="250" to="3000" step="50">
+      </doses>
+      <intervals default="8" unit="h" any="false">
+        <interval>6</interval>
+        <interval>8</interval>
+        <interval>12</interval>
+        <interval>24</interval>
+        <interval>36</interval>
+        <interval>48</interval>
+      </intervals>
+      <infusions default="30" unit="min" any="false">
+        <infusion>5</infusion>
+        <infusion>15</infusion>
+        <infusion>30</infusion>
+        <infusion>60</infusion>
+        <infusion>90</infusion>
+        <infusion>120</infusion>
+        <infusion>180</infusion>
+      </infusions>
+      <comments>
+        </comments>
+    </dosages>
+
+    <!-- Drug targets -->
+
+    <targets>
+      <!-- <target>
+      </target>-->
+      <target>
+        <type>residual</type>
+        <concentrations unit="mg/l">
+          <min>
+            <value>1</value>
+            <formula/>
+          </min>
+          <max>
+            <value>8</value>
+            <formula/>
+          </max>
+          <best>
+            <value>4</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <comments>
+          <comment lang="en"> No peak for this product, there is only a minimal concentration</comment>
+          <comment lang="fr"> Pas de pic pour ce produit, il y a seulement une concentration minimale</comment>
+        </comments>
+      </target>
+    </targets>
+
+    <!-- Drug covariates -->
+
+    <covariates>
+      <covariate>
+        <id>bodyweight</id>
+        <names>
+          <name lang="en">body weight</name>
+          <name lang="fr">Poids</name>
+        </names>
+        <descs>
+          <desc lang="en">Weight of the patient, in years</desc>
+          <desc lang="fr">Poids du patient, en années</desc>
+        </descs>
+        <unit>kg</unit> <!-- in years -->
+        <type>double</type>
+        <defaultvalue>70</defaultvalue>
+        <comments>
+        </comments>
+      </covariate>
+      <covariate>
+        <id>age</id>
+        <names>
+          <name lang="en"> Age </name>
+          <name lang="fr">Ã‚ge</name>
+        </names>
+        <descs>
+          <desc lang="en">Age of the patient, in years</desc>
+          <desc lang="fr">Ã‚ge du patient, en années</desc>
+        </descs>
+        <unit>y</unit> <!-- in years -->
+        <type>double</type>
+        <defaultvalue>35</defaultvalue>
+        <comments>
+          <comment lang="en"> Covariate found in table II</comment>
+          <comment lang="fr"> Covariable trouvée en table II</comment>
+        </comments>
+      </covariate>
+      <covariate>
+        <id>clcr</id>
+        <names>
+          <name lang="en"> Creatinine clearance</name>
+          <name lang="fr"> Clairance de la créatinine</name>
+        </names>
+        <descs>
+          <desc lang="en">Clearance Value Creatinine in ml/min</desc>
+          <desc lang="fr">Valeur d'élimination de la créatinine en ml/min</desc>
+        </descs>
+        <unit>ml/min</unit> <!-- in liter/hour -->
+        <type>double</type>
+        <defaultvalue>83</defaultvalue>
+        <comments>
+          <comment lang="en"> Covariate found in table II</comment>
+          <comment lang="fr"> Covariable trouvée en table II</comment>
+        </comments>
+      </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+
+    <errormodel>
+      <additive>0.469</additive>
+      <proportional>0.188</proportional>
+      <comments>
+          <comment lang="en"> Found in table 2, sigma2 1 and 2 in the "population estimate"</comment>
+          <comment lang="fr"> Corresponds aux valeurs table II sigma2 1 et 2 de "population estimate"</comment>
+        </comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>14.6</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.343</proportional>
+        </bsv>
+        <min>0.0001</min>
+        <max>100000</max>
+        <step>1</step>
+        <comments>
+        </comments>
+      </parameter>
+      <parameter>
+        <id>V1</id>
+        <unit>l</unit>
+        <value>10.8</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.378</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>50000</max>
+        <step>5</step>
+        <comments>
+        </comments>
+      </parameter>
+      <parameter>
+        <id>V2</id>
+        <unit>l</unit>
+        <value>12.6</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.319</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>50000</max>
+        <step>5</step>
+        <comments>
+        </comments>
+      </parameter>
+      <parameter>
+        <id>Q</id>
+        <unit>l/h</unit>
+        <value>18.6</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.539</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>100000</max>
+        <step>1</step>
+        <comments>
+        </comments>
+      </parameter>
+    </parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+    </correlations>
+
+    <!-- Drug operations -->
+
+    <operations>
+      <operation>
+        <parameter>CL</parameter>
+        <formula><![CDATA[
+
+theta_1 = 14.6;
+theta_2 = 0.62;
+theta_3 = -0.34;
+CCR = covariate_clcr;
+AGE = covariate_age;
+
+TVCL = theta_1 * Math.pow((CCR / 83),theta_2)* Math.pow((AGE / 35),theta_3);
+return TVCL;
+        ]]></formula>
+				<comments>
+				  <comment lang="en"> Found in table II</comment>
+				  <comment lang="fr"> Trouvée en table II</comment>
+				</comments>
+      </operation>
+      <operation>
+        <parameter>V1</parameter>
+        <formula><![CDATA[
+theta_4 = 10.8;
+theta_5 = 0.99;
+BW = covariate_bodyweight;
+
+TVV1 = theta_4 * Math.pow((BW/ 70),theta_5);
+return TVV1;
+        ]]></formula>
+				<comments>
+				  <comment lang="en"> Found in table II</comment>
+				  <comment lang="fr"> Trouvée en table II</comment>
+				</comments>
+      </operation>
+    </operations>
+
+    <!-- Drug general comments -->
+
+    <comments/>
+
+  </drug>
+</model>

@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Global Types -->
+
+  <xs:simpleType name="mandatoryToken">
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="mandatoryString">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="mandatoryNormalizedString">
+    <xs:restriction base="xs:normalizedString">
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="mandatoryBase64Binary">
+    <xs:restriction base="xs:base64Binary">
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="requestId">
+      <xs:restriction base="mandatoryToken">
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="drugId">
+      <xs:restriction base="xs:token">
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="patientId">
+      <xs:restriction base="xs:token">
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="practicianId">
+      <xs:restriction base="xs:token">
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="instituteId">
+      <xs:restriction base="xs:token">
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="gender">
+      <xs:restriction base="xs:token">
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="intake">
+    <xs:restriction base="xs:token">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="nature">
+    <xs:restriction base="xs:token">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="clinical">
+    <xs:restriction base="xs:token">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="emailAddress">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="emailType">
+    <xs:restriction base="xs:token">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="phoneNumber">
+    <xs:restriction base="xs:token">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="phoneType">
+    <xs:restriction base="xs:token">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="value">
+      <xs:restriction base="xs:token">
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="unit">
+      <xs:restriction base="xs:token">
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="requestState" >
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="open" />
+      <xs:enumeration value="close" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="valueUnit">
+    <xs:sequence>
+      <xs:element name="value" type="value" />
+      <xs:element name="unit" type="unit" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="translatedText">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="lang" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="institute">
+    <xs:sequence>
+      <xs:element name="instituteId" type="instituteId" />
+      <xs:element name="name" type="xs:token" />
+      <xs:element ref="contact" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="patient">
+    <xs:sequence>
+      <xs:element ref="name" />
+      <xs:element ref="contact" minOccurs="0" />
+      <xs:element name="institute" type="institute" minOccurs="0" />
+      <xs:element name="patientId" type="patientId" />
+      <xs:element name="stayNumber" type="xs:token" />
+      <xs:element name="birthdate" type="xs:token" />
+      <xs:element name="gender" type="gender" />
+      <xs:element ref="comments" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="practician">
+    <xs:sequence>
+      <xs:element ref="name" />
+      <xs:element ref="contact" minOccurs="0" />
+      <xs:element name="institute" type="institute" minOccurs="0" />
+      <xs:element name="practicianId" type="practicianId" />
+      <xs:element name="title" type="xs:token" />
+      <xs:element name="birthdate" type="xs:token" />
+      <xs:element name="gender" type="gender" />
+      <xs:element ref="comments" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Global Attributes -->
+
+  <xs:attribute name="version">
+    <xs:simpleType>
+      <xs:restriction base="xs:decimal">
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="lang">
+    <xs:simpleType>
+      <xs:restriction base="xs:normalizedString">
+        <xs:enumeration value="fr" />
+        <xs:enumeration value="en" />
+        <xs:enumeration value="FRA" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="type">
+    <xs:simpleType>
+      <xs:restriction base="xs:normalizedString">
+        <xs:enumeration value="query_list" />
+        <xs:enumeration value="reply_list" />
+        <xs:enumeration value="ack_list" />
+        <xs:enumeration value="query_request" />
+        <xs:enumeration value="reply_request" />
+        <xs:enumeration value="ack_request" />
+        <xs:enumeration value="notification" />
+        <xs:enumeration value="ack_notification" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="controlId">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="errorCondition">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="OK" />
+        <xs:enumeration value="NF" />
+        <xs:enumeration value="AE" />
+        <xs:enumeration value="AR" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <!-- Global Elements -->
+
+  <xs:element name="comments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="comment" type="translatedText" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="name">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="firstName" type="xs:token" />
+        <xs:element name="middleName" type="xs:token" />
+        <xs:element name="lastName" type="xs:token" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="emails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="email" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="emailAddress">
+                <xs:attribute name="type" type="emailType" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="phones">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="phone" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="phoneNumber">
+                <xs:attribute name="type" type="phoneType" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="contact">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="address" type="xs:token" />
+        <xs:element name="city" type="xs:token" />
+        <xs:element name="postcode" type="xs:token" />
+        <xs:element name="state" type="xs:token" />
+        <xs:element name="country" type="xs:token" />
+        <xs:element ref="emails" />
+        <xs:element ref="phones" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="drug">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="drugId" type="drugId" />
+        <xs:element name="atc" type="xs:token" />
+        <xs:element name="brandName" type="xs:token" />
+        <xs:element name="activePrinciple" type="xs:token" />
+        <xs:element ref="comments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="dosage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="startDate" type="xs:token" />
+        <xs:element name="lastDate" type="xs:token" />
+        <xs:element name="dose" type="valueUnit" />
+        <xs:element name="interval" type="valueUnit" />
+        <xs:element name="infusion" type="valueUnit" />
+        <xs:element name="intake" type="xs:token" />
+        <xs:element ref="comments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="dosages">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dosage" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="concentration">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="analyte" type="xs:token" />
+        <xs:element name="value" type="value" />
+        <xs:element name="unit" type="unit" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="concentrations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="concentration" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="sample">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="xs:token" />
+        <xs:element name="sampleDate" type="xs:token" />
+        <xs:element name="arrivalDate" type="xs:token" />
+        <xs:element ref="concentrations" />
+        <xs:element ref="comments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="samples">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sample" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="covariate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="xs:token" />
+        <xs:element name="date" type="xs:token" />
+        <xs:element name="value" type="valueUnit" />
+        <xs:element name="nature" type="nature" />
+        <xs:element ref="comments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="covariates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="covariate" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="clinical">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="xs:token" />
+        <xs:element name="date" type="xs:token" />
+        <xs:element name="value" type="xs:string" />
+        <xs:element ref="comments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="clinicals">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="clinical" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

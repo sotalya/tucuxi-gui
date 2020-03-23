@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Included Schemas -->
+
+  <xs:include schemaLocation="exchange.xsd" />
+
+  <!-- File Structure -->
+
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dataset" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="interpretation" />
+              <xs:element ref="drug" />
+              <xs:element ref="dosages" />
+              <xs:element ref="samples" />
+              <xs:element ref="covariates" />
+              <xs:element ref="parameters" />
+              <xs:element ref="clinicals" />
+              <xs:element name="patient" type="patient" />
+              <xs:element name="mandator" type="practician" minOccurs="0" />
+              <xs:element name="analyst" type="practician" minOccurs="0" />
+            </xs:sequence>
+            <xs:attribute ref="lang" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:decimal" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

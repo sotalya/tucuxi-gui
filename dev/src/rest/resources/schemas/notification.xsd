@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Included Schemas -->
+
+  <xs:include schemaLocation="mirth.xsd" />
+
+  <!-- Specific Types -->
+
+  <xs:complexType name="image">
+    <xs:sequence>
+      <xs:element name="width" type="xs:integer" />
+      <xs:element name="height" type="xs:integer" />
+      <xs:element name="format">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="png" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filename" type="mandatoryToken" />
+      <xs:element name="content" type="mandatoryBase64Binary" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Specific Elements -->
+
+  <xs:element name="resultStatus">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="C" />  <!-- Record coming over is a correction and thus replaces a final result -->
+        <xs:enumeration value="D" />  <!-- Deletes the OBX record -->
+        <xs:enumeration value="F" />  <!-- Final results, can only be changed with a corrected result -->
+        <xs:enumeration value="I" />  <!-- Specimen in lab, results pending -->
+        <xs:enumeration value="N" />  <!-- Not asked, used to affirmatively document that the observation identified in the OBX was
+                                           not sought when the universal service ID in OBR-4 implies that it would be sought. -->
+        <xs:enumeration value="O" />  <!-- Order detail description only (no result) -->
+        <xs:enumeration value="P" />  <!-- Preliminary results -->
+        <xs:enumeration value="R" />  <!-- Results entered, not verified -->
+        <xs:enumeration value="S" />  <!-- Partial results -->
+        <xs:enumeration value="X" />  <!-- Results cannot be obtained for this observation -->
+        <xs:enumeration value="U" />  <!-- Results status change to final without retransmitting results already sent as ‘preliminary.’
+                                           E.g., radiology changes status from preliminary to final -->
+        <xs:enumeration value="W" />  <!-- Post original as wrong, e.g., transmitted for wrong patient -->
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="pdf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="filename" type="mandatoryToken" />
+        <xs:element name="content" type="mandatoryBase64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="interpretation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="mandatoryToken" />
+        <xs:element name="expectedness" type="xs:string" />
+        <xs:element name="suitability" type="xs:string" />
+        <xs:element name="prediction" type="xs:string" />
+        <xs:element name="remonitoring" type="xs:string" />
+        <xs:element name="warning" type="xs:string" />
+        <xs:element name="curve" type="image" />
+        <xs:element name="date" type="xs:dateTime" />
+        <xs:element ref="comments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="parameter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="mandatoryToken" />
+        <xs:element name="date" type="xs:dateTime" />
+        <xs:element name="typical" type="valueUnit" />
+        <xs:element name="apriori" type="valueUnit" />
+        <xs:element name="aposteriori" type="valueUnit" />
+        <xs:element ref="comments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="parameters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="parameter" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- File Structure -->
+
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dataset" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="requestId" type="requestId" />
+              <xs:element name="requestState" type="requestState" />
+              <xs:element ref="resultStatus" />
+              <xs:element ref="pdf" minOccurs="0" />
+              <xs:element ref="interpretation" />
+              <xs:element ref="drug" />
+              <xs:element ref="dosages" />
+              <xs:element ref="samples" />
+              <xs:element ref="covariates" />
+              <xs:element ref="parameters" />
+              <xs:element ref="clinicals" />
+              <xs:element name="patient" type="patient" />
+              <xs:element name="mandator" type="practician" minOccurs="0" />
+              <xs:element name="analyst" type="practician" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute ref="version" use="required" />
+      <xs:attribute ref="lang" use="required" />
+      <xs:attribute ref="type" use="required" />
+      <xs:attribute ref="controlId" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

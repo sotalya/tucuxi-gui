@@ -1,0 +1,26 @@
+if [[ $1 == '--help' || $1 == 'help' || $1 == '-h' ]]; then
+	echo "Remove and create the local.db file using localdb.sql and base.sql"
+	echo "Usage : $0 [-t]"
+	echo "Arguments : -t : Add the test data from test.sql"
+	exit 0
+elif [[ $1 != '-t' && $1 != "" ]]; then
+	echo "Unknown argument : $1"
+	exit 1
+fi
+
+test=0
+[[ $1 == "-t" ]] && test=0
+for db in local.db localtest.db; do
+	echo "Creating $db"
+	rm "$db"
+	sqlite3 -batch "$db" '.read localdb.sql' || exit 1
+	sqlite3 -batch "$db" '.read base.sql' || exit 1
+
+	if [[ $test == 1 ]]; then
+		echo "Add testing data to $db"
+		sqlite3 -batch "$db" '.read test.sql' || exit 1
+	fi
+
+	#On the second run, always add the test values
+	test=1
+done

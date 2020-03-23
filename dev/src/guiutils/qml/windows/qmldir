@@ -1,0 +1,3 @@
+module guiutils.qml.windows
+MainWindow 1.0 MainWindow.qml
+

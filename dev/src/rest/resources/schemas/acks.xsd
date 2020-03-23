@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Included Schemas -->
+
+  <xs:include schemaLocation="mirth.xsd" />
+
+  <!-- Specific Elements -->
+
+  <xs:element name="acknowledgmentCode">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="AA" />  <!-- Original mode: Application Accept - Enhanced mode: Application acknowledgment: Accept -->
+        <xs:enumeration value="AE" />  <!-- Original mode: Application Error - Enhanced mode: Application acknowledgment: Error -->
+        <xs:enumeration value="AR" />  <!-- Original mode: Application Reject - Enhanced mode: Application acknowledgment: Reject -->
+        <xs:enumeration value="CA" />  <!-- Enhanced mode: Accept acknowledgment: Commit Accept -->
+        <xs:enumeration value="CE" />  <!-- Enhanced mode: Accept acknowledgment: Commit Error -->
+        <xs:enumeration value="CR" />  <!-- Enhanced mode: Accept acknowledgment: Commit Reject -->
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="error">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="segmentId" type="xs:string" />
+        <xs:element name="sequence" type="xs:integer" />
+        <xs:element name="fieldPosition" type="xs:integer" />
+        <xs:element name="codeIdentifyingError" type="xs:integer" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- File Structure -->
+
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="replyControlId" type="mandatoryString" />
+        <xs:element ref="acknowledgmentCode" />
+        <xs:element name="acknowledgmentMessage" type="xs:string" minOccurs="0" />
+        <xs:element ref="error" minOccurs="0" />
+      </xs:sequence>
+      <xs:attribute ref="version" use="required" />
+      <xs:attribute ref="lang" use="required" />
+      <xs:attribute ref="type" use="required" />
+      <xs:attribute ref="controlId" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

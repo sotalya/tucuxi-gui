@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/schemas">
+        <file alias="mirth.xsd">schemas/mirth.xsd</file>
+        <file alias="queries.xsd">schemas/queries.xsd</file>
+        <file alias="reply_list.xsd">schemas/reply_list.xsd</file>
+        <file alias="reply_request.xsd">schemas/reply_request.xsd</file>
+        <file alias="notification.xsd">schemas/notification.xsd</file>
+        <file alias="acks.xsd">schemas/acks.xsd</file>
+    </qresource>
+    <qresource prefix="/certificates">
+        <file alias="mirth.hevs.ch.crt">certificates/mirth.hevs.ch.crt</file>
+        <file alias="mirth.chuv.ch.pem">certificates/mirth.chuv.ch.pem</file>
+    </qresource>
+</RCC>

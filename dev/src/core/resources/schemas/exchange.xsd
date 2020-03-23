@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Global Types -->
+
+  <xs:simpleType name="mandatoryToken">
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="mandatoryString">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="mandatoryNormalizedString">
+    <xs:restriction base="xs:normalizedString">
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="value">
+      <xs:restriction base="xs:double">
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="unit">
+      <xs:restriction base="xs:token">
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="intake">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="extra" />
+      <xs:enumeration value="infu" />
+      <xs:enumeration value="bolus" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="curvetype">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="continuous" />
+      <xs:enumeration value="categorical" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="paramstype">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="apriori" />
+      <xs:enumeration value="aposteriori" />
+      <xs:enumeration value="reverse" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="nature">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="continuous" />
+      <xs:enumeration value="discrete" />
+      <xs:enumeration value="categorical" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="clinical">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="diagnosis" />
+      <xs:enumeration value="toxicity" />
+      <xs:enumeration value="adverseEffect" />
+      <xs:enumeration value="indication" />
+      <xs:enumeration value="response" />
+      <xs:enumeration value="comedication" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="emailAddress">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[^@]+@[^\.]+\..+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="emailType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="home" />
+      <xs:enumeration value="work" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="phoneNumber">
+    <xs:restriction base="mandatoryNormalizedString">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="phoneType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="mobile" />
+      <xs:enumeration value="home" />
+      <xs:enumeration value="work" />
+      <xs:enumeration value="fax" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="gender">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="male" />
+      <xs:enumeration value="female" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="valueUnit">
+    <xs:sequence>
+      <xs:element name="value" type="value" />
+      <xs:element name="unit" type="unit" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="reverseengine">
+    <xs:sequence>
+      <xs:element name="name" type="mandatoryNormalizedString" />
+      <xs:element name="version" type="mandatoryNormalizedString" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="percentileengine">
+    <xs:sequence>
+      <xs:element name="name" type="mandatoryNormalizedString" />
+      <xs:element name="version" type="mandatoryNormalizedString" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="postengine">
+    <xs:sequence>
+      <xs:element name="name" type="mandatoryNormalizedString" />
+      <xs:element name="version" type="mandatoryNormalizedString" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="modelengine">
+    <xs:sequence>
+      <xs:element name="name" type="mandatoryNormalizedString" />
+      <xs:element name="version" type="mandatoryNormalizedString" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="drugtreatment">
+    <xs:sequence>
+      <xs:element name="name" type="mandatoryNormalizedString" />
+      <xs:element name="patientId" type="xs:token"/>
+      <xs:element name="drugId" type="xs:token"/>
+      <xs:element name="drugmodelname" type="mandatoryNormalizedString"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="prediction">
+    <xs:sequence>
+      <xs:element name="name" type="mandatoryNormalizedString" />
+      <xs:element ref="comments" />
+      <xs:element name="curvetype" type="curvetype" />
+      <xs:element name="paramstype" type="paramstype" />
+      <xs:element name="nbpoints" type="xs:token" />
+      <xs:element name="startDate" type="xs:dateTime" />
+      <xs:element name="lastDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="drugresponseanalysis">
+    <xs:sequence>
+      <xs:element name="drugtreatmentname" type="mandatoryNormalizedString"/>
+      <xs:element name="drugmodelname" type="mandatoryNormalizedString"/>
+      <xs:element name="postenginename" type="mandatoryNormalizedString"/>
+      <xs:element name="reverseenginename" type="mandatoryNormalizedString"/>
+      <xs:element name="percentileenginename" type="mandatoryNormalizedString"/>
+      <xs:element name="prediction" type="prediction" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="translatedText">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="lang" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="institute">
+    <xs:sequence>
+      <xs:element name="id" type="mandatoryToken" />
+      <xs:element name="name" type="mandatoryNormalizedString" />
+      <xs:element ref="contact" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="patient">
+    <xs:sequence>
+      <xs:element ref="name" />
+      <xs:element ref="contact" minOccurs="0" />
+      <xs:element name="institute" type="institute" minOccurs="0" />
+      <xs:element name="id" type="mandatoryToken" />
+      <xs:element name="stayNumber" type="xs:token" />
+      <xs:element name="birthdate" type="xs:dateTime" />
+      <xs:element name="gender" type="gender" />
+      <xs:element ref="dosages" minOccurs="0"/>
+      <xs:element ref="samples" minOccurs="0"/>
+      <xs:element ref="covariates" minOccurs="0"/>
+      <xs:element ref="clinicals" minOccurs="0"/>
+      <xs:element ref="comments" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="practician">
+    <xs:sequence>
+      <xs:element ref="name" />
+      <xs:element ref="contact" minOccurs="0" />
+      <xs:element name="institute" type="institute" minOccurs="0" />
+      <xs:element name="id" type="mandatoryToken" />
+      <xs:element name="title" type="xs:token" />
+      <xs:element name="birthdate" type="xs:dateTime" minOccurs="0" />
+      <xs:element name="gender" type="gender" minOccurs="0" />
+      <xs:element ref="comments" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Global Attributes -->
+
+  <xs:attribute name="lang">
+    <xs:simpleType>
+      <xs:restriction base="xs:normalizedString">
+        <xs:enumeration value="fr" />
+        <xs:enumeration value="en" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <!-- Global Elements -->
+
+  <xs:element name="comments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="comment" type="translatedText" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="emails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="email" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="emailAddress">
+                <xs:attribute name="type" type="emailType" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="phones">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="phone" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="phoneNumber">
+                <xs:attribute name="type" type="phoneType" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="name">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="firstName" type="mandatoryNormalizedString" />
+        <xs:element name="middleName" type="xs:normalizedString" />
+        <xs:element name="lastName" type="mandatoryNormalizedString" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="contact">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="address" type="mandatoryNormalizedString" />
+        <xs:element name="city" type="mandatoryNormalizedString" />
+        <xs:element name="postcode" type="mandatoryNormalizedString" />
+        <xs:element name="state" type="mandatoryNormalizedString" />
+        <xs:element name="country" type="mandatoryNormalizedString" />
+        <xs:element ref="emails" />
+        <xs:element ref="phones" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="interpretation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="mandatoryToken" />
+        <xs:element name="expectedness" type="xs:string" />
+        <xs:element name="suitability" type="xs:string" />
+        <xs:element name="prediction" type="xs:string" />
+        <xs:element name="remonitoring" type="xs:string" />
+        <xs:element name="warning" type="xs:string" />
+        <xs:element name="curve" type="xs:base64Binary" />
+        <xs:element name="date" type="xs:dateTime" />
+        <xs:element ref="comments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="drug">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="mandatoryToken" />
+        <xs:element name="atc" type="xs:token" />
+        <xs:element name="brandName" type="xs:normalizedString" />
+        <xs:element name="activePrinciple" type="xs:normalizedString" />
+        <xs:element ref="comments" />
+        <xs:element ref="parameters" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="dosages">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dosage" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="startDate" type="xs:dateTime" />
+              <xs:element name="lastDate" type="xs:dateTime" />
+              <xs:element name="dose" type="valueUnit" />
+              <xs:element name="interval" type="valueUnit" />
+              <xs:element name="infusion" type="valueUnit" />
+              <xs:element name="intake" type="intake" />
+              <xs:element ref="comments" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="samples">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="sample" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" type="xs:token" />
+              <xs:element name="sampleDate" type="xs:dateTime" />
+              <xs:element name="arrivalDate" type="xs:dateTime" />
+              <xs:element name="analyte" type="xs:normalizedString" />
+              <xs:element name="concentration" type="valueUnit" />
+              <xs:element ref="comments" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="covariates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="covariate" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="mandatoryToken" />
+              <xs:element name="date" type="xs:dateTime" />
+              <xs:element name="value" type="valueUnit" />
+              <xs:element name="nature" type="nature" />
+              <xs:element ref="comments" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="parameters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="mandatoryToken" />
+              <xs:element name="date" type="xs:dateTime" />
+              <xs:element name="typical" type="valueUnit" />
+              <xs:element name="apriori" type="valueUnit" />
+              <xs:element name="aposteriori" type="valueUnit" />
+              <xs:element ref="comments" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="clinicals">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="clinical" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="clinical" />
+              <xs:element name="date" type="xs:dateTime" />
+              <xs:element name="value" type="mandatoryString" />
+              <xs:element ref="comments" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

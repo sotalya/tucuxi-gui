@@ -1,0 +1,377 @@
+
+/**************************************************************************************************
+* The page media rule
+**************************************************************************************************/
+
+@page {
+  size: A4;
+  margin: 20mm 10mm 20mm 10mm;
+}
+
+/**************************************************************************************************
+* The global display rules
+**************************************************************************************************/
+
+/*
+ * The html rule defines the background color surrounding the report's page itself, as well as the
+ * default font family and default font size. The background color represent a typical widget's
+ * background color. The default font size is set to 10px (62.5% of 16 pixel), which is usefull for
+ * converting top-level em values as well as rem values to pixels.
+ */
+
+@media screen {
+  html {
+    background-color: #d3d3d3;          /* Sets the background color outside of the page borders */
+    font-size: 62.5%;                   /* Sets the default font size to 10px                    */
+    font-family: Verdana, Geneva, Kalimati, sans-serif;
+  }
+}
+
+@media print {
+  html {
+    font-size: 62.5%;
+    font-family: Verdana, Geneva, Kalimati, sans-serif;
+  }
+}
+
+/*
+ * The body rule defines the report's page size, margins, color and border. The width is set to
+ * an A4 page's width, that is 210mm. It is actually set to 190mm to take into account the left and
+ * right padding (2*10mm) that acts as the A4 actual left and right margins. The margin property is
+ * itself set to auto in order to center the report's page on the QWebView in which the report is
+ * displayed. Finally, a thin frame is applied around the report's page to give the impression of a
+ * real page inside the QWebView.
+ */
+
+@media screen {
+  body {
+    font-size: 1rem;                    /* Default font size                                    */
+    background-color: #FFF;             /* White paper                                          */
+    margin: auto;                       /* Auto margins to center the report in the QWebView    */
+    padding: 20mm 10mm 20mm 10mm;       /* A4 default margin                                    */
+    width: 190mm;                       /* A4 width (210mm minus the left/right padding)        */
+    border: 1px solid black;            /* Frame around the report page                         */
+  }
+}
+
+@media print {
+  body {
+    font-size: 1rem;
+  }
+}
+
+/**************************************************************************************************
+* The headers rules
+**************************************************************************************************/
+
+header {
+  overflow: hidden;
+}
+
+@media print {
+  header {
+    page-break-inside: avoid;
+  }
+}
+
+header > * {
+  width: 45%;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+header > * > .field\.expanding {
+  margin-bottom: 1px
+}
+
+header > * > .line {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 1px;
+}
+
+header .recipient {
+  float: right;
+  margin-top: 25mm;
+}
+
+header .reference {
+  float: left;
+  clear: both;
+  font-size: .8rem;
+}
+
+header .creationDate {
+  float: right;
+  clear: none;
+}
+
+header .institute > *, header .cmo > .field\.expanding:nth-child(1), header .team > .field\.expanding:nth-child(1), header .recipient > .field\.expanding:nth-child(1) {
+  font-weight: bold;
+}
+
+/**************************************************************************************************
+* The sections rules
+**************************************************************************************************/
+
+section {
+  clear:both;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media print {
+  section {
+    page-break-inside: avoid;
+  }
+}
+
+.section\.title > .line > div:first-child {
+  text-align: left;
+}
+
+.section\.title, .section\.content {
+  overflow: hidden;
+}
+
+.section\.title {
+  border-top: .3rem solid #777777;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: #dbdbdb;
+  padding-top:    .5rem;
+  padding-bottom: .5rem;
+  margin-bottom:  .5rem;
+}
+
+.section\.title\.container {
+  float: left;
+  overflow: hidden;
+  width: 32rem;                         /* (4 * (Short + 1)) */
+}
+
+@media print {
+  [data-hidden="true"] {
+    display: none;
+  }
+}
+
+/**************************************************************************************************
+* The line rules
+**************************************************************************************************/
+
+.line, .line\.empty, .legend {
+  clear: both;
+  vertical-align: middle;
+  padding-top:    .1rem;
+  padding-bottom: .2rem;
+}
+
+.line\.empty {
+  height: 1em;
+}
+
+.line\.separator {
+  border-bottom: .3rem solid #777777;
+  margin: .5rem 0 .5rem;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+}
+
+.singleLine {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+[contenteditable="true"].singleLine br {
+  display: none;
+}
+
+[contenteditable="true"].singleLine * {
+  display: inline;
+  white-space:nowrap;
+}
+
+/**************************************************************************************************
+* The labels rules
+**************************************************************************************************/
+
+.label, .label\.short, .label\.expanding, .label\.header, .label\.contact, .label\.reference, .label\.dosage, .label\.proposedPosology, .label\.nextTDM {
+  float: left;
+  padding-left:  .5rem;
+  padding-right: .5rem;
+}
+
+.label, .label\.short, .label\.expanding, .label\.header, .label\.dosage, .label\.proposedPosology, .label\.nextTDM {
+  color: #5A5A5A;
+  font-weight: bold;
+}
+
+#patientSection > .section\.content > .line:first-child .label\.short {
+  text-align: right;
+}
+
+.label\.short {
+  width: 7rem;
+}
+
+.label\.expanding {
+  float: none;
+  overflow: hidden;
+}
+
+.label\.header {
+  width: 10rem;
+}
+
+.label\.contact {
+  width: 4rem;
+}
+
+.label\.dosage {
+  text-align: right;
+  width: 7rem;
+}
+
+.label\.proposedPosology, .label\.nextTDM {
+  text-align: left;
+  width: 18rem;
+}
+
+/**************************************************************************************************
+* The fields rules
+**************************************************************************************************/
+
+.field, .field\.short, .field\.expanding, .field\.title {
+  float: left;
+  padding-left:  .5rem;
+  padding-right: .5rem;
+}
+
+.field\.short {
+  min-width: 7rem;
+  max-width: 7rem;
+}
+
+.field\.expanding {
+  float: none;
+  overflow: hidden;
+}
+
+#titleSection .field\.expanding {
+  font-weight: bold;
+}
+
+.field\.title {
+  min-width: 42rem;                     /* (Header + 1) + (4 * (Short + 1)) - 1 */
+  max-width: 42rem;                     /* (Header + 1) + (4 * (Short + 1)) - 1 */
+}
+
+/**************************************************************************************************
+* The tables rules
+**************************************************************************************************/
+
+table {
+  width: 100%;
+  font-size: .8rem;
+}
+
+table th {
+  color: #5A5A5A;
+}
+
+table td:first-child {
+  color: #5A5A5A;
+}
+
+/**************************************************************************************************
+* The images rules
+**************************************************************************************************/
+
+#institute\.logo {
+  width: 100%;
+  height: auto;
+}
+
+#chart\.image {
+  width: 100%;
+  height: auto;
+}
+
+#chart\.legend {
+  height: auto;
+}
+
+/**************************************************************************************************
+* The editable elements rules
+**************************************************************************************************/
+
+@media screen {
+  [contentEditable="true"] {
+    font-weight: normal;
+    overflow: hidden;
+    width: auto;
+    min-height: 1em;
+    border: .1rem dashed #DAA;
+    border-radius: .8rem;
+  }
+
+  [contentEditable="true"]:hover {
+    background-color: #DDD;
+  }
+}
+
+@media print {
+  [contentEditable="true"] {
+    font-weight: normal;
+    overflow: hidden;
+    width: auto;
+    min-height: 1em;
+  }
+}
+
+/**************************************************************************************************
+* The title rules
+**************************************************************************************************/
+
+@media print {
+  #titleSection {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+}
+
+#titleSection {
+  font-size: 1.6rem;
+  clear:both;
+  padding-top: 1rem;
+  border-top: .3rem solid #777777;
+}
+
+
+/**************************************************************************************************
+* The prediction rules
+**************************************************************************************************/
+
+#predictionSection .prediction\.chart {
+  float: left;
+  width: 61%;
+  overflow: hidden;
+}
+
+#predictionSection .prediction\.legend, #predictionSection .prediction\.parameters {
+  float: right;
+  width: 38%;
+  overflow: hidden;
+}
+
+/**************************************************************************************************
+* The references rules
+**************************************************************************************************/
+
+#referencesSection {
+  font-size: .8rem;
+}
+

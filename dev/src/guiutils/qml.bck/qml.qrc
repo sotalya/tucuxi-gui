@@ -1,0 +1,67 @@
+<RCC>
+    <qresource prefix="/base"/>
+    <qresource prefix="/styles">
+        <file alias="TableStyle.qml">styles/TableStyle.qml</file>
+        <file alias="TextFieldStyleBackground.qml">styles/TextFieldStyleBackground.qml</file>
+        <file alias="EzBackgroundStyle.qml">styles/EzBackgroundStyle.qml</file>
+        <file alias="EzComboBoxStyle.qml">styles/EzComboBoxStyle.qml</file>
+        <file alias="EzTextFieldStyle.qml">styles/EzTextFieldStyle.qml</file>
+        <file alias="EzLabelStyle.qml">styles/EzLabelStyle.qml</file>
+        <file alias="EzText.qml">styles/EzText.qml</file>
+        <file alias="EzBorderlessBackgroundStyle.qml">styles/EzBorderlessBackgroundStyle.qml</file>
+    </qresource>
+    <qresource prefix="/controls">
+        <file alias="TimePicker.qml">controls/TimePicker.qml</file>
+        <file alias="DatePicker.qml">controls/DatePicker.qml</file>
+        <file alias="Chart.qml">controls/Chart.qml</file>
+        <file alias="Curtain.qml">controls/Curtain.qml</file>
+        <file alias="CurtainSet.qml">controls/CurtainSet.qml</file>
+        <file alias="EzEditTextSet.qml">controls/EzEditTextSet.qml</file>
+        <file alias="EzEditDateTimeSet.qml">controls/EzEditDateTimeSet.qml</file>
+        <file alias="EzNumericalComboSet.qml">controls/EzNumericalComboSet.qml</file>
+        <file alias="EzDateSet.qml">controls/EzDateSet.qml</file>
+        <file alias="EzComboSet.qml">controls/EzComboSet.qml</file>
+    </qresource>
+    <qresource prefix="/controls/flow">
+        <file alias="FlowTab.qml">controls/flow/FlowTab.qml</file>
+    </qresource>
+    <qresource prefix="/controls/table">
+        <file alias="Table.qml">controls/table/Table.qml</file>
+        <file alias="TableCell.qml">controls/table/TableCell.qml</file>
+        <file alias="TableDialog.qml">controls/table/TableDialog.qml</file>
+        <file alias="TableFilter.qml">controls/table/TableFilter.qml</file>
+        <file alias="TableHeader.qml">controls/table/TableHeader.qml</file>
+        <file alias="TableRow.qml">controls/table/TableRow.qml</file>
+    </qresource>
+    <qresource prefix="/windows">
+        <file alias="Flow.qml">windows/Flow.qml</file>
+        <file alias="MainWindow.qml">windows/MainWindow.qml</file>
+        <file alias="AdjustmentTab.qml">windows/AdjustmentTab.qml</file>
+        <file alias="AdjustmentTable.qml">windows/AdjustmentTable.qml</file>
+        <file alias="AdjustmentTabNew.qml">windows/AdjustmentTabNew.qml</file>
+        <file alias="CovariateListModelTab.qml">windows/CovariateListModelTab.qml</file>
+        <file alias="CovariateTable.qml">windows/CovariateTable.qml</file>
+        <file alias="CovariateTabNew.qml">windows/CovariateTabNew.qml</file>
+        <file alias="DatePicker.qml">windows/DatePicker.qml</file>
+        <file alias="DosageListModelTab.qml">windows/DosageListModelTab.qml</file>
+        <file alias="DosageTable.qml">windows/DosageTable.qml</file>
+        <file alias="DosageTabNew.qml">windows/DosageTabNew.qml</file>
+        <file alias="DrugListModelTab.qml">windows/DrugListModelTab.qml</file>
+        <file alias="DrugTable.qml">windows/DrugTable.qml</file>
+        <file alias="DrugTabNew.qml">windows/DrugTabNew.qml</file>
+        <file alias="DrugVariateTable.qml">windows/DrugVariateTable.qml</file>
+        <file alias="MeasureListModelTab.qml">windows/MeasureListModelTab.qml</file>
+        <file alias="MeasureTable.qml">windows/MeasureTable.qml</file>
+        <file alias="MeasureTabNew.qml">windows/MeasureTabNew.qml</file>
+        <file alias="PatientListModelTab.qml">windows/PatientListModelTab.qml</file>
+        <file alias="PatientTable.qml">windows/PatientTable.qml</file>
+        <file alias="PatientTabNew.qml">windows/PatientTabNew.qml</file>
+        <file alias="RequestList.qml">windows/RequestList.qml</file>
+        <file alias="StartupWindow.qml">windows/StartupWindow.qml</file>
+        <file alias="TargetTable.qml">windows/TargetTable.qml</file>
+        <file alias="TargetTabNew.qml">windows/TargetTabNew.qml</file>
+        <file alias="TooltipArea.qml">windows/TooltipArea.qml</file>
+        <file alias="ValidationTab.qml">windows/ValidationTab.qml</file>
+        <file alias="ValidationTabNew.qml">windows/ValidationTabNew.qml</file>
+    </qresource>
+</RCC>

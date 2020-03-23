@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DosageItemWidget</class>
+ <widget class="QWidget" name="DosageItemWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>446</width>
+    <height>351</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>426</width>
+        <height>331</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QGroupBox" name="generalBox">
+         <property name="title">
+          <string>General</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="intakeLabel">
+            <property name="text">
+             <string>Intake</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="intakeCombo"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="unitLabel">
+            <property name="text">
+             <string>Unit</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="UnitComboBox" name="unitCombo"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="durationLabel">
+            <property name="text">
+             <string>Duration</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="DurationSpinBox" name="durationBox"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="dosesBox">
+         <property name="title">
+          <string>Doses</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QCheckBox" name="anyBox">
+            <property name="text">
+             <string>Allow any dose</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="dosesList"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DurationSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>durationspinbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>UnitComboBox</class>
+   <extends>QComboBox</extends>
+   <header>unitcombobox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

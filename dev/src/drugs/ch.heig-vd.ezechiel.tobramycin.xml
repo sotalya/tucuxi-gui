@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.6" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>Yann Thoma</name>
+      <institution>HEIG-VD</institution>
+      <email>yann.thoma@heig-vd.ch</email>
+      <date>2018-11-09</date>
+      <comments>
+        <comment lang="en"></comment>
+      </comments>
+    </creator>
+    <revisions>
+    </revisions>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>S01AA12</atc>
+      <drugid>tobramycin</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.tobramycin</drugmodelid>
+      <pkmodelid>ezechiel.model.linear.2comp.infus.clv</pkmodelid>
+      <drugnames>
+        <name lang="en">Tobramycin</name>
+        <name lang="fr">Tobramycin</name>
+      </drugnames>
+      <domainnames>
+        <name lang="en">...</name>
+        <name lang="fr">...</name>
+      </domainnames>
+      <studynames>
+        <name lang="en">...</name>
+        <name lang="fr">...</name>
+      </studynames>
+      <references/>
+      <descs>
+        <desc lang="en">...</desc>
+        <desc lang="fr">...</desc>
+      </descs>
+      <brands>
+      </brands>
+      <comments/>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>infu</intake>
+      <distribution>2</distribution>
+      <elimination>linear</elimination>
+      <comments/>
+    </adme>
+
+    <!-- Drug half-life -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>2</value>
+      <multiplier>10</multiplier>
+      <comments/>
+    </halflife>
+
+    <!-- Drug units and conversions -->
+
+    <conversions>
+      <units>
+        <concentration>ug/l</concentration>
+        <result>ug/l</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>0</molarmass>
+      <comments/>
+    </conversions>
+
+    <!-- Standard treatment -->
+
+    <standardTreatment>
+        <isFixedDuration>false</isFixedDuration>
+        <duration>
+            <unit>d</unit>
+            <value>0</value>
+        </duration>
+    </standardTreatment>
+
+    <!-- Drug dosages -->
+
+    <dosages>
+      <doses default="10" unit="mg" any="true" from="1" to="400" step="1">
+      </doses>
+      <intervals default="24" unit="h" any="false">
+        <interval>12</interval>
+        <interval>24</interval>
+      </intervals>
+      <infusions default="15" unit="min" any="false">
+        <infusion>15</infusion>
+        <infusion>30</infusion>
+        <infusion>60</infusion>
+        <infusion>120</infusion>
+        <infusion>180</infusion>
+      </infusions>
+      <comments/>
+    </dosages>
+
+    <!-- Drug targets -->
+
+    <targets>
+
+    </targets>
+
+    <!-- Drug covariates -->
+
+    <covariates>
+      <covariate>
+        <id>age</id>
+        <names>
+          <name lang="en">Age</name>
+        </names>
+        <descs>
+          <desc lang="en">Age of the patient in years</desc>
+        </descs>
+        <unit>y</unit> <!-- in weeks -->
+        <type>double</type>
+        <defaultvalue>18</defaultvalue>
+        <comments/>
+      </covariate>
+      <covariate>
+        <id>sex</id>
+        <names>
+          <name lang="en">Sex</name>
+        </names>
+        <descs>
+          <desc lang="en">Sex of the patient</desc>
+        </descs>
+        <unit></unit> <!-- in weeks -->
+        <type>double</type>
+        <defaultvalue>0.5</defaultvalue>
+        <comments/>
+      </covariate>
+        <covariate>
+          <id>scr</id>
+          <names>
+            <name lang="en">SCR</name>
+          </names>
+          <descs>
+            <desc lang="en">serum creatinine concentration</desc>
+          </descs>
+          <unit>umol/l</unit> <!-- in weeks -->
+          <type>double</type>
+          <defaultvalue>37.2</defaultvalue>
+          <comments/>
+        </covariate>
+          <covariate>
+            <id>ffm</id>
+            <names>
+              <name lang="en">Fat free mass</name>
+            </names>
+            <descs>
+              <desc lang="en">Fat free mass</desc>
+            </descs>
+            <unit>kg</unit> <!-- in weeks -->
+            <type>double</type>
+            <defaultvalue>70</defaultvalue>
+            <comments/>
+          </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+
+    <errormodel>
+      <additive>0.0</additive>
+      <proportional>0.204</proportional>
+      <comments>
+      </comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>8.75</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>1000</max>
+        <step>0.01</step>
+        <comments></comments>
+      </parameter>
+
+      <parameter>
+        <id>V1</id>
+        <unit>l</unit>
+        <value>22.6</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>1000</max>
+        <step>0.01</step>
+        <comments></comments>
+      </parameter>
+
+      <parameter>
+        <id>Q</id>
+        <unit>l/h</unit>
+        <value>1.5</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0</min>
+        <max>100</max>
+        <step>0.01</step>
+        <comments></comments>
+      </parameter>
+
+
+	<parameter>
+        <id>V2</id>
+        <unit>l</unit>
+        <value>10.0</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0</min>
+        <max>400</max>
+        <step>0.01</step>
+        <comments></comments>
+      </parameter>
+    </parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+    </correlations>
+
+    <!-- Drug operations -->
+
+    <operations>
+    </operations>
+
+    <!-- Drug general comments -->
+
+    <comments/>
+
+  </drug>
+</model>

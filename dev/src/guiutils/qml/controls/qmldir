@@ -1,0 +1,23 @@
+module guiutils.qml.controls
+singleton Status 1.0 Status.qml
+AdjustmentTab 1.0 AdjustmentTab.qml
+ApplicationBar 1.0 ApplicationBar.qml
+ApplicationBarButton 1.0 ApplicationBarButton.qml
+Chart 1.0 Chart.qml
+CovariateTab 1.0 CovariateTab.qml
+DatePicker 1.0 DatePicker.qml
+DemoBanner 1.0 DemoBanner.qml
+DosageTab 1.0 DosageTab.qml
+DrugTab 1.0 DrugTab.qml
+Flow 1.0 Flow.qml
+FlowInformationPanel 1.0 FlowInformationPanel.qml
+FlowMenu 1.0 FlowMenu.qml
+FlowMenuButton 1.0 FlowMenuButton.qml
+FlowTab 1.0 FlowTab.qml
+MeasureTab 1.0 MeasureTab.qml
+PatientTab 1.0 PatientTab.qml
+RequestList 1.0 RequestList.qml
+TargetTab 1.0 TargetTab.qml
+TimePicker 1.0 TimePicker.qml
+ValidationTab 1.0 ValidationTab.qml
+singleton TuToolTips TuToolTips.qml

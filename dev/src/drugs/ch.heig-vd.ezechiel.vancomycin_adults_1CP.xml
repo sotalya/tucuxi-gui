@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.6" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>Sylvain Goutelle</name>
+      <institution>CHUV</institution>
+      <email>sylvain.goutelle@chuv.ch</email>
+      <date>2017-08-03</date>
+      <comments>
+          <comment lang="en">Based on article of Staatz et al
+          Population pharmacokinetic modelling of gentamicin and vancomycin in patients with unstable renal function following cardiothoracic surgery</comment>
+        <comment lang="en">
+        Age range : 17-87 years
+        Weight range : 44-110 kg
+        Disease : Adult patients with cardiothoracic surgery
+        </comment>
+        </comments>
+    </creator>
+    <revisions>
+      <revision>
+        <name>Yann Thoma</name>
+        <institution>HEIG-VD</institution>
+        <email>yann.thoma@heig-vd.ch</email>
+        <date>2017-08-14</date>
+        <comments>
+        <comment lang="en">Corrected CL and V operations
+        </comment>
+        </comments>
+      </revision>
+        <revision>
+          <name>Yann Thoma</name>
+          <institution>HEIG-VD</institution>
+          <email>yann.thoma@heig-vd.ch</email>
+          <date>2018-10-30</date>
+          <comments>
+          <comment lang="en">Added the bibtex reference
+          </comment>
+          </comments>
+        </revision>
+    </revisions>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>J01XA01</atc>
+      <drugid>vancomycin</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.vancomycin.adult.1CP</drugmodelid>
+      <pkmodelid>ezechiel.model.linear.1comp.infus.clv</pkmodelid>
+      <drugnames>
+        <name lang="en">Vancomycin</name>
+        <name lang="fr">Vancomycine</name>
+      </drugnames>
+      <domainnames>
+        <name lang="en">Adult  patients</name>
+        <name lang="fr">Patients adultes </name>
+      </domainnames>
+      <studynames>
+        <name lang="en">Population pharmacokinetic modelling of gentamicin and vancomycin in patients with unstable renal function following cardiothoracic surgery</name>
+      </studynames>
+      <references>
+            	<reference type='bibtex'>@article{doi:10.1111/j.1365-2125.2005.02547.x,
+author = {Staatz, Christine E. and Byrne, Colette and Thomson, Alison H.},
+title = {Population pharmacokinetic modelling of gentamicin and vancomycin in patients with unstable renal function following cardiothoracic surgery},
+journal = {British Journal of Clinical Pharmacology},
+volume = {61},
+number = {2},
+pages = {164-176},
+keywords = {cardiothoracic surgery, gentamicin, population pharmacokinetics, vancomycin },
+doi = {10.1111/j.1365-2125.2005.02547.x},
+url = {https://bpspubs.onlinelibrary.wiley.com/doi/abs/10.1111/j.1365-2125.2005.02547.x},
+eprint = {https://bpspubs.onlinelibrary.wiley.com/doi/pdf/10.1111/j.1365-2125.2005.02547.x},
+abstract = {Aims To describe the population pharmacokinetics of gentamicin and vancomycin in cardiothoracic surgery patients with unstable renal function. Methods Data collected during routine care were analyzed using NONMEM. Linear relationships between creatinine clearance (CLCr) and drug clearance (CL) were identified, and two approaches to modelling changing CLCr were examined. The first included baseline (BCOV) and difference from baseline (DCOV) effects and the second allowed the influence of CLCr to vary between individuals. Final model predictive performance was evaluated using independent data. The data sets were then combined and parameters re-estimated. Results Model building was performed using data from 96 (gentamicin) and 102 (vancomycin) patients, aged 17–87 years. CLCr ranged from 9 to 172 ml min−1 and changes varied from −76 to 58 ml min−1 (gentamicin) and −86 to 93 ml min−1 (vancomycin). Inclusion of BCOV and DCOV improved the fit of the gentamicin data but had little effect on that for vancomycin. Inclusion of interindividual variability (IIV) in the influence of CLcr resulted in a poorly characterized model for gentamicin and had no effect on vancomycin modelling. No bias was seen in population compared with individual CL estimates in independent data from 39 (gentamicin) and 37 (vancomycin) patients. Mean (95\% CI) differences were 4\% (−3, 11\%) and 2\% (−2, 6\%), respectively. Final estimates were: CLGent (l h−1) = 2.81 × (1 + 0.015 × (BCOVCLCr-BCOVCLCr Median) + 0.0174 × DCOVCLCr); CLVanc (l h−1) = 2.97 × (1 + 0.0205 ×  (CLCr-CLCr Median)). IIV in CL was 27\% for both drugs. Conclusions A parameter describing individual changes in CLcr with time improves population pharmacokinetic modelling of gentamicin but not vancomycin in clinically unstable patients.}
+}
+</reference>
+      </references>
+      <descs>
+        <desc lang="en">...</desc>
+        <desc lang="fr">...</desc>
+      </descs>
+      <brands>
+        <brand>Vancomycin</brand>
+      </brands>
+      <comments/>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>infu</intake>
+      <distribution>1</distribution>
+      <elimination>linear</elimination>
+      <comments/>
+    </adme>
+
+    <!-- Drug half-life -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>6</value>
+      <multiplier>10</multiplier>
+      <comments/>
+    </halflife>
+
+    <!-- Drug units and conversions -->
+
+    <conversions>
+      <units>
+        <concentration>mg/l</concentration>
+        <result>mg/l</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>0</molarmass>
+      <comments>
+			<comment lang="en">No conversion</comment>
+			<comment lang="fr">Pas de conversion</comment>
+        </comments>
+    </conversions>
+
+    <!-- Drug dosages -->
+
+    <dosages>
+      <doses default="1000" unit="mg" any="false">
+        <dose>250</dose>
+        <dose>500</dose>
+        <dose>750</dose>
+        <dose>1000</dose>
+        <dose>1250</dose>
+        <dose>1500</dose>
+        <dose>1750</dose>
+        <dose>2000</dose>
+        <dose>2500</dose>
+        <dose>3000</dose>
+      </doses>
+      <intervals default="12" unit="h" any="false">
+        <interval>6</interval>
+        <interval>8</interval>
+        <interval>12</interval>
+        <interval>18</interval>
+        <interval>24</interval>
+        <interval>36</interval>
+        <interval>48</interval>
+        <interval>72</interval>
+        <interval>96</interval>
+      </intervals>
+      <infusions default="60" unit="min" any="false">
+        <infusion>60</infusion>
+        <infusion>120</infusion>
+        <infusion>240</infusion>
+      </infusions>
+      <comments>
+			</comments>
+    </dosages>
+
+    <!-- Drug targets -->
+
+    <targets>
+		<target>
+        <type>residual</type>
+        <concentrations unit="mg/l">
+          <min>
+            <value>10</value>
+            <formula/>
+          </min>
+          <max>
+            <value>20</value>
+            <formula/>
+          </max>
+          <best>
+            <value>15</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <comments>
+				<comment lang="en">As seen with Aline for the residual concentration</comment>
+				<comment lang="fr">Vu avec Aline pour la concentration résiduelle</comment>
+			</comments>
+      </target>
+    </targets>
+
+    <!-- Drug covariates -->
+
+    <covariates>
+      <covariate>
+        <id>CLcr</id>
+        <names>
+          <name lang="en">Clearance of creatinine</name>
+          <name lang="fr">Clairance de la créatinine</name>
+        </names>
+        <descs>
+          <desc lang="en">Clearance of creatinine</desc>
+          <desc lang="fr">Clairance de la créatinine</desc>
+        </descs>
+        <unit>ml/min</unit>
+        <type>double</type>
+        <defaultvalue>60</defaultvalue>
+        <comments>
+				<comment lang="en">Median value in patients (building pop)</comment>
+			</comments>
+      </covariate>
+      <covariate>
+        <id>bodyweight</id>
+        <names>
+          <name lang="en">Total Body Weight</name>
+          <name lang="fr">Poids total</name>
+        </names>
+        <descs>
+          <desc lang="en">Total body weight of patient, in kilogramms</desc>
+          <desc lang="fr">Poids total du patient, en kilogramme</desc>
+        </descs>
+        <unit>kg</unit>
+        <type>double</type>
+        <defaultvalue>74</defaultvalue>
+        <comments>
+				<comment lang="en">Median value in patients (building pop)</comment>
+			</comments>
+      </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+
+    <errormodel>
+      <additive>1.6</additive>
+      <proportional>0.15</proportional>
+      <comments>
+			</comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>2.94</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.25</proportional>
+        </bsv>
+        <min>0</min>
+        <max>100</max>
+        <step>0.01</step>
+        <comments>
+				<comment lang="en">Typical clearance calculated for a patients with CCR = median</comment>
+			</comments>
+      </parameter>
+      <parameter>
+        <id>V</id>
+        <unit>l</unit>
+        <value>85.1</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.33</proportional>
+        </bsv>
+        <min>0</min>
+        <max>200</max>
+        <step>0.01</step>
+        <comments>
+				<comment lang="en">Typical volume calculated for an infected patient with weight = 74 kg = 1.15 * 74</comment>
+			</comments>
+      </parameter>
+
+
+	</parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+    </correlations>
+
+    <!-- Drug operations -->
+
+    <operations>
+      <operation>
+        <parameter>CL</parameter>
+        <formula><![CDATA[
+CCR = covariate_CLcr;
+
+theta_1 = 2.94;
+theta_2 = 0.0209;
+
+TVCL = theta_1 * (1+theta_2*(CCR-60));
+return TVCL;
+        ]]></formula>
+        <comments/>
+      </operation>
+      <operation>
+        <parameter>V</parameter>
+        <formula><![CDATA[
+theta_3 = 1.15;
+BW = covariate_bodyweight;
+
+TVV = theta_3*BW;
+return TVV;
+        ]]></formula>
+        <comments/>
+      </operation>
+    </operations>
+
+    <!-- Drug general comments -->
+
+    <comments>
+		</comments>
+
+  </drug>
+</model>

@@ -1,0 +1,22 @@
+<p>This software is a demonstration version. It is not a medical device and as such <b>is NOT INTENDED</b> to be used in a clinical practice for the interpretation of real patients data. The manufacturer declines any responsibility for damage caused by improper use or any use other than those described on this Instruction Sheet.
+</p>
+
+<p>
+The current state of this demonstrator allows the user to:
+<ul>
+	<li>create fake patients</li>
+	<li>select a medical drug</li>
+	<li>select a dosage</li>
+	<li>add patient's covariates</li>
+	<li>add drug concentration measures</li>
+	<li>propose a drug dosage adjustment</li>
+</ul>
+
+With respect to the commercial version it does not:
+<ul>
+	<li>save any data when the user closes the application</li>
+	<li>allow to generate and edit reports</li>
+</ul>
+
+</p>
+<p>This software is developed with the Qt library under the LGPL license.</p>

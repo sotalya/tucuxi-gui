@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="ezechiel-default.css" media="screen, print" />
+  </head>
+
+  <body>
+
+    <!-- The header -->
+
+    <header>
+      <div class="recipient">
+        <div id="recipient.fullname" class="field.expanding data" contenteditable="true" onInput="inputEvent(this, event)" >Recipient Name</div>
+        <div id="recipient.fulladdress" class="field.expanding data" contenteditable="true" onInput="inputEvent(this, event)">Recipient Address</div>
+      </div>
+
+      <div class="institute" >
+        <div id="institute.name" class="field.expanding data" contenteditable="true" onInput="inputEvent(this, event)" >Institute Name</div>
+        <div id="institute.fulladdress" class="field.expanding data" contenteditable="true" onInput="inputEvent(this, event)">Institute Address</div>
+      </div>
+
+      <div class="team">
+        <div id="team.name" class="field.expanding data" contenteditable="true" onInput="inputEvent(this, event)" >Therapeutic Drug Monitoring Unit</div>
+        <div id="team.members" class="field.expanding data" contenteditable="true" onInput="inputEvent(this, event)">Members list</div>
+      </div>
+
+      <div class="analyst">
+        <div id="analyst.fullname" class="field.expanding data" contenteditable="true" onInput="inputEvent(this, event)" >Analyst Name</div>
+        <div id="analyst.fulladdress" class="field.expanding data" contenteditable="true" onInput="inputEvent(this, event)">Analyst Address</div>
+      </div>
+
+      <div class="contact">
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.phone" >Phone:</div>
+          <div id="analyst.phone" class="field.expanding singleLine data" contenteditable="true" onInput="inputEvent(this, event)" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.fax" >Fax:</div>
+          <div id="analyst.fax" class="field.expanding singleLine data" contenteditable="true" onInput="inputEvent(this, event)" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.mail" >Mail:</div>
+          <div id="analyst.mail" class="field.expanding singleLine data" contenteditable="true" onInput="inputEvent(this, event)" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.website" >Website:</div>
+          <div id="analyst.website" class="field.expanding singleLine data" contenteditable="true" onInput="inputEvent(this, event)" ></div>
+        </div>
+      </div>
+
+      <div class="contact">
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.phone" >Phone:</div>
+          <div id="recipient.phone" class="field.expanding singleLine data" contenteditable="true" onInput="inputEvent(this, event)" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.fax" >Fax:</div>
+          <div id="recipient.fax" class="field.expanding singleLine data" contenteditable="true" onInput="inputEvent(this, event)" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.mail" >Mail:</div>
+          <div id="recipient.mail" class="field.expanding singleLine data" contenteditable="true" onInput="inputEvent(this, event)" ></div>
+        </div>
+        <div class="line">
+          <div class="label.short singleLine ellipsis translatable.website" >Website:</div>
+          <div id="recipient.website" class="field.expanding singleLine data" contenteditable="true" onInput="inputEvent(this, event)" ></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- The creation date section -->
+
+    <div id="creationDateSection" >
+      <div id="creation.display" class="field.expanding singleLine ellipsis data" contentEditable="true" onInput="inputEvent(this, event)" >Creation date</div>
+    </div>
+
+    <!-- The reference section -->
+
+    <div id="referenceSection" >
+      <div id="translatable.reference" class="label" >Reference:</div>
+      <div id="reference" class="field.expanding singleLine ellipsis data" contenteditable="true" onInput="inputEvent(this, event)" ></div>
+    </div>
+
+    <!-- The report section -->
+
+    <div id="titleSection">
+      <div id="title" class="field.expanding data" contenteditable="true" onInput="inputEvent(this, event)" ></div>
+    </div>
+
+    <!-- The patient section -->
+
+    <section id="patientSection" data-hidden="false" >
+      <div class="section.title" id="translatable.patient.title" onClick="sectionClicked(this, event)" >Patient</div>
+      <div class="section.content" >
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.patient.name" >Name:</div>
+          <div class="field.expanding singleLine data" id="patient.fullname" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.patient.birthdate" >Birthdate:</div>
+          <div class="field.long singleLine data" id="patient.birthdate.display" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+          <div class="label singleLine ellipsis" id="translatable.patient.age" >Age:</div>
+          <div class="field.short singleLine data" id="patient.age" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+          <div class="label singleLine ellipsis" id="translatable.patient.gender" >Gender:</div>
+          <div class="field.short singleLine data" id="patient.gender.display" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+          <div class="label singleLine ellipsis" id="translatable.patient.weight" >Weight:</div>
+          <div class="field.expanding singleLine data" id="patient.weight" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.interpretation.indication" >Indication:</div>
+          <div class="field.expanding data" id="interpretation.indication" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.interpretation.comedication" >Comedication:</div>
+          <div class="field.expanding data" id="interpretation.comedication" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.interpretation.response" >Response:</div>
+          <div class="field.expanding data" id="interpretation.response" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.interpretation.afterEffect" >Adverse effects:</div>
+          <div class="field.expanding data" id="interpretation.afterEffect" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis translatable.comments" >Comments:</div>
+          <div class="field.expanding data" id="interpretation.comments" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The sample section -->
+
+    <section id="sampleSection" data-hidden="false" >
+      <div class="section.title" id="translatable.sample.title" onClick="sectionClicked(this, event)" >Sample</div>
+      <div class="section.content" >
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.sample.drug" >Treatment:</div>
+          <div class="field.expanding singleLine data" id="treatment.drug" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.sample.external" >Sample ID:</div>
+          <div class="field.expanding singleLine data" id="sample.external" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.sample.date.display" >Sample date:</div>
+          <div class="field.expanding singleLine data" id="sample.date.display" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis" id="translatable.sample.dosage.date.display" >Last dose:</div>
+          <div class="field.expanding singleLine data" id="dosage.date.display" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label.long singleLine ellipsis translatable.comments" >Comments:</div>
+          <div class="field.expanding data" id="sample.comments" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line.empty" ></div>
+        <div class="line" >
+          <table>
+            <tr>
+              <th id="translatable.dosage.display">Current posology</th>
+<!--              <th id="translatable.interval.display">Interval</th>-->
+              <th id="translatable.sample.display">Observed concentration</th>
+              <th id="translatable.extrapolated.display">Extrapolated Residual Concentration</th>
+            </tr>
+            <tr>
+              <td class="data" id="dosage.display" onInput="inputEvent(this, event)" contentEditable ="true" ></td>
+<!--              <td class="data" id="interval.display" onInput="inputEvent(this, event)" contentEditable ="true" ></td>-->
+              <td class="data" id="sample.display" onInput="inputEvent(this, event)" contentEditable ="true" ></td>
+              <td class="data" id="extrapolated.display" onInput="inputEvent(this, event)" contentEditable ="true" ></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- The interpretation section -->
+
+    <section id="interpretationSection" data-hidden="false" >
+      <div class="section.title" id="translatable.interpretation.title" onClick="sectionClicked(this, event)" >Interpretation</div>
+      <div class="section.content" >
+        <div class="line" >
+          <div class="field.expanding data" id="interpretation" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label singleLine ellipsis" id="translatable.proposedPosology" >Proposed posology:</div>
+          <div class="field.expanding singleLine data" id="proposedPosology" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The next control section -->
+
+    <section id="nextControlSection" data-hidden="false" >
+      <div class="section.title" id="translatable.nextControl.title" onClick="sectionClicked(this, event)" >Next control</div>
+      <div class="section.content" >
+        <div class="line" >
+          <div class="field.expanding data" id="nextControl" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The chart section -->
+
+    <section id="chartSection" data-hidden="false" >
+      <div class="section.title" id="translatable.chart.title" onClick="sectionClicked(this, event)" >Concentration prediction</div>
+      <div class="section.content" >
+        <div class="line" >
+          <img class="image" id="chart.image" />
+        </div>
+        <div class="legend" >
+          <div class="field.expanding singleLine ellipsis data" id="chart.name" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+        <div class="line" >
+          <div class="label singleLine ellipsis translatable.comments" >Comments:</div>
+          <div class="field.expanding data" id="chart.comments" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The covariate section -->
+
+    <section id="covariateSection" data-hidden="false" >
+      <div class="section.title" id="translatable.covariates.title" onClick="sectionClicked(this, event)" >Covariates</div>
+      <div class="section.content" >
+        <div class="line" >
+          <table id="drugvariates.table">
+            <tr>
+              <th id="translatable.drugvariates.name">Drug Variate</th>
+              <th id="translatable.drugvariates.value">Default Value</th>
+              <th id="translatable.drugvariates.description">Description</th>
+            </tr>
+          </table>
+        </div>
+        <div class="line" >
+          <table id="covariates.table">
+            <tr>
+              <th id="translatable.covariates.name">Covariate</th>
+              <th id="translatable.covariates.value">Value</th>
+              <th id="translatable.covariates.description">Description</th>
+            </tr>
+          </table>
+        </div>
+        <div class="line" >
+          <div class="label singleLine ellipsis translatable.comments" >Comments:</div>
+          <div class="field.expanding data" id="covariates.comments" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The parameters section -->
+
+    <section id="parametersSection" data-hidden="false" >
+      <div class="section.title" id="translatable.parameters.title" onClick="sectionClicked(this, event)" >Parameters</div>
+      <div class="section.content" >
+        <div class="line" >
+          <table id="parameters.table">
+            <tr>
+              <th id="translatable.parameters.identifier" >Parameter</th>
+              <th id="translatable.parameters.patient" >A posteriori</th>
+              <th id="translatable.parameters.reference" >A priori</th>
+              <th id="translatable.parameters.population" >Typical patient</th>
+            </tr>
+          </table>
+        </div>
+        <div class="line" >
+          <div class="label singleLine ellipsis translatable.comments" >Comments:</div>
+          <div class="field.expanding data" id="parameters.comments" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The references section -->
+
+    <section id="referencesSection" data-hidden="false" >
+      <div class="section.title"  id="translatable.references.title" onClick="sectionClicked(this, event)" >References</div>
+      <div class="section.content" >
+        <div class="line" >
+          <div class="field.expanding data" id="references" onInput="inputEvent(this, event)" contentEditable="true" ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The scripts -->
+
+    <!-- <script src="ckeditor/ckeditor.js"></script> -->
+    <script type="text/javascript">
+
+
+      //Temporary disable CKEditor, we need to load the correct field values first
+      //CKEDITOR.disableAutoInline = true;
+
+      /********************************************************************************************
+      * Global variables
+      ********************************************************************************************/
+
+      //The <ID, initFunction> map
+      var UPDATER       = {};
+
+      //The display variables
+      var NB_DECIMALS   = 2;                //Number of decimals to display
+
+      //The events variables
+      var BLOCK_UPDATES = false;            //Ignore all updates
+
+      //The colors variables
+      var HIDDEN_FALSE_BACKGROUND = "#FFF";
+      var HIDDEN_TRUE_BACKGROUND  = "#d3d3d3";
+
+      /********************************************************************************************
+      * Sections functions
+      ********************************************************************************************/
+
+      function sectionClicked(elem, e)
+      {
+        var parent = elem.parentElement;
+        var hidden = parent.getAttribute("data-hidden") == "true";
+
+        if (hideSection(parent, !hidden)) {
+          return;
+        }
+        hidden ? Report.Data.showSection(parent.id) : Report.Data.hideSection(parent.id);
+      }
+
+      function hideSection(elem, hide)
+      {
+        title   = document.querySelector("#" + elem.id + " > .section\\.title");
+        content = document.querySelector("#" + elem.id + " > .section\\.content");
+
+        if (!document.body.contains(title)) {
+          return false;
+        }
+        if (!document.body.contains(content)) {
+          return false;
+        }
+
+        content.style.display = hide ? "none" : "";
+        content.offsetHeight; //Fix repaint issues
+
+        title.style.background = hide ? HIDDEN_TRUE_BACKGROUND : HIDDEN_FALSE_BACKGROUND;
+        elem.setAttribute("data-hidden", hide ? "true" : "false");
+      }
+
+      /********************************************************************************************
+      * Inputs functions
+      ********************************************************************************************/
+
+      function inputEvent(elem, e)
+      {
+        BLOCK_UPDATES = true;
+
+        Report.Data.setValue(elem.id, elem.innerHTML);
+
+        if (elem.id == "institute.name") {
+          Report.Data.unsetValue("institute.id");
+        }
+        if (elem.id == "analyst.fullname") {
+          Report.Data.unsetValue("analyst.id");
+        }
+        if (elem.id == "recipient.fullname") {
+          Report.Data.unsetValue("recipient.id");
+        }
+        if (elem.id.substring(0, 8) == "patient.") {
+          Report.Data.unsetValue("patient.id");
+        }
+
+        BLOCK_UPDATES = false;
+      }
+
+      /********************************************************************************************
+      * Slots functions
+      ********************************************************************************************/
+
+      function updateValue(id, value)
+      {
+        if (BLOCK_UPDATES) {
+          return;
+        }
+
+        if (UPDATER.hasOwnProperty(id)) {
+          UPDATER[id](true);
+        } else {
+          document.getElementById(id).innerHTML = value;
+        }
+      }
+
+      function updateImage(id, image)
+      {
+        if (BLOCK_UPDATES) {
+          return;
+        }
+
+        image.assignToHTMLImageElement(document.getElementById(id));
+      }
+
+      /********************************************************************************************
+      * Initialization functions
+      ********************************************************************************************/
+
+      function init()
+      {
+        //Initialize the report
+        initStyles();
+        initSections();
+        initData();
+
+        //Set the values of each data elements
+        var dataElements = document.getElementsByClassName("data");
+        for (var i = 0; i < dataElements.length; ++i) {
+          var dataElement = dataElements[i];
+          if (Report.Data.containsValue(dataElement.id)) {
+            dataElement.innerHTML = Report.Data.value(dataElement.id)
+          }
+        }
+
+        //Set the images of each image elements
+        var imageElements = document.getElementsByClassName("image");
+        for (var i = 0; i < imageElements.length; ++i) {
+          var imageElement = imageElements[i];
+          if (Report.Data.containsImage(imageElement.id)) {
+            Report.Data.image(imageElement.id).assignToHTMLImageElement(imageElement);
+          }
+        }
+
+        //Connect the update signals from the model
+        Report.Data.valueChanged.connect(updateValue);
+        Report.Data.imageChanged.connect(updateImage);
+        Report.Data.valuesReset.connect(init);
+        Report.Data.imagesReset.connect(init);
+      }
+
+      //Initializes the styles
+      function initStyles()
+      {
+        var sectionTitles = document.getElementsByClassName("section.title");
+
+        if (sectionTitles.length > 0) {
+          HIDDEN_FALSE_BACKGROUND = sectionTitles[0].style.background;
+        }
+      }
+
+      //Initializes the sections
+      function initSections()
+      {
+        var hiddenSections = Report.Data.hiddenSections();
+
+        for (var i = 0; i < hiddenSections.length; ++i) {
+          var section = document.getElementById(hiddenSections[i]);
+
+          if (document.body.contains(section)) {
+            hideSection(section, true);
+          }
+        }
+      }
+
+      //Initializes the data
+      function initData()
+      {
+        UPDATER.length = 0;
+
+        initInstitute();
+        initTeam();
+        initAnalyst();
+        initRecipient();
+        initCreation();
+        initReference();
+        initPatient();
+        initTreatment();
+        initSample();
+        initCovariates();
+        initDrugVariates();
+        initParameters();
+      }
+
+      /********************************************************************************************
+      * Institute functions
+      ********************************************************************************************/
+
+      function initInstitute()
+      {
+        initInstituteMap();
+        initInstituteAddress(false);
+      }
+
+      function initInstituteMap()
+      {
+        UPDATER["institute.address"]  = initInstituteAddress;
+        UPDATER["institute.postcode"] = initInstituteAddress;
+        UPDATER["institute.city"]     = initInstituteAddress;
+        UPDATER["institute.country"]  = initInstituteAddress;
+      }
+
+      function initInstituteAddress(reset)
+      {
+        if (!reset && Report.Data.containsValue("institute.fulladdress")) {
+          return;
+        }
+
+        var instituteFullAddress = Report.Data.value("institute.address") + "<br>" +
+                                   Report.Data.value("institute.postcode") + " " +
+                                   Report.Data.value("institute.city") + "<br>" +
+                                   Report.Data.value("institute.country");
+
+        setValue("institute.fulladdress", instituteFullAddress);
+      }
+
+      /********************************************************************************************
+      * Team functions
+      ********************************************************************************************/
+
+      function initTeam()
+      {
+        initTeamMap();
+        initTeamMembers(false);
+      }
+
+      function initTeamMap()
+      {
+        UPDATER["team.count"] = initTeamMembers;
+      }
+
+      function initTeamMembers(reset)
+      {
+        if (!reset && Report.Data.containsValue("team.members")) {
+          return;
+        }
+
+        var teamCount = parseInt(Report.Data.value("team.count"));
+        var teamMembers = "";
+        for (var i = 0; i < teamCount; ++i) {
+          teamMembers += Report.Data.value("team.member" + i + ".title") + " " +
+                         Report.Data.value("team.member" + i + ".firstname") + " " +
+                         Report.Data.value("team.member" + i + ".lastname") + "<br>";
+        }
+        setValue("team.members", teamMembers);
+      }
+
+      /********************************************************************************************
+      * Analyst functions
+      ********************************************************************************************/
+
+      function initAnalyst()
+      {
+        initAnalystMap();
+        initAnalystName(false);
+        initAnalystAddress(false);
+      }
+
+      function initAnalystMap()
+      {
+        UPDATER["analyst.title"]     = initAnalystName;
+        UPDATER["analyst.firstname"] = initAnalystName;
+        UPDATER["analyst.lastname"]  = initAnalystName;
+        UPDATER["analyst.address"]   = initAnalystAddress;
+        UPDATER["analyst.postcode"]  = initAnalystAddress;
+        UPDATER["analyst.city"]      = initAnalystAddress;
+        UPDATER["analyst.country"]   = initAnalystAddress;
+      }
+
+      function initAnalystName(reset)
+      {
+        if (!reset && Report.Data.containsValue("analyst.fullname")) {
+          return;
+        }
+
+        var analystFullName = Report.Data.value("analyst.title") + " " +
+                              Report.Data.value("analyst.firstname") + " " +
+                              Report.Data.value("analyst.lastname");
+
+        setValue("analyst.fullname", analystFullName);
+      }
+
+      function initAnalystAddress(reset)
+      {
+        if (!reset && Report.Data.containsValue("analyst.fulladdress")) {
+          return;
+        }
+
+        var analytFullAddress = Report.Data.value("analyst.address") + "<br>" +
+                                Report.Data.value("analyst.postcode") + " " +
+                                Report.Data.value("analyst.city") + "<br>" +
+                                Report.Data.value("analyst.country");
+
+        setValue("analyst.fulladdress", analytFullAddress);
+      }
+
+      /********************************************************************************************
+      * Recipient functions
+      ********************************************************************************************/
+
+      function initRecipient()
+      {
+        initRecipientMap();
+        initRecipientName(false);
+        initRecipientAddress(false);
+      }
+
+      function initRecipientMap()
+      {
+        UPDATER["recipient.title"]     = initRecipientName;
+        UPDATER["recipient.firstname"] = initRecipientName;
+        UPDATER["recipient.lastname"]  = initRecipientName;
+        UPDATER["recipient.address"]   = initRecipientAddress;
+        UPDATER["recipient.postcode"]  = initRecipientAddress;
+        UPDATER["recipient.city"]      = initRecipientAddress;
+        UPDATER["recipient.country"]   = initRecipientAddress;
+      }
+
+      function initRecipientName(reset)
+      {
+        if (!reset && Report.Data.containsValue("recipient.fullname")) {
+          return;
+        }
+
+        var recipientFullName = Report.Data.value("recipient.title") + " " +
+                                Report.Data.value("recipient.firstname") + " " +
+                                Report.Data.value("recipient.lastname");
+
+        setValue("recipient.fullname", recipientFullName);
+      }
+
+      function initRecipientAddress(reset)
+      {
+        if (!reset && Report.Data.containsValue("recipient.fulladdress")) {
+          return;
+        }
+
+        var recipientFullAddress = Report.Data.value("recipient.address") + "<br>" +
+                                   Report.Data.value("recipient.postcode") + " " +
+                                   Report.Data.value("recipient.city") + "<br>" +
+                                   Report.Data.value("recipient.country");
+
+        setValue("recipient.fulladdress", recipientFullAddress);
+      }
+
+      /********************************************************************************************
+      * Creation date functions
+      ********************************************************************************************/
+
+      function initCreation()
+      {
+        initCreationMap();
+        initCreationDisplay(false);
+      }
+
+      function initCreationMap()
+      {
+        UPDATER["creation"] = initCreationDisplay;
+      }
+
+      function initCreationDisplay(reset)
+      {
+        disableEdition("creation.display");
+
+        var creationDate = new Date(Report.Data.value("creation"));
+
+        if (!isNaN(creationDate)) {
+          Report.Data.setValue("creation.display", creationDate.toUTCString());
+        } else {
+          Report.Data.setValue("creation.display", (new Date()).toUTCString());
+        }
+      }
+
+      /********************************************************************************************
+      * Reference functions
+      ********************************************************************************************/
+
+      function initReference()
+      {
+        initReferenceDisplay();
+      }
+
+      function initReferenceDisplay()
+      {
+        if (!isEmpty(Report.Data.value("reference"))) {
+          disableEdition("reference");
+        }
+      }
+
+      /********************************************************************************************
+      * Patient functions
+      ********************************************************************************************/
+
+      function initPatient()
+      {
+        initPatientMap();
+        initPatientName(false);
+        initPatientBirthdate(false);
+        initPatientGender(false);
+      }
+
+      function initPatientMap()
+      {
+        UPDATER["patient.firstname"] = initPatientName;
+        UPDATER["patient.lastname"]  = initPatientName;
+        UPDATER["patient.birthdate"] = initPatientBirthdate;
+        UPDATER["patient.age"]       = initPatientBirthdate;
+        UPDATER["patient.gender"]    = initPatientGender;
+      }
+
+      function initPatientName(reset)
+      {
+        if (!reset && Report.Data.containsValue("patient.fullname")) {
+          disableEdition("patient.fullname");
+          return;
+        }
+
+        var patientFullName = Report.Data.value("patient.firstname") + " " +
+                                Report.Data.value("patient.lastname");
+
+        if (!isEmpty(patientFullName)) {
+          disableEdition("patient.fullname");
+          Report.Data.setValue("patient.fullname", toHtml(patientFullName));
+        }
+      }
+
+      function initPatientBirthdate(reset)
+      {
+        if (!reset && Report.Data.containsValue("patient.birthdate.display") && Report.Data.containsValue("patient.age")) {
+          disableEdition("patient.birthdate.display");
+          disableEdition("patient.age");
+          return;
+        }
+
+        var birthdate = new Date(Report.Data.value("patient.birthdate"));
+        if (isNaN(birthdate)) {
+          return;
+        }
+
+        disableEdition("patient.birthdate.display");
+        Report.Data.setValue("patient.birthdate.display", birthdate.toLocaleDateString());
+
+        var today = new Date();
+        var age = today.getFullYear() - birthdate.getFullYear();
+        var month = today.getMonth() - birthdate.getMonth();
+        if (month < 0 || (month === 0 && today.getDate() < birthdate.getDate())) {
+            age--;
+        }
+        if (age < 0) {
+          return;
+        }
+
+        disableEdition("patient.age");
+        Report.Data.setValue("patient.age", age);
+      }
+
+      function initPatientGender(reset)
+      {
+        if (!reset && Report.Data.containsValue("patient.gender.display")) {
+          disableEdition("patient.gender.display");
+          return;
+        }
+
+        if (!Report.Data.containsValue("patient.gender")) {
+          return;
+        }
+
+        disableEdition("patient.gender.display");
+        Report.Data.setValue("patient.gender.display", Report.Data.value("patient.gender") === "male" ? "M" : "F");
+      }
+
+      /********************************************************************************************
+      * Reference functions
+      ********************************************************************************************/
+
+      function initTreatment()
+      {
+        initTreatmentDisplay();
+      }
+
+      function initTreatmentDisplay()
+      {
+        if (!isEmpty(Report.Data.value("treatment.drug"))) {
+          disableEdition("treatment.drug");
+        }
+      }
+
+      /********************************************************************************************
+      * Sample functions
+      ********************************************************************************************/
+
+      function initSample()
+      {
+        initSampleMap();
+        initSampleId();
+        initSampleDate(false);
+        initSampleDosageDate(false);
+        initSampleDosageDisplay(false);
+        initSampleDisplay(false);
+        initSampleExtrapolated(false);
+      }
+
+      function initSampleMap()
+      {
+        UPDATER["sample.date"]           = initSampleDate;
+        UPDATER["dosage.take.last"]      = initSampleDosageDate;
+        UPDATER["dosage.dose.value"]     = initSampleDosageDisplay;
+        UPDATER["dosage.dose.unit"]      = initSampleDosageDisplay;
+        UPDATER["dosage.interval.value"] = initSampleDosageDisplay;
+        UPDATER["dosage.interval.unit"]  = initSampleDosageDisplay;
+        UPDATER["dosage.infusion.value"] = initSampleDosageDisplay;
+        UPDATER["dosage.infusion.unit"]  = initSampleDosageDisplay;
+        UPDATER["sample.value"]          = initSampleDisplay;
+        UPDATER["sample.unit"]           = initSampleDisplay;
+        UPDATER["concentrations.count"]                = initSampleExtrapolated;
+        UPDATER["concentrations.concentration0.value"] = initSampleExtrapolated;
+        UPDATER["concentrations.concentration0.unit"]  = initSampleExtrapolated;
+      }
+
+      function initSampleId()
+      {
+        if (!isEmpty(Report.Data.value("sample.external"))) {
+          disableEdition("sample.external");
+        }
+      }
+
+      function initSampleDate(reset)
+      {
+        //Init or reset the interval display
+        initSampleIntervalDisplay(reset);
+
+        if (!reset && Report.Data.containsValue("sample.date.display")) {
+          disableEdition("sample.date.display");
+          return;
+        }
+
+        var sampleDate = new Date(Report.Data.value("sample.date"));
+
+        if (!isNaN(sampleDate)) {
+          disableEdition("sample.date.display");
+          Report.Data.setValue("sample.date.display", sampleDate.toLocaleString());
+        }
+      }
+
+      function initSampleDosageDate(reset)
+      {
+        //Init or reset the interval display
+        initSampleIntervalDisplay(reset);
+
+        if (!reset && Report.Data.containsValue("dosage.date.display")) {
+          disableEdition("dosage.date.display");
+          return;
+        }
+
+        var dosageDate = new Date(Report.Data.value("dosage.take.last"));
+
+        if (!isNaN(dosageDate)) {
+          disableEdition("dosage.date.display");
+          Report.Data.setValue("dosage.date.display", dosageDate.toLocaleString());
+        }
+      }
+
+      function initSampleIntervalDisplay(reset) {
+        if (!reset && Report.Data.containsValue("interval.display")) {
+          disableEdition("interval.display");
+          return;
+        }
+
+        var sampleDate = new Date(Report.Data.value("sample.date"));
+        var dosageDate = new Date(Report.Data.value("dosage.take.last"));
+
+        if (!isNaN(sampleDate) && !isNaN(dosageDate) && dosageDate <= sampleDate) {
+          var interval = ((sampleDate - dosageDate) / (1000*60*60)).toFixed(NB_DECIMALS) + "h";
+          disableEdition("interval.display");
+          Report.Data.setValue("interval.display", interval);
+        }
+      }
+
+      function initSampleDosageDisplay(reset) {
+        if (!reset && Report.Data.containsValue("dosage.display")) {
+          disableEdition("dosage.display");
+          return;
+        }
+
+        var dosageValue    = Report.Data.value("dosage.dose.value") + " " +
+                             Report.Data.value("dosage.dose.unit");
+        var dosageInterval = Report.Data.value("dosage.interval.value") +
+                             Report.Data.value("dosage.interval.unit");
+
+        var dosageDisplay = "";
+        if (/\S/.test(dosageValue) && /\S/.test(dosageInterval)) {
+          dosageDisplay = dosageValue + " / " + dosageInterval;
+        }
+
+        var dosageInfusion = Report.Data.value("dosage.infusion.value") +
+                             Report.Data.value("dosage.infusion.unit");
+        if (/\S/.test(dosageDisplay) && /\S/.test(dosageInfusion) && Report.Data.value("dosage.infusion.value") != "0") {
+          dosageDisplay += ", " + dosageInfusion + " infusion duration";
+        }
+
+        if (!isEmpty(dosageDisplay)) {
+          disableEdition("dosage.display");
+          Report.Data.setValue("dosage.display", toHtml(dosageDisplay));
+        }
+      }
+
+      function initSampleDisplay(reset)
+      {
+        if (!reset && Report.Data.containsValue("sample.display")) {
+          disableEdition("sample.display");
+          return;
+        }
+
+        var sampleValue = Report.Data.value("sample.value");
+
+        if (!isEmpty(sampleValue)) {
+          var sample = format(sampleValue) + " " + Report.Data.value("sample.unit");
+          disableEdition("sample.display");
+          Report.Data.setValue("sample.display", sample);
+        }
+      }
+
+      function initSampleExtrapolated(reset)
+      {
+        if (!reset && Report.Data.containsValue("extrapolated.display")) {
+          disableEdition("extrapolated.display");
+          return;
+        }
+
+        var concentrationValue = Report.Data.value("concentrations.concentration0.value");
+
+        if (!isEmpty(concentrationValue)) {
+          var extrapolated = format(concentrationValue) + " " + Report.Data.value("concentrations.concentration0.unit");
+          disableEdition("extrapolated.display");
+          Report.Data.setValue("extrapolated.display", extrapolated);
+        }
+      }
+
+      /********************************************************************************************
+      * Covariates functions
+      ********************************************************************************************/
+
+      function initCovariates()
+      {
+        initCovariatesMap();
+        initCovariatesTable(false);
+      }
+
+      function initDrugVariates()
+      {
+        initDrugVariatesMap();
+        initDrugVariatesTable(false);
+      }
+
+      function initCovariatesMap()
+      {
+        UPDATER["covariates.count"] = initCovariatesTable;
+      }
+
+      function initDrugVariatesMap()
+      {
+        UPDATER["drugvariates.count"] = initDrugVariatesTable;
+      }
+
+      function initDrugVariatesTable(reset)
+      {
+        var weight = "";
+
+        var drugvariatesTable = document.getElementById("drugvariates.table");
+        var drugvariatesCount = parseInt(Report.Data.value("drugvariates.count"));
+
+        if (isNaN(drugvariatesCount) || drugvariatesCount == 0) {
+          drugvariatesTable.style.display = 'none';
+          return;
+        }
+
+        for (var i = 0; i < drugvariatesCount; ++i) {
+          var drugvariate = "drugvariates.drugvariate" + i;
+
+          var row = document.createElement("tr");
+          drugvariatesTable.appendChild(row);
+
+          var nameCell = document.createElement("td");
+          nameCell.setAttribute("class", "data");
+          nameCell.setAttribute("id", drugvariate + ".name");
+
+          var valueCell = document.createElement("td");
+          valueCell.setAttribute("class", "data");
+          valueCell.setAttribute("id", drugvariate + ".value.display");
+
+          var descCell = document.createElement("td");
+          descCell.setAttribute("class", "data");
+          descCell.setAttribute("id", drugvariate + ".description");
+
+          row.appendChild(nameCell);
+          row.appendChild(valueCell);
+          row.appendChild(descCell);
+
+          var drugvariateUnit = " " + Report.Data.value(drugvariate + ".unit");
+
+          if (!Report.Data.containsValue(drugvariate + ".value.display")) {
+            var type  = Report.Data.value(drugvariate + ".type");
+            var raw   = Report.Data.value(drugvariate + ".value");
+            var value = "";
+
+            if (type == "bool") {
+              if (parseFloat(raw) == 0) {
+                value = "No";
+              } else if (parseFloat(raw) == 1) {
+                value = "Yes";
+              } else {
+                value = "Unknown";
+              }
+            //ToDo: Remove when the sex's value is normalized in EzeCHieL
+            } else if (Report.Data.value(drugvariate + ".identifier") == "ch.heig-vd.ezechiel.imatinib.sex") {
+              if (parseFloat(raw) == 0) {
+                value = "Female";
+              } else if (parseFloat(raw) == 1) {
+                value = "Male";
+              } else {
+                value = "Undefined";
+              }
+            } else if (type == "int") {
+              value = parseInt(raw) + drugvariateUnit;
+            } else {
+              value = format(raw) + drugvariateUnit;
+            }
+
+            setValue(drugvariate + ".value.display", value);
+
+            if (Report.Data.value(drugvariate + ".identifier") === "weight") {
+              weight = value;
+            }
+          }
+        }
+
+        if (!reset && Report.Data.containsValue("patient.weight")) {
+          disableEdition("patient.weight");
+          return;
+        }
+
+        if (!isEmpty(weight)) {
+          disableEdition("patient.weight");
+          Report.Data.setValue("patient.weight", weight);
+        }
+      }
+
+      function initCovariatesTable(reset)
+      {
+        var weight = "";
+
+        var covariatesTable = document.getElementById("covariates.table");
+        var covariatesCount = parseInt(Report.Data.value("covariates.count"));
+
+        if (isNaN(covariatesCount) || covariatesCount == 0) {
+          covariatesTable.style.display = 'none';
+          return;
+        }
+
+        for (var i = 0; i < covariatesCount; ++i) {
+          var covariate = "covariates.covariate" + i;
+
+          var row = document.createElement("tr");
+          covariatesTable.appendChild(row);
+
+          var nameCell = document.createElement("td");
+          nameCell.setAttribute("class", "data");
+          nameCell.setAttribute("id", covariate + ".name");
+
+          var valueCell = document.createElement("td");
+          valueCell.setAttribute("class", "data");
+          valueCell.setAttribute("id", covariate + ".value.display");
+
+          var descCell = document.createElement("td");
+          descCell.setAttribute("class", "data");
+          descCell.setAttribute("id", covariate + ".description");
+
+          row.appendChild(nameCell);
+          row.appendChild(valueCell);
+          row.appendChild(descCell);
+
+          var covariateUnit = " " + Report.Data.value(covariate + ".unit");
+
+          if (!Report.Data.containsValue(covariate + ".value.display")) {
+            var type  = Report.Data.value(covariate + ".type");
+            var raw   = Report.Data.value(covariate + ".value");
+            var value = "";
+
+            if (type == "bool") {
+              if (parseFloat(raw) == 0) {
+                value = "No";
+              } else if (parseFloat(raw) == 1) {
+                value = "Yes";
+              } else {
+                value = "Unknown";
+              }
+            //ToDo: Remove when the sex's value is normalized in EzeCHieL
+            } else if (Report.Data.value(covariate + ".identifier") == "ch.heig-vd.ezechiel.imatinib.sex") {
+              if (parseFloat(raw) == 0) {
+                value = "Female";
+              } else if (parseFloat(raw) == 1) {
+                value = "Male";
+              } else {
+                value = "Undefined";
+              }
+            } else if (type == "int") {
+              value = parseInt(raw) + covariateUnit;
+            } else {
+              value = format(raw) + covariateUnit;
+            }
+
+            setValue(covariate + ".value.display", value);
+
+            if (Report.Data.value(covariate + ".identifier") === "weight") {
+              weight = value;
+            }
+          }
+        }
+
+        if (!reset && Report.Data.containsValue("patient.weight")) {
+          disableEdition("patient.weight");
+          return;
+        }
+
+        if (!isEmpty(weight)) {
+          disableEdition("patient.weight");
+          Report.Data.setValue("patient.weight", weight);
+        }
+      }
+
+      /********************************************************************************************
+      * Parameters functions
+      ********************************************************************************************/
+
+      function initParameters()
+      {
+        initParametersMap();
+        initParametersTable(false);
+      }
+
+      function initParametersMap()
+      {
+        UPDATER["parameters.count"] = initParametersTable;
+      }
+
+      function initParametersTable(reset)
+      {
+        var parametersTable = document.getElementById("parameters.table");
+        var parametersCount = parseInt(Report.Data.value("parameters.count"));
+
+        if (isNaN(parametersCount) || parametersCount == 0) {
+          parametersTable.style.display = 'none';
+          return;
+        }
+
+        for (var i = 0; i < parametersCount; ++i) {
+          var parameter = "parameters.parameter" + i;
+
+          var row = document.createElement("tr");
+          parametersTable.appendChild(row);
+
+          var identifierCell = document.createElement("td");
+          identifierCell.setAttribute("class", "data");
+          identifierCell.setAttribute("id", parameter + ".identifier");
+
+          var aposterioriCell = document.createElement("td");
+          aposterioriCell.setAttribute("class", "data");
+          aposterioriCell.setAttribute("id", parameter + ".patient.display");
+
+          var aprioriCell = document.createElement("td");
+          aprioriCell.setAttribute("class", "data");
+          aprioriCell.setAttribute("id", parameter + ".reference.display");
+
+          var populationCell = document.createElement("td");
+          populationCell.setAttribute("class", "data");
+          populationCell.setAttribute("id", parameter + ".population.display");
+
+          row.appendChild(identifierCell);
+          row.appendChild(aposterioriCell);
+          row.appendChild(aprioriCell);
+          row.appendChild(populationCell);
+
+          var parameterUnit = " " + Report.Data.value(parameter + ".unit");
+
+          if (!Report.Data.containsValue(parameter + ".patient.display")) {
+            var aposterioriDisplay = format(Report.Data.value(parameter + ".patient")) + parameterUnit;
+            setValue(parameter + ".patient.display", aposterioriDisplay);
+          }
+
+          if (!Report.Data.containsValue(parameter + ".reference.display")) {
+            var aprioriDisplay = format(Report.Data.value(parameter + ".reference")) + parameterUnit;
+            setValue(parameter + ".reference.display", aprioriDisplay);
+          }
+
+          if (!Report.Data.containsValue(parameter + ".population.display")) {
+            var populationDisplay = format(Report.Data.value(parameter + ".population")) + parameterUnit;
+            setValue(parameter + ".population.display", populationDisplay);
+          }
+        }
+      }
+
+      /********************************************************************************************
+      * Utilities functions
+      ********************************************************************************************/
+
+      //Fixes the decimals of a number in a string
+      function format(value) {
+        return parseFloat(value).toFixed(NB_DECIMALS);
+      }
+
+      //Disable the edition of the given element
+      function disableEdition(id) {
+          document.getElementById(id).setAttribute("contentEditable", "false");
+      }
+
+      //Check if a value is empty/whitespaces only
+      function isEmpty(value) {
+        return /^(?:\s|<br>)*$/.test(value);
+      }
+
+      //Replace special characters by HTML tags
+      function toHtml(value) {
+        return String(value).replace(/\n/g, "<br>");
+      }
+
+      //Converts a value to HTML and sets it unless it's empty
+      function setValue(id, value)
+      {
+        if (!isEmpty(value)) {
+          Report.Data.setValue(id, toHtml(value));
+        }
+      }
+    </script>
+  </body>
+</html>

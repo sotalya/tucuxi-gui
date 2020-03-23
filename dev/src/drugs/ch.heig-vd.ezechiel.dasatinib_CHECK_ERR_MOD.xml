@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.6" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>Tristan Montet et Ludovic Scheder</name>
+      <institution>HEIG-VD // REDS</institution>
+      <email>tristan.montet@heig-vd.ch</email>
+      <date>2015-06-19</date>
+      <comments>
+        <comment lang="en">Application to Dasatinib in Subjects With Chronic Myeloid Leukemia </comment>
+        <comment lang="fr">Application de Dasatinib à des sujets atteints de Leucémie Myeloide chronique</comment>
+        <comment lang="en">
+        Based on the study from Wang et al. Differential effects of dosing regimen on the safety and efficacy of dasatinib: retrospective exposure–response analysis of a Phase III study
+        Update of the model from Dai et al. Importance of Characterizing Determinants of Variability in Exposure: Application to Dasatinib in Subjects With Chronic Myeloid Leukemia
+        Dai study data
+        Age range . 15-86 years
+        Weight range : 38.5 - 179.7 kg
+        Disease : Chronic myeloid leukemia and acute lymphoblastic leukemia resistant  or intolerant to imatinib
+        </comment>
+      </comments>
+    </creator>
+    <revisions>
+      <revision>
+        <name>Sylvain Goutelle</name>
+        <institution>CHUV</institution>
+        <email>sylvain.goutelle@chuv.ch</email>
+        <date> 2017-08-22 </date>
+        <comments/>
+      </revision>
+    </revisions>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>None</atc>
+      <drugid>dasatinib</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.dasatinib</drugmodelid>
+      <pkmodelid>ch.heig-vd.ezechiel.analytic.linear.2comp.extra.clv</pkmodelid>
+      <drugnames>
+        <name lang="en">Dasatinib</name>
+        <name lang="fr">Dasatinib</name>
+      </drugnames>
+      <domainnames>
+        <name lang="en">Caucasian(351), Non-Caucasian(48)</name>
+        <name lang="fr">Caucasien(351), Non-Caucasien(48)</name>
+      </domainnames>
+      <studynames>
+        <name lang="en">"Chronic, accelerated, or blast phase CML or Ph+ ALL resistant to or intolerant of imatinib"</name>
+        <name lang="fr">"Chronic, accelerated, or blast phase CML or Ph+ ALL resistant to or intolerant of imatinib"</name>
+        <!--Article page 1256, Table 1 (Study Population)-->
+      </studynames>
+      <references>
+      </references>
+      <descs>
+        <desc lang="en">...</desc>
+        <desc lang="fr">...</desc>
+      </descs>
+      <brands>
+      </brands>
+      <comments>
+      </comments>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>extra</intake>
+      <distribution>2</distribution>
+      <elimination>linear</elimination>
+      <comments/>
+    </adme>
+
+    <!-- Drug half-life -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>2.93</value>
+      <multiplier>10</multiplier>
+      <comments>
+        <comment lang="fr">Halfe life trouvée sur internet à l'URL [www.ncbi.nlm.nih.gov/pmc/articles/PMC3684141/] car non trouvable sur l'article même. La valeur du multiplicateur est laissée à 10 tel que le préconnise l'aide du logiciel. La valeur de la "halflife" est en théorie de 4-6 heures mais les résulats de l'article (de l'URL) donnent plutôt 2.93 heures soit environ 3. Donc, au maximum, il faut 6h et au minimum 3. La moyenne est de int(4.5) = 5. </comment>
+      </comments>
+    </halflife>
+
+    <!-- Drug units and conversions -->
+
+    <conversions>
+      <units>
+        <concentration>ng/ml</concentration>
+        <result>ng/ml</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>0</molarmass>
+      <comments/>
+    </conversions>
+
+    <!-- Drug dosages -->
+
+    <dosages>
+      <doses default="100" unit="mg" any="false">
+        <dose>20</dose>
+        <dose>40</dose>
+        <dose>50</dose>
+        <dose>70</dose>
+        <dose>80</dose>
+        <dose>90</dose>
+        <dose>100</dose>
+        <dose>120</dose>
+        <dose>140</dose>
+      </doses>
+      <intervals default="24" unit="h" any="false">
+        <interval>12</interval>
+        <interval>24</interval>
+      </intervals>
+      <infusions default="0" unit="min" any="false">
+      </infusions>
+      <comments>
+      </comments>
+    </dosages>
+
+    <!-- Drug targets -->
+
+     <targets>
+      <target>
+        <type>residual</type>
+        <concentrations unit="ng/ml">
+          <min>
+            <value>1</value>
+            <formula/>
+          </min>
+          <max>
+            <value>10</value>
+            <formula/>
+          </max>
+          <best>
+            <value>2.5</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <comments>
+          <comment lang="en">I took the lowest Cmin 82.6 at 100 mg/24h) minus 2SD and highest Cmin (70 mg/12h) + 2SD from table 2</comment>
+        </comments>
+      </target>
+    </targets>
+
+    <!-- Drug covariates -->
+
+    <covariates>
+    </covariates>
+
+
+    <!-- Drug error model A VERIFIER+++ -->
+
+    <errormodel>
+      <additive>0</additive>
+      <proportional>0.464</proportional>
+      <comments>
+        <comment lang="fr">Attention, correspond au SD de l'erreur résiduelle log-additive, modèle d'erreur exponentiel. Voir comment le coder en erreur proportionnel ??</comment>
+      </comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>296</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.29</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>100000</max>
+        <step>1</step>
+        <comments>
+        <comment lang="fr">correspond à omega2 = 0.083</comment>
+      </comments>
+      </parameter>
+
+      <parameter>
+        <id>V1</id>
+        <unit>l</unit>
+        <value>1230</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>1.04</proportional>
+        </bsv>
+        <min>0.1</min>
+        <max>50000</max>
+        <step>5</step>
+        <comments/>
+      </parameter>
+
+      <parameter>
+        <id>V2</id>
+        <unit>l</unit>
+        <value>1030</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0</min>
+        <max>0</max>
+        <step>0</step>
+        <comments/>
+      </parameter>
+
+      <parameter>
+        <id>Q</id>
+        <unit>l/h</unit>
+        <value>119</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0</min>
+        <max>0</max>
+        <step>0</step>
+        <comments/>
+      </parameter>
+
+      <parameter>
+        <id>Ka</id>
+        <unit>h-1</unit>
+        <value>2.1</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>1.31</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>50000</max>
+        <step>0.1</step>
+        <comments/>
+      </parameter>
+
+      <parameter>
+        <id>F</id>
+        <unit></unit>
+        <value>1</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.36</proportional>
+        </bsv>
+        <min>0.1</min>
+        <max>1</max>
+        <step>0.01</step>
+        <comments>
+        <comment lang="fr">Les valeurs données dans l'articles sont des valeurs apparentes (CL/F par exemple). Nous avons posé F = 1.</comment>
+      </comments>
+      </parameter>
+    </parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+      <correlation>
+        <param1>CL</param1>
+        <param2>V1</param2>
+        <value>0.98</value>
+        <comments></comments>
+      </correlation>
+    </correlations>
+
+
+    <!-- Drug operations -->
+
+    <operations>
+    </operations>
+
+    <!-- Drug general comments -->
+
+    <comments/>
+
+  </drug>
+</model>

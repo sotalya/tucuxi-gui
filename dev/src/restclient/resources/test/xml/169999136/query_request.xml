@@ -1,0 +1,5 @@
+<data version='0.2' lang='en' type='query_request' controlId='66' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="eep.xsd">
+  <requestId>169999136</requestId>
+  <patientId>2839281</patientId>
+  <drugId>VAL</drugId>
+</data>

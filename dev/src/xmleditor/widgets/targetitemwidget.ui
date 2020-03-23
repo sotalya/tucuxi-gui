@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TargetItemWidget</class>
+ <widget class="QWidget" name="TargetItemWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>615</width>
+    <height>929</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>595</width>
+        <height>909</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QGroupBox" name="generalBox">
+         <property name="title">
+          <string>General</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="targetLabel">
+            <property name="text">
+             <string>Target</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="targetBox"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="concentrationBox">
+         <property name="title">
+          <string>Concentrations</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="CMinValLabel">
+            <property name="text">
+             <string>Min. value</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="CMinValBox"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="CMinForLabel">
+            <property name="text">
+             <string>Min. formula</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="CMaxValLabel">
+            <property name="text">
+             <string>Max. value</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="CMaxForLabel">
+            <property name="text">
+             <string>Max. formula</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="CBestValLabel">
+            <property name="text">
+             <string>Best value</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QDoubleSpinBox" name="CBestValBox"/>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="CBestForLabel">
+            <property name="text">
+             <string>Best formula</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="CMaxValBox"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPlainTextEdit" name="CMinForText"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QPlainTextEdit" name="CMaxForText"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="QPlainTextEdit" name="CBestForText"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="timeBox">
+         <property name="title">
+          <string>Times</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="TMinValLabel">
+            <property name="text">
+             <string>Min. value</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="TMinValBox"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="TMinForLabel">
+            <property name="text">
+             <string>Min. formula</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="TMaxValLabel">
+            <property name="text">
+             <string>Max. value</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="TMaxForLabel">
+            <property name="text">
+             <string>Max. formula</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="TBestValLabel">
+            <property name="text">
+             <string>Best value</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QDoubleSpinBox" name="TBestValBox"/>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="TBestForLabel">
+            <property name="text">
+             <string>Best formula</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="TMaxValBox"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPlainTextEdit" name="TMinForText"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QPlainTextEdit" name="TMaxForText"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="QPlainTextEdit" name="TBestForText"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>targetBox</tabstop>
+  <tabstop>CMinValBox</tabstop>
+  <tabstop>CMinForText</tabstop>
+  <tabstop>CMaxValBox</tabstop>
+  <tabstop>CMaxForText</tabstop>
+  <tabstop>CBestValBox</tabstop>
+  <tabstop>CBestForText</tabstop>
+  <tabstop>TMinValBox</tabstop>
+  <tabstop>TMinForText</tabstop>
+  <tabstop>TMaxValBox</tabstop>
+  <tabstop>TMaxForText</tabstop>
+  <tabstop>TBestValBox</tabstop>
+  <tabstop>TBestForText</tabstop>
+  <tabstop>scrollArea</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

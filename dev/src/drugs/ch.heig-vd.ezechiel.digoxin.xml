@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.6" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>Grosjean Moser</name>
+      <institution>HEIG-VD // REDS</institution>
+      <email/>
+      <date>2014-07-06</date>
+      <comments>
+        <comment lang="en">Based on population pharmacokinetics of digoxin in japanese patients"</comment>
+        <comment lang="fr">Basé sur la population pharmacocinétique de la digoxine chez des patients japonais</comment>
+      </comments>
+    </creator>
+    <revisions>
+	  <revision>
+	  <name>Robert Hooper</name>
+	  <institution>HEIG-VD // REDS</institution>
+      <email>robert.hooper@heig-vd.ch</email>
+      <date>2014-07-09</date>
+      <comments>
+          <comment lang="en">Based on population pharmacokinetics of digoxin in japanese patients"</comment>
+          <comment lang="fr">Basé sur la population pharmacocinétique de la digoxine chez des patients japonais</comment>
+        </comments>
+	  </revision>
+	  <revision>
+      <name>Sylvain Goutelle</name>
+      <institution>CHUV</institution>
+      <email>sylvain.goutelle@chuv.ch</email>
+      <date>2017-08-23</date>
+      <comments>
+      <comment lang="en">Based on population pharmacokinetics of digoxin in japanese patients"
+      Age range . 21-83 years
+      Weight range : 32-89 kg
+      Disease . unknown
+      </comment>
+        </comments>
+    </revision>
+    </revisions>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>C01AA05</atc>
+      <drugid>digoxin</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.digoxin</drugmodelid>
+      <pkmodelid>ezechiel.model.linear.2comp.bolus.clv</pkmodelid>
+      <drugnames>
+        <name lang="en">Digoxin</name>
+        <name lang="fr">Digoxine</name>
+      </drugnames>
+      <domainnames>
+        <name lang="en">Japanese patients with heart failure and atrial fibrillation</name>
+        <name lang="fr">Patients japonais atteints d'insuffisance cardiaque et de fibrillation auriculaire</name>
+      </domainnames>
+      <studynames>
+        <name lang="en">Population pharmacokinetics of digoxin in japanese patients</name>
+        <name lang="fr">Population pharmacocinétique de la digoxine chez des patients japonais</name>
+      </studynames>
+	<references>
+          <reference type='bibtex'>@article{yukawa_population_2001,
+	title = {Population pharmacokinetics of digoxin in Japanese patients},
+	volume = {40},
+	url = {http://link.springer.com/article/10.2165/00003088-200140100-00005},
+	number = {10},
+	urldate = {2014-10-23},
+	journal = {Clinical pharmacokinetics},
+	author = {Yukawa, Eiji and Suematu, Fumihiro and Yukawa, Miho and Minemoto, Masao and Ohdo, Shigehiro and Higuchi, Shun and Goto, Yoshinobu and Aoyama, Toshinobu},
+	year = {2001},
+	pages = {773--781},
+	file = {Yukawa_Digoxin.pdf:/home/rob/.zotero/zotero/iv5zqg2p.default/zotero/storage/T2457DFF/Yukawa_Digoxin.pdf:application/pdf}
+}
+	</reference>
+	</references>
+      <descs>
+        <desc lang="en">Cardiac glycoside that is widely prescribed for the treatment of patients with congestive heart failure and atrial fibrillation</desc>
+        <desc lang="fr">Glucoside cardiotonique qui est largement prescrite pour le traitement de patients souffrant d'insuffisance cardiaque congestive et la fibrillation auriculaire</desc>
+      </descs>
+      <brands>
+        <brand>Digosin : Chugai Pharmaceutical Co. Ltd, Tokyo, Japon</brand>
+      </brands>
+      <comments>
+          <comment lang="fr">Le code ATC de la digoxine a été trouvé sur le site : wikipedia.org/wiki/Digoxine</comment>
+          <comment lang="fr">La digoxine suit un modèle linéaire à deux compartiments. Prise PO dans l'étude mais pas de données en phase d'absorption. Modèle selon une administration bolus IV</comment>
+        </comments>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>bolus</intake>
+      <distribution>2</distribution>
+      <elimination>linear</elimination>
+	  <comments>
+          <comment lang="fr">Caractéristiques générales de la prise : modèle linéaire à deux compartiments par bolus</comment>
+        </comments>
+    </adme>
+
+    <!-- Drug half-life -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>36</value>
+      <multiplier>10</multiplier>
+      <comments/>
+    </halflife>
+
+    <!-- Drug units and conversions -->
+
+    <conversions>
+      <units>
+        <concentration>ug/l</concentration>
+        <result>ug/l</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>780.9385</molarmass>
+      <comments>
+          <comment lang="fr">La masse molaire de la digoxine a été trouvé sur le site : wikipedia.org/wiki/Digoxine</comment>
+        </comments>
+    </conversions>
+
+    <!-- Drug dosages -->
+
+    <dosages>
+      <doses default="0.25" unit="mg" any="false">
+        <dose>0.125</dose>
+        <dose>0.25</dose>
+        <dose>0.375</dose>
+        <dose>0.50</dose>
+        <dose>0.625</dose>
+        <dose>0.75</dose>
+        <dose>0.875</dose>
+        <dose>1.00</dose>
+      </doses>
+
+      <intervals default="24" unit="h" any="false">
+        <interval>12</interval>
+        <interval>24</interval>
+        <interval>36</interval>
+        <interval>48</interval>
+      </intervals>
+
+      <infusions default="5" unit="min" any="false">
+      </infusions>
+      <comments>
+          <comment lang="fr">J'ai mis une durée arbitraire courte pour la perfusion , au cas ou ce soit nécessaire</comment>
+        </comments>
+    </dosages>
+
+    <!-- Drug targets -->
+
+    <targets>
+      <target>
+        <type>mean</type>
+        <concentrations unit="ug/l">
+          <min>
+            <value>0.5</value>
+            <formula/>
+          </min>
+          <max>
+            <value>0.875</value>
+            <formula/>
+          </max>
+          <best>
+            <value>1</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <comments>
+          </comments>
+      </target>
+    </targets>
+
+    <!-- Drug covariates -->
+    <covariates>
+      <covariate>
+        <id>SPI</id>
+        <names>
+          <name lang="en">Coadministration of spironolactone</name>
+          <name lang="fr">Spironolactone co-administrés </name>
+        </names>
+        <descs>
+          <desc lang="en">Patient coadministered spironolactone : 1 for yes, 0 for no</desc>
+          <desc lang="fr">Patient co-administré avec du spironolactone : 1 pour oui, 0 pour non</desc>
+        </descs>
+        <unit/>
+        <type>bool</type>
+        <defaultvalue>0</defaultvalue>
+        <comments>
+            <comment lang="fr">Dans l'article (page 3, table 1), 23 patients sur 106 ont également reçus du spironolactone</comment>
+          </comments>
+
+      </covariate>
+      <covariate>
+        <id>CCB</id>
+        <names>
+          <name lang="en">Coadministration of calcium channel blockers</name>
+          <name lang="fr">Antagonistes du calcium co-administrés </name>
+        </names>
+        <descs>
+          <desc lang="en">Patient coadministered calcium antagonists : 1 for yes, 0 for no</desc>
+          <desc lang="fr">Patient co-administré avec des antagonistes du calcium : 1 pour oui, 0 pour non</desc>
+        </descs>
+        <unit/>
+        <type>bool</type>
+        <defaultvalue>0</defaultvalue>
+        <comments>
+            <comment lang="fr">Dans l'article (page 3, table 1), 19 patients sur 106 ont également reçus des antagonistes du calcium</comment>
+          </comments>
+      </covariate>
+
+      <covariate>
+        <id>CLCR</id>
+        <names>
+          <name lang="en">CLCR</name>
+          <name lang="fr">CLCR</name>
+        </names>
+        <descs>
+          <desc lang="en">Creatinine clearance, in ml/min</desc>
+          <desc lang="fr">Clairance de la créatinine, en ml/min</desc>
+        </descs>
+        <unit>ml/min</unit>
+        <type>double</type>
+        <defaultvalue>80</defaultvalue>
+        <comments>
+            <comment lang="fr">Dans l'article (page 3), la clairance de la créatinine moyenne vaut 56 ml/min</comment>
+          </comments>
+      </covariate>
+
+      <covariate>
+        <id>bodyweight</id>
+        <names>
+          <name lang="en">body weight</name>
+          <name lang="fr">poids</name>
+        </names>
+        <descs>
+          <desc lang="en">weight in kg</desc>
+          <desc lang="fr">poids en kg</desc>
+        </descs>
+        <unit>kg</unit>
+        <type>double</type>
+        <defaultvalue>60</defaultvalue>
+        <comments>
+            <comment lang="fr">Dans l'article (page 3), le poids moyen vaut 50 kg</comment>
+          </comments>
+      </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+
+    <errormodel>
+      <additive>0.0</additive>
+      <proportional>0.123</proportional>
+      <comments>
+        </comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>11.1</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.29</proportional>
+        </bsv>
+        <min>0.0001</min>
+        <max>100000</max>
+        <step>1</step>
+        <comments>
+          <comment lang="fr">Dans l'article la CL moyenne est de 0.185 L/h/kg soit  11.1 L/h pour BW = 60 kg et CLCR = 80 ml/min</comment>
+        </comments>
+      </parameter>
+
+      <parameter>
+        <id>V1</id>
+        <unit>l</unit>
+        <value>109.8</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>50000</max>
+        <step>5</step>
+        <comments>
+	      <comment lang="fr">Dans l'article (page 6), le paramètre V1 vaut 1.83 l/kg, ici valeur calculée pour 60 kg</comment>
+        </comments>
+      </parameter>
+
+      <parameter>
+        <id>V2</id>
+        <unit>l</unit>
+        <value>1356</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>50000</max>
+        <step>5</step>
+        <comments>
+	      <comment lang="fr">Dans l'article (page 6), le paramètre V2 vaut 22.6 l/kg , ici valeur calculée pour 60 kg</comment>
+        </comments>
+      </parameter>
+
+      <parameter>
+        <id>Q</id>
+        <unit>l/h</unit>
+        <value>37.7</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.378</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>100000</max>
+        <step>1</step>
+        <comments>
+          <comment lang="fr">Dans l'article (page 5, tableau 4),  le paramètre Q vaut 0.629 l/kg , ici valeur calculée pour 60 kg</comment>
+        </comments>
+      </parameter>
+    </parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+    </correlations>
+
+    <!-- Drug operations -->
+
+    <operations>
+      <operation>
+        <parameter>CL</parameter>
+        <formula><![CDATA[
+
+          theta1=0.036;
+          theta5=0.112;
+          theta6=0.770;
+          theta7=0.784;
+
+	  TVCL = (theta1 * covariate_bodyweight+ theta5 * covariate_CLCR) * Math.pow(theta6,covariate_SPI) * Math.pow(theta7,covariate_CCB);
+	  return TVCL;
+
+        ]]></formula>
+        <comments>
+        </comments>
+      </operation>
+      <operation>
+        <parameter>V1</parameter>
+        <formula><![CDATA[
+
+          theta2=1.83;
+          TVV1 = theta2*covariate_bodyweight;
+          return TVV1;
+
+        ]]></formula>
+        <comments>
+        </comments>
+      </operation>
+      <operation>
+        <parameter>V2</parameter>
+        <formula><![CDATA[
+
+          theta4=22.6;
+          TVV2 = theta4*covariate_bodyweight;
+          return TVV2;
+
+        ]]></formula>
+        <comments>
+        </comments>
+      </operation>
+      <operation>
+        <parameter>Q</parameter>
+        <formula><![CDATA[
+
+          theta3=0.629;
+          TVQ = theta3*covariate_bodyweight;
+          return TVQ;
+
+        ]]></formula>
+        <comments>
+        </comments>
+      </operation>
+    </operations>
+
+    <!-- Drug general comments -->
+
+    <comments/>
+
+  </drug>
+</model>

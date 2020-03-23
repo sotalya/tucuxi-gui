@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.6" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>Sylvain Goutelle</name>
+      <institution>CHUV</institution>
+      <email>sylvain.goutelle@chuv.ch</email>
+      <date>2017-08-17</date>
+      <comments>
+        <comment lang="en">Based on the article by Bartelink et al. Body Weight-Dependent Pharmacokinetics of
+        Busulfan in Paediatric Haematopoietic Stem Cell Transplantation Patients Towards Individualized Dosing
+        Clin Pharmacokinet 2012,51:331-45</comment>
+        <comment lang="en">
+        Age range: 0.1 - 26 years
+        Weight range: 3.1 - 109 kg
+        </comment>
+      </comments>
+    </creator>
+    <revisions>
+      <revision>
+        <name>Yann Thoma</name>
+        <institution>HEIG-VD</institution>
+        <email>yann.thoma@heig-vd.ch</email>
+        <date>2018-09-19</date>
+          <comments>
+            <comment lang="en">Corrected the a posteriori operations.</comment>
+        </comments>
+      </revision>
+    </revisions>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>L01AB01</atc>
+      <drugid>busulfan</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.busulfan_children_2CP</drugmodelid>
+      <pkmodelid>ezechiel.model.linear.2comp.infus.clv</pkmodelid>
+      <drugnames>
+        <name lang="en">Busulfan</name>
+        <name lang="fr">Busulfan</name>
+      </drugnames>
+      <domainnames>
+        <name lang="en">All_children (Age range: 0.1 - 26 yrs, Weight range: 3.1 - 109 kg)</name>
+        <name lang="fr">Tous_enfants</name>
+      </domainnames>
+      <studynames>
+        <name lang="en">Busulfan for children</name>
+        <name lang="fr">Busulfan pour enfants</name>
+      </studynames>
+      <references/>
+      <descs>
+        <desc lang="en">...</desc>
+        <desc lang="fr">...</desc>
+      </descs>
+      <brands>
+        <brand>Busilvex</brand>
+      </brands>
+      <comments/>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>infu</intake>
+      <distribution>2</distribution>
+      <elimination>linear</elimination>
+      <comments/>
+    </adme>
+
+    <!-- Drug half-life -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>2</value>
+      <multiplier>10</multiplier>
+      <comments/>
+    </halflife>
+
+    <!-- Drug units and conversions -->
+
+    <conversions>
+      <units>
+        <concentration>ug/l</concentration>
+        <result>ug/l</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>0</molarmass>
+      <comments/>
+    </conversions>
+
+
+    <!-- Standard treatment -->
+
+    <standardTreatment>
+        <isFixedDuration>true</isFixedDuration>
+        <duration>
+            <unit>d</unit>
+            <value>4</value>
+        </duration>
+    </standardTreatment>
+
+    <!-- Drug dosages -->
+
+    <dosages>
+      <doses default="10" unit="mg" any="true" from="1" to="400" step="1">
+      </doses>
+      <intervals default="6" unit="h" any="false">
+        <interval>6</interval>
+        <interval>24</interval>
+      </intervals>
+      <infusions default="120" unit="min" any="false">
+        <infusion>60</infusion>
+        <infusion>120</infusion>
+        <infusion>180</infusion>
+      </infusions>
+      <comments/>
+    </dosages>
+
+    <!-- Drug targets -->
+
+    <targets>
+      <target>
+        <type>peak</type>
+        <concentrations unit="mg/l">
+          <min>
+            <value>1.0</value>
+            <formula/>
+          </min>
+          <max>
+            <value>1.4</value>
+            <formula/>
+          </max>
+          <best>
+            <value>1.2</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <times unit="h">
+          <min>
+            <value>2</value>
+            <formula/>
+          </min>
+          <max>
+            <value>3</value>
+            <formula/>
+          </max>
+          <best>
+            <value>2.5</value>
+            <formula/>
+          </best>
+        </times>
+        <comments/>
+      </target>
+
+      <target>
+        <type>auc</type>
+        <concentrations unit="mg.h/L">
+          <min>
+            <value>3.7</value>
+            <formula/>
+          </min>
+          <max>
+            <value>6.2</value>
+            <formula/>
+          </max>
+          <best>
+            <value>4.5</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <comments><comment lang="en">
+        This is the target AUC per dose for a regimen with 16 doses over 4 days, i.e. a dose every 6h.
+        For cumulative AUC, the target are 59 , 72 and  99 (min - best - max)</comment>
+        </comments>
+      </target>
+
+    </targets>
+
+    <!-- Drug covariates -->
+
+    <covariates>
+      <covariate>
+        <id>bodyweight</id>
+        <names>
+          <name lang="en">Weight</name>
+        </names>
+        <descs>
+          <desc lang="en">Weight of the patient</desc>
+        </descs>
+        <unit>kg</unit> <!-- in weeks -->
+        <type>double</type>
+        <defaultvalue>15.3</defaultvalue>
+        <comments/>
+      </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+
+    <errormodel>
+      <additive>0.0</additive>
+      <proportional>0.14</proportional>
+      <comments>
+      </comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>3.47</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.27</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>1000</max>
+        <step>0.01</step>
+        <comments><comment lang="en">Typical CL for a patient weighting 15.3 kg</comment>
+        </comments>
+      </parameter>
+
+      <parameter>
+        <id>V1</id>
+        <unit>l</unit>
+        <value>11.1</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.20</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>1000</max>
+        <step>0.01</step>
+        <comments><comment lang="en">Typical V1 for a patient weighting 15.3 kg</comment>
+        </comments>
+      </parameter>
+
+      <parameter>
+        <id>Q</id>
+        <unit>l/h</unit>
+        <value>0.495</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.88</proportional>
+        </bsv>
+        <min>0</min>
+        <max>100</max>
+        <step>0.01</step>
+        <comments><comment lang="en">Typical Q for a patient weighting 15.3 kg</comment>
+        </comments>
+      </parameter>
+
+
+	<parameter>
+        <id>V2</id>
+        <unit>l</unit>
+        <value>76.8</value>
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.67</proportional>
+        </bsv>
+        <min>0</min>
+        <max>400</max>
+        <step>0.01</step>
+        <comments>
+				<comment lang="en">V2 = 6.92*V1, 76.8 is the value for a patient weighting 15.3 kg</comment>
+			</comments>
+      </parameter>
+    </parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+    </correlations>
+
+    <!-- Drug operations -->
+
+    <operations>
+      <operation>
+        <parameter>CL</parameter>
+        <formula><![CDATA[
+BW = covariate_bodyweight;
+theta_1 = 3.47;
+theta_2 = 1.56;
+theta_3 = -0.226;
+
+TVCL = theta_1 * Math.pow((BW/15.3),(theta_2*(Math.pow(BW,theta_3))));
+return TVCL;
+        ]]></formula>
+        <comments/>
+      </operation>
+
+      <operation>
+        <parameter>V1</parameter>
+        <formula><![CDATA[
+theta_4=11.1;
+theta_5 = 0.89;
+BW = covariate_bodyweight;
+
+TVV1= theta_4 * Math.pow((BW/15.3),theta_5);
+return TVV1;
+        ]]></formula>
+        <comments/>
+        </operation>
+
+      <operation>
+        <parameter>V2</parameter>
+        <formula><![CDATA[
+theta_4=11.1;
+theta_5 = 0.89;
+BW = covariate_bodyweight;
+
+theta_6=6.92;
+
+TVV2= theta_6*(theta_4 * Math.pow((BW/15.3),theta_5));
+return TVV2;
+        ]]></formula>
+        <comments/>
+      </operation>
+    </operations>
+    <!-- Drug general comments -->
+
+    <comments/>
+
+  </drug>
+</model>

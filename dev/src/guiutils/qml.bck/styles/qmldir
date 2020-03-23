@@ -1,0 +1,9 @@
+module guiutils.qml.styles
+singleton TableStyle 1.0 TableStyle.qml
+EzComboBoxStyle 1.0 EzComboBoxStyle.qml
+EzTextFieldStyle 1.0 EzTextFieldStyle.qml
+EzBackgroundStyle 1.0 EzBackgroundStyle.qml
+EzLabelStyle 1.0 EzLabelStyle.qml
+depends QtQuick 2.5
+depends QtQuick.Controls 1.4
+depends QtQuick.Controls.Styles 1.4

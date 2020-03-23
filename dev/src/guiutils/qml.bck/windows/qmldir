@@ -1,0 +1,31 @@
+module guiutils.qml.windows
+MainWindow 1.0 MainWindow.qml
+Flow 1.0 Flow.qml
+AdjustmentTab 1.0 AdjustmentTab.qml
+AdjustmentTable 1.0 AdjustmentTable.qml
+AdjustmentTabNew 1.0 AdjustmentTabNew.qml
+CovariateListModelTab 1.0 CovariateListModelTab.qml
+CovariateTable 1.0 CovariateTable.qml
+CovariateTabNew 1.0 CovariateTabNew.qml
+DatePicker 1.0 DatePicker.qml
+DosageListModelTab 1.0 DosageListModelTab.qml
+DosageTable 1.0 DosageTable.qml
+DosageTabNew 1.0 DosageTabNew.qml
+DrugListModelTab 1.0 DrugListModelTab.qml
+DrugTable 1.0 DrugTable.qml
+DrugTabNew 1.0 DrugTabNew.qml
+DrugVariateTable 1.0 DrugVariateTable.qml
+MeasureListModelTab 1.0 MeasureListModelTab.qml
+MeasureTable 1.0 MeasureTable.qml
+MeasureTabNew 1.0 MeasureTabNew.qml
+PatientListModelTab 1.0 PatientListModelTab.qml
+PatientTable 1.0 PatientTable.qml
+PatientTabNew 1.0 PatientTabNew.qml
+RequestList 1.0 RequestList.qml
+StartupWindow 1.0 StartupWindow.qml
+TargetTable 1.0 TargetTable.qml
+TargetTabNew 1.0 TargetTabNew.qml
+TooltipArea 1.0 TooltipArea.qml
+ValidationTab 1.0 ValidationTab.qml
+ValidationTabNew 1.0 ValidationTabNew.qml
+

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Included Schemas -->
+
+  <xs:include schemaLocation="mirth.xsd" />
+
+  <!-- Specific Types -->
+
+  <xs:complexType name="requestsPatient">
+    <xs:sequence>
+      <xs:element ref="name" />
+      <xs:element name="institute" minOccurs="0" >
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="instituteId" type="instituteId" />
+            <xs:element name="name" type="xs:token" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="patientId" type="patientId" />
+      <xs:element name="stayNumber" type="xs:token" />
+      <xs:element name="birthdate" type="xs:token" />
+      <xs:element name="gender" type="gender" />
+      <xs:element ref="comments" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- File Structure -->
+
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="request" maxOccurs="unbounded" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="requestId" type="requestId" />
+              <xs:element name="requestState" type="requestState" />
+              <xs:element name="patient" type="requestsPatient" />
+              <xs:element name="mandator" type="practician" minOccurs="0" />
+              <xs:element ref="sample" />
+              <xs:element ref="drug" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute ref="version" use="required" />
+      <xs:attribute ref="lang" use="required" />
+      <xs:attribute ref="type" use="required" />
+      <xs:attribute ref="controlId" use="required" />
+      <xs:attribute ref="errorCondition" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

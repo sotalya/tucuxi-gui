@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="jquery-3.1.1.js"></script>
+    <script src="qwebchannel.js"></script>
+    <script src="fieldmapping.js"></script>
+    <script src="moment.js"></script>
+    <title>Rapport</title>
+    <style>
+      .header-title {
+                font-size:9.0pt;
+                font-family:Arial;
+        color:black;
+        font-weight:bold;
+      }
+      .header {
+                font-size:9.0pt;
+                font-family:Arial;
+        color:black;
+      }
+      .title {
+                font-size:14.0pt;
+        font-family:Arial;
+        color:black;
+      }
+      .title-drug {
+                font-size:14.0pt;
+        font-family:Arial;
+        color:black;
+                font-weight:bold;
+      }
+      tr.section {
+           background-color: lightgrey;
+      }
+      tr.section>td.label {
+                font-size:10.0pt;
+                font-family:Arial;
+        font-weight:bold;
+                color: grey;
+      }
+      tr.section>td.data {
+                font-size:10.0pt;
+                font-family:Arial;
+        font-weight:bold;
+                color: black;
+      }
+      .label {
+                font-size:9.0pt;
+                font-family:Arial;
+        font-weight:bold;
+                color: grey;
+      }
+      .data {
+                font-size:9.0pt;
+                font-family:Arial;
+        color: black;
+      }
+      .dataPop {
+                font-size:9.0pt;
+                font-family:Arial;
+        color: grey;
+      }
+      .labelcovariates {
+                font-size:9.0pt;
+                font-family:Arial;
+                font-weight:bold;
+                color: grey;
+                background-color: lightgrey;
+       }
+      .ref {
+                font-size:8.0pt;
+                font-family:Arial;
+      }
+      table {
+        width: 95%;
+        border: 0;
+                margin-left:auto;
+            margin-right:auto;
+      }
+    </style>
+
+    <script type="text/javascript">
+      function updateFields(channel)
+      {
+        var data = getInfos(channel);
+        $("#creationDate").html(moment(data["creationDate"]).format("YYYY-MM-DD"));
+        $("#creationDate2").html(moment(data["creationDate"]).format("YYYY-MM-DD"));
+
+        $("#drugName").html(data["drugName"]);
+        $("#patientId").html(data["patientId"]);
+        $("#patientName").html(data["patientFirstName"] + " " + data["patientLastName"]);
+        //$("#patientAge").html(data["patientAge"]);
+        $("#patientWeight").html(data["patientWeight"]);
+        $("#patientGender").html(data["patientGender"]);
+        $("#patientDOB").html(moment(data["patientDOB"]).format("YYYY-MM-DD"));
+
+        $("#expectedness").html(data["expectedness"]);
+        $("#warning").html(data["warning"]);
+        $("#remonitoring").html(data["remonitoring"]);
+        $("#prediction").html(data["prediction"]);
+        $("#suitability").html(data["suitability"]);
+
+        $("#steadyStateAUC24").html(data["steadyStateAUC24"]);
+        $("#steadyStateMin").html(data["steadyStateMin"]);
+        $("#steadyStateMax").html(data["steadyStateMax"]);
+
+        var date = moment(data["lastDosageDate"])
+        $("#lastDosage").html(data["lastDosage"]);
+        $("#lastDosageDate").html(date.isValid() ? date.format("YYYY-MM-DD HH:mm") : "--");
+        $("#proposedPosology").html(data["proposedPosology"]);
+        $("#nextControl").html(data["nextControl"]);
+        $("#validationDate").html(data["validationDate"]);
+
+        $("#chartImage").attr("src", data["imageUrl"]);
+
+
+        var samplesLineElement = $("#measures");
+        samplesLineElement.empty();
+
+        getMeasures(channel, function(measure) {
+
+          var date = moment(measure.moment);
+          var d = date.isValid() ? date.format("YYYY-MM-DD HH:mm") : "--";
+          samplesLineElement.append("<tr class='section'>" +
+          "<td class='label'>Sample from:</td>" +
+          "<td class='data'><span id='sampleDate'>" + d + "</span></td>" +
+          "<td class='label'>ID</td>" +
+          "<td class='data'><span id='sampleId'>" + measure.sampleId + "</span></td>" +
+          "<td class='label'>Result</td>" +
+          "<td class='data'><span id='sampleValue'>" + measure.sampleValue + "</span></td>" +
+          "</tr>");
+        })
+
+        var parametersLineElement = $("#parameters");
+        parametersLineElement.empty();
+
+        parametersLineElement.append("<thead><tr><td></td><td></td><td class='label'>pop.</td><td class='label'>a priori</td><td class='label'>a post.</td></tr></thead>");
+        parametersLineElement.append("<tbody>");
+
+        getParameters(channel, function(param) {
+          parametersLineElement.append("<tr><td class='label'>" + param.name + "</td><td class='label'>[" + param.unit + "]" + "</td>" +
+                                       "<td class='data'>" + param.pop + "</td>" +
+                                       "<td class='data'>" + param.apriori + "</td>" +
+                                       "<td class='data'>" + param.aposteriori + "</td></tr>");
+        });
+
+        parametersLineElement.append("</tbody>");
+
+        var patientVariates = {};
+        getPatientVariates(channel, function(covariate) {
+          patientVariates[covariate.id] = covariate.value;
+        })
+
+        var hasPatientCovariates = hasPatientVariates(channel);
+
+        if (hasPatientCovariates) {
+            var patientCovariateslineElement = $("#patientcovariates tr:first");
+            patientCovariateslineElement.empty();
+            patientCovariateslineElement.append("<td class='labelcovariates'>Patient covariates</td>");
+            getDrugVariates(channel, function(covariate) {
+              var value = covariate.value;
+              var isPatientValue = false;
+              for (key in patientVariates) {
+                if (key == covariate.id) {
+                  value = patientVariates[key];
+                  isPatientValue = true;
+                }
+              }
+              if (covariate.id == "sex") {
+                if (value == 1) value = "Male";
+                if (value == 0) value = "Female";
+                if (value == 0.5) value = "???";
+              }
+              if (isPatientValue) {
+                patientCovariateslineElement.append("<td class='label'>" + covariate.name + ":</td>");
+                patientCovariateslineElement.append("<td class='data'>" + value + "</td>");
+              }
+              else {
+                //patientCovariateslineElement.append("<td class='dataPop'>" + value + "</td>");
+              }
+            });
+        }
+
+        var hasDefaultCovariates = hasDefaultVariates(channel);
+        if (hasDefaultCovariates) {
+            covariateslineElement = $("#defaultcovariates tr:first");
+            covariateslineElement.empty();
+            covariateslineElement.append("<td class='labelcovariates'>Default covariates</td>");
+            getDrugVariates(channel, function(covariate) {
+              var value = covariate.value;
+              var isPatientValue = false;
+              for (key in patientVariates) {
+                if (key == covariate.id) {
+                  value = patientVariates[key];
+                  isPatientValue = true;
+                }
+              }
+              if (covariate.id == "sex") {
+                if (value == 1) value = "Male";
+                if (value == 0) value = "Female";
+                if (value == 0.5) value = "???";
+              }
+              if (isPatientValue) {
+                // covariateslineElement.append("<td class='data'>" + value + "</td>");
+              }
+              else {
+                covariateslineElement.append("<td class='label'>" + covariate.name + ":</td>");
+                covariateslineElement.append("<td class='data'>" + value + "</td>");
+              }
+            });
+        }
+
+
+      }
+
+      document.addEventListener("DOMContentLoaded", function ()
+      {
+        new QWebChannel(qt.webChannelTransport, function (channel) {
+            channel.objects.info.dataUpdated.connect(function() {
+                updateFields(channel);
+            });
+            updateFields(channel);
+        });
+      });
+    </script>
+
+  </head>
+  <body>
+    <p> </p>
+    <table>
+      <tbody>
+        <tr>
+          <td style="width: 110px;">
+            <img style="height: 60px;" src="logo.jpeg">
+          </td>
+          <td class="header-title">DEMO VERSION!<br>
+            COOK COUNTY GENERAL HOSPITAL<br>
+            Clinical pharmacology division<br>
+            Biomedicine service<br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="header">
+      <tbody>
+        <tr>
+          <td><span class="header-title">Drug laboratory</span><br>
+            Dr. Mark Greene, laboratory manager<br>
+            Tel. +41 (0) 11 222 3333<br>
+            Fax +41 (0) 11 222 3334<br>
+            <br>
+            <span class="header-title">Therapeutic Drug Monitoring Unit<br>
+            </span>
+            Dr. John Carter, head-physician<br>
+            Tel. +41 (0) 11 222 3335<br>
+            Tel. +41 (0) 11 222 3336<br>
+          </td>
+          <td>
+            <!--
+            Dr Marie Curie<br>
+            Rue de la Découverte 38<br>
+            1200 Genève<br>
+            Suisse
+            -->
+          </td>
+        </tr>
+        <tr>
+          <!--
+          <td class="ref">Référence:123578987454-01</td>
+          <td>Lausanne, le <span id="creationDate">???</span></td>
+          -->
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <table>
+      <tbody>
+        <tr>
+          <td class="title" style="width: 280px;">Therapeutic Drug Monitoring:</td>
+          <td class="title-drug"><span id="drugName">???</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <table>
+      <tbody>
+        <tr class="section">
+          <td class="label">Patient:</td>
+          <td class="data"><span id="patientName">???</span></td>
+          <td class="label">ID</td>
+          <td class="data"><span id="patientId">???</span></td>
+          <td class="label">Date of birth</td>
+          <td class="data"><span id="patientDOB">???</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <table id="patientcovariates">
+      <tr></tr>
+    </table>
+    <table id="defaultcovariates">
+      <tr></tr>
+    </table>
+    <hr>
+    <table>
+      <tbody id="measures">
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr>
+          <td class="label">Last dose:</td>
+          <td class="data"><span id="lastDosageDate">???</span></td>
+          <td class="label">Dosage:</td>
+          <td class="data"><span id="lastDosage">???</span></td>
+        </tr>
+        <!--
+        <tr>
+          <td class="label">Comments:</td>
+          <td class="data">???</td>
+        </tr>
+        -->
+      </tbody>
+    </table>
+    <hr>
+    <table>
+      <tbody>
+        <tr class="section">
+          <td class="label">Predictions</td>
+          <td class="label">Extrapolated steady state AUC24:</td>
+          <td class="data" id="steadyStateAUC24">???</td>
+          <td class="label">Steady state peak:</td>
+          <td class="data" id="steadyStateMax">???</td>
+          <td class="label">Steady state trough:</td>
+          <td class="data" id="steadyStateMin">???</td>
+          <!--
+          <td class="label">Extrapolated trough:</td>
+          <td class="data">???</td>
+          <td class="label">Target trough:</td>
+          <td class="data">???</td>
+          -->
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <img class="image" id="chartImage" style="width:auto;height:300px">
+          </td>
+          <td>
+            <table>
+              <tbody>
+                </tr>
+                  <td class="label" colspan="5">Pharmacokinetic parameters (population,apriori,aposteriori)</td>
+                </tr>
+              </tbody>
+            </table>
+            <table id="parameters">
+              <thead><tr><td></td><td class='label'>pop.</td><td class='label'>a priori</td><td class='label'>a post.</td></tr></thead>
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <table>
+        <tr class="section">
+          <td class="label">Comments</td>
+        </tr>
+    </table>
+    <table>
+      <tbody>
+        <tr>
+          <td class="label" style="width: 100px;">Expectedness</td>
+          <td class="data"><span id="expectedness">???</span></td>
+        </tr>
+        <tr>
+          <td class="label">Suitability</td>
+          <td class="data"><span id="suitability">???</span></td>
+        </tr>
+        <tr>
+          <td class="label">Prediction</td>
+          <td class="data"><span id="prediction">???</span></td>
+        </tr>
+        <tr>
+          <td class="label">Remonitoring</td>
+          <td class="data"><span id="remonitoring">???</span></td>
+        </tr>
+        <tr>
+          <td class="label">Warning</td>
+          <td class="data"><span id="warning">???</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr class="section">
+          <td class="label">Dosage adjustment proposed</td>
+          <td class="label">Validation date:</td>
+          <td class="data"><span id="validationDate">???</span></td>
+          <!-- <td class="data"><span id="creationDate2">???</span></td> -->
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <tr>
+          <td class="label">Dosage:</td>
+          <td class="data"><span id="proposedPosology">???</span></td>
+        </tr>
+        <tr>
+          <td class="label">Next control:</td>
+          <td class="data"><span id="nextControl">???</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+

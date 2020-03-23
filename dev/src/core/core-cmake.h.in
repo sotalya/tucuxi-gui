@@ -1,0 +1,7 @@
+#ifndef CORECMAKE_H
+#define CORECMAKE_H
+
+#define APPDATA @APPDATA@
+#define BUILD_ID @BUILD_ID@
+
+#endif // CORECMAKE_H

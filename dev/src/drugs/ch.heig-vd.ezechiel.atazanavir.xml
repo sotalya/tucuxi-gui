@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model version='0.6' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>Pfister Ecknauer</name>
+      <institution>HEIG-VD</institution>
+      <email>julien.ecknauer@heig-vd.ch</email>
+      <date>2014-06-06</date>
+      <comments>
+      </comments>
+    </creator>
+    <revisions>
+      <revision>
+        <name>Pfister Ecknauer</name>
+        <institution>HEIG-VD</institution>
+        <email>julien.ecknauer@heig-vd.ch</email>
+        <date>2014-06-06</date>
+        <comments>
+        </comments>
+      </revision>
+      <revision>
+        <name>Robert Hooper</name>
+        <institution>HEIG-VD</institution>
+        <email>robert.hooper@heig-vd.ch</email>
+        <date>2014-07-09</date>
+        <comments>
+          <comment lang="en">
+	Based on: "Population Pharmacokinetics of Atazanavir in Patients with Human Immunodeficiency Virus Infection" by S.Colombo et al., ANTIMICROBIAL AGENTS AND CHEMOTHERAPY , Nov. 2006, p. 3801–3808, Table 3.
+          </comment>
+          </comments>
+      </revision>
+      <revision>
+        <name>Sylvain Goutelle</name>
+        <institution>CHUV</institution>
+        <email>sylvain.goutelle@chuv.ch</email>
+        <date>2017-07-26</date>
+        <comments>
+        <comment lang="en">
+Age range : 19-78 years
+Weight range : 43-117 kg
+Co-administration of Ritonavir 78%
+        </comment>
+        </comments>
+      </revision>
+    </revisions>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>L01XE01</atc>
+      <drugid>atazanavir</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.atazanavir</drugmodelid>
+      <pkmodelid>ezechiel.model.linear.1comp.extra.clv</pkmodelid>
+      <drugnames>
+        <name lang='en'>Atazanavir</name>
+        <name lang='fr'>Atazanavir</name>
+      </drugnames>
+      <domainnames>
+        <name lang='en'>Generic</name>
+        <name lang='fr'>Générique</name>
+      </domainnames>
+      <studynames>
+        <name lang='en'>test</name>
+        <name lang='fr'>test</name>
+      </studynames>
+      <references>
+          <reference type='bibtex'>@article{colombo_population_2006,
+	title = {Population Pharmacokinetics of Atazanavir in Patients with Human Immunodeficiency Virus Infection},
+	volume = {50},
+	issn = {0066-4804, 1098-6596},
+	url = {http://aac.asm.org/cgi/doi/10.1128/AAC.00098-06},
+	doi = {10.1128/AAC.00098-06},
+	language = {en},
+	number = {11},
+	urldate = {2014-10-23},
+	journal = {Antimicrobial Agents and Chemotherapy},
+	author = {Colombo, S. and Buclin, T. and Cavassini, M. and Decosterd, L. A. and Telenti, A. and Biollaz, J. and Csajka, C.},
+	month = nov,
+	year = {2006},
+	pages = {3801--3808},
+	file = {2006_Colombo_Atazanavir.pdf:/home/rob/.zotero/zotero/iv5zqg2p.default/zotero/storage/PZEVPA6A/2006_Colombo_Atazanavir.pdf:application/pdf}
+}
+	</reference>
+	</references>
+      <descs>
+        <desc lang='en'>...</desc>
+        <desc lang='fr'>...</desc>
+      </descs>
+      <brands>
+        <brand>Glivec</brand>
+      </brands>
+      <comments></comments>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>extra</intake>
+      <distribution>1</distribution>
+      <elimination>linear</elimination>
+      <comments></comments>
+    </adme>
+
+    <!-- Drug units and conversions -->
+
+  <!-- Drug half-life -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>12</value>
+      <multiplier>10</multiplier>
+      <comments/>
+    </halflife>
+
+    <conversions>
+      <units>
+        <concentration>mg/l</concentration>
+        <result>mg/l</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>0</molarmass>
+      <comments></comments>
+    </conversions>
+
+    <!-- Drug dosages -->
+
+    <dosages>
+      <doses default='300' unit='mg' any='false'>
+        <dose>150</dose>
+        <dose>200</dose>
+        <dose>300</dose>
+        <dose>400</dose>
+        <dose>500</dose>
+        <dose>600</dose>
+        <dose>700</dose>
+        <dose>800</dose>
+      </doses>
+      <intervals default='24' unit='h' any='false'>
+        <interval>24</interval>
+        <interval>12</interval>
+      </intervals>
+      <infusions default='0' unit='min' any='false'>
+      </infusions>
+      <comments></comments>
+    </dosages>
+
+    <!-- Drug targets -->
+
+    <targets>
+
+    </targets>
+
+    <!-- Drug covariates -->
+
+    <covariates>
+      <covariate>
+        <id>rito</id>
+        <names>
+          <name lang='en'>RITO</name>
+          <name lang='fr'>RITO</name>
+        </names>
+        <descs>
+          <desc lang='en'>Prise de Rito</desc>
+          <desc lang='fr'>Take Rito</desc>
+        </descs>
+        <unit></unit>
+        <type>bool</type>
+        <defaultvalue>0</defaultvalue>
+        <comments></comments>
+      </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+
+    <errormodel>
+      <additive>0.542</additive>
+      <proportional>0.30</proportional>
+      <comments><comment lang="fr">Valeurs de la sparse study car mieux estiméees , RSE plus bas</comment></comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>12.9</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.26</proportional>
+        </bsv>
+        <min>0.001</min>
+        <max>100000</max>
+        <step>1</step>
+        <comments></comments>
+      </parameter>
+      <parameter>
+        <id>V</id>
+        <unit>l</unit>
+        <value>88.3</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.29</proportional>
+        </bsv>
+        <min>0.1</min>
+        <max>50000</max>
+        <step>5</step>
+        <comments></comments>
+      </parameter>
+      <parameter>
+        <id>F</id>
+        <unit>%</unit>
+        <value>0.81</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0</proportional>
+        </bsv>
+        <min>0.1</min>
+        <max>100</max>
+        <step>1</step>
+        <comments></comments>
+      </parameter>
+      <parameter>
+        <id>Ka</id>
+        <unit>h-1</unit>
+        <value>0.405</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>1.22</proportional>
+        </bsv>
+        <min>0.01</min>
+        <max>10</max>
+        <step>0.01</step>
+        <comments></comments>
+      </parameter>
+    </parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+
+    </correlations>
+
+    <!-- Drug operations -->
+
+    <operations>
+      <operation>
+        <parameter>CL</parameter>
+        <formula><![CDATA[
+theta1=parameter_CL;
+theta2= -0.46;
+
+if (covariate_rito)
+	RITO=1;
+else
+	RITO=0;
+
+TVCL = theta1 * (1+theta2*RITO);
+return TVCL;
+        ]]></formula>
+        <comments></comments>
+      </operation>
+    </operations>
+
+    <!-- Drug general comments -->
+
+    <comments/>
+
+</drug>
+</model>

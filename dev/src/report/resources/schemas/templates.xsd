@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Global Attributes -->
+
+  <xs:attribute name="lang">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="fr" />
+        <xs:enumeration value="en" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <!-- Global Types -->
+
+  <xs:simpleType name="reportFile">
+      <xs:restriction base="xs:string">
+        <xs:pattern value=".+\.(htm|html)" />
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="translationType">
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="none" />
+        <xs:enumeration value="native" />
+        <xs:enumeration value="supplied" />
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="notEmptyString">
+      <xs:restriction base="xs:normalizedString">
+        <xs:pattern value=".*[^\s].*" />
+        <xs:minLength value="3" />
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="translatedText">
+    <xs:simpleContent>
+      <xs:extension base="notEmptyString">
+        <xs:attribute ref="lang" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="translatedNames">
+    <xs:sequence>
+      <xs:element name="name" type="translatedText" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="translatedDescs">
+    <xs:sequence>
+      <xs:element name="desc" type="translatedText" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Global Elements -->
+
+  <xs:element name="template">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="file"  type="reportFile" />
+        <xs:element name="translation"  type="translationType" />
+        <xs:element name="names" type="translatedNames" />
+        <xs:element name="descs" type="translatedDescs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>  
+
+  <!-- File Structure -->
+
+  <xs:element name="templates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="template" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model version='0.6' xsi:noNamespaceSchemaLocation='drug2.xsd' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+    <!-- Drug history -->
+    <history>
+        <revisions>
+            <revision>
+                <revisionAction>creation</revisionAction>
+                <revisionAuthorName>Yann Thoma</revisionAuthorName>
+                <institution>HEIG-VD // REDS</institution>
+                <email>yann.thoma@heig-vd.ch</email>
+                <date>2018-09-14</date>
+                <comments>
+                    <comment lang="en">This file is based on the first version of
+                        busulfan validated by Sylvain Goutelle : ch.heig-vd.ezechiel.busulfan_children.xml
+                    </comment>
+                </comments>
+            </revision>
+        </revisions>
+    </history>
+    <!-- Drug description -->
+    <head>
+        <drug>
+            <atcs>
+                <atc>L01AB01</atc>
+            </atcs>
+            <activeSubstances>
+                <activeSubstance>busulfan</activeSubstance>
+            </activeSubstances>
+            <drugName>
+                <name lang="en">Busulfan</name>
+                <name lang="fr">Busulfan</name>
+            </drugName>
+            <drugDescription>
+                <desc lang="en">TODO : Add a description here</desc>
+            </drugDescription>
+            <tdmStrategy>
+                <text lang="en">TODO : Add a TDM strategy</text>
+            </tdmStrategy>
+        </drug>
+        <study>
+            <studyName>
+                <name lang="en">Pharmacokinetic behavior and appraisal of intravenous busulfan dosing in infants and older children: the results of a population pharmacokinetic study from a large pediatric cohort undergoing hematopoietic stem-cell transplantation</name>
+            </studyName>
+            <studyAuthors>Paci A., Vassal G., Moshous D., Dalle J.H., Bleyzac N., Neven B., Galambrun C., Kemmel V., Abdi Z.D., Broutin S., Pétain A., Nguyen L.</studyAuthors>
+            <description>
+                <desc lang="en">Based on the article byPaci et al. Pharmacokinetic Behavior and Appraisal of Intravenous Busulfan Dosing in Infants and Older Children:
+                The Results of a Population Pharmacokinetic Study From a Large Pediatric Cohort Undergoing Hematopoietic Stem-Cell Transplantation.
+                Ther Drug Monit 2012, 34;:198-208</desc>
+            </description>
+            <references>
+                <reference type="bibtex">TODO : Add bibtex
+                </reference>
+            </references>
+        </study>
+        <comments/>
+    </head>
+
+    <!-- Drug data -->
+    <drugModel>
+        <drugId>busulfan</drugId> <!-- id d'une des substances actives -->
+        <drugModelId>ch.tucuxi.busulfan.children</drugModelId>
+
+        <domain>
+            <description>
+                <desc lang="en">All children (Age range: 10 days - 15 years, Weight range: 3.5 - 62.5 kg)</desc>
+            </description>
+            <constraints>
+                <constraint>
+                    <constraintType>hard</constraintType>
+                    <errorMessage>
+                        <text lang="en">The age shall be positive</text>
+                    </errorMessage>
+                    <requiredCovariates>
+                        <covariateId>age</covariateId>
+                    </requiredCovariates>
+                    <checkOperation>
+                        <softFormula>
+                            <inputs>
+                                <input>
+                                    <id>age</id>
+                                    <type>int</type>
+                                </input>
+                            </inputs>
+                            <code><![CDATA[return (age > 0);
+                                ]]>
+                            </code>
+                        </softFormula>
+                        <comments/>
+                    </checkOperation>
+                    <comments/>
+                </constraint>
+                <constraint>
+                    <constraintType>soft</constraintType>
+                    <errorMessage>
+                        <text lang="en">The weight should not be too much</text>
+                    </errorMessage>
+                    <requiredCovariates>
+                        <covariateId>bodyweight</covariateId>
+                    </requiredCovariates>
+                    <checkOperation>
+                        <softFormula>
+                            <inputs>
+                                <input>
+                                    <id>bodyweight</id>
+                                    <type>double</type>
+                                </input>
+                            </inputs>
+                            <code><![CDATA[return (bodyweight < 100);
+                                ]]>
+                            </code>
+                        </softFormula>
+                        <comments/>
+                    </checkOperation>
+                    <comments/>
+                </constraint>
+            </constraints>
+        </domain>
+
+
+
+        <!-- Drug model covariates -->
+        <covariates>
+            <covariate>
+                <covariateId>bodyweight</covariateId>
+                <covariateName>
+                    <name lang="en">Total Body Weight</name>
+                    <name lang="fr">Poids total</name>
+                </covariateName>
+                <description>
+                    <desc lang="en">Total body weight of patient, in kilogramms</desc>
+                    <desc lang="fr">Poids total du patient, en kilogramme</desc>
+                </description>
+                <unit>kg</unit>
+                <covariateType>standard</covariateType>
+                <dataType>double</dataType>
+                <interpolationType>linear</interpolationType>
+                <covariateValue>
+                    <standardValue>9</standardValue>
+                </covariateValue>
+                <validation> <!-- pourrait être une contrainte -->
+                    <errorMessage><text lang="fr"></text></errorMessage>
+                    <operation>
+                        <softFormula>
+                            <inputs>
+                                <input>
+                                    <id>bodyweight</id>
+                                    <type>double</type>
+                                </input>
+                            </inputs>
+                            <code><![CDATA[
+                                return bodyweight < 300 and bodyweight > 0;
+                                ]]>
+                            </code>
+                        </softFormula>
+                        <comments/>
+                    </operation>
+                    <comments/>
+                </validation>
+                <comments/>
+            </covariate>
+        </covariates>
+
+
+        <activeMoieties>
+            <activeMoiety>
+                <activeMoietyId>busulfan</activeMoietyId>
+                <activeMoietyName>
+                    <name lang="en">Busulfan</name>
+                </activeMoietyName>
+                <unit>mg/l</unit>
+                <analyteIdList>
+                    <analyteId>busulfan</analyteId>
+                </analyteIdList>
+                <analytesToMoietyFormula>
+                    <hardFormula>direct</hardFormula>
+                    <comments/>
+                </analytesToMoietyFormula>
+                <!-- Drug targets -->
+                <targets>
+                    <target>
+                        <targetType>peak</targetType>
+                        <targetValues>
+                        <unit>mg/l</unit>
+                            <min>
+                                <standardValue>1.0</standardValue>
+                            </min>
+                            <max>
+                                <standardValue>1.4</standardValue>
+                            </max>
+                            <best>
+                                <standardValue>1.2</standardValue>
+                            </best>
+                            <toxicityAlarm><standardValue>10000.0</standardValue></toxicityAlarm>
+                            <inefficacyAlarm><standardValue>0.0</standardValue></inefficacyAlarm>
+                        </targetValues>
+                        <times>
+                            <unit>h</unit>
+                            <min>
+                                <standardValue>0.9</standardValue>
+                            </min>
+                            <max>
+                                <standardValue>3</standardValue>
+                            </max>
+                            <best>
+                                <standardValue>2.5</standardValue>
+                            </best>
+                        </times>
+                        <comments>
+                            <comment lang="en">The time values shall be checked. They initially were not aligned with possible infusion times. A Toxicity and inefficacyAlarm should be added</comment>
+                        </comments>
+                    </target>
+                    <target>
+                        <targetType>cumulativeAuc</targetType>
+                        <targetValues>
+                            <unit>mg*h/l</unit>
+                            <min>
+                                <standardValue>59.0</standardValue>
+                            </min>
+                            <max>
+                                <standardValue>99.0</standardValue>
+                            </max>
+                            <best>
+                                <standardValue>72.0</standardValue>
+                            </best>
+                            <!-- TODO : Check that -->
+                            <toxicityAlarm><standardValue>10000.0</standardValue></toxicityAlarm>
+                            <inefficacyAlarm><standardValue>0.0</standardValue></inefficacyAlarm>
+                        </targetValues>
+                        <comments>
+                            <comment lang="en">This is the target cumulative for a regimen with 16 doses over 4 days, i.e. a dose every 6h.</comment>
+                        </comments>
+                    </target>
+                </targets>
+            </activeMoiety>
+        </activeMoieties>
+
+        <analyteGroups>
+            <analyteGroup>
+                <groupId>busulfan</groupId>
+                <pkModelId>linear.1comp.macro</pkModelId>
+                <analytes>
+                    <analyte>
+                        <analyteId>busulfan</analyteId>
+                        <unit>mg/l</unit>
+                        <molarMass>
+                          <value>246.292</value>
+                            <unit>g/mol</unit>
+                        </molarMass>
+                        <description>
+                            <desc lang="en"></desc>
+                        </description> <!-- peut être vide -->
+
+                        <errorModel> <!-- optional -->
+                            <errorModelType>mixed</errorModelType>
+                            <sigmas>
+                                <sigma>
+                                    <standardValue>0.057</standardValue>
+                                </sigma>
+                                <sigma>
+                                    <standardValue>0.11</standardValue>
+                                </sigma>
+                            </sigmas>
+                            <comments>
+                                <comment lang='fr'>add: en mg/L; prop, en % ie 0.11 = 11.0%</comment>
+                            </comments>
+                        </errorModel>
+                        <comments/>
+                    </analyte>
+                </analytes>
+
+                <!-- Drug parameters -->
+                <dispositionParameters>
+                    <parameters>
+                        <parameter>
+                            <parameterId>CL</parameterId>
+                            <unit>l/h</unit>
+                            <parameterValue>
+                                <standardValue>2.18</standardValue>
+                                <aprioriComputation>
+
+                                    <softFormula>
+                                        <inputs>
+                                            <input>
+                                                <id>bodyweight</id>
+                                                <type>double</type>
+                                            </input>
+                                        </inputs>
+                                        <code><![CDATA[
+                                theta_1 = 2.18;
+
+                                if (bodyweight < 9.0)
+                                  theta_2=1.25;
+                                else
+                                  theta_2=0.76;
+
+                                return theta_1 * Math.pow((bodyweight/ 9),theta_2);
+
+                         ]]>
+                                        </code>
+                                    </softFormula>
+                                    <comments/>
+                                </aprioriComputation>
+                            </parameterValue>
+                            <bsv>
+                                <bsvType>proportional</bsvType> <!-- même chose que le modèle d'erreur -->
+                                <stdDevs>
+                                    <stdDev>0.23</stdDev>
+                                </stdDevs>
+                            </bsv>
+                            <validation>
+                                <errorMessage><text lang="fr"></text></errorMessage>
+                                <operation>
+                                    <softFormula>
+                                        <inputs>
+                                            <input>
+                                                <id>CL</id>
+                                                <type>double</type>
+                                            </input>
+                                        </inputs>
+                                        <code><![CDATA[
+                                            return CL < 300.0 and CL > 0.0;
+                                            ]]>
+                                        </code>
+                                    </softFormula>
+                                    <comments/>
+                                </operation>
+                                <comments/>
+                            </validation>
+                            <comments/>
+                        </parameter>
+                        <parameter>
+                            <parameterId>V</parameterId>
+                            <unit>l</unit>
+                            <parameterValue>
+                                <standardValue>6.6</standardValue>
+                                <aprioriComputation>
+
+                                    <softFormula>
+                                        <inputs>
+                                            <input>
+                                                <id>bodyweight</id>
+                                                <type>double</type>
+                                            </input>
+                                        </inputs>
+                                        <code><![CDATA[
+                                theta_3=0.86;
+				return Math.pow(bodyweight,theta_3);
+                                            ]]>
+                                        </code>
+                                    </softFormula>
+                                    <comments/>
+                                </aprioriComputation>
+                            </parameterValue>
+                            <bsv>
+                                <bsvType>proportional</bsvType>
+                                <stdDevs>
+                                    <stdDev>0.22</stdDev>
+                                </stdDevs>
+                            </bsv>
+                            <validation>
+                                <errorMessage><text lang="fr"></text></errorMessage>
+                                <operation>
+                                    <softFormula>
+                                        <inputs>
+                                            <input>
+                                                <id>V</id>
+                                                <type>double</type>
+                                            </input>
+                                        </inputs>
+                                        <code><![CDATA[
+                                            return V < 300.0 and V > 0.0;
+                                            ]]>
+                                        </code>
+                                    </softFormula>
+                                    <comments/>
+                                </operation>
+                                <comments/>
+                            </validation>
+                            <comments>
+                                <comment lang="en">Typical volume calculated for a patients with weight = 75 kg</comment>
+                            </comments>
+                        </parameter>
+                    </parameters>
+
+                    <!-- elimination parameters correlations -->
+                    <correlations />
+                </dispositionParameters>
+            </analyteGroup>
+        </analyteGroups>
+
+        <!-- We can have various formulation and routes, and for each one a set of absorption parameters and available dosages -->
+
+        <formulationAndRoutes default="id0">
+            <formulationAndRoute>
+                <formulationAndRouteId>id0</formulationAndRouteId>
+                <formulation>parenteral solution</formulation><!-- dictionnaire -->
+                <administrationName>champ libre</administrationName>
+                <administrationRoute>intravenousDrip</administrationRoute> <!-- dictionnaire -->
+                <absorptionModelId>infusion</absorptionModelId>
+
+
+                <!-- Drug dosages -->
+                <dosages>
+
+
+                    <standardTreatment>
+                        <isFixedDuration>true</isFixedDuration>
+                        <timeValue>
+                            <unit>d</unit>
+                            <value>4</value>
+                        </timeValue>
+                    </standardTreatment>
+
+                    <analyteConversions>
+                        <analyteConversion>
+                            <analyteId>busulfan</analyteId>
+                            <factor>1</factor>
+                        </analyteConversion>
+                    </analyteConversions>
+
+                    <availableDoses>
+                        <unit>mg</unit>
+                        <default>
+                            <standardValue>10</standardValue>
+                        </default>
+                        <rangeValues>
+                            <from>
+                                <standardValue>1</standardValue>
+                            </from>
+                            <to>
+                                <standardValue>400</standardValue>
+                            </to>
+                            <step>
+                                <standardValue>1</standardValue>
+                            </step>
+                        </rangeValues>
+                    </availableDoses>
+
+                    <intervals>
+                        <unit>h</unit>
+                        <default>
+                            <standardValue>6</standardValue>
+                        </default>
+                        <fixedValues>
+                            <value>6</value>
+                            <value>24</value>
+                        </fixedValues>
+                    </intervals>
+                    <infusions>
+                        <unit>min</unit>
+                        <default>
+                            <standardValue>120</standardValue>
+                        </default>
+                        <fixedValues>
+                            <value>60</value>
+                            <value>120</value>
+                            <value>180</value>
+                        </fixedValues>
+                    </infusions>
+                    <comments/>
+                </dosages>
+
+                <absorptionParameters/>
+
+            </formulationAndRoute>
+        </formulationAndRoutes>
+
+
+
+        <timeConsiderations>
+            <!-- Drug half-life -->
+            <halfLife>
+                <unit>h</unit>
+                <duration>
+                    <standardValue>12</standardValue>
+                </duration>
+                <multiplier>10</multiplier>
+                <comments>
+                    <comment lang="en">TODO : Find the half life</comment>
+                </comments>
+            </halfLife>
+
+
+            <outdatedMeasure>
+                <unit>d</unit>
+                <duration>
+                    <standardValue>100</standardValue>
+                </duration>
+                <comments>
+                    <comment lang="en">TODO : This value is not set now</comment>
+                </comments>
+            </outdatedMeasure>
+        </timeConsiderations>
+
+        <!-- Drug general comments -->
+        <comments>
+        </comments>
+    </drugModel>
+</model>

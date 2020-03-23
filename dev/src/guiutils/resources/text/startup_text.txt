@@ -1,0 +1,21 @@
+<p>This software is a beta version. It is not a medical device and as such <b>is NOT INTENDED</b> to be used in a clinical practice for the interpretation of real patients data. The manufacturer declines any responsibility for damage caused by improper use or any use other than those described on this Instruction Sheet.
+</p>
+
+<p>
+The current state of this software allows the user to:
+<ul>
+        <li>Create fake patients</li>
+        <li>Select a medical drug</li>
+        <li>Select a dosage</li>
+        <li>Add patient's covariates</li>
+        <li>Add drug concentration measures</li>
+        <li>Propose a drug dosage adjustment</li>
+        <li>Save and load an interpretation</li>
+        <li>Generate a PDF report (not customized)</li>
+        <li>Connect to an external database to retrieve pending requests</li>
+</ul>
+</p>
+
+<p>By pressing CTRL+SHIFT+T you can toggle tooltips that can help you to better understand Tucuxi.</p>
+
+<p>This software is developed with the Qt library under the LGPL license.</p>

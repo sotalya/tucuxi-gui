@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.6" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>Jan Purro et Mélanie Huck</name>
+      <institution>HEIG-VD // REDS</institution>
+      <email>jan.purro@protonmail.ch</email>
+      <date>2016-05-20</date>
+      <comments>
+          <comment lang="en">
+            Based on the article Hennig, S., Norris, R. and Kirkpatrick, C. M. J. (2008), Target concentration intervention is needed for tobramycin dosing in paediatric patients with cystic fibrosis – a population pharmacokinetic study. British Journal of Clinical Pharmacology, 65: 502–510. doi: 10.1111/j.1365-2125.2007.03045.x.
+          </comment>
+          <comment lang="fr">
+            Basé sur sur l'article Target concentration intervention is needed for tobramycin dosing in paediatric patients with cystic fibrosis – a population pharmacokinetic study. British Journal of Clinical Pharmacology, 65: 502–510. doi: 10.1111/j.1365-2125.2007.03045.x
+          </comment>
+        </comments>
+    </creator>
+    <revisions>
+  <revision>
+	    <name>Sylvain Goutelle</name>
+      <institution>CHUV</institution>
+      <email>sylvain.goutelle@chuv.ch</email>
+      <date>2017-07-27</date>
+      <comments><comment lang="en">
+      Age range : 0.5 - 17.9 years
+      Weight range : 6 - 72.6 kg
+      Disease: Cystic fibrosis children
+      </comment></comments>
+	</revision>
+	</revisions>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>J01GB01</atc>
+      <drugid>tobramycin</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.tobramycin.children</drugmodelid>
+      <pkmodelid>ch.heig-vd.ezechiel.rk4.linear.2comp.infu.clv</pkmodelid>
+      <drugnames>
+        <name lang="en">Tobramycin</name>
+        <name lang="fr">Tobramycine</name>
+      </drugnames>
+      <domainnames>
+        <name lang="en">Generic</name>
+        <name lang="fr">Générique</name>
+      </domainnames>
+      <studynames>
+        <name lang="en">Hennig, S., Norris, R. and Kirkpatrick, C. M. J. (2008), Target concentration intervention is needed for tobramycin dosing in paediatric patients with cystic fibrosis – a population pharmacokinetic study. British Journal of Clinical Pharmacology, 65: 502–510. doi: 10.1111/j.1365-2125.2007.03045.x</name>
+      </studynames>
+	<references>
+          <reference type='bibtex'>@article{lamoth_reassessment_2009,
+	title = {Evaluation of Serum Concentrations Achieved With an Empiric Once-Daily Tobramycin Dosage Regimen in Children and Adults With Cystic Fibrosis},
+	volume = {17},
+	issn = {1551-6776},
+	url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3428189},
+	doi = {10.5863/1551-6776-17.1.67},
+	language = {en},
+	urldate = {2016-05-27},,
+	journal = {The Journal of Pediatric Pharmacology and Therapeutics},
+	author = {VandenBussche, Heather L. and Homnick, Douglas N.},
+	year = {2012},
+	pages = {67-77}
+    }
+        </reference>
+    </references>
+      <descs>
+          <desc lang="en">...</desc>
+          <desc lang="fr">...</desc>
+      </descs>
+      <brands>
+        <brand/>
+      </brands>
+      <comments>
+          <comment lang="en">FEEDBACK: more information for domain</comment>
+      </comments>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>infu</intake>
+      <distribution>2</distribution>
+      <elimination>linear</elimination>
+      <comments></comments>
+    </adme>
+
+    <!-- Drug half-life -->
+
+    <!-- Pas nécessaire de remplir -->
+
+    <halflife>
+        <unit>h</unit>
+        <value>3</value>
+        <multiplier>1</multiplier>
+      <comments/>
+    </halflife>
+
+    <!-- Drug units and conversions -->
+
+    <!-- Pas nécessaire de remplir -->
+
+    <conversions>
+      <units>
+        <concentration>mg/l</concentration>
+        <result>mg/l</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>0</molarmass>
+      <comments>
+      </comments>
+    </conversions>
+
+    <!-- Drug dosages -->
+
+    <dosages> <!-- SG: prévoir une posologie par step car pédiatrie, dose usuelle de 10 mg/kg -->
+      <doses default="300" unit="mg" any="true" from="5" to="1000" step="5">
+      </doses>
+      <intervals default="24" unit="d" any="false">
+        <interval>6</interval>
+        <interval>8</interval>
+        <interval>12</interval>
+        <interval>16</interval>
+        <interval>24</interval>
+        <interval>30</interval>
+        <interval>36</interval>
+        <interval>42</interval>
+        <interval>48</interval>
+        <interval>60</interval>
+        <interval>72</interval>
+      </intervals>
+      <infusions default="30" unit="min" any="false">
+		    <infusion>5</infusion>
+        <infusion>10</infusion>
+        <infusion>15</infusion>
+        <infusion>30</infusion>
+        <infusion>45</infusion>
+        <infusion>60</infusion>
+		    <infusion>75</infusion>
+		    <infusion>90</infusion>
+		    <infusion>105</infusion>
+		    <infusion>120</infusion>
+
+      </infusions>
+      <comments>
+      </comments>
+    </dosages>
+
+    <!-- Drug targets -->
+
+    <targets>
+      <target>
+        <type>peak</type>
+        <concentrations unit="mg/l">
+          <min>
+            <value>80</value>
+            <formula/>
+          </min>
+          <max>
+            <value>125</value>
+            <formula/>
+          </max>
+          <best>
+            <value>100</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <times unit="h">
+            <min>
+              <value>0.5</value>
+              <formula/>
+            </min>
+            <max>
+              <value>1.5</value>
+              <formula/>
+            </max>
+            <best>
+              <value>1</value>
+              <formula/>
+            </best>
+        </times>
+          <comments>
+        </comments>
+      </target>
+      <target>
+        <type>residual</type>
+        <concentrations unit="mg/l">
+          <min>
+            <value>0.1</value>
+            <formula/>
+          </min>
+          <max>
+            <value>1</value>
+            <formula/>
+          </max>
+          <best>
+            <value>0.5</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <comments>
+        </comments>
+      </target>
+    </targets>
+
+    <!-- Drug covariates -->
+
+    <covariates>
+      <covariate>
+        <id>bodyweight</id>
+        <names>
+          <name lang="en">body weight</name>
+          <name lang="fr">Poids</name>
+        </names>
+        <descs>
+          <desc lang="en">Total body weight of the patient, in kilos</desc>
+          <desc lang="fr">Poids total du patient, en kilos</desc>
+        </descs>
+        <unit/>
+        <type>int</type>
+        <defaultvalue>70</defaultvalue>
+        <comments>
+          <comment lang="fr">
+              Le poids du patient est la seule covariable qui a été retenue par l'étude, bien que d'autres covariables (notamment le taux d'élimination d'une autre molécule (serum creatinine)) aient été envisagées.
+          </comment>
+        </comments>
+      </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+
+    <errormodel>
+      <additive>0</additive>
+      <proportional>0.19</proportional>
+      <comments/>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>6.37</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.117</proportional>
+        </bsv>
+        <min>0</min>
+        <max>100</max>
+        <step>0.01</step>
+        <comments>
+        </comments>
+      </parameter>
+      <parameter>
+        <id>V1</id>
+        <unit>l</unit>
+        <value>18.70</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.117</proportional>
+        </bsv>
+        <min>0</min>
+        <max>100</max>
+        <step>0.01</step>
+        <comments></comments>
+      </parameter>
+      <parameter>
+        <id>V2</id>
+        <unit>l</unit>
+        <value>1.32</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.42</proportional>
+        </bsv>
+        <min>0</min>
+        <max>100</max>
+        <step>0.01</step>
+        <comments></comments>
+      </parameter>
+      <parameter>
+        <id>Q</id>
+        <unit>l/h</unit>
+        <value>0.39</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0</proportional>
+        </bsv>
+        <min>0</min>
+        <max>100</max>
+        <step>0.01</step>
+        <comments></comments>
+      </parameter>
+    </parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+        <correlation>
+            <param1>CL</param1>
+            <param2>V1</param2>
+            <value>0.73</value>
+            <comments>
+                <comment lang="fr">
+                        Valeurs issues de la Table 2 de l'étude.
+                </comment>
+            </comments>
+        </correlation>
+        <correlation>
+            <param1>CL</param1>
+            <param2>V2</param2>
+            <value>0.49</value>
+            <comments/>
+        </correlation>
+        <correlation>
+            <param1>V1</param1>
+            <param2>V2</param2>
+            <value>0.27</value>
+            <comments/>
+        </correlation>
+    </correlations>
+
+    <!-- Drug operations -->
+
+    <operations>
+	    <operation>
+        <parameter>CL</parameter>
+          <formula><![CDATA[
+          theta1 = 6.37;
+          BW = covariate_bodyweight;
+
+          TVCL = theta1 * (BW/70)^0.75;
+          return TVCL;
+          ]]></formula>
+            <comments>
+            </comments>
+
+        </operation>
+        <operation>
+            <parameter>V1</parameter>
+            <formula><![CDATA[
+            theta2 = 18.7;
+          BW = covariate_bodyweight;
+
+                v = theta2 * (BW/70);
+                return v;
+            ]]>
+            </formula>
+            <comments/>
+        </operation>
+    </operations>
+    <comments/>
+
+  </drug>
+</model>

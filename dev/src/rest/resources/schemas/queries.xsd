@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Included Schemas -->
+
+  <xs:include schemaLocation="mirth.xsd" />
+
+  <!-- File Structure -->
+
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element name="from" type="xs:dateTime" />
+          <xs:element name="to" type="xs:dateTime" />
+          <xs:element name="state" type="requestState" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="requestId" type="requestId" />
+          <xs:element name="patientId" type="patientId" />
+          <xs:element name="drugId" type="drugId" />
+        </xs:sequence>
+      </xs:choice>
+      <xs:attribute ref="version" use="required" />
+      <xs:attribute ref="lang" use="required" />
+      <xs:attribute ref="type" use="required" />
+      <xs:attribute ref="controlId" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

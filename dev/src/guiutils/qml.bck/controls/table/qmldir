@@ -1,0 +1,7 @@
+module guiutils.qml.controls.table
+Table 1.0 Table.qml
+TableHeader 1.0 TableHeader.qml
+TableFilter 1.0 TableFilter.qml
+TableDialog 1.0 TableDialog.qml
+TableRow 1.0 TableRow.qml
+TableCell 1.0 TableCell.qml

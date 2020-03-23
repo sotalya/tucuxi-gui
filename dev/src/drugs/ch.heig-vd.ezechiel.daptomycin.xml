@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="drugsmodel.xsl" type="text/xsl" ?>
+<model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.6" xsi:noNamespaceSchemaLocation="drug.xsd">
+
+  <!-- Drug history -->
+
+  <history>
+    <creator>
+      <name>William Bovy et Sarah Pitteloud</name>
+      <institution>HEIG-VD</institution>
+      <email>yann.thoma@heig-vd.ch</email>
+      <date>2014-06-27</date>
+      <comments>
+          <comment lang="en">
+          Population pharmacokinetics of Daptomycin in patients affected by sever Gram-positive infections : Di-Paolo analysi>
+
+            Disease.Severe Gram positive infection
+          Age mean 66+/-15 yrs
+          Weight mean 71+/-17kg</comment>
+          <comment lang="fr">Pharmacocinetique de la daptomycine chez des patients avec une infection.sévère à bactéries à Gram-positif: Analyse de Di-Paolo</comment>
+        </comments>
+    </creator>
+    <revisions>
+      <revision>
+        <name>Yann Sutter</name>
+        <institution>HEIG-VD // REDS</institution>
+        <email>yann.sutter@heig-vd.ch</email>
+        <date>2014-04-16</date>
+        <comments/>
+      </revision>
+	<revision>
+	<name>Robert Hooper</name>
+        <institution>HEIG-VD // REDS</institution>
+        <email>robert.hooper@heig-vd.ch</email>
+        <date>2014-07-15</date>
+        <comments/>
+      </revision>
+
+<revision>
+<name>Sylvain Goutelle</name>
+        <institution>CHUV</institution>
+        <email>sylvain.goutelle@chuv.ch</email>
+        <date>2017-07-25</date>
+        <comments/>
+      </revision>
+    </revisions>
+  </history>
+
+  <!-- Drug data -->
+
+  <drug>
+
+    <!-- Drug description -->
+
+    <head>
+      <atc>J01XX09</atc>
+      <drugid>daptomycin</drugid>
+      <drugmodelid>ch.heig-vd.ezechiel.daptomycin</drugmodelid>
+      <pkmodelid>ezechiel.model.linear.1comp.infus.clv</pkmodelid>
+      <drugnames>
+        <name lang="en">Daptomycin</name>
+        <name lang="fr">Daptomycine</name>
+      </drugnames>
+      <domainnames>
+        <name lang="en">Standard</name>
+        <name lang="fr">Standrard</name>
+      </domainnames>
+      <studynames>
+        <name lang="en">Population pharmacokinetics of daptomycin in patients affected by sever Gram-positive infections</name>
+        <name lang="fr">Pharmacocinetique de la daptomycine sur des patients affectes par une severe infection de Gram-positive</name>
+      </studynames>
+      <references>
+          <reference type='bibtex'>@article{di_paolo_population_2013,
+	title = {Population pharmacokinetics of daptomycin in patients affected by severe Gram-positive infections},
+	volume = {42},
+	issn = {09248579},
+	url = {http://linkinghub.elsevier.com/retrieve/pii/S0924857913002136},
+	doi = {10.1016/j.ijantimicag.2013.06.006},
+	language = {en},
+	number = {3},
+	urldate = {2014-10-23},
+	journal = {International Journal of Antimicrobial Agents},
+	author = {Di Paolo, Antonello and Tascini, Carlo and Polillo, Marialuisa and Gemignani, Giulia and Nielsen, Elisabet I. and Bocci, Guido and Karlsson, Mats O. and Menichetti, Francesco and Danesi, Romano},
+	month = sep,
+	year = {2013},
+	pages = {250--255},
+	file = {2013_Di-Paolo_Daptomycin.pdf:/home/rob/.zotero/zotero/iv5zqg2p.default/zotero/storage/RBE3GBEQ/2013_Di-Paolo_Daptomycin.pdf:application/pdf}
+}
+	</reference>
+	</references>
+	<descs>
+        <desc lang="en">Antibiotic used in treatment against Gram-positive organisms</desc>
+        <desc lang="fr">Antibiotique contre les organismes Gram-positifs</desc>
+      </descs>
+      <brands>
+        <brand>Daptomycin</brand>
+      </brands>
+      <comments/>
+    </head>
+
+    <!-- Drug adme and intake -->
+
+    <adme>
+      <intake>infu</intake>
+      <distribution>1</distribution>
+      <elimination>linear</elimination>
+      <comments>
+          <comment lang="en">Infused treatment in linear one compartiment model</comment>
+          <comment lang="fr">Traitement par infusion sur un modele lineaire a un compartiment</comment>
+        </comments>
+    </adme>
+
+    <!-- Drug units and conversions -->
+
+    <halflife>
+      <unit>h</unit>
+      <value>12</value>
+      <multiplier>10</multiplier>
+      <comments/>
+    </halflife>
+
+    <conversions>
+      <units>
+        <concentration>ug/l</concentration>
+        <result>ug/l</result>
+      </units>
+      <factors>
+        <concentration>0</concentration>
+        <result>0</result>
+      </factors>
+      <molarmass>0</molarmass>
+      <comments/>
+    </conversions>
+
+    <!-- Drug dosages -->
+
+    <dosages>
+      <doses default="500" unit="mg" any="false">
+        <dose>200</dose>
+        <dose>350</dose>
+        <dose>500</dose>
+	      <dose>600</dose>
+        <dose>700</dose>
+        <dose>800</dose>
+	      <dose>900</dose>
+        <dose>1000</dose>
+        <dose>1100</dose>
+        <dose>1200</dose>
+	      <dose>1350</dose>
+	</doses>
+      <intervals default="24" unit="h" any="false">
+        <interval>24</interval>
+        <interval>36</interval>
+        <interval>48</interval>
+      </intervals>
+      <infusions default="30" unit="min" any="false">
+        <infusion>6</infusion>
+        <infusion>30</infusion>
+      </infusions>
+      <comments/>
+    </dosages>
+
+    <!-- Drug targets -->
+
+    <targets>
+      <target>
+        <type>peak</type>
+        <concentrations unit="mg/l">
+          <min>
+            <value>40</value>
+            <formula/>
+          </min>
+          <max>
+            <value>100</value>
+            <formula/>
+          </max>
+          <best>
+            <value>60</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <times unit="h">
+          <min>
+            <value>0.5</value>
+            <formula/>
+          </min>
+          <max>
+            <value>1.5</value>
+            <formula/>
+          </max>
+          <best>
+            <value>1</value>
+            <formula/>
+          </best>
+        </times>
+        <comments/>
+      </target>
+      <target>
+        <type>residual</type>
+        <concentrations unit="mg/l">
+          <min>
+            <value>5</value>
+            <formula/>
+          </min>
+          <max>
+            <value>25</value>
+            <formula/>
+          </max>
+          <best>
+            <value>15</value>
+            <formula/>
+          </best>
+        </concentrations>
+        <comments>
+          <comment lang="fr">Cmin should be less than 25 mg/L to avoid muscular toxicity according to Bhavnani et al.CID 2010</comment>
+        </comments>
+      </target>
+    </targets>
+
+    <!-- Drug covariates -->
+
+    <covariates>
+      <covariate>
+        <id>CLcr</id>
+        <names>
+          <name lang="en">CLcr</name>
+          <name lang="fr">CLcr</name>
+        </names>
+        <descs>
+          <desc lang="en">Creatinine clearance</desc>
+          <desc lang="fr">Clairance de la creatinine</desc>
+        </descs>
+        <unit>mL/min</unit> <!-- ml for a minute -->
+        <type>double</type>
+        <defaultvalue>80</defaultvalue>
+        <comments></comments>
+        </covariate>
+    </covariates>
+
+    <!-- Drug error model -->
+
+    <errormodel>
+      <additive>1.422</additive>
+      <proportional>0.3628</proportional>
+      <comments>
+            <comment lang="en">Proportional taken as percent CV</comment>
+         </comments>
+    </errormodel>
+
+    <!-- Drug parameters -->
+
+    <parameters>
+      <parameter>
+        <id>CL</id>
+        <unit>l/h</unit>
+        <value>0.8016</value>
+        <bsv>
+          <additive>0</additive>
+          <proportional>0.2074</proportional>
+        </bsv>
+        <min>0.0001</min>
+        <max>100000</max>
+        <step>1</step>
+        <comments></comments>
+      </parameter>
+      <parameter>
+        <id>V</id>
+        <unit>l</unit>
+        <value>12.29</value> <!-- constante -->
+        <bsv>
+          <additive>0.0</additive>
+          <proportional>0.0</proportional>
+        </bsv>
+        <min>0.0001</min>
+        <max>100000</max>
+        <step>5</step>
+        <comments>
+         </comments>
+      </parameter>
+    </parameters>
+
+    <!-- Drug correlations -->
+
+    <correlations>
+    </correlations>
+
+    <!-- Drug operations -->
+
+    <operations>
+<operation>
+        <parameter>CL</parameter>
+        <formula><![CDATA[
+theta1=parameter_CL;
+theta3=0.2026;
+
+TVCL = theta1 * Math.pow(covariate_CLcr/80, theta3);
+return TVCL;
+        ]]></formula>
+        <comments/>
+      </operation>
+    </operations>
+
+    <!-- Drug general comments -->
+
+    <comments>
+        </comments>
+
+  </drug>
+</model>

@@ -47,7 +47,7 @@ cliutils.depends             = core apputils admin
 }
 drugeditor.depends	     = core guiutils
 
-guiutils.depends             = processingtucucore
+guiutils.depends             += processingtucucore
 gui.depends += processingtucucore
 cli.depends += processingtucucore
 

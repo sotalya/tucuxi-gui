@@ -54,8 +54,8 @@ ProcessingTucucore::ProcessingTucucore() : m_requestID(1)
 
         // We define the maximum number of points that can be calculated by the computing component:
         // 200000 points for a prediction
-        // 5000 points for percentiles
-        Tucuxi::Core::SingleOverloadEvaluator::getInstance()->setValues(200000, 5000, 10000);
+        // 10000 points for percentiles
+        Tucuxi::Core::SingleOverloadEvaluator::getInstance()->setValues(200000, 10000, 10000);
     }
 }
 
@@ -324,6 +324,15 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
         Tucuxi::Common::DateTime _endDate = translator.buildDateTime(traits.end);
         int nbPointsPerHour = traits.nbPoints / 24.0;
 
+        auto duration = _endDate - _startDate;
+        double durationInHours = static_cast<double>(duration.toSeconds()) / 3600.0;
+        if ( durationInHours * static_cast<double>(nbPointsPerHour) > 5000.0) {
+
+            nbPointsPerHour = 4;
+//            nbPointsPerHour = static_cast<int>(5000.0 / durationInHours);
+        }
+
+
         std::unique_ptr<Tucuxi::Core::ComputingTrait> computingTrait = std::make_unique<Tucuxi::Core::ComputingTraitPercentiles>(
                     std::to_string(m_requestID),
                     _startDate,
@@ -365,7 +374,7 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
                             for (size_t pointIndex=0; pointIndex<cycleData.m_concentrations[0].size(); pointIndex++) {
                                 ezechiel::core::FancyPoint* fpt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoint>(ABSTRACTREPO, fpts);
                                 fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                                                                          std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
+                                                                          std::chrono::milliseconds(static_cast<int64>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
                                 // The following requires at least Qt 5.8
                                 //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
                                 //                                          std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toSecsSinceEpoch());

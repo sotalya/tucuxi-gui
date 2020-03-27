@@ -5,7 +5,7 @@ set "ARCH=%1%"
 REM Target is Debug or Release
 set "TARGET=%2%" 
 
-set PRJ_DIR=C:\Projects\Ezechiel\dev
+set PRJ_DIR=E:\docs\tucuxi\tucuxi-gui\dev
 set SRC_DIR=%PRJ_DIR%\src
 set DIST_DIR=%PRJ_DIR%\build-ezechiel-tucucore-Desktop_Qt_5_7_1_MSVC2015_%ARCH%bit-%TARGET%\dist\
 set DEPLOY_DIR=%PRJ_DIR%\Deploy
@@ -30,7 +30,7 @@ mkdir %DEPLOY_DIR%\%ARCH%\%TARGET%\requests
 mkdir %DEPLOY_DIR%\%ARCH%\%TARGET%\reports
 
 REM Copy the application
-copy %DIST_DIR%\ezechiel.exe %DEPLOY_DIR%\%ARCH%\%TARGET%\Tucuxi.exe
+copy %DIST_DIR%\tucuxi.exe %DEPLOY_DIR%\%ARCH%\%TARGET%\Tucuxi.exe
 xcopy /s %DIST_DIR%\dbs %DEPLOY_DIR%\%ARCH%\%TARGET%\dbs\
 copy %SRC_DIR%\core\xml\definitions.xml %DEPLOY_DIR%\%ARCH%\%TARGET%\
 
@@ -78,4 +78,3 @@ REM Run setup.exe!
 REM rd /s /q %INSTALL_DIR%
 REM %PRJ_DIR%\Setup-%TARGET%%ARCH%.exe /S
 
-pause

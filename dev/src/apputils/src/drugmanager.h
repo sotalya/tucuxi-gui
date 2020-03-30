@@ -250,7 +250,7 @@ private:
     bool validateModel(const ezechiel::core::DrugModel* drug);
     bool validateParameters(const ezechiel::core::DrugModel* drug);
 
-    bool validateScripts(const ezechiel::core::DrugModel* drug);
+    // bool validateScripts(const ezechiel::core::DrugModel* drug);
 
     //Deletes the existing drugs
     void resetDrugs();

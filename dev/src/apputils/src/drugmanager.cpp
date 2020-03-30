@@ -31,8 +31,6 @@
 #include <iostream>
 #include <QtGlobal>
 
-#include <QScriptEngine>
-
 
 using namespace ezechiel::core;
 
@@ -149,6 +147,7 @@ ezechiel::core::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xmlDe
 //Validates a drug
 bool DrugManager::validateDrug(const DrugModel* drug)
 {
+#if 0
     LOG(QtDebugMsg, NOEZERROR, tr("Validating drug ID '%1'").arg(drug ? drug->descriptor().id : "unknown"));
 
     //Check if the drug is valid
@@ -173,6 +172,7 @@ bool DrugManager::validateDrug(const DrugModel* drug)
     if (!validateScripts(drug)) {
         return false;
     }
+#endif 0
     return true;
 }
 
@@ -427,6 +427,7 @@ bool DrugManager::validateParameters(const DrugModel* drug)
     return true;
 }
 
+#if 0
 bool DrugManager::validateScripts(const DrugModel *drug)
 {
     bool resultOk = true;
@@ -482,6 +483,7 @@ bool DrugManager::validateScripts(const DrugModel *drug)
     }
     return resultOk;
 }
+#endif 0
 
 //Deletes the existing drugs
 void DrugManager::resetDrugs()

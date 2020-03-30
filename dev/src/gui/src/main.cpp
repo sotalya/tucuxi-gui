@@ -100,7 +100,7 @@
 #include "core/utils/logging.h"
 
 #ifdef COMPILE_WITH_TUCUCORE
-#include "tucucommon/licensemanager.h"
+#include "tucucrypto/licensemanager.h"
 #else
 #include "src/fromtucuxi/licensemanager.h"
 #endif // COMPILE_WITH_TUCUCORE

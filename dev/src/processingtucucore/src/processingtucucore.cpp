@@ -93,7 +93,11 @@ ezechiel::ProcessingResult ProcessingTucucore::points(
 
     Tucuxi::Core::PredictionParameterType _type = translator.buildParameterType(traits.traits);
 
-    Tucuxi::Core::ComputingOption options(_type, Tucuxi::Core::CompartmentsOption::MainCompartment, true);
+    Tucuxi::Core::ComputingOption options(_type,
+                                          Tucuxi::Core::CompartmentsOption::MainCompartment,
+                                          Tucuxi::Core::RetrieveStatisticsOption::RetrieveStatistics,
+                                          Tucuxi::Core::RetrieveParametersOption::RetrieveParameters,
+                                          Tucuxi::Core::RetrieveCovariatesOption::RetrieveCovariates);
 
     bool validDates = true;
     if (!traits.start.isValid()) {
@@ -443,7 +447,10 @@ ezechiel::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
     double nbPointsPerHour = traits.nbPoints / 24.0;
 
     Tucuxi::Core::ComputingOption computingOption(Tucuxi::Core::PredictionParameterType::Population,
-                                                  Tucuxi::Core::CompartmentsOption::MainCompartment);
+                                                  Tucuxi::Core::CompartmentsOption::MainCompartment,
+                                                  Tucuxi::Core::RetrieveStatisticsOption::RetrieveStatistics,
+                                                  Tucuxi::Core::RetrieveParametersOption::RetrieveParameters,
+                                                  Tucuxi::Core::RetrieveCovariatesOption::RetrieveCovariates);
     if (analysis->getTreatment()->getMeasures()->size() != 0) {
         computingOption = Tucuxi::Core::ComputingOption(Tucuxi::Core::PredictionParameterType::Aposteriori,
                                                          Tucuxi::Core::CompartmentsOption::MainCompartment);

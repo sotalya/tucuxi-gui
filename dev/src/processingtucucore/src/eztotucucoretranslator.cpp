@@ -201,6 +201,8 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
 
     // TODO : Be careful her, we use the active substance ID
     std::string analyteId = _ezTreatment->getActiveSubstanceId().toStdString();
+    Tucuxi::Core::ActiveMoietyId activeMoietyId =
+            Tucuxi::Core::ActiveMoietyId(_ezTreatment->getActiveSubstanceId().toStdString());
 
     QList<ezechiel::core::CoreMeasure*> sampleList = _ezTreatment->getMeasures()->getList();
     QList<ezechiel::core::CoreMeasure*>::iterator itSamples = sampleList.begin();
@@ -236,7 +238,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
         }
         if (target->getTbest()->getUnitstring() == "h") {
             newTreatment->addTarget(std::make_unique<Tucuxi::Core::Target>(
-                                        analyteId,
+                                        activeMoietyId,
                                         targetType,
                                         target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getUnitstring().toStdString(),
@@ -251,7 +253,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
         }
         else if (target->getTbest()->getUnitstring() == "m") {
             newTreatment->addTarget(std::make_unique<Tucuxi::Core::Target>(
-                                        analyteId,
+                                        activeMoietyId,
                                         targetType,
                                         target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getUnitstring().toStdString(),
@@ -266,7 +268,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
         }
         else if (target->getTbest()->getUnitstring() == "s") {
             newTreatment->addTarget(std::make_unique<Tucuxi::Core::Target>(
-                                        analyteId,
+                                        activeMoietyId,
                                         targetType,
                                         target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getUnitstring().toStdString(),

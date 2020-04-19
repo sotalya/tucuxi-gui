@@ -136,103 +136,107 @@ ezechiel::ProcessingResult ProcessingTucucore::points(
                     nbPointsPerHour,
                     options);
 
-        traits->addTrait(std::move(computingTrait));
+        //traits->addTrait(std::move(computingTrait));
 
         // The traits for the prediction at measure times
         std::unique_ptr<Tucuxi::Core::ComputingTrait> computingTraitAtMeasure = std::make_unique<Tucuxi::Core::ComputingTraitAtMeasures>(
                     std::to_string(m_requestID),
                     options);
 
-        traits->addTrait(std::move(computingTraitAtMeasure));
+        //traits->addTrait(std::move(computingTraitAtMeasure));
 
-        Tucuxi::Core::ComputingRequest request(std::to_string(m_requestID), *drugModel, *drugTreatment, std::move(traits));
+        // TODO : Split that correctly
+        Tucuxi::Core::ComputingRequest request(std::to_string(m_requestID), *drugModel, *drugTreatment, std::move(computingTrait));
         std::unique_ptr<Tucuxi::Core::ComputingResponse> response = std::make_unique<Tucuxi::Core::ComputingResponse>(std::to_string(m_requestID));
 
+        Tucuxi::Core::ComputingRequest request1(std::to_string(m_requestID), *drugModel, *drugTreatment, std::move(computingTraitAtMeasure));
+        std::unique_ptr<Tucuxi::Core::ComputingResponse> response1 = std::make_unique<Tucuxi::Core::ComputingResponse>(std::to_string(m_requestID));
+
         Tucuxi::Core::ComputingResult res = iCore->compute(request, response);
-        if (res == Tucuxi::Core::ComputingResult::Ok) {
+
+        Tucuxi::Core::ComputingResult res1 = iCore->compute(request1, response1);
+        if ((res == Tucuxi::Core::ComputingResult::Ok) && (res1 == Tucuxi::Core::ComputingResult::Ok)) {
 
             TucucoreToEzTranslator tuToEzTranslator;
 
             ezechiel::core::FancyPoints* fpts = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoints>(ABSTRACTREPO, prediction.getPredictive()->getPredictionData());
 
-            for (const std::unique_ptr<Tucuxi::Core::SingleComputingResponse>& resp: response->getResponses()) {
-                Tucuxi::Core::SinglePointsResponse* pPredictionAtSampleTime = dynamic_cast<Tucuxi::Core::SinglePointsResponse*>(resp.get());
-                if (pPredictionAtSampleTime != nullptr) {
+            Tucuxi::Core::SinglePointsResponse* pPredictionAtSampleTime = dynamic_cast<Tucuxi::Core::SinglePointsResponse*>(response1->getResponses()[0].get());
+            if (pPredictionAtSampleTime != nullptr) {
 
-                    ezechiel::core::FancyPoints *pointsAtMeasures = prediction.getPredictive()->getPointsAtMeasures();
+                ezechiel::core::FancyPoints *pointsAtMeasures = prediction.getPredictive()->getPointsAtMeasures();
 
-                    for( size_t i = 0; i < pPredictionAtSampleTime->m_times.size(); i++) {
+                for( size_t i = 0; i < pPredictionAtSampleTime->m_times.size(); i++) {
 
-                        ezechiel::core::FancyPoint* fpt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoint>(ABSTRACTREPO, pointsAtMeasures);
+                    ezechiel::core::FancyPoint* fpt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoint>(ABSTRACTREPO, pointsAtMeasures);
 
-                        fpt->setTime(tuToEzTranslator.buildDateTime(pPredictionAtSampleTime->m_times[i]).toMSecsSinceEpoch() / 1000.0);
-                        fpt->setValue(pPredictionAtSampleTime->m_concentrations[0][i]);
-                        pointsAtMeasures->append(fpt);
-                    }
+                    fpt->setTime(tuToEzTranslator.buildDateTime(pPredictionAtSampleTime->m_times[i]).toMSecsSinceEpoch() / 1000.0);
+                    fpt->setValue(pPredictionAtSampleTime->m_concentrations[0][i]);
+                    pointsAtMeasures->append(fpt);
                 }
+            }
 
-                Tucuxi::Core::SinglePredictionResponse* pSinglePred = dynamic_cast<Tucuxi::Core::SinglePredictionResponse*>(resp.get());
-                if (pSinglePred != nullptr) {
+            Tucuxi::Core::SinglePredictionResponse* pSinglePred = dynamic_cast<Tucuxi::Core::SinglePredictionResponse*>(response->getResponses()[0].get());
+            if (pSinglePred != nullptr) {
 
-                    for (Tucuxi::Core::CycleData cycleData: pSinglePred->getData()) {
-                        for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {
+                for (Tucuxi::Core::CycleData cycleData: pSinglePred->getData()) {
+                    for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {
 
-                            // Create the FancyPoint
-                            ezechiel::core::FancyPoint* fpt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoint>(ABSTRACTREPO, fpts);
+                        // Create the FancyPoint
+                        ezechiel::core::FancyPoint* fpt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoint>(ABSTRACTREPO, fpts);
 
-                            // Get its parameters
-                            ezechiel::core::ParameterSet* parameterSet = fpt->getPset();
+                        // Get its parameters
+                        ezechiel::core::ParameterSet* parameterSet = fpt->getPset();
 
-                            // Populate the parameters list from the one of cycleData
-                            for(size_t param = 0; param < cycleData.m_parameters.size(); param++) {
-                                ezechiel::core::Parameter* p = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Parameter>(ABSTRACTREPO, parameterSet);
-                                p->getQuantity()->setValue(cycleData.m_parameters[param].m_value);
-                                p->setName(QString::fromStdString(cycleData.m_parameters[param].m_parameterId));
-                                parameterSet->getParameters()->append(p);
-                            }
-                            fpt->setPset(parameterSet);
-
-                            // This complex next translation is required because of the epoch being different for QDateTime and DateTime, one being local and the other no
-                            // fpt time is in seconds since epoch
-                            fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                                                                      std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
-                            // The following requires at least Qt 5.8
-                            //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                            //                                          std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toSecsSinceEpoch());
-                            fpt->setValue(cycleData.m_concentrations[0][i]);
-                            fpts->append(fpt);
+                        // Populate the parameters list from the one of cycleData
+                        for(size_t param = 0; param < cycleData.m_parameters.size(); param++) {
+                            ezechiel::core::Parameter* p = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Parameter>(ABSTRACTREPO, parameterSet);
+                            p->getQuantity()->setValue(cycleData.m_parameters[param].m_value);
+                            p->setName(QString::fromStdString(cycleData.m_parameters[param].m_parameterId));
+                            parameterSet->getParameters()->append(p);
                         }
+                        fpt->setPset(parameterSet);
 
-                        // Extract statistics
+                        // This complex next translation is required because of the epoch being different for QDateTime and DateTime, one being local and the other no
+                        // fpt time is in seconds since epoch
+                        fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
+                                                                        std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
+                        // The following requires at least Qt 5.8
+                        //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
+                        //                                          std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toSecsSinceEpoch());
+                        fpt->setValue(cycleData.m_concentrations[0][i]);
+                        fpts->append(fpt);
+                    }
 
-                        double mean;
-                        double auc;
-                        double cumulativeAuc;
-                        double residual;
-                        double peak;
-                        Tucuxi::Common::DateTime date;
-                        bool ok = true;
+                    // Extract statistics
+
+                    double mean;
+                    double auc;
+                    double cumulativeAuc;
+                    double residual;
+                    double peak;
+                    Tucuxi::Common::DateTime date;
+                    bool ok = true;
 
 
-                        ok &= cycleData.m_statistics.getStatistic(0, Tucuxi::Core::CycleStatisticType::Mean).getValue(date, mean);
-                        ok &= cycleData.m_statistics.getStatistic(0, Tucuxi::Core::CycleStatisticType::AUC).getValue(date, auc);
-                        ok &= cycleData.m_statistics.getStatistic(0, Tucuxi::Core::CycleStatisticType::CumulativeAuc).getValue(date, cumulativeAuc);
-                        ok &= cycleData.m_statistics.getStatistic(0, Tucuxi::Core::CycleStatisticType::Residual).getValue(date, residual);
-                        ok &= cycleData.m_statistics.getStatistic(0, Tucuxi::Core::CycleStatisticType::Peak).getValue(date, peak);
+                    ok &= cycleData.m_statistics.getStatistic(0, Tucuxi::Core::CycleStatisticType::Mean).getValue(date, mean);
+                    ok &= cycleData.m_statistics.getStatistic(0, Tucuxi::Core::CycleStatisticType::AUC).getValue(date, auc);
+                    ok &= cycleData.m_statistics.getStatistic(0, Tucuxi::Core::CycleStatisticType::CumulativeAuc).getValue(date, cumulativeAuc);
+                    ok &= cycleData.m_statistics.getStatistic(0, Tucuxi::Core::CycleStatisticType::Residual).getValue(date, residual);
+                    ok &= cycleData.m_statistics.getStatistic(0, Tucuxi::Core::CycleStatisticType::Peak).getValue(date, peak);
 
-                        if (!ok) {
-                            std::cout << "Something went wrong here" << std::endl;
-                        }
+                    if (!ok) {
+                        std::cout << "Something went wrong here" << std::endl;
+                    }
 
-                        prediction.getPredictive()->getPredictionData()->addStats(
-                                    tuToEzTranslator.buildDateTime(cycleData.m_start).toMSecsSinceEpoch() / 1000,
-                                    ezechiel::core::Duration(0,0,0,
-                                                             (cycleData.m_end - cycleData.m_start).toMilliseconds()).toHours(),
+                    prediction.getPredictive()->getPredictionData()->addStats(
+                                tuToEzTranslator.buildDateTime(cycleData.m_start).toMSecsSinceEpoch() / 1000,
+                                ezechiel::core::Duration(0,0,0,
+                                                         (cycleData.m_end - cycleData.m_start).toMilliseconds()).toHours(),
                                 mean, auc, cumulativeAuc, residual, peak
                                 );
 
 
-                    }
                 }
             }
 
@@ -346,9 +350,7 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
                     options,
                     static_cast<MixAborter*>(aborter)->getTucuxiAborter());
 
-        std::unique_ptr<Tucuxi::Core::ComputingTraits> traits = std::make_unique<Tucuxi::Core::ComputingTraits>();
-        traits->addTrait(std::move(computingTrait));
-        Tucuxi::Core::ComputingRequest request(std::to_string(m_requestID), *drugModel, *drugTreatment, std::move(traits));
+        Tucuxi::Core::ComputingRequest request(std::to_string(m_requestID), *drugModel, *drugTreatment, std::move(computingTrait));
         std::unique_ptr<Tucuxi::Core::ComputingResponse> response = std::make_unique<Tucuxi::Core::ComputingResponse>(std::to_string(m_requestID));
 
         Tucuxi::Core::ComputingResult res = iCore->compute(request, response);
@@ -491,10 +493,7 @@ ezechiel::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
     // std::cout << start << std::endl;
     // std::cout << end << std::endl;
 
-    std::unique_ptr<Tucuxi::Core::ComputingTraits> computingTraits = std::make_unique<Tucuxi::Core::ComputingTraits>();
-    computingTraits->addTrait(std::move(adjustmentsTraits));
-
-    Tucuxi::Core::ComputingRequest request(requestResponseId, *drugModel, *drugTreatment, std::move(computingTraits));
+    Tucuxi::Core::ComputingRequest request(requestResponseId, *drugModel, *drugTreatment, std::move(adjustmentsTraits));
 
     std::unique_ptr<Tucuxi::Core::ComputingResponse> response = std::make_unique<Tucuxi::Core::ComputingResponse>(requestResponseId);
 

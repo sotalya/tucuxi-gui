@@ -1,5 +1,4 @@
 #include "requestsclientprocessing.h"
-#include "rest/builders/interpretationrequestbuilder.h"#include "demorequestfileclient.h"
 #include "rest/builders/interpretationrequestbuilder.h"
 #include "core/dal/drugresponseanalysis.h"
 #include "core/core.h"
@@ -54,7 +53,7 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
 
     for (int i = 0; i < requestsContent.size(); ++i) {
         MessageContent content = requestsContent.at(i);
-        Q_ASSERT(content.listCount("sample.concentrations") > 0);
+        // Q_ASSERT(content.listCount("sample.concentrations") > 0);
 
         SharedPartialRequest request = AdminFactory::createEntity<PartialRequest>(ABSTRACTREPO);
 
@@ -80,13 +79,24 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
         request->institute()->name(content.value("patient.institute.name"));
 
         //The sample data
-        Measure* measure = static_cast<Measure*>(request->sample());
-        measure->sampleID(content.value("sample.id"));
-        measure->setMoment(QDateTime::fromString(content.value("sample.date.sample"), Qt::ISODate));
-        measure->arrivalDate(QDateTime::fromString(content.value("sample.date.arrival"), Qt::ISODate));
-        measure->setConcentration(ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, measure));
-        measure->getConcentration()->setValue(content.list("sample.concentrations").first().value("value").toDouble());
-        measure->getConcentration()->setUnit(content.list("sample.concentrations").first().value("unit"));
+        if (content.listCount("sample.concentrations") > 0) {
+            Measure* measure = static_cast<Measure*>(request->sample());
+            measure->sampleID(content.value("sample.id"));
+            measure->setMoment(QDateTime::fromString(content.value("sample.date.sample"), Qt::ISODate));
+            measure->arrivalDate(QDateTime::fromString(content.value("sample.date.arrival"), Qt::ISODate));
+            measure->setConcentration(ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, measure));
+            measure->getConcentration()->setValue(content.list("sample.concentrations").first().value("value").toDouble());
+            measure->getConcentration()->setUnit(content.list("sample.concentrations").first().value("unit"));
+        }
+        else {
+            Measure* measure = static_cast<Measure*>(request->sample());
+            measure->sampleID("nosample");
+            measure->setMoment(QDateTime::currentDateTime());
+            measure->arrivalDate(QDateTime::currentDateTime());
+            measure->setConcentration(ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, measure));
+            measure->getConcentration()->setValue(0);
+            measure->getConcentration()->setUnit(Unit("mg/l"));
+        }
 
         //The drug data
         ezechiel::core::ActiveSubstance* substance = nullptr;

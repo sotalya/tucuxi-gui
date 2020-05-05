@@ -152,16 +152,16 @@ ezechiel::ProcessingResult ProcessingTucucore::points(
         Tucuxi::Core::ComputingRequest request1(std::to_string(m_requestID), *drugModel, *drugTreatment, std::move(computingTraitAtMeasure));
         std::unique_ptr<Tucuxi::Core::ComputingResponse> response1 = std::make_unique<Tucuxi::Core::ComputingResponse>(std::to_string(m_requestID));
 
-        Tucuxi::Core::ComputingResult res = iCore->compute(request, response);
+        Tucuxi::Core::ComputingStatus res = iCore->compute(request, response);
 
-        Tucuxi::Core::ComputingResult res1 = iCore->compute(request1, response1);
-        if ((res == Tucuxi::Core::ComputingResult::Ok) && (res1 == Tucuxi::Core::ComputingResult::Ok)) {
+        Tucuxi::Core::ComputingStatus res1 = iCore->compute(request1, response1);
+        if ((res == Tucuxi::Core::ComputingStatus::Ok) && (res1 == Tucuxi::Core::ComputingStatus::Ok)) {
 
             TucucoreToEzTranslator tuToEzTranslator;
 
             ezechiel::core::FancyPoints* fpts = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoints>(ABSTRACTREPO, prediction.getPredictive()->getPredictionData());
 
-            Tucuxi::Core::SinglePointsResponse* pPredictionAtSampleTime = dynamic_cast<Tucuxi::Core::SinglePointsResponse*>(response1->getResponses()[0].get());
+            const Tucuxi::Core::SinglePointsData* pPredictionAtSampleTime = dynamic_cast<const Tucuxi::Core::SinglePointsData*>(response1->getData());
             if (pPredictionAtSampleTime != nullptr) {
 
                 ezechiel::core::FancyPoints *pointsAtMeasures = prediction.getPredictive()->getPointsAtMeasures();
@@ -176,7 +176,7 @@ ezechiel::ProcessingResult ProcessingTucucore::points(
                 }
             }
 
-            Tucuxi::Core::SinglePredictionResponse* pSinglePred = dynamic_cast<Tucuxi::Core::SinglePredictionResponse*>(response->getResponses()[0].get());
+            const Tucuxi::Core::SinglePredictionData* pSinglePred = dynamic_cast<const Tucuxi::Core::SinglePredictionData*>(response->getData());
             if (pSinglePred != nullptr) {
 
                 for (Tucuxi::Core::CycleData cycleData: pSinglePred->getData()) {
@@ -353,42 +353,40 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
         Tucuxi::Core::ComputingRequest request(std::to_string(m_requestID), *drugModel, *drugTreatment, std::move(computingTrait));
         std::unique_ptr<Tucuxi::Core::ComputingResponse> response = std::make_unique<Tucuxi::Core::ComputingResponse>(std::to_string(m_requestID));
 
-        Tucuxi::Core::ComputingResult res = iCore->compute(request, response);
-        if (res == Tucuxi::Core::ComputingResult::Ok) {
+        Tucuxi::Core::ComputingStatus res = iCore->compute(request, response);
+        if (res == Tucuxi::Core::ComputingStatus::Ok) {
 
             TucucoreToEzTranslator tuToEzTranslator;
 
             ezechiel::core::PercentileDataList* percpairs = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PercentileDataList>(ABSTRACTREPO, prediction.getPredictive());
             prediction.getPredictive()->setPercentileDataList(percpairs);
 
+            const Tucuxi::Core::PercentilesData* pPercentiles = dynamic_cast<const Tucuxi::Core::PercentilesData*>(response->getData());
 
-            for (const std::unique_ptr<Tucuxi::Core::SingleComputingResponse>& resp: response->getResponses()) {
-                Tucuxi::Core::PercentilesResponse* pPercentiles = dynamic_cast<Tucuxi::Core::PercentilesResponse*>(resp.get());
-                if (pPercentiles != nullptr) {
-                    for (size_t percIndex = 0; percIndex < pPercentiles->getNbRanks(); ++percIndex) {
-                        ezechiel::core::PercentileData* percpair = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PercentileData>(ABSTRACTREPO, prediction.getPredictive());
-                        percpairs->append(percpair);
-                        ezechiel::core::PredictionData* pdata = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionData>(ABSTRACTREPO, percpair);
-                        ezechiel::core::FancyPoints* fpts = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoints>(ABSTRACTREPO);
-                        fpts->setParent(pdata);
-                        pdata->setPoints(fpts);
-                        percpair->setPredictionData(pdata);
-                        percpair->setPercentile(pPercentiles->getRank(percIndex));
-                        const std::vector<Tucuxi::Core::CycleData>& cycleDatas = pPercentiles->getPercentileData(percIndex);
-                        for (size_t cycleIndex=0; cycleIndex < cycleDatas.size(); cycleIndex++) {
-                            const Tucuxi::Core::CycleData& cycleData = cycleDatas.at(cycleIndex);
-                            for (size_t pointIndex=0; pointIndex<cycleData.m_concentrations[0].size(); pointIndex++) {
-                                ezechiel::core::FancyPoint* fpt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoint>(ABSTRACTREPO, fpts);
-                                fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                                                                          std::chrono::milliseconds(static_cast<int64>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
-                                // The following requires at least Qt 5.8
-                                //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                                //                                          std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toSecsSinceEpoch());
+            if (pPercentiles != nullptr) {
+                for (size_t percIndex = 0; percIndex < pPercentiles->getNbRanks(); ++percIndex) {
+                    ezechiel::core::PercentileData* percpair = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PercentileData>(ABSTRACTREPO, prediction.getPredictive());
+                    percpairs->append(percpair);
+                    ezechiel::core::PredictionData* pdata = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionData>(ABSTRACTREPO, percpair);
+                    ezechiel::core::FancyPoints* fpts = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoints>(ABSTRACTREPO);
+                    fpts->setParent(pdata);
+                    pdata->setPoints(fpts);
+                    percpair->setPredictionData(pdata);
+                    percpair->setPercentile(pPercentiles->getRank(percIndex));
+                    const std::vector<Tucuxi::Core::CycleData>& cycleDatas = pPercentiles->getPercentileData(percIndex);
+                    for (size_t cycleIndex=0; cycleIndex < cycleDatas.size(); cycleIndex++) {
+                        const Tucuxi::Core::CycleData& cycleData = cycleDatas.at(cycleIndex);
+                        for (size_t pointIndex=0; pointIndex<cycleData.m_concentrations[0].size(); pointIndex++) {
+                            ezechiel::core::FancyPoint* fpt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoint>(ABSTRACTREPO, fpts);
+                            fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
+                                                                            std::chrono::milliseconds(static_cast<int64>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
+                            // The following requires at least Qt 5.8
+                            //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
+                            //                                          std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toSecsSinceEpoch());
 
-                                //fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][pointIndex]*3600.0);
-                                fpt->setValue(cycleData.m_concentrations[0][pointIndex]);
-                                fpts->append(fpt);
-                            }
+                            //fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][pointIndex]*3600.0);
+                            fpt->setValue(cycleData.m_concentrations[0][pointIndex]);
+                            fpts->append(fpt);
                         }
                     }
                 }
@@ -497,73 +495,66 @@ ezechiel::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
 
     std::unique_ptr<Tucuxi::Core::ComputingResponse> response = std::make_unique<Tucuxi::Core::ComputingResponse>(requestResponseId);
 
-    Tucuxi::Core::ComputingResult result;
+    Tucuxi::Core::ComputingStatus result;
     result = iCore->compute(request, response);
 
-    if (result != Tucuxi::Core::ComputingResult::Ok) {
+    if (result != Tucuxi::Core::ComputingStatus::Ok) {
         return ezechiel::ProcessingResult::Failure;
     }
 
-    const std::vector<std::unique_ptr<Tucuxi::Core::SingleComputingResponse> > &responses = response.get()->getResponses();
-    for(std::size_t i = 0; i < responses.size(); i++) {
-        const Tucuxi::Core::AdjustmentResponse *resp = dynamic_cast<Tucuxi::Core::AdjustmentResponse*>(responses[i].get());
-        if (resp == nullptr) {
-            std::cout << "Received an unexpected response instead of Adjustment response" << std::endl;
+    const Tucuxi::Core::AdjustmentData *resp = dynamic_cast<const Tucuxi::Core::AdjustmentData*>(response->getData());
+    if (resp == nullptr) {
+        std::cout << "Received an unexpected response instead of Adjustment response" << std::endl;
+    }
+
+
+    TucucoreToEzTranslator tuToEzTranslator;
+
+    // Process the adjustment
+    for (const auto & fullDosage : resp->getAdjustments()) {
+
+        TucucoreToEzTranslator translator;
+
+        ezechiel::core::Adjustment *adjustment = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Adjustment>(ABSTRACTREPO, prediction.getAdjustments());
+
+        ezechiel::core::DosageHistory *dosageHistory = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DosageHistory>(ABSTRACTREPO, adjustment);
+
+        if (!translator.buildDosageHistory(fullDosage.m_history, dosageHistory)) {
+            std::cout << "Could not build a dosage history from the computed one" << std::endl;
         }
 
+        adjustment->setDosageHistory(dosageHistory);
+        adjustment->setScore(fullDosage.getGlobalScore());
+        for (const auto & targetEvaluations : fullDosage.m_targetsEvaluation) {
+            //targetEvaluations
+            ezechiel::core::TargetEvaluationResult *targetResult = ezechiel::core::CoreFactory::createEntity<ezechiel::core::TargetEvaluationResult>(ABSTRACTREPO, adjustment);
 
-        TucucoreToEzTranslator tuToEzTranslator;
-
-        // Process the adjustment
-        for (const auto & fullDosage : resp->getAdjustments()) {
-
-            TucucoreToEzTranslator translator;
-
-            ezechiel::core::Adjustment *adjustment = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Adjustment>(ABSTRACTREPO, prediction.getAdjustments());
-
-            ezechiel::core::DosageHistory *dosageHistory = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DosageHistory>(ABSTRACTREPO, adjustment);
-
-            if (!translator.buildDosageHistory(fullDosage.m_history, dosageHistory)) {
-                std::cout << "Could not build a dosage history from the computed one" << std::endl;
-            }
-
-            adjustment->setDosageHistory(dosageHistory);
-            adjustment->setScore(fullDosage.getGlobalScore());
-            for (const auto & targetEvaluations : fullDosage.m_targetsEvaluation) {
-                //targetEvaluations
-                ezechiel::core::TargetEvaluationResult *targetResult = ezechiel::core::CoreFactory::createEntity<ezechiel::core::TargetEvaluationResult>(ABSTRACTREPO, adjustment);
-
-                translator.buildTargetEvaluation(&targetEvaluations, targetResult);
-                adjustment->getTargetEvaluationResults()->append(targetResult);
-
-            }
-
-            // data:
-            ezechiel::core::FancyPoints* fpts = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoints>(ABSTRACTREPO,adjustment->getPredictionData());
-            adjustment->getPredictionData()->setPoints(fpts);
-
-            for (Tucuxi::Core::CycleData cycleData: fullDosage.m_data) {
-                for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {
-                    ezechiel::core::FancyPoint* fpt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoint>(ABSTRACTREPO, fpts);
-                    //fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][i]*3600.0);// This complex next translation is required because of the epoch being different for QDateTime and DateTime, one being local and the other no
-                    // fpt time is in seconds since epoch
-                    fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                                                                    std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
-                    // The following requires Qt 5.8
-                    //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                    //                                                std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toSecsSinceEpoch());
-
-                    fpt->setValue(cycleData.m_concentrations[0][i]);
-                    fpts->append(fpt);
-                }
-            }
-
-            prediction.getAdjustments()->append(adjustment);
+            translator.buildTargetEvaluation(&targetEvaluations, targetResult);
+            adjustment->getTargetEvaluationResults()->append(targetResult);
 
         }
 
+        // data:
+        ezechiel::core::FancyPoints* fpts = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoints>(ABSTRACTREPO,adjustment->getPredictionData());
+        adjustment->getPredictionData()->setPoints(fpts);
 
+        for (Tucuxi::Core::CycleData cycleData: fullDosage.m_data) {
+            for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {
+                ezechiel::core::FancyPoint* fpt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoint>(ABSTRACTREPO, fpts);
+                //fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][i]*3600.0);// This complex next translation is required because of the epoch being different for QDateTime and DateTime, one being local and the other no
+                // fpt time is in seconds since epoch
+                fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
+                                                                std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
+                // The following requires Qt 5.8
+                //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
+                //                                                std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toSecsSinceEpoch());
 
+                fpt->setValue(cycleData.m_concentrations[0][i]);
+                fpts->append(fpt);
+            }
+        }
+
+        prediction.getAdjustments()->append(adjustment);
     }
 
     return ezechiel::ProcessingResult::Success;

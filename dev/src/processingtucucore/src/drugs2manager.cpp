@@ -44,7 +44,7 @@ Tucuxi::Core::DrugModel * Drugs2Manager::getTucucoreById(std::string id) const
 Tucuxi::Core::DrugModel* Drugs2Manager::scanDrug(const QString & fileName)
 {
     Tucuxi::Core::DrugModelImport importer;
-    Tucuxi::Core::DrugModelImport::Result result;
+    Tucuxi::Common::IImport::Status result;
     Tucuxi::Core::DrugModel *pDrugModel;
 
     //result = importer.importFromFile(pDrugModel, fileName.toStdString());
@@ -59,7 +59,7 @@ Tucuxi::Core::DrugModel* Drugs2Manager::scanDrug(const QString & fileName)
     std::string content = f.readAll().data();
     result = importer.importFromString(pDrugModel, content);
 
-    if (result != Tucuxi::Core::DrugModelImport::Result::Ok) {
+    if (result != Tucuxi::Common::IImport::Status::Ok) {
         return nullptr;
     }
 

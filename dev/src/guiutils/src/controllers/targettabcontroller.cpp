@@ -193,9 +193,8 @@ void TargetTabController::updateTvalues(int index, double &min, double &best, do
 
 QStringList TargetTabController::getTargetTypes()
 {
-    QStringList list = {"Residual", "Peak", "Mean", "AUC", "AUC 24h", "Cumulative AUC"};
-    //, "AUC divided by MIC",
-    //                     "AUC 24h divided by MIC", "AUC over MIC", "AUC 24h over MIC", "Peak divided by MIC", "Time over Mic"};
+    QStringList list = {"Residual", "Peak", "Mean", "AUC", "AUC 24h", "Cumulative AUC", "AUC divided by MIC" ,"AUC 24h divided by MIC"};
+    // "AUC over MIC", "AUC 24h over MIC", "Peak divided by MIC", "Time over Mic"};
     return list;
 }
 

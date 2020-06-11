@@ -246,6 +246,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
                                         target->getCbest()->getDbvalue(),
                                         target->getCmax()->getDbvalue(),
                                         target->getMic()->getDbvalue(),
+                                        target->getMic()->getUnitstring().toStdString(),
                                         // Here we consider the target times to be in hours
                                         std::chrono::seconds(static_cast<int>(60*60*target->getTmin()->getDbvalue())),
                                         std::chrono::seconds(static_cast<int>(60*60*target->getTbest()->getDbvalue())),
@@ -261,6 +262,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
                                         target->getCbest()->getDbvalue(),
                                         target->getCmax()->getDbvalue(),
                                         target->getMic()->getDbvalue(),
+                                        target->getMic()->getUnitstring().toStdString(),
                                         // Here we consider the target times to be in minutes
                                         std::chrono::seconds(static_cast<int>(60*target->getTmin()->getDbvalue())),
                                         std::chrono::seconds(static_cast<int>(60*target->getTbest()->getDbvalue())),
@@ -276,6 +278,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
                                         target->getCbest()->getDbvalue(),
                                         target->getCmax()->getDbvalue(),
                                         target->getMic()->getDbvalue(),
+                                        target->getMic()->getUnitstring().toStdString(),
                                         // Here we consider the target times to be in seconds
                                         std::chrono::seconds(static_cast<int>(target->getTmin()->getDbvalue())),
                                         std::chrono::seconds(static_cast<int>(target->getTbest()->getDbvalue())),

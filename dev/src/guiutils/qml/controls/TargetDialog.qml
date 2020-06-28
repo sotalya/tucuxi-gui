@@ -148,7 +148,7 @@ DialogBase {
             }
 
             EntityLabel {
-                text: "Concentrations:"
+                text: "Target values:"
                 Layout.preferredWidth: 100
                 tooltipText: ToolTips.targetDialog.concentrations
             }

@@ -434,7 +434,7 @@ ezechiel::core::OperableAmount *TucucoreToEzTranslator::translateMic(const Tucux
                                                                      Tucuxi::Core::Unit newUnit, ezechiel::core::Target *newTarget)
 {
     ezechiel::core::OperableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperableAmount>(ABSTRACTREPO, newTarget);
-    amount->setDbvalue(Tucuxi::Core::translateToUnit(subTarget.getValue(), micUnit, newUnit));
+    amount->setDbvalue(Tucuxi::Core::UnitManager::translateToUnit(subTarget.getValue(), micUnit, newUnit));
     amount->setUnit(ezechiel::core::Unit(QString(newUnit.toString().c_str())));
     return amount;
 }

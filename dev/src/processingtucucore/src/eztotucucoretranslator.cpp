@@ -241,7 +241,6 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
                                         activeMoietyId,
                                         targetType,
                                         target->getCmin()->getUnitstring().toStdString(),
-                                        target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getDbvalue(),
                                         target->getCbest()->getDbvalue(),
                                         target->getCmax()->getDbvalue(),
@@ -257,7 +256,6 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
                                         activeMoietyId,
                                         targetType,
                                         target->getCmin()->getUnitstring().toStdString(),
-                                        target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getDbvalue(),
                                         target->getCbest()->getDbvalue(),
                                         target->getCmax()->getDbvalue(),
@@ -272,7 +270,6 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
             newTreatment->addTarget(std::make_unique<Tucuxi::Core::Target>(
                                         activeMoietyId,
                                         targetType,
-                                        target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getDbvalue(),
                                         target->getCbest()->getDbvalue(),

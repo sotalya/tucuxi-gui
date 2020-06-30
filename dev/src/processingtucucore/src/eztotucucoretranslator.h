@@ -36,7 +36,7 @@ public:
     Tucuxi::Common::DateTime buildDateTime(const QDateTime &qDate);
 
 
-    Tucuxi::Core::Unit buildUnit(const QString &_strUnit);
+    Tucuxi::Common::Unit buildUnit(const QString &_strUnit);
 
     Tucuxi::Core::PredictionParameterType buildParameterType(const ezechiel::core::ParamTraits *traits);
 

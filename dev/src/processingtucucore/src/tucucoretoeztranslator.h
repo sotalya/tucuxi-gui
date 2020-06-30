@@ -61,8 +61,8 @@ public:
 
     ezechiel::core::DrugModel* buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel);
 
-    ezechiel::core::OperableAmount *translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::Unit micUnit,
-                                                 Tucuxi::Core::Unit newUnit, ezechiel::core::Target *newTarget);
+    ezechiel::core::OperableAmount *translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::Unit micUnit,
+                                                 Tucuxi::Common::Unit newUnit, ezechiel::core::Target *newTarget);
     ezechiel::core::OperableAmount *translate(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, ezechiel::core::Target *newTarget);
     ezechiel::core::OperableAmount *translateTime(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, ezechiel::core::Target *newTarget);
     ezechiel::core::TargetMethod *translate(Tucuxi::Core::TargetType targetType, ezechiel::core::Target *newTarget);

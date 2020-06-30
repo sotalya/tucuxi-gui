@@ -46,9 +46,9 @@ DateTime EzToTucucoreTranslator::buildDateTime(const QDateTime &qDate)
 }
 
 
-Tucuxi::Core::Unit EzToTucucoreTranslator::buildUnit(const QString &_strUnit)
+Tucuxi::Common::Unit EzToTucucoreTranslator::buildUnit(const QString &_strUnit)
 {
-    return Tucuxi::Core::Unit(_strUnit.toLatin1().data());
+    return Tucuxi::Common::Unit(_strUnit.toLatin1().data());
 }
 
 Tucuxi::Core::PredictionParameterType EzToTucucoreTranslator::buildParameterType(const ezechiel::core::ParamTraits *traits)
@@ -98,9 +98,10 @@ Tucuxi::Core::DosageTimeRange *EzToTucucoreTranslator::buildTimeRange(const ezec
     }
     Tucuxi::Core::FormulationAndRoute formulationAndRoute(formulation, administrationRoute, absorptionModel, "");
     Tucuxi::Core::LastingDose lastingDose(_ezDosage->getQuantity()->getDbvalue(),
-                formulationAndRoute,
-                std::chrono::seconds(static_cast<int>(_ezDosage->getDbtinf()*60.0)),
-                std::chrono::seconds(static_cast<int>(_ezDosage->getDbinterval()*3600.0)));
+                                          Tucuxi::Common::Unit(_ezDosage->getQuantity()->getUnitstring().toStdString()),
+                                          formulationAndRoute,
+                                          std::chrono::seconds(static_cast<int>(_ezDosage->getDbtinf()*60.0)),
+                                          std::chrono::seconds(static_cast<int>(_ezDosage->getDbinterval()*3600.0)));
 
     Tucuxi::Common::DateTime appliedDate = buildDateTime(_ezDosage->getApplied());
 
@@ -186,7 +187,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
                 covariate->getCovariateId().toStdString(),                    // _id,
                 Tucuxi::Common::Utils::varToString(buildDateTime(birthdate)),    // _value,
                 Tucuxi::Core::DataType::Date,                              // _dataType,
-                Tucuxi::Core::Unit(),      // _unit,
+                Tucuxi::Common::Unit(),      // _unit,
                 buildDateTime(covariate->getDate())));                     // _date
         }
         else {

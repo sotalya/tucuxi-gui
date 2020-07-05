@@ -132,19 +132,22 @@ InterpretationController::InterpretationController(QObject *parent) :
 
     _webchannel = new QQmlWebChannel(this);
 
-    QWebSocketServer server(QStringLiteral("QWebChannel Standalone Example Server"), QWebSocketServer::NonSecureMode);
-    if (!server.listen(QHostAddress::LocalHost, 12345)) {
+    // It seems there is no need for this server
+
+    /*
+    QWebSocketServer* server = new QWebSocketServer(QStringLiteral("QWebChannel Standalone Example Server"), QWebSocketServer::NonSecureMode);
+    if (!server->listen(QHostAddress::LocalHost, 12345)) {
         qFatal("Failed to open web socket server.");
     }
 
     // wrap WebSocket clients in QWebChannelAbstractTransport objects
-    WebSocketClientWrapper clientWrapper(&server);
+    WebSocketClientWrapper* clientWrapper = new WebSocketClientWrapper(server);
 
     // setup the channel
-    CONNECT(&clientWrapper, &WebSocketClientWrapper::clientConnected,
+    CONNECT(clientWrapper, &WebSocketClientWrapper::clientConnected,
                      _webchannel, &QWebChannel::connectTo);
 //    QObject::CONNECT(&clientWrapper, clientConnected(WebSocketTransport*)), _webchannel, SLOT(connectTo(QWebChannelAbstractTransport*)));
-
+*/
 
 
     flowController = new FlowController(this);
@@ -1675,6 +1678,10 @@ void InterpretationController::validateInterpretation(bool isValid)
 #endif // CONFIG_DEMO
 
         flowController->validateInterpretation();
+
+        // We got an issue with this predictionData
+        //_webchannel->registerObject("some", _interpretation->getAnalysis()->getChartData()->getAdjPred()->getPredictive()->getPredictionData());
+
         emit interpretationValidated();
     }
     else {

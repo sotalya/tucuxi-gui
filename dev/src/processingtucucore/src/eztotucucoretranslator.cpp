@@ -211,7 +211,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
         ezechiel::core::CoreMeasure *sample = *itSamples++;
         newTreatment->addSample(std::make_unique<Tucuxi::Core::Sample>(
             buildDateTime(sample->getMoment()),                     // date,
-            analyteId,                                              // analyteId,
+            Tucuxi::Core::AnalyteId(analyteId),                     // analyteId,
             sample->getConcentration()->getDbvalue(),               // value,
             buildUnit(sample->getConcentration()->getUnitstring())  // unit
         ));

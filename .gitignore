@@ -1,0 +1,62 @@
+#Common ignored files
+*~
+*.o
+*.user
+*.orig
+*.bak
+Makefile*
+*.swp
+
+#Qt generated files
+*.qm
+moc_*.h
+moc_*.cpp
+qrc_*.cpp
+
+#QtCreator files and folders
+*.pro.user*
+*.Debug
+*.Release
+
+#qmake specific folders
+dist
+build
+build*
+
+#qmake specific files
+.qmake.stash
+target_wrapper.sh
+
+#Doxygen specific folder
+doxy/
+
+#KDev4 files and folders
+*kdev*
+
+#Latex temp files
+*.aux
+*.lof
+*.lot
+*.log
+*.out
+
+#Latex temp images
+*eps-converted-to.pdf
+
+# explorers
+Thumbs.db*
+
+#dolphin explorer
+.directory
+
+#Clion IDE config files
+.idea/
+
+
+dev/setup.exe
+dev/Tucuxi.zip
+dev/Tucuxi-32-Release.zip
+dev/Tucuxi-64-Release.zip
+dev/setup-Release32.exe
+dev/setup-Release64.exe
+dev/Deploy

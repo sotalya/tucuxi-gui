@@ -64,7 +64,9 @@ Rectangle {
         }
         else {
             daweb.update();
+            daweb.webChannel.registerObject("interpretation", interpretation);
             reportInfo.dataUpdated();
+            daweb.reload();
         }
         printbutton.enabled = true;
     }

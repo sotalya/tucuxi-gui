@@ -431,6 +431,8 @@ bool InterpretationController::acceptAndQuit()
     // Stop every calculation
     calculationController->abortAll();
 
+    _webchannel->deregisterObject(_interpretation);
+
     // TODO:  Clean the interpretation
     // Currently deleting the request has an issue. To be checked on Windows.
     //deleteCurrentRequest();
@@ -444,6 +446,7 @@ bool InterpretationController::acceptAndQuit()
 // It deletes all objects related to the request and leaves the flow in its initial state
 void InterpretationController::deleteCurrentRequest()
 {
+
     if (chartData)
         chartData->initialize();
 

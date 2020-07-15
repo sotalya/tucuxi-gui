@@ -236,6 +236,7 @@ void signalHandler (int id)
 }
 */
 
+
 int main(int argc, char *argv[])
 {
 /*
@@ -332,7 +333,8 @@ int main(int argc, char *argv[])
     qRegisterMetaType<ezechiel::core::ValidInfusions*>("ValidInfusions*");
     qRegisterMetaType<ezechiel::core::DrugVariateList*>("DrugVariateList*");
     qRegisterMetaType<ezechiel::core::Target*>("Target*");
-    qRegisterMetaType<ezechiel::core::TargetMethod::TargetType>("TargetMethod::TargetType");
+    qRegisterMetaType<ezechiel::core::TargetMethod*>("TargetMethod*");
+    qRegisterMetaType<ezechiel::core::TargetMethod::TargetType>("TargetType");
     qRegisterMetaType<ezechiel::core::Operation*>("Operation*");
     qRegisterMetaType<QList<ezechiel::core::Operation*> >("QList<Operation*>");
     qRegisterMetaType<ezechiel::core::Bsv*>("Bsv*");
@@ -373,6 +375,9 @@ int main(int argc, char *argv[])
     qRegisterMetaType<AdjustmentTabController*>("AdjustmentTabController*");
     qRegisterMetaType<DrugTabController*>("DrugTabController*");
     qRegisterMetaType<MainWindowController*>("MainWindowController*");
+    qRegisterMetaType<Person::GenderType>("GenderType");
+
+    qRegisterMetaType< ezechiel::core::IntList >( "IntList" );
     qmlRegisterUncreatableType<InterpretationRequest>("ezechiel", 1, 0, "InterpretationRequest", QObject::tr("Cannot instantiate type 'InterpretationRequest'"));
     qmlRegisterUncreatableType<Patient>("ezechiel", 1, 0, "Patient", QObject::tr("Cannot instantiate type 'Patient'"));
     qmlRegisterUncreatableType<Person>("ezechiel", 1, 0, "Person", QObject::tr("Cannot instantiate type 'Person'"));
@@ -381,6 +386,8 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<ezechiel::core::DrugModel>("ezechiel", 1, 0, "DrugModel", QObject::tr("Cannot instantiate type 'DrugModel'"));
     qmlRegisterUncreatableType<ezechiel::core::ActiveSubstance>("ezechiel", 1, 0, "ActiveSubstance", QObject::tr("Cannot instantiate type 'ActiveSubstance'"));
     qmlRegisterUncreatableType<ezechiel::core::Target>("ezechiel", 1, 0, "Target", QObject::tr("Cannot instantiate type 'Target'"));
+    qmlRegisterUncreatableType<ezechiel::core::TargetEvaluationResult>("ezechiel", 1, 0, "TargetEvaluationResult", QObject::tr("Cannot instantiate type 'TargetEvaluationResult'"));
+    qmlRegisterUncreatableType<ezechiel::core::TargetEvaluationResults>("ezechiel", 1, 0, "TargetEvaluationResults", QObject::tr("Cannot instantiate type 'TargetEvaluationResults'"));
     qmlRegisterUncreatableType<ezechiel::core::CoreMeasure>("ezechiel", 1, 0, "CoreMeasure", QObject::tr("Cannot instantiate type 'CoreMeasure'"));
     qmlRegisterUncreatableType<ezechiel::core::PatientVariate>("ezechiel", 1, 0, "PatientVariate", QObject::tr("Cannot instantiate type 'PatientVariate'"));
     qmlRegisterUncreatableType<ezechiel::core::DrugVariate>("ezechiel", 1, 0, "DrugVariate", QObject::tr("Cannot instantiate type 'DrugVariate'"));    

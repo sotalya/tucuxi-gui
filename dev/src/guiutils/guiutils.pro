@@ -176,6 +176,9 @@ RESOURCES += \
     resources/guiutils.qrc \
     qml/qml.qrc
 
+FORMS += \
+    src/widgets/validatedrugdialog.ui
+
 CODECFORTR      += UTF-8
 TRANSLATIONS    += $${TRANS_DIR}/guiutils_fr.ts
 QML_IMPORT_PATH += $$PWD/..
@@ -196,5 +199,3 @@ include(../translation.pri)
 #include(../qwt.pri)
 include(../botan.pri)
 
-FORMS += \
-    src/widgets/validatedrugdialog.ui

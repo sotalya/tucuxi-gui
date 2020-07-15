@@ -444,18 +444,20 @@ function drawCurve(ctx, predData, color, filter)
                 ctx.lineWidth   = 6.0;
                 ctx.strokeStyle = color + 1;
             }
+
+            if (dataX[i] > date.getTime() / 1000) {
+                if (!isFuture) {
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.globalAlpha = 0.2;
+                } else {
+                    isFuture = true;
+                }
+            }
+
             if (x1 > topLeftX && x2 < canvas.bottomRightX) {
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);
-                if (dataX[i] > date.getTime() / 1000) {
-                    if (!isFuture) {
-                        ctx.stroke();
-                        ctx.beginPath();
-                        ctx.globalAlpha = 0.2;
-                    } else {
-                        isFuture = true;
-                    }
-                }
             }
         }
     }

@@ -46,9 +46,9 @@ DateTime EzToTucucoreTranslator::buildDateTime(const QDateTime &qDate)
 }
 
 
-Tucuxi::Core::Unit EzToTucucoreTranslator::buildUnit(const QString &_strUnit)
+Tucuxi::Common::Unit EzToTucucoreTranslator::buildUnit(const QString &_strUnit)
 {
-    return Tucuxi::Core::Unit(_strUnit.toLatin1().data());
+    return Tucuxi::Common::Unit(_strUnit.toLatin1().data());
 }
 
 Tucuxi::Core::PredictionParameterType EzToTucucoreTranslator::buildParameterType(const ezechiel::core::ParamTraits *traits)
@@ -98,9 +98,10 @@ Tucuxi::Core::DosageTimeRange *EzToTucucoreTranslator::buildTimeRange(const ezec
     }
     Tucuxi::Core::FormulationAndRoute formulationAndRoute(formulation, administrationRoute, absorptionModel, "");
     Tucuxi::Core::LastingDose lastingDose(_ezDosage->getQuantity()->getDbvalue(),
-                formulationAndRoute,
-                std::chrono::seconds(static_cast<int>(_ezDosage->getDbtinf()*60.0)),
-                std::chrono::seconds(static_cast<int>(_ezDosage->getDbinterval()*3600.0)));
+                                          Tucuxi::Common::Unit(_ezDosage->getQuantity()->getUnitstring().toStdString()),
+                                          formulationAndRoute,
+                                          std::chrono::seconds(static_cast<int>(_ezDosage->getDbtinf()*60.0)),
+                                          std::chrono::seconds(static_cast<int>(_ezDosage->getDbinterval()*3600.0)));
 
     Tucuxi::Common::DateTime appliedDate = buildDateTime(_ezDosage->getApplied());
 
@@ -186,7 +187,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
                 covariate->getCovariateId().toStdString(),                    // _id,
                 Tucuxi::Common::Utils::varToString(buildDateTime(birthdate)),    // _value,
                 Tucuxi::Core::DataType::Date,                              // _dataType,
-                Tucuxi::Core::Unit(),      // _unit,
+                Tucuxi::Common::Unit(),      // _unit,
                 buildDateTime(covariate->getDate())));                     // _date
         }
         else {
@@ -201,6 +202,8 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
 
     // TODO : Be careful her, we use the active substance ID
     std::string analyteId = _ezTreatment->getActiveSubstanceId().toStdString();
+    Tucuxi::Core::ActiveMoietyId activeMoietyId =
+            Tucuxi::Core::ActiveMoietyId(_ezTreatment->getActiveSubstanceId().toStdString());
 
     QList<ezechiel::core::CoreMeasure*> sampleList = _ezTreatment->getMeasures()->getList();
     QList<ezechiel::core::CoreMeasure*>::iterator itSamples = sampleList.begin();
@@ -208,7 +211,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
         ezechiel::core::CoreMeasure *sample = *itSamples++;
         newTreatment->addSample(std::make_unique<Tucuxi::Core::Sample>(
             buildDateTime(sample->getMoment()),                     // date,
-            analyteId,                                              // analyteId,
+            Tucuxi::Core::AnalyteId(analyteId),                     // analyteId,
             sample->getConcentration()->getDbvalue(),               // value,
             buildUnit(sample->getConcentration()->getUnitstring())  // unit
         ));
@@ -236,14 +239,14 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
         }
         if (target->getTbest()->getUnitstring() == "h") {
             newTreatment->addTarget(std::make_unique<Tucuxi::Core::Target>(
-                                        analyteId,
+                                        activeMoietyId,
                                         targetType,
-                                        target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getDbvalue(),
                                         target->getCbest()->getDbvalue(),
                                         target->getCmax()->getDbvalue(),
                                         target->getMic()->getDbvalue(),
+                                        target->getMic()->getUnitstring().toStdString(),
                                         // Here we consider the target times to be in hours
                                         std::chrono::seconds(static_cast<int>(60*60*target->getTmin()->getDbvalue())),
                                         std::chrono::seconds(static_cast<int>(60*60*target->getTbest()->getDbvalue())),
@@ -251,14 +254,14 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
         }
         else if (target->getTbest()->getUnitstring() == "m") {
             newTreatment->addTarget(std::make_unique<Tucuxi::Core::Target>(
-                                        analyteId,
+                                        activeMoietyId,
                                         targetType,
-                                        target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getDbvalue(),
                                         target->getCbest()->getDbvalue(),
                                         target->getCmax()->getDbvalue(),
                                         target->getMic()->getDbvalue(),
+                                        target->getMic()->getUnitstring().toStdString(),
                                         // Here we consider the target times to be in minutes
                                         std::chrono::seconds(static_cast<int>(60*target->getTmin()->getDbvalue())),
                                         std::chrono::seconds(static_cast<int>(60*target->getTbest()->getDbvalue())),
@@ -266,14 +269,14 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
         }
         else if (target->getTbest()->getUnitstring() == "s") {
             newTreatment->addTarget(std::make_unique<Tucuxi::Core::Target>(
-                                        analyteId,
+                                        activeMoietyId,
                                         targetType,
-                                        target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getUnitstring().toStdString(),
                                         target->getCmin()->getDbvalue(),
                                         target->getCbest()->getDbvalue(),
                                         target->getCmax()->getDbvalue(),
                                         target->getMic()->getDbvalue(),
+                                        target->getMic()->getUnitstring().toStdString(),
                                         // Here we consider the target times to be in seconds
                                         std::chrono::seconds(static_cast<int>(target->getTmin()->getDbvalue())),
                                         std::chrono::seconds(static_cast<int>(target->getTbest()->getDbvalue())),
@@ -331,9 +334,9 @@ Tucuxi::Core::DrugModel *EzToTucucoreTranslator::buildDrugModel(const ezechiel::
         // We have a model
         std::string fileName = fileNameMap[originalDrugModelId];
         Tucuxi::Core::DrugModelImport importer;
-        Tucuxi::Core::DrugModelImport::Result result;
+        Tucuxi::Common::IImport::Status result;
         result = importer.importFromFile(pDrugModel, fileName);
-        if (result == Tucuxi::Core::DrugModelImport::Result::Ok) {
+        if (result == Tucuxi::Common::IImport::Status::Ok) {
             return pDrugModel;
         }
     }

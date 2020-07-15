@@ -48,18 +48,18 @@ Rectangle {
                         tooltipText: ToolTips.targetTab.type
                     }
                     EntityListHeaderItem {
-                        label.text: "CMin"
+                        label.text: "Min"
                         Layout.preferredWidth: 90
                         tooltipText: ToolTips.targetTab.cMin
                     }
                     EntityListHeaderItem {
-                        label.text: "CBest"
+                        label.text: "Best"
                         Layout.preferredWidth: 90
                         tooltipText: ToolTips.targetTab.cBest
                     }
                     EntityListHeaderItem {
                         Layout.fillWidth: true
-                        label.text: "CMax"
+                        label.text: "Max"
                         tooltipText: ToolTips.targetTab.cMax
                     }
                     EntityListHeaderImage {

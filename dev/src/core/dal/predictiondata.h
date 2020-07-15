@@ -95,13 +95,16 @@ struct MeasureValues
     double m_predictedValue;
 };
 
+
+typedef QList<int> IntList;
+
 class PredictionData : public Entity
 {
     Q_OBJECT
     ENTITY_UTILS(PredictionData)
     AUTO_PROPERTY_DECL(FancyPoints*, points, Points)
-    Q_PROPERTY(QList<int> peaks READ getPeaks NOTIFY peaksChanged)
-    Q_PROPERTY(QList<int> troughs READ getTroughs NOTIFY troughsChanged)
+    Q_PROPERTY(IntList peaks READ getPeaks NOTIFY peaksChanged)
+    Q_PROPERTY(IntList troughs READ getTroughs NOTIFY troughsChanged)
 public:
     explicit PredictionData(AbstractRepository *repository,QObject *parent = nullptr);
 
@@ -176,8 +179,8 @@ public:
         return 0.0;
     }
 
-    QList<int>& getTroughs() { return _troughs; }
-    QList<int>& getPeaks() { return _peaks; }
+    Q_INVOKABLE IntList getTroughs() { return _troughs; }
+    Q_INVOKABLE IntList getPeaks() { return _peaks; }
 
     Q_INVOKABLE double timeAt(const int index) {
         if (index > 0 && index < _points->size()) {
@@ -257,8 +260,8 @@ public slots:
     void findLociAtPoint(FancyPoint&);
 
 private:
-    QList<int> _troughs;
-    QList<int> _peaks;
+    IntList _troughs;
+    IntList _peaks;
     std::vector<CycleStatistics> m_stats;
 
     std::vector<MeasureValues> m_measureValues;

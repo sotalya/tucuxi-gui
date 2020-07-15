@@ -154,7 +154,7 @@ void ValidateDrugDialog::validateDrug()
     Tucuxi::Core::DrugModel *dModel;
 
     Tucuxi::Core::DrugModelImport importer;
-    if (importer.importFromFile(dModel, filePath.toStdString()) != Tucuxi::Core::DrugModelImport::Result::Ok) {
+    if (importer.importFromFile(dModel, filePath.toStdString()) != Tucuxi::Common::IImport::Status::Ok) {
         _errorMessage = "Can not import the drug file.\n\n" + importer.getErrorMessage();
         setErrorMessages(_VALIDATION_INIT, _VALIDATION_ERROR, _ERROR_MESSAGE, _WARNING_COLOR, _error_icon);
         return;

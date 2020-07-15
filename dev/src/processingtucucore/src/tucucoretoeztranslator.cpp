@@ -341,7 +341,7 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
         newTarget->setTmin(translateTime(target->getTMin(), target.get(), newTarget));
         newTarget->setTmax(translateTime(target->getTMax(), target.get(), newTarget));
         newTarget->setTbest(translateTime(target->getTBest(), target.get(), newTarget));
-        newTarget->setMic(translate(target->getMic(), target.get(), newTarget));
+        newTarget->setMic(translateMic(target->getMic(), target->getMicUnit(), target->getMicUnit(), newTarget));
         newTarget->setType(translate(target->getTargetType(), newTarget));
         targetList->append(newTarget);
     }
@@ -429,6 +429,16 @@ ezechiel::core::OperableAmount *TucucoreToEzTranslator::translate(const Tucuxi::
     amount->setUnit(ezechiel::core::Unit(uString));
     return amount;
 }
+
+ezechiel::core::OperableAmount *TucucoreToEzTranslator::translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::Unit micUnit,
+                                                                     Tucuxi::Common::Unit newUnit, ezechiel::core::Target *newTarget)
+{
+    ezechiel::core::OperableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperableAmount>(ABSTRACTREPO, newTarget);
+    amount->setDbvalue(Tucuxi::Common::UnitManager::convertToUnit(subTarget.getValue(), micUnit, newUnit));
+    amount->setUnit(ezechiel::core::Unit(QString(newUnit.toString().c_str())));
+    return amount;
+}
+
 
 ezechiel::core::OperableAmount *TucucoreToEzTranslator::translateTime(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, ezechiel::core::Target *newTarget)
 {

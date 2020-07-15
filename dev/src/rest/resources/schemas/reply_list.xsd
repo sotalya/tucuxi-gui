@@ -38,7 +38,7 @@
               <xs:element name="requestState" type="requestState" />
               <xs:element name="patient" type="requestsPatient" />
               <xs:element name="mandator" type="practician" minOccurs="0" />
-              <xs:element ref="sample" />
+              <xs:element ref="sample" minOccurs="0" />
               <xs:element ref="drug" />
             </xs:sequence>
           </xs:complexType>

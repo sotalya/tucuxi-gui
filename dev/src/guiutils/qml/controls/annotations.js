@@ -47,12 +47,19 @@ function annotatePrediction(ctx, pred, index, color)
                 }
             }
             if (isCurveVisible(index)) {
+                checkAndDisplayDomain(ctx, pred);
                 annotateCurveLoci(ctx, pred.predictive.predictionData, index, color);
             }
         }
     }
 }
 
+function checkAndDisplayDomain(ctx, pred)
+{
+    if (!pred.isValidDomain){
+        ctx.fillText(pred.domainMessage, topRightX, topRightY)
+    }
+}
 function annotateDosage(ctx, dosage, color)
 {
     if (!dosage) {return;}

@@ -36,6 +36,27 @@
 #include "tucucore/computingservice/computingresponse.h"
 #include "tucucore/cyclestatisticscalculator.h"
 #include "tucucore/overloadevaluator.h"
+#include "tucucore/drugdomainconstraintsevaluator.h"
+#include "tucucore/operation.h"
+
+void checkCovariate(const Tucuxi::Common::DateTime _startDate, const Tucuxi::Core::DrugTreatment &drugTreatment, const Tucuxi::Core::DrugModel &drugModel, ezechiel::core::PredictionResult& prediction, const Tucuxi::Common::DateTime _endDate)
+{
+    Tucuxi::Core::DrugDomainConstraintsEvaluator drugDomainConstraintsEvaluator;
+    std::vector<Tucuxi::Core::DrugDomainConstraintsEvaluator::EvaluationResult> evaluationResults;
+    Tucuxi::Core::DrugDomainConstraintsEvaluator::Result drugDomainResult = drugDomainConstraintsEvaluator.evaluate(drugModel,
+                                                                                                                    drugTreatment,
+                                                                                                                    _startDate,
+                                                                                                                    _endDate,
+                                                                                                                    evaluationResults);
+    if (drugDomainResult != Tucuxi::Core::DrugDomainConstraintsEvaluator::Result::Compatible){
+        prediction.setIsValidDomain(false);
+        std::string message;
+        for (const auto &evalResult : evaluationResults){
+            message += "TO\n";
+        }
+        prediction.setDomainMessage(QString::fromStdString(message));
+    }
+}
 
 ProcessingTucucore::ProcessingTucucore() : m_requestID(1)
 {
@@ -61,7 +82,6 @@ ProcessingTucucore::ProcessingTucucore() : m_requestID(1)
 
 ProcessingTucucore::~ProcessingTucucore() {
 }
-
 ezechiel::ProcessingResult ProcessingTucucore::points(
         const ezechiel::core::DrugResponseAnalysis* analysis,
         const ezechiel::core::PointsTraits traits,
@@ -112,8 +132,8 @@ ezechiel::ProcessingResult ProcessingTucucore::points(
         return ezechiel::ProcessingResult::Failure;
     }
 
-    Tucuxi::Common::DateTime _startDate = translator.buildDateTime(traits.start);
-    Tucuxi::Common::DateTime _endDate = translator.buildDateTime(traits.end);
+    Tucuxi::Common::DateTime startDate = translator.buildDateTime(traits.start);
+    Tucuxi::Common::DateTime endDate = translator.buildDateTime(traits.end);
     double nbPointsPerHour = static_cast<double>(traits.nbPoints) / 24.0;
 
 
@@ -131,8 +151,8 @@ ezechiel::ProcessingResult ProcessingTucucore::points(
         // The traits for the curve prediction
         std::unique_ptr<Tucuxi::Core::ComputingTrait> computingTrait = std::make_unique<Tucuxi::Core::ComputingTraitConcentration>(
                     std::to_string(m_requestID),
-                    _startDate,
-                    _endDate,
+                    startDate,
+                    endDate,
                     nbPointsPerHour,
                     options);
 
@@ -153,6 +173,8 @@ ezechiel::ProcessingResult ProcessingTucucore::points(
         std::unique_ptr<Tucuxi::Core::ComputingResponse> response1 = std::make_unique<Tucuxi::Core::ComputingResponse>(std::to_string(m_requestID));
 
         Tucuxi::Core::ComputingStatus res = iCore->compute(request, response);
+
+        checkCovariate(startDate, *drugTreatment, *drugModel, prediction, endDate);
 
         Tucuxi::Core::ComputingStatus res1 = iCore->compute(request1, response1);
         if ((res == Tucuxi::Core::ComputingStatus::Ok) && (res1 == Tucuxi::Core::ComputingStatus::Ok)) {
@@ -324,15 +346,15 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
             ranks[i] = traits.percs[i];
 
 
-        Tucuxi::Core::PredictionParameterType _type = translator.buildParameterType(traits.traits);
+        Tucuxi::Core::PredictionParameterType type = translator.buildParameterType(traits.traits);
 
-        Tucuxi::Core::ComputingOption options(_type, Tucuxi::Core::CompartmentsOption::MainCompartment);
+        Tucuxi::Core::ComputingOption options(type, Tucuxi::Core::CompartmentsOption::MainCompartment);
 
-        Tucuxi::Common::DateTime _startDate = translator.buildDateTime(traits.start);
-        Tucuxi::Common::DateTime _endDate = translator.buildDateTime(traits.end);
+        Tucuxi::Common::DateTime startDate = translator.buildDateTime(traits.start);
+        Tucuxi::Common::DateTime endDate = translator.buildDateTime(traits.end);
         int nbPointsPerHour = traits.nbPoints / 24.0;
 
-        auto duration = _endDate - _startDate;
+        auto duration = endDate - startDate;
         double durationInHours = static_cast<double>(duration.toSeconds()) / 3600.0;
         if ( durationInHours * static_cast<double>(nbPointsPerHour) > 5000.0) {
 
@@ -343,8 +365,8 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
 
         std::unique_ptr<Tucuxi::Core::ComputingTrait> computingTrait = std::make_unique<Tucuxi::Core::ComputingTraitPercentiles>(
                     std::to_string(m_requestID),
-                    _startDate,
-                    _endDate,
+                    startDate,
+                    endDate,
                     ranks,
                     nbPointsPerHour,
                     options,
@@ -354,6 +376,9 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
         std::unique_ptr<Tucuxi::Core::ComputingResponse> response = std::make_unique<Tucuxi::Core::ComputingResponse>(std::to_string(m_requestID));
 
         Tucuxi::Core::ComputingStatus res = iCore->compute(request, response);
+
+        checkCovariate(startDate, *drugTreatment, *drugModel, prediction, endDate);
+
         if (res == Tucuxi::Core::ComputingStatus::Ok) {
 
             TucucoreToEzTranslator tuToEzTranslator;
@@ -498,6 +523,8 @@ ezechiel::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
     Tucuxi::Core::ComputingStatus result;
     result = iCore->compute(request, response);
 
+    checkCovariate(start, *drugTreatment, *drugModel, prediction, end);
+
     if (result != Tucuxi::Core::ComputingStatus::Ok) {
         return ezechiel::ProcessingResult::Failure;
     }
@@ -560,3 +587,5 @@ ezechiel::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
 
     return ezechiel::ProcessingResult::Success;
 }
+
+

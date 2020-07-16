@@ -17,8 +17,11 @@ class PredictionResult : public Entity
 //    AUTO_PROPERTY_DECL(ParameterType, paramsType, ParamsType)
     AUTO_PROPERTY_DECL(Predictive*, predictive, Predictive)
     AUTO_PROPERTY_DECL(Adjustments*, adjustments, Adjustments)
-public:
+    AUTO_PROPERTY_DECL(bool, isValidDomain, IsValidDomain)
+    AUTO_PROPERTY_DECL(QString, domainMessage, DomainMessage)
+    public:
     explicit PredictionResult(AbstractRepository *repository,QObject *parent = nullptr);
+
 };
 
 }

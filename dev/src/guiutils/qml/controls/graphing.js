@@ -58,6 +58,11 @@ function step()
         }
     }
 
+    //verify compatibility between drugmodel constraint and covariate
+    if (aprP.predictive.predictionData.isValid){
+        checkAndDisplayDomain(ctx, aprP)
+    }
+
     //draw adjustments if we have, and indicated in show
     if (revP && revP.isValid) {
         if (graphInformationSelection.presentPossibleAdjustments && graphInformationSelection.displayPossibleAdjustments) {
@@ -123,6 +128,14 @@ function step()
         else {
             drawSoftwareDescription(ctx, nographtext);
         }
+    }
+}
+
+function checkAndDisplayDomain(ctx, pred)
+{
+    if (!pred.isValidDomain){
+        ctx.textAlign = 'end';
+        ctx.strokeText(pred.domainMessage, topRightX, topRightY + 10);
     }
 }
 

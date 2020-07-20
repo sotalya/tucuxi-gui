@@ -206,7 +206,7 @@ Rectangle {
                                     }
                                 }
 
-                                /*
+
                                 CheckBox {
                                     id: withRestPeriod
                                     text: "Rest period?"
@@ -226,7 +226,7 @@ Rectangle {
                                         hoverEnabled: true
                                     }
                                 }
-                                */
+
 
                             }
                         }

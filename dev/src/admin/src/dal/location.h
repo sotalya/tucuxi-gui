@@ -17,6 +17,11 @@ class Location : public ezechiel::core::Entity
 public:
     Q_INVOKABLE Location(ezechiel::core::AbstractRepository *repository = 0, QObject *parent = nullptr);
     Q_INVOKABLE Location(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
 };
 
 Q_DECLARE_METATYPE(Location*)

@@ -54,8 +54,8 @@ void PredictionData::findLoci(FancyPoints* pts){
             }
         }
     }
-    emit troughsChanged(&_troughs);
-    emit peaksChanged(&_peaks);
+    emit troughsChanged(_troughs);
+    emit peaksChanged(_peaks);
 }
 
 void PredictionData::findLociAtPoint(FancyPoint& pt) {
@@ -67,10 +67,10 @@ void PredictionData::findLociAtPoint(FancyPoint& pt) {
     pit_prev--;
     if ((*pit_prev)->getValue() < (*pit)->getValue() && pt.getValue() < (*pit)->getValue()) {
         _peaks.append(pit - pit_begin);
-        emit peaksChanged(&_peaks);
+        emit peaksChanged(_peaks);
     } else if ((*pit_prev)->getValue() > (*pit)->getValue() && pt.getValue() > (*pit)->getValue()) {
         _troughs.append(pit - pit_begin);
-        emit troughsChanged(&_troughs);
+        emit troughsChanged(_troughs);
     }
 }
 

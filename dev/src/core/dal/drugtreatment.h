@@ -35,6 +35,12 @@ class DrugTreatment : public Entity
     AUTO_PROPERTY_DECL(CoreMeasureList*, measures, Measures)
     AUTO_PROPERTY_DECL(TargetList*, targets, Targets)
 
+
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
 //    Q_PROPERTY(QList<PatientVariate*> *covariates READ covariates WRITE setCovariates NOTIFY covariatesChanged)
 
 protected:

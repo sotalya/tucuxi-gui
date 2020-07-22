@@ -40,6 +40,13 @@ protected:
     Q_INVOKABLE InterpretationRequest(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 private:
+
+public:
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
 };
 
 Q_DECLARE_METATYPE(InterpretationRequest*)

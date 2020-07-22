@@ -18,6 +18,11 @@ class Patient : public ezechiel::core::CorePatient
     AUTO_PROPERTY(Person*, person)
     AUTO_PROPERTY(int, person_id)
 
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
 public:
     Q_INVOKABLE Patient(ezechiel::core::AbstractRepository *repository = 0, QObject *parent = nullptr);
     Q_INVOKABLE Patient(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);

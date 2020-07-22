@@ -44,6 +44,10 @@ protected:
 
 public:
 
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
 
     Q_INVOKABLE QString typeToQString()
     {

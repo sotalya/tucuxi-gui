@@ -27,6 +27,11 @@ class Halflife : public Entity
 
     AUTO_PROPERTY_DECL(TranslatableString*, comments, Comments)
 
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
 protected:
 
     Q_INVOKABLE explicit Halflife(AbstractRepository *repository, QObject *parent = nullptr)

@@ -22,6 +22,11 @@ class ErrorModel : public Entity
 
     AUTO_PROPERTY_DECL(TranslatableString*, comments, Comments)
 
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
 protected:
 
     Q_INVOKABLE ErrorModel(AbstractRepository *repository, QObject *parent = nullptr) : Entity(repository, parent), _additive(0.0), _proportional(0.0), _comments(0) {}

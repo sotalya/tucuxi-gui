@@ -21,6 +21,7 @@ class ValidDose : public Entity
     AUTO_PROPERTY_DECL(IdentifiableAmount*, quantity, Quantity)
     AUTO_PROPERTY_DECL(Admin*, route, Route) // YTA: This Route should be declared outside dosage.h
 
+
 protected:
 
     Q_INVOKABLE explicit ValidDose(AbstractRepository *repository, QObject *parent = nullptr) : Entity(repository, parent),
@@ -38,6 +39,12 @@ protected:
     }
 
 public:
+
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
     ~ValidDose() {}
 };
 
@@ -93,6 +100,12 @@ public:
             this->append(_vd);
         }
     }
+
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
     /** \brief Construct and returns the drug's supported doses amounts.
      * @return The doses amounts.
      */

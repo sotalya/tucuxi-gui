@@ -252,8 +252,8 @@ private:
     }
 
 signals:
-    void peaksChanged(QList<int>*);
-    void troughsChanged(QList<int>*);
+    void peaksChanged(QList<int>);
+    void troughsChanged(QList<int>);
 
 public slots:
     void findLoci(FancyPoints*);

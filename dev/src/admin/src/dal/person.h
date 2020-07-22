@@ -33,6 +33,11 @@ public:
     AUTO_PROPERTY(int, location_id)
     AUTO_PROPERTY_DECL(ezechiel::core::UncastedValueList *, uncastedValues, UncastedValues)
 
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
 public:
     Q_INVOKABLE Person(ezechiel::core::AbstractRepository *repository = 0, QObject *parent = nullptr);
     Q_INVOKABLE Person(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);

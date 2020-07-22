@@ -88,6 +88,11 @@ protected:
 
 public:
 
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
     //! To print.
     QString toString () const;
 
@@ -139,6 +144,11 @@ public:
     ParameterSet(AbstractRepository *repository, QObject* parent);
     //! Create a parameter set from another parameter set.
     ParameterSet(AbstractRepository *repository, QObject* parent, ParameterSet* other);
+
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
 
     //! Parameter type of this set.
     ParameterType type () const;

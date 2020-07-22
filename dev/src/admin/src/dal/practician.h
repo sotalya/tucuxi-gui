@@ -17,6 +17,11 @@ class Practician : public ezechiel::core::Entity
     AUTO_PROPERTY(Institute*, institute)
     AUTO_PROPERTY(int, institute_id)
 
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
 public:
     Q_INVOKABLE Practician(ezechiel::core::AbstractRepository *repository = 0, QObject *parent = nullptr);
     Q_INVOKABLE Practician(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);

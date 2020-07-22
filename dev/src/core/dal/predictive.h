@@ -21,6 +21,12 @@ class Predictive : public Entity
 public:
     explicit Predictive(AbstractRepository *repository, QObject *parent = nullptr);
 
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
+
 signals:
 
 public slots:

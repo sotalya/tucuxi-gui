@@ -148,7 +148,7 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
             rlutil::resetColor();
             continue;
         } else {
-            informer << request->drug()->id();
+            informer << request->drug()->getSubstanceId();
         }
         rlutil::resetColor();
         informer << endl;

@@ -155,6 +155,7 @@ Rectangle {
                 daweb.update();
                 reportInfo.graphPath = "file://" + appPath + "/graph.png";
                 webChannel.registerObject("interpretation", interpretation);
+                //webChannel.registerObject("something", interpretation.analysis.chartData.adjPred.predictive.predictionData);
                 webChannel.registerObject("info", reportInfo);
 
                 // Now load the web page into the web browser
@@ -178,7 +179,7 @@ Rectangle {
 
         //ToDo: custom look for the buttons, see with Sandrine
         //ToDo: later on, the right panel could display the report
-        Button {
+        TucuButton {
             id: printbutton
             Layout.fillWidth: true
             text: "Generate pdf"

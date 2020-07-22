@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QtQml>
 #include <QtWebEngine/QtWebEngine>
+#include <QSystemTrayIcon>
 
 #include "errors_gui.h"
 #include "restconfigdialog.h"
@@ -247,7 +248,19 @@ int main(int argc, char *argv[])
     signal(SIGFPE, signalHandler);
 */
 
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
+
     QApplication app(argc, argv);
+
+/*
+ * For the day we want to play with the system tray
+ *
+    if (QSystemTrayIcon::isSystemTrayAvailable()) {
+        auto systemTrayIcon = new QSystemTrayIcon();
+        systemTrayIcon->setIcon(QIcon(":/icons/logo.ico"));
+        systemTrayIcon->setVisible(true);
+    }
+*/
 
 #ifdef QT_DEBUG
     qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "23654");

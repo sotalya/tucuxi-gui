@@ -3,6 +3,7 @@
         <file alias="checked.png">icons/validator/checked.png</file>
         <file alias="error.png">icons/validator/error.png</file>
         <file alias="warning.png">icons/validator/warning.png</file>
+        <file alias="logo.ico">icons/logo.ico</file>
         <file alias="logo.png">icons/logo.png</file>
         <file alias="padlock.png">icons/padlock.png</file>
         <file alias="unlock.png">icons/unlock.png</file>

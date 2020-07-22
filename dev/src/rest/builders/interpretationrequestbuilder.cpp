@@ -302,6 +302,15 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
             QString valueString = dosageNode.firstChildElement("infusion").firstChildElement("value").firstChild().toText().data();
             QString unit = dosageNode.firstChildElement("infusion").firstChildElement("unit").firstChild().toText().data();
             int value = valueString.toInt(&ok);
+            if (!ok) {
+                double dValue = valueString.toDouble(&ok);
+                if (ok) {
+                    value = static_cast<int>(dValue);
+                    if (static_cast<double>(value) != dValue) {
+                        ok = false;
+                    }
+                }
+            }
             if (ok) {
 
                 if (unit == "h") {

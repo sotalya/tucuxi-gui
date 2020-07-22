@@ -36,7 +36,7 @@ TextField {
         return isOk
     }
 
-//    inputMask: "99:99"
+    inputMask: "99:99"
     inputMethodHints : Qt.ImhTime
     text: date.toLocaleString(Qt.locale(),"hh:mm")
     lastTextOk: date.toLocaleString(Qt.locale(),"hh:mm")
@@ -45,7 +45,7 @@ TextField {
     enabled: isEnabled
 
     onFocusChanged: if (activeFocus) selectAll()
-
+/*
     onTextChanged: {
         var curPos = cursorPosition
 
@@ -86,7 +86,7 @@ TextField {
         // After the modification of the text we need to place the cursor at the correct position
         cursorPosition = curPos;
     }
-
+*/
     onEditingFinished: {
         getValues();
     }

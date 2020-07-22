@@ -133,7 +133,7 @@ void RestRequestsClient::queryRequest(const QString &requestId, const QString &p
     rlutil::setColor(rlutil::GREEN);
     informer << "\tDrugId:\t"; informer.flush();
     rlutil::resetColor();
-    informer << content.value("drug.id");
+    informer << content.value("drug.drugId");
     rlutil::resetColor();
     informer << endl;
 

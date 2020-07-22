@@ -20,7 +20,7 @@ config_view_preproc {
     QMAKE_CXXFLAGS += -save-temps
 }
 
-disablepercs {
+config_disablepercs {
    DEFINES += DISABLEPERCS
 }
 # Customized project configurations
@@ -41,33 +41,6 @@ config_externalreport {
 
 # Common settings for the whole project
 CONFIG += qt thread rtti silent c++14 warn_off embed_manifest_dll embed_manifest_exe
-
-config_multithread {
-    DEFINES += MULTITHREAD
-}
-
-config_openmp {
-    DEFINES += OPENMP
-    DEFINES -= MULTITHREAD
-
-    unix {
-        QMAKE_CXXFLAGS += -fopenmp
-        QMAKE_LFLAGS += -fopenmp
-        LIBS += -fopenmp
-    }
-    win32 {
-            QMAKE_CXXFLAGS += -openmp
-            LIBS += -openmp
-    }
-
-    macx {
-        CONFIG += dead_strip
-        # Apparently not yet supported by apple
-        #    QMAKE_CXXFLAGS += -fopenmp
-        #    QMAKE_LFLAGS += -fopenmp
-        #    LIBS += -fopenmp
-    }
-}
 
 CXXFLAGS += -Wwrite-strings -fexceptions -Wall
 CFLAGS += -fexceptions

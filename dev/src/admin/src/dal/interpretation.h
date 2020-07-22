@@ -60,6 +60,13 @@ protected:
 
     Q_INVOKABLE Interpretation(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);
 
+public:
+
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
 };
 
 typedef Interpretation* SharedInterpretation;

@@ -30,6 +30,11 @@ public:
     SharedPhone phone(const PhoneType &type) const;
     Email* email(const Type &type) const;
 
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
 private:
     QList<SharedPhone> _phones;
     QList<Email*> _emails;

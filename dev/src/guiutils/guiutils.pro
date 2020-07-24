@@ -112,7 +112,8 @@ SOURCES += \
     src/demorequestfileclient.cpp \
     src/widgets/validatedrugdialog.cpp \
     src/multithreadedcalculationcontroller.cpp \
-    src/unavailablefunctionality.cpp
+    src/unavailablefunctionality.cpp \
+    src/appmode.cpp
 
 config_connected {
 SOURCES +=
@@ -166,7 +167,8 @@ HEADERS +=  \
     src/demorequestfileclient.h \
     src/widgets/validatedrugdialog.h \
     src/multithreadedcalculationcontroller.h \
-    src/unavailablefunctionality.h
+    src/unavailablefunctionality.h \
+    src/appmode.h
 
 config_connected {
 HEADERS +=

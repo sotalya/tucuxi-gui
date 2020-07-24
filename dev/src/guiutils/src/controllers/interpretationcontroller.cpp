@@ -57,6 +57,7 @@
 #include "guiutils/src/chartdatacontroller.h"
 #include "guiutils/src/widgets/persistentfiledialog.h"
 #include "guiutils/src/unavailablefunctionality.h"
+#include "guiutils/src/appmode.h"
 
 #include "measuretabcontroller.h"
 #include "dosagetabcontroller.h"
@@ -336,6 +337,8 @@ void InterpretationController::bindModelsToRootContext(QQmlContext *rootContext)
     rootContext->setContextProperty("validationTabController", validationTabController);
     rootContext->setContextProperty("drugTabController", drugTabController);
 	rootContext->setContextProperty("graphInformationSelection", _graphInformationSelection);
+    rootContext->setContextProperty("appMode", AppMode::getInstance());
+
 }
 
 

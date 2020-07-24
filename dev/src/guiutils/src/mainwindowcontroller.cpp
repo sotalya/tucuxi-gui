@@ -22,6 +22,7 @@
 #ifdef CONFIG_CONNECTED
 #include "rest/restrequestsclient.h"
 #include "guiutils/src/demorequestfileclient.h"
+#include "guiutils/src/appglobals.h"
 #else
 #include "demorequestsclient.h"
 #include "guiutils/src/demorequestfileclient.h"
@@ -31,6 +32,8 @@
 #include "admin/src/interpretationxmlimport.h"
 
 #include "guiutils/src/unavailablefunctionality.h"
+
+#include "guiutils/src/appglobals.h"
 
 MainWindowController::MainWindowController(QObject *parent) :
     currentView(HOME),
@@ -43,9 +46,13 @@ MainWindowController::MainWindowController(QObject *parent) :
 
     requestsController = new RequestsController(this);
 
+
+
 #ifdef CONFIG_CONNECTED
     QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
-    QString listFile = SETTINGS.get(ezechiel::core::Module::GUI, "listFile").toString();
+//    QString listFile = SETTINGS.get(ezechiel::core::Module::GUI, "listFile").toString();
+    AppGlobals* appGlobals = AppGlobals::getInstance();
+    QString listFile = appGlobals->getListFile()
     //if (listFile.isEmpty()) {
     //    listFile = requestDefaultDir;
     //}
@@ -128,6 +135,8 @@ MainWindowController::MainWindowController(QObject *parent) :
     getRootContext()->setContextProperty("mainWindowController", this);
     getRootContext()->setContextProperty("appPath", QApplication::applicationDirPath());
 
+//    AppGlobals* appGlobals = AppGlobals::getInstance();
+//    QString requestFile = appGlobals->getRequestFile();
 
 //    QString requestFile = SETTINGS.get(ezechiel::core::Module::GUI, "requestFile").toString();
 //    loadRequestFile(requestFile);

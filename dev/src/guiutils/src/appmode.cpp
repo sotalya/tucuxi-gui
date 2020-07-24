@@ -1,7 +1,6 @@
 #include "appmode.h"
-#include "controllers/interpretationcontroller.h"
 
-AppMode* AppMode::m_instance = 0;
+AppMode* AppMode::m_instance = nullptr;
 
 AppMode::AppMode()
 {}

@@ -19,6 +19,7 @@ CONFIG(debug) {
 
 config_demo {
     RESOURCES += resources/demo/demo.qrc
+    DEFINES += CONFIG_DEMO
 }
 
 # For chrono

@@ -12,7 +12,7 @@ private:
 
 public:
     static AppMode* getInstance(){
-        if (!m_instance){
+        if (m_instance == nullptr){
             m_instance = new AppMode();
         }
         return m_instance;

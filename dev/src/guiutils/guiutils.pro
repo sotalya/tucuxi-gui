@@ -113,7 +113,8 @@ SOURCES += \
     src/widgets/validatedrugdialog.cpp \
     src/multithreadedcalculationcontroller.cpp \
     src/unavailablefunctionality.cpp \
-    src/appmode.cpp
+    src/appmode.cpp \
+    src/appglobals.cpp
 
 config_connected {
 SOURCES +=
@@ -168,7 +169,8 @@ HEADERS +=  \
     src/widgets/validatedrugdialog.h \
     src/multithreadedcalculationcontroller.h \
     src/unavailablefunctionality.h \
-    src/appmode.h
+    src/appmode.h \
+    src/appglobals.h
 
 config_connected {
 HEADERS +=

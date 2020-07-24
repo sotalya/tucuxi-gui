@@ -90,6 +90,8 @@
 #include "guiutils/src/models/studylistmodel.h"
 #include "guiutils/src/models/targetlistmodel.h"
 #include "guiutils/src/models/validationmodel.h"
+#include "guiutils/src/appmode.h"
+#include "guiutils/src/appglobals.h"
 
 #include "rest/restlogger.h"
 #include "rest/restrequestsclient.h"
@@ -279,11 +281,16 @@ int main(int argc, char *argv[])
     // Set settings info before CORE is called
     QCoreApplication::setOrganizationName("HEIG-VD");
 //    QSettings::setDefaultFormat(QSettings::Format::IniFormat);
-#ifdef CONFIG_DEMO
-    QCoreApplication::setApplicationName("Tucuxi - Demo version - Not intended for medical use");
-#else
-    QCoreApplication::setApplicationName("Tucuxi");
-#endif // CONFIG_DEMO
+
+    AppMode* appMode = AppMode::getInstance();
+
+    if(appMode->isDemo()){
+        QCoreApplication::setApplicationName("Tucuxi - Demo version - Not intended for medical use");
+    }
+    else{
+        QCoreApplication::setApplicationName("Tucuxi - Educational version - Not intended for medical use");
+    }
+
     QCoreApplication::setApplicationVersion("0.3.0");
 
     CORE->setRunningMode(ezechiel::core::Core::GUI);
@@ -679,6 +686,13 @@ void parseOptions()
 
     SETTINGS.set(ezechiel::core::Module::GUI,"listFile", parser.value(listFileOption));
     SETTINGS.set(ezechiel::core::Module::GUI,"requestFile", parser.value(requestFileOption));
+
+    AppGlobals *appGlobals = AppGlobals::getInstance();
+
+    appGlobals->setListFile(parser.value(listFileOption));
+    appGlobals->setRequestFile(parser.value(requestFileOption));
+
+
 #ifdef CONFIG_CONNECTED
     MirthRequest::updateDefaultBasePath(parser.value(basePathOption));
     MirthRequest::updateDefaultPort(parser.value(portOption).toInt());
@@ -709,7 +723,7 @@ void initResources()
 
 #ifdef COMPILE_WITH_TUCUCORE
     Drugs2Manager* manager = Drugs2Manager::getInstance();
-#ifdef CONFIG_DEMO
+#ifndef CONFIG_DEMO
     std::string basePath = ":/drugs/";
 #else
     std::string basePath = CORE->path(ezechiel::core::Core::Drugs2).toStdString() + "/";

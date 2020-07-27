@@ -314,6 +314,7 @@ Rectangle {
             ]
         }
 
+
         EntityBlockEnd {
             visible : patientRequiredExpandHeader.expanded && (patientRequired.model ? 1 : 0)
         }
@@ -476,6 +477,167 @@ Rectangle {
 
         EntityBlockEnd {
             visible : patientExtraExpandHeader.expanded && (patientRequired.model ? 1 : 0)
+        }
+
+        EntityTitle {
+            label.text: "Physician in charge"
+            id: physicianInChargeHeader
+            expanded: false
+            visible : patientRequired.model ? 1 : 0
+        }
+
+        //Physician
+        EntityView {
+            id: physicianInCharge
+            Layout.preferredHeight: 220
+            Layout.minimumHeight:   150
+            property var model: patientListView.currentItem? patientListView.currentItem.selected_model : 0
+
+            visible: (patientListView.count > 0) && physicianInChargeHeader.expanded && (patientRequired.model ? 1 : 0);
+
+            columnlayout.children: [
+
+                RowLayout {
+                    Layout.preferredHeight: physicianInCharge.rowHeight
+                    Layout.minimumHeight:   physicianInCharge.rowHeight
+                    spacing: 2
+
+                    EntityLabel {
+                        text: "Title:"
+                    }
+                    EntityTextField {
+                        placeholderText: "title"
+                        text: interpretation.request.practician ? interpretation.request.practician.title : ""
+                        onTextChanged: interpretation.request.practician.title = text
+                        Layout.fillWidth:  true
+                    }
+                }
+                ,
+                RowLayout {
+                    Layout.preferredHeight: physicianInCharge.rowHeight
+                    Layout.minimumHeight:   physicianInCharge.rowHeight
+                    spacing: 2
+
+                    EntityLabel {
+                        text: "First name:"
+                    }
+
+                    EntityTextField {
+                        Layout.fillWidth:  true
+                        text: interpretation.request.practician ? interpretation.request.practician.person.firstname : ""
+                        onTextChanged: {
+                            if (!interpretation.request.practician) {return;}
+                            interpretation.request.practician.person.firstname = text
+                        }
+                        placeholderText: "first name"
+                    }
+                    EntityLabel {
+                        text: "Last name:"
+                        Layout.preferredWidth: 100
+                    }
+                    EntityTextField {
+                        placeholderText: "last name"
+                        text: interpretation.request.practician ? interpretation.request.practician.person.name : ""
+                        onTextChanged: {
+                            if (!interpretation.request.practician) {return;}
+                            interpretation.request.practician.person.name = text
+                        }
+                        Layout.fillWidth:  true
+                    }
+                }
+                ,
+                RowLayout {
+                    Layout.preferredHeight: physicianInCharge.rowHeight
+                    Layout.minimumHeight:   physicianInCharge.rowHeight
+                    spacing: 2
+
+                    EntityLabel {
+                        Layout.preferredWidth: 75
+                        text: "Affiliation:"
+                    }
+                    EntityTextField {
+                        Layout.fillWidth:  true
+                        placeholderText: "affiliation"
+                        text: interpretation.request.practician ? interpretation.request.practician.institute : ""
+                        onTextChanged: {
+                            if (!patientExtra.model) {return;}
+                            interpretation.request.practician.institute = text;
+                        }
+                    }
+                }
+                ,
+                RowLayout {
+                    Layout.preferredHeight: physicianInCharge.rowHeight
+                    Layout.minimumHeight:   physicianInCharge.rowHeight
+                    spacing: 2
+
+                    EntityLabel {
+                        text: "City:"
+                    }
+                    EntityTextField {
+                        Layout.fillWidth:  true
+                        placeholderText: "city"
+                        text: interpretation.request.practician ? interpretation.request.practician.person.location.city : ""
+                        onTextChanged: {
+                            if (!interpretation.request.practician) {return;}
+                            interpretation.request.practician.person.location.city = text
+                        }
+                    }
+
+                    EntityLabel {
+                        text: "Postcode:"
+                        Layout.preferredWidth: 100
+                    }
+                    EntityTextField {
+                        Layout.fillWidth:  true
+                        placeholderText: "postcode"
+                        text: interpretation.request.practician ? interpretation.request.practician.person.location.postcode : ""
+                        onTextChanged: {
+                            if (!interpretation.request.practician) {return;}
+                            interpretation.request.practician.person.location.postcode = text
+                        }
+                    }
+                }
+                ,
+                RowLayout {
+                    Layout.preferredHeight: physicianInCharge.rowHeight
+                    Layout.minimumHeight:   physicianInCharge.rowHeight
+                    spacing: 2
+
+                    EntityLabel {
+                        text: "State:"
+                    }
+                    EntityTextField {
+                        Layout.fillWidth:  true
+                        placeholderText: "state"
+                        text: interpretation.request.practician ? interpretation.request.practician.person.location.state : ""
+                        onTextChanged: {
+                            if (!interpretation.request.practician) {return;}
+                            interpretation.request.practician.person.location.state = text
+                        }
+                    }
+
+                    EntityLabel {
+                        text: "Country:"
+                        Layout.preferredWidth: 100
+                    }
+                    EntityTextField {
+                        Layout.fillWidth:  true
+                        placeholderText: "country"
+                        text: interpretation.request.practician ? interpretation.request.practician.person.location.country : ""
+                        onTextChanged: {
+                            if (!interpretation.request.practician) {return;}
+                            interpretation.request.practician.person.location.country = text
+                        }
+                    }
+                }
+                ,
+                RowLayout {} //Spacer
+            ]
+        }
+
+        EntityBlockEnd {
+            visible : physicianInChargeHeader.expanded && (patientRequired.model ? 1 : 0)
         }
 
         Item {

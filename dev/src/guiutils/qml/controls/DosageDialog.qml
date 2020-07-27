@@ -9,7 +9,7 @@ import guiutils.qml.controls 1.0
 import ezechiel 1.0
 
 DialogBase {
-    title: "Dosage parameters"
+    title: "Dosage definition"
     width: 600
     height: 400
 

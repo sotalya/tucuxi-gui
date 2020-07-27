@@ -19,6 +19,30 @@ Item {
         }
 
         Text {
+
+            Layout.fillWidth: true
+            wrapMode: Text.WordWrap
+            verticalAlignment: Text.AlignVCenter
+            text: "<center>" + whichLicence() + "</center>"
+            textFormat: TextEdit.RichText
+            font.family: "Helvetica"
+            font.pointSize: 18
+            color: "black"
+            padding : 20
+            focus: true
+        }
+
+        Image {
+            Layout.fillHeight: true
+            Layout.preferredWidth: 40
+            Layout.alignment: Qt.AlignCenter
+            source: "qrc:/icons/logo.png"
+            antialiasing: true
+            mipmap: true
+            fillMode: Image.PreserveAspectFit
+        }
+
+        Text {
             Layout.fillWidth: true
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
@@ -81,6 +105,22 @@ Item {
             Layout.fillHeight: true
             Layout.preferredHeight: 100
         }
+    }
+
+    function whichLicence(){
+        var licence;
+        if(appMode.isDemo()){
+            licence = "Demo licence\n"
+        } else if(appMode.isEducational()){
+            licence = "Educational license"
+        } else if(appMode.isInstitutional()){
+            licence = "Institutional license"
+        } else if(appMode.isPractice()){
+            licence = "Practice license"
+        } else{
+            licence = "No licence"
+        }
+        return licence;
     }
 }
     /*

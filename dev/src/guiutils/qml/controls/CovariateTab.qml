@@ -38,11 +38,11 @@ Rectangle {
 
 
         /**********************************************************************
-          Drug variate list
+          Drug covariate list
         **********************************************************************/
 
         EntityTitle {
-            label.text: "Drug variates list"
+            label.text: "Drug covariates list"
             id: drugVariatesListExpandHeader
             tooltipText: ToolTips.covariateTab.drugVariateList
         }
@@ -182,11 +182,11 @@ Rectangle {
         }
 
         /**********************************************************************
-          Patient variate list
+          Patient covariate list
         **********************************************************************/
 
         EntityTitle {
-            label.text: "Patient variate history : %1".arg( (drugVariateListView.currentIndex != -1) ? drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].name : "?")
+            label.text: "Patient covariate history : %1".arg( (drugVariateListView.currentIndex != -1) ? drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].name : "?")
             id: patientVariatesListExpandHeader
             visible : true
             tooltipText: ToolTips.covariateTab.patientVariateList

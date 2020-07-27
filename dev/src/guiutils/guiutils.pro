@@ -117,7 +117,7 @@ SOURCES += \
     src/appglobals.cpp
 
 config_connected {
-SOURCES +=
+    SOURCES +=
 }
 
 HEADERS +=  \

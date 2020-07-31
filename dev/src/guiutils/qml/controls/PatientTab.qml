@@ -558,7 +558,7 @@ Rectangle {
                     EntityTextField {
                         Layout.fillWidth:  true
                         placeholderText: "affiliation"
-                        text: interpretation.request.practician ? interpretation.request.practician.institute : ""
+                        text: interpretation.request.practician ? interpretation.request.practician.institute.name : ""
                         onTextChanged: {
                             if (!patientExtra.model) {return;}
                             interpretation.request.practician.institute = text;

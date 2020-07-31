@@ -195,6 +195,8 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
 
     newModel->setStudyAuthors(QString::fromStdString(drugModel->getMetadata().getAuthorName()));
 
+    newModel->setDescription(QString::fromStdString(drugModel->getMetadata().getDescription().getString()));
+
 
     //
     // Active substance

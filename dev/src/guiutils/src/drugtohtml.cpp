@@ -34,12 +34,17 @@ QString DrugToHtml::drugToHtml(const ezechiel::core::DrugModel *drug)
         desc += "</h5>";*/
         desc += "<tr><td></td><td></td></tr>";
         desc += "<tr><td><b>Domain:   </b></td><td><b>" + drug->getDomainName()+ "</b></td></tr>";
-        desc += "<tr><td>Study:   </td><td>" + drug->getStudyName() + "</td></tr>";
-        desc += "<tr><td>Authors:   </td><td>" + drug->getStudyAuthors() + "</td></tr>";
+        desc += "<tr><td><b>Study:   </b></td><td><b>" + drug->getStudyName() + "</b></td></tr>";
+        desc += "<tr><td>Study description:   </td><td>" + drug->description() + "</td></tr>";
 //        desc += "<h5>Absorption, distribution, metabolism, and excretion</h5>";
+        desc += "<tr><td><b>Drug Parameters ID: </b></td><td><b>" + drug->getDrugModelId() + "</b></td></tr>";
+        desc += "<tr><td>Written by:   </td><td>" + drug->getStudyAuthors() + "</td></tr>";
+        desc += "<tr><td>Affiliation:   </td><td>" + QString("TODO") + "</td></tr>";
+        desc += "<tr><td>Last revision:   </td><td>" + QString("TODO") + "</td></tr>";
         desc += "<tr><td></td><td></td></tr>";
 
-        desc += "<tr><td>Model: </td><td>" + drug->getDrugModelId() + "</td></tr>";
+//        auto covariatePointer = drug->getCovariates();
+
         if (drug->getAdme()->getIntakes()->size() == 0)
             desc += "<tr><td>Route: </td><td>Undefined</td></tr>";
         else if (drug->getAdme()->getIntakes()->size() == 1)

@@ -684,8 +684,8 @@ void parseOptions()
     //and other network related features
     Q_UNUSED(standaloneOption);
 
-    SETTINGS.set(ezechiel::core::Module::GUI,"listFile", parser.value(listFileOption));
-    SETTINGS.set(ezechiel::core::Module::GUI,"requestFile", parser.value(requestFileOption));
+//    SETTINGS.set(ezechiel::core::Module::GUI,"listFile", parser.value(listFileOption));
+//    SETTINGS.set(ezechiel::core::Module::GUI,"requestFile", parser.value(requestFileOption));
 
     AppGlobals *appGlobals = AppGlobals::getInstance();
 

@@ -165,8 +165,8 @@ public:
 
     Patient* _currentPatient;
 
-    Patient * getCurrentPatient() const;
     void setCurrentPatient(Patient *patient);
+    Patient * getCurrentPatient() const;
 
     ezechiel::core::DrugModelList* getDrugs() { return _drugs; }
     ezechiel::core::DrugModelList* getDrugModels() { return _drugModelsForCurrentSubstance; }

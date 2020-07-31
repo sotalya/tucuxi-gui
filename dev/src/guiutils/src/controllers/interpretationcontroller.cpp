@@ -1739,6 +1739,10 @@ void InterpretationController::saveInterpretation()
     // Settings to keep track of the previous path
     dirPath = SETTINGS.get(ezechiel::core::Module::GUI,"interpretationDirPath", "").toString();
 
+//    Patient* currentPatient = getCurrentPatient();
+
+//    dirPath +=
+
     QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Request File"),
                                                     dirPath,
                                                     tr("Tucuxi Interpretation File (*.tui)"));

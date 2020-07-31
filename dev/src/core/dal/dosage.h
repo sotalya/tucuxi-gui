@@ -45,6 +45,7 @@ class Dosage : public Entity, AbstractDosage
     Q_PROPERTY(double dbtinf READ getDbtinf WRITE setDbtinf NOTIFY dbtinfChanged)
     Q_PROPERTY(Admin* route READ getRoute WRITE setRoute NOTIFY routeChanged)
     AUTO_PROPERTY_DECL(IdentifiableAmount*, quantity, Quantity)
+    AUTO_PROPERTY_DECL(double, stepQuantity, StepQuantity)
     AUTO_PROPERTY_DECL(QDateTime, applied, Applied)
     AUTO_PROPERTY_DECL(QDateTime, endtime, EndTime)
     AUTO_PROPERTY_DECL(QDateTime, steadyStateLastDoseDate, SteadyStateLastDoseDate)

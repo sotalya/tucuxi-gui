@@ -12,6 +12,7 @@ namespace core {
 
 //AUTO_PROPERTY_IMPL(Dosage, ADME::Route, route, Route)
 AUTO_PROPERTY_IMPL(Dosage, IdentifiableAmount*, quantity, Quantity)
+AUTO_PROPERTY_IMPL(Dosage, double, stepQuantity, StepQuantity)
 AUTO_PROPERTY_IMPL(Dosage, QDateTime, applied, Applied)
 AUTO_PROPERTY_IMPL(Dosage, QDateTime, endtime, EndTime)
 AUTO_PROPERTY_IMPL(Dosage, Duration, tinf, Tinf)

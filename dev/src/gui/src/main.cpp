@@ -723,7 +723,7 @@ void initResources()
 
 #ifdef COMPILE_WITH_TUCUCORE
     Drugs2Manager* manager = Drugs2Manager::getInstance();
-#ifndef CONFIG_DEMO
+#ifdef CONFIG_DEMO
     std::string basePath = ":/drugs/";
 #else
     std::string basePath = CORE->path(ezechiel::core::Core::Drugs2).toStdString() + "/";

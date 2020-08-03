@@ -28,7 +28,7 @@ DialogBase {
     }
 
     function init(quantity, interval, route, tinf, appliedDate, endDate, hasEndDate, isAtSteadyState, routeNames, disableAtSteadyState,
-                  standardTreatment)
+                  standardTreatment, drugModel)
     {
         self = this
 
@@ -36,6 +36,10 @@ DialogBase {
         doseSpinBox.decimals = 2;
         doseSpinBox.setRealValue(quantity.dbvalue);
         doseSpinBox.suffix = " " + quantity.unitstring;
+        doseSpinBox.to = drugModel.doses.toDose.dbvalue * Math.pow(10, doseSpinBox.decimals);
+        doseSpinBox.stepSize = drugModel.doses.stepDose.dbvalue * Math.pow(10, doseSpinBox.decimals);
+        doseSpinBox.from = drugModel.doses.fromDose.dbvalue * Math.pow(10, doseSpinBox.decimals);
+
         doseSpinBox.doValidation = function() { return getQuantity() > 0 }
 
         intervalSpinBox.setRealValue(interval);

@@ -60,6 +60,8 @@ SpinBox {
     // caused by the formatting code which suddently adds separator for thousands and ".00" for decimals when
     // they are missing. The current code fixes problems linked to thousands separators but does nothing for
     // the ones linked to decimals.
+
+
     onValueChanged: {
         var t = root.textFromValue(root.value, root.locale);
         if (!(t === txtInput.text) && root.value !== 0) {

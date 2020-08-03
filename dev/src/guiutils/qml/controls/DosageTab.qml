@@ -93,7 +93,8 @@ Rectangle {
                             dosageTabController.addDosage();
                             dosageListView.currentIndex = dosageListView.count-1;
                             var model = interpretation.drugResponseAnalysis.treatment.dosages.objlist[dosageListView.currentIndex]
-                            dosageDialog.exec(model, routesName, true, false)
+                            var drugModel = interpretation.drugResponseAnalysis.drugModel
+                            dosageDialog.exec(model, routesName, true, false, drugModel)
                         }
 
                         tooltipText: ToolTips.dosageTab.add
@@ -352,7 +353,7 @@ Rectangle {
         id: dosageDialog
         objectName: "dosageDialog"
 
-        function exec(model, routesName, bCreatingNewItem, allowSteadyState)
+        function exec(model, routesName, bCreatingNewItem, allowSteadyState, drugModel)
         {
             if (model) {
                 var enableAtSteadyState = allowSteadyState || (bCreatingNewItem && (dosageTabController.getNbDosages() === 1));
@@ -368,7 +369,8 @@ Rectangle {
                     model.isAtSteadyState,
                     routesName,
                     disableAtSteadyState,
-                    interpretation.drugResponseAnalysis.drugModel.standardTreatment);
+                    interpretation.drugResponseAnalysis.drugModel.standardTreatment,
+                    drugModel);
                 this.open(bCreatingNewItem);
             }
         }

@@ -169,112 +169,147 @@ Rectangle {
             tooltipText: ToolTips.validationTab.parametersListTitle
         }
 
-        ListView {
-            id: deflv
-            Layout.fillWidth: true;
-            Layout.preferredHeight: 20
-            Layout.minimumHeight:   20
-            visible : parameterListExpandHeader.expanded
-            model: poppt // lyt.lamodel
-            orientation: Qt.Horizontal
-            header: Component {
-                Text {
-                    text: "Population:"
-                }
-            }
-            spacing: 2
-            delegate: RowLayout {
-                Text {
-                    text: "  " + modelData.name + " = " + (modelData.quantity.dbvalue).toFixed(3)
-                }
-            }
 
-            MouseArea {
-                id: popMousearea
-                anchors.fill: parent
-                hoverEnabled: true
-                ToolTip {
-                    property string tooltipText : ToolTips.validationTab.populationParameters
-                    background: Rectangle {
-                        color: Style.tooltip.color
-                        border.color: Style.tooltip.border_color
+        EntityList {
+            id: parameter
+
+            columnlayout.children: [
+
+                EntityListHeader {
+                    id: popParametersListHeaders
+                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 100; label.text: ""}
+                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 115; label.text: "CL"; }
+                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 115; label.text: "F"}
+                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 115; label.text: "Ka"}
+                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 115; label.text: "V"}
+                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 115; label.text: ""}
+                },
+
+                EntityListView{
+                    id: deflv
+                    Layout.fillWidth: true;
+                    Layout.preferredHeight: 20
+                    Layout.minimumHeight:   20
+                    Layout.minimumWidth: 115
+                    Layout.preferredWidth: 115
+                    visible : parameterListExpandHeader.expanded
+                    model: poppt // lyt.lamodel
+                    orientation: Qt.Horizontal
+                    header: Component {
+                        Text {
+                            color: Style.table.foreground.header
+                            text: "Population"
+                            width: 100
+                        }
                     }
-                    visible : (show_tooltip) ? (popMousearea.containsMouse && (tooltipText != "")) : false
-                    text : tooltipText
-                }
-            }
-        }
-
-        ListView {
-            id: aprlv
-            Layout.fillWidth: true;
-            Layout.preferredHeight: 20
-            Layout.minimumHeight:   20
-            visible : parameterListExpandHeader.expanded
-            header: Component {
-                Text {
-                    text: "Apriori:"
-                }
-            }
-            model: aprpt
-            orientation: Qt.Horizontal
-            spacing: 2
-            delegate: RowLayout{
-                Text {
-                    text: "  " + modelData.name + " = " + (modelData.quantity.dbvalue).toFixed(3)
-                }
-            }
-
-            MouseArea {
-                id: aprMousearea
-                anchors.fill: parent
-                hoverEnabled: true
-                ToolTip {
-                    property string tooltipText : ToolTips.validationTab.aprioriParameters
-                    background: Rectangle {
-                        color: Style.tooltip.color
-                        border.color: Style.tooltip.border_color
+                    delegate:
+                        RowLayout{
+                        width: 115
+                        Text {
+                            text: (modelData.quantity.dbvalue).toFixed(3)
+                        }
                     }
-                    visible : (show_tooltip) ? (aprMousearea.containsMouse && (tooltipText != "")) : false
-                    text : tooltipText
-                }
-            }
-        }
-
-        ListView {
-            id: apolv
-            Layout.fillWidth: true;
-            Layout.preferredHeight: 20
-            Layout.minimumHeight:   20
-            visible : parameterListExpandHeader.expanded
-            model: apopt
-            header: Component {
-                Text {
-                    text: "Aposteriori:"
-                }
-            }
-            orientation: Qt.Horizontal
-            spacing: 2
-            delegate: RowLayout {
-                Text {
-                    text: "  " + modelData.name + " = " + (modelData.quantity.dbvalue).toFixed(3)
-                }
-            }
-
-            MouseArea {
-                id: apostMousearea
-                anchors.fill: parent
-                hoverEnabled: true
-                ToolTip {
-                    property string tooltipText : ToolTips.validationTab.aposterioriParameters
-                    background: Rectangle {
-                        color: Style.tooltip.color
-                        border.color: Style.tooltip.border_color
+                    MouseArea {
+                        id: popMousearea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        ToolTip {
+                            property string tooltipText : ToolTips.validationTab.populationParameters
+                            background: Rectangle {
+                                color: Style.tooltip.color
+                                border.color: Style.tooltip.border_color
+                            }
+                            visible : (show_tooltip) ? (popMousearea.containsMouse && (tooltipText != "")) : false
+                            text : tooltipText
+                        }
                     }
-                    visible : (show_tooltip) ? (apostMousearea.containsMouse && (tooltipText != "")) : false
-                    text : tooltipText
+
+
+                },
+
+                EntityListView {
+                    id: aprlv
+                    Layout.fillWidth: true;
+                    Layout.preferredHeight: 20
+                    Layout.minimumHeight:   20
+                    Layout.minimumWidth: 115
+                    Layout.preferredWidth: 115
+                    visible : parameterListExpandHeader.expanded
+                    header: Component {
+                        Text {
+                            text: "Apriori"
+                            width: 100
+                            color: Style.table.foreground.header
+                        }
+                    }
+                    model: aprpt
+                    orientation: Qt.Horizontal
+                    spacing: 2
+                    delegate: RowLayout{
+                        width: 115
+                        Text {
+                            text: (modelData.quantity.dbvalue).toFixed(3)
+                        }
+                    }
+
+                    MouseArea {
+                        id: aprMousearea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        ToolTip {
+                            property string tooltipText : ToolTips.validationTab.aprioriParameters
+                            background: Rectangle {
+                                color: Style.tooltip.color
+                                border.color: Style.tooltip.border_color
+                            }
+                            visible : (show_tooltip) ? (aprMousearea.containsMouse && (tooltipText != "")) : false
+                            text : tooltipText
+                        }
+                    }
+                },
+
+                EntityListView {
+                    id: apolv
+                    Layout.fillWidth: true;
+                    Layout.preferredHeight: 20
+                    Layout.minimumHeight:   20
+                    Layout.minimumWidth: 115
+                    Layout.preferredWidth: 115
+                    visible : parameterListExpandHeader.expanded
+                    model: apopt
+                    header: Component {
+                        Text {
+                            text: "Aposteriori"
+                            width: 100
+                            color: Style.table.foreground.header
+                        }
+                    }
+                    orientation: Qt.Horizontal
+                    spacing: 2
+                    delegate: RowLayout {
+                        width: 115
+                        Text {
+                            text: (modelData.quantity.dbvalue).toFixed(3)
+                        }
+                    }
+
+                    MouseArea {
+                        id: apostMousearea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        ToolTip {
+                            property string tooltipText : ToolTips.validationTab.aposterioriParameters
+                            background: Rectangle {
+                                color: Style.tooltip.color
+                                border.color: Style.tooltip.border_color
+                            }
+                            visible : (show_tooltip) ? (apostMousearea.containsMouse && (tooltipText != "")) : false
+                            text : tooltipText
+                        }
+                    }
                 }
-            }
+
+            ]
         }
 
         EntityTitle {
@@ -442,23 +477,38 @@ Rectangle {
                             Layout.minimumHeight:   analysis.rowHeight * 1
                             border.width: 1
                             border.color: "#cccccc"
-                            TextArea {
-                                id: expectednessInput
-                                placeholderText: "Please fill in"
-                                anchors.fill: parent
-                                clip: true
-                                anchors.margins:1
-                                wrapMode: TextEdit.WordWrap
-                                text: analysisFrame.model.expectedness
-                                onTextChanged: analysisFrame.model.expectedness = text
-                                font.family:    analysis.inputFontFamily
-                                font.pixelSize: analysis.inputFontSize
-                                verticalAlignment:   analysis.inputVAlign
-                                horizontalAlignment: analysis.inputHAlign
 
-                                EntityToolTip {
-                                    tooltipText: ToolTips.validationTab.expectedness
+                            Flickable{
+                                id: expectedFlick
+                                anchors.fill: parent
+
+                                TextArea.flickable: TextArea {
+                                    id: expectednessInput
+                                    placeholderText: "Please fill in"
+                                    clip: true
+                                    anchors.margins:1
+                                    wrapMode: TextArea.Wrap
+                                    text: analysisFrame.model.expectedness
+                                    onTextChanged: analysisFrame.model.expectedness = text
+                                    font.family:    analysis.inputFontFamily
+                                    font.pixelSize: analysis.inputFontSize
+                                    verticalAlignment:   analysis.inputVAlign
+                                    horizontalAlignment: analysis.inputHAlign
+
+                                    EntityToolTip {
+                                        tooltipText: ToolTips.validationTab.expectedness
+                                    }
+
+//                                    MouseArea {
+//                                        anchors.fill: parent
+//                                        onClicked: {
+//                                            validationDialog.exec()
+//                                        }
+//                                    }
                                 }
+
+
+                                ScrollBar.vertical: ScrollBar {}
                             }
                         }
 
@@ -485,24 +535,32 @@ Rectangle {
                             Layout.minimumHeight:   analysis.rowHeight * 1
                             border.width: 1
                             border.color: "#cccccc"
-                            TextArea {
-                                id: suitabilityInput
-                                placeholderText: "Please fill in"
+
+                            Flickable{
+                                id: suitableFlick
                                 anchors.fill: parent
-                                anchors.margins: 1
-                                clip: true
-                                wrapMode: TextEdit.WordWrap
-                                text: analysisFrame.model.suitability
-                                onTextChanged: analysisFrame.model.suitability = text
-                                font.family:    analysis.inputFontFamily
-                                font.pixelSize: analysis.inputFontSize
-                                verticalAlignment:   analysis.inputVAlign
-                                horizontalAlignment: analysis.inputHAlign
+
+                                TextArea.flickable: TextArea {
+                                    id: suitabilityInput
+                                    placeholderText: "Please fill in"
+                                    anchors.margins: 1
+                                    clip: true
+                                    wrapMode: TextEdit.WordWrap
+                                    text: analysisFrame.model.suitability
+                                    onTextChanged: analysisFrame.model.suitability = text
+                                    font.family:    analysis.inputFontFamily
+                                    font.pixelSize: analysis.inputFontSize
+                                    verticalAlignment:   analysis.inputVAlign
+                                    horizontalAlignment: analysis.inputHAlign
 
                                 EntityToolTip {
                                     tooltipText: ToolTips.validationTab.suitability
                                 }
                             }
+
+                                ScrollBar.vertical: ScrollBar {}
+                            }
+
                         }
 
                     }
@@ -528,10 +586,14 @@ Rectangle {
                             Layout.minimumHeight:   analysis.rowHeight * 1
                             border.width: 1
                             border.color: "#cccccc"
-                            TextArea {
+
+                            Flickable{
+                                id: predictionFlick
+                                anchors.fill: parent
+
+                                TextArea.flickable: TextArea {
                                 id: predictionInput
                                 placeholderText: "Please fill in"
-                                anchors.fill: parent
                                 anchors.margins: 1
                                 clip: true
                                 wrapMode: TextEdit.WordWrap
@@ -545,6 +607,8 @@ Rectangle {
                                 EntityToolTip {
                                     tooltipText: ToolTips.validationTab.prediction
                                 }
+                            }
+                                ScrollBar.vertical: ScrollBar {}
                             }
                         }
 
@@ -571,10 +635,14 @@ Rectangle {
                             Layout.minimumHeight:   analysis.rowHeight * 1
                             border.width: 1
                             border.color: "#cccccc"
-                            TextArea {
+
+                            Flickable{
+                                id: remonitoringFlick
+                                anchors.fill: parent
+
+                                TextArea.flickable: TextArea {
                                 id: remonitoringInput
                                 placeholderText: "Please fill in"
-                                anchors.fill: parent
                                 anchors.margins: 1
                                 clip: true
                                 wrapMode: TextEdit.WordWrap
@@ -589,6 +657,8 @@ Rectangle {
                                     tooltipText: ToolTips.validationTab.remonitoring
                                 }
                             }
+                            ScrollBar.vertical: ScrollBar {}
+                        }
                         }
 
                     }
@@ -614,10 +684,14 @@ Rectangle {
                             Layout.minimumHeight:   analysis.rowHeight * 1
                             border.width: 1
                             border.color: "#cccccc"
-                            TextArea {
+
+                            Flickable{
+                                id: warningFlick
+                                anchors.fill: parent
+
+                                TextArea.flickable: TextArea {
                                 id: warningInput
                                 placeholderText: "Please fill in"
-                                anchors.fill: parent
                                 anchors.margins: 1
                                 clip: true
                                 wrapMode: TextEdit.WordWrap
@@ -642,6 +716,8 @@ Rectangle {
                                 }
 */
                             }
+                            ScrollBar.vertical: ScrollBar {}
+                        }
                         }
                     }
 
@@ -662,6 +738,16 @@ Rectangle {
         }
         Rectangle{
             Layout.fillHeight: true
+        }
+    }
+
+    ValidationTextDialog {
+        id: validationDialog
+        objectName: "validationTextDialog"
+
+        function exec()
+        {
+            this.init();
         }
     }
 }

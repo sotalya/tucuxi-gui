@@ -19,7 +19,7 @@ Item {
 
     property int iconSpacing: 5
 
-    property int totalWidth :  patientNameLabel.contentWidth - 10
+    property int totalWidth :  Math.max(patientNameLabel.contentWidth - 10, drugNameLabel.contentWidth - 10)
 
     //Name label
     Text {

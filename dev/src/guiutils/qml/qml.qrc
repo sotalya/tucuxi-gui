@@ -69,6 +69,7 @@
         <file alias="EntityToolTip.qml">controls/EntityToolTip.qml</file>
         <file alias="TucuButton.qml">controls/TucuButton.qml</file>
         <file alias="TooltipArea.qml">controls/TooltipArea.qml</file>
+        <file alias="ValidationTextDialog.qml">controls/ValidationTextDialog.qml</file>
     </qresource>
     <qresource prefix="/windows">
         <file alias="MainWindow.qml">windows/MainWindow.qml</file>
@@ -77,7 +78,5 @@
         <file alias="StartupButton.qml">windows/StartupButton.qml</file>
         <file alias="MainWindowGuiTest.qml">windows/MainWindowGuiTest.qml</file>
     </qresource>
-    <qresource prefix="/">
-        <file>controls/ValidationTextDialog.qml</file>
-    </qresource>
+    <qresource prefix="/"/>
 </RCC>

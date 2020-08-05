@@ -269,10 +269,23 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
     auto defaultFormulation = drugModel->getFormulationAndRoutes().getDefault();
     {
         // Only the default dose
+
         ezechiel::core::ValidDoses *validDoses = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidDoses>(ABSTRACTREPO, newModel);
+        QString uString = QString::fromStdString(defaultFormulation->getValidDoses()->getUnit().toString());
+
+        std::vector<Tucuxi::Core::Value> a = defaultFormulation->getValidDoses()->getValues();
+        for(const auto &doseValue : defaultFormulation->getValidDoses()->getValues()){
+            ezechiel::core::ValidDose *validDose = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidDose>(ABSTRACTREPO, validDoses);
+            ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDose);
+            amount->setDbvalue(doseValue);
+            amount->setUnit(ezechiel::core::Unit(uString));
+            validDose->setQuantity(amount);
+            validDoses->append(validDose);
+        }
+
+
         ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
         amount->setDbvalue(defaultFormulation->getValidDoses()->getDefaultValue());
-        QString uString = QString::fromStdString(defaultFormulation->getValidDoses()->getUnit().toString());
         amount->setUnit(ezechiel::core::Unit(uString));
         validDoses->setQuantity(amount);
 

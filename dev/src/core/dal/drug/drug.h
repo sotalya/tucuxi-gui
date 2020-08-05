@@ -142,7 +142,6 @@ public: // YTA: To be checked and put protected
      // YTA: Needed by ApputilsFactory which is outside core. Should be solved...
     Q_INVOKABLE DrugModel(AbstractRepository *repository = 0, QObject* parent = 0);
 
-
     Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
     {
         return true;

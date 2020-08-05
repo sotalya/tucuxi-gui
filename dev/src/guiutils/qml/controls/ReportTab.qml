@@ -46,13 +46,30 @@ Rectangle {
             current = predData.points.objat(++index);
         }
         //if (index < nbPoints) {
+
             var pset = current.pset.parameters.objlist;
             for (var i = 0; i < pset.length; ++i) {
                 if (i !== 0) params = params + ",";
-                params = params + "\"" + pset[i].name + "\":" + "\"" + pset[i].quantity.dbvalue.toFixed(3) + "\"";
+                params = params + "\"" + pset[i].name + "\":" + "\"" + roundParameters(pset[i].quantity.dbvalue) + "\"";
             }
         //}
         return "{" + params + "}";
+    }
+
+    function roundParameters(param)
+    {
+        var valueInt = (param.toFixed(0) * 100).toFixed(0)   //x
+        var valueOne = (param.toFixed(1) * 100).toFixed(0)  //x.0
+        var valueTwo = (param.toFixed(2) * 100).toFixed(0)   //x.00
+        var result = param.toFixed(2)
+        if (valueTwo === valueInt){
+            result = param.toFixed(0)
+        }
+        else if(valueTwo === valueOne){
+            result = param.toFixed(1)
+        }
+
+        return result
     }
 
     function updateReport()

@@ -237,7 +237,7 @@ Rectangle {
                     visible : parameterListExpandHeader.expanded
                     header: Component {
                         Text {
-                            text: "Apriori"
+                            text: "A priori"
                             width: 100
                             color: Style.table.foreground.header
                         }
@@ -279,7 +279,7 @@ Rectangle {
                     model: apopt
                     header: Component {
                         Text {
-                            text: "Aposteriori"
+                            text: "A posteriori"
                             width: 100
                             color: Style.table.foreground.header
                         }

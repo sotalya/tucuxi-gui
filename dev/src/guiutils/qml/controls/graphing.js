@@ -18,10 +18,6 @@ function step()
     //dont draw any curves if we cant even draw the population curves
     if (popP) {
         if (popP.predictive.predictionData.isValid) {
-            //draw pop curves if indicated in show or measurestab with no measures
-            if ((graphInformationSelection.presentPopulationPrediction || adjTabShowPop) && graphInformationSelection.displayPopulationPrediction) {
-                drawPop(ctx, colors, popcolors);
-            }
             if ((graphInformationSelection.presentPopulationPercentiles || adjTabShowPop) && graphInformationSelection.displayPopulationPercentiles) {
                 if (popercsP.isValid) {
                     drawPercentiles(ctx, popercsP, colors[7], popcolors);
@@ -31,9 +27,6 @@ function step()
             //draw apriori if indicated in show
             if (aprP) {
                 if (aprP.predictive.predictionData.isValid) {
-                    if ((graphInformationSelection.presentAprioriPrediction || adjTabShowApr) && graphInformationSelection.displayAprioriPrediction) {
-                        drawApr(ctx, colors, aprcolors);
-                    }
                     if ((graphInformationSelection.presentAprioriPercentiles || adjTabShowApr) && graphInformationSelection.displayAprioriPercentiles) {
                         if (aprpercsP.isValid) {
                             drawPercentiles(ctx, aprpercsP, colors[8], aprcolors);
@@ -45,10 +38,7 @@ function step()
             //draw aposteriori if indicated in show and we have measures
             if (apoP) {
                 if (apoP.predictive.predictionData.isValid) {
-                    if (graphInformationSelection.presentAposterioriPrediction && hasMeasures && graphInformationSelection.displayAposterioriPrediction) {
-                        drawApo(ctx, colors, apocolors);
-                     }
-                     if (graphInformationSelection.presentAposterioriPercentiles && hasMeasures && graphInformationSelection.displayAposterioriPercentiles) {
+                    if (graphInformationSelection.presentAposterioriPercentiles && hasMeasures && graphInformationSelection.displayAposterioriPercentiles) {
                         if (apopercsP.isValid) {
                             drawPercentiles(ctx, apopercsP, colors[6], apocolors);
                         }
@@ -58,25 +48,72 @@ function step()
         }
     }
 
+
+    //Draw the content
+    //dont draw any curves if we cant even draw the population curves
+    if (popP) {
+        if (popP.predictive.predictionData.isValid) {
+
+            //draw pop curves if indicated in show or measurestab with no measures
+            if ((graphInformationSelection.presentPopulationPrediction || adjTabShowPop) && graphInformationSelection.displayPopulationPrediction) {
+                drawPop(ctx, colors, popcolors);
+            }
+
+            //draw apriori if indicated in show
+            if (aprP) {
+                if (aprP.predictive.predictionData.isValid) {
+
+                    if ((graphInformationSelection.presentAprioriPrediction || adjTabShowApr) && graphInformationSelection.displayAprioriPrediction) {
+                        drawApr(ctx, colors, aprcolors);
+                    }
+                }
+            }
+
+            //draw aposteriori if indicated in show and we have measures
+            if (apoP) {
+                if (apoP.predictive.predictionData.isValid) {
+
+                    if (graphInformationSelection.presentAposterioriPrediction && hasMeasures && graphInformationSelection.displayAposterioriPrediction) {
+                        drawApo(ctx, colors, apocolors);
+                    }
+                }
+            }
+        }
+    }
+
+
     //verify compatibility between drugmodel constraint and covariate
     if (aprP.predictive.predictionData.isValid){
         checkAndDisplayDomain(ctx, aprP)
+    }
+
+    if (adjP) {
+        if (graphInformationSelection.presentSelectedAdjustment && graphInformationSelection.displaySelectedAdjustment) {
+
+            if (adjpercsP.isValid) {
+
+                if ((apoP) && (apoP.predictive.predictionData.isValid)) {
+                    drawPercentilesAdjustments(ctx, adjpercsP, apocolors[0], apocolors);
+                }
+                else {
+                    drawPercentilesAdjustments(ctx, adjpercsP, aprcolors[0], aprcolors);
+                }
+            }
+
+            if ((apoP) && (apoP.predictive.predictionData.isValid)) {
+                drawAdjustment(ctx, colors[4]);
+            }
+            else {
+                drawAdjustment(ctx, colors[2]);
+
+            }
+        }
     }
 
     //draw adjustments if we have, and indicated in show
     if (revP && revP.isValid) {
         if (graphInformationSelection.presentPossibleAdjustments && graphInformationSelection.displayPossibleAdjustments) {
             drawReverse(ctx, colors, revcolors);
-        }
-    }
-    if (adjP) {
-        if (graphInformationSelection.presentSelectedAdjustment && graphInformationSelection.displaySelectedAdjustment) {
-
-            if (adjpercsP.isValid) {
-                drawPercentilesAdjustments(ctx, adjpercsP, adjcolors[0], adjcolors);
-            }
-
-            drawAdjustment(ctx, colors[9]);
         }
     }
 
@@ -167,7 +204,7 @@ function getAdjustmentFilter(filterMax)
 
 function drawPop(ctx, colors, popcolors)
 {
-    drawCurve(ctx, popP.predictive.predictionData, popcolors[0], getAdjustmentFilter(true));
+    drawCurve(ctx, popP.predictive.predictionData, colors[1], getAdjustmentFilter(true));
     ctx.restore();
     ctx.save();
 }
@@ -264,6 +301,7 @@ function drawSoftwareDescription(ctx, text)
 function colorRegionBtwCurves(ctx, predDataL, predDataU, dataX, dataY, dataYY, color, filter)
 {
     ctx.globalAlpha = 0.2;
+    ctx.globalAlpha = 1.0;
     ctx.lineWidth   = 2.0;// / scalex;
     ctx.lineCap     = "round";
     ctx.lineJoin    = "round";
@@ -462,7 +500,7 @@ function drawCurve(ctx, predData, color, filter)
                 if (!isFuture) {
                     ctx.stroke();
                     ctx.beginPath();
-                    ctx.globalAlpha = 0.2;
+                    ctx.globalAlpha = 0.6;
                 } else {
                     isFuture = true;
                 }
@@ -488,7 +526,7 @@ function drawCurve(ctx, predData, color, filter)
 function drawMeasures(ctx)
 {
     //Settings
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "red";
     ctx.lineWidth = 1;// / scalex;
 
     //ToDo: Ignore filtered curves in the calculation of max and min, and move it canvas properties
@@ -514,7 +552,7 @@ function drawMeasures(ctx)
                 y: y,
                 value: measures[i].concentration.dbvalue.toFixed(2) + " " + measures[i].concentration.unitstring,
                 time: formatDate(measures[i].moment),
-                color: "blue"
+                color: "red"
             }
         }
     }

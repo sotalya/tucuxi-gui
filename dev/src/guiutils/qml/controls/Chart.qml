@@ -158,10 +158,41 @@ Canvas {
         closestPred = ({});
         currentMeasure = null;
 
-        colors = ["#bfbfbf", "#21B035", "#cc0066", "#cc0066", "#8fd6f7", "#e8a45c", "#64a0e0", "lightgreen", "pink", "black"];
-        popcolors = ["#0B360E", "#17701E", "#2CD438"];
-        aprcolors = ["#E84229", "#B53A70", "#FF4200"];
-        apocolors = ["#4A24B5", "#484db5", "#5168B5"];
+        colors = ["#bfbfbf",    // Unused
+                  "#21B035",    // popPrediction
+                  "#cc0066",    // aprioriPrediction
+                  "#cc0066",    // Unused
+                  "#8fd6f7",    // aposterioriPrediction
+                  "#e8a45c",    // suggestedAdjustmentLegend
+                  "#64a0e0",    // aposterioriPercentilesLegend
+                  "lightgreen", // popPercentilesLegend
+                  "pink",       // aprioriPredictionLegend
+                  "black"       // selectedAdjustmentLegend
+                ];
+
+        colors = ["#bfbfbf",    // Unused
+                  "#9f8e6f",    // popPrediction
+                  "#e19a00",    // aprioriPrediction
+                  "#cc0066",    // Unused
+                  "#C80000",    // aposterioriPrediction
+                  "#e8a45c",    // suggestedAdjustmentLegend
+                  "#FE9A9A",    // aposterioriPercentilesLegend
+                  "#D0C0A2",    // popPercentilesLegend
+                  "#F2C054",    // aprioriPredictionLegend
+                  "black"       // selectedAdjustmentLegend
+                ];
+
+        //popcolors = ["#0B360E", "#17701E", "#2CD438"];
+        //aprcolors = ["#E84229", "#B53A70", "#FF4200"];
+        //apocolors = ["#4A24B5", "#484db5", "#5168B5"];
+
+        // For the next arrays:
+        // [0] : Percentile line
+        // [1] : Inner percentile fill
+        // [2] : Outer percentile fill
+        popcolors = ["#D0C0A2", "#D0C0A2", "#F2ECDE"];
+        aprcolors = ["#F2C054", "#F2C054", "#FEF2C0"];
+        apocolors = ["#FE9A9A", "#FE9A9A", "#FED4D4"];
         adjcolors = ["#323232", "#969696", "#646464"];
         revcolors = [];
 

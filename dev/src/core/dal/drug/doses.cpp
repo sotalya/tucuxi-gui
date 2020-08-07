@@ -16,6 +16,8 @@ AUTO_PROPERTY_IMPL(ValidDoses, IdentifiableAmount*, stepDose, StepDose)
 
 AUTO_PROPERTY_IMPL(ValidDoses, TranslatableString*, comments,Comments)
 
+AUTO_PROPERTY_IMPL(ValidDoses, QList<double>, dosesList, DosesList)
+
 //POINTERLIST_CLASS_IMPL(dosesList, ValidDose)
 
 

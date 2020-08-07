@@ -66,6 +66,8 @@ class ValidDoses : public Entity, public QList<ValidDose*>
 
     AUTO_PROPERTY_DECL(TranslatableString*, comments,Comments)
 
+    AUTO_PROPERTY_DECL(QList<double>, dosesList, DosesList)
+
 
 public:
 

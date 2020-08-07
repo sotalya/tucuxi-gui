@@ -189,6 +189,7 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
     // General fields
     //
 
+
     newModel->setDrugModelId(QString::fromStdString(drugModel->getDrugModelId()));
 
     newModel->setName(translate(drugModel->getMetadata().getDrugName(), newModel));
@@ -271,36 +272,31 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
         // Only the default dose
 
         ezechiel::core::ValidDoses *validDoses = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidDoses>(ABSTRACTREPO, newModel);
-        QString uString = QString::fromStdString(defaultFormulation->getValidDoses()->getUnit().toString());
-
-        std::vector<Tucuxi::Core::Value> a = defaultFormulation->getValidDoses()->getValues();
+        QList<double> doseList;
         for(const auto &doseValue : defaultFormulation->getValidDoses()->getValues()){
-            ezechiel::core::ValidDose *validDose = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidDose>(ABSTRACTREPO, validDoses);
-            ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDose);
-            amount->setDbvalue(doseValue);
-            amount->setUnit(ezechiel::core::Unit(uString));
-            validDose->setQuantity(amount);
-            validDoses->append(validDose);
+            doseList.append(doseValue);
         }
+        validDoses->setDosesList(doseList);
+        QString uString = QString::fromStdString(defaultFormulation->getValidDoses()->getUnit().toString());
 
 
         ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
-        amount->setDbvalue(defaultFormulation->getValidDoses()->getDefaultValue());
+//        amount->setDbvalue(defaultFormulation->getValidDoses()->getDefaultValue());
         amount->setUnit(ezechiel::core::Unit(uString));
         validDoses->setQuantity(amount);
 
-        ezechiel::core::IdentifiableAmount *amountStep = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
-        amountStep->setDbvalue(defaultFormulation->getValidDoses()->getStepValue());
-        amountStep->setUnit(ezechiel::core::Unit(uString));
-        validDoses->setStepDose(amountStep);
+//        ezechiel::core::IdentifiableAmount *amountStep = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
+//        amountStep->setDbvalue(defaultFormulation->getValidDoses()->getStepValue());
+//        amountStep->setUnit(ezechiel::core::Unit(uString));
+//        validDoses->setStepDose(amountStep);
 
-        ezechiel::core::IdentifiableAmount *amountTo= ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
-        amountTo->setDbvalue(defaultFormulation->getValidDoses()->getToValue());
-        validDoses->setToDose(amountTo);
+//        ezechiel::core::IdentifiableAmount *amountTo= ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
+//        amountTo->setDbvalue(defaultFormulation->getValidDoses()->getToValue());
+//        validDoses->setToDose(amountTo);
 
-        ezechiel::core::IdentifiableAmount *amountFrom= ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
-        amountFrom->setDbvalue(defaultFormulation->getValidDoses()->getFromValue());
-        validDoses->setFromDose(amountFrom);
+//        ezechiel::core::IdentifiableAmount *amountFrom= ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
+//        amountFrom->setDbvalue(defaultFormulation->getValidDoses()->getFromValue());
+//        validDoses->setFromDose(amountFrom);
 
 
 
@@ -309,17 +305,9 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
 
     if (defaultFormulation->getValidInfusionTimes() != nullptr)
     {
-        // Only the default infusion time
+
         ezechiel::core::ValidInfusions *validInfusions = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusions>(ABSTRACTREPO, newModel);
-
-        ezechiel::core::ValidInfusion *validInfusion = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusion>(ABSTRACTREPO, validInfusions);
-        ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validInfusion);
-        amount->setDbvalue(defaultFormulation->getValidInfusionTimes()->getDefaultValue());
         QString uString = QString::fromStdString(defaultFormulation->getValidInfusionTimes()->getUnit().toString());
-        amount->setUnit(ezechiel::core::Unit(uString));
-        validInfusion->setQuantity(amount);
-        validInfusions->append(validInfusion);
-
 
         for(const auto &value : defaultFormulation->getValidInfusionTimes()->getValues()){
             ezechiel::core::ValidInfusion *validInfusionFixed = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusion>(ABSTRACTREPO, validInfusions);
@@ -329,6 +317,18 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
             validInfusionFixed->setQuantity(amountFixed);
             validInfusions->append(validInfusionFixed);
         }
+
+
+
+//         Only the default infusion time
+//        ezechiel::core::ValidInfusion *validInfusion = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusion>(ABSTRACTREPO, validInfusions);
+//        ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validInfusion);
+//        QString uString = QString::fromStdString(defaultFormulation->getValidInfusionTimes()->getUnit().toString());
+
+//        amount->setDbvalue(defaultFormulation->getValidInfusionTimes()->getDefaultValue());
+//        amount->setUnit(ezechiel::core::Unit(uString));
+//        validInfusion->setQuantity(amount);
+//        validInfusions->append(validInfusion);
 
         newModel->setInfusions(validInfusions);
 

@@ -457,6 +457,8 @@ if (times.length > 0) {
 
         hoverEnabled: true
 
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+
         property bool isMouseOver: false
         property bool hasShifted: false
         property double pressX
@@ -473,14 +475,22 @@ if (times.length > 0) {
         }
 
         onReleased: {
-            closestPred.selected = !closestPred.selected && closestPred.highlight;
-            canvas.requestPaint();
+            if (mouse.button  == Qt.LeftButton) {
+                closestPred.selected = !closestPred.selected && closestPred.highlight;
+                canvas.requestPaint();
+            }
         }
 
         onPressed: {
-            pressX = mouse.x;
-            tooltipX = mouse.x;
-            tooltipY = mouse.y;
+            if (mouse.button  == Qt.RightButton) {
+                // Open a dialog to select the objects to show on the graph
+
+            }
+            else {
+                pressX = mouse.x;
+                tooltipX = mouse.x;
+                tooltipY = mouse.y;
+            }
         }
 
         onExited: {

@@ -252,17 +252,17 @@ function drawAdjustment(ctx, color)
 function drawPercentiles(ctx, pairs, color, colors)
 {
     if (pairs.size() < 1) {return;}
-    for (var i = 0; i < pairs.size(); ++i) {
-        drawCurve(ctx, pairs.objat(i).predictionData, color, getAdjustmentFilter(true));
-        ctx.restore();
-        ctx.save();
-    }
     colorRegionBtwCurves(ctx, pairs.objat(0).predictionData,  pairs.objat(3).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(3).Y, colors[2], getAdjustmentFilter(true));
     ctx.restore();
     ctx.save();
     colorRegionBtwCurves(ctx, pairs.objat(1).predictionData,  pairs.objat(2).predictionData, pairs.objat(0).X, pairs.objat(1).Y, pairs.objat(2).Y, colors[1], getAdjustmentFilter(true));
     ctx.restore();
     ctx.save();
+    for (var i = 0; i < pairs.size(); ++i) {
+        drawCurve(ctx, pairs.objat(i).predictionData, color, getAdjustmentFilter(true));
+        ctx.restore();
+        ctx.save();
+    }
 }
 
 function drawPercentilesAdjustments(ctx, pairs, color, colors)

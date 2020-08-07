@@ -176,9 +176,9 @@ Canvas {
                   "#cc0066",    // Unused
                   "#C80000",    // aposterioriPrediction
                   "#e8a45c",    // suggestedAdjustmentLegend
-                  "#FE9A9A",    // aposterioriPercentilesLegend
-                  "#D0C0A2",    // popPercentilesLegend
-                  "#F2C054",    // aprioriPredictionLegend
+                  "#fe6d6d",    // aposterioriPercentilesLegend
+                  "#b2a283",    // popPercentilesLegend
+                  "#efac1c",    // aprioriPredictionLegend
                   "black"       // selectedAdjustmentLegend
                 ];
 
@@ -190,9 +190,9 @@ Canvas {
         // [0] : Percentile line
         // [1] : Inner percentile fill
         // [2] : Outer percentile fill
-        popcolors = ["#D0C0A2", "#D0C0A2", "#F2ECDE"];
-        aprcolors = ["#F2C054", "#F2C054", "#FEF2C0"];
-        apocolors = ["#FE9A9A", "#FE9A9A", "#FED4D4"];
+        popcolors = ["#b2a283", "#D0C0A2", "#F2ECDE"];
+        aprcolors = ["#efac1c", "#F2C054", "#FEF2C0"];
+        apocolors = ["#fe6d6d", "#FE9A9A", "#FED4D4"];
         adjcolors = ["#323232", "#969696", "#646464"];
         revcolors = [];
 

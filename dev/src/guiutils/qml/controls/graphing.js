@@ -430,8 +430,8 @@ function drawCurve(ctx, predData, color, filter)
     //Settings
     ctx.strokeStyle = color;
     ctx.lineWidth   = 2.0;
-    ctx.lineCap     = "round";
-    ctx.lineJoin    = "round";
+    ctx.lineCap     = "butt";
+    ctx.lineJoin    = "bevel";
 
     //ToDo: Ignore filtered curves in the calculation of max and min, and move it canvas properties
 
@@ -440,6 +440,10 @@ function drawCurve(ctx, predData, color, filter)
     ctx.beginPath();
     var isFuture = false;
     var highlight = predData === canvas.closestPred && canvas.closestPred.highlight;
+
+    // This variable is used to know if we need to move before drawing the line.
+    var continueLine = false;
+
     for (var i = 0; i < dataX.length - 2; i++)
     {
         if (!filter || filter(dataX[i+1]))
@@ -463,15 +467,25 @@ function drawCurve(ctx, predData, color, filter)
                     ctx.stroke();
                     ctx.beginPath();
                     ctx.globalAlpha = 0.2;
+                    continueLine = false;
                 } else {
                     isFuture = true;
                 }
             }
 
             if (x1 > topLeftX && x2 < canvas.bottomRightX) {
-                ctx.moveTo(x1, y1);
+                if (!continueLine) {
+                    ctx.moveTo(x1, y1);
+                    continueLine = true;
+                }
                 ctx.lineTo(x2, y2);
             }
+            else {
+                continueLine = false;
+            }
+        }
+        else {
+            continueLine = false;
         }
     }
     if (highlight) {

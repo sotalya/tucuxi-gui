@@ -84,6 +84,7 @@ Rectangle {
                 if (poppd.closestPoint) {
                     var popi = poppd.closestPoint.currentindex;
                     poppt = poppd.points.objat(popi).pset.parameters.objlist;
+                    actualDrugModel = poppt
                 }
             }
 
@@ -94,6 +95,7 @@ Rectangle {
                 if (aprpd.closestPoint) {
                     var apri = aprpd.closestPoint.currentindex;
                     aprpt = aprpd.points.objat(apri).pset.parameters.objlist;
+                    actualDrugModel = aprpt
                 }
             }
 
@@ -104,6 +106,7 @@ Rectangle {
                 if (apopd.closestPoint) {
                     var apoi = apopd.closestPoint.currentindex;
                     apopt = apopd.points.objat(apoi).pset.parameters.objlist;
+                    actualDrugModel = apopt
                 }
             }
 
@@ -121,6 +124,8 @@ Rectangle {
             //            var apoi = flow.chart.currentPoints[2].currentindex;
         }
     }
+
+    property var actualDrugModel: ({})
 
     property var poppt: ({})
     onPopptChanged: {
@@ -177,136 +182,136 @@ Rectangle {
 
                 EntityListHeader {
                     id: popParametersListHeaders
-                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 100; label.text: ""}
-                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 115; label.text: "CL"; }
-                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 115; label.text: "F"}
-                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 115; label.text: "Ka"}
-                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 115; label.text: "V"}
-                    EntityListHeaderItem { Layout.minimumHeight:   20; Layout.preferredWidth: 115; label.text: ""}
-                },
 
-                EntityListView{
-                    id: deflv
-                    Layout.fillWidth: true;
-                    Layout.preferredHeight: 20
-                    Layout.minimumHeight:   20
-                    Layout.minimumWidth: 115
-                    Layout.preferredWidth: 115
-                    visible : parameterListExpandHeader.expanded
-                    model: poppt // lyt.lamodel
-                    orientation: Qt.Horizontal
-                    header: Component {
-                        Text {
-                            color: Style.table.foreground.header
-                            text: "Population"
-                            width: 100
-                        }
-                    }
-                    delegate:
-                        RowLayout{
-                        width: 115
-                        Text {
-                            text: (modelData.quantity.dbvalue).toFixed(3)
-                        }
-                    }
-                    MouseArea {
-                        id: popMousearea
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        ToolTip {
-                            property string tooltipText : ToolTips.validationTab.populationParameters
-                            background: Rectangle {
-                                color: Style.tooltip.color
-                                border.color: Style.tooltip.border_color
-                            }
-                            visible : (show_tooltip) ? (popMousearea.containsMouse && (tooltipText != "")) : false
-                            text : tooltipText
-                        }
-                    }
-
+                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 115; label.text: ""}
+                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 115; label.text: "Population"; }
+                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 115; label.text: "A priori"}
+                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 115; label.text: "A posteriori"}
+                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 115; label.text: ""}
 
                 },
 
-                EntityListView {
-                    id: aprlv
+                RowLayout{
                     Layout.fillWidth: true;
-                    Layout.preferredHeight: 20
-                    Layout.minimumHeight:   20
-                    Layout.minimumWidth: 115
-                    Layout.preferredWidth: 115
-                    visible : parameterListExpandHeader.expanded
-                    header: Component {
-                        Text {
-                            text: "A priori"
-                            width: 100
-                            color: Style.table.foreground.header
-                        }
-                    }
-                    model: aprpt
-                    orientation: Qt.Horizontal
-                    spacing: 2
-                    delegate: RowLayout{
-                        width: 115
-                        Text {
-                            text: (modelData.quantity.dbvalue).toFixed(3)
-                        }
-                    }
-
-                    MouseArea {
-                        id: aprMousearea
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        ToolTip {
-                            property string tooltipText : ToolTips.validationTab.aprioriParameters
-                            background: Rectangle {
-                                color: Style.tooltip.color
-                                border.color: Style.tooltip.border_color
+                    Layout.minimumWidth: 100;
+                    Layout.preferredWidth: 100;
+                    EntityListView{
+                        Layout.fillWidth: true;
+                        Layout.preferredHeight: 20
+                        Layout.minimumHeight:   20
+                        Layout.minimumWidth: 100
+                        Layout.preferredWidth: 100
+                        visible : parameterListExpandHeader.expanded
+                        orientation: Qt.Vertical
+                        model: actualDrugModel
+                        delegate:
+                            Text {
+                                text: modelData.name
+                                color: Style.table.foreground.header
                             }
-                            visible : (show_tooltip) ? (aprMousearea.containsMouse && (tooltipText != "")) : false
-                            text : tooltipText
-                        }
-                    }
-                },
-
-                EntityListView {
-                    id: apolv
-                    Layout.fillWidth: true;
-                    Layout.preferredHeight: 20
-                    Layout.minimumHeight:   20
-                    Layout.minimumWidth: 115
-                    Layout.preferredWidth: 115
-                    visible : parameterListExpandHeader.expanded
-                    model: apopt
-                    header: Component {
-                        Text {
-                            text: "A posteriori"
-                            width: 100
-                            color: Style.table.foreground.header
-                        }
-                    }
-                    orientation: Qt.Horizontal
-                    spacing: 2
-                    delegate: RowLayout {
-                        width: 115
-                        Text {
-                            text: (modelData.quantity.dbvalue).toFixed(3)
-                        }
                     }
 
-                    MouseArea {
-                        id: apostMousearea
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        ToolTip {
-                            property string tooltipText : ToolTips.validationTab.aposterioriParameters
-                            background: Rectangle {
-                                color: Style.tooltip.color
-                                border.color: Style.tooltip.border_color
+                    EntityListView{
+                        id: deflv
+                        Layout.fillWidth: true;
+                        Layout.preferredHeight: 20
+                        Layout.minimumHeight:   20
+                        Layout.minimumWidth: 100
+                        Layout.preferredWidth: 100
+                        visible : parameterListExpandHeader.expanded
+                        model: poppt // lyt.lamodel
+                        orientation: Qt.Vertical
+                        delegate:
+                            RowLayout{
+                            Text {
+                                text: (modelData.quantity.dbvalue).toFixed(3)
                             }
-                            visible : (show_tooltip) ? (apostMousearea.containsMouse && (tooltipText != "")) : false
-                            text : tooltipText
+                        }
+                        MouseArea {
+                            id: popMousearea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            ToolTip {
+                                property string tooltipText : ToolTips.validationTab.populationParameters
+                                background: Rectangle {
+                                    color: Style.tooltip.color
+                                    border.color: Style.tooltip.border_color
+                                }
+                                visible : (show_tooltip) ? (popMousearea.containsMouse && (tooltipText != "")) : false
+                                text : tooltipText
+                            }
+                        }
+
+
+                    }
+
+                    EntityListView {
+                        id: aprlv
+                        Layout.fillWidth: true;
+                        Layout.preferredHeight: 20
+                        Layout.minimumHeight:   20
+                        Layout.minimumWidth: 115
+                        Layout.preferredWidth: 115
+                        visible : parameterListExpandHeader.expanded
+                        model: aprpt
+                        orientation: Qt.Vertical
+                        spacing: 2
+                        delegate: RowLayout{
+                            Text {
+                                text: (modelData.quantity.dbvalue).toFixed(3)
+                            }
+                        }
+
+                        MouseArea {
+                            id: aprMousearea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            ToolTip {
+                                property string tooltipText : ToolTips.validationTab.aprioriParameters
+                                background: Rectangle {
+                                    color: Style.tooltip.color
+                                    border.color: Style.tooltip.border_color
+                                }
+                                visible : (show_tooltip) ? (aprMousearea.containsMouse && (tooltipText != "")) : false
+                                text : tooltipText
+                            }
                         }
                     }
+
+                    EntityListView {
+                        id: apolv
+                        Layout.fillWidth: true;
+                        Layout.preferredHeight: 20
+                        Layout.minimumHeight:   20
+                        Layout.minimumWidth: 115
+                        Layout.preferredWidth: 115
+                        headerPositioning: ListView.OverlayHeader
+                        visible : parameterListExpandHeader.expanded
+                        model: apopt
+                        orientation: Qt.Vertical
+                        spacing: 2
+                        delegate: RowLayout {
+                            Text {
+                                text: (modelData.quantity.dbvalue).toFixed(3)
+                            }
+                        }
+
+                        MouseArea {
+                            id: apostMousearea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            ToolTip {
+                                property string tooltipText : ToolTips.validationTab.aposterioriParameters
+                                background: Rectangle {
+                                    color: Style.tooltip.color
+                                    border.color: Style.tooltip.border_color
+                                }
+                                visible : (show_tooltip) ? (apostMousearea.containsMouse && (tooltipText != "")) : false
+                                text : tooltipText
+                            }
+                        }
+                    }
+
                 }
 
             ]

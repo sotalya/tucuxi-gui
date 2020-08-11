@@ -1,5 +1,4 @@
 <RCC>
-    <qresource prefix="/base"/>
     <qresource prefix="/styles">
         <file alias="Style.qml">styles/Style.qml</file>
     </qresource>
@@ -70,6 +69,7 @@
         <file alias="TucuButton.qml">controls/TucuButton.qml</file>
         <file alias="TooltipArea.qml">controls/TooltipArea.qml</file>
         <file alias="ValidationTextDialog.qml">controls/ValidationTextDialog.qml</file>
+        <file alias="EntitySpinBoxDose.qml">controls/EntitySpinBoxDose.qml</file>
     </qresource>
     <qresource prefix="/windows">
         <file alias="MainWindow.qml">windows/MainWindow.qml</file>

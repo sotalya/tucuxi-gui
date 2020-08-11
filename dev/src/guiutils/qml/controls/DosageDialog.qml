@@ -33,16 +33,19 @@ DialogBase {
         self = this
 
         stdTreatment = standardTreatment;
-        doseSpinBox.decimals = 2;
-        doseSpinBox.setRealValue(quantity.dbvalue);
-        doseSpinBox.suffix = " " + quantity.unitstring;
+        doseSpinBoxDose.decimals = 2;
+        doseSpinBoxDose.setRealValue(quantity.dbvalue);
+        doseSpinBoxDose.suffix = " " + quantity.unitstring;
 
-        doseSpinBox.from = doses.dosesList[0]
-        doseSpinBox.to = doses.dosesList[dosesList.length];
-        doseSpinBox.stepSize = doses.stepDose.dbvalue * Math.pow(10, doseSpinBox.decimals);
+        doseSpinBoxDose.currentDose = 0;
+        doseSpinBoxDose.doses = doses
+
+        doseSpinBoxDose.from = doses.dosesList[doseSpinBoxDose.currentDose] * Math.pow(10, doseSpinBoxDose.decimals);
+        doseSpinBoxDose.to = doses.dosesList[(doses.dosesList.length - 1)] * Math.pow(10, doseSpinBoxDose.decimals);
+        doseSpinBoxDose.stepSize = (doses.dosesList[doseSpinBoxDose.currentDose + 1] - doses.dosesList[doseSpinBoxDose.currentDose]) * Math.pow(10, doseSpinBoxDose.decimals);
 
 
-        doseSpinBox.doValidation = function() { return getQuantity() > 0 }
+        doseSpinBoxDose.doValidation = function() { return getQuantity() > 0 }
 
         intervalSpinBox.setRealValue(interval);
         intervalSpinBox.doValidation = function() { return getInterval () > 0 }
@@ -90,7 +93,7 @@ DialogBase {
 //        refresh()
     }
 
-    function getQuantity()    { return doseSpinBox.getRealValue() }
+    function getQuantity()    { return doseSpinBoxDose.getRealValue() }
     function getInterval()    { return intervalSpinBox.getRealValue() }
     function getInfusion()    { return infusionSpinBox.getRealValue() }
     //function getRoute()       { return routeComboBox.currentIndex }
@@ -129,7 +132,7 @@ DialogBase {
         // ... force a change of focus to ensure TimePicker values are actually used
         appliedDateInput.focus = true
 
-        var bOk = doseSpinBox.validate()
+        var bOk = doseSpinBoxDose.validate()
         bOk = intervalSpinBox.validate() && bOk
         bOk = appliedDateInput.validate() && bOk
         bOk = stoppedDateInput.validate() && bOk
@@ -137,6 +140,7 @@ DialogBase {
         bOk = stoppedTimeInput.validate() && bOk
         return bOk
     }
+
 
     function showOverlappingMessage(bShow) {
         overlappingLabel.visible = bShow
@@ -179,11 +183,13 @@ DialogBase {
                     Layout.preferredWidth: 100
                     tooltipText: ToolTips.dosageDialog.dose
                 }
-                EntitySpinBox {
-                    id: doseSpinBox
+                EntitySpinBoxDose {
+                    id: doseSpinBoxDose
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
-                    onEditingFinished: { self.validate() }
+                    onEditingFinished: { doValidation() }
+                    up.onPressedChanged: {adaptStepUp()}
+                    down.onPressedChanged: {adaptStepDown()}
                 }
             }
 

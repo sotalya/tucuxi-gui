@@ -3,6 +3,7 @@
 #include "core/dal/drug/drug.h"
 #include "core/dal/drug/translatablestring.h"
 #include "core/dal/drug/adme.h"
+#include "core/dal/drug/drugvariate.h"
 
 DrugToHtml::DrugToHtml()
 {
@@ -37,13 +38,14 @@ QString DrugToHtml::drugToHtml(const ezechiel::core::DrugModel *drug)
         desc += "<tr><td><b>Study:   </b></td><td><b>" + drug->getStudyName() + "</b></td></tr>";
         desc += "<tr><td>Study description:   </td><td>" + drug->description() + "</td></tr>";
 //        desc += "<h5>Absorption, distribution, metabolism, and excretion</h5>";
-        desc += "<tr><td><b>Drug Parameters ID: </b></td><td><b>" + drug->getDrugModelId() + "</b></td></tr>";
-        desc += "<tr><td>Written by:   </td><td>" + drug->getStudyAuthors() + "</td></tr>";
-        desc += "<tr><td>Affiliation:   </td><td>" + QString("TODO") + "</td></tr>";
-        desc += "<tr><td>Last revision:   </td><td>" + QString("TODO") + "</td></tr>";
-        desc += "<tr><td></td><td></td></tr>";
+        desc += "<tr><td>Study authors:   </td><td>" + drug->getStudyAuthors() + "</td></tr>";
 
-//        auto covariatePointer = drug->getCovariates();
+        //        desc += "<tr><td>Written by:   </td><td>" + QString("TODO") + "</td></tr>";
+        //        desc += "<tr><td>Affiliation:   </td><td>" + QString("TODO") + "</td></tr>";
+        //        desc += "<tr><td>Last revision:   </td><td>" + QString("TODO") + "</td></tr>";
+
+        desc += "<tr><td></td><td></td></tr>";
+        desc += "<tr><td><b>Drug Model ID: </b></td><td><b>" + drug->getDrugModelId() + "</b></td></tr>";
 
         if (drug->getAdme()->getIntakes()->size() == 0)
             desc += "<tr><td>Route: </td><td>Undefined</td></tr>";
@@ -75,7 +77,20 @@ QString DrugToHtml::drugToHtml(const ezechiel::core::DrugModel *drug)
         //desc += "<tr><td>Distribution: </td><td>" + drug->getAdme()->getDistribution() + " compartments</td></tr>";
         desc += "<tr><td>Distribution: </td><td>" + drug->getAdme()->getDistribution() + "</td></tr>";
         desc += "<tr><td>Elimination: </td><td>" + drug->getAdme()->getElimination() + "</td></tr>";
+
+
+        auto covariatePointer = drug->getCovariates();
+        if ((covariatePointer != nullptr) && (covariatePointer->size() > 0)) {
+
+            desc += "<tr><td>Covariates:</td><td>" + covariatePointer->at(0)->getVisualNameTranslation()->value();
+            for (int i = 1; i < covariatePointer->size(); i++) {
+                desc += ", " + covariatePointer->at(i)->getVisualNameTranslation()->value();
+            }
+            desc += "</td></tr>";
+        }
+
         desc += "</table>";
+
 
         return desc;
     }

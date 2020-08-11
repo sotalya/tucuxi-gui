@@ -25,6 +25,7 @@ EntitySpinBox {
         for (var i = 0; i < valuesList.length; i++){
             if(valuesList[i] === getRealValue()){
                 stepSize = (valuesList[i + 1] - valuesList[i]) * Math.pow(10, decimals)
+                return;
             }
         }
     }
@@ -34,6 +35,7 @@ EntitySpinBox {
         for (var i = 0; i < valuesList.length; i++){
             if(valuesList[i] === getRealValue()){
                 stepSize = (valuesList[i] - valuesList[i - 1]) * Math.pow(10, decimals)
+                return;
             }
         }
     }

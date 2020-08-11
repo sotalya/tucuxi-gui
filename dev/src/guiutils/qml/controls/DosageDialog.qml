@@ -37,12 +37,10 @@ DialogBase {
         doseSpinBoxDose.setRealValue(quantity.dbvalue);
         doseSpinBoxDose.suffix = " " + quantity.unitstring;
 
-        doseSpinBoxDose.currentDose = 0;
         doseSpinBoxDose.doses = doses
 
-        doseSpinBoxDose.from = doses.dosesList[doseSpinBoxDose.currentDose] * Math.pow(10, doseSpinBoxDose.decimals);
+        doseSpinBoxDose.from = doses.dosesList[0] * Math.pow(10, doseSpinBoxDose.decimals);
         doseSpinBoxDose.to = doses.dosesList[(doses.dosesList.length - 1)] * Math.pow(10, doseSpinBoxDose.decimals);
-        doseSpinBoxDose.stepSize = (doses.dosesList[doseSpinBoxDose.currentDose + 1] - doses.dosesList[doseSpinBoxDose.currentDose]) * Math.pow(10, doseSpinBoxDose.decimals);
 
 
         doseSpinBoxDose.doValidation = function() { return getQuantity() > 0 }
@@ -187,7 +185,7 @@ DialogBase {
                     id: doseSpinBoxDose
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
-                    onEditingFinished: { doValidation() }
+                    onEditingFinished: {doValidation() }
                     up.onPressedChanged: {adaptStepUp()}
                     down.onPressedChanged: {adaptStepDown()}
                 }

@@ -12,11 +12,7 @@ EntitySpinBox {
 
     id: doseSpinBox
 
-    property int currentDose: 0
     property var doses: null
-
-    property bool upEnable : true
-    property bool downEnable : true
 
     function valueValidation()
     {
@@ -25,22 +21,20 @@ EntitySpinBox {
 
     function adaptStepUp()
     {
-        if ((doseSpinBox.currentDose <= doses.dosesList.length - 2) && upEnable){
-            stepSize = (doses.dosesList[doseSpinBox.currentDose + 1] - doses.dosesList[doseSpinBox.currentDose]) * Math.pow(10, decimals)
-            console.log("i : " + doseSpinBox.currentDose + " | value : " + doses.dosesList[doseSpinBox.currentDose] + " | Step : " + stepSize)
-            doseSpinBox.currentDose++;
+        for (var i = 0; i < doses.dosesList.length; i++){
+            if(doses.dosesList[i] === getRealValue()){
+                stepSize = (doses.dosesList[i + 1] - doses.dosesList[i]) * Math.pow(10, decimals)
+            }
         }
-        upEnable = !upEnable;
     }
 
     function adaptStepDown()
     {
-        if ((doseSpinBox.currentDose > 0) && downEnable){
-            stepSize = (doses.dosesList[doseSpinBox.currentDose] - doses.dosesList[doseSpinBox.currentDose - 1]) * Math.pow(10, decimals)
-            console.log("i : " + doseSpinBox.currentDose + " | value : " + doses.dosesList[doseSpinBox.currentDose] + " | Step : " + stepSize)
-            doseSpinBox.currentDose--;
+        for (var i = 0; i < doses.dosesList.length; i++){
+            if(doses.dosesList[i] === getRealValue()){
+                stepSize = (doses.dosesList[i] - doses.dosesList[i - 1]) * Math.pow(10, decimals)
+            }
         }
-        downEnable = !downEnable;
     }
 
 }

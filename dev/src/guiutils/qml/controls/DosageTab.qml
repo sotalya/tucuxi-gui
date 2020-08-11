@@ -93,8 +93,7 @@ Rectangle {
                             dosageTabController.addDosage();
                             dosageListView.currentIndex = dosageListView.count-1;
                             var model = interpretation.drugResponseAnalysis.treatment.dosages.objlist[dosageListView.currentIndex]
-                            var doses = interpretation.drugResponseAnalysis.drugModel.doses
-                            dosageDialog.exec(model, routesName, true, false, doses)
+                            dosageDialog.exec(model, routesName, true, false)
                         }
 
                         tooltipText: ToolTips.dosageTab.add
@@ -370,7 +369,7 @@ Rectangle {
                     routesName,
                     disableAtSteadyState,
                     interpretation.drugResponseAnalysis.drugModel.standardTreatment,
-                    doses);
+                    interpretation.drugResponseAnalysis.drugModel.doses);
                 this.open(bCreatingNewItem);
             }
         }

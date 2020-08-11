@@ -45,6 +45,7 @@ class ValidIntervals : public Entity, public QList<ValidInterval*>
 
     AUTO_PROPERTY_DECL(IdentifiableAmount*, quantity, Quantity)
     AUTO_PROPERTY_DECL(bool, any, Any)
+    AUTO_PROPERTY_DECL(QList<double>, intervalsList, IntervalsList)
 
 public:
     explicit ValidIntervals(AbstractRepository *repository, QObject *parent = nullptr)

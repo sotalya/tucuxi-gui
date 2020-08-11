@@ -50,6 +50,7 @@ class ValidInfusions : public Entity, public QList<ValidInfusion*>
     AUTO_PROPERTY_DECL(IdentifiableAmount*, quantity, Quantity)
     AUTO_PROPERTY_DECL(bool, any, Any)
     AUTO_PROPERTY_DECL(InfusionsList*, list, List)
+    AUTO_PROPERTY_DECL(QList<double>, infusionsList, InfusionsList)
 
 public:
     Q_INVOKABLE ValidInfusions(AbstractRepository *repository, QObject *parent = nullptr)

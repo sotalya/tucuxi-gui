@@ -28,32 +28,41 @@ DialogBase {
     }
 
     function init(quantity, interval, route, tinf, appliedDate, endDate, hasEndDate, isAtSteadyState, routeNames, disableAtSteadyState,
-                  standardTreatment, doses)
+                  standardTreatment, drugmodel)
     {
         self = this
 
         stdTreatment = standardTreatment;
-        doseSpinBoxDose.decimals = 2;
-        doseSpinBoxDose.setRealValue(quantity.dbvalue);
-        doseSpinBoxDose.suffix = " " + quantity.unitstring;
 
-        doseSpinBoxDose.doses = doses
+        // doses
+        doseSpinBox.decimals = 2;
+        doseSpinBox.setRealValue(quantity.dbvalue);
+        doseSpinBox.suffix = " " + quantity.unitstring;
+        doseSpinBox.valuesList = drugmodel.doses.dosesList
+        doseSpinBox.from = drugmodel.doses.dosesList[0] * Math.pow(10, doseSpinBox.decimals);
+        doseSpinBox.to = drugmodel.doses.dosesList[(drugmodel.doses.dosesList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
+        doseSpinBox.doValidation = function() { return getQuantity() > 0 }
 
-        doseSpinBoxDose.from = doses.dosesList[0] * Math.pow(10, doseSpinBoxDose.decimals);
-        doseSpinBoxDose.to = doses.dosesList[(doses.dosesList.length - 1)] * Math.pow(10, doseSpinBoxDose.decimals);
-
-
-        doseSpinBoxDose.doValidation = function() { return getQuantity() > 0 }
-
+        // intervals
+        intervalSpinBox.decimals = 2;
         intervalSpinBox.setRealValue(interval);
+        intervalSpinBox.valuesList = drugmodel.intervals.intervalsList
+        intervalSpinBox.from = drugmodel.intervals.intervalsList[0] * Math.pow(10, doseSpinBox.decimals);
+        intervalSpinBox.to = drugmodel.intervals.intervalsList[(drugmodel.intervals.intervalsList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
         intervalSpinBox.doValidation = function() { return getInterval () > 0 }
 
         //routeComboBox.model = routeNames;
         //routeComboBox.currentIndex = route.value;
         routeText.text = route.description
 
+        // infusions
         infusionRow.visible = route.label === "INFUSION"
+        infusionSpinBox.decimals = 2;
         infusionSpinBox.setRealValue(tinf);
+        infusionSpinBox.valuesList = drugmodel.infusions.infusionsList
+        infusionSpinBox.from = drugmodel.infusions.infusionsList[0] * Math.pow(10, doseSpinBox.decimals);
+        infusionSpinBox.to = drugmodel.infusions.infusionsList[(drugmodel.infusions.infusionsList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
+        infusionSpinBox.doValidation = function() { return getInfusion() > 0 }
 
         var validateDates = function() {
             return getAppliedDate() <= getEndDate()
@@ -91,7 +100,7 @@ DialogBase {
 //        refresh()
     }
 
-    function getQuantity()    { return doseSpinBoxDose.getRealValue() }
+    function getQuantity()    { return doseSpinBox.getRealValue() }
     function getInterval()    { return intervalSpinBox.getRealValue() }
     function getInfusion()    { return infusionSpinBox.getRealValue() }
     //function getRoute()       { return routeComboBox.currentIndex }
@@ -130,7 +139,7 @@ DialogBase {
         // ... force a change of focus to ensure TimePicker values are actually used
         appliedDateInput.focus = true
 
-        var bOk = doseSpinBoxDose.validate()
+        var bOk = doseSpinBox.validate()
         bOk = intervalSpinBox.validate() && bOk
         bOk = appliedDateInput.validate() && bOk
         bOk = stoppedDateInput.validate() && bOk
@@ -181,13 +190,12 @@ DialogBase {
                     Layout.preferredWidth: 100
                     tooltipText: ToolTips.dosageDialog.dose
                 }
-                EntitySpinBoxDose {
-                    id: doseSpinBoxDose
+                EntitySpinBoxList {
+                    id: doseSpinBox
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
                     onEditingFinished: {doValidation() }
-                    up.onPressedChanged: {adaptStepUp()}
-                    down.onPressedChanged: {adaptStepDown()}
+
                 }
             }
 
@@ -198,7 +206,7 @@ DialogBase {
                     Layout.preferredWidth: 100
                     tooltipText: ToolTips.dosageDialog.interval
                 }
-                EntitySpinBox {
+                EntitySpinBoxList {
                     id: intervalSpinBox
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
@@ -241,7 +249,7 @@ DialogBase {
                     Layout.preferredWidth: 100
                     tooltipText: ToolTips.dosageDialog.infusion
                 }
-                EntitySpinBox {
+                EntitySpinBoxList {
                     id: infusionSpinBox
                     suffix: " minutes"
                     horizontalAlignment: Text.AlignLeft

@@ -69,7 +69,7 @@
         <file alias="TucuButton.qml">controls/TucuButton.qml</file>
         <file alias="TooltipArea.qml">controls/TooltipArea.qml</file>
         <file alias="ValidationTextDialog.qml">controls/ValidationTextDialog.qml</file>
-        <file alias="EntitySpinBoxDose.qml">controls/EntitySpinBoxDose.qml</file>
+        <file alias="EntitySpinBoxList.qml">controls/EntitySpinBoxList.qml</file>
     </qresource>
     <qresource prefix="/windows">
         <file alias="MainWindow.qml">windows/MainWindow.qml</file>

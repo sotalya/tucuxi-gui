@@ -269,79 +269,58 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
 
     auto defaultFormulation = drugModel->getFormulationAndRoutes().getDefault();
     {
-        // Only the default dose
-
+        // All doses values found on drug model
         ezechiel::core::ValidDoses *validDoses = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidDoses>(ABSTRACTREPO, newModel);
+        ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
+
+        QString uString = QString::fromStdString(defaultFormulation->getValidDoses()->getUnit().toString());
         QList<double> doseList;
         for(const auto &doseValue : defaultFormulation->getValidDoses()->getValues()){
             doseList.append(doseValue);
         }
+
         validDoses->setDosesList(doseList);
-        QString uString = QString::fromStdString(defaultFormulation->getValidDoses()->getUnit().toString());
-
-
-        ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
-//        amount->setDbvalue(defaultFormulation->getValidDoses()->getDefaultValue());
         amount->setUnit(ezechiel::core::Unit(uString));
         validDoses->setQuantity(amount);
-
-//        ezechiel::core::IdentifiableAmount *amountStep = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
-//        amountStep->setDbvalue(defaultFormulation->getValidDoses()->getStepValue());
-//        amountStep->setUnit(ezechiel::core::Unit(uString));
-//        validDoses->setStepDose(amountStep);
-
-//        ezechiel::core::IdentifiableAmount *amountTo= ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
-//        amountTo->setDbvalue(defaultFormulation->getValidDoses()->getToValue());
-//        validDoses->setToDose(amountTo);
-
-//        ezechiel::core::IdentifiableAmount *amountFrom= ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
-//        amountFrom->setDbvalue(defaultFormulation->getValidDoses()->getFromValue());
-//        validDoses->setFromDose(amountFrom);
-
-
 
         newModel->setDoses(validDoses);
     }
 
     if (defaultFormulation->getValidInfusionTimes() != nullptr)
     {
-
+        //All infusions values found on drug model
         ezechiel::core::ValidInfusions *validInfusions = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusions>(ABSTRACTREPO, newModel);
-        QString uString = QString::fromStdString(defaultFormulation->getValidInfusionTimes()->getUnit().toString());
+        ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validInfusions);
 
+        QString uString = QString::fromStdString(defaultFormulation->getValidInfusionTimes()->getUnit().toString());
+        QList<double> infusionsList;
         for(const auto &value : defaultFormulation->getValidInfusionTimes()->getValues()){
-            ezechiel::core::ValidInfusion *validInfusionFixed = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusion>(ABSTRACTREPO, validInfusions);
-            ezechiel::core::IdentifiableAmount *amountFixed = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validInfusionFixed);
-            amountFixed->setDbvalue(value);
-            amountFixed->setUnit(ezechiel::core::Unit(uString));
-            validInfusionFixed->setQuantity(amountFixed);
-            validInfusions->append(validInfusionFixed);
+            infusionsList.append(value);
         }
 
-
-
-//         Only the default infusion time
-//        ezechiel::core::ValidInfusion *validInfusion = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusion>(ABSTRACTREPO, validInfusions);
-//        ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validInfusion);
-//        QString uString = QString::fromStdString(defaultFormulation->getValidInfusionTimes()->getUnit().toString());
-
-//        amount->setDbvalue(defaultFormulation->getValidInfusionTimes()->getDefaultValue());
-//        amount->setUnit(ezechiel::core::Unit(uString));
-//        validInfusion->setQuantity(amount);
-//        validInfusions->append(validInfusion);
+        validInfusions->setInfusionsList(infusionsList);
+        amount->setUnit(ezechiel::core::Unit(uString));
+        validInfusions->setQuantity(amount);
 
         newModel->setInfusions(validInfusions);
 
     }
 
     {
-        // Only the default interval
+        // All intervals values found on drug model
         ezechiel::core::ValidIntervals *validIntervals = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidIntervals>(ABSTRACTREPO, newModel);
         ezechiel::core::IdentifiableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, validIntervals);
-        amount->setDbvalue(defaultFormulation->getValidIntervals()->getDefaultValue());
+
         QString uString = QString::fromStdString(defaultFormulation->getValidIntervals()->getUnit().toString());
+        QList<double> intervalsList;
+        for(const auto &value : defaultFormulation->getValidIntervals()->getValues()){
+            intervalsList.append(value);
+        }
+
+        validIntervals->setIntervalsList(intervalsList);
         amount->setUnit(ezechiel::core::Unit(uString));
         validIntervals->setQuantity(amount);
+
         newModel->setIntervals(validIntervals);
     }
 

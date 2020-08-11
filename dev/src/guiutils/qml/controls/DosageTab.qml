@@ -369,7 +369,7 @@ Rectangle {
                     routesName,
                     disableAtSteadyState,
                     interpretation.drugResponseAnalysis.drugModel.standardTreatment,
-                    interpretation.drugResponseAnalysis.drugModel.doses);
+                    interpretation.drugResponseAnalysis.drugModel);
                 this.open(bCreatingNewItem);
             }
         }

@@ -22,18 +22,22 @@ EntitySpinBox {
 
     function adaptStepUp()
     {
+        stepSize = 1
         for (var i = 0; i < valuesList.length; i++){
-            if(valuesList[i] === getRealValue()){
-                stepSize = (valuesList[i + 1] - valuesList[i]) * Math.pow(10, decimals)
+            if(valuesList[i] > getRealValue()){
+                stepSize = (valuesList[i] - getRealValue()) * Math.pow(10, decimals)
+                return
             }
         }
     }
 
     function adaptStepDown()
     {
+        stepSize = 1
         for (var i = 0; i < valuesList.length; i++){
-            if(valuesList[i] === getRealValue()){
-                stepSize = (valuesList[i] - valuesList[i - 1]) * Math.pow(10, decimals)
+            if(valuesList[i] < getRealValue()){
+                stepSize = (valuesList[i] - getRealValue()) * Math.pow(10, decimals)
+                return
             }
         }
     }

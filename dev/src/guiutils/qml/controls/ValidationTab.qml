@@ -84,7 +84,8 @@ Rectangle {
                 if (poppd.closestPoint) {
                     var popi = poppd.closestPoint.currentindex;
                     poppt = poppd.points.objat(popi).pset.parameters.objlist;
-                    actualDrugModel = poppt
+                    parametersType.push(poppd.points.objat(popi).pset.parameters)
+//                    validationTabController.setParametersTypeList(poppt)
                 }
             }
 
@@ -95,7 +96,8 @@ Rectangle {
                 if (aprpd.closestPoint) {
                     var apri = aprpd.closestPoint.currentindex;
                     aprpt = aprpd.points.objat(apri).pset.parameters.objlist;
-                    actualDrugModel = aprpt
+                    parametersType.push(aprpd.points.objat(apri).pset.parameters)
+//                    validationTabController.setParametersTypeList(aprpt)
                 }
             }
 
@@ -106,7 +108,7 @@ Rectangle {
                 if (apopd.closestPoint) {
                     var apoi = apopd.closestPoint.currentindex;
                     apopt = apopd.points.objat(apoi).pset.parameters.objlist;
-                    actualDrugModel = apopt
+//                    validationTabController.setParametersTypeList(apopt)
                 }
             }
 
@@ -125,13 +127,13 @@ Rectangle {
         }
     }
 
-    property var actualDrugModel: ({})
+    property var parametersType : []
 
     property var poppt: ({})
     onPopptChanged: {
-        //        for (var i = 0; i < poppt.length; ++i) {
-        //            console.log(poppt[i].name + poppt[i].quantity.dbvalue);
-        //        }
+//                for (var i = 0; i < poppt.length; ++i) {
+//                    console.log(poppt[i].name + poppt[i].quantity.dbvalue);
+//                }
     }
 
     property var aprpt: ({})
@@ -158,15 +160,19 @@ Rectangle {
         property var dprms: interpretation.drugResponseAnalysis.drugModel? interpretation.drugResponseAnalysis.drugModel.parameters.parameters : 0
         property var lamodel: dprms ? dprms.objlist : 0
         onDprmsChanged: {
-            //        console.log("# defparams: " + dprms.size());
-            //        console.log("# lamodel: " + dprms.size());
+//                    console.log("# defparams: " + dprms.size());
+//                    console.log("# lamodel: " + dprms.size());
         }
 
         onLamodelChanged: {
-            //        for (var i = 0; i < lamodel.length; ++i) {
-            //            console.log("param: " + lamodel[i].name);
-            //        }
+//                    for (var i = 0; i < lamodel.length; ++i) {
+//                        console.log("param: " + lamodel[i].name);
+//                    }
         }
+
+        /**********************************************************************
+          Parameters
+        **********************************************************************/
 
         EntityTitle {
             label.text: "Parameters"
@@ -178,141 +184,176 @@ Rectangle {
         EntityList {
             id: parameter
 
+            visible: parameterListExpandHeader.expanded
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
             columnlayout.children: [
 
                 EntityListHeader {
                     id: popParametersListHeaders
 
-                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 115; label.text: ""}
-                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 115; label.text: "Population"; }
-                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 115; label.text: "A priori"}
-                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 115; label.text: "A posteriori"}
-                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 115; label.text: ""}
+                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 120; label.text: "Pk Parameters"}
+                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 120; label.text: "Population"}
+                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 120; label.text: "A priori"}
+                    EntityListHeaderItem { Layout.minimumHeight: 20; Layout.preferredWidth: 120; label.text: "A posteriori"}
 
                 },
 
-                RowLayout{
-                    Layout.fillWidth: true;
-                    Layout.minimumWidth: 100;
-                    Layout.preferredWidth: 100;
-                    EntityListView{
-                        Layout.fillWidth: true;
-                        Layout.preferredHeight: 20
-                        Layout.minimumHeight:   20
-                        Layout.minimumWidth: 100
-                        Layout.preferredWidth: 100
-                        visible : parameterListExpandHeader.expanded
-                        orientation: Qt.Vertical
-                        model: actualDrugModel
-                        delegate:
-                            Text {
-                                text: modelData.name
-                                color: Style.table.foreground.header
+                EntityHeaderEnd {
+                    visible: true
+                },
+
+                EntityListView {
+                    id: parameterslistView
+                    objectName: "parametersListView"
+                    model: parametersType
+
+                    delegate: EntityListDelegate {
+                        id: parameterListDelegate
+
+                        rowlayout.children: [
+                            EntityListDelegateItem {
+                                Layout.preferredWidth: 120
+                                label.text: modelData.name
+                            },
+                            EntityListDelegateItem {
+
+                                Layout.fillWidth: true
+                                label.text: (modelData.quantity.dbvalue).toFixed(3)
+
+                            },
+                            EntityListDelegateItem {
+                                Layout.fillWidth: true
+                                label.text: (modelData.quantity.dbvalue).toFixed(3)
+
                             }
-                    }
-
-                    EntityListView{
-                        id: deflv
-                        Layout.fillWidth: true;
-                        Layout.preferredHeight: 20
-                        Layout.minimumHeight:   20
-                        Layout.minimumWidth: 100
-                        Layout.preferredWidth: 100
-                        visible : parameterListExpandHeader.expanded
-                        model: poppt // lyt.lamodel
-                        orientation: Qt.Vertical
-                        delegate:
-                            RowLayout{
-                            Text {
-                                text: (modelData.quantity.dbvalue).toFixed(3)
-                            }
-                        }
-                        MouseArea {
-                            id: popMousearea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            ToolTip {
-                                property string tooltipText : ToolTips.validationTab.populationParameters
-                                background: Rectangle {
-                                    color: Style.tooltip.color
-                                    border.color: Style.tooltip.border_color
-                                }
-                                visible : (show_tooltip) ? (popMousearea.containsMouse && (tooltipText != "")) : false
-                                text : tooltipText
-                            }
-                        }
-
-
-                    }
-
-                    EntityListView {
-                        id: aprlv
-                        Layout.fillWidth: true;
-                        Layout.preferredHeight: 20
-                        Layout.minimumHeight:   20
-                        Layout.minimumWidth: 115
-                        Layout.preferredWidth: 115
-                        visible : parameterListExpandHeader.expanded
-                        model: aprpt
-                        orientation: Qt.Vertical
-                        spacing: 2
-                        delegate: RowLayout{
-                            Text {
-                                text: (modelData.quantity.dbvalue).toFixed(3)
-                            }
-                        }
-
-                        MouseArea {
-                            id: aprMousearea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            ToolTip {
-                                property string tooltipText : ToolTips.validationTab.aprioriParameters
-                                background: Rectangle {
-                                    color: Style.tooltip.color
-                                    border.color: Style.tooltip.border_color
-                                }
-                                visible : (show_tooltip) ? (aprMousearea.containsMouse && (tooltipText != "")) : false
-                                text : tooltipText
-                            }
-                        }
-                    }
-
-                    EntityListView {
-                        id: apolv
-                        Layout.fillWidth: true;
-                        Layout.preferredHeight: 20
-                        Layout.minimumHeight:   20
-                        Layout.minimumWidth: 115
-                        Layout.preferredWidth: 115
-                        headerPositioning: ListView.OverlayHeader
-                        visible : parameterListExpandHeader.expanded
-                        model: apopt
-                        orientation: Qt.Vertical
-                        spacing: 2
-                        delegate: RowLayout {
-                            Text {
-                                text: (modelData.quantity.dbvalue).toFixed(3)
-                            }
-                        }
-
-                        MouseArea {
-                            id: apostMousearea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            ToolTip {
-                                property string tooltipText : ToolTips.validationTab.aposterioriParameters
-                                background: Rectangle {
-                                    color: Style.tooltip.color
-                                    border.color: Style.tooltip.border_color
-                                }
-                                visible : (show_tooltip) ? (apostMousearea.containsMouse && (tooltipText != "")) : false
-                                text : tooltipText
-                            }
-                        }
-                    }
-
+                    ]
                 }
+                }
+
+//                RowLayout{
+//                    Layout.fillWidth: true;
+//                    Layout.minimumWidth: 100;
+//                    Layout.preferredWidth: 100;
+//                    EntityListView{
+//                        Layout.fillWidth: true;
+//                        Layout.preferredHeight: 20
+//                        Layout.minimumHeight:   20
+//                        Layout.minimumWidth: 100
+//                        Layout.preferredWidth: 100
+//                        visible : parameterListExpandHeader.expanded
+//                        orientation: Qt.Vertical
+//                        model: actualDrugModel
+//                        delegate:
+//                            Text {
+//                                text: modelData.name
+//                                color: Style.table.foreground.header
+//                            }
+//                    }
+
+//                    EntityListView{
+//                        id: deflv
+//                        Layout.fillWidth: true;
+//                        Layout.preferredHeight: 20
+//                        Layout.minimumHeight:   20
+//                        Layout.minimumWidth: 100
+//                        Layout.preferredWidth: 100
+//                        visible : parameterListExpandHeader.expanded
+//                        model: poppt // lyt.lamodel
+//                        orientation: Qt.Vertical
+//                        delegate:
+//                            RowLayout{
+//                            Text {
+//                                text: (modelData.quantity.dbvalue).toFixed(3)
+//                            }
+//                        }
+//                        MouseArea {
+//                            id: popMousearea
+//                            anchors.fill: parent
+//                            hoverEnabled: true
+//                            ToolTip {
+//                                property string tooltipText : ToolTips.validationTab.populationParameters
+//                                background: Rectangle {
+//                                    color: Style.tooltip.color
+//                                    border.color: Style.tooltip.border_color
+//                                }
+//                                visible : (show_tooltip) ? (popMousearea.containsMouse && (tooltipText != "")) : false
+//                                text : tooltipText
+//                            }
+//                        }
+
+
+//                    }
+
+//                    EntityListView {
+//                        id: aprlv
+//                        Layout.fillWidth: true;
+//                        Layout.preferredHeight: 20
+//                        Layout.minimumHeight:   20
+//                        Layout.minimumWidth: 115
+//                        Layout.preferredWidth: 115
+//                        visible : parameterListExpandHeader.expanded
+//                        model: aprpt
+//                        orientation: Qt.Vertical
+//                        spacing: 2
+//                        delegate: RowLayout{
+//                            Text {
+//                                text: (modelData.quantity.dbvalue).toFixed(3)
+//                            }
+//                        }
+
+//                        MouseArea {
+//                            id: aprMousearea
+//                            anchors.fill: parent
+//                            hoverEnabled: true
+//                            ToolTip {
+//                                property string tooltipText : ToolTips.validationTab.aprioriParameters
+//                                background: Rectangle {
+//                                    color: Style.tooltip.color
+//                                    border.color: Style.tooltip.border_color
+//                                }
+//                                visible : (show_tooltip) ? (aprMousearea.containsMouse && (tooltipText != "")) : false
+//                                text : tooltipText
+//                            }
+//                        }
+//                    }
+
+//                    EntityListView {
+//                        id: apolv
+//                        Layout.fillWidth: true;
+//                        Layout.preferredHeight: 20
+//                        Layout.minimumHeight:   20
+//                        Layout.minimumWidth: 115
+//                        Layout.preferredWidth: 115
+//                        headerPositioning: ListView.OverlayHeader
+//                        visible : parameterListExpandHeader.expanded
+//                        model: apopt
+//                        orientation: Qt.Vertical
+//                        spacing: 2
+//                        delegate: RowLayout {
+//                            Text {
+//                                text: (modelData.quantity.dbvalue).toFixed(3)
+//                            }
+//                        }
+
+//                        MouseArea {
+//                            id: apostMousearea
+//                            anchors.fill: parent
+//                            hoverEnabled: true
+//                            ToolTip {
+//                                property string tooltipText : ToolTips.validationTab.aposterioriParameters
+//                                background: Rectangle {
+//                                    color: Style.tooltip.color
+//                                    border.color: Style.tooltip.border_color
+//                                }
+//                                visible : (show_tooltip) ? (apostMousearea.containsMouse && (tooltipText != "")) : false
+//                                text : tooltipText
+//                            }
+//                        }
+//                    }
+
+//                }
 
             ]
         }

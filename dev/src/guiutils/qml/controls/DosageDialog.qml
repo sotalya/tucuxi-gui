@@ -39,16 +39,16 @@ DialogBase {
         doseSpinBox.setRealValue(quantity.dbvalue);
         doseSpinBox.suffix = " " + quantity.unitstring;
         doseSpinBox.valuesList = drugmodel.doses.dosesList
-        doseSpinBox.from = drugmodel.doses.dosesList[0] * Math.pow(10, doseSpinBox.decimals);
-        doseSpinBox.to = drugmodel.doses.dosesList[(drugmodel.doses.dosesList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
+        //doseSpinBox.from = drugmodel.doses.dosesList[0] * Math.pow(10, doseSpinBox.decimals);
+        //doseSpinBox.to = drugmodel.doses.dosesList[(drugmodel.doses.dosesList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
         doseSpinBox.doValidation = function() { return getQuantity() > 0 }
 
         // intervals
         intervalSpinBox.decimals = 2;
         intervalSpinBox.setRealValue(interval);
         intervalSpinBox.valuesList = drugmodel.intervals.intervalsList
-        intervalSpinBox.from = drugmodel.intervals.intervalsList[0] * Math.pow(10, doseSpinBox.decimals);
-        intervalSpinBox.to = drugmodel.intervals.intervalsList[(drugmodel.intervals.intervalsList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
+        //intervalSpinBox.from = drugmodel.intervals.intervalsList[0] * Math.pow(10, doseSpinBox.decimals);
+        //intervalSpinBox.to = drugmodel.intervals.intervalsList[(drugmodel.intervals.intervalsList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
         intervalSpinBox.doValidation = function() { return getInterval () > 0 }
 
         //routeComboBox.model = routeNames;
@@ -60,8 +60,8 @@ DialogBase {
         infusionSpinBox.decimals = 2;
         infusionSpinBox.setRealValue(tinf);
         infusionSpinBox.valuesList = drugmodel.infusions.infusionsList
-        infusionSpinBox.from = drugmodel.infusions.infusionsList[0] * Math.pow(10, doseSpinBox.decimals);
-        infusionSpinBox.to = drugmodel.infusions.infusionsList[(drugmodel.infusions.infusionsList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
+//        infusionSpinBox.from = drugmodel.infusions.infusionsList[0] * Math.pow(10, doseSpinBox.decimals);
+//        infusionSpinBox.to = drugmodel.infusions.infusionsList[(drugmodel.infusions.infusionsList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
         infusionSpinBox.doValidation = function() { return getInfusion() > 0 }
 
         var validateDates = function() {

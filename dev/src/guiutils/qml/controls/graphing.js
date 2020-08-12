@@ -301,6 +301,7 @@ function drawSoftwareDescription(ctx, text)
 function colorRegionBtwCurves(ctx, predDataL, predDataU, dataX, dataY, dataYY, color, filter)
 {
     ctx.globalAlpha = 0.2;
+    ctx.globalAlpha = 1.0;
     ctx.lineWidth   = 2.0;// / scalex;
     ctx.lineCap     = "round";
     ctx.lineJoin    = "round";

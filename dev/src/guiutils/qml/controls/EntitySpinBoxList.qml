@@ -15,6 +15,11 @@ EntitySpinBox {
     up.onPressedChanged: {adaptStepUp()}
     down.onPressedChanged: {adaptStepDown()}
 
+    // The following do not work to disable the - and +. It disallows to define values outside
+    // of the list min and max values
+    // minimumValue: valuesList ? Math.min(value, valuesList[0]) : 0
+    // maximumValue: valuesList ? Math.max(value, valuesList[valuesList.length - 1]) : 10000000
+
     function valueValidation()
     {
         console.log("value : " + value)
@@ -29,7 +34,6 @@ EntitySpinBox {
                 return
             }
         }
-
     }
 
     function adaptStepDown()

@@ -281,6 +281,7 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
 
         validDoses->setDosesList(doseList);
         amount->setUnit(ezechiel::core::Unit(uString));
+        amount->setDbvalue(defaultFormulation->getValidDoses()->getDefaultValue());
         validDoses->setQuantity(amount);
 
         newModel->setDoses(validDoses);
@@ -300,6 +301,7 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
 
         validInfusions->setInfusionsList(infusionsList);
         amount->setUnit(ezechiel::core::Unit(uString));
+        amount->setDbvalue(defaultFormulation->getValidInfusionTimes()->getDefaultValue());
         validInfusions->setQuantity(amount);
 
         newModel->setInfusions(validInfusions);
@@ -319,6 +321,7 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
 
         validIntervals->setIntervalsList(intervalsList);
         amount->setUnit(ezechiel::core::Unit(uString));
+        amount->setDbvalue(defaultFormulation->getValidIntervals()->getDefaultValue());
         validIntervals->setQuantity(amount);
 
         newModel->setIntervals(validIntervals);

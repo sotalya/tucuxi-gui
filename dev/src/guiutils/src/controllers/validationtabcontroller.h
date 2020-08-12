@@ -19,17 +19,6 @@ public:
 //    STD_PROPERTY_DECL(QString, posology, Posology)
 //    STD_PROPERTY_DECL(QDateTime, nextControlDate, nextControlDate)
 
-    Q_INVOKABLE QList<QObject*> getParametersTypeList()const{
-        return _parametersTypeList;
-    }
-
-    Q_INVOKABLE void setParametersTypeList(QObject* _parametersType){
-        _parametersTypeList.push_back(_parametersType);
-    }
-
-private:
-    QList<QObject*> _parametersTypeList;
-
 };
 
 

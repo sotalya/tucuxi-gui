@@ -4,12 +4,14 @@
 #include "core/dal/entity.h"
 #include "steptypes.h"
 #include "curvetypes.h"
+#include "core/settings.h"
 
 struct GraphInfo
 {
     bool available;
     bool visible;
 };
+
 
 class GraphInformationSelection : public ezechiel::core::Entity
 {
@@ -51,6 +53,9 @@ class GraphInformationSelection : public ezechiel::core::Entity
         void setCurrentTab(StepType::Enum step);
         Q_INVOKABLE void setVisible(CurveType::Enum curveType, bool isVisible);
         Q_INVOKABLE void setVisible(StepType::Enum stepType, CurveType::Enum curveType, bool isVisible);
+        Q_INVOKABLE void setAvailable(CurveType::Enum curveType, bool isAvailable);
+        Q_INVOKABLE void setAvailable(StepType::Enum stepType, CurveType::Enum curveType, bool isAvailable);
+        Q_INVOKABLE void saveSettings();
 
     protected:
         Q_INVOKABLE GraphInformationSelection(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);
@@ -58,10 +63,12 @@ class GraphInformationSelection : public ezechiel::core::Entity
     private:
         void initStep(StepType::Enum stepType, bool curveInfo[CurveType::size]);
 		void updateProperties();
+        void loadParameters();
 
 	private:
         GraphInfo _graphInfo[StepType::size][CurveType::size];
         StepType::Enum _currentStep;
+        QMap<QString, QVariant> _parametersSettingsMap;
 };
 
 #endif // GRAPHINFORMATIONSELECTION_H

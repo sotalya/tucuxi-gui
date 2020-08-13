@@ -1,4 +1,5 @@
 #include "graphinformationselection.h"
+#include "core/settings.h"
 
 GraphInformationSelection::GraphInformationSelection(ezechiel::core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
@@ -26,6 +27,21 @@ GraphInformationSelection::GraphInformationSelection(ezechiel::core::AbstractRep
     initStep(StepType::Adjustment, adjustmentInfo);
     initStep(StepType::Validation, validationInfo);
     initStep(StepType::Report, reportInfo);
+
+    loadParameters();
+
+
+}
+
+void GraphInformationSelection::loadParameters(){
+    QMap<QString, QVariant> displayParameters = SETTINGS.get(ezechiel::core::Module::GUI, "DisplayParameters").toMap();
+
+    for (int i=0; i<=StepType::last; i++){
+        if (displayParameters.contains(QString::fromStdString(std::to_string(i)))){
+
+    }
+    }
+
 }
 
 void GraphInformationSelection::setCurrentTab(StepType::Enum step)
@@ -42,13 +58,30 @@ void GraphInformationSelection::setVisible(CurveType::Enum curveType, bool isVis
 void GraphInformationSelection::setVisible(StepType::Enum stepType, CurveType::Enum curveType, bool isVisible)
 {
     if (_graphInfo[stepType][curveType].visible != isVisible)
-	{
+    {
         _graphInfo[stepType][curveType].visible = isVisible;
-    	if (stepType == _currentStep)
-	    {
-			updateProperties();
-	    }
-	}
+        if (stepType == _currentStep)
+        {
+            updateProperties();
+        }
+    }
+}
+
+void GraphInformationSelection::setAvailable(CurveType::Enum curveType, bool isAvailable)
+{
+    setAvailable(_currentStep, curveType, isAvailable);
+}
+
+void GraphInformationSelection::setAvailable(StepType::Enum stepType, CurveType::Enum curveType, bool isAvailable)
+{
+    if (_graphInfo[stepType][curveType].available != isAvailable)
+    {
+        _graphInfo[stepType][curveType].available = isAvailable;
+        if (stepType == _currentStep)
+        {
+            updateProperties();
+        }
+    }
 }
 
 void GraphInformationSelection::initStep(StepType::Enum stepType, bool curveInfo[CurveType::size])
@@ -58,6 +91,25 @@ void GraphInformationSelection::initStep(StepType::Enum stepType, bool curveInfo
         _graphInfo[stepType][i].available = curveInfo[i];
         _graphInfo[stepType][i].visible = true;
     }
+}
+
+void GraphInformationSelection::saveSettings(){
+
+    QString currentTab = QString::fromStdString(std::to_string(_currentStep));
+
+    QList<QVariant> parametersTypeList;
+
+    for (int i=CurveType::first; i<=CurveType::last; i++)
+    {
+        QVariant q(_graphInfo[_currentStep][i].available);
+        parametersTypeList.append(q);
+    }
+
+    QVariant parametersType(parametersTypeList);
+
+    _parametersSettingsMap[currentTab] = parametersType;
+
+    SETTINGS.set(ezechiel::core::Module::GUI, "DisplayParameters" ,_parametersSettingsMap);
 }
 
 void GraphInformationSelection::updateProperties()

@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 
 import guiutils.qml.styles 1.0
@@ -117,6 +117,8 @@ Canvas {
     //ToDo: remove default unit
     property string unit: "ug/l"
     property real unitefforder: 1
+
+
 
     function reset() {
         //return;
@@ -472,6 +474,7 @@ if (times.length > 0) {
         }
 
         onClicked: {
+
         }
 
         onReleased: {
@@ -481,9 +484,16 @@ if (times.length > 0) {
             }
         }
 
+        GraphSettingsDialog {
+            id: graphSettingsDialog
+            objectName: "graphSettingsDialog"
+        }
+
         onPressed: {
             if (mouse.button  == Qt.RightButton) {
                 // Open a dialog to select the objects to show on the graph
+                graphSettingsDialog.init()
+                graphSettingsDialog.open(true)
 
             }
             else {
@@ -512,64 +522,6 @@ if (times.length > 0) {
             // For most mice, 120 equals one step of the wheel.
             Graphing.zoom(wheel.angleDelta.y/120);
             tooltipX = -1; // Clear tooltip
-        }
-
-        CheckBox {
-            id: popPCB
-            onClicked: { graphInformationSelection.setVisible(0, this.checked) }
-
-            TooltipArea {
-                text : ToolTips.chart.popVisible
-            }
-        }
-        CheckBox {
-            id: popPerCB
-            onClicked: { graphInformationSelection.setVisible(1, this.checked) }
-            TooltipArea {
-                text : ToolTips.chart.popPercVisible
-            }
-        }
-        CheckBox {
-            id: aprPCB
-            onClicked: { graphInformationSelection.setVisible(2, this.checked) }
-            TooltipArea {
-                text : ToolTips.chart.aprioriVisible
-            }
-        }
-        CheckBox {
-            id: aprPerCB
-            onClicked: { graphInformationSelection.setVisible(3, this.checked) }
-            TooltipArea {
-                text : ToolTips.chart.aprioriPercVisible
-            }
-        }
-        CheckBox {
-            id: apoPCB
-            onClicked: { graphInformationSelection.setVisible(4, this.checked) }
-            TooltipArea {
-                text : ToolTips.chart.apostVisible
-            }
-        }
-        CheckBox {
-            id: apoPerCB
-            onClicked: { graphInformationSelection.setVisible(5, this.checked) }
-            TooltipArea {
-                text : ToolTips.chart.apostPercVisible
-            }
-        }
-        CheckBox {
-            id: revCB
-            onClicked: { graphInformationSelection.setVisible(8, this.checked) }
-            TooltipArea {
-                text : ToolTips.chart.revVisible
-            }
-        }
-        CheckBox {
-            id: adjCB
-            onClicked: { graphInformationSelection.setVisible(9, this.checked) }
-            TooltipArea {
-                text : ToolTips.chart.adjVisible
-            }
         }
     }
 
@@ -621,4 +573,5 @@ if (times.length > 0) {
             Trails.loop();
         }
     }
+
 }

@@ -215,6 +215,15 @@ Settings::~Settings()
 
 }
 
+//ParameterGraphSettings::ParameterGraphSettings()
+//{}
+
+//SingleGraphSettings::SingleGraphSettings()
+//{}
+
+//GraphDisplaySettings::GraphDisplaySettings()
+//{}
+
 } // namespace core
 } // namespace ezechiel
 

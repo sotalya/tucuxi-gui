@@ -290,7 +290,7 @@ function drawNonPlotArea(ctx, colors, index)
     drawAxisTicks(ctx);
     drawAxisLabels(ctx);
     //Draw the labels
-    drawLegends(ctx, colors);
+//    drawLegends(ctx, colors);
 }
 
 function drawSoftwareDescription(ctx, text)
@@ -1044,6 +1044,7 @@ function drawLegends(ctx, colors)
 
     var adjTabShowPop = graphInformationSelection.presentAposterioriPrediction && !hasPatientVariates && !hasMeasures;
     var adjTabShowApr = graphInformationSelection.presentAposterioriPrediction && hasPatientVariates && !hasMeasures;
+
 
     popPCB.visible = false
     popPCB.checked = graphInformationSelection.displayPopulationPrediction

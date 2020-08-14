@@ -49,6 +49,7 @@ class GraphInformationSelection : public ezechiel::core::Entity
     AUTO_PROPERTY_DECL(bool, presentTargets, PresentTargets)
     AUTO_PROPERTY_DECL(bool, displayTargets, DisplayTargets)
 
+
     public:
         void setCurrentTab(StepType::Enum step);
         Q_INVOKABLE void setVisible(CurveType::Enum curveType, bool isVisible);
@@ -62,8 +63,8 @@ class GraphInformationSelection : public ezechiel::core::Entity
 
     private:
         void initStep(StepType::Enum stepType, bool curveInfo[CurveType::size]);
-		void updateProperties();
-        void loadParameters();
+        void updateProperties();
+        void loadDisplayParametersSettings();
 
 	private:
         GraphInfo _graphInfo[StepType::size][CurveType::size];

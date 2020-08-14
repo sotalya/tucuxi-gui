@@ -28,18 +28,27 @@ GraphInformationSelection::GraphInformationSelection(ezechiel::core::AbstractRep
     initStep(StepType::Validation, validationInfo);
     initStep(StepType::Report, reportInfo);
 
-    loadParameters();
-
+    loadDisplayParametersSettings();
 
 }
 
-void GraphInformationSelection::loadParameters(){
+void GraphInformationSelection::loadDisplayParametersSettings(){
     QMap<QString, QVariant> displayParameters = SETTINGS.get(ezechiel::core::Module::GUI, "DisplayParameters").toMap();
+    QList<QVariant> listParametersValues;
+    int curveIndex = 0;
 
-    for (int i=0; i<=StepType::last; i++){
-        if (displayParameters.contains(QString::fromStdString(std::to_string(i)))){
+    for (int stepIndex=0; stepIndex<=StepType::last; stepIndex++){
+        QString qIndex = QString::fromStdString(std::to_string(stepIndex));
 
-    }
+        if (displayParameters.contains(qIndex)){
+            listParametersValues = displayParameters[qIndex].toList();
+            for (const QVariant &value : listParametersValues){
+                setAvailable(StepType::Enum(stepIndex),CurveType::Enum(curveIndex), value.toBool());
+                curveIndex++;
+            }
+            curveIndex = 0;
+        }
+
     }
 
 }
@@ -101,8 +110,7 @@ void GraphInformationSelection::saveSettings(){
 
     for (int i=CurveType::first; i<=CurveType::last; i++)
     {
-        QVariant q(_graphInfo[_currentStep][i].available);
-        parametersTypeList.append(q);
+        parametersTypeList.append(_graphInfo[_currentStep][i].available);
     }
 
     QVariant parametersType(parametersTypeList);

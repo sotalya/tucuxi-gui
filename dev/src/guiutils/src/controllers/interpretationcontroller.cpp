@@ -908,21 +908,21 @@ void InterpretationController::resetReqState() {
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(root, "resetReqState"));
 }
 
-QVariant InterpretationController::getGraphDrugData() {
-    if (!_interpretation) {return QVariant::fromValue(false);}
-    if (!_interpretation->getDrugResponseAnalysis()) {return QVariant::fromValue(false);}
-    ezechiel::core::DrugModel *drug = _interpretation->getDrugResponseAnalysis()->getDrugModel();
-    if (drug) {
-        QString desc;
-        desc += "Drug name: " + drug->getName()->value() + "|| ";
-        desc += "ATC: " + drug->getActiveSubstance()->getAtc().at(0) + "|| ";
-        if (!drug->getDescriptionsTranslationMap()->isEmpty())
-            desc += "Description: " + drug->getDescriptions() + "||";
-        return QVariant::fromValue(desc);
-        _chartDataController->dosageUpdated(shouldPercentilesBeComputed);
-    }
-    return QVariant::fromValue(false);
-}
+//QVariant InterpretationController::getGraphDrugData() {
+//    if (!_interpretation) {return QVariant::fromValue(false);}
+//    if (!_interpretation->getDrugResponseAnalysis()) {return QVariant::fromValue(false);}
+//    ezechiel::core::DrugModel *drug = _interpretation->getDrugResponseAnalysis()->getDrugModel();
+//    if (drug) {
+//        QString desc;
+//        desc += "Drug name: " + drug->getName()->value() + "|| ";
+//        desc += "ATC: " + drug->getActiveSubstance()->getAtc().at(0) + "|| ";
+//        if (!drug->getDescriptionsTranslationMap()->isEmpty())
+//            desc += "Description: " + drug->getDescriptions() + "||";
+//        return QVariant::fromValue(desc);
+//        _chartDataController->dosageUpdated(shouldPercentilesBeComputed);
+//    }
+//    return QVariant::fromValue(false);
+//}
 
 
 bool InterpretationController::exportReport(Report *report)

@@ -246,7 +246,7 @@ public slots:
 
     void publishReport(QImage);
     void resetReqState();
-    QVariant getGraphDrugData();
+//    QVariant getGraphDrugData();
     void setReportTabShow(QVariant);
 
     void currentTabChanged(int index);

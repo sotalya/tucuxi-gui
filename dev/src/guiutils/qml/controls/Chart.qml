@@ -80,7 +80,7 @@ Canvas {
 
     property var revcolors: [];
     property string nographtext: "Welcome to Tucuxi! Graphs of predicted concentrations will be shown here.";
-    property var nographdrugtext: interpretationController.getGraphDrugData();
+//    property var nographdrugtext: interpretationController.getGraphDrugData();
 
     property real timestart: Date.now();
 
@@ -573,5 +573,54 @@ if (times.length > 0) {
             Trails.loop();
         }
     }
+
+//    Text {
+//        visible: false
+//        id: qPopPredText
+//    }
+
+//    Text {
+//        visible: false
+//        id: qPopPercText
+//    }
+//    Text {
+//        visible: false
+//        id: qAprPredText
+//    }
+
+//    Text {
+//        visible: false
+//        id: qAprPercText
+//    }
+
+//    Text {
+//        visible: false
+//        id: qApoPredText
+//    }
+
+//    Text {
+//        visible: false
+//        id: qApoPercText
+//    }
+
+//    Text {
+//        visible: false
+//        id: qMeasText
+//    }
+
+//    Text {
+//        visible: false
+//        id: qPossAdjText
+//    }
+
+//    Text {
+//        visible: false
+//        id: qSelAdjText
+//    }
+
+//    Text {
+//        visible: false
+//        id: qTarText
+//    }
 
 }

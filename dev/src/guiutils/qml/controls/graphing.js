@@ -156,16 +156,16 @@ function step()
     drawNonPlotArea(ctx, colors, pop);
 
     //draw descriptions
-    if (!graphInformationSelection.presentPopulationPrediction &&
-        !graphInformationSelection.presentAprioriPrediction &&
-        !graphInformationSelection.presentAposterioriPrediction) {
-        if (nographdrugtext) {
-            drawSoftwareDescription(ctx, nographdrugtext);
-        }
-        else {
-            drawSoftwareDescription(ctx, nographtext);
-        }
-    }
+//    if (!graphInformationSelection.presentPopulationPrediction &&
+//        !graphInformationSelection.presentAprioriPrediction &&
+//        !graphInformationSelection.presentAposterioriPrediction) {
+//        if (nographdrugtext) {
+//            drawSoftwareDescription(ctx, nographdrugtext);
+//        }
+//        else {
+//            drawSoftwareDescription(ctx, nographtext);
+//        }
+//    }
 }
 
 function checkAndDisplayDomain(ctx, pred)
@@ -290,7 +290,7 @@ function drawNonPlotArea(ctx, colors, index)
     drawAxisTicks(ctx);
     drawAxisLabels(ctx);
     //Draw the labels
-//    drawLegends(ctx, colors);
+    drawLegends(ctx, colors);
 }
 
 function drawSoftwareDescription(ctx, text)
@@ -1028,7 +1028,6 @@ function drawLegends(ctx, colors)
     var internalSpacing = 5;
     var externalSpacing = 10;
 
-    var cbSize = 16;
     var colorSize = 10;
     var boxHeight = 20;
 
@@ -1046,32 +1045,27 @@ function drawLegends(ctx, colors)
     var adjTabShowApr = graphInformationSelection.presentAposterioriPrediction && hasPatientVariates && !hasMeasures;
 
 
-    popPCB.visible = false
-    popPCB.checked = graphInformationSelection.displayPopulationPrediction
-    popPerCB.visible = false
-    popPerCB.checked = graphInformationSelection.displayPopulationPercentiles
-    aprPCB.visible = false
-    aprPCB.checked = graphInformationSelection.displayAprioriPrediction
-    aprPerCB.visible = false
-    aprPerCB.checked = graphInformationSelection.displayAprioriPercentiles
-    apoPCB.visible = false
-    apoPCB.checked = graphInformationSelection.displayAposterioriPrediction
-    apoPerCB.visible = false
-    apoPerCB.checked = graphInformationSelection.displayAposterioriPercentiles
-    revCB.visible = false
-    revCB.checked = graphInformationSelection.displayPossibleAdjustments
-    adjCB.visible = false
-    adjCB.checked = graphInformationSelection.displaySelectedAdjustment
+//    qPopPredText.visible = graphInformationSelection.presentPopulationPrediction
+//    qPopPercText.visible = graphInformationSelection.presentPopulationPercentiles
+//    qAprPredText.visible = graphInformationSelection.presentAprioriPrediction
+//    qAprPercText.visible = graphInformationSelection.presentAprioriPercentiles
+//    qApoPredText.visible = graphInformationSelection.presentAposterioriPrediction
+//    qApoPercText.visible = graphInformationSelection.presentAposterioriPercentiles
+//    qMeasText.visible = graphInformationSelection.presentMeasures
+//    qPossAdjText.visible = graphInformationSelection.presentPossibleAdjustments
+//    qSelAdjText.visible = graphInformationSelection.presentSelectedAdjustment
+//    qTarText.visible = graphInformationSelection.presentTargets
+
 
     if (popP) {
         if (popP.predictive.predictionData.isValid) {
             if (graphInformationSelection.presentPopulationPrediction || adjTabShowPop) {
-                legends.push( {text: populationText, color: colors[1], cb: popPCB} );
+                legends.push( {text: populationText, color: colors[1]} );
                 legendsWidth.push(ctx.measureText(populationText).width);
                 //legendsWidth.push(ctx.measureText(popPCB.text).width);
             }
             if (popercsP.isValid && graphInformationSelection.presentPopulationPercentiles || adjTabShowPop) {
-                legends.push( {text: popPercText, color: colors[7], cb: popPerCB} );
+                legends.push( {text: popPercText, color: colors[7]} );
                 legendsWidth.push(ctx.measureText(popPercText).width);
             }
         }
@@ -1079,11 +1073,11 @@ function drawLegends(ctx, colors)
     if (aprP) {
         if (aprP.predictive.predictionData.isValid) {
             if (graphInformationSelection.presentAprioriPrediction || adjTabShowApr) {
-                legends.push( {text: aprioriText, color: colors[2], cb: aprPCB} );
+                legends.push( {text: aprioriText, color: colors[2]} );
                 legendsWidth.push(ctx.measureText(aprioriText).width);
             }
             if (aprpercsP.isValid && graphInformationSelection.presentAprioriPercentiles || adjTabShowApr) {
-                legends.push( {text: aprPercText, color: colors[8], cb: aprPerCB} );
+                legends.push( {text: aprPercText, color: colors[8]} );
                 legendsWidth.push(ctx.measureText(aprPercText).width);
             }
         }
@@ -1091,30 +1085,30 @@ function drawLegends(ctx, colors)
     if (apoP) {
         if (apoP.predictive.predictionData.isValid) {
             if (graphInformationSelection.presentAposterioriPrediction) {
-                legends.push( {text: aposterioriText, color: colors[4], cb: apoPCB} );
+                legends.push( {text: aposterioriText, color: colors[4]} );
                 legendsWidth.push(ctx.measureText(aposterioriText).width);
             }
             if (apopercsP.isValid && graphInformationSelection.presentAposterioriPercentiles) {
-                legends.push( {text: apoPercText, color: colors[6], cb: apoPerCB} );
+                legends.push( {text: apoPercText, color: colors[6]} );
                 legendsWidth.push(ctx.measureText(apoPercText).width);
             }
         }
     }
     if (revP) {
         if (revP.isValid && graphInformationSelection.presentPossibleAdjustments) {
-            legends.push( {text: reverseText, color: colors[5], cb: revCB});
+            legends.push( {text: reverseText, color: colors[5]});
             legendsWidth.push(ctx.measureText(reverseText).width);
         }
     }
     if (adjP) {
         if (adjP.predictive.predictionData.isValid && graphInformationSelection.presentSelectedAdjustment) {
-            legends.push( {text: adjustmentText, color: colors[9], cb: adjCB} );
+            legends.push( {text: adjustmentText, color: colors[9]} );
             legendsWidth.push(ctx.measureText(adjustmentText).width);
         }
     }
 
     for (var j = 0; j < legendsWidth.length; j++)
-        totalLength += legendsWidth[j] + internalSpacing * 4 + colorSize + cbSize;
+        totalLength += legendsWidth[j] + internalSpacing * 4 + colorSize;
     totalLength += externalSpacing * (legends.length - 1);
 
     var nLines = Math.ceil(totalLength / plotWidth);
@@ -1130,7 +1124,7 @@ function drawLegends(ctx, colors)
 
     //Draw legends
     for (var i = 0; i < legends.length; i++) {
-        var boxWidth  = legendsWidth[i] + internalSpacing * 4 + colorSize + cbSize;
+        var boxWidth  = legendsWidth[i] + internalSpacing * 4 + colorSize;
 
         ctx.fillStyle = legends[i].color;
 
@@ -1143,15 +1137,15 @@ function drawLegends(ctx, colors)
         ctx.stroke();
         ctx.fill();
 
-        if (legends[i].cb) {
-            legends[i].cb.visible = true
-            legends[i].cb.x = x + internalSpacing * 2 + colorSize
-            legends[i].cb.y = y + (boxHeight - cbSize) / 2
-        }
+//        if (legends[i].cb) {
+//            legends[i].cb.visible = true
+//            legends[i].cb.x = x + internalSpacing * 2 + colorSize
+//            legends[i].cb.y = y + (boxHeight - cbSize) / 2
+//        }
 
         ctx.fillStyle = "black";
         ctx.beginPath();
-        ctx.fillText(legends[i].text, x + internalSpacing * 3 + cbSize + colorSize, y + (boxHeight + colorSize) / 2);
+        ctx.fillText(legends[i].text, x + internalSpacing * 3 + colorSize, y + (boxHeight + colorSize) / 2);
 
         x += boxWidth + externalSpacing;
         nLegendsInLine++;

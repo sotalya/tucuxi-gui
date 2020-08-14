@@ -1045,18 +1045,6 @@ function drawLegends(ctx, colors)
     var adjTabShowApr = graphInformationSelection.presentAposterioriPrediction && hasPatientVariates && !hasMeasures;
 
 
-//    qPopPredText.visible = graphInformationSelection.presentPopulationPrediction
-//    qPopPercText.visible = graphInformationSelection.presentPopulationPercentiles
-//    qAprPredText.visible = graphInformationSelection.presentAprioriPrediction
-//    qAprPercText.visible = graphInformationSelection.presentAprioriPercentiles
-//    qApoPredText.visible = graphInformationSelection.presentAposterioriPrediction
-//    qApoPercText.visible = graphInformationSelection.presentAposterioriPercentiles
-//    qMeasText.visible = graphInformationSelection.presentMeasures
-//    qPossAdjText.visible = graphInformationSelection.presentPossibleAdjustments
-//    qSelAdjText.visible = graphInformationSelection.presentSelectedAdjustment
-//    qTarText.visible = graphInformationSelection.presentTargets
-
-
     if (popP) {
         if (popP.predictive.predictionData.isValid) {
             if (graphInformationSelection.presentPopulationPrediction || adjTabShowPop) {

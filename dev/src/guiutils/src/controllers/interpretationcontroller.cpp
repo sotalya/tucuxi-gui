@@ -229,7 +229,7 @@ void InterpretationController::setNewInterpretation(Interpretation *interpretati
 
     predictionspec = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionSpec>(REPO, this);
     std::vector<double> _percv;
-    _percv.insert(_percv.begin(), {5, 25, 75, 95});
+    _percv.insert(_percv.begin(), {5, 10, 25, 50, 75, 90, 95});
     predictionspec->setPercentileList(_percv);
     predictionspec->setNbPoints(250);
 
@@ -921,6 +921,16 @@ void InterpretationController::resetReqState() {
 //        return QVariant::fromValue(desc);
 //        _chartDataController->dosageUpdated(shouldPercentilesBeComputed);
 //    }
+//    qPopPredText.visible = graphInformationSelection.presentPopulationPrediction
+//    qPopPercText.visible = graphInformationSelection.presentPopulationPercentiles
+//    qAprPredText.visible = graphInformationSelection.presentAprioriPrediction
+//    qAprPercText.visible = graphInformationSelection.presentAprioriPercentiles
+//    qApoPredText.visible = graphInformationSelection.presentAposterioriPrediction
+//    qApoPercText.visible = graphInformationSelection.presentAposterioriPercentiles
+//    qMeasText.visible = graphInformationSelection.presentMeasures
+//    qPossAdjText.visible = graphInformationSelection.presentPossibleAdjustments
+//    qSelAdjText.visible = graphInformationSelection.presentSelectedAdjustment
+//    qTarText.visible = graphInformationSelection.presentTargets
 //    return QVariant::fromValue(false);
 //}
 

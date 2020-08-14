@@ -18,7 +18,7 @@ function step()
     //dont draw any curves if we cant even draw the population curves
     if (popP) {
         if (popP.predictive.predictionData.isValid) {
-            if ((graphInformationSelection.presentPopulationPercentiles || adjTabShowPop) && graphInformationSelection.displayPopulationPercentiles) {
+            if (graphInformationSelection.presentPopulationPercentiles || adjTabShowPop) {
                 if (popercsP.isValid) {
                     drawPercentiles(ctx, popercsP, colors[7], popcolors);
                 }
@@ -27,7 +27,7 @@ function step()
             //draw apriori if indicated in show
             if (aprP) {
                 if (aprP.predictive.predictionData.isValid) {
-                    if ((graphInformationSelection.presentAprioriPercentiles || adjTabShowApr) && graphInformationSelection.displayAprioriPercentiles) {
+                    if (graphInformationSelection.presentAprioriPercentiles || adjTabShowApr) {
                         if (aprpercsP.isValid) {
                             drawPercentiles(ctx, aprpercsP, colors[8], aprcolors);
                         }
@@ -38,7 +38,7 @@ function step()
             //draw aposteriori if indicated in show and we have measures
             if (apoP) {
                 if (apoP.predictive.predictionData.isValid) {
-                    if (graphInformationSelection.presentAposterioriPercentiles && hasMeasures && graphInformationSelection.displayAposterioriPercentiles) {
+                    if (graphInformationSelection.presentAposterioriPercentiles && hasMeasures) {
                         if (apopercsP.isValid) {
                             drawPercentiles(ctx, apopercsP, colors[6], apocolors);
                         }
@@ -251,15 +251,39 @@ function drawAdjustment(ctx, color)
 
 function drawPercentiles(ctx, pairs, color, colors)
 {
+    var displayedCurves = [];
+
     if (pairs.size() < 1) {return;}
-    colorRegionBtwCurves(ctx, pairs.objat(0).predictionData,  pairs.objat(3).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(3).Y, colors[2], getAdjustmentFilter(true));
-    ctx.restore();
-    ctx.save();
-    colorRegionBtwCurves(ctx, pairs.objat(1).predictionData,  pairs.objat(2).predictionData, pairs.objat(0).X, pairs.objat(1).Y, pairs.objat(2).Y, colors[1], getAdjustmentFilter(true));
-    ctx.restore();
-    ctx.save();
-    for (var i = 0; i < pairs.size(); ++i) {
-        drawCurve(ctx, pairs.objat(i).predictionData, color, getAdjustmentFilter(true));
+    if (graphInformationSelection.perc5_95){
+        colorRegionBtwCurves(ctx, pairs.objat(0).predictionData,  pairs.objat(6).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(6).Y, colors[3], getAdjustmentFilter(true));
+        ctx.restore();
+        ctx.save();
+        displayedCurves.push(pairs.objat(0))
+        displayedCurves.push(pairs.objat(6))
+    }
+
+    if (graphInformationSelection.perc10_90){
+        colorRegionBtwCurves(ctx, pairs.objat(1).predictionData,  pairs.objat(5).predictionData, pairs.objat(0).X, pairs.objat(1).Y, pairs.objat(5).Y, colors[2], getAdjustmentFilter(true));
+        ctx.restore();
+        ctx.save();
+        displayedCurves.push(pairs.objat(1))
+        displayedCurves.push(pairs.objat(5))
+    }
+
+    if (graphInformationSelection.perc25_75){
+        colorRegionBtwCurves(ctx, pairs.objat(2).predictionData,  pairs.objat(4).predictionData, pairs.objat(0).X, pairs.objat(2).Y, pairs.objat(4).Y, colors[1], getAdjustmentFilter(true));
+        ctx.restore();
+        ctx.save();
+        displayedCurves.push(pairs.objat(2))
+        displayedCurves.push(pairs.objat(4))
+    }
+
+    if (graphInformationSelection.perc50){
+        displayedCurves.push(pairs.objat(3))
+    }
+
+    for (var i = 0; i < displayedCurves.length; ++i) {
+        drawCurve(ctx, displayedCurves[i].predictionData, color, getAdjustmentFilter(true));
         ctx.restore();
         ctx.save();
     }
@@ -1017,13 +1041,21 @@ function drawLegends(ctx, colors)
 
     //Constants
     var populationText  = "Population";
-    var popPercText     = "Pop. percentiles (5-25-75-95)"
+    var popPercText     = "Pop. percentiles"
     var aprioriText     = "A priori";
     var aposterioriText = "A posteriori";
     var reverseText     = "Suggested adjustments";
     var adjustmentText  = "Adjustments";
-    var aprPercText		= "Apr. percentiles (5-25-75-95)"
-    var apoPercText		= "Apo. percentiles (5-25-75-95)"
+    var aprPercText		= "Apr. percentiles"
+    var apoPercText		= "Apo. percentiles"
+    var perc5Text       = "5"
+    var perc10Text      = "10"
+    var perc25Text      = "25"
+    var perc50Text      = "50"
+    var perc75Text      = "75"
+    var perc90Text      = "90"
+    var perc95Text      = "95"
+    var percTextTab     = [0,0,0,0,0,0,0];
 
     var internalSpacing = 5;
     var externalSpacing = 10;
@@ -1044,6 +1076,37 @@ function drawLegends(ctx, colors)
     var adjTabShowPop = graphInformationSelection.presentAposterioriPrediction && !hasPatientVariates && !hasMeasures;
     var adjTabShowApr = graphInformationSelection.presentAposterioriPrediction && hasPatientVariates && !hasMeasures;
 
+
+    if (graphInformationSelection.perc5_95){
+        percTextTab[0] = perc5Text + "-"
+        percTextTab[6] = "-" + perc95Text
+    }
+
+    if (graphInformationSelection.perc10_90){
+        percTextTab[1] = perc10Text + "-"
+        percTextTab[5] = "-" + perc90Text
+    }
+
+    if (graphInformationSelection.perc25_75){
+        percTextTab[2] = perc25Text + "-"
+        percTextTab[4] = "-" + perc75Text
+    }
+
+    if (graphInformationSelection.perc50){
+        percTextTab[3] = perc50Text
+    }
+
+    var percString = " (";
+
+    for (var i = 0; i < percTextTab.length; i++){
+        if (percTextTab[i] !== 0){
+            percString += percTextTab[i]
+        }
+    }
+
+    popPercText += percString + ")"
+    aprPercText += percString + ")"
+    apoPercText += percString + ")"
 
     if (popP) {
         if (popP.predictive.predictionData.isValid) {

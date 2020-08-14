@@ -191,10 +191,11 @@ Canvas {
         // For the next arrays:
         // [0] : Percentile line
         // [1] : Inner percentile fill
-        // [2] : Outer percentile fill
-        popcolors = ["#b2a283", "#D0C0A2", "#F2ECDE"];
-        aprcolors = ["#efac1c", "#F2C054", "#FEF2C0"];
-        apocolors = ["#fe6d6d", "#FE9A9A", "#FED4D4"];
+        // [2] : Between percentile fill
+        // [3] : Outer percentile fill
+        popcolors = ["#b2a283", "#D0C0A2", "#E1D6C0", "#F2ECDE"];
+        aprcolors = ["#efac1c", "#F2C054", "#F8D98A", "#FEF2C0"];
+        apocolors = ["#fe6d6d", "#FE9A9A", "#FEB7B7", "#FED4D4"];
         adjcolors = ["#323232", "#969696", "#646464"];
         revcolors = [];
 

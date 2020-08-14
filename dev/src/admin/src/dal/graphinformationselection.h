@@ -12,6 +12,15 @@ struct GraphInfo
     bool visible;
 };
 
+typedef enum{
+    Perc5_95 = 0,
+    Perc10_90,
+    Perc25_75,
+    Perc50
+}PercentileRangeEnum;
+
+Q_DECLARE_METATYPE(PercentileRangeEnum)
+
 
 class GraphInformationSelection : public ezechiel::core::Entity
 {
@@ -49,6 +58,11 @@ class GraphInformationSelection : public ezechiel::core::Entity
     AUTO_PROPERTY_DECL(bool, presentTargets, PresentTargets)
     AUTO_PROPERTY_DECL(bool, displayTargets, DisplayTargets)
 
+    AUTO_PROPERTY_DECL(bool, perc5_95, Perc5_95)
+    AUTO_PROPERTY_DECL(bool, perc10_90, Perc10_90)
+    AUTO_PROPERTY_DECL(bool, perc25_75, Perc25_75)
+    AUTO_PROPERTY_DECL(bool, perc50, Perc50)
+
 
     public:
         void setCurrentTab(StepType::Enum step);
@@ -57,6 +71,7 @@ class GraphInformationSelection : public ezechiel::core::Entity
         Q_INVOKABLE void setAvailable(CurveType::Enum curveType, bool isAvailable);
         Q_INVOKABLE void setAvailable(StepType::Enum stepType, CurveType::Enum curveType, bool isAvailable);
         Q_INVOKABLE void saveSettings();
+        Q_INVOKABLE void setPercentile(bool percentile, PercentileRangeEnum percentileRange);
 
     protected:
         Q_INVOKABLE GraphInformationSelection(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);

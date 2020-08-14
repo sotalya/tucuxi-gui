@@ -17,11 +17,11 @@ DialogBase {
 
     //Constants
     property var populationText:    "Population";
-    property var popPercText:       "Pop. percentiles (5-25-75-95)"
+    property var popPercText:       "Pop. percentiles"
     property var aprioriText:       "A priori";
-    property var aprPercText:       "Apr. percentiles (5-25-75-95)"
+    property var aprPercText:       "Apr. percentiles"
     property var aposterioriText:   "A posteriori";
-    property var apoPercText:       "Apo. percentiles (5-25-75-95)"
+    property var apoPercText:       "Apo. percentiles"
     property var reverseText:       "Suggested adjustments";
     property var adjustmentText:    "Adjustments";
     property var targetText:        "Target";
@@ -225,6 +225,50 @@ DialogBase {
                     TooltipArea {
                         text : ToolTips.chart.adjVisible
                     }
+                }
+            }
+        }
+        RowLayout {
+            spacing: 10
+            Layout.preferredWidth: parent
+            CheckBox {
+                id : perc5_95CB
+                checked: true
+                text:"5 - 95"
+                property var old: false
+                onClicked: {
+                    graphInformationSelection.setPercentile(old, 0)
+                    old = !old
+                }
+            }
+            CheckBox {
+                id : perc10_90CB
+                checked: true
+                text:"10 - 90"
+                property var old: false
+                onClicked: {
+                    graphInformationSelection.setPercentile(old, 1)
+                    old = !old
+                }
+            }
+            CheckBox {
+                id : perc25_75CB
+                checked: true
+                text:"25 - 75"
+                property var old: false
+                onClicked: {
+                    graphInformationSelection.setPercentile(old, 2)
+                    old = !old
+                }
+            }
+            CheckBox {
+                id : perc50CB
+                checked: true
+                text:"50"
+                property var old: false
+                onClicked: {
+                    graphInformationSelection.setPercentile(old, 3)
+                    old = !old
                 }
             }
         }

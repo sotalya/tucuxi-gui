@@ -1,3 +1,4 @@
+
 #include "graphinformationselection.h"
 #include "core/settings.h"
 
@@ -30,6 +31,11 @@ GraphInformationSelection::GraphInformationSelection(ezechiel::core::AbstractRep
 
     loadDisplayParametersSettings();
 
+    _perc50 = true;
+    _perc25_75 = true;
+    _perc10_90 = true;
+    _perc5_95 = true;
+
 }
 
 void GraphInformationSelection::loadDisplayParametersSettings(){
@@ -48,9 +54,7 @@ void GraphInformationSelection::loadDisplayParametersSettings(){
             }
             curveIndex = 0;
         }
-
     }
-
 }
 
 void GraphInformationSelection::setCurrentTab(StepType::Enum step)
@@ -105,7 +109,6 @@ void GraphInformationSelection::initStep(StepType::Enum stepType, bool curveInfo
 void GraphInformationSelection::saveSettings(){
 
     QString currentTab = QString::fromStdString(std::to_string(_currentStep));
-
     QList<QVariant> parametersTypeList;
 
     for (int i=CurveType::first; i<=CurveType::last; i++)
@@ -113,11 +116,33 @@ void GraphInformationSelection::saveSettings(){
         parametersTypeList.append(_graphInfo[_currentStep][i].available);
     }
 
-    QVariant parametersType(parametersTypeList);
-
-    _parametersSettingsMap[currentTab] = parametersType;
+    _parametersSettingsMap[currentTab] = parametersTypeList;
 
     SETTINGS.set(ezechiel::core::Module::GUI, "DisplayParameters" ,_parametersSettingsMap);
+}
+
+void GraphInformationSelection::setPercentile(bool percentile, PercentileRangeEnum percentileRange){
+
+    switch (percentileRange) {
+
+    case Perc50:
+        _perc50 = percentile;
+        break;
+
+    case Perc5_95:
+        _perc5_95 = percentile;
+        break;
+
+    case Perc10_90:
+        _perc10_90 = percentile;
+        break;
+
+    case Perc25_75:
+        _perc25_75 = percentile;
+        break;
+    }
+
+    updateProperties();
 }
 
 void GraphInformationSelection::updateProperties()
@@ -184,3 +209,8 @@ AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayMeasures, DisplayMeas
 
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentTargets, PresentTargets)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayTargets, DisplayTargets)
+
+AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc5_95, Perc5_95)
+AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc10_90, Perc10_90)
+AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc25_75, Perc25_75)
+AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc50, Perc50)

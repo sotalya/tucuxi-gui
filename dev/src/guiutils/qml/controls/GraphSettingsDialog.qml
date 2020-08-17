@@ -11,8 +11,8 @@ import ezechiel 1.0
 DialogBase {
     title: "Graph settings parameter"
     width: 600
-    height: 400
-
+    height: 450
+    minimumHeight: 450
     property var self
 
     //Constants
@@ -51,6 +51,8 @@ DialogBase {
     function init(){
 
         self = this
+
+        graphSettingsGB.title = graphInformationSelection.getCurrentTab() + " settings"
 
         popPCB.visible = true
         popPCB.checked = graphInformationSelection.presentPopulationPrediction
@@ -132,146 +134,161 @@ DialogBase {
             width: parent.parent.width - 100
             height: parent.parent.height - 50
 
-        RowLayout{
-            spacing: 10
+            GroupBox {
+                id: graphSettingsGB
+                width: parent.width
+                height: parent.height
+                RowLayout{
+                    height: parent.height
+                    ColumnLayout {
+                        width: parent.width
+                        height: parent.height
+                        CheckBox {
+                            id: popPCB
+                            text: populationText
+                            onClicked: { graphInformationSelection.setAvailable(0, this.checked) }
 
-            ColumnLayout {
-                spacing: 2
+                            TooltipArea {
+                                text : ToolTips.chart.popVisible
+                            }
+                        }
 
-                CheckBox {
-                    id: popPCB
-                    text: populationText
-                    onClicked: { graphInformationSelection.setAvailable(0, this.checked) }
+                        CheckBox {
+                            id: popPerCB
+                            text: popPercText
+                            onClicked: { graphInformationSelection.setAvailable(1, this.checked) }
+                            TooltipArea {
+                                text : ToolTips.chart.popPercVisible
+                            }
+                        }
 
-                    TooltipArea {
-                        text : ToolTips.chart.popVisible
+                        CheckBox {
+                            id: aprPCB
+                            text: aprioriText
+                            onClicked: { graphInformationSelection.setAvailable(2, this.checked) }
+                            TooltipArea {
+                                text : ToolTips.chart.aprioriVisible
+                            }
+                        }
+                        CheckBox {
+                            id: aprPerCB
+                            text: aprPercText
+                            onClicked: { graphInformationSelection.setAvailable(3, this.checked) }
+                            TooltipArea {
+                                text : ToolTips.chart.aprioriPercVisible
+                            }
+                        }
+                        CheckBox {
+                            id: apoPCB
+                            text: aposterioriText
+                            onClicked: { graphInformationSelection.setAvailable(4, this.checked) }
+                            TooltipArea {
+                                text : ToolTips.chart.apostVisible
+                            }
+                        }
                     }
-                }
 
-                CheckBox {
-                    id: popPerCB
-                    text: popPercText
-                    onClicked: { graphInformationSelection.setAvailable(1, this.checked) }
-                    TooltipArea {
-                        text : ToolTips.chart.popPercVisible
-                    }
-                }
+                    ColumnLayout {
 
-                CheckBox {
-                    id: aprPCB
-                    text: aprioriText
-                    onClicked: { graphInformationSelection.setAvailable(2, this.checked) }
-                    TooltipArea {
-                        text : ToolTips.chart.aprioriVisible
-                    }
-                }
-                CheckBox {
-                    id: aprPerCB
-                    text: aprPercText
-                    onClicked: { graphInformationSelection.setAvailable(3, this.checked) }
-                    TooltipArea {
-                        text : ToolTips.chart.aprioriPercVisible
-                    }
-                }
-                CheckBox {
-                    id: apoPCB
-                    text: aposterioriText
-                    onClicked: { graphInformationSelection.setAvailable(4, this.checked) }
-                    TooltipArea {
-                        text : ToolTips.chart.apostVisible
-                    }
-                }
-          }
-
-            ColumnLayout {
-                spacing: 2
-
-                CheckBox {
-                    id: apoPerCB
-                    text: apoPercText
-                    onClicked: { graphInformationSelection.setAvailable(5, this.checked) }
-                    TooltipArea {
-                        text : ToolTips.chart.apostPercVisible
-                    }
-                }
-                CheckBox {
-                    id: measureCB
-                    text: measureText
-                    onClicked: { graphInformationSelection.setAvailable(6, this.checked) }
-                    TooltipArea {
-                        text : ToolTips.chart.apostVisible
-                    }
-                }
-                CheckBox {
-                    id: targetCB
-                    text: targetText
-                    onClicked: { graphInformationSelection.setAvailable(7, this.checked) }
-                    TooltipArea {
-                        text : ToolTips.chart.apostVisible
-                    }
-                }
-                CheckBox {
-                    id: revCB
-                    text: reverseText
-                    onClicked: { graphInformationSelection.setAvailable(8, this.checked) }
-                    TooltipArea {
-                        text : ToolTips.chart.revVisible
-                    }
-                }
-                CheckBox {
-                    id: adjCB
-                    text: adjustmentText
-                    onClicked: { graphInformationSelection.setAvailable(9, this.checked) }
-                    TooltipArea {
-                        text : ToolTips.chart.adjVisible
+                        CheckBox {
+                            id: apoPerCB
+                            text: apoPercText
+                            onClicked: { graphInformationSelection.setAvailable(5, this.checked) }
+                            TooltipArea {
+                                text : ToolTips.chart.apostPercVisible
+                            }
+                        }
+                        CheckBox {
+                            id: measureCB
+                            text: measureText
+                            onClicked: { graphInformationSelection.setAvailable(6, this.checked) }
+                            TooltipArea {
+                                text : ToolTips.chart.apostVisible
+                            }
+                        }
+                        CheckBox {
+                            id: targetCB
+                            text: targetText
+                            onClicked: { graphInformationSelection.setAvailable(7, this.checked) }
+                            TooltipArea {
+                                text : ToolTips.chart.apostVisible
+                            }
+                        }
+                        CheckBox {
+                            id: revCB
+                            text: reverseText
+                            onClicked: { graphInformationSelection.setAvailable(8, this.checked) }
+                            TooltipArea {
+                                text : ToolTips.chart.revVisible
+                            }
+                        }
+                        CheckBox {
+                            id: adjCB
+                            text: adjustmentText
+                            onClicked: { graphInformationSelection.setAvailable(9, this.checked) }
+                            TooltipArea {
+                                text : ToolTips.chart.adjVisible
+                            }
+                        }
                     }
                 }
             }
-        }
-        RowLayout {
-            spacing: 10
-            Layout.preferredWidth: parent
-            CheckBox {
-                id : perc5_95CB
-                checked: true
-                text:"5 - 95"
-                property var old: false
-                onClicked: {
-                    graphInformationSelection.setPercentile(old, 0)
-                    old = !old
+            GroupBox {
+                id: generalGraphSettingsGB
+                title: qsTr("General Settings")
+
+                ColumnLayout{
+                    spacing: 1
+                    Text {
+                        id: name
+                        text: qsTr("Percentiles")
+                    }
+
+                    RowLayout {
+                        spacing: 2
+                        CheckBox {
+                            id : perc5_95CB
+                            checked: graphInformationSelection.perc5_95
+                            text:"5 - 95"
+                            property var old: !graphInformationSelection.perc5_95
+                            onClicked: {
+                                graphInformationSelection.setPercentile(old, 0)
+                                old = !old
+                            }
+                        }
+                        CheckBox {
+                            id : perc10_90CB
+                            checked: graphInformationSelection.perc10_90
+                            text:"10 - 90"
+                            property var old: !graphInformationSelection.perc10_90
+                            onClicked: {
+                                graphInformationSelection.setPercentile(old, 1)
+                                old = !old
+                            }
+                        }
+                        CheckBox {
+                            id : perc25_75CB
+                            checked: graphInformationSelection.perc25_75
+                            text:"25 - 75"
+                            property var old: !graphInformationSelection.perc25_75
+                            onClicked: {
+                                graphInformationSelection.setPercentile(old, 2)
+                                old = !old
+                            }
+                        }
+                        CheckBox {
+                            id : perc50CB
+                            checked: graphInformationSelection.perc50
+                            text:"50"
+                            property var old: !graphInformationSelection.perc50
+                            onClicked: {
+                                graphInformationSelection.setPercentile(old, 3)
+                                old = !old
+                            }
+                        }
+                    }
                 }
             }
-            CheckBox {
-                id : perc10_90CB
-                checked: true
-                text:"10 - 90"
-                property var old: false
-                onClicked: {
-                    graphInformationSelection.setPercentile(old, 1)
-                    old = !old
-                }
-            }
-            CheckBox {
-                id : perc25_75CB
-                checked: true
-                text:"25 - 75"
-                property var old: false
-                onClicked: {
-                    graphInformationSelection.setPercentile(old, 2)
-                    old = !old
-                }
-            }
-            CheckBox {
-                id : perc50CB
-                checked: true
-                text:"50"
-                property var old: false
-                onClicked: {
-                    graphInformationSelection.setPercentile(old, 3)
-                    old = !old
-                }
-            }
-        }
 
             RowLayout {
                 spacing: 10

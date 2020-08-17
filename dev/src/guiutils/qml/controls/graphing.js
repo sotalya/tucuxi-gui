@@ -1048,14 +1048,6 @@ function drawLegends(ctx, colors)
     var adjustmentText  = "Adjustments";
     var aprPercText		= "Apr. percentiles"
     var apoPercText		= "Apo. percentiles"
-    var perc5Text       = "5"
-    var perc10Text      = "10"
-    var perc25Text      = "25"
-    var perc50Text      = "50"
-    var perc75Text      = "75"
-    var perc90Text      = "90"
-    var perc95Text      = "95"
-    var percTextTab     = [0,0,0,0,0,0,0];
 
     var internalSpacing = 5;
     var externalSpacing = 10;
@@ -1076,37 +1068,9 @@ function drawLegends(ctx, colors)
     var adjTabShowPop = graphInformationSelection.presentAposterioriPrediction && !hasPatientVariates && !hasMeasures;
     var adjTabShowApr = graphInformationSelection.presentAposterioriPrediction && hasPatientVariates && !hasMeasures;
 
-
-    if (graphInformationSelection.perc5_95){
-        percTextTab[0] = perc5Text + "-"
-        percTextTab[6] = "-" + perc95Text
-    }
-
-    if (graphInformationSelection.perc10_90){
-        percTextTab[1] = perc10Text + "-"
-        percTextTab[5] = "-" + perc90Text
-    }
-
-    if (graphInformationSelection.perc25_75){
-        percTextTab[2] = perc25Text + "-"
-        percTextTab[4] = "-" + perc75Text
-    }
-
-    if (graphInformationSelection.perc50){
-        percTextTab[3] = perc50Text
-    }
-
-    var percString = " (";
-
-    for (var i = 0; i < percTextTab.length; i++){
-        if (percTextTab[i] !== 0){
-            percString += percTextTab[i]
-        }
-    }
-
-    popPercText += percString + ")"
-    aprPercText += percString + ")"
-    apoPercText += percString + ")"
+    apoPercText += findEnablePercentiles()
+    aprPercText += findEnablePercentiles()
+    popPercText += findEnablePercentiles()
 
     if (popP) {
         if (popP.predictive.predictionData.isValid) {
@@ -1283,4 +1247,55 @@ function publishImage()
 {
     //TODO done hardcode this size, figure it out
     grabToImage(function(result) {interpretationController.getImage(result.image)}, Qt.size(canvas.width,canvas.height));
+}
+
+function findEnablePercentiles()
+{
+    var perc5Text       = "5"
+    var perc10Text      = "10"
+    var perc25Text      = "25"
+    var perc50Text      = "50"
+    var perc75Text      = "75"
+    var perc90Text      = "90"
+    var perc95Text      = "95"
+    var percTextTab     = [0,0,0,0,0,0,0];
+
+
+    if (graphInformationSelection.perc5_95){
+        percTextTab[0] = perc5Text
+        percTextTab[6] = perc95Text
+    }
+
+    if (graphInformationSelection.perc10_90){
+        percTextTab[1] = perc10Text
+        percTextTab[5] = perc90Text
+    }
+
+    if (graphInformationSelection.perc25_75){
+        percTextTab[2] = perc25Text
+        percTextTab[4] = perc75Text
+    }
+
+    if (graphInformationSelection.perc50){
+        percTextTab[3] = perc50Text
+    }
+
+    var percString = " (";
+    var lastPercentile = false;
+
+    for (var i = 0; i < percTextTab.length; i++){
+        if (percTextTab[i] !== 0){
+            percString += percTextTab[i]
+            percString += "-"
+            lastPercentile = true;
+        }
+    }
+
+    if (!lastPercentile){
+        return ""
+    }
+
+    percString = percString.slice(0, -1) + ")";
+
+    return percString
 }

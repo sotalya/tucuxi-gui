@@ -31,15 +31,35 @@ GraphInformationSelection::GraphInformationSelection(ezechiel::core::AbstractRep
 
     loadDisplayParametersSettings();
 
-    _perc50 = true;
-    _perc25_75 = true;
-    _perc10_90 = true;
-    _perc5_95 = true;
+}
 
+QString GraphInformationSelection::getCurrentTab() const{
+
+    static std::map<StepType::Enum, std::string> stringMap =
+    {
+        {StepType::Enum::Patient, "Patient"},
+        {StepType::Enum::Drug, "Drug"},
+        {StepType::Enum::Dosage, "Dosage"},
+        {StepType::Enum::Covariate, "Covariate"},
+        {StepType::Enum::Measure, "Measure"},
+        {StepType::Enum::Target, "Target"},
+        {StepType::Enum::Adjustment, "Adjustement"},
+        {StepType::Enum::Validation, "Validation"},
+        {StepType::Enum::Report, "Report"}
+    };
+
+    auto it = stringMap.find(_currentStep);
+    if (it != stringMap.end()) {
+        return QString::fromStdString(it->second);
+    }
+
+    return 0; // SHOULDN'T GO HERE
 }
 
 void GraphInformationSelection::loadDisplayParametersSettings(){
-    QMap<QString, QVariant> displayParameters = SETTINGS.get(ezechiel::core::Module::GUI, "DisplayParameters").toMap();
+
+
+    QMap<QString, QVariant> displayParameters = SETTINGS.get(ezechiel::core::Module::GUI, "GraphDisplayParameters").toMap();
     QList<QVariant> listParametersValues;
     int curveIndex = 0;
 
@@ -54,6 +74,20 @@ void GraphInformationSelection::loadDisplayParametersSettings(){
             }
             curveIndex = 0;
         }
+    }
+
+    QList<QVariant> percentile = SETTINGS.get(ezechiel::core::Module::GUI, "GeneralDisplayParameters").toList();
+    if (percentile.length() != 0){
+        _perc50 = percentile[0].toBool();
+        _perc25_75 = percentile[1].toBool();
+        _perc10_90 = percentile[2].toBool();
+        _perc5_95 = percentile[3].toBool();
+    }
+    else{
+        _perc50 = true;
+        _perc25_75 = true;
+        _perc10_90 = true;
+        _perc5_95 = true;
     }
 }
 
@@ -110,6 +144,12 @@ void GraphInformationSelection::saveSettings(){
 
     QString currentTab = QString::fromStdString(std::to_string(_currentStep));
     QList<QVariant> parametersTypeList;
+    QList<QVariant> percentiles;
+
+    percentiles.append(_perc50);
+    percentiles.append(_perc25_75);
+    percentiles.append(_perc10_90);
+    percentiles.append(_perc5_95);
 
     for (int i=CurveType::first; i<=CurveType::last; i++)
     {
@@ -118,7 +158,10 @@ void GraphInformationSelection::saveSettings(){
 
     _parametersSettingsMap[currentTab] = parametersTypeList;
 
-    SETTINGS.set(ezechiel::core::Module::GUI, "DisplayParameters" ,_parametersSettingsMap);
+
+    SETTINGS.set(ezechiel::core::Module::GUI, "GraphDisplayParameters" ,_parametersSettingsMap);
+
+    SETTINGS.set(ezechiel::core::Module::GUI, "GeneralDisplayParameters" ,percentiles);
 }
 
 void GraphInformationSelection::setPercentile(bool percentile, PercentileRangeEnum percentileRange){

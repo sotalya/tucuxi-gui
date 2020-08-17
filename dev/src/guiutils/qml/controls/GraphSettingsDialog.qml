@@ -38,6 +38,10 @@ DialogBase {
     property var currentPossAdj;
     property var currentSelAdj;
 
+    property var currentPerc50;
+    property var currentPerc25_75;
+    property var currentPerc10_90;
+    property var currentPerc5_95;
 
     // Intercept Return to validate the dialog
     Shortcut {
@@ -93,6 +97,11 @@ DialogBase {
         adjCB.visible = true
         adjCB.checked = graphInformationSelection.presentSelectedAdjustment
         currentSelAdj = adjCB.checked
+
+        currentPerc50 = graphInformationSelection.perc50
+        currentPerc25_75 = graphInformationSelection.perc25_75
+        currentPerc10_90 = graphInformationSelection.perc10_90
+        currentPerc5_95 = graphInformationSelection.perc5_95
     }
 
     function restore(){
@@ -106,6 +115,11 @@ DialogBase {
         graphInformationSelection.setAvailable(2, currentAprPred)
         graphInformationSelection.setAvailable(1, currentPopPerc)
         graphInformationSelection.setAvailable(0, currentPopPred)
+
+        graphInformationSelection.perc50 = currentPerc50
+        graphInformationSelection.perc25_75 = currentPerc25_75
+        graphInformationSelection.perc10_90 = currentPerc10_90
+        graphInformationSelection.perc5_95 = currentPerc5_95
     }
 
 
@@ -146,7 +160,7 @@ DialogBase {
                         CheckBox {
                             id: popPCB
                             text: populationText
-                            onClicked: { graphInformationSelection.setAvailable(0, this.checked) }
+                            onCheckedChanged: { graphInformationSelection.setAvailable(0, this.checked) }
 
                             TooltipArea {
                                 text : ToolTips.chart.popVisible
@@ -236,6 +250,7 @@ DialogBase {
             GroupBox {
                 id: generalGraphSettingsGB
                 title: qsTr("General Settings")
+                width: graphSettingsGB.width
 
                 ColumnLayout{
                     spacing: 1
@@ -292,7 +307,7 @@ DialogBase {
 
             RowLayout {
                 spacing: 10
-                Layout.preferredWidth: parent
+                width: graphSettingsGB.width
                 Button {
                     id: acceptBtn
                     text: "Save and Quit"
@@ -303,6 +318,10 @@ DialogBase {
                         self.exit(true);
                     }
                 }
+                Rectangle{
+                    Layout.preferredWidth: 125
+                }
+
                 Button {
                     id: cancelBtn
                     text: "Cancel"

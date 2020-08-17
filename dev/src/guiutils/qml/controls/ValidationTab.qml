@@ -315,41 +315,41 @@ Rectangle {
             ]
         }
 
-        EntityTitle {
-            label.text: "Display selection"
-            id: displaySelectionListExpandHeader
-        }
+//        EntityTitle {
+//            label.text: "Display selection"
+//            id: displaySelectionListExpandHeader
+//        }
 
-        Rectangle {
-            Layout.fillWidth:  true
-            Layout.preferredHeight: 30
-            Layout.minimumHeight:   20
-            visible : displaySelectionListExpandHeader.expanded
-            RowLayout {
-                Layout.preferredHeight: 25
-                Layout.minimumHeight:   25
-                spacing: 2
+//        Rectangle {
+//            Layout.fillWidth:  true
+//            Layout.preferredHeight: 30
+//            Layout.minimumHeight:   20
+//            visible : displaySelectionListExpandHeader.expanded
+//            RowLayout {
+//                Layout.preferredHeight: 25
+//                Layout.minimumHeight:   25
+//                spacing: 2
 
-                CheckBox {
-                    text: "Measures"
-                    checked: true
-                    onCheckedChanged: {
-                        //show[mea] = checked ? 1 : 0;
-                        //toggleShow(mea, show[mea]);
-                        toggleShow(mea, checked ? 1 : 0);
-                    }
-                }
-                CheckBox {
-                    text: "Targets"
-                    checked: true
-                    onCheckedChanged: {
-                        //show[tar] = checked ? 1 : 0;
-                        //toggleShow(tar, show[tar]);
-                        toggleShow(tar, checked ? 1 : 0);
-                    }
-                }
-            }
-        }
+//                CheckBox {
+//                    text: "Measures"
+//                    checked: true
+//                    onCheckedChanged: {
+//                        //show[mea] = checked ? 1 : 0;
+//                        //toggleShow(mea, show[mea]);
+//                        toggleShow(mea, checked ? 1 : 0);
+//                    }
+//                }
+//                CheckBox {
+//                    text: "Targets"
+//                    checked: true
+//                    onCheckedChanged: {
+//                        //show[tar] = checked ? 1 : 0;
+//                        //toggleShow(tar, show[tar]);
+//                        toggleShow(tar, checked ? 1 : 0);
+//                    }
+//                }
+//            }
+//        }
 
         EntityTitle {
             label.text: "Validation"

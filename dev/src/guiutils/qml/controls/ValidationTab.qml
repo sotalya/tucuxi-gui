@@ -1,4 +1,4 @@
-import QtQuick 2.5
+    import QtQuick 2.5
 import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.0
 
@@ -514,6 +514,16 @@ Rectangle {
                                 ScrollBar.vertical: ScrollBar {}
                             }
                         }
+                        Button{
+                            spacing: 1
+                            Layout.preferredHeight: parent.height
+                            text: "Sentences"
+                            onClicked: {
+                                expectPalette.init(expectednessInput)
+                                expectPalette.open(true)
+                            }
+                        }
+
 
                     }
                     RowLayout {
@@ -565,6 +575,15 @@ Rectangle {
                             }
 
                         }
+                        Button{
+                            spacing: 1
+                            Layout.preferredHeight: parent.height
+                            text: "Sentences"
+                            onClicked: {
+                                suitablePalette.init(suitabilityInput)
+                                suitablePalette.open(true)
+                            }
+                        }
 
                     }
                     RowLayout {
@@ -612,6 +631,15 @@ Rectangle {
                                 }
                             }
                                 ScrollBar.vertical: ScrollBar {}
+                            }
+                        }
+                        Button{
+                            spacing: 1
+                            Layout.preferredHeight: parent.height
+                            text: "Sentences"
+                            onClicked: {
+                                predictionPalette.init(predictionInput)
+                                predictionPalette.open(true)
                             }
                         }
 
@@ -662,6 +690,15 @@ Rectangle {
                             }
                             ScrollBar.vertical: ScrollBar {}
                         }
+                        }
+                        Button{
+                            spacing: 1
+                            Layout.preferredHeight: parent.height
+                            text: "Sentences"
+                            onClicked: {
+                                remonitoringPalette.init(remonitoringInput)
+                                remonitoringPalette.open(true)
+                            }
                         }
 
                     }
@@ -722,6 +759,15 @@ Rectangle {
                             ScrollBar.vertical: ScrollBar {}
                         }
                         }
+                        Button{
+                            spacing: 1
+                            Layout.preferredHeight: parent.height
+                            text: "Sentences"
+                            onClicked: {
+                                warningPalette.init(warningInput, sentencePalettes.at(4))
+                                warningPalette.open(true)
+                            }
+                        }
                     }
 
                     TucuButton {
@@ -753,4 +799,25 @@ Rectangle {
             this.init();
         }
     }
+
+    ValidationSentencesDialog{
+        id: warningPalette
+    }
+
+    ValidationSentencesDialog{
+        id: remonitoringPalette
+    }
+
+    ValidationSentencesDialog{
+        id: predictionPalette
+    }
+
+    ValidationSentencesDialog{
+        id: suitablePalette
+    }
+
+    ValidationSentencesDialog{
+        id: expectPalette
+    }
+
 }

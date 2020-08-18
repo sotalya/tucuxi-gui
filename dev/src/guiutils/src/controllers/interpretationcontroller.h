@@ -17,6 +17,7 @@
 #include "guiutils/src/websocketclientwrapper.h"
 #include "guiutils/src/websockettransport.h"
 #include "guiutils/src/calculationcontroller.h"
+#include "core/sentencepalette.h"
 
 class CalculationController;
 class ChartDataController;
@@ -378,6 +379,9 @@ private:
     ezechiel::core::CorePatientList* _patients;
 
     GraphInformationSelection *_graphInformationSelection;
+
+    ezechiel::core::SentencesPalette *_sentencePalette;
+    ezechiel::core::SentencesPalettes *_sentencePalettes;
 
     FlowController* flowController;
     CalculationController* calculationController;

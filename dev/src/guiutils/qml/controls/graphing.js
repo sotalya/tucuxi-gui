@@ -1258,7 +1258,10 @@ function findEnablePercentiles()
     var perc75Text      = "75"
     var perc90Text      = "90"
     var perc95Text      = "95"
+
     var percTextTab     = [0,0,0,0,0,0,0];
+    var percString = " (";
+    var lastPercentile = false;
 
 
     if (graphInformationSelection.perc5_95){
@@ -1279,9 +1282,6 @@ function findEnablePercentiles()
     if (graphInformationSelection.perc50){
         percTextTab[3] = perc50Text
     }
-
-    var percString = " (";
-    var lastPercentile = false;
 
     for (var i = 0; i < percTextTab.length; i++){
         if (percTextTab[i] !== 0){

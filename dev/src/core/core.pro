@@ -49,6 +49,7 @@ HEADERS	+= \
     interfaces/plugin.h \
     interfaces/pluginfactory.h \
     interfaces/processinginterface.h \
+    sentencepalette.h \
     utils/convert.h \
     utils/dataset.h \
     utils/dbobjects.h \
@@ -118,6 +119,7 @@ SOURCES	+= \
     dal/corepatient.cpp \
     dal/entity.cpp \
     interfaces/optionable.cpp \
+    sentencepalette.cpp \
     utils/convert.cpp \
     utils/dataset.cpp \
     utils/dbobjects.cpp \

@@ -39,6 +39,8 @@
 #include "tucucore/drugdomainconstraintsevaluator.h"
 #include "tucucore/operation.h"
 
+#include "core/sentencepalette.h"
+
 void checkCovariate(const Tucuxi::Common::DateTime _startDate, const Tucuxi::Core::DrugTreatment &drugTreatment, const Tucuxi::Core::DrugModel &drugModel, ezechiel::core::PredictionResult& prediction, const Tucuxi::Common::DateTime _endDate)
 {
     Tucuxi::Core::DrugDomainConstraintsEvaluator drugDomainConstraintsEvaluator;

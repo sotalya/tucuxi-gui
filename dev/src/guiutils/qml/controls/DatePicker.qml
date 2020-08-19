@@ -14,7 +14,6 @@ Rectangle {
 //    implicitWidth: wholeDate.implicitWidth - 20
     implicitHeight:wholeDate.height
 
-
     width : 150
     Layout.minimumWidth: 150
 

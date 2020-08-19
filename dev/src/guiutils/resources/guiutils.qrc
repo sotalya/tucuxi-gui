@@ -36,6 +36,7 @@
         <file alias="remove_disabled.png">icons/buttons/remove_disabled.png</file>
         <file alias="remove_hover.png">icons/buttons/remove_hover.png</file>
         <file alias="edit.png">icons/buttons/edit.png</file>
+        <file alias="palette.png">icons/buttons/palette.png</file>
     </qresource>
     <qresource prefix="/icons/flow">
         <file alias="adjustments.png">icons/flow/adjustments.png</file>

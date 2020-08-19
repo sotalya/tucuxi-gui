@@ -15,5 +15,4 @@ ListView {
     snapMode: ListView.SnapToItem
     spacing: 2
     clip: true
-
 }

@@ -167,9 +167,11 @@ InterpretationController::InterpretationController(QObject *parent) :
 
     _sentencePalette = ezechiel::core::CoreFactory::createEntity<SentencesPalette>(REPO, this);
 
-//    for(int i=0; i<5; i++){
-//        _sentencePalettes->append(ezechiel::core::CoreFactory::createEntity<SentencesPalette>(REPO, this));
-//    }
+    _sentencePalettes = ezechiel::core::CoreFactory::createEntity<SentencesPalettes>(REPO, this);
+
+    for(int i=0; i<5; i++){
+        _sentencePalettes->append(ezechiel::core::CoreFactory::createEntity<SentencesPalette>(REPO, this));
+    }
 
 
 
@@ -345,7 +347,7 @@ void InterpretationController::bindModelsToRootContext(QQmlContext *rootContext)
 	rootContext->setContextProperty("graphInformationSelection", _graphInformationSelection);
     rootContext->setContextProperty("appMode", AppMode::getInstance());
     rootContext->setContextProperty("sentencePalette", _sentencePalette);
-//    rootContext->setContextProperty("sentencePalettes", _sentencePalettes);
+    rootContext->setContextProperty("sentencePalettes", _sentencePalettes);
 
 }
 

@@ -501,13 +501,6 @@ Rectangle {
                                     EntityToolTip {
                                         tooltipText: ToolTips.validationTab.expectedness
                                     }
-
-//                                    MouseArea {
-//                                        anchors.fill: parent
-//                                        onClicked: {
-//                                            validationDialog.exec()
-//                                        }
-//                                    }
                                 }
 
 
@@ -517,14 +510,38 @@ Rectangle {
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
-                            text: "Sentences"
+                            Layout.preferredWidth: 50
+                            text: "Save"
                             onClicked: {
-                                expectPalette.init(expectednessInput)
+                                expectPalette.initAddSentence(expectednessInput, 0)
                                 expectPalette.open(true)
                             }
                         }
+                        Button{
+                            spacing: 1
+                            Layout.preferredHeight: parent.height
+                            Layout.preferredWidth: 40
+                            id: expectPaletteBTN
+                            background: Rectangle{
+                                color: "white"
+                            }
 
-
+                            onClicked: {
+                                expectPalette.init(expectednessInput, 0)
+                                expectPalette.open(true)
+                            }
+                            Image {
+                                anchors.verticalCenter: expectPaletteBTN.verticalCenter
+                                anchors.right: expectPaletteBTN.right
+                                anchors.left: expectPaletteBTN.left
+                                width:  32
+                                height: 32
+                                source: "qrc:/icons/buttons/palette.png";
+                                antialiasing: true
+                                mipmap:       true
+                                fillMode: Image.PreserveAspectFit
+                            }
+                        }
                     }
                     RowLayout {
                         Layout.preferredHeight: analysis.rowHeight
@@ -578,13 +595,37 @@ Rectangle {
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
-                            text: "Sentences"
+                            Layout.preferredWidth: 50
+                            text: "Save"
                             onClicked: {
-                                suitablePalette.init(suitabilityInput)
+                                suitablePalette.initAddSentence(suitabilityInput, 1)
                                 suitablePalette.open(true)
                             }
                         }
-
+                        Button{
+                            spacing: 1
+                            Layout.preferredHeight: parent.height
+                            Layout.preferredWidth: 40
+                            id: suitablePaletteBTN
+                            background: Rectangle{
+                                color: "white"
+                            }
+                            onClicked: {
+                                suitablePalette.init(suitabilityInput, 1)
+                                suitablePalette.open(true)
+                            }
+                            Image {
+                                anchors.verticalCenter: suitablePaletteBTN.verticalCenter
+                                anchors.right: suitablePaletteBTN.right
+                                anchors.left: suitablePaletteBTN.left
+                                width:  32
+                                height: 32
+                                source: "qrc:/icons/buttons/palette.png";
+                                antialiasing: true
+                                mipmap:       true
+                                fillMode: Image.PreserveAspectFit
+                            }
+                        }
                     }
                     RowLayout {
                         Layout.preferredHeight: analysis.rowHeight
@@ -636,13 +677,37 @@ Rectangle {
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
-                            text: "Sentences"
+                            Layout.preferredWidth: 50
+                            text: "Save"
                             onClicked: {
-                                predictionPalette.init(predictionInput)
+                                predictionPalette.initAddSentence(predictionInput, 2)
                                 predictionPalette.open(true)
                             }
                         }
-
+                        Button{
+                            spacing: 1
+                            Layout.preferredHeight: parent.height
+                            Layout.preferredWidth: 40
+                            id: predictionPaletteBTN
+                            background: Rectangle{
+                                color: "white"
+                            }
+                            onClicked: {
+                                predictionPalette.init(predictionInput, 2)
+                                predictionPalette.open(true)
+                            }
+                            Image {
+                                anchors.verticalCenter: predictionPaletteBTN.verticalCenter
+                                anchors.right: predictionPaletteBTN.right
+                                anchors.left: predictionPaletteBTN.left
+                                width:  32
+                                height: 32
+                                source: "qrc:/icons/buttons/palette.png";
+                                antialiasing: true
+                                mipmap:       true
+                                fillMode: Image.PreserveAspectFit
+                            }
+                        }
                     }
                     RowLayout {
                         Layout.preferredHeight: analysis.rowHeight
@@ -694,13 +759,37 @@ Rectangle {
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
-                            text: "Sentences"
+                            Layout.preferredWidth: 50
+                            text: "Save"
                             onClicked: {
-                                remonitoringPalette.init(remonitoringInput)
+                                remonitoringPalette.initAddSentence(remonitoringInput, 3)
                                 remonitoringPalette.open(true)
                             }
                         }
-
+                        Button{
+                            spacing: 1
+                            Layout.preferredHeight: parent.height
+                            Layout.preferredWidth: 40
+                            background: Rectangle{
+                                color: "white"
+                            }
+                            id: remonitoringPaletteBTN
+                            onClicked: {
+                                remonitoringPalette.init(remonitoringInput, 3)
+                                remonitoringPalette.open(true)
+                            }
+                            Image {
+                                anchors.verticalCenter: remonitoringPaletteBTN.verticalCenter
+                                anchors.right: remonitoringPaletteBTN.right
+                                anchors.left: remonitoringPaletteBTN.left
+                                width:  32
+                                height: 32
+                                source: "qrc:/icons/buttons/palette.png";
+                                antialiasing: true
+                                mipmap:       true
+                                fillMode: Image.PreserveAspectFit
+                            }
+                        }
                     }
                     RowLayout {
                         Layout.preferredHeight: analysis.rowHeight
@@ -762,13 +851,41 @@ Rectangle {
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
-                            text: "Sentences"
+                            Layout.preferredWidth: 50
+                            text: "Save"
+
                             onClicked: {
-                                warningPalette.init(warningInput, sentencePalettes.at(4))
+                                warningPalette.initAddSentence(warningInput, 4)
                                 warningPalette.open(true)
                             }
                         }
+                        Button{
+                            spacing: 1
+                            Layout.preferredHeight: parent.height
+                            Layout.preferredWidth: 40
+                            id: warningPaletteBTN
+                            background: Rectangle{
+                                color: "white"
+                            }
+                            onClicked: {
+                                warningPalette.init(warningInput, 4)
+                                warningPalette.open(true)
+                            }
+                            Image {
+                                id: palette
+                                anchors.verticalCenter: warningPaletteBTN.verticalCenter
+                                anchors.right: warningPaletteBTN.right
+                                anchors.left: warningPaletteBTN.left
+                                width:  32
+                                height: 32
+                                source: "qrc:/icons/buttons/palette.png";
+                                antialiasing: true
+                                mipmap:       true
+                                fillMode: Image.PreserveAspectFit
+                            }
+                        }
                     }
+
 
                     TucuButton {
                         objectName: "validateInterpretation"

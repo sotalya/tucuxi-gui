@@ -310,7 +310,7 @@ DialogBase {
                 width: graphSettingsGB.width
                 Button {
                     id: acceptBtn
-                    text: "Save and Quit"
+                    text: "Save and Close"
                     objectName: "okDosage"
                     Layout.preferredWidth: 125
                     onClicked: function() {

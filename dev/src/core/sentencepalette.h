@@ -25,8 +25,12 @@ public:
     Q_INVOKABLE void addSentenceToSpecific(QString _sentence);
     Q_INVOKABLE void removeSentenceFromGlobal(int _listIndex);
     Q_INVOKABLE void removeSentenceFromSpecific(int _listIndex);
+    Q_INVOKABLE void saveSentencesSettings(int _index);
 
-    void update(void);
+
+private:
+    void loadSentencesSettings();
+
 };
 
 QML_POINTERLIST_CLASS_DECL(SentencesPalettes, SentencesPalette)

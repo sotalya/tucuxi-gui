@@ -380,7 +380,6 @@ private:
 
     GraphInformationSelection *_graphInformationSelection;
 
-    ezechiel::core::SentencesPalette *_sentencePalette;
     ezechiel::core::SentencesPalettes *_sentencePalettes;
 
     FlowController* flowController;

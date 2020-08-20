@@ -79,7 +79,6 @@ DialogBase {
                         Layout.fillHeight: true
                         columnlayout.spacing: 2
 
-
                         columnlayout.children: [
 
 
@@ -320,6 +319,7 @@ DialogBase {
                 text: "Close"
                 Layout.preferredWidth: 125
                 onClicked: function() {
+                    sentencePalettes.objat(objlist).saveSentencesSettings(objlist)
                     self.exit(false);
                 }
             }

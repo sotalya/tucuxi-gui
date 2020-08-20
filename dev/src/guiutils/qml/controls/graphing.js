@@ -586,7 +586,7 @@ function drawMeasures(ctx)
                 x: x,
                 y: y,
                 value: measures[i].concentration.dbvalue.toFixed(2) + " " + measures[i].concentration.unitstring,
-                time: formatDate(measures[i].moment),
+                time: formatDateInLine(measures[i].moment),
                 color: "red"
             }
         }
@@ -977,6 +977,10 @@ function drawAxisTicks(ctx)
         }
     }
 
+    var interdatesize = canvas.width / ticktimes.length
+    var oldDate = new Date()
+    var oldDateUsed = false
+
     for (i = 0; i < ticktimes.length; i++) {
         ctx.beginPath();
         ctx.moveTo(atime2screen(ticktimes[i]), bottomLeftY);
@@ -986,9 +990,36 @@ function drawAxisTicks(ctx)
         var date = new Date(ticktimes[i] * 1000);
         //        console.log(date.toString());
         ctx.translate(atime2screen(ticktimes[i]), bottomLeftY + tickSize * 1.5);
-        ctx.rotate(Math.PI/5);
-        ctx.fillText(formatDate(date), 0, 0);
-        ctx.rotate(-Math.PI/5);
+
+        if (interdatesize < 105){
+            ctx.rotate(Math.PI/5);
+            ctx.fillText(formatDate(date), 0, 0)
+            ctx.rotate(-Math.PI/5);
+        }
+        else{
+            ctx.fillText(formatHour(date), -14, 1)
+            if (i > 0){
+                if (oldDate.getDate() !== date.getDate()){
+                    if (i === ticktimes.length - 1){
+                        ctx.fillText(formatDay(date), -30, 15);
+                    }
+                    else if (!oldDateUsed){
+                        if (i === 1){
+                            ctx.fillText(formatDay(oldDate), -interdatesize, 15);
+                        }
+                        else{
+                            ctx.fillText(formatDay(date), -30, 15);
+                        }
+                    }
+                    oldDateUsed = false
+                }
+                else{
+                    ctx.fillText(formatDay(date), -(interdatesize / 2) - 14, 15);
+                    oldDateUsed = true
+                }
+            }
+        }
+        oldDate = date
         ctx.translate(-atime2screen(ticktimes[i]), -(bottomLeftY + tickSize * 1.5));
     }
 
@@ -1216,6 +1247,25 @@ function checkPointProximity(x1, y1, x2, y2, useScale)
     return Math.abs(x1 - x2) <= tolerance && Math.abs(y1 - y2) <= tolerance;
 }
 
+function formatHour(date)
+{
+    var hours = date.getHours();
+    var mins  = date.getMinutes();
+    var sTime = (hours < 10 ? "0" + hours : hours) + ":" + (mins < 10 ? "0" + mins : mins);
+
+    return sTime;
+}
+
+function formatDay(date)
+{
+    var day   = date.getDate();
+    var month = date.getMonth() + 1;
+    var year  = date.getFullYear();
+    var sDate = (day < 10 ? "0" + day : day) + "." + (month < 10 ? "0" + month : month) + "." + year;
+
+    return sDate;
+}
+
 function formatDate(date)
 {
     var hours = date.getHours();
@@ -1229,7 +1279,6 @@ function formatDate(date)
 
     return sTime + " " + sDate;
 }
-
 
 function zoom(nSteps)
 {

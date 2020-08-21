@@ -844,6 +844,7 @@ function drawAxisTicks(ctx)
     //ToDo: Ignore filtered curves in the calculation of max and min, and move it canvas properties
 
     var tickSize = 10;
+    var dateTickSize = 30;
     var tickSpacingy = 0.2;
 
     //Draw y-ticks
@@ -977,55 +978,125 @@ function drawAxisTicks(ctx)
         }
     }
 
-    var interdatesize = canvas.width / ticktimes.length
-    var oldDate = new Date()
+    var oldDate = new Date(ticktimes[0] * 1000);
     var oldDateUsed = false
+    var cumulInterDateSize = 0
+    var interdatesize = 0
+    var tabStartDate = []
+    var intervalSizeInMiddle = atime2screen(ticktimes[2]) - atime2screen(ticktimes[1])
+    var needToRotate = false
+    var hourHalfWidth = 14
+    var dateHalfWidth = 2 * hourHalfWidth
+
+    // smallestChangeOfDate is needed when the interval of width between ticks become very small but
+    // the date is equal (only different hours) --> Allow to avoid rotating display
+    var smallestChangeOfDate = proportionnalInterval(ticktimes, oldDate);
 
     for (i = 0; i < ticktimes.length; i++) {
+
+        //Draw the ticks on the axis
         ctx.beginPath();
         ctx.moveTo(atime2screen(ticktimes[i]), bottomLeftY);
         ctx.lineTo(atime2screen(ticktimes[i]), bottomLeftY + tickSize);
         ctx.stroke();
 
-        var date = new Date(ticktimes[i] * 1000);
-        //        console.log(date.toString());
         ctx.translate(atime2screen(ticktimes[i]), bottomLeftY + tickSize * 1.5);
 
-        if (interdatesize < 105){
+        var date = new Date(ticktimes[i] * 1000);
+
+        // Interval between two dates too small --> rotation
+        if (smallestChangeOfDate * intervalSizeInMiddle < ((2 * dateHalfWidth) + 10)){
             ctx.rotate(Math.PI/5);
             ctx.fillText(formatDate(date), 0, 0)
             ctx.rotate(-Math.PI/5);
+            needToRotate = true;
         }
         else{
-            ctx.fillText(formatHour(date), -14, 1)
+            ctx.fillText(formatHour(date), -hourHalfWidth, 1)
+
+            // Compute the exact position of the date on the axis
+            // The date can be used for multiple ticks for example
             if (i > 0){
+                interdatesize = i > 0 ? atime2screen(ticktimes[i]) - atime2screen(ticktimes[i - 1]) : atime2screen(ticktimes[i]);
+
                 if (oldDate.getDate() !== date.getDate()){
-                    if (i === ticktimes.length - 1){
-                        ctx.fillText(formatDay(date), -30, 15);
+                    if (oldDateUsed){
+                        ctx.fillText(formatDay(oldDate), - ((cumulInterDateSize + interdatesize) / 2) - dateHalfWidth, 30);
+                        cumulInterDateSize = 0
                     }
-                    else if (!oldDateUsed){
-                        if (i === 1){
-                            ctx.fillText(formatDay(oldDate), -interdatesize, 15);
-                        }
-                        else{
-                            ctx.fillText(formatDay(date), -30, 15);
-                        }
+                    else{
+                        ctx.fillText(formatDay(oldDate), - (interdatesize/2) - dateHalfWidth, 30);
                     }
                     oldDateUsed = false
                 }
                 else{
-                    ctx.fillText(formatDay(date), -(interdatesize / 2) - 14, 15);
+                    cumulInterDateSize += interdatesize
+                    if (i === ticktimes.length - 1){
+                        ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30);
+                    }
                     oldDateUsed = true
                 }
             }
+
+            tabStartDate[i] = oldDateUsed
+            oldDate = date
         }
-        oldDate = date
         ctx.translate(-atime2screen(ticktimes[i]), -(bottomLeftY + tickSize * 1.5));
+    }
+
+    // Increase length of ticks at the beggining and the end of a day
+    if (!needToRotate){
+        tickSizeAdjustement(ctx, tabStartDate, ticktimes, dateTickSize)
     }
 
     ctx.restore();
     ctx.save();
 }
+
+function proportionnalInterval(ticktimes, oldDate)
+{
+    // This function compute for each duration of a day the number of ticks.
+    // Only the smallest number is kept. This number is very usefull when the
+    // graph is enlarged, because it could be a lot of ticks (small interval)
+    // but with the same date --> Don't want to rotate the date
+    var smallestChangeOfDate = 0;
+    var changeOfDate = false;
+    for (var i = 1; i < ticktimes.length; i++) {
+        var date = new Date(ticktimes[i] * 1000);
+
+        if (oldDate.getDate() === date.getDate()){
+            if (changeOfDate){
+                smallestChangeOfDate = 0;
+                changeOfDate = false
+            }
+            smallestChangeOfDate++;
+        }
+        else{
+            if (changeOfDate){
+                smallestChangeOfDate = 0;
+            }
+            smallestChangeOfDate++;
+            changeOfDate = true;
+        }
+        oldDate = date
+    }
+    oldDate = new Date();
+
+    return smallestChangeOfDate;
+}
+
+function tickSizeAdjustement(ctx, tabStartDate, ticktimes, dateTickSize)
+{
+    for(var k = 0; k < ticktimes.length; k++){
+        if ((k === 0) || (k === ticktimes.length - 1) || !tabStartDate[k]){
+            ctx.beginPath();
+            ctx.moveTo(atime2screen(ticktimes[k]), bottomLeftY + 20);
+            ctx.lineTo(atime2screen(ticktimes[k]), bottomLeftY + 20 + dateTickSize);
+            ctx.stroke();
+        }
+    }
+}
+
 
 function chopTimeAxis(fxn, interval)
 {

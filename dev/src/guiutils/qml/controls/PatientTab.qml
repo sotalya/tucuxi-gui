@@ -636,6 +636,16 @@ Rectangle {
             ]
         }
 
+        Button{
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            text: "Analyst"
+            onClicked: {
+                analystDialog.init()
+                analystDialog.open(true)
+            }
+        }
+
         EntityBlockEnd {
             visible : physicianInChargeHeader.expanded && (patientRequired.model ? 1 : 0)
         }
@@ -643,5 +653,9 @@ Rectangle {
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    AnalystDialog{
+        id: analystDialog
     }
 }

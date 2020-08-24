@@ -55,6 +55,8 @@ public:
     void addEmail(Email* email) { _emails.append(email);}
     void addPhone(SharedPhone phone) { _phones.append(phone);}
 
+    QVariant toQVariant(void) const;
+
 signals:
     void phonesChanged(const QList<SharedPhone> &phones);
     void emailsChanged(const QList<Email*> &emails);

@@ -22,6 +22,8 @@ public:
     {
         return true;
     }
+
+    QVariant toQVariant(void) const;
 };
 
 Q_DECLARE_METATYPE(Location*)

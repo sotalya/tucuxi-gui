@@ -20,6 +20,17 @@ Location::Location(ezechiel::core::AbstractRepository *repository, const int &id
 {
 }
 
+QVariant Location::toQVariant() const{
+    QMap<QString, QVariant> locationMap;
+
+    locationMap["city"] = _city;
+    locationMap["postcode"] = _postcode;
+    locationMap["state"] = _state;
+    locationMap["country"] = _country;
+
+    return locationMap;
+}
+
 //QString Location::address() const
 //{
 //    return _address;

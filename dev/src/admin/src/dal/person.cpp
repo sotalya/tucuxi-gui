@@ -43,6 +43,18 @@ Person::Person(ezechiel::core::AbstractRepository *repository, const int &id, QO
     setEmails(QList<Email*>());
 }
 
+QVariant Person::toQVariant() const{
+
+    QMap<QString, QVariant> personMap;
+
+    personMap["name"] = _name;
+    personMap["firstname"] = _firstname;
+    personMap["location"] = _location->toQVariant();
+
+    return personMap;
+
+}
+
 void Person::setBirthdate(QDateTime date)
 {
     _birthday = date.date();

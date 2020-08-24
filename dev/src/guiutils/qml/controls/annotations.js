@@ -20,10 +20,10 @@ function step()
     }
 
     //    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    annotatePrediction(ctx, canvas.popP, canvas.pop, canvas.colors[1]);
+    annotatePrediction(ctx, canvas.popP, canvas.pop, canvas.popcolors[1]);
     annotatePrediction(ctx, aprP, apr, aprcolors[1]);
-    annotatePrediction(ctx, apoP, apo, colors[4]);
-    annotatePrediction(ctx, adjP, adj, colors[5]);
+    annotatePrediction(ctx, apoP, apo, apocolors[1]);
+    annotatePrediction(ctx, adjP, adj, adjcolors[1]);
 
     if (revP !== null && revP.isValid) {
         if (graphInformationSelection.displayPossibleAdjustments) {
@@ -343,6 +343,7 @@ function drawTooltips(ctx)
         if (canvas.currentPoints[i]) {
             var filter = Graphing.getAdjustmentFilter(canvas.currentPoints[i].predIndex !== adj);
             var t = canvas.currentPoints[i].x;
+            var a = canvas
             if (!filter || filter(t)) {
                 if (isCurveVisible(i) && mouseArea.tooltipX > topLeftX) {
                     x = Graphing.atime2screen(canvas.currentPoints[i].x);

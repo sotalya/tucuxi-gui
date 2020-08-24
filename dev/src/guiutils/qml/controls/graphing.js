@@ -253,7 +253,9 @@ function drawPercentiles(ctx, pairs, color, colors)
 {
     var displayedCurves = [];
 
-    if (pairs.size() < 1) {return;}
+
+    if (pairs.size() < 1) {
+        console.log("empty");return;}
     if (graphInformationSelection.perc5_95){
         colorRegionBtwCurves(ctx, pairs.objat(0).predictionData,  pairs.objat(6).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(6).Y, colors[3], getAdjustmentFilter(true));
         ctx.restore();
@@ -535,7 +537,7 @@ function drawCurve(ctx, predData, color, filter)
                 }
             }
 
-            if (x1 > topLeftX && x2 < canvas.bottomRightX) {
+            if (x2 > topLeftX && x1 < canvas.bottomRightX) {
                 if (!continueLine) {
                     ctx.moveTo(x1, y1);
                     continueLine = true;

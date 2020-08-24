@@ -164,24 +164,24 @@ void GraphInformationSelection::saveSettings(){
     SETTINGS.set(ezechiel::core::Module::GUI, "GeneralDisplayParameters" ,percentiles);
 }
 
-void GraphInformationSelection::setPercentile(bool percentile, PercentileRangeEnum percentileRange){
+void GraphInformationSelection::setPercentile(PercentileRangeEnum percentileRange, bool isAvailable){
 
     switch (percentileRange) {
 
     case Perc50:
-        _perc50 = percentile;
+        _perc50 = isAvailable;
         break;
 
     case Perc5_95:
-        _perc5_95 = percentile;
+        _perc5_95 = isAvailable;
         break;
 
     case Perc10_90:
-        _perc10_90 = percentile;
+        _perc10_90 = isAvailable;
         break;
 
     case Perc25_75:
-        _perc25_75 = percentile;
+        _perc25_75 = isAvailable;
         break;
     }
 

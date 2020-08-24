@@ -98,13 +98,28 @@ DialogBase {
         adjCB.checked = graphInformationSelection.presentSelectedAdjustment
         currentSelAdj = adjCB.checked
 
-        currentPerc50 = graphInformationSelection.perc50
-        currentPerc25_75 = graphInformationSelection.perc25_75
-        currentPerc10_90 = graphInformationSelection.perc10_90
-        currentPerc5_95 = graphInformationSelection.perc5_95
+
+        perc5_95CB.checked = graphInformationSelection.perc5_95
+        currentPerc5_95 = perc5_95CB.checked
+
+        perc10_90CB.checked = graphInformationSelection.perc10_90
+        currentPerc10_90 = perc10_90CB.checked
+
+        perc25_75CB.checked = graphInformationSelection.perc25_75
+        currentPerc25_75 = perc25_75CB.checked
+
+        perc50CB.checked = graphInformationSelection.perc50
+        currentPerc50 = perc50CB.checked
+
+
     }
 
     function restore(){
+        graphInformationSelection.setPercentile(3, currentPerc50)
+        graphInformationSelection.setPercentile(2, currentPerc25_75)
+        graphInformationSelection.setPercentile(1, currentPerc10_90)
+        graphInformationSelection.setPercentile(0, currentPerc5_95)
+
         graphInformationSelection.setAvailable(9, currentSelAdj)
         graphInformationSelection.setAvailable(8, currentPossAdj)
         graphInformationSelection.setAvailable(7, currentTargets)
@@ -115,11 +130,6 @@ DialogBase {
         graphInformationSelection.setAvailable(2, currentAprPred)
         graphInformationSelection.setAvailable(1, currentPopPerc)
         graphInformationSelection.setAvailable(0, currentPopPred)
-
-        graphInformationSelection.perc50 = currentPerc50
-        graphInformationSelection.perc25_75 = currentPerc25_75
-        graphInformationSelection.perc10_90 = currentPerc10_90
-        graphInformationSelection.perc5_95 = currentPerc5_95
     }
 
 
@@ -263,42 +273,30 @@ DialogBase {
                         spacing: 2
                         CheckBox {
                             id : perc5_95CB
-                            checked: graphInformationSelection.perc5_95
                             text:"5 - 95"
-                            property var old: !graphInformationSelection.perc5_95
                             onClicked: {
-                                graphInformationSelection.setPercentile(old, 0)
-                                old = !old
+                                graphInformationSelection.setPercentile(0, this.checked)
                             }
                         }
                         CheckBox {
                             id : perc10_90CB
-                            checked: graphInformationSelection.perc10_90
                             text:"10 - 90"
-                            property var old: !graphInformationSelection.perc10_90
                             onClicked: {
-                                graphInformationSelection.setPercentile(old, 1)
-                                old = !old
+                                graphInformationSelection.setPercentile(1, this.checked)
                             }
                         }
                         CheckBox {
                             id : perc25_75CB
-                            checked: graphInformationSelection.perc25_75
                             text:"25 - 75"
-                            property var old: !graphInformationSelection.perc25_75
                             onClicked: {
-                                graphInformationSelection.setPercentile(old, 2)
-                                old = !old
+                                graphInformationSelection.setPercentile(2, this.checked)
                             }
                         }
                         CheckBox {
                             id : perc50CB
-                            checked: graphInformationSelection.perc50
                             text:"50"
-                            property var old: !graphInformationSelection.perc50
                             onClicked: {
-                                graphInformationSelection.setPercentile(old, 3)
-                                old = !old
+                                graphInformationSelection.setPercentile(3, this.checked)
                             }
                         }
                     }

@@ -72,7 +72,7 @@ class GraphInformationSelection : public ezechiel::core::Entity
         Q_INVOKABLE void setAvailable(CurveType::Enum curveType, bool isAvailable);
         Q_INVOKABLE void setAvailable(StepType::Enum stepType, CurveType::Enum curveType, bool isAvailable);
         Q_INVOKABLE void saveSettings();
-        Q_INVOKABLE void setPercentile(bool percentile, PercentileRangeEnum percentileRange);
+        Q_INVOKABLE void setPercentile(PercentileRangeEnum percentileRange, bool isAvailable);
         Q_INVOKABLE QString getCurrentTab() const;
 
     protected:

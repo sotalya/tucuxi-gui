@@ -35,6 +35,8 @@ public:
         return true;
     }
 
+    QVariant toQVariant(void) const;
+
 private:
     QList<SharedPhone> _phones;
     QList<Email*> _emails;

@@ -1,6 +1,7 @@
 #include "admin/src/dal/practician.h"
 #include "core/interfaces/abstractrepository.h"
 #include "../adminfactory.h"
+#include "core/settings.h"
 
 Practician::Practician(ezechiel::core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
@@ -24,6 +25,24 @@ Practician::Practician(ezechiel::core::AbstractRepository *repository, const int
     institute(_ins);
     SharedPerson _pers = AdminFactory::createEntity<Person>(repository);
     person(_pers);
+}
+
+void Practician::saveToSettings(){
+
+    QMap<QString, QVariant> analystMap;
+
+    analystMap["title"] = _title;
+    analystMap["person"] = _person->toQVariant();
+//    analystMap["institute"] = _institute->toQVariant();
+
+
+    SETTINGS.set(ezechiel::core::Module::GUI, "practician" ,analystMap);
+}
+
+QVariant Practician::loadSettings(){
+    QMap<QString, QVariant> analystMap = SETTINGS.get(ezechiel::core::Module::GUI, "practician").toMap();
+
+    return analystMap;
 }
 
 PracticianSet::PracticianSet(ezechiel::core::AbstractRepository *repository, QObject *parent, const PracticianSet* &other)

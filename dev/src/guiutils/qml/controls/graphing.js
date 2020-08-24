@@ -1044,11 +1044,14 @@ function drawAxisTicks(ctx)
             oldDate = date
         }
         ctx.translate(-atime2screen(ticktimes[i]), -(bottomLeftY + tickSize * 1.5));
-    }
 
-    // Increase length of ticks at the beggining and the end of a day
-    if (!needToRotate){
-        tickSizeAdjustement(ctx, tabStartDate, ticktimes, dateTickSize)
+        // Increase length of ticks at the beggining and the end of a day
+        if (!needToRotate && date.getHours() === 0){
+            ctx.beginPath();
+            ctx.moveTo(atime2screen(ticktimes[i]), bottomLeftY + 20);
+            ctx.lineTo(atime2screen(ticktimes[i]), bottomLeftY + 20 + dateTickSize);
+            ctx.stroke();
+        }
     }
 
     ctx.restore();
@@ -1086,19 +1089,6 @@ function proportionnalInterval(ticktimes, oldDate)
 
     return smallestChangeOfDate;
 }
-
-function tickSizeAdjustement(ctx, tabStartDate, ticktimes, dateTickSize)
-{
-    for(var k = 0; k < ticktimes.length; k++){
-        if ((k === 0) || (k === ticktimes.length - 1) || !tabStartDate[k]){
-            ctx.beginPath();
-            ctx.moveTo(atime2screen(ticktimes[k]), bottomLeftY + 20);
-            ctx.lineTo(atime2screen(ticktimes[k]), bottomLeftY + 20 + dateTickSize);
-            ctx.stroke();
-        }
-    }
-}
-
 
 function chopTimeAxis(fxn, interval)
 {

@@ -917,12 +917,13 @@ function drawAxisTicks(ctx)
     var _6hours = false
     var _8hours = false
     var _12hours = false
-    var _25hours = false
+    var _24hours = false
+    var _1week = false
 
 
     //1 tick / 15 minutes
     if (days <= 0.1){
-        if (!chopTimeAxis2(function(d) {
+        if (!chopTimeAxis(function(d) {
             d.setMilliseconds(0);
             d.setSeconds(0);
             return d.setMinutes(Math.ceil(d.getMinutes() / 15) * 15 % 60);
@@ -934,7 +935,7 @@ function drawAxisTicks(ctx)
 
     //1 tick / 30 minutes
     if (_15minutes || (days <= 0.25 && days > 0.1)){
-        if (!chopTimeAxis2(function(d) {
+        if (!chopTimeAxis(function(d) {
             d.setMilliseconds(0);
             d.setSeconds(0);
             return d.setMinutes(Math.ceil(d.getMinutes() / 30) * 30 % 60);
@@ -946,7 +947,7 @@ function drawAxisTicks(ctx)
 
     //1 tick / hr
     if (_30minutes || (days <= 1 && days > 0.25)){
-        if (!chopTimeAxis2(function(d) {
+        if (!chopTimeAxis(function(d) {
             d.setMilliseconds(0);
             d.setSeconds(0);
             d.setMinutes(0);
@@ -959,7 +960,7 @@ function drawAxisTicks(ctx)
 
     //1 tick / 4 hr
     if (_1hour || (days > 1 && days <= 2)){
-        if (!chopTimeAxis2(function(d) {
+        if (!chopTimeAxis(function(d) {
             d.setMilliseconds(0);
             d.setSeconds(0);
             d.setMinutes(0);
@@ -972,7 +973,7 @@ function drawAxisTicks(ctx)
 
     //1 tick / 6 hr
     if (_4hours || (days > 2 && days <= 3)){
-        if (!chopTimeAxis2(function(d) {
+        if (!chopTimeAxis(function(d) {
             d.setMilliseconds(0);
             d.setSeconds(0);
             d.setMinutes(0);
@@ -985,7 +986,7 @@ function drawAxisTicks(ctx)
 
     //1 tick / 8 hr
     if (_6hours || (days > 3 && days <= 4)){
-        if (!chopTimeAxis2(function(d) {
+        if (!chopTimeAxis(function(d) {
             d.setMilliseconds(0);
             d.setSeconds(0);
             d.setMinutes(0);
@@ -999,7 +1000,7 @@ function drawAxisTicks(ctx)
 
     //1 tick / 12 hr
     if (_8hours || (days > 4 && days <= 7)){
-        if (!chopTimeAxis2(function(d) {
+        if (!chopTimeAxis(function(d) {
             d.setMilliseconds(0);
             d.setSeconds(0);
             d.setMinutes(0);
@@ -1011,27 +1012,27 @@ function drawAxisTicks(ctx)
     }
 
     //1 tick / day
-    if(_12hours || (days > 7 && days < 25)){
-        if (!chopTimeAxis2(function(d) {
+    if(_12hours || (days > 7 && days < 10)){
+        if (!chopTimeAxis(function(d) {
             d.setMilliseconds(0);
             d.setSeconds(0);
             d.setMinutes(0);
             return d.setHours(Math.ceil(d.getHours() / 24) * 24 % 24);
         }, 86400, ticktimes)){
-            _25hours = true;
+            _24hours = true;
             ticktimes = []
         }
    }
 
    //1 tick / week
-   if (_25hours || days >= 25){
-       if (!chopTimeAxis2(function(d) {
+   if (_24hours || days >= 10){
+       if (chopTimeAxis(function(d) {
            d.setMilliseconds(0);
            d.setSeconds(0);
            d.setMinutes(0);
            return d.setHours(Math.ceil(d.getHours() / 24) * 24 % 24);
        }, 604800, ticktimes)){
-           ticktimes = []
+           _1week = true
        }
    }
 
@@ -1080,9 +1081,16 @@ function drawAxisTicks(ctx)
                         ctx.fillText(formatDay(oldDate), - ((cumulInterDateSize + interdatesize) / 2) - dateHalfWidth, 30);
                         cumulInterDateSize = 0
                     }
+                    else if(_1week){
+                        if (i === ticktimes.length - 1){
+                            ctx.fillText(formatDay(date), - dateHalfWidth, 15);
+                        }
+                        ctx.fillText(formatDay(oldDate), - (interdatesize) - dateHalfWidth, 15);
+                    }
                     else{
                         ctx.fillText(formatDay(oldDate), - (interdatesize/2) - dateHalfWidth, 30);
                     }
+
                     oldDateUsed = false
                 }
                 else{
@@ -1093,13 +1101,17 @@ function drawAxisTicks(ctx)
                     oldDateUsed = true
                 }
             }
+            else if(_1week && ticktimes.length === 1){
+                ctx.fillText(formatDay(oldDate), - (interdatesize) - dateHalfWidth, 15);
+            }
+
             oldDate = date
         }
         ctx.translate(-atime2screen(ticktimes[i]), -(bottomLeftY + tickSize * 1.5));
 
         // Increase length of ticks at the beggining and the end of a day
         if (!needToRotate && !oldDateUsed){
-            if (i === 0 && date.getHours() !== 0){
+            if ((i === 0 && date.getHours() !== 0) || _1week){
 
             }
             else{
@@ -1149,14 +1161,14 @@ function proportionnalInterval(ticktimes, oldDate)
     return smallestChangeOfDate;
 }
 
-function chopTimeAxis2(fxn, interval, ticktimes)
+function chopTimeAxis(fxn, interval, ticktimes)
 {
     var early = ascreen2time(bottomLeftX) * 1000;
     var late = ascreen2time(canvas.width - bottomLeftX);
     var date = new Date(early);
     var tick = fxn(date);
 
-    var intervalMinimalAxisWidth = 65
+    var intervalMinimalAxisWidth = 66
     var cumul = bottomLeftX;
 
     tick = tick / 1000;
@@ -1171,23 +1183,6 @@ function chopTimeAxis2(fxn, interval, ticktimes)
         cumul += intervalMinimalAxisWidth
     }
     return true;
-}
-
-function chopTimeAxis(fxn, interval)
-{
-    var early = ascreen2time(bottomLeftX) * 1000;
-    var late = ascreen2time(canvas.width - bottomLeftX);
-    var date = new Date(early);
-    var tick = fxn(date);
-    tick = tick / 1000;
-    var ticktimes = [];
-    while (tick < late) {
-        if (tick * 1000 >= early) {
-            ticktimes.push(tick);
-        }
-        tick = tick + interval;
-    }
-    return ticktimes;
 }
 
 function drawAxisLabels(ctx)

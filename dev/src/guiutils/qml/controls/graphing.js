@@ -293,18 +293,45 @@ function drawPercentiles(ctx, pairs, color, colors)
 
 function drawPercentilesAdjustments(ctx, pairs, color, colors)
 {
-    if (pairs.size() < 1) {return;}
-    for (var i = 0; i < pairs.size(); ++i) {
-        drawCurve(ctx, pairs.objat(i).predictionData, color, false);
+    var displayedCurves = [];
+
+    if (pairs.size() < 1) {
+        console.log("empty");return;}
+    if (graphInformationSelection.perc5_95){
+        colorRegionBtwCurves(ctx, pairs.objat(0).predictionData,  pairs.objat(6).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(6).Y, colors[3], false);
+        ctx.restore();
+        ctx.save();
+        displayedCurves.push(pairs.objat(0))
+        displayedCurves.push(pairs.objat(6))
+    }
+
+    if (graphInformationSelection.perc10_90){
+        colorRegionBtwCurves(ctx, pairs.objat(1).predictionData,  pairs.objat(5).predictionData, pairs.objat(0).X, pairs.objat(1).Y, pairs.objat(5).Y, colors[2], false);
+        ctx.restore();
+        ctx.save();
+        displayedCurves.push(pairs.objat(1))
+        displayedCurves.push(pairs.objat(5))
+    }
+
+    if (graphInformationSelection.perc25_75){
+        colorRegionBtwCurves(ctx, pairs.objat(2).predictionData,  pairs.objat(4).predictionData, pairs.objat(0).X, pairs.objat(2).Y, pairs.objat(4).Y, colors[1], false);
+        ctx.restore();
+        ctx.save();
+        displayedCurves.push(pairs.objat(2))
+        displayedCurves.push(pairs.objat(4))
+    }
+
+    if (graphInformationSelection.perc50){
+        displayedCurves.push(pairs.objat(3))
+    }
+
+    for (var i = 0; i < displayedCurves.length; ++i) {
+        drawCurve(ctx, displayedCurves[i].predictionData, color, getAdjustmentFilter(true));
         ctx.restore();
         ctx.save();
     }
-    colorRegionBtwCurves(ctx, pairs.objat(0).predictionData,  pairs.objat(3).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(3).Y, colors[2], false);
-    ctx.restore();
-    ctx.save();
-    colorRegionBtwCurves(ctx, pairs.objat(1).predictionData,  pairs.objat(2).predictionData, pairs.objat(0).X, pairs.objat(1).Y, pairs.objat(2).Y, colors[1], false);
-    ctx.restore();
-    ctx.save();
+
+    return;
 }
 
 function drawNonPlotArea(ctx, colors, index)

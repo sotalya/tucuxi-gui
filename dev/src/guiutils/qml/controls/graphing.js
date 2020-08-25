@@ -253,9 +253,9 @@ function drawPercentiles(ctx, pairs, color, colors)
 {
     var displayedCurves = [];
 
-
-    if (pairs.size() < 1) {
-        console.log("empty");return;}
+    if (pairs.size() < 1){
+        return;
+    }
     if (graphInformationSelection.perc5_95){
         colorRegionBtwCurves(ctx, pairs.objat(0).predictionData,  pairs.objat(6).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(6).Y, colors[3], getAdjustmentFilter(true));
         ctx.restore();
@@ -906,86 +906,140 @@ function drawAxisTicks(ctx)
     var ticktimes = [];
     var earliest = ascreen2time(bottomLeftX);
     var latest = ascreen2time(canvas.width);
-    var days = (latest - earliest) / 86400.0;
+    var axisMaximumWidth = latest - earliest
+    var days = axisMaximumWidth / 86400.0;
     var date = new Date(earliest * 1000);
-    //    console.log("days: " + days);
-    //    console.log("earliest: " + earliest);
-    //    console.log("latest: " + latest);
-    //    console.log("date: " + date.toString());
-    if (days > 2 && days < 7) {
-        //1 tick / 12 hr
-        ticktimes = chopTimeAxis(function(d) {
+
+    var _15minutes = false
+    var _30minutes = false
+    var _1hour = false
+    var _4hours = false
+    var _6hours = false
+    var _8hours = false
+    var _12hours = false
+    var _25hours = false
+
+
+    //1 tick / 15 minutes
+    if (days <= 0.1){
+        if (!chopTimeAxis2(function(d) {
+            d.setMilliseconds(0);
+            d.setSeconds(0);
+            return d.setMinutes(Math.ceil(d.getMinutes() / 15) * 15 % 60);
+        }, 900, ticktimes)){
+            _15minutes = true;
+            ticktimes = []
+        }
+    }
+
+    //1 tick / 30 minutes
+    if (_15minutes || (days <= 0.25 && days > 0.1)){
+        if (!chopTimeAxis2(function(d) {
+            d.setMilliseconds(0);
+            d.setSeconds(0);
+            return d.setMinutes(Math.ceil(d.getMinutes() / 30) * 30 % 60);
+        }, 1800, ticktimes)){
+            _30minutes = true;
+            ticktimes = []
+            }
+    }
+
+    //1 tick / hr
+    if (_30minutes || (days <= 1 && days > 0.25)){
+        if (!chopTimeAxis2(function(d) {
+            d.setMilliseconds(0);
+            d.setSeconds(0);
+            d.setMinutes(0);
+            return d.setHours(Math.ceil(d.getHours()) % 24);
+        }, 3600, ticktimes)){
+            _1hour = true;
+            ticktimes = []
+            }
+    }
+
+    //1 tick / 4 hr
+    if (_1hour || (days > 1 && days <= 2)){
+        if (!chopTimeAxis2(function(d) {
+            d.setMilliseconds(0);
+            d.setSeconds(0);
+            d.setMinutes(0);
+            return d.setHours(Math.ceil(d.getHours() / 4) * 4 % 24);
+        }, 14400, ticktimes)){
+            _4hours = true;
+            ticktimes = []
+            }
+    }
+
+    //1 tick / 6 hr
+    if (_4hours || (days > 2 && days <= 3)){
+        if (!chopTimeAxis2(function(d) {
+            d.setMilliseconds(0);
+            d.setSeconds(0);
+            d.setMinutes(0);
+            return d.setHours(Math.ceil(d.getHours() / 6) * 6 % 24);
+        }, 21600, ticktimes)){
+            _6hours = true;
+            ticktimes = []
+            }
+    }
+
+    //1 tick / 8 hr
+    if (_6hours || (days > 3 && days <= 4)){
+        if (!chopTimeAxis2(function(d) {
+            d.setMilliseconds(0);
+            d.setSeconds(0);
+            d.setMinutes(0);
+            return d.setHours(Math.ceil(d.getHours() / 8) * 8 % 24);
+        }, 28800, ticktimes)){
+
+            _8hours = true
+            ticktimes = []
+        }
+    }
+
+    //1 tick / 12 hr
+    if (_8hours || (days > 4 && days <= 7)){
+        if (!chopTimeAxis2(function(d) {
             d.setMilliseconds(0);
             d.setSeconds(0);
             d.setMinutes(0);
             return d.setHours(Math.ceil(d.getHours() / 12) * 12 % 24);
-        }, 43200);
-    } else {
-        if (days < 2) {
-            if (days > 1) {
-                //1 tick / 4 hr
-                ticktimes = chopTimeAxis(function(d) {
-                    d.setMilliseconds(0);
-                    d.setSeconds(0);
-                    d.setMinutes(0);
-                    return d.setHours(Math.ceil(d.getHours() / 4) * 4 % 24);
-                }, 14400);
-            } else {
-                if (days > 0.25) {
-                    //1 tick / hr
-                    ticktimes = chopTimeAxis(function(d) {
-                        d.setMilliseconds(0);
-                        d.setSeconds(0);
-                        d.setMinutes(0);
-                        return d.setHours(Math.ceil(d.getHours()) % 24);
-                    }, 3600);
-                } else {
-                    if (days > 0.1) {
-                        //1 tick / every 30 minutes
-                        ticktimes = chopTimeAxis(function(d) {
-                            d.setMilliseconds(0);
-                            d.setSeconds(0);
-                            return d.setMinutes(Math.ceil(d.getMinutes() / 30) * 30 % 60);
-                        }, 1800);
-                    } else {
-                        //1 tick / every 15 minutes
-                        ticktimes = chopTimeAxis(function(d) {
-                            d.setMilliseconds(0);
-                            d.setSeconds(0);
-                            return d.setMinutes(Math.ceil(d.getMinutes() / 15) * 15 % 60);
-                        }, 900);
-                    }
-
-                }
-
-            }
-        } else {
-            //1 tick / every day
-            if (days < 25) {
-                ticktimes = chopTimeAxis(function(d) {
-                    d.setMilliseconds(0);
-                    d.setSeconds(0);
-                    d.setMinutes(0);
-                    return d.setHours(Math.ceil(d.getHours() / 24) * 24 % 24);
-                }, 86400);
-            } else {
-                //1 tick / every week
-                ticktimes = chopTimeAxis(function(d) {
-                    d.setMilliseconds(0);
-                    d.setSeconds(0);
-                    d.setMinutes(0);
-                    return d.setHours(Math.ceil(d.getHours() / 24) * 24 % 24);
-                }, 604800);
-            }
+        }, 43200, ticktimes)) {
+            _12hours = true
+            ticktimes = []
         }
     }
 
-    var oldDate = new Date(ticktimes[0] * 1000);
+    //1 tick / day
+    if(_12hours || (days > 7 && days < 25)){
+        if (!chopTimeAxis2(function(d) {
+            d.setMilliseconds(0);
+            d.setSeconds(0);
+            d.setMinutes(0);
+            return d.setHours(Math.ceil(d.getHours() / 24) * 24 % 24);
+        }, 86400, ticktimes)){
+            _25hours = true;
+            ticktimes = []
+        }
+   }
+
+   //1 tick / week
+   if (_25hours || days >= 25){
+       if (!chopTimeAxis2(function(d) {
+           d.setMilliseconds(0);
+           d.setSeconds(0);
+           d.setMinutes(0);
+           return d.setHours(Math.ceil(d.getHours() / 24) * 24 % 24);
+       }, 604800, ticktimes)){
+           ticktimes = []
+       }
+   }
+
+    var oldDate = new Date(ticktimes[0] * 1000)
+    var intervalSizeInMiddle = atime2screen(ticktimes[2]) - atime2screen(ticktimes[1])
     var oldDateUsed = false
     var cumulInterDateSize = 0
     var interdatesize = 0
-    var tabStartDate = []
-    var intervalSizeInMiddle = atime2screen(ticktimes[2]) - atime2screen(ticktimes[1])
     var needToRotate = false
     var hourHalfWidth = 14
     var dateHalfWidth = 2 * hourHalfWidth
@@ -1039,18 +1093,21 @@ function drawAxisTicks(ctx)
                     oldDateUsed = true
                 }
             }
-
-            tabStartDate[i] = oldDateUsed
             oldDate = date
         }
         ctx.translate(-atime2screen(ticktimes[i]), -(bottomLeftY + tickSize * 1.5));
 
         // Increase length of ticks at the beggining and the end of a day
-        if (!needToRotate && date.getHours() === 0){
-            ctx.beginPath();
-            ctx.moveTo(atime2screen(ticktimes[i]), bottomLeftY + 20);
-            ctx.lineTo(atime2screen(ticktimes[i]), bottomLeftY + 20 + dateTickSize);
-            ctx.stroke();
+        if (!needToRotate && !oldDateUsed){
+            if (i === 0 && date.getHours() !== 0){
+
+            }
+            else{
+                ctx.beginPath();
+                ctx.moveTo(atime2screen(ticktimes[i]), bottomLeftY + 20);
+                ctx.lineTo(atime2screen(ticktimes[i]), bottomLeftY + 20 + dateTickSize);
+                ctx.stroke();
+            }
         }
     }
 
@@ -1066,28 +1123,54 @@ function proportionnalInterval(ticktimes, oldDate)
     // but with the same date --> Don't want to rotate the date
     var smallestChangeOfDate = 0;
     var changeOfDate = false;
-    for (var i = 1; i < ticktimes.length; i++) {
-        var date = new Date(ticktimes[i] * 1000);
+    for (var i = 0; i < ticktimes.length; i++) {
+        if(i > 0){
+            var date = new Date(ticktimes[i] * 1000);
 
-        if (oldDate.getDate() === date.getDate()){
-            if (changeOfDate){
-                smallestChangeOfDate = 0;
-                changeOfDate = false
+            if (oldDate.getDate() === date.getDate()){
+                if (changeOfDate){
+                    smallestChangeOfDate = 0;
+                    changeOfDate = false
+                }
+                smallestChangeOfDate++;
             }
-            smallestChangeOfDate++;
-        }
-        else{
-            if (changeOfDate){
-                smallestChangeOfDate = 0;
+            else{
+                if (changeOfDate){
+                    smallestChangeOfDate = 0;
+                }
+                smallestChangeOfDate++;
+                changeOfDate = true;
             }
-            smallestChangeOfDate++;
-            changeOfDate = true;
+            oldDate = date
         }
-        oldDate = date
     }
     oldDate = new Date();
 
     return smallestChangeOfDate;
+}
+
+function chopTimeAxis2(fxn, interval, ticktimes)
+{
+    var early = ascreen2time(bottomLeftX) * 1000;
+    var late = ascreen2time(canvas.width - bottomLeftX);
+    var date = new Date(early);
+    var tick = fxn(date);
+
+    var intervalMinimalAxisWidth = 65
+    var cumul = bottomLeftX;
+
+    tick = tick / 1000;
+    while (tick < late) {
+        if (ascreen2time(cumul) > late){
+            return false;
+        }
+        else if (tick * 1000 >= early) {
+            ticktimes.push(tick);
+        }
+        tick = tick + interval;
+        cumul += intervalMinimalAxisWidth
+    }
+    return true;
 }
 
 function chopTimeAxis(fxn, interval)

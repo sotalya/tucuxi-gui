@@ -1064,17 +1064,16 @@ function drawAxisTicks(ctx)
    }
 
     var oldDate = new Date(ticktimes[0] * 1000)
-    var intervalSizeInMiddle = atime2screen(ticktimes[2]) - atime2screen(ticktimes[1])
     var oldDateUsed = false
     var cumulInterDateSize = 0
     var interdatesize = 0
-    var needToRotate = false
     var hourHalfWidth = 14
     var dateHalfWidth = 2 * hourHalfWidth
 
     // smallestChangeOfDate is needed when the interval of width between ticks become very small but
     // the date is equal (only different hours) --> Allow to avoid rotating display
-    var smallestChangeOfDate = proportionnalInterval(ticktimes, oldDate);
+//    var smallestChangeOfDate = proportionnalInterval(ticktimes, oldDate, intervalSizeInMiddle);
+//    intervalSizeInMiddle = intervalSizeInMiddle === 0 ? ((2 * dateHalfWidth) + 10) : intervalSizeInMiddle
 
     for (i = 0; i < ticktimes.length; i++) {
 
@@ -1088,56 +1087,48 @@ function drawAxisTicks(ctx)
 
         var date = new Date(ticktimes[i] * 1000);
 
-        // Interval between two dates too small --> rotation
-        if (smallestChangeOfDate * intervalSizeInMiddle < ((2 * dateHalfWidth) + 10)){
-            ctx.rotate(Math.PI/5);
-            ctx.fillText(formatDate(date), 0, 0)
-            ctx.rotate(-Math.PI/5);
-            needToRotate = true;
-        }
-        else{
-            ctx.fillText(formatHour(date), -hourHalfWidth, 1)
+        ctx.fillText(formatHour(date), -hourHalfWidth, 1)
 
-            // Compute the exact position of the date on the axis
-            // The date can be used for multiple ticks for example
-            if (i > 0){
-                interdatesize = i > 0 ? atime2screen(ticktimes[i]) - atime2screen(ticktimes[i - 1]) : atime2screen(ticktimes[i]);
+        // Compute the exact position of the date on the axis
+        // The date can be used for multiple ticks for example
+        if (i > 0){
+            interdatesize = i > 0 ? atime2screen(ticktimes[i]) - atime2screen(ticktimes[i - 1]) : atime2screen(ticktimes[i]);
 
-                if (oldDate.getDate() !== date.getDate()){
-                    if (oldDateUsed){
-                        ctx.fillText(formatDay(oldDate), - ((cumulInterDateSize + interdatesize) / 2) - dateHalfWidth, 30);
-                        cumulInterDateSize = 0
+            if (oldDate.getDate() !== date.getDate()){
+                if (oldDateUsed){
+                    ctx.fillText(formatDay(oldDate), - ((cumulInterDateSize + interdatesize) / 2) - dateHalfWidth, 30);
+                    cumulInterDateSize = 0
+                }
+                else if(_1week){
+                    if (i === ticktimes.length - 1){
+                        ctx.fillText(formatDay(date), - dateHalfWidth, 15);
                     }
-                    else if(_1week){
-                        if (i === ticktimes.length - 1){
-                            ctx.fillText(formatDay(date), - dateHalfWidth, 15);
-                        }
-                        ctx.fillText(formatDay(oldDate), - (interdatesize) - dateHalfWidth, 15);
-                    }
-                    else{
-                        ctx.fillText(formatDay(oldDate), - (interdatesize/2) - dateHalfWidth, 30);
-                    }
-
-                    oldDateUsed = false
+                    ctx.fillText(formatDay(oldDate), - (interdatesize) - dateHalfWidth, 15);
                 }
                 else{
-                    cumulInterDateSize += interdatesize
-                    if (i === ticktimes.length - 1){
-                        ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30);
-                    }
-                    oldDateUsed = true
+                    ctx.fillText(formatDay(oldDate), - (interdatesize/2) - dateHalfWidth, 30);
                 }
-            }
-            else if(_1week && ticktimes.length === 1){
-                ctx.fillText(formatDay(oldDate), - (interdatesize) - dateHalfWidth, 15);
-            }
 
-            oldDate = date
+                oldDateUsed = false
+            }
+            else{
+                cumulInterDateSize += interdatesize
+                if (i === ticktimes.length - 1){
+                    ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30);
+                }
+                oldDateUsed = true
+            }
         }
+        else if(_1week && ticktimes.length === 1){
+            ctx.fillText(formatDay(oldDate), - (interdatesize) - dateHalfWidth, 15);
+        }
+
+        oldDate = date
+
         ctx.translate(-atime2screen(ticktimes[i]), -(bottomLeftY + tickSize * 1.5));
 
         // Increase length of ticks at the beggining and the end of a day
-        if (!needToRotate && !oldDateUsed){
+        if (!oldDateUsed){
             if ((i === 0 && date.getHours() !== 0) || _1week){
 
             }
@@ -1154,7 +1145,7 @@ function drawAxisTicks(ctx)
     ctx.save();
 }
 
-function proportionnalInterval(ticktimes, oldDate)
+function proportionnalInterval(ticktimes, oldDate, intervalSizeInMiddle)
 {
     // This function compute for each duration of a day the number of ticks.
     // Only the smallest number is kept. This number is very usefull when the
@@ -1184,6 +1175,13 @@ function proportionnalInterval(ticktimes, oldDate)
         }
     }
     oldDate = new Date();
+
+    if (ticktimes.length === 1){
+        smallestChangeOfDate = 1;
+    }
+    else{
+        intervalSizeInMiddle = (atime2screen(ticktimes[ticktimes.length - 1]) - atime2screen(ticktimes[0])) / (ticktimes.length - 1)
+    }
 
     return smallestChangeOfDate;
 }

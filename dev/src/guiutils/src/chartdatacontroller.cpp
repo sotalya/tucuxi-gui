@@ -57,6 +57,8 @@ void ChartDataController::initiateUpdatePopPred()
 
 void ChartDataController::receiveResultsPopPred(ezechiel::core::PredictionResult* pred) {
     pred->setParent(chartData);
+    // Here we set the prediction result, and as a result, it erases the percentiles.
+    // It is a side effect that could be handled differently. There is also a memory leak here.
     chartData->setPopPred(pred);
 }
 

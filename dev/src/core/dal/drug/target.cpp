@@ -91,7 +91,6 @@ void Target::copyFrom(Target *other)
     _cmax->setValue(other->getCmax()->value());
     _cmax->setUnit(other->getCmax()->unit());
     _cbest->setValue(other->getCbest()->value());
-    std::cout << "Unit: " << qPrintable(other->getTmin()->unit().name()) << std::endl;
     _cbest->setUnit(other->getCbest()->unit());
     _tmin->setValue(other->getTmin()->value());
     _tmin->setUnit(other->getTmin()->unit());

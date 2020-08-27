@@ -929,151 +929,99 @@ function drawAxisTicks(ctx)
     }
 
     //Draw x-ticks
-    var tickSpacingx;
     var ticktimes = [];
     var earliest = ascreen2time(bottomLeftX);
     var latest = ascreen2time(canvas.width);
-    var axisMaximumWidth = latest - earliest
-    var days = axisMaximumWidth / 86400.0;
+    var axisMaximumWidth = latest - earliest;
     var date = new Date(earliest * 1000);
+    var hourHalfWidth = 14;
+    var dateHalfWidth = 2 * hourHalfWidth;
 
-    var _15minutes = false
-    var _30minutes = false
-    var _1hour = false
-    var _4hours = false
-    var _6hours = false
-    var _8hours = false
-    var _12hours = false
-    var _24hours = false
-    var _1week = false
 
+    var _1week = false;
+
+    var maximumTimeInterval = 0;
+    var timeIntervalDependingOnPrecision = 0;
+    var ticks = [];
+    var maximumTicks;
+    var oldDate;
 
     //1 tick / 15 minutes
-    if (days <= 0.1){
-        if (!chopTimeAxis(function(d) {
-            d.setMilliseconds(0);
-            d.setSeconds(0);
-            return d.setMinutes(Math.ceil(d.getMinutes() / 15) * 15 % 60);
-        }, 900, ticktimes)){
-            _15minutes = true;
-            ticktimes = []
-        }
-    }
+    timeIntervalDependingOnPrecision = chop(900, ticks, false, 15) // Maximum number of interval corresponding to precision (15 minutes)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 30 minutes
-    if (_15minutes || (days <= 0.25 && days > 0.1)){
-        if (!chopTimeAxis(function(d) {
-            d.setMilliseconds(0);
-            d.setSeconds(0);
-            return d.setMinutes(Math.ceil(d.getMinutes() / 30) * 30 % 60);
-        }, 1800, ticktimes)){
-            _30minutes = true;
-            ticktimes = []
-            }
-    }
+    ticks = []
+    timeIntervalDependingOnPrecision = chop(1800, ticks, false, 30)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / hr
-    if (_30minutes || (days <= 1 && days > 0.25)){
-        if (!chopTimeAxis(function(d) {
-            d.setMilliseconds(0);
-            d.setSeconds(0);
-            d.setMinutes(0);
-            return d.setHours(Math.ceil(d.getHours()) % 24);
-        }, 3600, ticktimes)){
-            _1hour = true;
-            ticktimes = []
-            }
-    }
+    ticks = []
+    timeIntervalDependingOnPrecision = chop(3600, ticks, false, 1)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 4 hr
-    if (_1hour || (days > 1 && days <= 2)){
-        if (!chopTimeAxis(function(d) {
-            d.setMilliseconds(0);
-            d.setSeconds(0);
-            d.setMinutes(0);
-            return d.setHours(Math.ceil(d.getHours() / 4) * 4 % 24);
-        }, 14400, ticktimes)){
-            _4hours = true;
-            ticktimes = []
-            }
-    }
+    ticks = []
+    timeIntervalDependingOnPrecision = chop(14400, ticks, true, 4)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 6 hr
-    if (_4hours || (days > 2 && days <= 3)){
-        if (!chopTimeAxis(function(d) {
-            d.setMilliseconds(0);
-            d.setSeconds(0);
-            d.setMinutes(0);
-            return d.setHours(Math.ceil(d.getHours() / 6) * 6 % 24);
-        }, 21600, ticktimes)){
-            _6hours = true;
-            ticktimes = []
-            }
-    }
+    ticks = []
+    timeIntervalDependingOnPrecision = chop(21600, ticks, true, 6)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 8 hr
-    if (_6hours || (days > 3 && days <= 4)){
-        if (!chopTimeAxis(function(d) {
-            d.setMilliseconds(0);
-            d.setSeconds(0);
-            d.setMinutes(0);
-            return d.setHours(Math.ceil(d.getHours() / 8) * 8 % 24);
-        }, 28800, ticktimes)){
-
-            _8hours = true
-            ticktimes = []
-        }
-    }
+    ticks = []
+    timeIntervalDependingOnPrecision = chop(28800, ticks, true, 8)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 12 hr
-    if (_8hours || (days > 4 && days <= 7)){
-        if (!chopTimeAxis(function(d) {
-            d.setMilliseconds(0);
-            d.setSeconds(0);
-            d.setMinutes(0);
-            return d.setHours(Math.ceil(d.getHours() / 12) * 12 % 24);
-        }, 43200, ticktimes)) {
-            _12hours = true
-            ticktimes = []
-        }
-    }
+    ticks = []
+    timeIntervalDependingOnPrecision = chop(43200, ticks, true, 12)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / day
-    if(_12hours || (days > 7 && days < 10)){
-        if (!chopTimeAxis(function(d) {
-            d.setMilliseconds(0);
-            d.setSeconds(0);
-            d.setMinutes(0);
-            return d.setHours(Math.ceil(d.getHours() / 24) * 24 % 24);
-        }, 86400, ticktimes)){
-            _24hours = true;
-            ticktimes = []
-        }
-   }
+    ticks = []
+    timeIntervalDependingOnPrecision = chop(86400, ticks, true, 24)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
-   //1 tick / week
-   if (_24hours || days >= 10){
-       if (chopTimeAxis(function(d) {
-           d.setMilliseconds(0);
-           d.setSeconds(0);
-           d.setMinutes(0);
-           return d.setHours(Math.ceil(d.getHours() / 24) * 24 % 24);
-       }, 604800, ticktimes)){
-           _1week = true
-       }
-   }
+    //1 tick / week
+    ticks = []
+    timeIntervalDependingOnPrecision = chop(604800, ticks, true, 24)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    _1week = (ticks === ticktimes) ? true : _1week;
 
-    var oldDate = new Date(ticktimes[0] * 1000)
+
     var oldDateUsed = false
     var cumulInterDateSize = 0
     var interdatesize = 0
-    var hourHalfWidth = 14
-    var dateHalfWidth = 2 * hourHalfWidth
-
-    // smallestChangeOfDate is needed when the interval of width between ticks become very small but
-    // the date is equal (only different hours) --> Allow to avoid rotating display
-//    var smallestChangeOfDate = proportionnalInterval(ticktimes, oldDate, intervalSizeInMiddle);
-//    intervalSizeInMiddle = intervalSizeInMiddle === 0 ? ((2 * dateHalfWidth) + 10) : intervalSizeInMiddle
+    oldDate = new Date(ticktimes[0] * 1000)
 
     for (i = 0; i < ticktimes.length; i++) {
 
@@ -1145,69 +1093,79 @@ function drawAxisTicks(ctx)
     ctx.save();
 }
 
-function proportionnalInterval(ticktimes, oldDate, intervalSizeInMiddle)
+function proportionnalInterval(ticktimes, oldDate)
 {
-    // This function compute for each duration of a day the number of ticks.
-    // Only the smallest number is kept. This number is very usefull when the
-    // graph is enlarged, because it could be a lot of ticks (small interval)
-    // but with the same date --> Don't want to rotate the date
+    // This function compute for each duration of a DAY the number of ticks.
+    // The smallest number is kept as long as it is not at the edge.
+    // This number is used for the display rate
+
     var smallestChangeOfDate = 0;
-    var changeOfDate = false;
+    var numberChangeOfDate = 0;
+    var changeOfDate = 0;
+    var once = true
     for (var i = 0; i < ticktimes.length; i++) {
         if(i > 0){
             var date = new Date(ticktimes[i] * 1000);
-
-            if (oldDate.getDate() === date.getDate()){
-                if (changeOfDate){
-                    smallestChangeOfDate = 0;
-                    changeOfDate = false
+            if (date.getDate() === oldDate.getDate()){
+                numberChangeOfDate++;
+                if (numberChangeOfDate > 1 && i === ticktimes.length - 1){
+                    smallestChangeOfDate = (smallestChangeOfDate > numberChangeOfDate || once) ? numberChangeOfDate : smallestChangeOfDate
                 }
-                smallestChangeOfDate++;
             }
             else{
-                if (changeOfDate){
-                    smallestChangeOfDate = 0;
+                numberChangeOfDate++;
+                if (i !== 1 || i !== ticktimes.length - 1){
+                    smallestChangeOfDate = (smallestChangeOfDate > numberChangeOfDate || once) ? numberChangeOfDate : smallestChangeOfDate
                 }
-                smallestChangeOfDate++;
-                changeOfDate = true;
+                numberChangeOfDate = 0;
+                once = false;
+                changeOfDate++;
             }
             oldDate = date
         }
     }
     oldDate = new Date();
 
+    smallestChangeOfDate = changeOfDate === 1 ? smallestChangeOfDate + 1 : smallestChangeOfDate
+
     if (ticktimes.length === 1){
         smallestChangeOfDate = 1;
-    }
-    else{
-        intervalSizeInMiddle = (atime2screen(ticktimes[ticktimes.length - 1]) - atime2screen(ticktimes[0])) / (ticktimes.length - 1)
     }
 
     return smallestChangeOfDate;
 }
 
-function chopTimeAxis(fxn, interval, ticktimes)
-{
+function chop(interval, ticktimes, isHour, time){
+    // This function is used to determine the x coordinate (time)
+    // of the ticks corresponding to the precision needed
+    // Return : The maximum number of ticks
+
     var early = ascreen2time(bottomLeftX) * 1000;
     var late = ascreen2time(canvas.width - bottomLeftX);
     var date = new Date(early);
-    var tick = fxn(date);
 
-    var intervalMinimalAxisWidth = 66
-    var cumul = bottomLeftX;
+    date.setMilliseconds(0);
+    date.setSeconds(0);
+    date.setMinutes(0);
+    if (isHour){
+        date.setHours(Math.ceil(date.getHours() / time) * time % 24)
+    }
+    else{
+        date.setMinutes(Math.ceil(date.getMinutes() / time) * time % 60);
+    }
+
+    var nbOfTimeInterval = 0;
+    var tick = date;
 
     tick = tick / 1000;
     while (tick < late) {
-        if (ascreen2time(cumul) > late){
-            return false;
-        }
-        else if (tick * 1000 >= early) {
+        if (tick * 1000 >= early) {
             ticktimes.push(tick);
         }
         tick = tick + interval;
-        cumul += intervalMinimalAxisWidth
+        nbOfTimeInterval++;
     }
-    return true;
+    return nbOfTimeInterval;
 }
 
 function drawAxisLabels(ctx)

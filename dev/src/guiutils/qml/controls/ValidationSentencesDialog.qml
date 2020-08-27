@@ -163,7 +163,7 @@ DialogBase {
                                 }
                             },
                             Button{
-                                anchors.left: parent.horizontalCenter
+                                Layout.alignment: Qt.AlignHCenter
                                 visible: !paletteChoice
                                 enabled: !paletteChoice
                                 id :addgloballistbtn
@@ -201,7 +201,7 @@ DialogBase {
                         columnlayout.children: [
 
                             Label{
-                                text: interpretationController.currentActiveSubstance.name.value() + " specific"
+                                text: (interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.name.value() : "") + " specific"
                                 width: parent.width
                             },
 
@@ -281,7 +281,7 @@ DialogBase {
                             },
                             Button{
                                 id: addspecificlistbtn
-                                anchors.left: parent.horizontalCenter
+                                Layout.alignment: Qt.AlignHCenter
                                 visible: !paletteChoice
                                 enabled: !paletteChoice
                                 Layout.preferredWidth: 45
@@ -314,7 +314,7 @@ DialogBase {
 
 
             Button {
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter
                 id: cancelBtn
                 text: "Close"
                 Layout.preferredWidth: 125

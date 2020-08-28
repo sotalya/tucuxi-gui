@@ -1001,9 +1001,25 @@ function drawAxisTicks(ctx)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
-    //1 tick / day
+    //1 tick / 24 hr
     ticks = []
     timeIntervalDependingOnPrecision = chop(86400, ticks, true, 24)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
+
+    //1 tick / 48 hr
+    ticks = []
+    timeIntervalDependingOnPrecision = chop(172800, ticks, true, 24)
+    oldDate = new Date(ticks[0] * 1000);
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
+    maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
+
+    //1 tick / 72 hr
+    ticks = []
+    timeIntervalDependingOnPrecision = chop(259200, ticks, true, 24)
     oldDate = new Date(ticks[0] * 1000);
     maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
@@ -1062,7 +1078,14 @@ function drawAxisTicks(ctx)
             else{
                 cumulInterDateSize += interdatesize
                 if (i === ticktimes.length - 1){
-                    ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30);
+                    if (new Date(ticktimes[i] * 1000).getDate() !== new Date(ticktimes[i - 2] * 1000).getDate()){
+                        if ((atime2screen(ticktimes[i]) - atime2screen(ticktimes[i - 1])) > ((2 * dateHalfWidth) + 10)){
+                                ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30);
+                        }
+                    }
+                    else{
+                        ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30);
+                    }
                 }
                 oldDateUsed = true
             }

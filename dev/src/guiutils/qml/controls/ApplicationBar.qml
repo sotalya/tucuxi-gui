@@ -10,6 +10,24 @@ Rectangle {
     height: 45
     color: Style.toolbar.background.toolbar
 
+
+    SettingsDialog {
+        id: settingsDialog
+        objectName: "settingsDialog"
+
+        function exec()
+        {
+            this.init();
+            this.open(true);
+        }
+    }
+
+    function editSettings()
+    {
+        // Todo : Open a settings dialog, and act accordingly
+        settingsDialog.exec();
+    }
+
     //Toolbar content
     RowLayout {
         anchors.fill: parent
@@ -50,6 +68,7 @@ Rectangle {
         //                icon_hover: "qrc:/icons/toolbar/file_hover.png"
         //                onPressed: interpretationController.publishReport()
         //            }
+
 
         ApplicationBarButton {
             id: saveReqAction
@@ -93,6 +112,40 @@ Rectangle {
             onPressed: mainWindowController.goToPendingRequests()
 
             tooltipText: ToolTips.applicationBar.pending
+        }
+
+        Item {
+            Layout.preferredWidth: 50
+        }
+
+        ApplicationBarButton {
+            id: helpAction
+            Layout.preferredWidth:  parent.height
+            Layout.preferredHeight: parent.height
+            icon:       "qrc:/icons/toolbar/help.png"
+            icon_hover: "qrc:/icons/toolbar/help_hover.png"
+            //onPressed: editSettings()
+            tooltipText: ToolTips.applicationBar.help
+        }
+
+        ApplicationBarButton {
+            id: aboutAction
+            Layout.preferredWidth:  parent.height
+            Layout.preferredHeight: parent.height
+            icon:       "qrc:/icons/toolbar/about.png"
+            icon_hover: "qrc:/icons/toolbar/about_hover.png"
+            //onPressed: editSettings()
+            tooltipText: ToolTips.applicationBar.about
+        }
+
+        ApplicationBarButton {
+            id: settingsAction
+            Layout.preferredWidth:  parent.height
+            Layout.preferredHeight: parent.height
+            icon:       "qrc:/icons/toolbar/settings.png"
+            icon_hover: "qrc:/icons/toolbar/settings_hover.png"
+            onPressed: editSettings()
+            tooltipText: ToolTips.applicationBar.settings
         }
 
         ApplicationBarButton {

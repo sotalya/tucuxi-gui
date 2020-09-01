@@ -4,15 +4,31 @@ TARGET      = ezechiel-admin
 TEMPLATE    = lib
 DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 
+!config_tucucore_lib {
+unix {
+#    include($${TUCUXIROOTDIR}/make/qtcreator/general.pri)
+}
+win32 {
+    include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
+}
+    include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
+    include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
+}
+else {
+    include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
+}
+
 # To solve issues with namespaces
 # QMAKE_CXXFLAGS += -fpermissive
 
 #Removing the QtGui module (the admin must NOT use any gui element)
 QT -= gui
 
+
 INCLUDEPATH += ..
 
 HEADERS	+= \
+    src/dal/sentencepalette.h \
     src/stdadminrepository.h \
     src/dal/email.h \
     src/dal/institute.h \
@@ -58,6 +74,7 @@ SOURCES += \
     src/dal/interpretation.cpp \
     src/dal/partialrequest.cpp \
     src/dal/interpretationanalysis.cpp \
+    src/dal/sentencepalette.cpp \
     src/dal/validationstatus.cpp \
     src/requestsclient.cpp \
     src/dal/graphinformationselection.cpp \

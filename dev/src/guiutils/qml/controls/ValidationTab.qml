@@ -513,8 +513,8 @@ Rectangle {
                             Layout.preferredWidth: 50
                             text: "Save"
                             onClicked: {
-                                expectPalette.initAddSentence(expectednessInput, 0)
-                                expectPalette.open(true)
+                                expectednessPalette.initAddSentence(expectednessInput.text, 0)
+                                expectednessPalette.open(true)
                             }
                         }
                         Button{
@@ -527,8 +527,8 @@ Rectangle {
                             }
 
                             onClicked: {
-                                expectPalette.init(expectednessInput, 0)
-                                expectPalette.open(true)
+                                expectednessPalette.init(expectednessInput.text, 0)
+                                expectednessPalette.open(true)
                             }
                             Image {
                                 anchors.verticalCenter: expectPaletteBTN.verticalCenter
@@ -598,7 +598,7 @@ Rectangle {
                             Layout.preferredWidth: 50
                             text: "Save"
                             onClicked: {
-                                suitablePalette.initAddSentence(suitabilityInput, 1)
+                                suitablePalette.initAddSentence(suitabilityInput.text, 1)
                                 suitablePalette.open(true)
                             }
                         }
@@ -611,7 +611,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                suitablePalette.init(suitabilityInput, 1)
+                                suitablePalette.init(suitabilityInput.text, 1)
                                 suitablePalette.open(true)
                             }
                             Image {
@@ -680,7 +680,7 @@ Rectangle {
                             Layout.preferredWidth: 50
                             text: "Save"
                             onClicked: {
-                                predictionPalette.initAddSentence(predictionInput, 2)
+                                predictionPalette.initAddSentence(predictionInput.text, 2)
                                 predictionPalette.open(true)
                             }
                         }
@@ -693,7 +693,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                predictionPalette.init(predictionInput, 2)
+                                predictionPalette.init(predictionInput.text, 2)
                                 predictionPalette.open(true)
                             }
                             Image {
@@ -762,7 +762,7 @@ Rectangle {
                             Layout.preferredWidth: 50
                             text: "Save"
                             onClicked: {
-                                remonitoringPalette.initAddSentence(remonitoringInput, 3)
+                                remonitoringPalette.initAddSentence(remonitoringInput.text, 3)
                                 remonitoringPalette.open(true)
                             }
                         }
@@ -775,7 +775,7 @@ Rectangle {
                             }
                             id: remonitoringPaletteBTN
                             onClicked: {
-                                remonitoringPalette.init(remonitoringInput, 3)
+                                remonitoringPalette.init(remonitoringInput.text, 3)
                                 remonitoringPalette.open(true)
                             }
                             Image {
@@ -855,7 +855,7 @@ Rectangle {
                             text: "Save"
 
                             onClicked: {
-                                warningPalette.initAddSentence(warningInput, 4)
+                                warningPalette.initAddSentence(warningInput.text, 4)
                                 warningPalette.open(true)
                             }
                         }
@@ -868,7 +868,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                warningPalette.init(warningInput, 4)
+                                warningPalette.init(warningInput.text, 4)
                                 warningPalette.open(true)
                             }
                             Image {
@@ -917,24 +917,23 @@ Rectangle {
         }
     }
 
-    ValidationSentencesDialog{
+    SentencePaletteDialog{
+        id: expectednessPalette
+    }
+
+    SentencePaletteDialog{
         id: warningPalette
     }
 
-    ValidationSentencesDialog{
+    SentencePaletteDialog{
         id: remonitoringPalette
     }
 
-    ValidationSentencesDialog{
+    SentencePaletteDialog{
         id: predictionPalette
     }
 
-    ValidationSentencesDialog{
+    SentencePaletteDialog{
         id: suitablePalette
     }
-
-    ValidationSentencesDialog{
-        id: expectPalette
-    }
-
 }

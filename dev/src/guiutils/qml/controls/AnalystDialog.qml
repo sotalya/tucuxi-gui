@@ -204,7 +204,7 @@ DialogBase {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 spacing: 10
-                anchors.horizontalCenter: parent.horizontalCenter
+                // anchors.horizontalCenter: parent.horizontalCenter
 
                 //TODO Implement ok and cancel button
 

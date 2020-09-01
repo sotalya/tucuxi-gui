@@ -73,6 +73,7 @@
         <file alias="GraphSettingsDialog.qml">controls/GraphSettingsDialog.qml</file>
         <file alias="ValidationSentencesDialog.qml">controls/ValidationSentencesDialog.qml</file>
         <file alias="AnalystDialog.qml">controls/AnalystDialog.qml</file>
+        <file alias="SettingsDialog.qml">controls/SettingsDialog.qml</file>
     </qresource>
     <qresource prefix="/windows">
         <file alias="MainWindow.qml">windows/MainWindow.qml</file>

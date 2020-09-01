@@ -96,6 +96,12 @@
         <file alias="shutdown.png">icons/toolbar/shutdown.png</file>
         <file alias="shutdown_hover.png">icons/toolbar/shutdown_hover.png</file>
         <file alias="file_disabled.png">icons/toolbar/file_disabled.png</file>
+        <file alias="about.png">icons/toolbar/about.png</file>
+        <file alias="about_hover.png">icons/toolbar/about_hover.png</file>
+        <file alias="help.png">icons/toolbar/help.png</file>
+        <file alias="help_hover.png">icons/toolbar/help_hover.png</file>
+        <file alias="settings.png">icons/toolbar/settings.png</file>
+        <file alias="settings_hover.png">icons/toolbar/settings_hover.png</file>
     </qresource>
     <qresource prefix="/text">
         <file alias="demo_startup_text.txt">text/demo_startup_text.txt</file>

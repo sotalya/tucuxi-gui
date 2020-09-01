@@ -10,6 +10,9 @@ QtObject {
         readonly property string home: qsTr("Start a new clinical interpretation")
         readonly property string pending: qsTr("Get the list of pending requests (concentration results to interpret)")
         readonly property string quit: qsTr("Quit Tucuxi")
+        readonly property string settings: qsTr("Application settings")
+        readonly property string help: qsTr("Help")
+        readonly property string about: qsTr("About Tucuxi")
     }
     property QtObject flowButtons: QtObject {
         readonly property string patient: qsTr("This tab is to enter information about the patient,<br/>

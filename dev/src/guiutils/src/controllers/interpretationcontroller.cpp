@@ -571,6 +571,11 @@ void InterpretationController::startNewPatient()
     setRawRequest("");
     FakePatientsCreator().createFakePatients(_patients);
 
+    interpretation->getAnalyst()->title("Dr.");
+    interpretation->getAnalyst()->institute()->name("The institute");
+    interpretation->getAnalyst()->person()->firstname("Prenom");
+    interpretation->getAnalyst()->person()->name("Nom");
+
 
     // Set it to the controller
     setNewInterpretation(interpretation, true);

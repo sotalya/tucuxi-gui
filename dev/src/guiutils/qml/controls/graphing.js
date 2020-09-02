@@ -295,8 +295,7 @@ function drawPercentilesAdjustments(ctx, pairs, color, colors)
 {
     var displayedCurves = [];
 
-    if (pairs.size() < 1) {
-        console.log("empty");return;}
+    if (pairs.size() < 1) {return;}
     if (graphInformationSelection.perc5_95){
         colorRegionBtwCurves(ctx, pairs.objat(0).predictionData,  pairs.objat(6).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(6).Y, colors[3], false);
         ctx.restore();

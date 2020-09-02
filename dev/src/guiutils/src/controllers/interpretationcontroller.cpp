@@ -167,10 +167,7 @@ InterpretationController::InterpretationController(QObject *parent) :
 
     //Each validation section (expectedness, suitability, prediction, remonitoring and warning) have a sentence palette
 
-    _sentencePalettes = ezechiel::core::CoreFactory::createEntity<SentencesPalettes>(REPO, this);
-    for(int i=0; i<5; i++){
-        _sentencePalettes->append(ezechiel::core::CoreFactory::createEntity<SentencesPalette>(REPO, this));
-    }
+    _sentencesPalettes = ezechiel::core::CoreFactory::createEntity<SentencesPalettes>(REPO, this);
 
     _graphInformationSelection = ezechiel::core::CoreFactory::createEntity<GraphInformationSelection>(REPO, this);
 
@@ -343,7 +340,7 @@ void InterpretationController::bindModelsToRootContext(QQmlContext *rootContext)
     rootContext->setContextProperty("drugTabController", drugTabController);
 	rootContext->setContextProperty("graphInformationSelection", _graphInformationSelection);
     rootContext->setContextProperty("appMode", AppMode::getInstance());
-    rootContext->setContextProperty("sentencePalettes", _sentencePalettes);
+    rootContext->setContextProperty("sentencesPalettes", _sentencesPalettes);
 
 }
 

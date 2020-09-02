@@ -18,8 +18,6 @@ AUTO_PROPERTY_IMPL(ValidDoses, TranslatableString*, comments,Comments)
 
 AUTO_PROPERTY_IMPL(ValidDoses, QList<double>, dosesList, DosesList)
 
-//POINTERLIST_CLASS_IMPL(dosesList, ValidDose)
-
 
 QML_POINTERLIST_CLASS_IMPL(DoseList, ValidDose)
 } // namespace core

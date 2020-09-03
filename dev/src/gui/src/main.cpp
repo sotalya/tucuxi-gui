@@ -396,6 +396,13 @@ int main(int argc, char *argv[])
     qRegisterMetaType<DrugTabController*>("DrugTabController*");
     qRegisterMetaType<MainWindowController*>("MainWindowController*");
     qRegisterMetaType<Person::GenderType>("GenderType");
+    qRegisterMetaType<SentencesPalettes*>("SentencesPalettes*");
+    qRegisterMetaType<Section*>("Section*");
+    //qRegisterMetaType<QList<Section*>*>("QList<Section*>*");
+
+    qmlRegisterUncreatableType<SentencesPalettes>("ezechiel", 1, 0, "SentencesPalettes", QObject::tr("Cannot instantiate type 'SentencesPalettes'"));
+    qmlRegisterUncreatableType<Section>("ezechiel", 1, 0, "Section", QObject::tr("Cannot instantiate type 'Section'"));
+    //qmlRegisterUncreatableType<QList<Section*>>("ezechiel", 1, 0, "QList<Section*>", QObject::tr("Cannot instantiate type 'QList<Section*>'"));
 
     qRegisterMetaType< ezechiel::core::IntList >( "IntList" );
     qmlRegisterUncreatableType<InterpretationRequest>("ezechiel", 1, 0, "InterpretationRequest", QObject::tr("Cannot instantiate type 'InterpretationRequest'"));

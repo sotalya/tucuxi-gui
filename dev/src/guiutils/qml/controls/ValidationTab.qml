@@ -527,7 +527,7 @@ Rectangle {
                             }
 
                             onClicked: {
-                                expectednessPalette.init(expectednessInput.text, 0)
+                                expectednessPalette.init(expectednessInput.text, 0, expectednessInput)
                                 expectednessPalette.open(true)
                             }
                             Image {
@@ -611,7 +611,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                suitablePalette.init(suitabilityInput.text, 1)
+                                suitablePalette.init(suitabilityInput.text, 1, suitabilityInput)
                                 suitablePalette.open(true)
                             }
                             Image {
@@ -693,7 +693,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                predictionPalette.init(predictionInput.text, 2)
+                                predictionPalette.init(predictionInput.text, 2, predictionInput)
                                 predictionPalette.open(true)
                             }
                             Image {
@@ -775,7 +775,7 @@ Rectangle {
                             }
                             id: remonitoringPaletteBTN
                             onClicked: {
-                                remonitoringPalette.init(remonitoringInput.text, 3)
+                                remonitoringPalette.init(remonitoringInput.text, 3, remonitoringInput)
                                 remonitoringPalette.open(true)
                             }
                             Image {
@@ -868,7 +868,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                warningPalette.init(warningInput.text, 4)
+                                warningPalette.init(warningInput.text, 4, warningInput)
                                 warningPalette.open(true)
                             }
                             Image {

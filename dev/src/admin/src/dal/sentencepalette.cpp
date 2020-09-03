@@ -15,11 +15,13 @@
 #endif
 #include<iostream>
 
-void Sentences::removeSentenceFromSpecific(int _listIndex){
+
+
+void DrugSentences::removeSentenceFromSpecific(int _listIndex){
     _sentences.removeAt(_listIndex);
 }
 
-void Sentences::addSentenceToSpecific(QString _sentence){
+void DrugSentences::addSentenceToSpecific(QString _sentence){
     _sentences.append(_sentence);
 }
 
@@ -30,6 +32,7 @@ void Section::addSentenceToGlobal(QString _sentence){
 void Section::removeSentenceFromGlobal(int _listIndex){
     _globalSentences.removeAt(_listIndex);
 }
+
 
 QStringList Section::getSentencesList(QString _drugId){
 
@@ -65,7 +68,7 @@ void Section::removeSentenceFromSentencesList(QString _drugId, int _listIndex){
 }
 
 void Section::addSentences(QString _drugId){
-    auto newSentence = ezechiel::core::CoreFactory::createEntity<Sentences>(_repository);
+    auto newSentence = ezechiel::core::CoreFactory::createEntity<DrugSentences>(_repository);
     newSentence->setDrugId(_drugId);
     _specificSentences.push_back(newSentence);
 }
@@ -79,7 +82,7 @@ void Section::addSentenceToSentences(QString _drugId, QString _sentence){
         }
     }
     if(!same){
-        auto newSentence = ezechiel::core::CoreFactory::createEntity<Sentences>(_repository);
+        auto newSentence = ezechiel::core::CoreFactory::createEntity<DrugSentences>(_repository);
         newSentence->setDrugId(_drugId);
         newSentence->addSentenceToSpecific(_sentence);
         _specificSentences.push_back(newSentence);
@@ -261,11 +264,11 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
 }
 
 
-AUTO_PROPERTY_IMPL(Sentences, QString, drugId, DrugId)
-AUTO_PROPERTY_IMPL(Sentences, QStringList, sentences, Sentences)
+AUTO_PROPERTY_IMPL(DrugSentences, QString, drugId, DrugId)
+AUTO_PROPERTY_IMPL(DrugSentences, QStringList, sentences, Sentences)
 AUTO_PROPERTY_IMPL(Section, QString, sectionid, SectionId)
 AUTO_PROPERTY_IMPL(Section, QStringList, globalSentences, GlobalSentences)
-AUTO_PROPERTY_IMPL(Section, QList<Sentences*>, specificSentences, SpecificSentences)
+AUTO_PROPERTY_IMPL(Section, QList<DrugSentences*>, specificSentences, SpecificSentences)
 AUTO_PROPERTY_IMPL(SentencesPalettes, QStringList, globalSentences, GlobalSentences)
 AUTO_PROPERTY_IMPL(SentencesPalettes, QList<Section*>, sectionsList, SectionsList)
 AUTO_PROPERTY_IMPL(SentencesPalettes, QString, filename, Filename)

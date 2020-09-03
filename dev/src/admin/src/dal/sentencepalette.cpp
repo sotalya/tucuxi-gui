@@ -5,6 +5,16 @@
 #include <sstream>
 #include <fstream>
 
+#include <stdio.h>
+#ifdef WIN32
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+#include<iostream>
+
 void Sentences::removeSentenceFromSpecific(int _listIndex){
     _sentences.removeAt(_listIndex);
 }
@@ -161,17 +171,38 @@ void SentencesPalettes::exportToXml(){
     m_doc.toString(xmlString, true);
 
     std::ofstream file;
-    file.open(m_filename);
+    file.open(_filename.toStdString());
     if ((file.rdstate() & std::ostream::failbit) != 0) {
     }
     file << xmlString;
     file.close();
 }
 
-void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *_sentencesPalettes, std::string _filename){
+void SentencesPalettes::saveXMLPath(){
+
+    SETTINGS.set(ezechiel::core::Module::GUI, "sentencesPalettesXML" , _filename);
+}
+
+QString SentencesPalettes::loadXMLPath(){
+    QString xmlPath = SETTINGS.get(ezechiel::core::Module::GUI, "sentencesPalettesXML").toString();
+
+    return (xmlPath.isEmpty()) ? getDefaultPath() : xmlPath;
+}
+
+QString SentencesPalettes::getDefaultPath(){
+    char buff[FILENAME_MAX];
+    GetCurrentDir( buff, FILENAME_MAX );
+    std::string current_working_dir(buff);
+    current_working_dir.erase(current_working_dir.rfind('/'), std::string::npos);
+    current_working_dir.erase(current_working_dir.rfind('/'), std::string::npos);
+    return QString::fromStdString(current_working_dir + "/sentences.xml");
+}
+
+void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *_sentencesPalettes, QString _filename){
     Tucuxi::Common::XmlDocument document;
-    if (!document.open(_filename)) {
-        //not good
+    if (!document.open(_filename.toStdString())) {
+        //no document
+        return;
     }
 
     static const std::string SENTENCES_PALETTE_NODE         = "sentencesPalette";
@@ -237,4 +268,5 @@ AUTO_PROPERTY_IMPL(Section, QStringList, globalSentences, GlobalSentences)
 AUTO_PROPERTY_IMPL(Section, QList<Sentences*>, specificSentences, SpecificSentences)
 AUTO_PROPERTY_IMPL(SentencesPalettes, QStringList, globalSentences, GlobalSentences)
 AUTO_PROPERTY_IMPL(SentencesPalettes, QList<Section*>, sectionsList, SectionsList)
+AUTO_PROPERTY_IMPL(SentencesPalettes, QString, filename, Filename)
 

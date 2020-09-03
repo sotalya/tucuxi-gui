@@ -37,7 +37,7 @@ DialogBase {
         sectionNb = _sectionNb
         paletteChoice = false
         self = this
-        currentDrugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.name.value() : ""
+        currentDrugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId: ""
         update()
     }
 
@@ -48,7 +48,7 @@ DialogBase {
         sectionNb = _sectionNb
         paletteChoice = true
         self = this
-        currentDrugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.name.value() : ""
+        currentDrugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId : ""
         update()
     }
 

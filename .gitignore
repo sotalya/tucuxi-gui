@@ -60,3 +60,6 @@ dev/Tucuxi-64-Release.zip
 dev/setup-Release32.exe
 dev/setup-Release64.exe
 dev/Deploy
+
+#xml sentences files
+*.xml

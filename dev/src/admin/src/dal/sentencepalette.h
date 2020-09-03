@@ -68,7 +68,7 @@ class SentencesPalettes : public ezechiel::core::Entity
         }
 
         public:
-        void importXml(SentencesPalettes *_sentencesPalettes, std::string _fileName);
+        void importXml(SentencesPalettes *_sentencesPalettes, QString _fileName);
 
     };
 
@@ -78,6 +78,7 @@ class SentencesPalettes : public ezechiel::core::Entity
 
     AUTO_PROPERTY_DECL(QStringList, globalSentences, GlobalSentences)
     AUTO_PROPERTY_DECL(QList<Section*>, sectionsList, SectionsList)
+    AUTO_PROPERTY_DECL(QString, filename, Filename)
 
     public:
 
@@ -87,18 +88,22 @@ class SentencesPalettes : public ezechiel::core::Entity
             newSection->setSectionId(QString::number(i));
             _sectionsList.push_back(newSection);
         }
-        m_filename = "/home/johan/Bureau/sentence.xml";
+        _filename = loadXMLPath();
         SentencesPalettesImporter s;
-        s.importXml(this, m_filename);
+        s.importXml(this, _filename);
     }
 
     Q_INVOKABLE void addSentenceToGlobal(QString _sentence);
     Q_INVOKABLE void removeSentenceFromGlobal(int _listIndex);
     Q_INVOKABLE void exportToXml();
+    Q_INVOKABLE void saveXMLPath();
+    Q_INVOKABLE QString loadXMLPath();
 
 private:
+    QString getDefaultPath();
+
     Tucuxi::Common::XmlDocument m_doc;
-    std::string m_filename;
+//    std::string m_filename;
 };
 
 #endif // SENTENCEPALETTE_H

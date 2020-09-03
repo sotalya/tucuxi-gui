@@ -21,7 +21,6 @@ DialogBase {
 
     function onUpdated(bApplied, bCreatingNewItem) {
         if (bApplied) {
-
             interpretation.analyst.person.firstname = analystFirstname.text
             interpretation.analyst.person.name = analystLastname.text
             interpretation.analyst.person.location.city = analystCity.text
@@ -32,6 +31,9 @@ DialogBase {
             //interpretation.analyst.institute.name = analystAffiliation.text
             //interpretation.analyst.person.setPhones()
             interpretation.analyst.saveToSettings()
+
+            sentencesPalettes.filename = xmlPathETF.text
+            sentencesPalettes.saveXMLPath()
         }
     }
 
@@ -53,6 +55,8 @@ DialogBase {
         analystState.text = analyst["person"]["location"]["state"].toString()
         analystCountry.text = analyst["person"]["location"]["country"].toString()
         analystTitle.text = analyst["title"].toString()
+        xmlPathETF.text = sentencesPalettes.loadXMLPath()
+
         //analystAffiliation.text = analyst["institute"]["name"].toString()
     }
 
@@ -226,6 +230,34 @@ DialogBase {
 
             Item {
                 id: connectivityTab
+                width: parent.width
+
+//                GridLayout {
+//                    anchors.fill: parent
+//                    rows: 3
+//                    columns: 3
+                    ColumnLayout{
+                        Layout.row: 1
+                        Layout.column:1
+                        width: parent.width - 20
+                        height: parent.height
+
+                        RowLayout {
+                            width: parent.width
+                            spacing: 2
+
+                            EntityLabel {
+                                Layout.preferredWidth: 180
+                                text: "Sentences file path (XML) :"
+                            }
+                            EntityTextField {
+                                id: xmlPathETF
+                                Layout.fillWidth:  true
+                            }
+                        }
+
+//                    }
+                }
             }
             /*
             Item {
@@ -239,6 +271,8 @@ DialogBase {
             sequence: "Return"
             onActivated: {
                 if (self.apply()) {
+                    sentencesPalettes.filename = xmlPathETF.text
+                    sentencesPalettes.exportToXml();
                     self.exit(true);
                 }
             }
@@ -263,8 +297,10 @@ DialogBase {
             }
             Button {
                 id: acceptBtn
-                text: "Ok"
+                text: "Save and Close"
                 onClicked: function() {
+                    sentencesPalettes.filename = xmlPathETF.text
+                    sentencesPalettes.exportToXml();
                     root.exit(true);
                 }
             }

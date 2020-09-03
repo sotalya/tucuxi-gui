@@ -527,7 +527,7 @@ Rectangle {
                             }
 
                             onClicked: {
-                                expectednessPalette.init(expectednessInput.text, 0)
+                                expectednessPalette.init(expectednessInput.text, 0, expectednessInput)
                                 expectednessPalette.open(true)
                             }
                             Image {

@@ -58,6 +58,9 @@ private:
     ezechiel::core::AbstractRepository *_repository;
 };
 
+QML_POINTERLIST_CLASS_DECL(SectionList, Section)
+
+
 class SentencesPalettes : public ezechiel::core::Entity
 {
     class SentencesPalettesImporter : public Tucuxi::Common::XMLImporter
@@ -77,21 +80,25 @@ class SentencesPalettes : public ezechiel::core::Entity
     ENTITY_UTILS(SentencesPalettes)
 
     AUTO_PROPERTY_DECL(QStringList, globalSentences, GlobalSentences)
-    AUTO_PROPERTY_DECL(QList<Section*>, sectionsList, SectionsList)
+    AUTO_PROPERTY_DECL(SectionList*, sectionsList, SectionsList)
     AUTO_PROPERTY_DECL(QString, filename, Filename)
 
     public:
 
-    Q_INVOKABLE explicit SentencesPalettes(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr){
+    Q_INVOKABLE explicit SentencesPalettes(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr)
+    {
+        _sectionsList = ezechiel::core::CoreFactory::createEntity<SectionList>(repository);
         for (int i=0; i < VALIDATION_SECTIONS; i++){
             auto newSection = ezechiel::core::CoreFactory::createEntity<Section>(repository);
             newSection->setSectionId(QString::number(i));
-            _sectionsList.push_back(newSection);
+            _sectionsList->append(newSection);
         }
         _filename = loadXMLPath();
         SentencesPalettesImporter s;
         s.importXml(this, _filename);
     }
+
+    Q_INVOKABLE Section* getSection(int i) { return _sectionsList->at(i);}
 
     Q_INVOKABLE void addSentenceToGlobal(QString _sentence);
     Q_INVOKABLE void removeSentenceFromGlobal(int _listIndex);
@@ -99,11 +106,17 @@ class SentencesPalettes : public ezechiel::core::Entity
     Q_INVOKABLE void saveXMLPath();
     Q_INVOKABLE QString loadXMLPath();
 
+    Q_INVOKABLE void test();
+
 private:
     QString getDefaultPath();
 
     Tucuxi::Common::XmlDocument m_doc;
 //    std::string m_filename;
 };
+
+Q_DECLARE_METATYPE(Section*)
+Q_DECLARE_METATYPE(QList<Section*>)
+Q_DECLARE_METATYPE(SectionList*)
 
 #endif // SENTENCEPALETTE_H

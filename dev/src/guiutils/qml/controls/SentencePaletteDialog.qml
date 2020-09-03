@@ -22,11 +22,20 @@ DialogBase {
     property var currentSpecificModel
     property var currentDrugId
 
+    property var sectionData
+    property var globalSectionData
+    property var specificSectionData
+
+    property var inputText
+
 
     // Intercept Return to validate the dialog
     Shortcut {
         sequence: "Return"
         onActivated: {
+            if (inputText) {
+                inputText.text = sectionText
+            }
             self.exit(false);
         }
     }
@@ -42,8 +51,9 @@ DialogBase {
     }
 
 
-    function init(_sectionText, _sectionNb)
+    function init(_sectionText, _sectionNb, _inputText)
     {
+        inputText = _inputText
         sectionText = _sectionText
         sectionNb = _sectionNb
         paletteChoice = true
@@ -54,19 +64,10 @@ DialogBase {
 
     function update()
     {
-        // globalCB.checked --> Need more thought on it.
-        // For now, each section contain a globalSentences
-        if(true)
-        {
-            specificSentenceList.model = sentencesPalettes.sectionsList[sectionNb] ? sentencesPalettes.sectionsList[sectionNb].getSentencesList(currentDrugId): ""
-            globalSentencesList.model = sentencesPalettes.sectionsList[sectionNb] ? sentencesPalettes.sectionsList[sectionNb].globalSentences : ""
-        }
-        else{
-            specificSentenceList.model = sentencesPalettes.sectionsList[sectionNb] ? sentencesPalettes.sectionsList[sectionNb].getSentencesList(currentDrugId): ""
-            globalSentencesList.model = sentencesPalettes ? sentencesPalettes.globalSentences : ""
-        }
 
-
+        sectionData = sentencesPalettes.sectionsList.objat(sectionNb)
+        globalSectionData = sentencesPalettes.sectionsList.objat(sectionNb).globalSentences
+        specificSectionData = sentencesPalettes.sectionsList.objat(sectionNb).getSentencesList(currentDrugId)
     }
 
     GridLayout {
@@ -137,6 +138,9 @@ DialogBase {
                                 Layout.fillHeight: true
                                 id: globalSentencesList
                                 objectName: "parametersListView"
+
+                                model: globalSectionData
+
                                 delegate: EntityListDelegate {
                                     id: globalSentencesdelegate
                                     property var globalListIndex: index
@@ -182,7 +186,7 @@ DialogBase {
                                                 color: "white"
                                             }
                                             onClicked: {
-                                                sentencesPalettes.sectionsList[sectionNb].removeSentenceFromGlobal(globalListIndex)
+                                                sectionData.removeSentenceFromGlobal(globalListIndex)
                                                 root.update()
                                             }
                                             Image {
@@ -212,7 +216,7 @@ DialogBase {
                                 }
                                 onClicked: {
                                     if (sectionText !== ""){
-                                        sentencesPalettes.sectionsList[sectionNb].addSentenceToGlobal(sectionText)
+                                        sectionData.addSentenceToGlobal(sectionText)
                                         root.update()
                                     }
                                 }
@@ -253,6 +257,9 @@ DialogBase {
                                 Layout.fillHeight: true
                                 id: specificSentenceList
                                 objectName: "parametersListView"
+
+                                model: specificSectionData
+
                                 delegate: EntityListDelegate {
                                     id: specificSentenceListDelegate
                                     property var specificListIndex: index
@@ -298,7 +305,8 @@ DialogBase {
                                                 color: "white"
                                             }
                                             onClicked: {
-                                                sentencesPalettes.sectionsList[sectionNb].removeSentenceFromSentencesList(currentDrugId, specificListIndex)
+                                                var sec = sentencesPalettes.getSection(sectionNb)
+                                                sec.removeSentenceFromSentencesList(currentDrugId, specificListIndex)
                                                 root.update()
                                             }
                                             Image {
@@ -327,7 +335,8 @@ DialogBase {
                                 }
                                 onClicked: {
                                     if (sectionText !== ""){
-                                        sentencesPalettes.sectionsList[sectionNb].addSentenceToSentencesList(currentDrugId, sectionText)
+                                        var sec = sentencesPalettes.getSection(sectionNb)
+                                        sec.addSentenceToSentencesList(currentDrugId, sectionText)
                                         root.update()
                                     }
                                 }
@@ -357,6 +366,9 @@ DialogBase {
                 Layout.preferredWidth: 125
                 onClicked: function() {
                     sentencesPalettes.exportToXml();
+                    if (inputText) {
+                        inputText.text = sectionText
+                    }
                     self.exit(false);
                 }
             }

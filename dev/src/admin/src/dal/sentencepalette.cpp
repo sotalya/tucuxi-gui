@@ -15,6 +15,8 @@
 #endif
 #include<iostream>
 
+QML_POINTERLIST_CLASS_IMPL(SectionList, Section)
+
 void Sentences::removeSentenceFromSpecific(int _listIndex){
     _sentences.removeAt(_listIndex);
 }
@@ -104,7 +106,8 @@ void SentencesPalettes::exportToXml(){
 
     m_doc.setRoot(root);
 
-    for(const auto &section : _sectionsList){
+    for(int i = 0; i< _sectionsList->size(); i++) {
+        auto section = _sectionsList->at(i);
         if(section->getGlobalSentences().size() != 0){
             //Global
             Tucuxi::Common::XmlNode palette = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element, "sentencesPalette");
@@ -198,6 +201,11 @@ QString SentencesPalettes::getDefaultPath(){
     return QString::fromStdString(current_working_dir + "/sentences.xml");
 }
 
+void SentencesPalettes::test()
+{
+    int i;
+}
+
 void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *_sentencesPalettes, QString _filename){
     Tucuxi::Common::XmlDocument document;
     if (!document.open(_filename.toStdString())) {
@@ -227,7 +235,9 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
         Tucuxi::Common::XmlNodeIterator sentencesIterator = sentencesPaletteIterator->getChildren(SENTENCES_NODE);
         Tucuxi::Common::XmlNodeIterator sentenceIterator = sentencesIterator->getChildren(SENTENCE_NODE);
 
-        for(const auto &section : _sentencesPalettes->getSectionsList()){
+
+        for(int i = 0; i< _sentencesPalettes->getSectionsList()->size(); i++) {
+            auto section = _sentencesPalettes->getSectionsList()->at(i);
             if(sectionId == section->getSectionId()){
                 for(const auto &sentences : section->getSpecificSentences()){
                     if (sentences->getDrugId() == drugId){
@@ -267,6 +277,6 @@ AUTO_PROPERTY_IMPL(Section, QString, sectionid, SectionId)
 AUTO_PROPERTY_IMPL(Section, QStringList, globalSentences, GlobalSentences)
 AUTO_PROPERTY_IMPL(Section, QList<Sentences*>, specificSentences, SpecificSentences)
 AUTO_PROPERTY_IMPL(SentencesPalettes, QStringList, globalSentences, GlobalSentences)
-AUTO_PROPERTY_IMPL(SentencesPalettes, QList<Section*>, sectionsList, SectionsList)
+AUTO_PROPERTY_IMPL(SentencesPalettes, SectionList*, sectionsList, SectionsList)
 AUTO_PROPERTY_IMPL(SentencesPalettes, QString, filename, Filename)
 

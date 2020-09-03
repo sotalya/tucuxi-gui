@@ -12,6 +12,7 @@ DialogBase {
     title: "Known sentences"
     width: 600
     height: 300
+    id:root
 
     property var self
     property var sectionText
@@ -53,7 +54,9 @@ DialogBase {
 
     function update()
     {
-        if(true) //globalCB.checked --> Need more thought on it
+        // globalCB.checked --> Need more thought on it.
+        // For now, each section contain a globalSentences
+        if(true)
         {
             specificSentenceList.model = sentencesPalettes.sectionsList[sectionNb] ? sentencesPalettes.sectionsList[sectionNb].getSentencesList(currentDrugId): ""
             globalSentencesList.model = sentencesPalettes.sectionsList[sectionNb] ? sentencesPalettes.sectionsList[sectionNb].globalSentences : ""
@@ -119,7 +122,8 @@ DialogBase {
                                     id:globalCB
                                     checked: true
                                     text: "Overall"
-
+                                    visible: false
+                                    enabled: false
                                 }
 
                             },
@@ -178,8 +182,8 @@ DialogBase {
                                                 color: "white"
                                             }
                                             onClicked: {
-                                                sentencesPalettes.removeSentenceFromGlobal(globalListIndex)
-                                                this.update()
+                                                sentencesPalettes.sectionsList[sectionNb].removeSentenceFromGlobal(globalListIndex)
+                                                root.update()
                                             }
                                             Image {
                                                 anchors.verticalCenter: globalDeleteBtn.verticalCenter
@@ -208,8 +212,8 @@ DialogBase {
                                 }
                                 onClicked: {
                                     if (sectionText !== ""){
-                                        sentencesPalettes.addSentenceToGlobal(sectionText)
-                                        this.update()
+                                        sentencesPalettes.sectionsList[sectionNb].addSentenceToGlobal(sectionText)
+                                        root.update()
                                     }
                                 }
                                 Image {
@@ -295,7 +299,7 @@ DialogBase {
                                             }
                                             onClicked: {
                                                 sentencesPalettes.sectionsList[sectionNb].removeSentenceFromSentencesList(currentDrugId, specificListIndex)
-                                                this.update()
+                                                root.update()
                                             }
                                             Image {
                                                 anchors.verticalCenter: specificDeleteBtn.verticalCenter
@@ -324,7 +328,7 @@ DialogBase {
                                 onClicked: {
                                     if (sectionText !== ""){
                                         sentencesPalettes.sectionsList[sectionNb].addSentenceToSentencesList(currentDrugId, sectionText)
-                                        this.update()
+                                        root.update()
                                     }
                                 }
                                 Image {
@@ -352,7 +356,7 @@ DialogBase {
                 text: "Close"
                 Layout.preferredWidth: 125
                 onClicked: function() {
-//                    sentencesPalettes.objat(sectionNb).saveSentencesSettings(sectionNb, interpretationController.currentActiveSubstance.name.value())
+                    sentencesPalettes.exportToXml();
                     self.exit(false);
                 }
             }

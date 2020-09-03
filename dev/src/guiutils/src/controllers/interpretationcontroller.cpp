@@ -169,6 +169,7 @@ InterpretationController::InterpretationController(QObject *parent) :
 
     _sentencesPalettes = ezechiel::core::CoreFactory::createEntity<SentencesPalettes>(REPO, this);
 
+
     _graphInformationSelection = ezechiel::core::CoreFactory::createEntity<GraphInformationSelection>(REPO, this);
 
     measureTabController = new MeasureTabController(this);

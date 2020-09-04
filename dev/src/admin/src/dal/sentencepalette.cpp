@@ -25,6 +25,10 @@ void DrugSentences::addSentence(QString _sentence){
     _sentences.append(_sentence);
 }
 
+Section::Section(ezechiel::core::AbstractRepository *repository, QObject *parent){
+    _repository = repository;
+}
+
 void Section::addSentenceToGlobal(QString _sentence){
     _globalSentences.push_back(_sentence);
 }
@@ -87,6 +91,19 @@ void Section::addSentenceToDrugSentences(QString _drugId, QString _sentence){
     }
 
 }
+
+SentencesPalettes::SentencesPalettes(ezechiel::core::AbstractRepository *repository, QObject *parent){
+    _sectionsList = ezechiel::core::CoreFactory::createEntity<SectionList>(repository);
+    for (int i=0; i < VALIDATION_SECTIONS; i++){
+        auto newSection = ezechiel::core::CoreFactory::createEntity<Section>(repository);
+        newSection->setSectionId(QString::number(i));
+        _sectionsList->append(newSection);
+    }
+    _filename = loadXMLPath();
+    SentencesPalettesImporter s;
+    s.importXml(this, _filename);
+}
+
 
 void SentencesPalettes::addSentenceToGlobal(QString _sentence){
     _globalSentences.push_back(_sentence);
@@ -270,7 +287,7 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
 
 AUTO_PROPERTY_IMPL(DrugSentences, QString, drugId, DrugId)
 AUTO_PROPERTY_IMPL(DrugSentences, QStringList, sentences, Sentences)
-AUTO_PROPERTY_IMPL(Section, QString, sectionid, SectionId)
+AUTO_PROPERTY_IMPL(Section, QString, sectionId, SectionId)
 AUTO_PROPERTY_IMPL(Section, QStringList, globalSentences, GlobalSentences)
 AUTO_PROPERTY_IMPL(Section, QList<DrugSentences*>, specificSentences, SpecificSentences)
 AUTO_PROPERTY_IMPL(SentencesPalettes, QStringList, globalSentences, GlobalSentences)

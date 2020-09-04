@@ -36,13 +36,15 @@ class Section : public ezechiel::core::Entity
 
     ENTITY_UTILS(Section)
 
-    AUTO_PROPERTY_DECL(QString, sectionid, SectionId)
+    AUTO_PROPERTY_DECL(QString, sectionId, SectionId)
     AUTO_PROPERTY_DECL(QStringList, globalSentences, GlobalSentences)
     AUTO_PROPERTY_DECL(QList<DrugSentences*>, specificSentences, SpecificSentences)
 
-    Q_INVOKABLE explicit Section(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr){
-        _repository = repository;
-    }
+    Q_INVOKABLE explicit Section(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);
+
+    void addDrugSentences(QString _drugId);
+
+    ezechiel::core::AbstractRepository *_repository;
 
 public:
 
@@ -61,11 +63,6 @@ public:
     Q_INVOKABLE QStringList getSpecificSentencesList(QString _drugId);
 
     void addSentenceToDrugSentences(QString _drugId, QString _sentence);
-
-private:
-    void addDrugSentences(QString _drugId);
-//    void addDrugSentences(QString _drugId, QString _sentence);
-    ezechiel::core::AbstractRepository *_repository;
 };
 
 QML_POINTERLIST_CLASS_DECL(SectionList, Section)
@@ -99,20 +96,14 @@ class SentencesPalettes : public ezechiel::core::Entity
     AUTO_PROPERTY_DECL(SectionList*, sectionsList, SectionsList)
     AUTO_PROPERTY_DECL(QString, filename, Filename)
 
-    public:
+    QString getDefaultPath();
 
-    Q_INVOKABLE explicit SentencesPalettes(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr)
-    {
-        _sectionsList = ezechiel::core::CoreFactory::createEntity<SectionList>(repository);
-        for (int i=0; i < VALIDATION_SECTIONS; i++){
-            auto newSection = ezechiel::core::CoreFactory::createEntity<Section>(repository);
-            newSection->setSectionId(QString::number(i));
-            _sectionsList->append(newSection);
-        }
-        _filename = loadXMLPath();
-        SentencesPalettesImporter s;
-        s.importXml(this, _filename);
-    }
+    Tucuxi::Common::XmlDocument m_doc;
+
+
+public:
+
+    Q_INVOKABLE explicit SentencesPalettes(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);
 
     Q_INVOKABLE Section* getSection(int i) { return _sectionsList->at(i);}
 
@@ -123,10 +114,6 @@ class SentencesPalettes : public ezechiel::core::Entity
     Q_INVOKABLE void saveXMLPath();
     Q_INVOKABLE QString loadXMLPath();
 
-private:
-    QString getDefaultPath();
-
-    Tucuxi::Common::XmlDocument m_doc;
 };
 
 Q_DECLARE_METATYPE(Section*)

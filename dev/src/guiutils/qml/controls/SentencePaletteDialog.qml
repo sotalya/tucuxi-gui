@@ -9,7 +9,7 @@ import guiutils.qml.controls 1.0
 import ezechiel 1.0
 
 DialogBase {
-    title: "Known sentences"
+    title: sectionName ? sectionName : ""
     width: 600
     height: 300
     id:root
@@ -25,6 +25,8 @@ DialogBase {
     property var sectionData
     property var globalSectionData
     property var specificSectionData
+    property var sectionName
+    property var oldSectionText
 
     property var inputText
 
@@ -40,34 +42,24 @@ DialogBase {
         }
     }
 
-    function initAddSentence(_sectionText, _sectionNb){
-
-        sectionText = _sectionText
-        sectionNb = _sectionNb
-        paletteChoice = false
-        self = this
-        currentDrugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId: ""
-        update()
-    }
-
-
-    function init(_sectionText, _sectionNb, _inputText)
+    function init(_sectionText, _sectionNb, _inputText, _sectionName, _paletteBtn)
     {
+        sectionName = _sectionName
         inputText = _inputText
         sectionText = _sectionText
         sectionNb = _sectionNb
-        paletteChoice = true
+        paletteChoice = _paletteBtn
         self = this
         currentDrugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId : ""
         update()
+        oldSectionText = _sectionText
     }
 
     function update()
     {
-
         sectionData = sentencesPalettes.sectionsList.objat(sectionNb)
         globalSectionData = sentencesPalettes.sectionsList.objat(sectionNb).globalSentences
-        specificSectionData = sentencesPalettes.sectionsList.objat(sectionNb).getSentencesList(currentDrugId)
+        specificSectionData = sentencesPalettes.sectionsList.objat(sectionNb).getSpecificSentencesList(currentDrugId)
     }
 
     GridLayout {
@@ -159,7 +151,9 @@ DialogBase {
                                                 anchors.fill: parent
                                                 onClicked: {
                                                     if (paletteChoice){
-                                                        sectionText = modelData
+                                                        if (inputText) {
+                                                            inputText.text = modelData
+                                                        }
                                                     }
                                                 }
                                             }
@@ -268,7 +262,9 @@ DialogBase {
                                                 anchors.fill: parent
                                                 onClicked: {
                                                     if (paletteChoice){
-                                                        sectionText = modelData
+                                                        if (inputText) {
+                                                            inputText.text = modelData
+                                                        }
                                                     }
                                                 }
                                             }
@@ -286,7 +282,7 @@ DialogBase {
                                             }
                                             onClicked: {
                                                 var sec = sentencesPalettes.getSection(sectionNb)
-                                                sec.removeSentenceFromSentencesList(currentDrugId, specificListIndex)
+                                                sec.removeSentenceFromDrugSentencesList(currentDrugId, specificListIndex)
                                                 root.update()
                                             }
                                             Image {
@@ -316,7 +312,7 @@ DialogBase {
                                 onClicked: {
                                     if (sectionText !== ""){
                                         var sec = sentencesPalettes.getSection(sectionNb)
-                                        sec.addSentenceToSentencesList(currentDrugId, sectionText)
+                                        sec.addSentenceToDrugSentencesList(currentDrugId, sectionText)
                                         root.update()
                                     }
                                 }
@@ -337,19 +333,30 @@ DialogBase {
 
                }
 
-
-
-            Button {
+            RowLayout{
                 Layout.alignment: Qt.AlignHCenter
-                id: cancelBtn
-                text: "Close"
-                Layout.preferredWidth: 125
-                onClicked: function() {
-                    sentencesPalettes.exportToXml();
-                    if (inputText) {
-                        inputText.text = sectionText
+                Button {
+                    id: closeBtn
+                    text: "Close"
+                    Layout.preferredWidth: 125
+                    onClicked: function() {
+                        sentencesPalettes.exportToXml();
+                        self.exit(false);
                     }
-                    self.exit(false);
+                }
+
+                Button {
+                    id: cancelBtn
+                    text: "Cancel"
+                    visible: paletteChoice
+                    enabled: paletteChoice
+                    Layout.preferredWidth: 125
+                    onClicked: function() {
+                        if (inputText) {
+                            inputText.text = oldSectionText
+                        }
+//                        self.exit(false);
+                    }
                 }
             }
         }

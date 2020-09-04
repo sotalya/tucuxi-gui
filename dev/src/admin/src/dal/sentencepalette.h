@@ -9,7 +9,7 @@
 
 ///
 /// \brief The DrugSentences class
-/// \brief This object contains the drug specific sentences list
+/// \brief This object contains the drug specific sentences list and the drug id
 class DrugSentences : public ezechiel::core::Entity
 {
     Q_OBJECT
@@ -22,8 +22,8 @@ class DrugSentences : public ezechiel::core::Entity
 public:
 
     Q_INVOKABLE explicit DrugSentences(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr){}
-    Q_INVOKABLE void addSentenceToSpecific(QString _sentence);
-    Q_INVOKABLE void removeSentenceFromSpecific(int _listIndex);
+    Q_INVOKABLE void addSentence(QString _sentence);
+    Q_INVOKABLE void removeSentence(int _listIndex);
 
 };
 
@@ -48,23 +48,32 @@ public:
 
     Q_INVOKABLE void addSentenceToGlobal(QString _sentence);
     Q_INVOKABLE void removeSentenceFromGlobal(int _listIndex);
-    Q_INVOKABLE void addSentenceToSentencesList(QString _drugId, QString _sentence);
-    Q_INVOKABLE void removeSentenceFromSentencesList(QString _drugId, int _listIndex);
-    Q_INVOKABLE QStringList getSentencesList(QString _drugId);
 
-    void addSentenceToSentences(QString _drugId, QString _sentence);
+    Q_INVOKABLE void addSentenceToDrugSentencesList(QString _drugId, QString _sentence);
+    Q_INVOKABLE void removeSentenceFromDrugSentencesList(QString _drugId, int _listIndex);
+
+    ///
+    /// \brief getSpecificSentencesList : return the list of sentences according to the drugId
+    /// \brief Used in SentencePaletteDialog.qml to display the content
+    /// \param _drugId : the drug ident
+    /// \return QStringList :
+    ///
+    Q_INVOKABLE QStringList getSpecificSentencesList(QString _drugId);
+
+    void addSentenceToDrugSentences(QString _drugId, QString _sentence);
 
 private:
-    void addSentences(QString _drugId);
+    void addDrugSentences(QString _drugId);
+//    void addDrugSentences(QString _drugId, QString _sentence);
     ezechiel::core::AbstractRepository *_repository;
 };
+
+QML_POINTERLIST_CLASS_DECL(SectionList, Section)
+
 ///
 /// \brief The SentencesPalettes class
 /// \brief This object is the top of the sentences palettes architecture
 ///
-
-QML_POINTERLIST_CLASS_DECL(SectionList, Section)
-
 class SentencesPalettes : public ezechiel::core::Entity
 {
     ///
@@ -113,8 +122,6 @@ class SentencesPalettes : public ezechiel::core::Entity
     Q_INVOKABLE void exportToXml();
     Q_INVOKABLE void saveXMLPath();
     Q_INVOKABLE QString loadXMLPath();
-
-    Q_INVOKABLE void test();
 
 private:
     QString getDefaultPath();

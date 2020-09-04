@@ -466,7 +466,7 @@ Rectangle {
                         Text {
                             id: expectednessLabel
                             Layout.preferredWidth: 100
-                            text: "Expectedness:"
+                            text: "Expectedness "
                             elide: Text.ElideRight
                             color: analysis.labelForeground
                             font.family:    analysis.labelFontFamily
@@ -513,7 +513,7 @@ Rectangle {
                             Layout.preferredWidth: 50
                             text: "Save"
                             onClicked: {
-                                expectednessPalette.initAddSentence(expectednessInput.text, 0)
+                                expectednessPalette.init(expectednessInput.text, 0, expectednessInput, expectednessLabel.text, false)
                                 expectednessPalette.open(true)
                             }
                         }
@@ -527,7 +527,7 @@ Rectangle {
                             }
 
                             onClicked: {
-                                expectednessPalette.init(expectednessInput.text, 0, expectednessInput)
+                                expectednessPalette.init(expectednessInput.text, 0, expectednessInput, expectednessLabel.text, true)
                                 expectednessPalette.open(true)
                             }
                             Image {
@@ -551,7 +551,7 @@ Rectangle {
                         Text {
                             id: suitabilityLabel
                             Layout.preferredWidth: 100
-                            text: "Suitability:"
+                            text: "Suitability "
                             elide: Text.ElideRight
                             color: analysis.labelForeground
                             font.family:    analysis.labelFontFamily
@@ -598,7 +598,7 @@ Rectangle {
                             Layout.preferredWidth: 50
                             text: "Save"
                             onClicked: {
-                                suitablePalette.initAddSentence(suitabilityInput.text, 1)
+                                suitablePalette.init(suitabilityInput.text, 1, suitabilityInput, suitabilityLabel.text, false)
                                 suitablePalette.open(true)
                             }
                         }
@@ -611,7 +611,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                suitablePalette.init(suitabilityInput.text, 1, suitabilityInput)
+                                suitablePalette.init(suitabilityInput.text, 1, suitabilityInput, suitabilityLabel.text, true)
                                 suitablePalette.open(true)
                             }
                             Image {
@@ -635,7 +635,7 @@ Rectangle {
                         Text {
                             id: predictionLabel
                             Layout.preferredWidth: 100
-                            text: "Prediction:"
+                            text: "Prediction "
                             elide: Text.ElideRight
                             color: analysis.labelForeground
                             font.family:    analysis.labelFontFamily
@@ -680,7 +680,7 @@ Rectangle {
                             Layout.preferredWidth: 50
                             text: "Save"
                             onClicked: {
-                                predictionPalette.initAddSentence(predictionInput.text, 2)
+                                predictionPalette.init(predictionInput.text, 2, predictionInput, predictionLabel.text, false)
                                 predictionPalette.open(true)
                             }
                         }
@@ -693,7 +693,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                predictionPalette.init(predictionInput.text, 2, predictionInput)
+                                predictionPalette.init(predictionInput.text, 2, predictionInput, predictionLabel.text, true)
                                 predictionPalette.open(true)
                             }
                             Image {
@@ -717,7 +717,7 @@ Rectangle {
                         Text {
                             id: remonitoringLabel
                             Layout.preferredWidth: 100
-                            text: "Remonitoring:"
+                            text: "Remonitoring "
                             elide: Text.ElideRight
                             color: analysis.labelForeground
                             font.family:    analysis.labelFontFamily
@@ -762,7 +762,7 @@ Rectangle {
                             Layout.preferredWidth: 50
                             text: "Save"
                             onClicked: {
-                                remonitoringPalette.initAddSentence(remonitoringInput.text, 3)
+                                remonitoringPalette.init(remonitoringInput.text, 3, remonitoringInput, remonitoringLabel.text, false)
                                 remonitoringPalette.open(true)
                             }
                         }
@@ -775,7 +775,7 @@ Rectangle {
                             }
                             id: remonitoringPaletteBTN
                             onClicked: {
-                                remonitoringPalette.init(remonitoringInput.text, 3, remonitoringInput)
+                                remonitoringPalette.init(remonitoringInput.text, 3, remonitoringInput, remonitoringLabel.text, true)
                                 remonitoringPalette.open(true)
                             }
                             Image {
@@ -799,7 +799,7 @@ Rectangle {
                         Text {
                             id: warningLabel
                             Layout.preferredWidth: 100
-                            text: "Warning:"
+                            text: "Warning "
                             elide: Text.ElideRight
                             color: analysis.labelForeground
                             font.family:    analysis.labelFontFamily
@@ -855,7 +855,7 @@ Rectangle {
                             text: "Save"
 
                             onClicked: {
-                                warningPalette.initAddSentence(warningInput.text, 4)
+                                warningPalette.init(warningInput.text, 4, warningInput, warningLabel.text, false)
                                 warningPalette.open(true)
                             }
                         }
@@ -868,7 +868,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                warningPalette.init(warningInput.text, 4, warningInput)
+                                warningPalette.init(warningInput.text, 4, warningInput, warningLabel.text, true)
                                 warningPalette.open(true)
                             }
                             Image {

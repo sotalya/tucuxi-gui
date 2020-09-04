@@ -17,11 +17,11 @@
 
 QML_POINTERLIST_CLASS_IMPL(SectionList, Section)
 
-void DrugSentences::removeSentenceFromSpecific(int _listIndex){
+void DrugSentences::removeSentence(int _listIndex){
     _sentences.removeAt(_listIndex);
 }
 
-void DrugSentences::addSentenceToSpecific(QString _sentence){
+void DrugSentences::addSentence(QString _sentence){
     _sentences.append(_sentence);
 }
 
@@ -34,58 +34,56 @@ void Section::removeSentenceFromGlobal(int _listIndex){
 }
 
 
-QStringList Section::getSentencesList(QString _drugId){
+QStringList Section::getSpecificSentencesList(QString _drugId){
 
     for(const auto &sentencesList : _specificSentences){
         if(sentencesList->getDrugId() == _drugId){
             return sentencesList->getSentences();
         }
     }
-    addSentences(_drugId);
+    addDrugSentences(_drugId);
     return _specificSentences.last()->getSentences();
 }
 
-void Section::addSentenceToSentencesList(QString _drugId, QString _sentence){
+void Section::addSentenceToDrugSentencesList(QString _drugId, QString _sentence){
     for(const auto &sentencesList : _specificSentences){
         if(sentencesList->getDrugId() == _drugId){
-            sentencesList->addSentenceToSpecific(_sentence);
+            sentencesList->addSentence(_sentence);
             return;
         }
     }
     //SHOULD NOT GO THERE
-    addSentences(_drugId);
+    addDrugSentences(_drugId);
 }
 
-void Section::removeSentenceFromSentencesList(QString _drugId, int _listIndex){
+void Section::removeSentenceFromDrugSentencesList(QString _drugId, int _listIndex){
     for(const auto &sentencesList : _specificSentences){
         if(sentencesList->getDrugId() == _drugId){
-            sentencesList->removeSentenceFromSpecific(_listIndex);
+            sentencesList->removeSentence(_listIndex);
             return;
         }
     }
     //SHOULD NOT GO THERE
-    addSentences(_drugId);
+    addDrugSentences(_drugId);
 }
 
-void Section::addSentences(QString _drugId){
+void Section::addDrugSentences(QString _drugId){
     auto newSentence = ezechiel::core::CoreFactory::createEntity<DrugSentences>(_repository);
     newSentence->setDrugId(_drugId);
     _specificSentences.push_back(newSentence);
 }
 
-void Section::addSentenceToSentences(QString _drugId, QString _sentence){
+void Section::addSentenceToDrugSentences(QString _drugId, QString _sentence){
     bool same = false;
     for (const auto &sentence : getSpecificSentences()){
         if (_drugId == sentence->getDrugId()){
             same = true;
-            sentence->addSentenceToSpecific(_sentence);
+            sentence->addSentence(_sentence);
         }
     }
     if(!same){
-        auto newSentence = ezechiel::core::CoreFactory::createEntity<DrugSentences>(_repository);
-        newSentence->setDrugId(_drugId);
-        newSentence->addSentenceToSpecific(_sentence);
-        _specificSentences.push_back(newSentence);
+        addDrugSentences(_drugId);
+        _specificSentences.last()->addSentence(_sentence);
     }
 
 }
@@ -197,14 +195,13 @@ QString SentencesPalettes::getDefaultPath(){
     char buff[FILENAME_MAX];
     GetCurrentDir( buff, FILENAME_MAX );
     std::string current_working_dir(buff);
-    current_working_dir.erase(current_working_dir.rfind('/'), std::string::npos);
-    current_working_dir.erase(current_working_dir.rfind('/'), std::string::npos);
-    return QString::fromStdString(current_working_dir + "/sentences.xml");
-}
+    int i = 0;
+    while(i < 2){
+        current_working_dir.erase(current_working_dir.rfind('/'), std::string::npos);
+        i++;
+    }
 
-void SentencesPalettes::test()
-{
-    int i;
+    return QString::fromStdString(current_working_dir + "/sentences.xml");
 }
 
 void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *_sentencesPalettes, QString _filename){
@@ -222,7 +219,6 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
     static const std::string SENTENCE_NODE                  = "sentence";
 
     bool foundDrugInSpecificList = false;
-    bool globalSentences = false;
 
     Tucuxi::Common::XmlNode root = document.getRoot();
 
@@ -244,7 +240,7 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
                     if (sentences->getDrugId() == drugId){
                         while(sentenceIterator != Tucuxi::Common::XmlNodeIterator::none()){
                             QString sentence = QString::fromStdString(sentenceIterator->getValue());
-                            sentences->addSentenceToSpecific(sentence);
+                            sentences->addSentence(sentence);
                             sentenceIterator++;
                         }
                         foundDrugInSpecificList = true;
@@ -261,7 +257,7 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
                 else if (!foundDrugInSpecificList){
                     while(sentenceIterator != Tucuxi::Common::XmlNodeIterator::none()){
                         QString sentence = QString::fromStdString(sentenceIterator->getValue());
-                        section->addSentenceToSentences(drugId, sentence);
+                        section->addSentenceToDrugSentences(drugId, sentence);
                         sentenceIterator++;
                     }
                 }

@@ -28,6 +28,7 @@ public:
     void adjustmentUpdated();
     void adjustmentSettingsUpdated();
     void dosageUpdated(bool bShowPerc, bool computeRev = true);
+    void viewRangeUpdated(bool bShowPerc, bool computeRev = true);
     void measureUpdated(bool bShowPerc);
     void targetUpdated();
     void covariateUpdated(bool bShowPerc);

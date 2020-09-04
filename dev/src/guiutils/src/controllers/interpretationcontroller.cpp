@@ -1474,7 +1474,7 @@ void InterpretationController::setViewRange(const QDateTime &minX, const QDateTi
 
     if (updateInterpretationRange(EViewRangeUpdateContext::UserResize)) {
         flowController->evaluate();
-        _chartDataController->dosageUpdated(shouldPercentilesBeComputed);
+        _chartDataController->viewRangeUpdated(shouldPercentilesBeComputed);
     }
     else {
         CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "requestPaint"));

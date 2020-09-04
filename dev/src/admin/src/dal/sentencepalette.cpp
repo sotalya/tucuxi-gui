@@ -101,7 +101,13 @@ SentencesPalettes::SentencesPalettes(ezechiel::core::AbstractRepository *reposit
     }
     _filename = loadXMLPath();
     SentencesPalettesImporter s;
-    s.importXml(this, _filename);
+    m_sentencesPalettesImporter = &s;
+    m_sentencesPalettesImporter->importXml(this, _filename);
+//    s.importXml(this, _filename);
+}
+
+void SentencesPalettes::manualImport(QString _filename) {
+    m_sentencesPalettesImporter->importXml(this, _filename);
 }
 
 
@@ -210,15 +216,14 @@ QString SentencesPalettes::loadXMLPath(){
 
 QString SentencesPalettes::getDefaultPath(){
     char buff[FILENAME_MAX];
-    GetCurrentDir( buff, FILENAME_MAX );
+    GetCurrentDir( buff, FILENAME_MAX ); // dist folder
     std::string current_working_dir(buff);
-    int i = 0;
-    while(i < 2){
-        current_working_dir.erase(current_working_dir.rfind('/'), std::string::npos);
-        i++;
-    }
-
     return QString::fromStdString(current_working_dir + "/sentences.xml");
+}
+
+bool SentencesPalettes::isPathExisting(QString _name){
+      struct stat buffer;
+      return (stat (_name.toStdString().c_str(), &buffer) == 0);
 }
 
 void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *_sentencesPalettes, QString _filename){
@@ -256,8 +261,10 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
                 for(const auto &sentences : section->getSpecificSentences()){
                     if (sentences->getDrugId() == drugId){
                         while(sentenceIterator != Tucuxi::Common::XmlNodeIterator::none()){
-                            QString sentence = QString::fromStdString(sentenceIterator->getValue());
-                            sentences->addSentence(sentence);
+                            QString xmlSentence = QString::fromStdString(sentenceIterator->getValue());
+                            if (isXMLSentenceExisting(sentences->getSentences(), xmlSentence)){
+                                sentences->addSentence(xmlSentence);
+                            }
                             sentenceIterator++;
                         }
                         foundDrugInSpecificList = true;
@@ -265,8 +272,10 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
                 }
                 if(drugId == "all"){
                     while(sentenceIterator != Tucuxi::Common::XmlNodeIterator::none()){
-                        QString sentence = QString::fromStdString(sentenceIterator->getValue());
-                        section->addSentenceToGlobal(sentence);
+                        QString xmlSentence = QString::fromStdString(sentenceIterator->getValue());
+                        if (isXMLSentenceExisting(section->getGlobalSentences(), xmlSentence)){
+                            section->addSentenceToGlobal(xmlSentence);
+                        }
                         sentenceIterator++;
                     }
                 }
@@ -278,10 +287,20 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
                         sentenceIterator++;
                     }
                 }
+                foundDrugInSpecificList = false;
             }
         }
         sentencesPaletteIterator++;
     }
+}
+
+bool SentencesPalettes::SentencesPalettesImporter::isXMLSentenceExisting(QStringList _sentence, QString _xmlSentence){
+    for (auto const &sentence : _sentence.toStdList()){
+        if(sentence == _xmlSentence){
+            return 0;
+        }
+    }
+    return 1;
 }
 
 

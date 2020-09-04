@@ -83,8 +83,12 @@ class SentencesPalettes : public ezechiel::core::Entity
             return ignored;
         }
 
+        bool isXMLSentenceExisting(QStringList _sentence, QString _xmlSentence);
+
         public:
         void importXml(SentencesPalettes *_sentencesPalettes, QString _fileName);
+
+
 
     };
 
@@ -100,6 +104,7 @@ class SentencesPalettes : public ezechiel::core::Entity
 
     Tucuxi::Common::XmlDocument m_doc;
 
+    SentencesPalettesImporter *m_sentencesPalettesImporter;
 
 public:
 
@@ -113,6 +118,10 @@ public:
     Q_INVOKABLE void exportToXml();
     Q_INVOKABLE void saveXMLPath();
     Q_INVOKABLE QString loadXMLPath();
+
+    Q_INVOKABLE void manualImport(QString _filename);
+
+    Q_INVOKABLE bool isPathExisting(QString _name);
 
 };
 

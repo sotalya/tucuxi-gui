@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Layouts 1.11
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Dialogs 1.3
 
 import guiutils.qml.styles 1.0
 import guiutils.qml.controls 1.0
@@ -18,6 +19,7 @@ DialogBase {
 
     property var stdTreatment
 
+    property var pathChanged
 
     function onUpdated(bApplied, bCreatingNewItem) {
         if (bApplied) {
@@ -42,6 +44,7 @@ DialogBase {
     {
         self = this
         loadAnalystFromSettings()
+        pathChanged = false
     }
 
     function loadAnalystFromSettings()
@@ -69,6 +72,10 @@ DialogBase {
             width: parent.width
             TabButton {
                 text: qsTr("Analyst")
+            }
+
+           TabButton {
+                text: qsTr("Sentences")
             }
 
             TabButton {
@@ -229,17 +236,22 @@ DialogBase {
             }
 
             Item {
-                id: connectivityTab
+                id: sentencesPalettesTab
                 width: parent.width
 
-//                GridLayout {
-//                    anchors.fill: parent
-//                    rows: 3
-//                    columns: 3
+                GridLayout {
+                    anchors.fill: parent
+                    rows: 3
+                    columns: 3
+
+                    Rectangle {
+                        Layout.fillWidth:  true
+                        Layout.fillHeight:  true
+                    }
                     ColumnLayout{
                         Layout.row: 1
                         Layout.column:1
-                        width: parent.width - 20
+                        width: parent.width
                         height: parent.height
 
                         RowLayout {
@@ -248,17 +260,37 @@ DialogBase {
 
                             EntityLabel {
                                 Layout.preferredWidth: 180
-                                text: "Sentences file path (XML) :"
+                                text: "Sentences XML file saving path"
                             }
                             EntityTextField {
                                 id: xmlPathETF
                                 Layout.fillWidth:  true
+                                onTextChanged: {
+                                    pathChanged = true
+                                }
                             }
                         }
 
-//                    }
+                        Button{
+                            Layout.alignment: Qt.AlignHCenter
+                            text: "Import sentences"
+                            onClicked: {
+                                fileDialog.open();
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        Layout.fillWidth:  true
+                        Layout.fillHeight:  true
+                    }
                 }
             }
+
+            Item {
+                id: connectivityTab
+                width: parent.width
+                                }
             /*
             Item {
                 id: activityTab
@@ -298,13 +330,39 @@ DialogBase {
             Button {
                 id: acceptBtn
                 text: "Save and Close"
-                onClicked: function() {
+                onClicked: {
+                    if (pathChanged){
+                        if (sentencesPalettes.isPathExisting(xmlPathETF.text)){
+                            messageDialog.open()
+                        }
+                    }
+                    else{
+                        sentencesPalettes.filename = xmlPathETF.text
+                        sentencesPalettes.exportToXml();
+                        root.exit(true);
+                    }
+                }
+            }
+            MessageDialog {
+                id: messageDialog
+                title: "Warning"
+                text: "The path you want to use is already used. If you continue, the older file will be overwritten."
+                standardButtons: StandardButton.Abort | StandardButton.Yes
+                onAccepted: {
+                    messageDialog.close()
                     sentencesPalettes.filename = xmlPathETF.text
                     sentencesPalettes.exportToXml();
                     root.exit(true);
                 }
-            }
 
+                onRejected: {
+                    messageDialog.close()
+                    sentencesPalettes.filename = xmlPathETF.text
+                    sentencesPalettes.exportToXml();
+                }
+
+                Component.onCompleted: visible = false
+            }
             Button {
                 id: cancelBtn
                 text: "Cancel"
@@ -321,6 +379,23 @@ DialogBase {
         Rectangle{
             height: 20
         }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Import"
+        folder: shortcuts.home
+        modality: Qt.WindowModal
+        selectExisting: true
+        selectMultiple: false
+        onAccepted: {
+            sentencesPalettes.manualImport(fileDialog.fileUrls.toString().replace(/^(file:\/{2})/,""))
+            fileDialog.close();
+        }
+        onRejected: {
+            fileDialog.close();
+        }
+        Component.onCompleted: visible = false
     }
 
 }

@@ -355,7 +355,7 @@ DialogBase {
                         if (inputText) {
                             inputText.text = oldSectionText
                         }
-//                        self.exit(false);
+                        self.exit(false);
                     }
                 }
             }

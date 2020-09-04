@@ -322,6 +322,23 @@ void ChartDataController::adjustmentUpdated()
     initiateUpdateAdjPerc();
 }
 
+
+void ChartDataController::viewRangeUpdated(bool bShowPerc, bool computeRev)
+{
+    initiateUpdatePopPred();
+    initiateUpdateAprPred();
+    initiateUpdateApoPred();
+//    initiateUpdateAdjPred();
+    if (computeRev)
+        initiateUpdateRevPred();
+    if (bShowPerc) {
+        initiateUpdatePopPerc();
+        initiateUpdateAprPerc();
+        initiateUpdateApoPerc();
+//        initiateUpdateAdjPerc();
+    }
+}
+
 void ChartDataController::dosageUpdated(bool bShowPerc, bool computeRev)
 {    
     initiateUpdatePopPred();

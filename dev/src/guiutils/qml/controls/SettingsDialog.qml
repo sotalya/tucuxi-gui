@@ -35,10 +35,20 @@ DialogBase {
             interpretation.analyst.saveToSettings()
 
             sentencesPalettes.filename = xmlPathETF.text
+            sentencesPalettes.exportToXml();
             sentencesPalettes.saveXMLPath()
         }
     }
 
+    function applyChanges()
+    {
+        if (pathChanged){
+            if (sentencesPalettes.isPathExisting(xmlPathETF.text)){
+                messageDialog.open()
+            }
+        }
+        return true;
+    }
 
     function init()
     {
@@ -319,17 +329,13 @@ DialogBase {
             Layout.fillWidth: true
             Layout.fillHeight: true
             spacing: 10
-            // anchors.horizontalCenter: parent.horizontalCenter
-
-            //TODO Implement ok and cancel button
 
             Item{
                 Layout.fillWidth:  true
-                //Layout.fillHeight:  true
             }
             Button {
                 id: acceptBtn
-                text: "Save and Close"
+                text: "Ok"
                 onClicked: {
                     if (pathChanged){
                         if (sentencesPalettes.isPathExisting(xmlPathETF.text)){
@@ -337,42 +343,53 @@ DialogBase {
                         }
                     }
                     else{
-                        sentencesPalettes.filename = xmlPathETF.text
-                        sentencesPalettes.exportToXml();
-                        root.exit(true);
+                        self.exit(true);
                     }
                 }
             }
+
+            Button {
+                id: applyBtn
+                text: "Apply"
+                onClicked: function() {
+                    if (pathChanged){
+                        if (sentencesPalettes.isPathExisting(xmlPathETF.text)){
+                            messageDialog.open()
+                        }
+                    }
+                }
+            }
+
+            Button {
+                id: cancelBtn
+                text: "Cancel"
+                onClicked: function() {
+                    self.exit(false);
+                }
+            }
+
+            Item{
+                Layout.fillWidth:  true
+            }
+
             MessageDialog {
                 id: messageDialog
                 title: "Warning"
                 text: "The path you want to use is already used. If you continue, the older file will be overwritten."
                 standardButtons: StandardButton.Abort | StandardButton.Yes
+
                 onAccepted: {
                     messageDialog.close()
                     sentencesPalettes.filename = xmlPathETF.text
                     sentencesPalettes.exportToXml();
-                    root.exit(true);
+                    pathChanged = false;
                 }
 
                 onRejected: {
                     messageDialog.close()
-                    sentencesPalettes.filename = xmlPathETF.text
-                    sentencesPalettes.exportToXml();
                 }
 
                 Component.onCompleted: visible = false
-            }
-            Button {
-                id: cancelBtn
-                text: "Cancel"
-                onClicked: function() {
-                    root.exit(false);
-                }
-            }
-            Item{
-                Layout.fillWidth:  true
-                //Layout.fillHeight:  true
             }
         }
 
@@ -386,6 +403,7 @@ DialogBase {
         title: "Import"
         folder: shortcuts.home
         modality: Qt.WindowModal
+        nameFilters: "*.xml"
         selectExisting: true
         selectMultiple: false
         onAccepted: {

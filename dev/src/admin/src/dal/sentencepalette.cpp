@@ -103,7 +103,6 @@ SentencesPalettes::SentencesPalettes(ezechiel::core::AbstractRepository *reposit
     SentencesPalettesImporter s;
     m_sentencesPalettesImporter = &s;
     m_sentencesPalettesImporter->importXml(this, _filename);
-//    s.importXml(this, _filename);
 }
 
 void SentencesPalettes::manualImport(QString _filename) {

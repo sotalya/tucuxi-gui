@@ -87,9 +87,6 @@ class SentencesPalettes : public ezechiel::core::Entity
 
         public:
         void importXml(SentencesPalettes *_sentencesPalettes, QString _fileName);
-
-
-
     };
 
     Q_OBJECT
@@ -110,6 +107,8 @@ public:
 
     Q_INVOKABLE explicit SentencesPalettes(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);
 
+    // Used in QML to get the reference to the section.
+    // Especially used to write the sentence from list to the TextArea
     Q_INVOKABLE Section* getSection(int i) { return _sectionsList->at(i);}
 
     Q_INVOKABLE void addSentenceToGlobal(QString _sentence);
@@ -119,8 +118,10 @@ public:
     Q_INVOKABLE void saveXMLPath();
     Q_INVOKABLE QString loadXMLPath();
 
+    // Manual import, from the settingsDialog button^
     Q_INVOKABLE void manualImport(QString _filename);
 
+    // Check if the saving path already exist.
     Q_INVOKABLE bool isPathExisting(QString _name);
 
 };

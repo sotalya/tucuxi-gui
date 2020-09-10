@@ -324,6 +324,8 @@ int main(int argc, char *argv[])
     qRegisterMetaType<ezechiel::core::LightActiveSubstanceList*>("LightActiveSubstanceList*");
     qRegisterMetaType<ezechiel::core::CoreMeasure*>("CoreMeasure*");
     qRegisterMetaType<ezechiel::core::CoreMeasureList*>("CoreMeasureList*");
+    qRegisterMetaType<PhoneList*>("PhoneList*");
+    qRegisterMetaType<Phone*>("Phone*");
     qRegisterMetaType<ezechiel::core::PatientVariate*>("PatientVariate*");
     qRegisterMetaType<ezechiel::core::DrugVariate*>("DrugVariate*");
     qRegisterMetaType<ezechiel::core::DrugTreatment*>("DrugTreatment*");
@@ -407,6 +409,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType< ezechiel::core::IntList >( "IntList" );
     qmlRegisterUncreatableType<InterpretationRequest>("ezechiel", 1, 0, "InterpretationRequest", QObject::tr("Cannot instantiate type 'InterpretationRequest'"));
     qmlRegisterUncreatableType<Patient>("ezechiel", 1, 0, "Patient", QObject::tr("Cannot instantiate type 'Patient'"));
+    qmlRegisterUncreatableType<Phone>("ezechiel", 1, 0, "Phone", QObject::tr("Cannot instantiate type 'Phone'"));
     qmlRegisterUncreatableType<Person>("ezechiel", 1, 0, "Person", QObject::tr("Cannot instantiate type 'Person'"));
     qmlRegisterUncreatableType<Location>("ezechiel", 1, 0, "Location", QObject::tr("Cannot instantiate type 'Location'"));
     qmlRegisterUncreatableType<Practician>("ezechiel", 1, 0, "Practician", QObject::tr("Cannot instantiate type 'Practician'"));

@@ -4,6 +4,7 @@
 
 
 AUTO_PROPERTY_IMPL(Person, ezechiel::core::UncastedValueList *, uncastedValues, UncastedValues)
+AUTO_PROPERTY_IMPL(Person, PhoneList*, phones, Phones)
 
 Person::Person(ezechiel::core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
@@ -13,7 +14,7 @@ Person::Person(ezechiel::core::AbstractRepository *repository, QObject *parent) 
     _birthday(),
     _location(),
     _emails(),
-    _phones(),
+    _phones(AdminFactory::createEntity<PhoneList>(repository, this)),
     _gender(GenderType::Male),
     _uncastedValues(AdminFactory::createEntity<ezechiel::core::UncastedValueList>(repository, this))
 {    
@@ -21,7 +22,7 @@ Person::Person(ezechiel::core::AbstractRepository *repository, QObject *parent) 
 //    setLocation(_loc.data());
 //    setLocation(0);
     _location = AdminFactory::createEntity<Location>(repository);
-    setPhones(QList<SharedPhone>());
+    // setPhones(QList<SharedPhone>());
     setEmails(QList<Email*>());
 }
 
@@ -33,13 +34,13 @@ Person::Person(ezechiel::core::AbstractRepository *repository, const int &id, QO
     _location(),
     _birthday(),
     _emails(),
-    _phones(),
+    _phones(AdminFactory::createEntity<PhoneList>(repository, this)),
     _gender(GenderType::Male),
     _uncastedValues(NULL)
 {
     Location* _loc = AdminFactory::createEntity<Location>(repository);
     location(_loc);
-    setPhones(QList<SharedPhone>());
+    // setPhones(QList<SharedPhone>());
     setEmails(QList<Email*>());
 }
 

@@ -511,7 +511,7 @@ SharedPatient InterpretationRequestBuilder::buildPatient(const QString &rootKey)
     patient->person()->location()->country(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("country").firstChild().toText().data());
 
     //Patient phones
-    patient->person()->setPhones(buildPhones(rootKey, ""));
+    patient->person()->setPhones(buildPhoneList(rootKey, ""));
 
     //Patient mails
     patient->person()->setEmails(buildEmails(rootKey, ""));
@@ -556,7 +556,7 @@ SharedPractician InterpretationRequestBuilder::buildPractician(const QString &ro
     practician->person()->location()->country(datasetNode.firstChildElement("mandator").firstChildElement("contact").firstChildElement("country").firstChild().toText().data());
 
     //Practician phones
-    practician->person()->setPhones(buildPhones(rootKey, ""));
+    practician->person()->setPhones(buildPhoneList(rootKey, ""));
 
     //Practician mails
     practician->person()->setEmails(buildEmails(rootKey, ""));
@@ -705,6 +705,30 @@ QList<SharedPhone> InterpretationRequestBuilder::buildPhones(const QString &root
         phone->setNumber(patientPhoneNode.firstChild().toText().data());
         phone->setType(toPhoneType(patientPhoneNode.attributeNode("type").value()));
         phones.append(phone);
+
+        patientPhoneNode = patientPhoneNode.nextSiblingElement("phone");
+    }
+
+    return phones;
+}
+
+
+PhoneList *InterpretationRequestBuilder::buildPhoneList(const QString &rootKey, const QString &rootKey2)
+{
+    PhoneList *phones = AdminFactory::createEntity<PhoneList>(ABSTRACTREPO);
+
+    QDomElement patientPhoneNode;
+    if (rootKey2 != "") {
+        patientPhoneNode = datasetNode.firstChildElement(rootKey).firstChildElement(rootKey2).firstChildElement("contact").firstChildElement("phones").firstChildElement("email");
+    } else {
+        patientPhoneNode = datasetNode.firstChildElement(rootKey).firstChildElement("contact").firstChildElement("emails").firstChildElement("phones");
+    }
+    //Get patient phones
+    while (!patientPhoneNode.isNull()) {
+        SharedPhone phone = AdminFactory::createEntity<Phone>(ABSTRACTREPO);
+        phone->setNumber(patientPhoneNode.firstChild().toText().data());
+        phone->setType(toPhoneType(patientPhoneNode.attributeNode("type").value()));
+        phones->append(phone);
 
         patientPhoneNode = patientPhoneNode.nextSiblingElement("phone");
     }

@@ -14,6 +14,9 @@ enum class PhoneType {
 class Phone : public ezechiel::core::Entity
 {
     Q_OBJECT
+
+    ADMIN_ENTITY_UTILS(Phone)
+
     AUTO_PROPERTY_DECL(QString, number, Number)
     AUTO_PROPERTY_DECL(PhoneType, type, Type)
 
@@ -25,9 +28,17 @@ public:
     void setTypeFromString(const QString &type);
     QString typeToString() const;
 
+    Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
+    {
+        return true;
+    }
+
 };
 
+QML_POINTERLIST_CLASS_DECL(PhoneList, Phone)
+
 typedef Phone* SharedPhone;
+Q_DECLARE_METATYPE(PhoneType)
 Q_DECLARE_METATYPE(Phone*)
 Q_DECLARE_METATYPE(QList<Phone*>)
 #endif // PHONE_H

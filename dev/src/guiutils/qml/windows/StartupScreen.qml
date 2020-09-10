@@ -103,7 +103,7 @@ Rectangle
             Layout.fillWidth: true
             Layout.preferredHeight: Style.splash.copyright.height
             horizontalAlignment: Text.AlignHCenter
-            text: "Copyright (c) Tucuxi SA - 2019"
+            text: "Copyright (c) HEIG-VD/CHUV - 2020"
             font.family: Style.splash.copyright.family
             fontSizeMode: Text.Fit
             minimumPixelSize: Style.splash.copyright.size

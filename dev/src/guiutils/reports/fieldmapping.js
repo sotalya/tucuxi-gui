@@ -11,6 +11,21 @@ function enumerate(list, callback)
     });
 }
 
+
+
+function getAnalystPhones(channel, callback)
+{
+    var interp = channel.objects.interpretation;
+    var phones = interp.analyst.person.phones;
+    if (phones) {
+        enumerate(phones, function(obj) {
+            var m = Object.create(null);
+            m.number = obj.number;
+            callback(m);
+        });
+    }
+}
+
 function getInfos(channel)
 {
     var fields = {}
@@ -45,10 +60,23 @@ function getInfos(channel)
 
     fields["drugName"] = interp.drugResponseAnalysis.drugModel.activeSubstance.substanceId;
     
+    fields["analystTitle"] = interp.analyst.title;
     fields["analystFirstName"] = interp.analyst.person.firstname;
     fields["analystLastName"] = interp.analyst.person.name;
-    fields["instituteName"] = interp.analyst.institute.name;
-    fields["instituteAddresse"] = interp.analyst.institute.location.address;
+    fields["analystInstituteName"] = interp.analyst.institute.name;
+    fields["analystInstituteAddresse"] = interp.analyst.institute.location.address;
+    interp.justForDebuggingPurpose();
+    //fields["analystPhone"] = interp.analyst.person.phones.objat(0).number;
+
+    fields["analystRole"] = interp.analyst.role;
+
+
+    fields["mandatorTitle"] = interp.request.practician.title;
+    fields["mandatorFirstName"] = interp.request.practician.person.firstname;
+    fields["mandatorLastName"] = interp.request.practician.person.name;
+    fields["mandatorInstituteName"] = interp.request.practician.institute.name;
+    fields["mandatorInstituteAddresse"] = interp.request.practician.institute.location.address;
+    fields["mandatorPhone"] = "11111";
     
     fields["expectedness"] = interp.analysis.expectedness;
     fields["warning"] = interp.analysis.warning;
@@ -88,6 +116,7 @@ function getMeasures(channel, callback)
         });
     }
 }
+
 
 function getParameters(channel, callback) 
 {

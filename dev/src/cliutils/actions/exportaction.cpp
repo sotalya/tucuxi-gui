@@ -959,14 +959,14 @@ bool ExportAction::buildContact(ExchangeAction::ContactData &contactData, const 
 {
     //Build the phones
     QList<PhoneData> phonesData;
-    if (person)
+   /* if (person)
         foreach (SharedPhone phone, person->phones()) {
             PhoneData phoneData;
             phoneData.setNumber(phone->getNumber());
             phoneData.setType(phone->typeToString());
             phonesData.append(phoneData);
         }
-
+*/
     //Build the emails
     QList<EmailData> emailsData;
     if (person)

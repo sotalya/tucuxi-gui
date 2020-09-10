@@ -41,6 +41,7 @@ private:
 
     ezechiel::core::CoreMeasureList * buildSamples(const QString &rootKey, const SharedPatient patient, const QString &drug);
     QList<SharedPhone> buildPhones(const QString &rootKey);
+    PhoneList* buildPhoneList(const QString &rootKey);
     QList<Email*> buildEmails(const QString &rootKey);
 
     ezechiel::core::Admin::Route toDosageRoute(const QString &route);

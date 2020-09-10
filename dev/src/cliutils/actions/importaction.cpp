@@ -1369,8 +1369,8 @@ bool ImportAction::processContact(const ImportAction::ContactData &contactData, 
         phone->setTypeFromString(contactData.phones().at(i).type());
 
         //Add the phone
-        if (!person->phones().contains(phone))
-            person->addPhone(phone);
+//        if (!person->getPhones()->contains(phone))
+//            person->addPhone(phone);
     }
 
     //Set or update the email

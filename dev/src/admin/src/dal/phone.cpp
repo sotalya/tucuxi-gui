@@ -19,6 +19,8 @@ Phone::Phone(ezechiel::core::AbstractRepository *repository, const int &id, QObj
 AUTO_PROPERTY_IMPL(Phone, QString, number, Number)
 AUTO_PROPERTY_IMPL(Phone, PhoneType, type, Type)
 
+QML_POINTERLIST_CLASS_IMPL(PhoneList, Phone)
+
 //QString Phone::number() const
 //{
 //    return _number;

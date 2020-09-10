@@ -574,9 +574,12 @@ void InterpretationController::startNewPatient()
 
     interpretation->getAnalyst()->title("Dr.");
     interpretation->getAnalyst()->institute()->name("The institute");
-    interpretation->getAnalyst()->person()->firstname("Prenom");
-    interpretation->getAnalyst()->person()->name("Nom");
-
+    interpretation->getAnalyst()->person()->firstname("ThePrenom");
+    interpretation->getAnalyst()->person()->name("TheNom");
+    interpretation->getAnalyst()->role("Division head");
+    auto phone = CoreFactory::createEntity<Phone>(ABSTRACTREPO,interpretation->getAnalyst()->person()->getPhones());
+    phone->setNumber("+41 21 123456");
+    interpretation->getAnalyst()->person()->getPhones()->append(phone);
 
     // Set it to the controller
     setNewInterpretation(interpretation, true);

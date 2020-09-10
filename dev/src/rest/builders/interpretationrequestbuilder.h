@@ -38,6 +38,7 @@ private:
 
     ezechiel::core::CoreMeasureList* buildSamples(const QString &rootKey, const SharedPatient patient, const QString &activeSubstance);
     QList<SharedPhone> buildPhones(const QString &rootKey, const QString&);
+    PhoneList* buildPhoneList(const QString &rootKey, const QString&);
     QList<Email*> buildEmails(const QString &rootKey, const QString&);
 
     PhoneType toPhoneType(const QString &type);

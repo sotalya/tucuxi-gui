@@ -39,3 +39,8 @@ AUTO_PROPERTY_IMPL(Interpretation, QDateTime, adjustmentDate, AdjustmentDate)
 AUTO_PROPERTY_IMPL(Interpretation, ezechiel::core::AdjustmentDosage*, selectedAdjustment, SelectedAdjustment)
 AUTO_PROPERTY_IMPL(Interpretation, QDateTime, startInterpretationTime, StartInterpretationTime)
 AUTO_PROPERTY_IMPL(Interpretation, QDateTime, validateInterpretationTime, ValidateInterpretationTime)
+
+bool Interpretation::justForDebuggingPurpose()
+{
+    return true;
+}

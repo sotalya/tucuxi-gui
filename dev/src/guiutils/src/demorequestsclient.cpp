@@ -313,7 +313,7 @@ SharedPatient DemoInterpretationRequestBuilder::buildPatient(const QString &root
     patient->person()->location()->country(QString("id %1").arg(i));
 
     //Patient phones
-    patient->person()->setPhones(buildPhones(rootKey + ".contact.phones"));
+    patient->person()->setPhones(buildPhoneList(rootKey + ".contact.phones"));
 
     //Patient mails
     patient->person()->setEmails(buildEmails(rootKey + ".contact.emails"));
@@ -348,7 +348,7 @@ SharedPractician DemoInterpretationRequestBuilder::buildPractician(const QString
     practician->person()->location()->country(QString("id %1").arg(i));
 
     //Practician phones
-    practician->person()->setPhones(buildPhones(rootKey + ".contact.phones"));
+    practician->person()->setPhones(buildPhoneList(rootKey + ".contact.phones"));
 
     //Practician mails
     practician->person()->setEmails(buildEmails(rootKey + ".contact.emails"));
@@ -440,6 +440,20 @@ QList<SharedPhone> DemoInterpretationRequestBuilder::buildPhones(const QString &
         phone->setNumber("021 210 10 10");
         phone->setType(PhoneType::Professional);
         phones.append(phone);
+    }
+
+    return phones;
+}
+
+PhoneList* DemoInterpretationRequestBuilder::buildPhoneList(const QString &rootKey)
+{
+    PhoneList *phones = AdminFactory::createEntity<PhoneList>(ABSTRACTREPO);
+
+    for (int i = 0; i < 2; ++i) {
+        SharedPhone phone = AdminFactory::createEntity<Phone>(ABSTRACTREPO);
+        phone->setNumber("021 210 10 10");
+        phone->setType(PhoneType::Professional);
+        phones->append(phone);
     }
 
     return phones;

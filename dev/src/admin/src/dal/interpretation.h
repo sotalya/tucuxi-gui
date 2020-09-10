@@ -62,6 +62,8 @@ protected:
 
 public:
 
+    Q_INVOKABLE bool justForDebuggingPurpose();
+
     Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
     {
         return true;

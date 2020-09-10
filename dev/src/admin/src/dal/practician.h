@@ -12,6 +12,7 @@ class Practician : public ezechiel::core::Entity
     ADMIN_ENTITY_UTILS(Practician)
     AUTO_PROPERTY(QString, externalId)
     AUTO_PROPERTY(QString, title)
+    AUTO_PROPERTY(QString, role)
     AUTO_PROPERTY(Person*, person)
     AUTO_PROPERTY(int, person_id)
     AUTO_PROPERTY(Institute*, institute)

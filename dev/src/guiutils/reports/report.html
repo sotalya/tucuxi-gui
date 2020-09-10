@@ -112,8 +112,25 @@
         $("#nextControl").html(data["nextControl"]);
         $("#validationDate").html(data["validationDate"]);
 
-        $("#chartImage").attr("src", data["imageUrl"]);
+        $("#analystTitle").html(data["analystTitle"]);
+        $("#analystFirstName").html(data["analystFirstName"]);
+        //var interp = channel.objects.interpretation;
+        //$("#analystFirstName").html(interp.analyst.person.firstname);
 
+        $("#analystLastName").html(data["analystLastName"]);
+        $("#analystInstituteName").html(data["analystInstituteName"]);
+        $("#analystInstituteAddresse").html(data["analystInstituteAddresse"]);
+        $("#analystPhone").html(data["analystPhone"]);
+        $("#analystRole").html(data["analystRole"]);
+
+        $("#mandatorTitle").html(data["mandatorTitle"]);
+        $("#mandatorFirstName").html(data["mandatorFirstName"]);
+        $("#mandatorLastName").html(data["mandatorLastName"]);
+        $("#mandatorInstituteName").html(data["mandatorInstituteName"]);
+        $("#mandatorInstituteAddresse").html(data["mandatorInstituteAddresse"]);
+        $("#mandatorPhone").html(data["mandatorPhone"]);
+
+        $("#chartImage").attr("src", data["imageUrl"]);
 
         var samplesLineElement = $("#measures");
         samplesLineElement.empty();
@@ -131,6 +148,13 @@
           "<td class='data'><span id='sampleValue'>" + measure.sampleValue + "</span></td>" +
           "</tr>");
         })
+
+        var phoneElement = $("#analystPhones");
+        phoneElement.empty();
+        getAnalystPhones(channel, function(phone) {
+            phoneElement.append("<span id='analystPhones'>" + "Tel. " + phone.number + "</span>");
+        })
+
 
         var parametersLineElement = $("#parameters");
         parametersLineElement.empty();
@@ -251,11 +275,10 @@
             Tel. +41 (0) 11 222 3333<br>
             Fax +41 (0) 11 222 3334<br>
             <br>
-            <span class="header-title">Therapeutic Drug Monitoring Unit<br>
+            <span class="header-title"><span id="analystInstituteName">???</span><br>
             </span>
-            Dr. John Carter, head-physician<br>
-            Tel. +41 (0) 11 222 3335<br>
-            Tel. +41 (0) 11 222 3336<br>
+            <span id="analystTitle">???</span> <span id="analystFirstName">???</span> <span id="analystLastName">???</span>,  <span id="analystRole">???</span><br>
+            <span id="analystPhones">???</span>
           </td>
           <td>
             <!--

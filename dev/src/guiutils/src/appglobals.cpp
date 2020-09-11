@@ -10,7 +10,24 @@ AppGlobals::AppGlobals() :
     m_listFile(),
     m_requestFile(),
     m_analyst(nullptr)
-{}
+{
+
+    m_showProcessingTime = SETTINGS.get(ezechiel::core::Module::GUI, "showProcessingTime" ,true).toBool();
+
+}
+
+bool AppGlobals::showProcessingTime()
+{
+    return m_showProcessingTime;
+}
+
+void AppGlobals::setShowProcessingTime(bool show)
+{
+    if (show != m_showProcessingTime) {
+        m_showProcessingTime = show;
+        SETTINGS.set(ezechiel::core::Module::GUI, "showProcessingTime" ,show);
+    }
+}
 
 const QString AppGlobals::getListFile(){
     return m_listFile;

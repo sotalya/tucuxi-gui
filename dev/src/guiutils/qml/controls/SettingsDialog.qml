@@ -44,6 +44,11 @@ DialogBase {
             sentencesPalettes.filename = xmlPathETF.text
             sentencesPalettes.exportToXml();
             sentencesPalettes.saveXMLPath()
+
+            if (showProcessingTime.checkState == Qt.Checked)
+                appGlobals.setShowProcessingTime(true);
+            else
+                appGlobals.setShowProcessingTime(false);
         }
     }
 
@@ -61,6 +66,11 @@ DialogBase {
     {
         self = this
         loadAnalyst()
+        if (appGlobals.showProcessingTime())
+            showProcessingTime.checkState = Qt.Checked
+        else
+            showProcessingTime.checkState = Qt.Unchecked
+
         pathChanged = false
     }
 
@@ -96,6 +106,11 @@ DialogBase {
                 text: qsTr("Analyst")
                 width: implicitWidth
             }
+
+            TabButton {
+                 text: qsTr("General")
+                 width: implicitWidth
+             }
 
            TabButton {
                 text: qsTr("Sentences")
@@ -284,6 +299,54 @@ DialogBase {
                     }
                 }
 
+            }
+
+            Item {
+                id: generalTab
+                width: parent.width
+
+                GridLayout {
+                    anchors.fill: parent
+                    rows: 3
+                    columns: 3
+
+                    Rectangle {
+                        Layout.fillWidth:  true
+                        Layout.fillHeight:  true
+                    }
+                    ColumnLayout{
+                        Layout.row: 1
+                        Layout.column:1
+                        width: parent.width
+                        height: parent.height
+
+                        RowLayout {
+                            CheckBox {
+                                id: showProcessingTime
+                                text: "Show interpretation processing time when you validate?"
+                                checked: true
+                                enabled: !appMode.isDemo()
+
+                                //ToolTip.visible: (show_tooltip) ? steadyStateMousearea.containsMouse : false
+                                //ToolTip.text: ToolTips.dosageDialog.steadyState
+
+                                MouseArea {
+                                    id: steadyStateMousearea
+                                    anchors.top: parent.top
+                                    anchors.bottom: parent.bottom
+                                    anchors.right: parent.right
+                                    width: parent.width - 30
+                                    hoverEnabled: true
+                                }
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        Layout.fillWidth:  true
+                        Layout.fillHeight:  true
+                    }
+                }
             }
 
             Item {

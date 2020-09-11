@@ -27,6 +27,9 @@ public:
 
     Q_INVOKABLE void saveAnalystSettings();
 
+    Q_INVOKABLE bool showProcessingTime();
+    Q_INVOKABLE void setShowProcessingTime(bool show);
+
 private:
     Q_OBJECT
     AppGlobals();
@@ -40,6 +43,8 @@ private:
     QString m_requestFile;
 
     Practician *m_analyst;
+
+    bool m_showProcessingTime;
 };
 
 #endif // APPGLOBALS_H

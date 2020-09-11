@@ -1710,14 +1710,17 @@ void InterpretationController::validateInterpretation(bool isValid)
         Duration processingTime(0, 0, _interpretation->getStartInterpretationTime().secsTo(_interpretation->getValidateInterpretationTime()));
         Duration processingTimeFromData(0, 0, getLastDataTime(_interpretation).secsTo(_interpretation->getValidateInterpretationTime()));
 #ifndef CONFIG_DEMO
-        QMessageBox messageBox;
-        messageBox.setWindowTitle("Processing time");
-        messageBox.setText(QString("Interpretation total processing time from last data was : <br/><b>%1</b> "
-                                                          "<br/><br/>Processing time from starting the interpretation was :  <br/><b>%2</b>").arg(processingTimeFromData.toLongString()).arg(processingTime.toLongString()));
-        messageBox.setTextFormat(Qt::TextFormat::RichText);
-        messageBox.exec();
+        if (AppGlobals::getInstance()->showProcessingTime()) {
+            QMessageBox messageBox;
+            messageBox.setWindowTitle("Processing time");
+            messageBox.setText(QString("Interpretation total processing time from last data was : <br/><b>%1</b> "
+                                                          "<br/><br/>Processing time from starting the interpretation was :  <br/><b>%2</b>"
+                                       "<br/><br/>Go to settings if you wish to disable this dialog.").arg(processingTimeFromData.toLongString()).arg(processingTime.toLongString()));
+            messageBox.setTextFormat(Qt::TextFormat::RichText);
+            messageBox.exec();
 //        QMessageBox::information(0, "Processing time", QString("Interpretation total processing time from last data was : \n<b>%1</b> "
 //                                                               "\n\nProcessing time from starting the interpretation was :  \n<b>%2</b>").arg(processingTimeFromData.toLongString()).arg(processingTime.toLongString()));
+        }
 #endif // CONFIG_DEMO
 
         flowController->validateInterpretation();

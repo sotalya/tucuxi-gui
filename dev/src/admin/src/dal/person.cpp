@@ -44,21 +44,23 @@ Person::Person(ezechiel::core::AbstractRepository *repository, const int &id, QO
     setEmails(QList<Email*>());
 }
 
-QVariant Person::toQVariant() const{
-
-    QMap<QString, QVariant> personMap;
-
-    personMap["name"] = _name;
-    personMap["firstname"] = _firstname;
-    personMap["location"] = _location->toQVariant();
-
-    return personMap;
-
-}
-
 void Person::setBirthdate(QDateTime date)
 {
     _birthday = date.date();
+}
+
+
+void Person::setPrimaryPhone(QString phoneNumber)
+{
+    if (_phones->size() > 0) {
+        _phones->at(0)->setNumber(phoneNumber);
+    }
+    else {
+        auto phone = ezechiel::core::CoreFactory::createEntity<Phone>(_repository, _phones);
+        phone->setType(PhoneType::Professional);
+        phone->setNumber(phoneNumber);
+        _phones->append(phone);
+    }
 }
 //void Person::setGender(GenderType gender) {
 //    _gender = gender;

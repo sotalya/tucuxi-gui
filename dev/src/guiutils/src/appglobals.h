@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+class Practician;
+
 class AppGlobals : public QObject
 {    
 public:
@@ -21,13 +23,23 @@ public:
 
     const QString getRequestFile();
 
+    Q_INVOKABLE Practician *getAnalyst();
+
+    Q_INVOKABLE void saveAnalystSettings();
+
 private:
     Q_OBJECT
     AppGlobals();
+
+    // Declared private as it is automatically called when we get the analyst the first time
+    void loadAnalystSettings();
+
     static AppGlobals* m_instance;
 
     QString m_listFile;
     QString m_requestFile;
+
+    Practician *m_analyst;
 };
 
 #endif // APPGLOBALS_H

@@ -50,7 +50,6 @@ MainWindowController::MainWindowController(QObject *parent) :
 
 #ifdef CONFIG_CONNECTED
     QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
-//    QString listFile = SETTINGS.get(ezechiel::core::Module::GUI, "listFile").toString();
     AppGlobals* appGlobals = AppGlobals::getInstance();
     QString listFile = appGlobals->getListFile();
     //if (listFile.isEmpty()) {

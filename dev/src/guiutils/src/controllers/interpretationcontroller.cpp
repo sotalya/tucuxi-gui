@@ -58,6 +58,7 @@
 #include "guiutils/src/widgets/persistentfiledialog.h"
 #include "guiutils/src/unavailablefunctionality.h"
 #include "guiutils/src/appmode.h"
+#include "guiutils/src/appglobals.h"
 
 #include "measuretabcontroller.h"
 #include "dosagetabcontroller.h"
@@ -339,8 +340,9 @@ void InterpretationController::bindModelsToRootContext(QQmlContext *rootContext)
     rootContext->setContextProperty("adjustmentTabController", adjustmentTabController);
     rootContext->setContextProperty("validationTabController", validationTabController);
     rootContext->setContextProperty("drugTabController", drugTabController);
-	rootContext->setContextProperty("graphInformationSelection", _graphInformationSelection);
+    rootContext->setContextProperty("graphInformationSelection", _graphInformationSelection);
     rootContext->setContextProperty("appMode", AppMode::getInstance());
+    rootContext->setContextProperty("appGlobals", AppGlobals::getInstance());
     rootContext->setContextProperty("sentencesPalettes", _sentencesPalettes);
 
 }
@@ -572,6 +574,19 @@ void InterpretationController::startNewPatient()
     setRawRequest("");
     FakePatientsCreator().createFakePatients(_patients);
 
+    auto analyst = interpretation->getAnalyst();
+    auto globalAnalyst = AppGlobals::getInstance()->getAnalyst();
+    analyst->title(globalAnalyst->title());
+    analyst->institute()->name(globalAnalyst->institute()->name());
+    analyst->person()->firstname(globalAnalyst->person()->firstname());
+    analyst->person()->name(globalAnalyst->person()->name());
+    analyst->role(globalAnalyst->role());
+    auto phone = CoreFactory::createEntity<Phone>(ABSTRACTREPO,analyst->person()->getPhones());
+    if (globalAnalyst->person()->getPhones()->size() > 0) {
+        phone->setNumber(globalAnalyst->person()->getPhones()->at(0)->getNumber());
+    }
+    interpretation->getAnalyst()->person()->getPhones()->append(phone);
+  /*
     interpretation->getAnalyst()->title("Dr.");
     interpretation->getAnalyst()->institute()->name("The institute");
     interpretation->getAnalyst()->person()->firstname("ThePrenom");
@@ -580,7 +595,7 @@ void InterpretationController::startNewPatient()
     auto phone = CoreFactory::createEntity<Phone>(ABSTRACTREPO,interpretation->getAnalyst()->person()->getPhones());
     phone->setNumber("+41 21 123456");
     interpretation->getAnalyst()->person()->getPhones()->append(phone);
-
+*/
     // Set it to the controller
     setNewInterpretation(interpretation, true);
 

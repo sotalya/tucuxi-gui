@@ -29,24 +29,17 @@ Practician::Practician(ezechiel::core::AbstractRepository *repository, const int
     person(_pers);
 }
 
-void Practician::saveToSettings(){
-
-    QMap<QString, QVariant> analystMap;
-
-    analystMap["title"] = _title;
-    analystMap["role"] = _role;
-    analystMap["person"] = _person->toQVariant();
-//    analystMap["institute"] = _institute->toQVariant();
-
-
-    SETTINGS.set(ezechiel::core::Module::GUI, "practician" ,analystMap);
+/*
+void Practician::copyTo(Practician *other)
+{
+    other->externalId(_externalId);
+    other->title(_title);
+    other->role(_role);
+    other->person_id(_person_id);
+    other->institute_id(_institute_id);
+    _person->copyTo(other->person());
 }
-
-QVariant Practician::loadSettings(){
-    QMap<QString, QVariant> analystMap = SETTINGS.get(ezechiel::core::Module::GUI, "practician").toMap();
-
-    return analystMap;
-}
+*/
 
 PracticianSet::PracticianSet(ezechiel::core::AbstractRepository *repository, QObject *parent, const PracticianSet* &other)
 {

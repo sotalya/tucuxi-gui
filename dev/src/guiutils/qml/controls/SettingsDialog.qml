@@ -21,18 +21,25 @@ DialogBase {
 
     property var pathChanged
 
+    function applyToAnalyst(analyst) {
+        analyst.person.firstname = analystFirstname.text
+        analyst.person.name = analystLastname.text
+        analyst.role = analystRole.text
+        analyst.person.location.city = analystCity.text
+        analyst.person.location.postcode = analystPostcode.text
+        analyst.person.location.state = analystState.text
+        analyst.person.location.country = analystCountry.text
+        analyst.title = analystTitle.text
+        analyst.institute.name = analystAffiliation.text
+        analyst.person.setPrimaryPhone(analystPhone.text)
+    }
+
     function onUpdated(bApplied, bCreatingNewItem) {
         if (bApplied) {
-            interpretation.analyst.person.firstname = analystFirstname.text
-            interpretation.analyst.person.name = analystLastname.text
-            interpretation.analyst.person.location.city = analystCity.text
-            interpretation.analyst.person.location.postcode = analystPostcode.text
-            interpretation.analyst.person.location.state = analystState.text
-            interpretation.analyst.person.location.country = analystCountry.text
-            interpretation.analyst.title = analystTitle.text
-            //interpretation.analyst.institute.name = analystAffiliation.text
-            //interpretation.analyst.person.setPhones()
-            interpretation.analyst.saveToSettings()
+            applyToAnalyst(interpretation.analyst)
+
+            applyToAnalyst(appGlobals.getAnalyst())
+            appGlobals.saveAnalystSettings()
 
             sentencesPalettes.filename = xmlPathETF.text
             sentencesPalettes.exportToXml();
@@ -53,24 +60,29 @@ DialogBase {
     function init()
     {
         self = this
-        loadAnalystFromSettings()
+        loadAnalyst()
         pathChanged = false
     }
 
-    function loadAnalystFromSettings()
+    function loadAnalyst()
     {
-        var analyst = interpretation.analyst.loadSettings()
+        var analyst = interpretation.analyst
+        analystLastname.text = analyst.person.name
+        analystFirstname.text = analyst.person.firstname
 
-        analystLastname.text = analyst["person"]["name"].toString()
-        analystFirstname.text = analyst["person"]["firstname"].toString()
-        analystCity.text = analyst["person"]["location"]["city"].toString()
-        analystPostcode.text = analyst["person"]["location"]["postcode"].toString()
-        analystState.text = analyst["person"]["location"]["state"].toString()
-        analystCountry.text = analyst["person"]["location"]["country"].toString()
-        analystTitle.text = analyst["title"].toString()
+        analystCity.text = analyst.person.location.city
+        analystPostcode.text = analyst.person.location.postcode
+        analystState.text = analyst.person.location.state
+        analystCountry.text = analyst.person.location.country
+        analystTitle.text = analyst.title
+        analystRole.text = analyst.role
+        if (analyst.person.phones.size() > 0)
+            analystPhone.text = analyst.person.phones.at(0).number
+        if (analyst.institute)
+            analystAffiliation.text = analyst.institute.name
+
         xmlPathETF.text = sentencesPalettes.loadXMLPath()
 
-        //analystAffiliation.text = analyst["institute"]["name"].toString()
     }
 
     ColumnLayout {
@@ -82,14 +94,17 @@ DialogBase {
             width: parent.width
             TabButton {
                 text: qsTr("Analyst")
+                width: implicitWidth
             }
 
            TabButton {
                 text: qsTr("Sentences")
+                width: implicitWidth
             }
 
             TabButton {
                 text: qsTr("Connectivity")
+                width: implicitWidth
             }
             /*
             TabButton {
@@ -165,6 +180,32 @@ DialogBase {
                                 id: analystLastname
                                 placeholderText: "last name"
                                 Layout.fillWidth:  true
+                            }
+                        }
+
+                        RowLayout {
+                            //Layout.preferredHeight: physicianInCharge.rowHeight
+                            //Layout.minimumHeight:   physicianInCharge.rowHeight
+                            Layout.minimumWidth: 400
+                            spacing: 2
+
+
+                            EntityLabel {
+                                text: "Role:"
+                            }
+                            EntityTextField {
+                                id: analystRole
+                                Layout.fillWidth:  true
+                                placeholderText: "role"
+                            }
+
+                            EntityLabel {
+                                text: "Phone number:"
+                            }
+                            EntityTextField {
+                                id: analystPhone
+                                Layout.fillWidth:  true
+                                placeholderText: "phone"
                             }
                         }
 

@@ -45,6 +45,8 @@ public:
 
     Q_INVOKABLE void setBirthdate(QDateTime date);
 
+    Q_INVOKABLE void setPrimaryPhone(QString phoneNumber);
+
 //    Q_INVOKABLE QList<SharedPhone> phones() const {return _phones;}
 //    Q_INVOKABLE void setPhones(const QList<SharedPhone> &phones) {_phones = phones; emit phonesChanged(phones);}
 
@@ -55,8 +57,6 @@ public:
 
     void addEmail(Email* email) { _emails.append(email);}
     void addPhone(SharedPhone phone) { _phones->append(phone);}
-
-    QVariant toQVariant(void) const;
 
 signals:
     //void phonesChanged(const QList<SharedPhone> &phones);

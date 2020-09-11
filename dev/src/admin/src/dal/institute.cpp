@@ -28,9 +28,6 @@ Institute::Institute(ezechiel::core::AbstractRepository *repository, const int &
     location(_loc);
 }
 
-QVariant Institute::toQVariant() const{
-
-}
 
 //QString Institute::name() const
 //{

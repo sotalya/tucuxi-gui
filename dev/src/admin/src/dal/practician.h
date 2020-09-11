@@ -23,12 +23,11 @@ class Practician : public ezechiel::core::Entity
         return true;
     }
 
+//    void copyTo(Practician *other);
+
 public:
     Q_INVOKABLE Practician(ezechiel::core::AbstractRepository *repository = 0, QObject *parent = nullptr);
     Q_INVOKABLE Practician(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
-    Q_INVOKABLE void saveToSettings(void);
-    Q_INVOKABLE QVariant loadSettings(void);
-
 
 };
 Q_DECLARE_METATYPE(Practician*)

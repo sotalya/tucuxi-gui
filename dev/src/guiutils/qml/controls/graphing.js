@@ -1218,13 +1218,13 @@ function drawLegends(ctx, colors)
 
     //Constants
     var populationText  = "Population";
-    var popPercText     = "Pop. percentiles"
+    var popPercText     = "Population percentiles"
     var aprioriText     = "A priori";
     var aposterioriText = "A posteriori";
     var reverseText     = "Suggested adjustments";
     var adjustmentText  = "Adjustments";
-    var aprPercText		= "Apr. percentiles"
-    var apoPercText		= "Apo. percentiles"
+    var aprPercText		= "A priori percentiles"
+    var apoPercText		= "A posteriori percentiles"
 
     var internalSpacing = 5;
     var externalSpacing = 10;

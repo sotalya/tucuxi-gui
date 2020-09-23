@@ -433,7 +433,7 @@ Rectangle {
                     spacing: 2
                     EntityListHeaderItem { Layout.preferredWidth: 80; label.text: "Type"; tooltipText: ToolTips.adjustmentTab.type }
                     EntityListHeaderItem { Layout.preferredWidth: 115; label.text: "From"; tooltipText: ToolTips.adjustmentTab.from }
-                    EntityListHeaderItem { Layout.preferredWidth: 115; Layout.fillWidth: true; label.text: "To"; tooltipText: ToolTips.adjustmentTab.to }
+                    EntityListHeaderItem { Layout.preferredWidth: 65; label.text: "To"; tooltipText: ToolTips.adjustmentTab.to }
                     EntityListHeaderItem { Layout.preferredWidth: 60; label.text: "Dose"; tooltipText: ToolTips.adjustmentTab.dose }
                     EntityListHeaderItem { Layout.preferredWidth: 80; label.text: "Interval"; tooltipText: ToolTips.adjustmentTab.interval }
                     EntityListHeaderItem { Layout.preferredWidth: 80; label.text: "Duration"; tooltipText: ToolTips.adjustmentTab.infusion }
@@ -483,8 +483,7 @@ Rectangle {
                                 label.color: manualAdjustmentListDelegate.mousearea.hovered ? manualAdjustmentList.rowForegroundHover : (manualAdjustmentListDelegate.ListView.isCurrentItem ? manualAdjustmentList.rowForegroundSelected : manualAdjustmentList.rowForeground)
                             },
                             EntityListDelegateItem {
-                                Layout.preferredWidth: 115
-                                Layout.fillWidth: true
+                                Layout.preferredWidth: 65
                                 color: manualAdjustmentListDelegate.mousearea.hovered ? manualAdjustmentList.rowBackgroundHover : (manualAdjustmentListDelegate.ListView.isCurrentItem ? manualAdjustmentList.rowBackgroundSelected : manualAdjustmentList.rowBackground)
                                 label.text: Qt.formatDateTime(modelData.endtime)
                                 label.color: manualAdjustmentListDelegate.mousearea.hovered ? manualAdjustmentList.rowForegroundHover : (manualAdjustmentListDelegate.ListView.isCurrentItem ? manualAdjustmentList.rowForegroundSelected : manualAdjustmentList.rowForeground)

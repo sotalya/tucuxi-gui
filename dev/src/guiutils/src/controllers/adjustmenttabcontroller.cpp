@@ -266,7 +266,7 @@ void AdjustmentTabController::selectAdjustment(int index)
 
 void AdjustmentTabController::forceRefresh()
 {
-    adaptDates(getAdjustment(MANUAL), getAdjustment(SUGGESTED));
+    adaptDates(getAdjustment(MANUAL), getLastAdjustment(SUGGESTED));
     _adjustments->sort(compareAdjustment);
     masterController->adjustmentUpdated();
 }
@@ -318,6 +318,18 @@ bool AdjustmentTabController::compareAdjustment(const ezechiel::core::Dosage* a,
 ezechiel::core::AdjustmentDosage* AdjustmentTabController::getAdjustment(const QString &type)
 {
     for (int i=0; i<_adjustments->size(); i++) {
+        ezechiel::core::AdjustmentDosage* adj = static_cast<ezechiel::core::AdjustmentDosage*>(_adjustments->at(i));
+        if (adj->getType() == type) {
+            return adj;
+        }
+    }
+    return nullptr;
+}
+
+
+ezechiel::core::AdjustmentDosage* AdjustmentTabController::getLastAdjustment(const QString &type)
+{
+    for (int i=_adjustments->size() - 1; i >= 0; i--) {
         ezechiel::core::AdjustmentDosage* adj = static_cast<ezechiel::core::AdjustmentDosage*>(_adjustments->at(i));
         if (adj->getType() == type) {
             return adj;

@@ -75,6 +75,7 @@ private:
     static bool compareAdjustment(const ezechiel::core::Dosage* a, const ezechiel::core::Dosage* b);
 
     ezechiel::core::AdjustmentDosage* getAdjustment(const QString &type);
+    ezechiel::core::AdjustmentDosage* getLastAdjustment(const QString &type);
     void adaptDates(const ezechiel::core::AdjustmentDosage *manual, ezechiel::core::AdjustmentDosage *suggested);
 
 private:

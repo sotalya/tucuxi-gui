@@ -216,7 +216,7 @@ Rectangle {
                     EntityListHeaderItem {
                         Layout.minimumHeight: 20;
                         Layout.preferredWidth: 120;
-                        label.text: "Population"
+                        label.text: "Typical patient"
 
                         MouseArea {
                             id: popMousearea
@@ -497,6 +497,25 @@ Rectangle {
                                     font.pixelSize: analysis.inputFontSize
                                     verticalAlignment:   analysis.inputVAlign
                                     horizontalAlignment: analysis.inputHAlign
+
+                                    Keys.onPressed: {
+                                        if (event.modifiers) {
+                                            var t = validationTabController.getShortCutText(0, event.key, event.modifiers);
+                                            if (t != "") {
+                                                expectednessInput.text = t;
+                                                event.accepted = true;
+                                            }
+
+                                        }
+
+                                        console.log(event.key);
+                                        console.log(event.modifiers);
+                                    }
+
+                                    Shortcut {
+                                        sequence: "Ctrl+E,Ctrl+W"
+                                        onActivated: expectednessInput.text = "new text"
+                                    }
 
                                     EntityToolTip {
                                         tooltipText: ToolTips.validationTab.expectedness

@@ -16,16 +16,16 @@ DialogBase {
     property var self
 
     //Constants
-    property var populationText:    "Population";
-    property var popPercText:       "Pop. percentiles"
-    property var aprioriText:       "A priori";
-    property var aprPercText:       "Apr. percentiles"
-    property var aposterioriText:   "A posteriori";
-    property var apoPercText:       "Apo. percentiles"
+    property var populationText:    "Typical patient prediction";
+    property var popPercText:       "Typical patient percentiles"
+    property var aprioriText:       "A priori prediction";
+    property var aprPercText:       "A priori percentiles"
+    property var aposterioriText:   "A posteriori prediction";
+    property var apoPercText:       "A posteriori percentiles"
     property var reverseText:       "Suggested adjustments";
     property var adjustmentText:    "Adjustments";
-    property var targetText:        "Target";
-    property var measureText:       "Measure";
+    property var targetText:        "Targets";
+    property var measureText:       "Measures";
 
     property var currentPopPred;
     property var currentPopPerc;

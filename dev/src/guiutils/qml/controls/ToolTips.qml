@@ -27,7 +27,7 @@ QtObject {
         readonly property string dosage: qsTr("This tab is to enter the current dosage and the dosage history. <br/>
                                 Use the <img src=\"qrc:/icons/buttons/add.png\" height=\"22\" width=\"22\"/> button to introduce a new dosage specification.<br/>
                                 The first dosage can be considered either at steady state or not. Recent dosage changes can be specified by adding new dosages.<br/>
-                                <i>Population percentiles</i> are then computed, which show the range of likely concentration profiles<br/>
+                                <i>Typical patient percentiles</i> are then computed, which show the range of likely concentration profiles<br/>
                                 predicted under the defined dosage history in a typical patient.")
 
         readonly property string covariates: qsTr("This tab is to specify the patient's individual covariates. <br/>
@@ -44,7 +44,7 @@ QtObject {
 
         readonly property string targets: qsTr("This tab is to specify concentration targets for the dosage adjustment engine to suggest a dose adaptation.<br/>
                                Multiple targets can be defined, in which case all of them must be satisfied simultaneously by the adjustment proposed.<br/>
-                               Targets have default population values that can be overridden to specify individual concentration levels aimed to in this patient.<br/>
+                               Targets have default values that can be overridden to specify individual concentration levels aimed to in this patient.<br/>
                                It is possible to enter manually a dosage adjustment different from the adaptations automatically proposed.<br/>
                                The starting time of the dosage adjustment can be changed as well, which will trigger a new proposition.")
 
@@ -204,8 +204,8 @@ QtObject {
     }
 
     property QtObject validationTab: QtObject {
-        readonly property string parametersListTitle :      qsTr("Population, prior and posterior values of each pharmacokinetic parameter")
-        readonly property string populationParameters :      qsTr("<i>Population</i>  parameter values for a typical patient")
+        readonly property string parametersListTitle :      qsTr("Typical patient, prior and posterior values of each pharmacokinetic parameter")
+        readonly property string populationParameters :      qsTr("Pk  parameter values for a typical patient")
         readonly property string aprioriParameters :      qsTr("<i>A priori</i> parameter values computed based on the patient's individual covariates")
         readonly property string aposterioriParameters :      qsTr("Bayesian maximum likelihood <i>a posteriori</i> parameter values, <br/>
                                  computed based on both the patient's covariates and his/her measured concentrations")
@@ -242,8 +242,8 @@ QtObject {
     }
 
     property QtObject chart: QtObject {
-        readonly property string popVisible : qsTr("Display the <i>population</i> prediction for a typical patient")
-        readonly property string popPercVisible : qsTr("Display the <i>population</i> percentiles for typical patients")
+        readonly property string popVisible : qsTr("Display the <i>typical patient</i> prediction for a typical patient")
+        readonly property string popPercVisible : qsTr("Display the <i>typical patient</i> percentiles for typical patients")
         readonly property string aprioriVisible : qsTr("Display the <I>a priori</i> prediction for the current patient")
         readonly property string aprioriPercVisible : qsTr("Display the <I>a priori</i> percentiles for patients similar to the current one")
         readonly property string apostVisible : qsTr("Display the <i>a posteriori</i> prediction for the current patient")

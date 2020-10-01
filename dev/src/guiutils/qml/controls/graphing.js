@@ -1217,8 +1217,8 @@ function drawLegends(ctx, colors)
     ctx.font         = "12px " + police;
 
     //Constants
-    var populationText  = "Population";
-    var popPercText     = "Population percentiles"
+    var populationText  = "Typical patient";
+    var popPercText     = "Typical patient percentiles"
     var aprioriText     = "A priori";
     var aposterioriText = "A posteriori";
     var reverseText     = "Suggested adjustments";

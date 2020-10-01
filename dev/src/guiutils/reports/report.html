@@ -159,7 +159,7 @@
         var parametersLineElement = $("#parameters");
         parametersLineElement.empty();
 
-        parametersLineElement.append("<thead><tr><td></td><td></td><td class='label'>pop.</td><td class='label'>a priori</td><td class='label'>a post.</td></tr></thead>");
+        parametersLineElement.append("<thead><tr><td></td><td></td><td class='label'>typical p.</td><td class='label'>a priori</td><td class='label'>a post.</td></tr></thead>");
         parametersLineElement.append("<tbody>");
 
         getParameters(channel, function(param) {
@@ -376,12 +376,12 @@
             <table>
               <tbody>
                 </tr>
-                  <td class="label" colspan="5">Pharmacokinetic parameters (population,apriori,aposteriori)</td>
+                  <td class="label" colspan="5">Pharmacokinetic parameters (typical patient,apriori,aposteriori)</td>
                 </tr>
               </tbody>
             </table>
             <table id="parameters">
-              <thead><tr><td></td><td class='label'>pop.</td><td class='label'>a priori</td><td class='label'>a post.</td></tr></thead>
+              <thead><tr><td></td><td class='label'>typical p.</td><td class='label'>a priori</td><td class='label'>a post.</td></tr></thead>
               <tbody>
               </tbody>
             </table>

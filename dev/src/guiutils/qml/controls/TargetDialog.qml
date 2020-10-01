@@ -35,7 +35,7 @@ DialogBase {
         return targetTabController.calculateUnit(type, baseUnit);
     }
 
-    function init(type, cmin, cbest, cmax, tmin, tbest, tmax)
+    function init(type, cmin, cbest, cmax, tmin, tbest, tmax, mic)
     {
         typeInput.currentIndex = type
 
@@ -63,12 +63,17 @@ DialogBase {
         tMaxInput.setRealValue(tmax.dbvalue)
         tMaxInput.suffix= " " + timeUnit
 
+        micInput.decimals = 2;
+        micInput.setRealValue(mic.dbvalue)
+        micInput.suffix = " " + currentUnit
+
         cMinInput.doValidation = function () { return cMinInput.getRealValue() >= 0 && cMinInput.getRealValue() <= cBestInput.getRealValue() }
         cBestInput.doValidation = function () { return cBestInput.getRealValue() >= 0 }
         cMaxInput.doValidation = function () { return cMaxInput.getRealValue() >= 0 && cMaxInput.getRealValue() >= cBestInput.getRealValue() }
         tMinInput.doValidation = function () { return tMinInput.getRealValue() >= 0 && tMinInput.getRealValue() <= tBestInput.getRealValue() }
         tBestInput.doValidation = function () { return tBestInput.getRealValue() >= 0 }
         tMaxInput.doValidation = function () { return tMaxInput.getRealValue() >= 0 && tMaxInput.getRealValue() >= tBestInput.getRealValue() }
+        micInput.doValidation = function () { return micInput.getRealValue() >= 0 }
 
         validate()
     }
@@ -80,6 +85,7 @@ DialogBase {
     function getTMin()  { return tMinInput.getRealValue() }
     function getTBest() { return tBestInput.getRealValue() }
     function getTMax()  { return tMaxInput.getRealValue() }
+    function getMic()   { return micInput.getRealValue() }
     function getUnit()  { return currentUnit}
 
     function validate()
@@ -90,6 +96,7 @@ DialogBase {
         bOk = tMinInput.validate() && bOk
         bOk = tBestInput.validate() && bOk
         bOk = tMaxInput.validate() && bOk
+        bOk = micInput.validate() && bOk
         return bOk
     }
 
@@ -245,7 +252,7 @@ DialogBase {
                 spacing: 2
                 visible: typeInput.currentText === "Peak";
                 EntityLabel {
-                    id: tMaxLabel                    
+                    id: tMaxLabel
                     text: "Max:"
                     horizontalAlignment: Text.AlignRight
                     Layout.preferredWidth: 100
@@ -255,6 +262,24 @@ DialogBase {
                     id: tMaxInput
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex === 1
+                    onEditingFinished: { targetDialog.validate() }
+                }
+            }
+
+            RowLayout {
+                spacing: 2
+                visible: typeInput.currentIndex > 5;
+                EntityLabel {
+                    id: micLabel
+                    text: "MIC:"
+                    horizontalAlignment: Text.AlignRight
+                    Layout.preferredWidth: 100
+                    tooltipText: ToolTips.targetDialog.mic
+                }
+                EntitySpinBox {
+                    id: micInput
+                    Layout.preferredWidth: 200
+                    enabled: typeInput.currentIndex > 5
                     onEditingFinished: { targetDialog.validate() }
                 }
             }

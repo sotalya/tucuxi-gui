@@ -349,7 +349,8 @@ Rectangle {
                     model.cmax,
                     model.tmin,
                     model.tbest,
-                    model.tmax)
+                    model.tmax,
+                    model.mic)
                 this.open(bCreatingNewItem);
             }
         }
@@ -363,6 +364,7 @@ Rectangle {
             targetTabController.setTminDbValue(targetListView.currentIndex, this.getTMin())
             targetTabController.setTbestDbValue(targetListView.currentIndex, this.getTBest())
             targetTabController.setTmaxDbValue(targetListView.currentIndex, this.getTMax())
+            targetTabController.setMicDbValue(targetListView.currentIndex, this.getMic())
             targetTabController.setUnit(targetListView.currentIndex, this.getUnit())
             targetTabController.forceRefresh()
             return true

@@ -113,6 +113,14 @@ void TargetTabController::setTbestDbValue(int index, double value)
     updateTvalues(index, min, best, max);
 }
 
+void TargetTabController::setMicDbValue(int index, double value)
+{
+    if (!isIndexValid(index)) return;
+    if ( _targets->at(index)->getMic()->getDbvalue() == value) return;
+
+    _targets->at(index)->getMic()->setDbvalue(value);
+}
+
 void TargetTabController::addTarget()
 {
     ezechiel::core::TargetList* tlist = masterController->getInterpretation()->getDrugResponseAnalysis()->getTreatment()->getTargets();

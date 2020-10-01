@@ -36,6 +36,7 @@ public:
     Q_INVOKABLE void setTminDbValue(int index, double value);
     Q_INVOKABLE void setTbestDbValue(int index, double value);
     Q_INVOKABLE void setTmaxDbValue(int index, double value);
+    Q_INVOKABLE void setMicDbValue(int index, double value);
     Q_INVOKABLE void setUnit(int index, QString unitString);
 
     Q_INVOKABLE void forceRefresh();

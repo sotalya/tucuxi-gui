@@ -170,6 +170,7 @@ QtObject {
         readonly property string tMin : qsTr("Minimum acceptable value for the target ")
         readonly property string tMax : qsTr("Maximum acceptable value for the target ")
         readonly property string tBest : qsTr("Optimal value for the target")
+        readonly property string mic : qsTr("Minimum inhibitory concentration")
     }
 
     property QtObject adjustmentTab: QtObject {

@@ -67,7 +67,7 @@ void LocalCalculationController::computePopPred(PredictionSpec* prediction)
 {
 
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running population prediction.");
+    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running typical patient prediction.");
 
     DataSet dataSet;
     PopulationTraits parametersTraits;
@@ -100,14 +100,14 @@ void LocalCalculationController::preparePredResults(QVector<int> time, QVector<d
         fpt->setValue(data[i]);
         fpts->append(fpt);
     }
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending population prediction.");
+    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending typical patient prediction.");
     pred->moveToThread(qApp->thread());
 }
 
 void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running population percentiles.");
+    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running typical patient percentiles.");
 
 //    std::vector<double> percentiles = {10, 25, 75, 90};
     QMap<double, DataSet> percsDataSets;
@@ -134,7 +134,7 @@ void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
         emit engage();
         return;
     }
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending population percentiles.");
+    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending typical patient percentiles.");
     pred->moveToThread(qApp->thread());
     emit popPercComputed(pred);
     emit engage();

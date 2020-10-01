@@ -67,12 +67,12 @@ INSTALLS    += def
 
 !config_demo {
     #Install the definition tdd file
-    drugs2path    =  $${DESTDIR}/drugs2
+    drugs2path    =  $${DESTDIR}/drugfiles
     macx {
-        drugs2path = $${DESTDIR}/$${TARGET}.app/Contents/Resources/drugs2
+        drugs2path = $${DESTDIR}/$${TARGET}.app/Contents/Resources/drugfiles
     }
     android {
-        drugs2path = /assets/drugs2
+        drugs2path = /assets/drugfiles
     }
     copydata.commands = $$quote($(COPY_DIR) $$DRUGSPATH/* $${drugs2path}$$escape_expand(\n\t))
     unix {

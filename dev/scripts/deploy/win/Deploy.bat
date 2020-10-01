@@ -25,7 +25,7 @@ mkdir %DEPLOY_DIR%\%ARCH%
 mkdir %DEPLOY_DIR%\%ARCH%\%TARGET%
 mkdir %DEPLOY_DIR%\%ARCH%\%TARGET%\dbs
 REM mkdir %DEPLOY_DIR%\%ARCH%\%TARGET%\drugs
-mkdir %DEPLOY_DIR%\%ARCH%\%TARGET%\drugs2
+mkdir %DEPLOY_DIR%\%ARCH%\%TARGET%\drugfiles
 mkdir %DEPLOY_DIR%\%ARCH%\%TARGET%\requests
 mkdir %DEPLOY_DIR%\%ARCH%\%TARGET%\reports
 
@@ -38,7 +38,7 @@ REM Copy drugs
 REM copy %SRC_DIR%\drugs\*.xml %DEPLOY_DIR%\%ARCH%\%TARGET%\drugs\
 REM copy %SRC_DIR%\drugs\*.xsl %DEPLOY_DIR%\%ARCH%\%TARGET%\drugs\
 REM copy %SRC_DIR%\drugs\*.css %DEPLOY_DIR%\%ARCH%\%TARGET%\drugs\
-copy %DIST_DIR%\drugs2\*.tdd %DEPLOY_DIR%\%ARCH%\%TARGET%\drugs2\
+copy %DIST_DIR%\drugfiles\*.tdd %DEPLOY_DIR%\%ARCH%\%TARGET%\drugfiles\
 copy %DIST_DIR%\reports\* %DEPLOY_DIR%\%ARCH%\%TARGET%\reports\
 
 REM Copy openssl libs

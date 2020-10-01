@@ -409,7 +409,7 @@ void Core::initPaths()
 #endif
     _paths[Databases]    = _paths[ApplicationData] + "/dbs";
     _paths[Drugs]        = _paths[ApplicationData] + "/drugs";
-    _paths[Drugs2]        = _paths[ApplicationData] + "/drugs2";
+    _paths[Drugs2]        = _paths[ApplicationData] + "/drugfiles";
     _paths[Plugins]      = _paths[ApplicationData] + "/plugins";
     _paths[PluginsData]  = _paths[ApplicationData] + "/data";
     _paths[Translations] = _paths[ApplicationData] + "/trans";

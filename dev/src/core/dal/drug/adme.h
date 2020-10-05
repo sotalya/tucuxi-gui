@@ -5,6 +5,8 @@
 #include "core/utils/ezutils.h"
 #include <QMetaEnum>
 
+#include "tucucore/drugmodel/formulationandroute.h"
+
 namespace ezechiel {
 namespace core {
 
@@ -29,13 +31,15 @@ class Admin : public Entity
 
     Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent = nullptr)
         : Entity(repository, parent),
-          _route(EXTRA)
+          _route(EXTRA),
+          _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
     {
     }
 
     Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent, Admin* admin)
         : Entity(repository, parent),
-          _route(admin->getRoute())
+          _route(admin->getRoute()),
+          _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
     {
     }
 
@@ -55,6 +59,7 @@ class Admin : public Entity
         case INFUSION: return "Infusion";
         case EXTRA: return "Extravascular";
         case EXTRALAG: return "Extravascular with lag time";
+        case DEFAULT: return "Default route";
         case UNVALID: return "Invalid";
         }
     }
@@ -86,9 +91,45 @@ class Admin : public Entity
     Q_SIGNAL void descriptionChanged(QString description);
 
     bool isValid() { return _route != Route::UNVALID;}
+
+    Tucuxi::Core::FormulationAndRoute getFormulationAndRoute() const { return _formulationAndRoute;}
+    void setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute formulationAndRoute);
+
+    Q_INVOKABLE QString getAdministrationName() const { return QString::fromStdString(_formulationAndRoute.getAdministrationName());}
+    Q_INVOKABLE QString getFormulationString() const {
+        static std::map<Tucuxi::Core::Formulation, std::string> map = {
+            {Tucuxi::Core::Formulation::Undefined, "undefined"},
+            {Tucuxi::Core::Formulation::ParenteralSolution,"parenteral solution"},
+            {Tucuxi::Core::Formulation::OralSolution, "oral solution"},
+            {Tucuxi::Core::Formulation::Test, "test"}
+        };
+        return QString::fromStdString(map.at(_formulationAndRoute.getFormulation()));
+    }
+
+    Q_INVOKABLE QString getAdministrationRoute() const {
+
+        static std::map<Tucuxi::Core::AdministrationRoute, std::string> m =
+        {
+            {Tucuxi::Core::AdministrationRoute::Undefined, "undefined"},
+            {Tucuxi::Core::AdministrationRoute::Intramuscular, "intramuscular"},
+            {Tucuxi::Core::AdministrationRoute::IntravenousBolus, "intravenous bolus"},
+            {Tucuxi::Core::AdministrationRoute::IntravenousDrip, "intravenous drip"},
+            {Tucuxi::Core::AdministrationRoute::Nasal, "nasal"},
+            {Tucuxi::Core::AdministrationRoute::Oral, "oral"},
+            {Tucuxi::Core::AdministrationRoute::Rectal, "rectal"},
+            {Tucuxi::Core::AdministrationRoute::Subcutaneous, "subcutaneous"},
+            {Tucuxi::Core::AdministrationRoute::Sublingual, "sublingual"},
+            {Tucuxi::Core::AdministrationRoute::Transdermal, "transdermal"},
+            {Tucuxi::Core::AdministrationRoute::Vaginal, "vaginal"}
+        };
+        return QString::fromStdString(m.at(_formulationAndRoute.getAdministrationRoute()));
+    }
+
 private:
     Route _route;
     QString _description;
+
+    Tucuxi::Core::FormulationAndRoute _formulationAndRoute;
 };
 
 QML_POINTERLIST_CLASS_DECL(AdminList, Admin)

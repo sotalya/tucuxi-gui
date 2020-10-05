@@ -364,13 +364,61 @@ bool InterpretationXmlExport::save(ezechiel::core::UncastedValueList *list)
 }
 
 
+
+QString toString(Tucuxi::Core::Formulation _formulation) {
+    static std::map<Tucuxi::Core::Formulation, std::string> map = {
+        {Tucuxi::Core::Formulation::Undefined, "undefined"},
+        {Tucuxi::Core::Formulation::ParenteralSolution,"parenteral solution"},
+        {Tucuxi::Core::Formulation::OralSolution, "oral solution"},
+        {Tucuxi::Core::Formulation::Test, "test"}
+    };
+    return QString::fromStdString(map.at(_formulation));
+}
+
+QString toString(Tucuxi::Core::AdministrationRoute _admin) {
+
+    static std::map<Tucuxi::Core::AdministrationRoute, std::string> m =
+    {
+        {Tucuxi::Core::AdministrationRoute::Undefined, "undefined"},
+        {Tucuxi::Core::AdministrationRoute::Intramuscular, "intramuscular"},
+        {Tucuxi::Core::AdministrationRoute::IntravenousBolus, "intravenousBolus"},
+        {Tucuxi::Core::AdministrationRoute::IntravenousDrip, "intravenousDrip"},
+        {Tucuxi::Core::AdministrationRoute::Nasal, "nasal"},
+        {Tucuxi::Core::AdministrationRoute::Oral, "oral"},
+        {Tucuxi::Core::AdministrationRoute::Rectal, "rectal"},
+        {Tucuxi::Core::AdministrationRoute::Subcutaneous, "subcutaneous"},
+        {Tucuxi::Core::AdministrationRoute::Sublingual, "sublingual"},
+        {Tucuxi::Core::AdministrationRoute::Transdermal, "transdermal"},
+        {Tucuxi::Core::AdministrationRoute::Vaginal, "vaginal"}
+    };
+    return QString::fromStdString(m.at(_admin));
+}
+
+QString toString(Tucuxi::Core::AbsorptionModel _model) {
+    static std::map<Tucuxi::Core::AbsorptionModel, std::string> m =
+    {
+        {Tucuxi::Core::AbsorptionModel::Undefined, "undefined"},
+        {Tucuxi::Core::AbsorptionModel::Intravascular, "bolus"},
+        {Tucuxi::Core::AbsorptionModel::Extravascular, "extra"},
+        {Tucuxi::Core::AbsorptionModel::ExtravascularLag, "extra.lag"},
+        {Tucuxi::Core::AbsorptionModel::Infusion, "infusion"}
+    };
+    return QString::fromStdString(m.at(_model));
+}
+
 bool InterpretationXmlExport::save(ezechiel::core::AdjustmentDosage *dosage, const QString &tagName)
 {
     writer.writeStartElement(tagName);
     writer.writeTextElement("type", dosage->getType());
     writer.writeTextElement("dbinterval", QString("%1").arg(dosage->getDbinterval()));
     writer.writeTextElement("dbtinf", QString("%1").arg(dosage->getDbtinf()));
-    writer.writeTextElement("route", dosage->getRoute()->getLabel());
+//    writer.writeTextElement("route", dosage->getRoute()->getLabel());
+    writer.writeStartElement("formulationAndRoute");
+    writer.writeTextElement("formulation", toString(dosage->getRoute()->getFormulationAndRoute().getFormulation()));
+    writer.writeTextElement("administrationName", QString::fromStdString(dosage->getRoute()->getFormulationAndRoute().getAdministrationName()));
+    writer.writeTextElement("administrationRoute", toString(dosage->getRoute()->getFormulationAndRoute().getAdministrationRoute()));
+    writer.writeTextElement("absorptionModel", toString(dosage->getRoute()->getFormulationAndRoute().getAbsorptionModel()));
+    writer.writeEndElement();
     saveIdentifiableAmount("quantity", dosage->getQuantity());
     writer.writeTextElement("applied", writeDate(dosage->getApplied()));
     writer.writeTextElement("endTime", writeDate(dosage->getEndTime()));
@@ -386,7 +434,13 @@ bool InterpretationXmlExport::save(ezechiel::core::Dosage *dosage, const QString
     writer.writeStartElement(tagName);
     writer.writeTextElement("dbinterval", QString("%1").arg(dosage->getDbinterval()));
     writer.writeTextElement("dbtinf", QString("%1").arg(dosage->getDbtinf()));
-    writer.writeTextElement("route", dosage->getRoute()->getLabel());
+    //    writer.writeTextElement("route", dosage->getRoute()->getLabel());
+    writer.writeStartElement("formulationAndRoute");
+    writer.writeTextElement("formulation", toString(dosage->getRoute()->getFormulationAndRoute().getFormulation()));
+    writer.writeTextElement("administrationName", QString::fromStdString(dosage->getRoute()->getFormulationAndRoute().getAdministrationName()));
+    writer.writeTextElement("administrationRoute", toString(dosage->getRoute()->getFormulationAndRoute().getAdministrationRoute()));
+    writer.writeTextElement("absorptionModel", toString(dosage->getRoute()->getFormulationAndRoute().getAbsorptionModel()));
+    writer.writeEndElement();
     saveIdentifiableAmount("quantity", dosage->getQuantity());
     writer.writeTextElement("applied", writeDate(dosage->getApplied()));
     writer.writeTextElement("endTime", writeDate(dosage->getEndTime()));

@@ -122,6 +122,7 @@ bool TucucoreToEzTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistor
                 dosage->getQuantity()->setValue(lasting->getDose() );
                 ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, dosage);
                 admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
+                admin->setFormulationAndRoute(lasting->getLastFormulationAndRoute());
                 admin->setDescription(description(lasting->getLastFormulationAndRoute()));
                 dosage->setRoute(admin);
                 // TODO : Deal with units
@@ -147,6 +148,7 @@ bool TucucoreToEzTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistor
                 dosage->getQuantity()->setValue(lasting->getDose() );
                 ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, dosage);
                 admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
+                admin->setFormulationAndRoute(lasting->getLastFormulationAndRoute());
                 admin->setDescription(description(lasting->getLastFormulationAndRoute()));
                 dosage->setRoute(admin);
                 // TODO : Deal with units
@@ -232,14 +234,18 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
     ezechiel::core::ADME *adme = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ADME>(ABSTRACTREPO, newModel);
     ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, adme);
     admin->setRoute(translateAbsorptionModel(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute().getAbsorptionModel()));
+    admin->setFormulationAndRoute(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute());
     admin->setDescription(description(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute()));
+    admin->setFormulationAndRoute(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute());
     adme->setDefaultIntake(admin);
 
     ezechiel::core::AdminList *adminList = ezechiel::core::CoreFactory::createEntity<ezechiel::core::AdminList>(ABSTRACTREPO, adme);
     for(auto & formulation : drugModel->getFormulationAndRoutes()) {
         ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, adminList);
         admin->setRoute(translateAbsorptionModel(formulation->getFormulationAndRoute().getAbsorptionModel()));
+        admin->setFormulationAndRoute(formulation->getFormulationAndRoute());
         admin->setDescription(description(formulation->getFormulationAndRoute()));
+        admin->setFormulationAndRoute(formulation->getFormulationAndRoute());
         adminList->append(admin);
     }
     adme->setIntakes(adminList);
@@ -458,8 +464,8 @@ ezechiel::core::OperableAmount *TucucoreToEzTranslator::translate(const Tucuxi::
     return amount;
 }
 
-ezechiel::core::OperableAmount *TucucoreToEzTranslator::translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::Unit micUnit,
-                                                                     Tucuxi::Common::Unit newUnit, ezechiel::core::Target *newTarget)
+ezechiel::core::OperableAmount *TucucoreToEzTranslator::translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::TucuUnit micUnit,
+                                                                     Tucuxi::Common::TucuUnit newUnit, ezechiel::core::Target *newTarget)
 {
     ezechiel::core::OperableAmount *amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperableAmount>(ABSTRACTREPO, newTarget);
     amount->setDbvalue(Tucuxi::Common::UnitManager::convertToUnit(subTarget.getValue(), micUnit, newUnit));

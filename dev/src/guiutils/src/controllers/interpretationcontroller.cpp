@@ -733,6 +733,7 @@ void InterpretationController::startInterpretationRequest(InterpretationRequest 
                 if (dosage->getRoute()->getRoute() == Admin::Route::DEFAULT) {
                     Admin *admin = ezechiel::core::CoreFactory::createEntity<Admin>(APPUTILSREPO, nullptr);
                     admin->setRoute(defaultRoutes[0]);
+                    admin->setFormulationAndRoute(defaultAdmins[0]->getFormulationAndRoute());
                     admin->setDescription(defaultAdmins[0]->getDescription());
                     dosage->setRoute(admin);
                 }
@@ -1367,6 +1368,8 @@ void InterpretationController::switchDrugModel(int index)
 
         updateSexAndAgeCovariates();
 
+        associateFormulationToRoute(_interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages(), drug->getAdme()->getIntakes());
+
         // TODO: To be checked: Do we really need that?
         dosagesView->setProperty("routes", QVariant::fromValue(drug->getAdme()->getIntakes()));
         adjustmentsView->setProperty("routes", QVariant::fromValue(drug->getAdme()->getIntakes()));
@@ -1390,6 +1393,52 @@ void InterpretationController::switchDrugModel(int index)
         _chartDataController->dosageUpdated(shouldPercentilesBeComputed, true);
     }
 
+}
+
+bool InterpretationController::associateFormulationToRoute(DosageHistory *dosageHistory, AdminList *adminList)
+{
+    for (int i = 0; i < dosageHistory->size(); i++) {
+        Admin *d = dosageHistory->at(i)->getRoute();
+
+        bool found = false;
+        for (int j = 0; j < adminList->size(); j++) {
+            Admin *a = adminList->at(j);
+            if (a->getFormulationAndRoute().getAbsorptionModel() == Tucuxi::Core::AbsorptionModel::Infusion) {
+                if (d->getRoute() == Admin::Route::INFUSION) {
+                    found = true;
+                    d->setFormulationAndRoute(a->getFormulationAndRoute());
+                }
+            }
+
+            if (a->getFormulationAndRoute().getAbsorptionModel() == Tucuxi::Core::AbsorptionModel::Extravascular) {
+                if (d->getRoute() == Admin::Route::EXTRA) {
+                    found = true;
+                    d->setFormulationAndRoute(a->getFormulationAndRoute());
+                }
+            }
+
+            if (a->getFormulationAndRoute().getAbsorptionModel() == Tucuxi::Core::AbsorptionModel::ExtravascularLag) {
+                if (d->getRoute() == Admin::Route::EXTRALAG) {
+                    found = true;
+                    d->setFormulationAndRoute(a->getFormulationAndRoute());
+                }
+            }
+
+            if (a->getFormulationAndRoute().getAbsorptionModel() == Tucuxi::Core::AbsorptionModel::Intravascular) {
+                if (d->getRoute() == Admin::Route::BOLUS) {
+                    found = true;
+                    d->setFormulationAndRoute(a->getFormulationAndRoute());
+                }
+            }
+
+        }
+
+        if (!found) {
+            std::cout << "Can not create a formulation and route";
+            return false;
+        }
+    }
+    return true;
 }
 
 

@@ -109,6 +109,8 @@ static {
 TUCUXIROOTDIR = $$(TUCUXI_ROOT)
 TUCUXIDRUGSDIR = $$(TUCUXI_DRUGS_DIR)
 
+include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
+
 macx {
     DEFINES+=MACOS
 }

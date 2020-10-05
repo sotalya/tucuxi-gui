@@ -119,6 +119,7 @@ ezechiel::core::Admin* PredictionSpecCopier::copy(ezechiel::core::Admin* admin, 
     newAdmin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO,parent);
     newAdmin->setRoute(admin->getRoute());
     newAdmin->setValue(admin->getValue());
+    newAdmin->setFormulationAndRoute(admin->getFormulationAndRoute());
 
     return newAdmin;
 }

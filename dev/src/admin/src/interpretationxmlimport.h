@@ -48,6 +48,7 @@ class Dosage;
 class AdjustmentDosage;
 class DosageHistory;
 class Bsv;
+class Admin;
 }
 
 }
@@ -113,6 +114,8 @@ protected:
     ValidationStatus *loadValidationStatus(const QString &tagName, QObject *parent);
     ClinicalSet *loadClinicals(const QString &tagName, QObject *parent);
     Clinical *loadClinical(const QString &tagName, QObject *parent);
+
+    ezechiel::core::Admin *loadAdmin(const QString &tagName, QObject *parent);
 
 
 

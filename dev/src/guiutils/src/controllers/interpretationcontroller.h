@@ -56,6 +56,8 @@ class ActiveSubstanceList;
 class LightActiveSubstanceList;
 class LightActiveSubstance;
 class ActiveSubstance;
+class AdminList;
+class DosageHistory;
 }
 }
 
@@ -227,6 +229,8 @@ public:
     /// \param what Defines what has to be shown
     /// Show statistics in a dialog
     void showStatistics(int what);
+
+    bool associateFormulationToRoute(ezechiel::core::DosageHistory *dosageHistory, ezechiel::core::AdminList *adminList);
 
 signals:
     void webchannelChanged(QQmlWebChannel&);

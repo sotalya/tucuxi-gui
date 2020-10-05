@@ -183,6 +183,7 @@ void AdjustmentTabController::setRouteValue(int index, int routeValue)
     }
 
     adjustment->getRoute()->setRoute(route);
+    adjustment->getRoute()->setFormulationAndRoute(adme->getIntakes()->at(routeValue)->getFormulationAndRoute());
 }
 
 void AdjustmentTabController::addAdjustment()
@@ -194,6 +195,7 @@ void AdjustmentTabController::addAdjustment()
     adjustment->setApplied(getAdjustmentDate());
     adjustment->setEndTime(getAdjustmentDate().addDays(1));
     adjustment->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
+    adjustment->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute());
     adjustment->getRoute()->setDescription(drugModel->getAdme()->getDefaultIntake()->getDescription());
     adjustment->getQuantity()->setDbvalue(drugModel->getDoses()->getQuantity()->value());
     adjustment->getQuantity()->setUnit(ezechiel::core::Unit("mg"));
@@ -249,6 +251,7 @@ void AdjustmentTabController::selectAdjustment(int index)
         adjustment->setApplied(suggestedAdjustment->getApplied());
         adjustment->setEndTime(suggestedAdjustment->getEndTime());
         adjustment->getRoute()->setRoute(suggestedAdjustment->getRoute()->getRoute());
+        adjustment->getRoute()->setFormulationAndRoute(suggestedAdjustment->getRoute()->getFormulationAndRoute());
         adjustment->getRoute()->setDescription(suggestedAdjustment->getRoute()->getDescription());
         adjustment->getQuantity()->setDbvalue(suggestedAdjustment->getQuantity()->value());
         adjustment->getQuantity()->setUnit(suggestedAdjustment->getQuantity()->unit());

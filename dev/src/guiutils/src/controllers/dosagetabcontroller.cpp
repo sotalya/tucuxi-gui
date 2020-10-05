@@ -121,6 +121,7 @@ void DosageTabController::setRouteValue(int index, int routeValue)
     if ( _dosages->at(index)->getRoute()->getRoute() == route) return;
 
     _dosages->at(index)->getRoute()->setRoute(route);
+    _dosages->at(index)->getRoute()->setFormulationAndRoute(adminList->at(routeValue)->getFormulationAndRoute());
 }
 
 void DosageTabController::setHasEndDate(int index, bool hasEndDate)
@@ -157,6 +158,7 @@ void DosageTabController::addDosage()
 
     ezechiel::core::Dosage* dosage = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Dosage>(ABSTRACTREPO, _dosages);
     dosage->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
+    dosage->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute());
     dosage->getRoute()->setDescription(drugModel->getAdme()->getDefaultIntake()->getDescription());
     dosage->getQuantity()->setDbvalue(drugModel->getDoses()->getQuantity()->value());
     dosage->getQuantity()->setUnit(ezechiel::core::Unit("mg"));

@@ -46,9 +46,9 @@ DateTime EzToTucucoreTranslator::buildDateTime(const QDateTime &qDate)
 }
 
 
-Tucuxi::Common::Unit EzToTucucoreTranslator::buildUnit(const QString &_strUnit)
+Tucuxi::Common::TucuUnit EzToTucucoreTranslator::buildUnit(const QString &_strUnit)
 {
-    return Tucuxi::Common::Unit(_strUnit.toLatin1().data());
+    return Tucuxi::Common::TucuUnit(_strUnit.toLatin1().data());
 }
 
 Tucuxi::Core::PredictionParameterType EzToTucucoreTranslator::buildParameterType(const ezechiel::core::ParamTraits *traits)
@@ -96,9 +96,10 @@ Tucuxi::Core::DosageTimeRange *EzToTucucoreTranslator::buildTimeRange(const ezec
         formulation = Tucuxi::Core::Formulation::ParenteralSolution;
     } break;
     }
-    Tucuxi::Core::FormulationAndRoute formulationAndRoute(formulation, administrationRoute, absorptionModel, "");
+//    Tucuxi::Core::FormulationAndRoute formulationAndRoute(formulation, administrationRoute, absorptionModel, "");
+    Tucuxi::Core::FormulationAndRoute formulationAndRoute = _ezDosage->getRoute()->getFormulationAndRoute();
     Tucuxi::Core::LastingDose lastingDose(_ezDosage->getQuantity()->getDbvalue(),
-                                          Tucuxi::Common::Unit(_ezDosage->getQuantity()->getUnitstring().toStdString()),
+                                          Tucuxi::Common::TucuUnit(_ezDosage->getQuantity()->getUnitstring().toStdString()),
                                           formulationAndRoute,
                                           std::chrono::seconds(static_cast<int>(_ezDosage->getDbtinf()*60.0)),
                                           std::chrono::seconds(static_cast<int>(_ezDosage->getDbinterval()*3600.0)));
@@ -187,7 +188,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
                 covariate->getCovariateId().toStdString(),                    // _id,
                 Tucuxi::Common::Utils::varToString(buildDateTime(birthdate)),    // _value,
                 Tucuxi::Core::DataType::Date,                              // _dataType,
-                Tucuxi::Common::Unit(),      // _unit,
+                Tucuxi::Common::TucuUnit(),      // _unit,
                 buildDateTime(covariate->getDate())));                     // _date
         }
         else {

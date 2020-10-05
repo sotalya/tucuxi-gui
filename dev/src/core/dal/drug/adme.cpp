@@ -37,6 +37,31 @@ bool ADME::isValid()
     return true;
 }
 
+
+QString formulationAndRoutedescription(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
+{
+    QString result;
+    switch(_formulationAndRoute.getAdministrationRoute()) {
+    case Tucuxi::Core::AdministrationRoute::Intramuscular : result = "Intramuscular"; break;
+    case Tucuxi::Core::AdministrationRoute::IntravenousBolus : result = "Intravenous bolus"; break;
+    case Tucuxi::Core::AdministrationRoute::IntravenousDrip : result = "Intravenous drip"; break;
+    case Tucuxi::Core::AdministrationRoute::Nasal : result = "Nasal"; break;
+    case Tucuxi::Core::AdministrationRoute::Oral : result = "Oral"; break;
+    case Tucuxi::Core::AdministrationRoute::Rectal : result = "Rectal"; break;
+    case Tucuxi::Core::AdministrationRoute::Subcutaneous : result = "Subcutaneous"; break;
+    case Tucuxi::Core::AdministrationRoute::Sublingual : result = "Sublingual"; break;
+    case Tucuxi::Core::AdministrationRoute::Transdermal : result = "Transdermal"; break;
+    default: result = "Undefined"; break;
+    }
+    return result;
+}
+
+
+void Admin::setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute formulationAndRoute) {
+    _formulationAndRoute = formulationAndRoute;
+    setDescription(formulationAndRoutedescription(_formulationAndRoute));
+}
+
 QML_POINTERLIST_CLASS_IMPL(AdminList, Admin)
 
 } // namespace core

@@ -682,6 +682,108 @@ ezechiel::core::DosageHistory *InterpretationXmlImport::loadDosageHistory(const 
 }
 
 
+
+Tucuxi::Core::Formulation extractFormulation(QString s)
+{
+
+    static std::map<std::string, Tucuxi::Core::Formulation> m =
+    {
+        {"undefined", Tucuxi::Core::Formulation::Undefined},
+        {"parenteral solution", Tucuxi::Core::Formulation::ParenteralSolution},
+        {"oral solution", Tucuxi::Core::Formulation::OralSolution},
+        {"test", Tucuxi::Core::Formulation::Test}
+    };
+
+    auto it = m.find(s.toStdString());
+    if (it != m.end()) {
+        return it->second;
+    }
+    return Tucuxi::Core::Formulation::Undefined;
+}
+
+
+Tucuxi::Core::AdministrationRoute extractAdministrationRoute(QString s)
+{
+
+    static std::map<std::string, Tucuxi::Core::AdministrationRoute> m =
+    {
+        {"undefined", Tucuxi::Core::AdministrationRoute::Undefined},
+        {"intramuscular", Tucuxi::Core::AdministrationRoute::Intramuscular},
+        {"intravenousBolus", Tucuxi::Core::AdministrationRoute::IntravenousBolus},
+        {"intravenousDrip", Tucuxi::Core::AdministrationRoute::IntravenousDrip},
+        {"nasal", Tucuxi::Core::AdministrationRoute::Nasal},
+        {"oral", Tucuxi::Core::AdministrationRoute::Oral},
+        {"rectal", Tucuxi::Core::AdministrationRoute::Rectal},
+        {"subcutaneous", Tucuxi::Core::AdministrationRoute::Subcutaneous},
+        {"sublingual", Tucuxi::Core::AdministrationRoute::Sublingual},
+        {"transdermal", Tucuxi::Core::AdministrationRoute::Transdermal},
+        {"vaginal", Tucuxi::Core::AdministrationRoute::Vaginal}
+    };
+
+    auto it = m.find(s.toStdString());
+    if (it != m.end()) {
+        return it->second;
+    }
+    return Tucuxi::Core::AdministrationRoute::Undefined;
+}
+
+
+Tucuxi::Core::AbsorptionModel extractAbsorptionModel(QString s)
+{
+
+    static std::map<std::string, Tucuxi::Core::AbsorptionModel> m =
+    {
+        {"undefined", Tucuxi::Core::AbsorptionModel::Undefined},
+        {"bolus", Tucuxi::Core::AbsorptionModel::Intravascular},
+        {"extra", Tucuxi::Core::AbsorptionModel::Extravascular},
+        {"extra.lag", Tucuxi::Core::AbsorptionModel::ExtravascularLag},
+        {"infusion", Tucuxi::Core::AbsorptionModel::Infusion}
+    };
+
+    auto it = m.find(s.toStdString());
+    if (it != m.end()) {
+        return it->second;
+    }
+
+    return Tucuxi::Core::AbsorptionModel::Undefined;
+
+}
+
+
+ezechiel::core::Admin *InterpretationXmlImport::loadAdmin(const QString &tagName, QObject *parent)
+{
+    ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, parent);
+
+    // By default, not at steady state
+
+    Tucuxi::Core::Formulation formulation;
+    Tucuxi::Core::AbsorptionModel absorptionModel;
+    Tucuxi::Core::AdministrationRoute administrationRoute;
+    std::string administrationName;
+
+    WHILE_NOT_END_ELEM(tagName){
+
+        if(isOk && reader.readNextStartElement()){
+            QString name = reader.name().toString();
+
+            if (name == "formulation")
+                formulation = extractFormulation(extractor());
+            else if (name == "administrationName")
+                administrationName = extractor().toStdString();
+            else if (name == "administrationRoute")
+                administrationRoute = extractAdministrationRoute(extractor());
+            else if (name == "absorptionModel") {
+                absorptionModel = extractAbsorptionModel(extractor());
+            }
+        }
+    }
+    checkReaderError();
+
+    admin->setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute(formulation, administrationRoute, absorptionModel, administrationName));
+
+    return admin;
+}
+
 ezechiel::core::AdjustmentDosage *InterpretationXmlImport::loadAdjustmentDosage(const QString &tagName, QObject *parent)
 {
     ezechiel::core::AdjustmentDosage *dosage = ezechiel::core::CoreFactory::createEntity<ezechiel::core::AdjustmentDosage>(ABSTRACTREPO, parent);
@@ -703,6 +805,10 @@ ezechiel::core::AdjustmentDosage *InterpretationXmlImport::loadAdjustmentDosage(
             else if (name == "route") {
                 ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, dosage);
                 admin->setLabel(extractor());
+                dosage->setRoute(admin);
+            }
+            else if (name == "formulationAndRoute") {
+                auto admin = loadAdmin("formulationAndRoute", dosage);
                 dosage->setRoute(admin);
             }
             else if (name == "quantity") {
@@ -748,6 +854,10 @@ ezechiel::core::Dosage *InterpretationXmlImport::loadDosage(const QString &tagNa
             else if (name == "route") {
                 ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, dosage);
                 admin->setLabel(extractor());
+                dosage->setRoute(admin);
+            }
+            else if (name == "formulationAndRoute") {
+                auto admin = loadAdmin("formulationAndRoute", dosage);
                 dosage->setRoute(admin);
             }
             else if (name == "quantity") {

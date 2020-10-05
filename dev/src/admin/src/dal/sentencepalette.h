@@ -63,6 +63,8 @@ public:
     Q_INVOKABLE QStringList getSpecificSentencesList(QString _drugId);
 
     void addSentenceToDrugSentences(QString _drugId, QString _sentence);
+
+    QString getSentencePerKey(int key);
 };
 
 QML_POINTERLIST_CLASS_DECL(SectionList, Section)

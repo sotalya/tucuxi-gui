@@ -21,18 +21,18 @@ ChartData::ChartData(AbstractRepository *repository,QObject *parent)
 }
 
 void ChartData::initialize()
-{
+{/*
     if (_popPred)
-        delete _popPred;
+        _popPred->deleteLater();
     if (_aprPred)
-        delete _aprPred;
+        _aprPred->deleteLater();
     if (_apoPred)
-        delete _apoPred;
+        _apoPred->deleteLater();
     if (_revPred)
-        delete _revPred;
+        _revPred->deleteLater();
     if (_adjPred)
-        delete _adjPred;
-
+        _adjPred->deleteLater();
+*/
     _popPred = CoreFactory::createEntity<PredictionResult>(_repository, this);
     _aprPred = CoreFactory::createEntity<PredictionResult>(_repository, this);
     _apoPred = CoreFactory::createEntity<PredictionResult>(_repository, this);

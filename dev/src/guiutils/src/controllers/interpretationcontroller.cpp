@@ -195,6 +195,7 @@ InterpretationController::InterpretationController(QObject *parent) :
     adjustmentTabController->setAdjustments(CoreFactory::createEntity<ezechiel::core::DosageHistory>(ABSTRACTREPO, this));
 
     validationTabController = new ValidationTabController(this);
+    validationTabController->_sentencesPalettes = _sentencesPalettes;
 
     drugTabController = new DrugTabController(this);
     drugTabController->setMasterController(this);
@@ -1271,6 +1272,13 @@ void InterpretationController::switchDrugModel(int index)
         // TODO: This call makes trouble with the REST flow.
         DrugTreatment* treatment = _interpretation->getDrugResponseAnalysis()->getTreatment();
         _interpretation->getDrugResponseAnalysis()->setDrugModel(drug);
+
+        _interpretation->getAnalysis()->setSuitability("");
+        _interpretation->getAnalysis()->setExpectedness("");
+        _interpretation->getAnalysis()->setPrediction("");
+        _interpretation->getAnalysis()->setRemonitoring("");
+        _interpretation->getAnalysis()->setWarning("");
+
         if (_drugs->size() != 1) {
             treatment->getMeasures()->clear();
             treatment->getDosages()->clear();

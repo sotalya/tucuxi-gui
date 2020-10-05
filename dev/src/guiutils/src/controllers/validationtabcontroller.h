@@ -6,6 +6,7 @@
 
 #include "core/utils/autoproperty.h"
 #include "abstractviewcontroller.h"
+#include "admin/src/dal/sentencepalette.h"
 
 
 class ValidationTabController : public AbstractViewController
@@ -14,6 +15,10 @@ class ValidationTabController : public AbstractViewController
 
 public:
     explicit ValidationTabController(QObject *parent = nullptr);
+
+    Q_INVOKABLE QString getShortCutText(int section, int key, int modifiers);
+
+    SentencesPalettes *_sentencesPalettes;
 
     // These two fields are actually not used at all.
 //    STD_PROPERTY_DECL(QString, posology, Posology)

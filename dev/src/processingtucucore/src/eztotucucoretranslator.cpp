@@ -69,7 +69,7 @@ Tucuxi::Core::DosageTimeRange *EzToTucucoreTranslator::buildTimeRange(const ezec
     Tucuxi::Core::Formulation formulation;
     switch (_ezDosage->getRoute()->getRoute()) {
     case ezechiel::core::Admin::Route::BOLUS: {
-        absorptionModel = Tucuxi::Core::AbsorptionModel::Extravascular;
+        absorptionModel = Tucuxi::Core::AbsorptionModel::Intravascular;
         administrationRoute = Tucuxi::Core::AdministrationRoute::IntravenousBolus;
         formulation = Tucuxi::Core::Formulation::ParenteralSolution;
     } break;

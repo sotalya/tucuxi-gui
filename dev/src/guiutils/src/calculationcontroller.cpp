@@ -82,6 +82,7 @@ void LocalCalculationController::computePopPred(PredictionSpec* prediction)
                                            pointsTraits,
                                            *pred);
 
+    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending typical patient prediction.");
     pred->moveToThread(qApp->thread());
     emit popPredComputed(pred);
     emit engage();

@@ -92,6 +92,28 @@ void Section::addSentenceToDrugSentences(QString _drugId, QString _sentence){
 
 }
 
+
+QString Section::getSentencePerKey(int key)
+{
+    std::cout << key << std::endl;
+    int index = 0;
+    for(const auto &sentencesList : _specificSentences){
+        for (const auto &sentence: sentencesList->getSentences()) {
+            if (key - Qt::Key_0 == index) {
+                return sentence;
+            }
+            index ++;
+        }
+    }
+    for(const auto &sentence : _globalSentences){
+        if (key - Qt::Key_0 == index) {
+            return sentence;
+        }
+        index ++;
+    }
+    return "";
+}
+
 SentencesPalettes::SentencesPalettes(ezechiel::core::AbstractRepository *repository, QObject *parent){
     _sectionsList = ezechiel::core::CoreFactory::createEntity<SectionList>(repository);
     for (int i=0; i < VALIDATION_SECTIONS; i++){

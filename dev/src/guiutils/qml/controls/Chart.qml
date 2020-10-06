@@ -168,21 +168,22 @@ Canvas {
                   "#e8a45c",    // suggestedAdjustmentLegend
                   "#64a0e0",    // aposterioriPercentilesLegend
                   "lightgreen", // popPercentilesLegend
-                  "pink",       // aprioriPredictionLegend
+                  "pink",       // aprioriPercentilesLegend
                   "black"       // selectedAdjustmentLegend
                 ];
 
         colors = ["#bfbfbf",    // Unused
                   "#9f8e6f",    // popPrediction
                   "#e19a00",    // aprioriPrediction
-                  "#cc0066",    // Unused
+                  "#27ba58",    // Unused
                   "#C80000",    // aposterioriPrediction
                   "#e8a45c",    // suggestedAdjustmentLegend
                   "#fe6d6d",    // aposterioriPercentilesLegend
                   "#b2a283",    // popPercentilesLegend
-                  "#efac1c",    // aprioriPredictionLegend
+                  "#efac1c",    // aprioriPercentilesLegend
                   "black"       // selectedAdjustmentLegend
                 ];
+
 
         //popcolors = ["#0B360E", "#17701E", "#2CD438"];
         //aprcolors = ["#E84229", "#B53A70", "#FF4200"];
@@ -196,6 +197,28 @@ Canvas {
         popcolors = ["#b2a283", "#D0C0A2", "#E1D6C0", "#F2ECDE"];
         aprcolors = ["#efac1c", "#F2C054", "#F8D98A", "#FEF2C0"];
         apocolors = ["#fe6d6d", "#FE9A9A", "#FEB7B7", "#FED4D4"];
+        adjcolors = ["#323232", "#969696", "#646464"];
+        revcolors = [];
+
+
+
+
+        colors = ["#bfbfbf",    // Unused
+                  "#3c4042",    // popPrediction
+                  "#004375",    // aprioriPrediction
+                  "#9abfe7",    // Unused
+                  //"#C80000",    // aposterioriPrediction
+                  "#269043",    // aposterioriPrediction
+                  "#e8a45c",    // suggestedAdjustmentLegend
+                  "#8cda75",    // aposterioriPercentilesLegend
+                  "#aaaeb2",    // popPercentilesLegend
+                  "#9abfe7",    // aprioriPercentilesLegend
+                  "black"       // selectedAdjustmentLegend
+                ];
+
+        popcolors = ["#aaaeb2", "#D2D6DA", "#E0E2E6", "#EAEEF0"];
+        aprcolors = ["#9abfe7", "#9AE8E2", "#B6F4F0", "#DEFEFC"];
+        apocolors = ["#8cda75", "#8CECA6", "#B4FABA", "#D6FCDA"];
         adjcolors = ["#323232", "#969696", "#646464"];
         revcolors = [];
 
@@ -443,8 +466,8 @@ if (times.length > 0) {
     onPaint: {
         updateChartDimensions();
         Graphing.step();
-        Annotations.step();
         Clock.showClock();
+        Annotations.step();
     }
 
     Timer {

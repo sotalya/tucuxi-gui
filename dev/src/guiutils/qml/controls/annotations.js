@@ -3,6 +3,10 @@
 function step()
 {
     var ctx = canvas.getContext("2d");
+
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = 1.0;
+
     if (graphInformationSelection.displayPopulationPrediction && canvas.state !== "validation") {
         annotateDosage(ctx, dosages.current, colors[1]);
     }
@@ -20,9 +24,9 @@ function step()
     }
 
     //    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    annotatePrediction(ctx, canvas.popP, canvas.pop, canvas.popcolors[1]);
-    annotatePrediction(ctx, aprP, apr, aprcolors[1]);
-    annotatePrediction(ctx, apoP, apo, apocolors[1]);
+    annotatePrediction(ctx, canvas.popP, canvas.pop, colors[1]);
+    annotatePrediction(ctx, aprP, apr, colors[2]);
+    annotatePrediction(ctx, apoP, apo, colors[4]);
     annotatePrediction(ctx, adjP, adj, adjcolors[1]);
 
     if (revP !== null && revP.isValid) {
@@ -351,6 +355,7 @@ function drawTooltips(ctx)
                     ctx.beginPath();
                     ctx.arc(x, y, 4, 0, 2 * Math.PI, true);
                     ctx.fillStyle = canvas.currentPoints[i].color;
+                    ctx.fillStyle = "#e6e6e6";
                     ctx.fill();
                     ctx.stroke();
 
@@ -372,7 +377,8 @@ function drawTooltips(ctx)
                         ctx.beginPath();
                         ctx.rect(x, y, tooltipWidth, tooltipHeight);
 
-                        ctx.globalAlpha = 0.5;
+                        //ctx.globalAlpha = 0.5;
+                        ctx.globalAlpha = 1.0;
                         ctx.fill();
                         ctx.globalAlpha = 1.0;
                         ctx.stroke();

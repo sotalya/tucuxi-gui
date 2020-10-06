@@ -204,7 +204,7 @@ function getAdjustmentFilter(filterMax)
 
 function drawPop(ctx, colors, popcolors)
 {
-    drawCurve(ctx, popP.predictive.predictionData, popcolors[0], getAdjustmentFilter(true));
+    drawCurve(ctx, popP.predictive.predictionData, colors[1], getAdjustmentFilter(true));
     ctx.restore();
     ctx.save();
 }
@@ -563,7 +563,7 @@ function drawCurve(ctx, predData, color, filter)
                 }
             }
 
-            if (x2 > topLeftX && x1 < canvas.bottomRightX) {
+            if (x2 > topLeftX && x1 <= canvas.bottomRightX) {
                 if (!continueLine) {
                     ctx.moveTo(x1, y1);
                     continueLine = true;

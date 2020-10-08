@@ -159,7 +159,7 @@ Canvas {
         currentPoints = [];
         closestPred = ({});
         currentMeasure = null;
-
+/*
         colors = ["#bfbfbf",    // Unused
                   "#21B035",    // popPrediction
                   "#cc0066",    // aprioriPrediction
@@ -172,6 +172,12 @@ Canvas {
                   "black"       // selectedAdjustmentLegend
                 ];
 
+
+        popcolors = ["#0B360E", "#17701E", "#2CD438"];
+        aprcolors = ["#E84229", "#B53A70", "#FF4200"];
+        apocolors = ["#4A24B5", "#484db5", "#5168B5"];
+*/
+/*
         colors = ["#bfbfbf",    // Unused
                   "#9f8e6f",    // popPrediction
                   "#e19a00",    // aprioriPrediction
@@ -185,10 +191,6 @@ Canvas {
                 ];
 
 
-        //popcolors = ["#0B360E", "#17701E", "#2CD438"];
-        //aprcolors = ["#E84229", "#B53A70", "#FF4200"];
-        //apocolors = ["#4A24B5", "#484db5", "#5168B5"];
-
         // For the next arrays:
         // [0] : Percentile line
         // [1] : Inner percentile fill
@@ -200,7 +202,7 @@ Canvas {
         adjcolors = ["#323232", "#969696", "#646464"];
         revcolors = [];
 
-
+*/
 
 
         colors = ["#bfbfbf",    // Unused

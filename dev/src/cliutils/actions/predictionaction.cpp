@@ -47,7 +47,7 @@ const char *const PredictionAction::_ENGINE_OPTIONS_DISPLAY = QT_TR_NOOP_UTF8("T
 const char *const PredictionAction::_MO = QT_TR_NOOP_UTF8("model");
 const char *const PredictionAction::_PE = QT_TR_NOOP_UTF8("percentiles engine");
 const char *const PredictionAction::_PO = QT_TR_NOOP_UTF8("post engine");
-const char *const PredictionAction::_RE = QT_TR_NOOP_UTF8("reverse engine");
+const char *const PredictionAction::_REE = QT_TR_NOOP_UTF8("reverse engine");
 
 //The commands keywords
 const char *const PredictionAction::_CMD_LIST    = "list";

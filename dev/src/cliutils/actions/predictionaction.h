@@ -52,7 +52,7 @@ private:
     static const char *const _MO;
     static const char *const _PE;
     static const char *const _PO;
-    static const char *const _RE;
+    static const char *const _REE;
 
     //The commands keywords
     static const char *const _CMD_LIST;

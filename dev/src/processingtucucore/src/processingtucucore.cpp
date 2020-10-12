@@ -38,6 +38,7 @@
 #include "tucucore/overloadevaluator.h"
 #include "tucucore/drugdomainconstraintsevaluator.h"
 #include "tucucore/operation.h"
+#include "tucucore/cachecomputing.h"
 
 void checkCovariate(const Tucuxi::Common::DateTime _startDate, const Tucuxi::Core::DrugTreatment &drugTreatment, const Tucuxi::Core::DrugModel &drugModel, ezechiel::core::PredictionResult& prediction, const Tucuxi::Common::DateTime _endDate)
 {
@@ -77,6 +78,12 @@ ProcessingTucucore::ProcessingTucucore() : m_requestID(1)
         // 200000 points for a prediction
         // 10000 points for percentiles
         Tucuxi::Core::SingleOverloadEvaluator::getInstance()->setValues(200000, 10000, 10000);
+    }
+
+    Tucuxi::Common::ComponentManager* cmpMgr = Tucuxi::Common::ComponentManager::getInstance();
+    Tucuxi::Core::IComputingService* iCore = cmpMgr->getComponent<Tucuxi::Core::IComputingService>("ComputingService");
+    for (int i = 0; i < 4; i++) {
+        m_caches.emplace_back(std::make_unique<Tucuxi::Core::CacheComputing>(iCore));
     }
 }
 
@@ -339,6 +346,7 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
     Tucuxi::Common::ComponentManager* cmpMgr = Tucuxi::Common::ComponentManager::getInstance();
     Tucuxi::Core::IComputingService* iCore = cmpMgr->getComponent<Tucuxi::Core::IComputingService>("ComputingService");
     if (iCore != nullptr) {
+
         m_requestID++;
 
         Tucuxi::Core::PercentileRanks ranks(traits.percs.size());
@@ -375,7 +383,14 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
         Tucuxi::Core::ComputingRequest request(std::to_string(m_requestID), *drugModel, *drugTreatment, std::move(computingTrait));
         std::unique_ptr<Tucuxi::Core::ComputingResponse> response = std::make_unique<Tucuxi::Core::ComputingResponse>(std::to_string(m_requestID));
 
-        Tucuxi::Core::ComputingStatus res = iCore->compute(request, response);
+        Tucuxi::Core::CacheComputing *cache = nullptr;
+        cache = m_caches[traits.cacheId].get();
+
+        if (traits.clearCache) {
+            cache->clear();
+        }
+        Tucuxi::Core::ComputingStatus res = cache->compute(request, response);
+//        Tucuxi::Core::ComputingStatus res = iCore->compute(request, response);
 
         checkCovariate(startDate, *drugTreatment, *drugModel, prediction, endDate);
 

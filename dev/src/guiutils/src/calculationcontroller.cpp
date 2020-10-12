@@ -121,6 +121,9 @@ void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
                                         prediction->getEndDate(),
                                         &parametersTraits);
 
+    percentilesTraits.clearCache = prediction->getClearCache();
+    percentilesTraits.cacheId = 0;
+
     percentilesTraits.options[QString("percentile_method")] = QVariant::fromValue(2);
 
     PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
@@ -181,6 +184,9 @@ void LocalCalculationController::computeAprPerc(PredictionSpec* prediction)
                                         prediction->getEndDate(),
                                         &parametersTraits);
 
+    percentilesTraits.clearCache = prediction->getClearCache();
+    percentilesTraits.cacheId = 1;
+
     percentilesTraits.options[QString("percentile_method")] = QVariant::fromValue(2);
 
     PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
@@ -240,6 +246,9 @@ void LocalCalculationController::computeApoPerc(PredictionSpec* prediction)
                                         prediction->getStartDate(),
                                         prediction->getEndDate(),
                                         &parametersTraits);
+
+    percentilesTraits.clearCache = prediction->getClearCache();
+    percentilesTraits.cacheId = 2;
 
     PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
 
@@ -312,6 +321,8 @@ void LocalCalculationController::computeAdjPerc(PredictionSpec* prediction)
                                         start,
                                         end,
                                         parametersTraits);
+
+    percentilesTraits.cacheId = 3;
 
     PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
 

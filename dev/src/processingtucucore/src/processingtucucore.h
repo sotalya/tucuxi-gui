@@ -21,6 +21,14 @@ namespace ezechiel {
     }
 }
 
+namespace Tucuxi {
+    namespace Core {
+        class CacheComputing;
+    }
+}
+
+
+
 /**
  * This class implements the interface ProcessingInterface,
  * as defined in the UML. Points can be population or apriori.
@@ -68,6 +76,15 @@ protected:
 
     int m_requestID;
 
+    ///
+    /// \brief m_caches A vector of caches for the percentiles
+    ///
+    /// [0] : Typical patient percentiles
+    /// [1] : A priori percentiles
+    /// [2] : A posteriori percentiles
+    /// [3] : Adjustment percentiles
+    ///
+    std::vector<std::unique_ptr<Tucuxi::Core::CacheComputing> > m_caches;
 };
 
 #endif // PROCESSINGTUCUCORE_H

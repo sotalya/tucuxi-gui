@@ -79,6 +79,8 @@ public:
         : CalcTraits(ptraits, _start, _end, _nbPoints), percs(_percs)
     {}
     const std::vector<double> percs;
+    bool clearCache{true};
+    int cacheId{-1};
 };
 
 class PointsTraits : public CalcTraits

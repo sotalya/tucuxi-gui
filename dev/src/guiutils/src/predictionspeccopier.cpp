@@ -40,6 +40,7 @@ ezechiel::core::PredictionSpec *PredictionSpecCopier::copy(ezechiel::core::Predi
     newSpec->setPercentileList(spec->getPercentileList());
     newSpec->setStartDate(spec->getStartDate());
     newSpec->setSteadyState(spec->getSteadyState());
+    newSpec->setClearCache(spec->getClearCache());
 
     return newSpec;
 }

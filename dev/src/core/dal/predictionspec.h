@@ -52,6 +52,7 @@ protected:
     AUTO_PROPERTY_DECL(bool, adjustmentWithLoadingDose, AdjustmentWithLoadingDose)
     AUTO_PROPERTY_DECL(bool, adjustmentWithRestPeriod, AdjustmentWithRestPeriod)
     AUTO_PROPERTY_DECL(CalculationType, calculationType, CalculationType)
+    AUTO_PROPERTY_DECL(bool, clearCache, ClearCache)
 
     protected:
 
@@ -63,7 +64,8 @@ protected:
         _paramsType(POPULATION),
         _calculationType(Undefined),
         _adjustmentWithLoadingDose(false),
-        _adjustmentWithRestPeriod(false)
+        _adjustmentWithRestPeriod(false),
+        _clearCache(true)
     {
         //  _analysis = ezechiel::core::CoreFactory::createEntity<DrugResponseAnalysis>(repository);
     }

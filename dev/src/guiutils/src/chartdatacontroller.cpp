@@ -325,6 +325,8 @@ void ChartDataController::adjustmentUpdated()
 
 void ChartDataController::viewRangeUpdated(bool bShowPerc, bool computeRev)
 {
+    // Only for that particular case we keep the cache
+    predictionspec->setClearCache(false);
     initiateUpdatePopPred();
     initiateUpdateAprPred();
     initiateUpdateApoPred();
@@ -337,6 +339,8 @@ void ChartDataController::viewRangeUpdated(bool bShowPerc, bool computeRev)
         initiateUpdateApoPerc();
 //        initiateUpdateAdjPerc();
     }
+    // Back to the clear cache mode
+    predictionspec->setClearCache(true);
 }
 
 void ChartDataController::dosageUpdated(bool bShowPerc, bool computeRev)

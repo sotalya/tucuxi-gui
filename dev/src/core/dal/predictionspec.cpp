@@ -14,6 +14,7 @@ AUTO_PROPERTY_IMPL(PredictionSpec, QDateTime, adjustmentDate, AdjustmentDate)
 AUTO_PROPERTY_IMPL(PredictionSpec, bool, adjustmentWithLoadingDose, AdjustmentWithLoadingDose)
 AUTO_PROPERTY_IMPL(PredictionSpec, bool, adjustmentWithRestPeriod, AdjustmentWithRestPeriod)
 AUTO_PROPERTY_IMPL(PredictionSpec, PredictionSpec::CalculationType, calculationType, CalculationType)
+AUTO_PROPERTY_IMPL(PredictionSpec, bool, clearCache, ClearCache)
 
 
 

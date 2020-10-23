@@ -85,7 +85,7 @@ Rectangle {
                         id: drugListDelegate
                         property var selected_model: model
 
-                        objectName: "drugListItem_" + index
+                        objectName: "drugList_" + modelData.name.value() // index
 
                         mousearea.onClicked: {
                             drugListDelegate.ListView.view.currentIndex = index

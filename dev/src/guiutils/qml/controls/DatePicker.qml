@@ -58,6 +58,7 @@ Rectangle {
 
     TextField {
         id : wholeDate
+        objectName: "wholeDate"
         anchors.left: parent.left
         font.family:    parent.fontFamily
         font.pixelSize: parent.fontSize

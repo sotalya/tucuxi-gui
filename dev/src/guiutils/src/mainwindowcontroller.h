@@ -29,6 +29,7 @@ public:
 
 #ifdef CONFIG_GUITEST
     QQuickWindow *getWindow() { return m_window;};
+    InterpretationController *getInterpretationController() { return interpretationController;}
 #endif // CONFIG_GUITEST
 
 #endif // CONFIG_GUITEST

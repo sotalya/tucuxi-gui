@@ -63,6 +63,7 @@ Rectangle {
                         tooltipText: ToolTips.targetTab.cMax
                     }
                     EntityListHeaderImage {
+                        objectName: "addTarget"
                         image.source: "qrc:/icons/buttons/add.png"
                         mousearea.onClicked: {
                             targetTabController.addTarget();
@@ -139,6 +140,7 @@ Rectangle {
                                 label.color: root.mousearea.hovered ? targetList.rowForegroundHover : (root.ListView.isCurrentItem ? targetList.rowForegroundSelected : targetList.rowForeground)
                             },
                             EntityListImage {
+                                objectName: "editTarget_" + index;
                                 image.source: "qrc:/icons/buttons/edit.png"
                                 mousearea.onClicked: {
                                     targetListView.currentIndex = index;
@@ -147,6 +149,7 @@ Rectangle {
                                 tooltipText: ToolTips.targetTab.edit
                             },
                             EntityListImage {
+                                objectName: "removeTarget_" + index;
                                 image.source: "qrc:/icons/buttons/remove.png"
                                 mousearea.onClicked: {
                                     targetTabController.removeTarget(index);
@@ -339,6 +342,7 @@ Rectangle {
 
     TargetDialog {
         id: targetDialog
+        objectName: "targetDialog"
         function exec(model, bCreatingNewItem)
         {
             if (model) {

@@ -53,7 +53,9 @@ void checkCovariate(const Tucuxi::Common::DateTime _startDate, const Tucuxi::Cor
         prediction.setIsValidDomain(false);
         std::string errorMessage;
         for (const auto &evalResult : evaluationResults){
-            errorMessage += evalResult.m_constraint->getErrorMessage().getString();
+            if (evalResult.m_result != Tucuxi::Core::DrugDomainConstraintsEvaluator::Result::Compatible) {
+                errorMessage += evalResult.m_constraint->getErrorMessage().getString() + " ";
+            }
         }
         prediction.setDomainMessage(QString::fromStdString(errorMessage));
     }

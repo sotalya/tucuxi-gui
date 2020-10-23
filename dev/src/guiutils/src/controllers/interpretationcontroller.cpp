@@ -1082,6 +1082,9 @@ QVariantHash InterpretationController::hashToJS(QVariant qlobj) {
 
 void InterpretationController::adjustmentDateUpdated()
 {
+    if (_currentDrugModel == nullptr) {
+        return;
+    }
     if (updateInterpretationRange(EViewRangeUpdateContext::AdjustmentDate)) {
         flowController->evaluate();
 

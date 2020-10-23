@@ -273,6 +273,10 @@ bool ChartDataController::isReverseValid() const
         return false;
     }
 
+    if (!predictionspec->getStartDate().isValid()) {
+        return false;
+    }
+
     return true;
 }
 
@@ -330,14 +334,14 @@ void ChartDataController::viewRangeUpdated(bool bShowPerc, bool computeRev)
     initiateUpdatePopPred();
     initiateUpdateAprPred();
     initiateUpdateApoPred();
-//    initiateUpdateAdjPred();
+    initiateUpdateAdjPred();
     if (computeRev)
         initiateUpdateRevPred();
     if (bShowPerc) {
         initiateUpdatePopPerc();
         initiateUpdateAprPerc();
         initiateUpdateApoPerc();
-//        initiateUpdateAdjPerc();
+        initiateUpdateAdjPerc();
     }
     // Back to the clear cache mode
     predictionspec->setClearCache(true);

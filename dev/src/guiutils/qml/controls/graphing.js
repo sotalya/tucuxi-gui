@@ -500,8 +500,12 @@ function extents(ctx)
         }
     }
 
+    // Modify maxY with respect to the manual y factor
+    maxY = maxY * yFactor;
+
     var lg10 = Math.pow(10, Math.ceil(Math.log(1.1 * maxY) / Math.LN10) - 1);
     maxY = Math.ceil(1.1 / lg10 * maxY) * lg10;
+
 
     xRatio = plotWidth  / (maxX - minX);
     yRatio = plotHeight / (maxY - minY);
@@ -1424,6 +1428,11 @@ function formatDate(date)
     var sDate = (day < 10 ? "0" + day : day) + "." + (month < 10 ? "0" + month : month) + "." + year;
 
     return sTime + " " + sDate;
+}
+
+function zoomY(nSteps)
+{
+    yFactor = yFactor * (1.0 - nSteps * 0.1);
 }
 
 function zoom(nSteps)

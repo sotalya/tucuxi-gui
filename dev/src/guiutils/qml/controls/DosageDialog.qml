@@ -9,6 +9,7 @@ import guiutils.qml.controls 1.0
 import ezechiel 1.0
 
 DialogBase {
+    id: root
     title: "Dosage definition"
     width: 600
     height: 400
@@ -369,8 +370,8 @@ DialogBase {
                     objectName: "okDosage"
                     Layout.preferredWidth: 125
                     onClicked: function() {
-                        if (self.apply()) {
-                            self.exit(true);
+                        if (root.apply()) {
+                            root.exit(true);
                         }
                     }
                 }
@@ -380,7 +381,7 @@ DialogBase {
                     text: "Apply"
                     Layout.preferredWidth: 125
                     onClicked: function() {
-                        self.apply()
+                        root.apply()
                     }
                 }
                 Button {
@@ -388,7 +389,7 @@ DialogBase {
                     text: "Cancel"
                     Layout.preferredWidth: 125
                     onClicked: function() {
-                        self.exit(false);
+                        root.exit(false);
                     }
                 }
             }

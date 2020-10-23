@@ -114,10 +114,11 @@ Canvas {
     property real xRatio: 0
     property real yRatio: 0
 
+    property real yFactor: 1
+
     //ToDo: remove default unit
     property string unit: "ug/l"
     property real unitefforder: 1
-
 
 
     function reset() {
@@ -242,6 +243,7 @@ Canvas {
         minY = 0;
         xRatio = 0;
         yRatio = 0;
+        yFactor = 1.0;
 
         //ToDo: remove default unit
         unit = "ug/l";
@@ -545,9 +547,15 @@ if (times.length > 0) {
         }
 
         onWheel: {
-            // For most mice, 120 equals one step of the wheel.
-            Graphing.zoom(wheel.angleDelta.y/120);
-            tooltipX = -1; // Clear tooltip
+            if (wheel.modifiers & Qt.ShiftModifier) {
+                Graphing.zoomY(wheel.angleDelta.y/120);
+                requestPaint();
+            }
+            else {
+                // For most mice, 120 equals one step of the wheel.
+                Graphing.zoom(wheel.angleDelta.y/120);
+                tooltipX = -1; // Clear tooltip
+            }
         }
     }
 

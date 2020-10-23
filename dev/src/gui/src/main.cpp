@@ -124,95 +124,9 @@ void initRestConfig();
 #include <iostream>
 
 #ifdef CONFIG_GUITEST
-#include <QTest>
-
-#include <Spix/QtQmlBot.h>
-
-class GuiTests : public spix::TestServer {
-public:
-    GuiTests(QQuickWindow *window) : m_window(window) {}
-
-protected:
-
-    QQuickWindow *m_window;
-
-    void executeTest() override
-    {
-        wait(std::chrono::milliseconds(1000));
-        bool ok;
-
-        spix::ItemPath path("mainWindow");
-        std::string root = path.rootComponent();
-        const std::vector<std::string> children = path.components();
-        //        const std::vector<std::string>& components() const;
-        //        size_t length() const { return m_components.size(); };
-        //        std::string rootComponent() const;
-
-        ok = existsAndVisible(spix::ItemPath("mainWindow"));
-        ok = existsAndVisible(spix::ItemPath("mainWindow/launchView"));
-        ok = existsAndVisible(spix::ItemPath("mainWindow/launchView/newPatient"));
-        ok = existsAndVisible(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
-        mouseClick(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
-
-        spix::ItemPath path1("mainWindow/launchView/newPatient");
-        std::string root1 = path.rootComponent();
-        const std::vector<std::string> children1 = path.components();
-
-        wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
-        wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/drugListItem_3"));
-        wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
-        wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
-        wait(std::chrono::milliseconds(1500));
-        mouseClick(spix::ItemPath("dosageDialog/okDosage"));
-        wait(std::chrono::milliseconds(1500));
-        this->takeScreenshot("mainWindow/flowView", "screen.png");
-
-        wait(std::chrono::milliseconds(1500));
-        takeScreenshot("mainWindow/flowView", "screen2.png");
-
-        // We call this function to synchronize the thread before clicking
-        existsAndVisible(spix::ItemPath("fake"));
-        QTest::keyClick(m_window, Qt::Key_Right);
-        wait(std::chrono::milliseconds(1500));
-        takeScreenshot("mainWindow/flowView", "screen3.png");
-        mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
-        wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/selectAdjustment_0"));
-        wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
-        wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/validateInterpretation"));
-        wait(std::chrono::milliseconds(500));
-
-        existsAndVisible(spix::ItemPath("fake"));
-//        std::cout << " dialog: " << qPrintable(qApp->activeWindow()->windowTitle()) << std::endl;
-        QTest::keyClick(qApp->activeWindow(), Qt::Key_Enter);
-
-
-        mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
-        wait(std::chrono::milliseconds(20000));
-        mouseClick(spix::ItemPath("mainWindow/flowView/printButton"));
-        wait(std::chrono::milliseconds(2000));
-        mouseClick(spix::ItemPath("mainWindow/applicationBarView/shutDownAction"));
-
-/*
-        QTest::keyClick(qApp->activeModalWidget(), Qt::Key_A);
-        QTest::keyClick(qApp->activeModalWidget(), Qt::Key_B);
-        QTest::keyClick(qApp->activeModalWidget(), Qt::Key_C);
-        QTest::keyClick(qApp->activeModalWidget(), Qt::Key_Enter);
-
-        QTest::keyClick(qApp->activePopupWidget(), Qt::Key_A);
-        QTest::keyClick(qApp->activePopupWidget(), Qt::Key_B);
-        QTest::keyClick(qApp->activePopupWidget(), Qt::Key_C);
-        QTest::keyClick(qApp->activePopupWidget(), Qt::Key_Enter);
-*/
-    }
-};
+#include "../test/gui/src/guitest.h"
 #endif // CONFIG_GUITEST
+
 
 // YTA: Demo of a subclass outside core that uses the factory
 /*
@@ -611,15 +525,20 @@ int main(int argc, char *argv[])
 
 #ifdef CONFIG_GUITEST
     // Instantiate and run tests
-    GuiTests tests(mainWindow->getWindow());
+//    GuiTests tests(mainWindow->getWindow());
+    SpixGTest tests(mainWindow, mainWindow->getWindow(), argc, argv);
     auto bot = new spix::QtQmlBot();
     bot->runTestServer(tests);
 #endif // CONFIG_GUITEST
 
     int result = app.exec();
 
+#ifdef CONFIG_GUITEST
+    return tests.testResult();
+#else
     // delete mainWindow;
     return result;
+#endif
 }
 
 void parseOptions()

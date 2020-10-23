@@ -230,9 +230,11 @@ void MainWindowController::monitorStatus(QQuickView::Status status)
 
 void MainWindowController::goToHome()
 {
+#ifndef CONFIG_GUITEST
     if (currentView == FLOW)
         if (!interpretationController->acceptAndQuit())
             return;
+#endif // CONFIG_GUITEST
 
     currentView = HOME;
     // Then go to home page

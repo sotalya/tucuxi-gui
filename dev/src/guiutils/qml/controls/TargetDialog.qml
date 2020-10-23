@@ -10,7 +10,7 @@ import guiutils.qml.controls 1.0
 import ezechiel 1.0
 
 DialogBase {
-    id: targetDialog
+    id: root
     title: "Target parameters"
     width: 450
     height: 450
@@ -24,8 +24,8 @@ DialogBase {
     Shortcut {
         sequence: "Return"
         onActivated: {
-            if (targetDialog.apply()) {
-                targetDialog.exit(true);
+            if (root.apply()) {
+                root.exit(true);
             }
         }
     }
@@ -134,6 +134,7 @@ DialogBase {
                 }
                 EntityComboBox {
                     id: typeInput
+                    objectName: "typeInput"
                     Layout.preferredWidth: 200
                     model: targetTabController.getTargetTypes()
 
@@ -172,7 +173,7 @@ DialogBase {
                 EntitySpinBox {
                     id: cMinInput
                     Layout.preferredWidth: 200
-                    onEditingFinished: { targetDialog.validate() }
+                    onEditingFinished: { root.validate() }
                 }
             }
             RowLayout {
@@ -188,7 +189,7 @@ DialogBase {
                 EntitySpinBox {
                     id: cBestInput
                     Layout.preferredWidth: 200
-                    onEditingFinished: { targetDialog.validate() }
+                    onEditingFinished: { root.validate() }
                 }
             }
             RowLayout {
@@ -203,7 +204,7 @@ DialogBase {
                 EntitySpinBox {
                     id: cMaxInput
                     Layout.preferredWidth: 200
-                    onEditingFinished: { targetDialog.validate() }
+                    onEditingFinished: { root.validate() }
                 }
 
             }
@@ -228,7 +229,7 @@ DialogBase {
                     id: tMinInput
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex === 1
-                    onEditingFinished: { targetDialog.validate() }                    
+                    onEditingFinished: { root.validate() }
                 }
             }
             RowLayout {
@@ -245,7 +246,7 @@ DialogBase {
                     id: tBestInput
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex === 1
-                    onEditingFinished: { targetDialog.validate() }
+                    onEditingFinished: { root.validate() }
                 }
             }
             RowLayout {
@@ -262,7 +263,7 @@ DialogBase {
                     id: tMaxInput
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex === 1
-                    onEditingFinished: { targetDialog.validate() }
+                    onEditingFinished: { root.validate() }
                 }
             }
 
@@ -280,7 +281,7 @@ DialogBase {
                     id: micInput
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex > 5
-                    onEditingFinished: { targetDialog.validate() }
+                    onEditingFinished: { root.validate() }
                 }
             }
 
@@ -288,19 +289,21 @@ DialogBase {
                 Button {                    
                     id: acceptBtn
                     text: "Ok"
+                    objectName: "okTarget"
                     Layout.preferredWidth: 150
                     onClicked: function() {
-                        if (targetDialog.apply()) {
-                            targetDialog.exit(true);
+                        if (root.apply()) {
+                            root.exit(true);
                         }
                     }
                 }
                 Button {
                     id: cancelBtn
                     text: "Cancel"
+                    objectName: "cancelTarget"
                     Layout.preferredWidth: 150
                     onClicked: function() {
-                        targetDialog.exit(false);
+                        root.exit(false);
                     }
                 }
             }

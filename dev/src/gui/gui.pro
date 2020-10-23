@@ -28,6 +28,7 @@ DEPENDPATH += .$${DESTDIR}
 INCLUDEPATH +=	..
 
 config_guitest {
+    include($$PWD/../../test/gui/tucuxi-gui-test.pri)
     LIBS += /usr/local/lib/libSpix.a
     QT += testlib
 }

@@ -86,6 +86,7 @@ Rectangle {
 
         ApplicationBarButton {
             id: newAction
+            objectName: "newAction"
             Layout.preferredWidth:  parent.height
             Layout.preferredHeight: parent.height
             icon:       "qrc:/icons/toolbar/folder_patient_add.png"

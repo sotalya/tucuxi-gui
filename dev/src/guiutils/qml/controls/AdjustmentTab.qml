@@ -137,6 +137,7 @@ Rectangle {
                                 */
                                 DatePicker {
                                     id: atDateSettingInput
+                                    objectName: "atDateSettingInput"
                                     Layout.preferredWidth: 150
                                     date: adjustmentTabController.adjustmentDate
                                     onEditingFinished: {
@@ -145,6 +146,7 @@ Rectangle {
                                 }
                                 TimePicker {
                                     id: atMinutesSettingInput
+                                    objectName: "atMinutesSettingInput"
                                     Layout.fillWidth: true
                                     date: adjustmentTabController.adjustmentDate
                                     onEditingFinished: {

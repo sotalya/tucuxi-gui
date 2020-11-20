@@ -19,33 +19,7 @@
 
 extern SpixGTest* srv;
 
-TEST(StressTest, Test1)
-{
-    for (int testIndex = 0; testIndex < 10; testIndex ++) {
-
-        srv->startNewPatient();
-
-        srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
-        srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugList_Cefepime"));
-        srv->waitPeriod();
-
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
-        srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
-        srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
-
-        srv->waitPeriod(2);
-    }
-    srv->synchronize();
-
-    CHECKSPIXERRORS;
-}
-
-
-TEST(StressTest, TestPercentiles)
+TEST(CacheTest, Test1)
 {
     for (int testIndex = 0; testIndex < 10; testIndex ++) {
 
@@ -64,6 +38,15 @@ TEST(StressTest, TestPercentiles)
         srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
 
         srv->waitPeriod(20);
+
+        srv->enterKey(spix::ItemPath("mainWindow/flowView/chartArea"), spix::KeyCodes::Right, 0);
+        srv->waitPeriod(5);
+        srv->enterKey(spix::ItemPath("mainWindow/flowView/chartArea"), spix::KeyCodes::Left, 0);
+        srv->waitPeriod(5);
+        srv->enterKey(spix::ItemPath("mainWindow/flowView/chartArea"), spix::KeyCodes::Left, 0);
+        srv->waitPeriod(5);
+        srv->enterKey(spix::ItemPath("mainWindow/flowView/chartArea"), spix::KeyCodes::Right, 0);
+        srv->waitPeriod(5);
     }
     srv->synchronize();
 

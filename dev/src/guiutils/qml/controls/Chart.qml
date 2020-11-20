@@ -483,6 +483,7 @@ if (times.length > 0) {
     //ToDo: horizontal offset and zoom only
     MouseArea {
         id: mouseArea
+        objectName: "chartArea"
         anchors.fill: parent
 
         hoverEnabled: true

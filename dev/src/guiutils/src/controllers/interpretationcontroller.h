@@ -398,7 +398,9 @@ private:
     QObject *dosagesView;
     QObject *drugsView;
     QObject *drugVariatesView;
+public: // For RandomTest
     QObject *flowView;
+private:
     QObject *measuresView;
     QObject *patientsView;
     QObject *studiesView;
@@ -444,6 +446,7 @@ public slots:
     bool sendReport(Report *report);
 
     bool updateInterpretationRange(EViewRangeUpdateContext context);
+
 };
 
 #endif // INTERPRETATIONCONTROLER_H

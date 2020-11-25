@@ -14,7 +14,7 @@ Rectangle {
     property int status: Status.invalid;
     property bool enabled: false;
 
-    property var routes: interpretation.drugResponseAnalysis.drugModel? interpretation.drugResponseAnalysis.drugModel.intakes : 0
+    property var routes // : dosageTabController.drugModel ? dosageTabController.drugModel.intakes : 0 // interpretation.drugResponseAnalysis.drugModel? interpretation.drugResponseAnalysis.drugModel.intakes : 0
 
     property var routeobjs: routes? routes.objlist : 0
 
@@ -93,7 +93,7 @@ Rectangle {
                             dosageTabController.addDosage();
                             dosageListView.currentIndex = dosageListView.count-1;
                             var model = interpretation.drugResponseAnalysis.treatment.dosages.objlist[dosageListView.currentIndex]
-                            dosageDialog.exec(model, routesName, true, false)
+                            dosageDialog.exec(model, routes, routesName, true, false)
                         }
 
                         tooltipText: ToolTips.dosageTab.add
@@ -154,7 +154,7 @@ Rectangle {
                                 image.source: "qrc:/icons/buttons/edit.png"
                                 mousearea.onClicked: {
                                     dosageListView.currentIndex = index;
-                                    dosageDialog.exec(modelData, routesName, false, index == 0)
+                                    dosageDialog.exec(modelData, routes, routesName, false, index == 0)
                                 }
                                 tooltipText: ToolTips.dosageTab.edit
                             },
@@ -352,7 +352,7 @@ Rectangle {
         id: dosageDialog
         objectName: "dosageDialog"
 
-        function exec(model, routesName, bCreatingNewItem, allowSteadyState, doses)
+        function exec(model, routes, routesName, bCreatingNewItem, allowSteadyState, doses)
         {
             if (model) {
                 var enableAtSteadyState = allowSteadyState || (bCreatingNewItem && (dosageTabController.getNbDosages() === 1));
@@ -366,6 +366,7 @@ Rectangle {
                     model.endtime,
                     model.hasEndDate,
                     model.isAtSteadyState,
+                         routes,
                     routesName,
                     disableAtSteadyState,
                     interpretation.drugResponseAnalysis.drugModel.standardTreatment,
@@ -382,7 +383,7 @@ Rectangle {
                 dosageTabController.setDbValue(dosageListView.currentIndex, this.getQuantity());
                 dosageTabController.setDbInterval(dosageListView.currentIndex, this.getInterval());
                 dosageTabController.setDbTinf(dosageListView.currentIndex, this.getInfusion());
-                //dosageTabController.setRouteValue(dosageListView.currentIndex, this.getRoute());
+                dosageTabController.setRouteValue(dosageListView.currentIndex, this.getRoute());
                 dosageTabController.setAppliedTime(dosageListView.currentIndex, appliedDate);
                 dosageTabController.setEndTime(dosageListView.currentIndex, endDate);
                 dosageTabController.setHasEndDate(dosageListView.currentIndex, !this.isAtSteadyState() && this.hasEndDate());

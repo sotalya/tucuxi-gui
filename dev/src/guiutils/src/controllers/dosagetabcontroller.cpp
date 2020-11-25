@@ -15,8 +15,11 @@
 
 STD_PROPERTY_IMPL(DosageTabController, ezechiel::core::DosageHistory*, dosages, Dosages)
 
+//STD_PROPERTY_IMPL(DosageTabController, ezechiel::core::DrugModel*, drugModel, DrugModel)
+
 DosageTabController::DosageTabController(QObject *parent) : AbstractViewController(parent)
 {
+//    _drugModel = nullptr;
     _dosages = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DosageHistory>(ABSTRACTREPO, this);
 }
 

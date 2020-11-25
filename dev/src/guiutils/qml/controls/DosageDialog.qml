@@ -18,6 +18,10 @@ DialogBase {
 
     property var stdTreatment
 
+    property var availableRoutes
+
+    property bool multipleRoutes : false
+
     // Intercept Return to validate the dialog
     Shortcut {
         sequence: "Return"
@@ -28,12 +32,14 @@ DialogBase {
         }
     }
 
-    function init(quantity, interval, route, tinf, appliedDate, endDate, hasEndDate, isAtSteadyState, routeNames, disableAtSteadyState,
+    function init(quantity, interval, route, tinf, appliedDate, endDate, hasEndDate, isAtSteadyState, routes, routeNames, disableAtSteadyState,
                   standardTreatment, drugmodel)
     {
         self = this
 
         stdTreatment = standardTreatment;
+
+        availableRoutes = routes;
 
         // doses
         doseSpinBox.decimals = 2;
@@ -52,8 +58,18 @@ DialogBase {
         //intervalSpinBox.to = drugmodel.intervals.intervalsList[(drugmodel.intervals.intervalsList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
         intervalSpinBox.doValidation = function() { return getInterval () > 0 }
 
-        //routeComboBox.model = routeNames;
-        //routeComboBox.currentIndex = route.value;
+        multipleRoutes = (routes.objlist.length > 1);
+
+        var rNames = [];
+        for (var i = 0; i < routes.objlist.length; ++i) {
+            //                    console.log("route at (" + i + "): " + routeobjs[i].label);
+            rNames[i] = routes.objlist[i].description;
+            if (routes.objlist[i].description === route.description) {
+                routeComboBox.currentIndex = i;
+            }
+        }
+        routeComboBox.model = rNames;
+//        routeComboBox.currentIndex = route.value;
         routeText.text = route.description
 
         // infusions
@@ -104,7 +120,7 @@ DialogBase {
     function getQuantity()    { return doseSpinBox.getRealValue() }
     function getInterval()    { return intervalSpinBox.getRealValue() }
     function getInfusion()    { return infusionSpinBox.getRealValue() }
-    //function getRoute()       { return routeComboBox.currentIndex }
+    function getRoute()       { return routeComboBox.currentIndex }
     function getAppliedDate() { return new Date(appliedDateInput.date.getFullYear(),
                                    appliedDateInput.date.getMonth(),
                                    appliedDateInput.date.getDate(),
@@ -153,12 +169,13 @@ DialogBase {
     function showOverlappingMessage(bShow) {
         overlappingLabel.visible = bShow
     }
-/*
+
     function refresh()
     {
-        infusionRow.visible = this.getRoute() === 1;
+        var route = root.availableRoutes.objlist[routeComboBox.currentIndex];
+        infusionRow.visible = route.label === "INFUSION";
     }
-*/
+
 
     GridLayout {
         anchors.fill: parent
@@ -223,20 +240,21 @@ DialogBase {
                     Layout.preferredWidth: 100
                     tooltipText: ToolTips.dosageDialog.route
                 }
-    /*
+
                 EntityComboBox {
                     id: routeComboBox
-                    property var dialog
+                    visible : root.multipleRoutes
                     Layout.preferredWidth: 300
                     model: [] // Empty at the beginning. It is filled when the drug model is defined
                     onCurrentIndexChanged: {
-                        dialog.refresh()
+                        root.refresh()
                     }
 
                 }
-    */
+
                 EntityTextField {
                     id: routeText
+                    visible : !root.multipleRoutes
                     readOnly: true
                     Layout.preferredWidth: 250
                 }

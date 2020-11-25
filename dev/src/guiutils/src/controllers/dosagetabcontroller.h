@@ -12,6 +12,7 @@ namespace ezechiel {
 namespace core {
 
 class DosageHistory;
+class DrugModel;
 
 }
 }
@@ -25,6 +26,7 @@ public:
 
     //! This property is used by DosageTab.qml to access the list of dosages
     STD_PROPERTY_DECL(ezechiel::core::DosageHistory*, dosages, Dosages)
+    //STD_PROPERTY_DECL(ezechiel::core::DrugModel*, drugModel, DrugModel)
     Q_PROPERTY(bool canHaveMoreDosages READ getCanHaveMoreDosages NOTIFY canHaveMoreDosagesChanged);
 
 public:

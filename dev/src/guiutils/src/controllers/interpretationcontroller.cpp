@@ -894,6 +894,7 @@ void InterpretationController::loadInterpretation(Interpretation *interpretation
 
         setCurrentDrugModel(drugModel);
 
+
         CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(drugsView, "setCurrentDrugModel",
                                   Q_ARG(QVariant, QVariant::fromValue(drugModelIndex))));
 
@@ -903,7 +904,7 @@ void InterpretationController::loadInterpretation(Interpretation *interpretation
                 covariateTabController->reset(drugModel->getCovariates());
 
                 // TODO: To be checked: Do we really need that?
-       //         dosagesView->setProperty("routes", QVariant::fromValue(drug->getAdme()->getIntakes()));
+                dosagesView->setProperty("routes", QVariant::fromValue(drugModel->getAdme()->getIntakes()));
        //         adjustmentsView->setProperty("routes", QVariant::fromValue(drug->getAdme()->getIntakes()));
 
        //         adjustmentTabController->setAdjustmentDateFromMaster(QDateTime::currentDateTime());

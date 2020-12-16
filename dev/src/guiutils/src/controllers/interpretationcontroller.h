@@ -70,6 +70,7 @@ enum class EViewRangeUpdateContext {
     UserResize
 };
 
+
 class InterpretationController : public QObject
 {
     Q_OBJECT
@@ -142,6 +143,10 @@ class InterpretationController : public QObject
 
     STD_PROPERTY_DECL(bool, isDemo, IsDemo)
 
+    //! For testing purpose.
+    //! Allows to set the name of the report form the GUI tests, and to retrieve it from QML
+    STD_PROPERTY_DECL(QString, reportFileName, ReportFileName);
+
 public:
 
     // Get the flow view
@@ -210,10 +215,8 @@ public:
     Q_INVOKABLE void addPatient();
     Q_INVOKABLE void removePatient(int index);
 
+    // For testing purposes
     Q_INVOKABLE bool isTesting();
-    Q_INVOKABLE QString getReportFileName();
-
-
 
     // Translate a Url into a local file string
     Q_INVOKABLE QString handleFileChosen(const QString &urlString);
@@ -231,6 +234,8 @@ public:
     void showStatistics(int what);
 
     bool associateFormulationToRoute(ezechiel::core::DosageHistory *dosageHistory, ezechiel::core::AdminList *adminList);
+
+    Q_INVOKABLE QByteArray interpretationToJson();
 
 signals:
     void webchannelChanged(QQmlWebChannel&);

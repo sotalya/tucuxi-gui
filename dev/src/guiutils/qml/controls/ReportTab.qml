@@ -81,7 +81,7 @@ Rectangle {
         }
         else {
             daweb.update();
-            daweb.webChannel.registerObject("interpretation", interpretation);
+            //daweb.webChannel.registerObject("interpretation", interpretation);
             reportInfo.dataUpdated();
             daweb.reload();
         }
@@ -108,8 +108,6 @@ Rectangle {
             property variant patientvariates: []
             property variant measures: []
             property variant dosages: []
-            property string lastDosage: "";
-            property string lastDosageDate: "";
             property string popParameters: "";
             property string aPrioriParameters: "";
             property string aPosterioriParameters: "";
@@ -120,6 +118,7 @@ Rectangle {
             property string steadyStateAUC24: "";
             property string steadyStateMin: "";
             property string steadyStateMax: "";
+            property string fullJson: "";
         }
 
         WebEngineView {
@@ -130,48 +129,39 @@ Rectangle {
 
             function update()
             {
-                reportInfo.lastDosage = "";
-                reportInfo.lastDosageDate = "";
+                reportInfo.fullJson = interpretationController.interpretationToJson();
 
-                var dos = interpretation.drugResponseAnalysis.treatment.dosages;
-                if (dos.size() > 0) {
-                    var dosage = dos.objat(dos.size()-1);
-                    reportInfo.lastDosage = dosage.quantity.dbvalue + dosage.quantity.unitstring;
-                    reportInfo.lastDosageDate = dosage.applied;
-                }
-
-                reportInfo.steadyStateMax = (interpretation.analysis.chartData.getInfo("steadyStateMax")/1000).toFixed(2) + "mg/l";
-                reportInfo.steadyStateMin = (interpretation.analysis.chartData.getInfo("steadyStateMin")/1000).toFixed(2) + "mg/l";
-                reportInfo.steadyStateAUC24 = (interpretation.analysis.chartData.getInfo("steadyStateAUC24")/1000).toFixed(2) + "mg/l*h";
+//                reportInfo.steadyStateMax = (interpretation.analysis.chartData.getInfo("steadyStateMax")/1000).toFixed(2) + "mg/l";
+//                reportInfo.steadyStateMin = (interpretation.analysis.chartData.getInfo("steadyStateMin")/1000).toFixed(2) + "mg/l";
+//                reportInfo.steadyStateAUC24 = (interpretation.analysis.chartData.getInfo("steadyStateAUC24")/1000).toFixed(2) + "mg/l*h";
 
                 // Get parameter sets at the adjustment date
-                reportInfo.popParameters = "{}"
-                if (flow.chart.popP) {
-                    reportInfo.popParameters = getParameters(flow.chart.popP.predictive.predictionData);
-                }
-                reportInfo.aPrioriParameters = "{}"
-                if (flow.chart.aprP) {
-                    reportInfo.aPrioriParameters = getParameters(flow.chart.aprP.predictive.predictionData);
-                }
-                reportInfo.aPosterioriParameters = "{}"
-                if (flow.chart.apoP) {
-                    reportInfo.aPosterioriParameters = getParameters(flow.chart.apoP.predictive.predictionData);
-                }
+//                reportInfo.popParameters = "{}"
+//                if (flow.chart.popP) {
+//                    reportInfo.popParameters = getParameters(flow.chart.popP.predictive.predictionData);
+//                }
+//                reportInfo.aPrioriParameters = "{}"
+//                if (flow.chart.aprP) {
+//                    reportInfo.aPrioriParameters = getParameters(flow.chart.aprP.predictive.predictionData);
+//                }
+//                reportInfo.aPosterioriParameters = "{}"
+//                if (flow.chart.apoP) {
+//                    reportInfo.aPosterioriParameters = getParameters(flow.chart.apoP.predictive.predictionData);
+//                }
 
                 // Validation info:
-                reportInfo.posology = interpretation.analysis.dosageDescription
-                reportInfo.nextControl = interpretation.analysis.nextControl.toLocaleDateString(Qt.locale(), "dd.MM.yyyy") + " " +
-                                         interpretation.analysis.nextControl.toLocaleTimeString(Qt.locale(), "HH:mm");
-                reportInfo.validationDate = interpretationController.interpretation.validateInterpretationTime.toLocaleDateString(Qt.locale(), "dd.MM.yyyy") + " " +
-                        interpretationController.interpretation.validateInterpretationTime.toLocaleTimeString(Qt.locale(), "HH:mm");
+//                reportInfo.posology = interpretation.analysis.dosageDescription
+//                reportInfo.nextControl = interpretation.analysis.nextControl.toLocaleDateString(Qt.locale(), "dd.MM.yyyy") + " " +
+//                                         interpretation.analysis.nextControl.toLocaleTimeString(Qt.locale(), "HH:mm");
+//                reportInfo.validationDate = interpretationController.interpretation.validateInterpretationTime.toLocaleDateString(Qt.locale(), "dd.MM.yyyy") + " " +
+//                        interpretationController.interpretation.validateInterpretationTime.toLocaleTimeString(Qt.locale(), "HH:mm");
             }
 
             function register()
             {
                 // Init our report info object and add it to the channel
                 daweb.update();
-                reportInfo.graphPath = "file://" + appPath + "/graph.png";
-                webChannel.registerObject("interpretation", interpretation);
+                //webChannel.registerObject("interpretation", interpretation);
                 //webChannel.registerObject("something", interpretation.analysis.chartData.adjPred.predictive.predictionData);
                 webChannel.registerObject("info", reportInfo);
 
@@ -198,13 +188,19 @@ Rectangle {
         //ToDo: later on, the right panel could display the report
         TucuButton {
             id: printbutton
+            objectName: "printButton"
             Layout.fillWidth: true
             text: "Generate pdf"
             enabled: false
             //        onClicked: publishReport(InterpretationController.Pdf)
             onClicked: {
                 forceActiveFocus();
-                fileDialog.open();
+                if (interpretationController.isTesting()) {
+                    daweb.printToPdf(interpretationController.reportFileName);
+                }
+                else {
+                    fileDialog.open();
+                }
             }
         }
 

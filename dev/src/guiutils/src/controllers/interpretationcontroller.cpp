@@ -84,6 +84,8 @@ STD_PROPERTY_IMPL(InterpretationController, Interpretation*, interpretation, Int
 STD_PROPERTY_IMPL(InterpretationController, QString, rawRequest, RawRequest)
 STD_PROPERTY_IMPL(InterpretationController, QString, clinicalsHtml, ClinicalsHtml)
 STD_PROPERTY_IMPL(InterpretationController, bool, isDemo, IsDemo)
+STD_PROPERTY_IMPL(InterpretationController, QString, reportFileName, ReportFileName)
+
 
 InterpretationController::InterpretationController(QObject *parent) :
     QObject (parent),
@@ -218,7 +220,9 @@ InterpretationController::InterpretationController(QObject *parent) :
 
 void InterpretationController::setNewInterpretation(Interpretation *interpretation, bool newInterpretation)
 {
+    auto oldInterpretation = _interpretation;
     if (_interpretation != nullptr) {
+        _interpretation->setParent(nullptr);
         deleteCurrentRequest();
         // TODO : To be fixed. If we want to delete it we have to take care of every call to clear() method
         // that deletes the objects of the list. For instance, patients list clear will delete the patient
@@ -309,6 +313,10 @@ void InterpretationController::setNewInterpretation(Interpretation *interpretati
         setClinicalsHtml(toDisplay);
 
         setRawRequest(interpretationRequest->getSource());
+    }
+
+    if (oldInterpretation != nullptr) {
+        //delete oldInterpretation;
     }
 
 }
@@ -441,7 +449,7 @@ bool InterpretationController::acceptAndQuit()
     // Stop every calculation
     calculationController->abortAll();
 
-    _webchannel->deregisterObject(_interpretation);
+    //_webchannel->deregisterObject(_interpretation);
 
     // TODO:  Clean the interpretation
     // Currently deleting the request has an issue. To be checked on Windows.
@@ -792,7 +800,6 @@ void InterpretationController::startInterpretationRequest(InterpretationRequest 
         drugTabController->setDrugInfo(findRealActiveSubstance( _privateActiveSubstances->at(0)));
         //drugTabController->setDrugInfo(findRealActiveSubstance( _activeSubstances->at(0)));
     }
-
 
 }
 
@@ -1284,7 +1291,8 @@ void InterpretationController::switchDrugModel(int index)
         _interpretation->getAnalysis()->setRemonitoring("");
         _interpretation->getAnalysis()->setWarning("");
 
-        if (_drugs->size() != 1) {
+        if (true) {
+//        if (_drugs->size() != 1) {
             treatment->getMeasures()->clear();
             treatment->getDosages()->clear();
             treatment->getCovariates()->clear();
@@ -2020,7 +2028,224 @@ bool InterpretationController::isTesting()
 #endif // CONFIG_GUITEST
 }
 
-QString InterpretationController::getReportFileName()
+
+double toFixed(double value, int n)
 {
-    return "TestReport.pdf";
+    return static_cast<int>(value * std::pow(10.0, n)) / std::pow(10.0, n);
+}
+
+QString roundToString(double value)
+{
+    auto valueInt = toFixed(toFixed(value, 0) * 100.0, 0);
+    auto valueOne = toFixed(toFixed(value, 1) * 100.0, 0);
+    auto valueTwo = toFixed(toFixed(value, 2) * 100.0, 0);
+
+    if (valueTwo == valueInt){
+        return QString("%1").arg(value, 0, 'f', 0);
+    }
+    else if(valueTwo == valueOne){
+        return QString("%1").arg(value, 0, 'f', 1);
+    }
+    return QString("%1").arg(value, 0, 'f', 2);
+}
+
+
+QByteArray InterpretationController::interpretationToJson()
+{
+    QJsonDocument doc;
+    QJsonObject interpretation;
+
+    interpretation.insert("graphPath", "file://" + QApplication::applicationDirPath() + "/graph.png");
+    interpretation.insert("validationDate", _interpretation->getValidateInterpretationTime().toString());
+
+    QJsonArray drugCovariates;
+    auto drugCovs = _interpretation->getDrugResponseAnalysis()->getDrugModel()->getCovariates();
+    for (int i = 0; i < drugCovs->size(); i++) {
+        QJsonObject covariate;
+        const auto c = drugCovs->at(i);
+        covariate.insert("id", c->getCovariateId());
+        covariate.insert("name", c->getVisualNameTranslation()->value());
+        QString unitString = c->getQuantity()->getUnitstring();
+        if ((unitString == "") || (unitString == "-")) {
+            covariate.insert("value", QString("%1").arg(roundToString(c->getQuantity()->getDbvalue())));
+        }
+        else {
+            covariate.insert("value", QString("%1%2").arg(c->getQuantity()->getDbvalue()).arg(c->getQuantity()->getUnitstring()));
+        }
+        drugCovariates.append(covariate);
+    }
+    interpretation.insert("drugCovariates", drugCovariates);
+
+    QJsonArray covariates;
+    auto covs = _interpretation->getDrugResponseAnalysis()->getTreatment()->getCovariates();
+    for (int i = 0; i < covs->size(); i++) {
+        QJsonObject covariate;
+        const auto c = covs->at(i);
+
+        covariate.insert("id", c->getCovariateId());
+        covariate.insert("name", c->getName());
+        QString unitString = c->getQuantity()->getUnitstring();
+        if ((unitString == "") || (unitString == "-")) {
+            covariate.insert("value", QString("%1").arg(roundToString(c->getQuantity()->getDbvalue())));
+        }
+        else {
+            covariate.insert("value", QString("%1%2").arg(c->getQuantity()->getDbvalue()).arg(c->getQuantity()->getUnitstring()));
+        }
+        covariates.append(covariate);
+    }
+    interpretation.insert("covariates", covariates);
+
+    QJsonArray measures;
+    auto ms = _interpretation->getDrugResponseAnalysis()->getTreatment()->getMeasures();
+    for (int i = 0; i < ms->size(); i++) {
+        auto m = dynamic_cast<Measure*>(ms->at(i));
+        QJsonObject measure;
+        measure.insert("sampleId", m->sampleID());
+        measure.insert("sampleDate", m->getMoment().toString(Qt::ISODate));
+        measure.insert("sampleValue", QString("%1 %2").arg(m->getConcentration()->getDbvalue()).arg(m->getConcentration()->getUnitstring()));
+        measures.insert(i, measure);
+    }
+    interpretation.insert("measures", measures);
+
+
+    interpretation.insert("drugName", _interpretation->getDrugResponseAnalysis()->getDrugModel()->getActiveSubstance()->getName()->value());
+
+    QJsonObject patient;
+    auto p = _interpretation->getDrugResponseAnalysis()->getTreatment()->getPatient();
+    auto p1 = dynamic_cast<Patient*>(p);
+    patient.insert("externalId", p1->externalId());
+    patient.insert("firstName", p1->person()->firstname());
+    patient.insert("lastName", p1->person()->name());
+    patient.insert("address", p1->person()->location()->address());
+    patient.insert("birthday", p1->person()->birthday().toString(Qt::ISODate));
+    patient.insert("gender", p1->person()->gender());
+    interpretation.insert("patient", patient);
+
+
+    QJsonObject analyst;
+    analyst.insert("title", _interpretation->getAnalyst()->title());
+    analyst.insert("firstName", _interpretation->getAnalyst()->person()->firstname());
+    analyst.insert("lastName", _interpretation->getAnalyst()->person()->name());
+    analyst.insert("instituteName", _interpretation->getAnalyst()->institute()->name());
+    analyst.insert("instituteAddress", _interpretation->getAnalyst()->institute()->location()->address());
+    analyst.insert("role", _interpretation->getAnalyst()->role());
+    QJsonArray analystPhone;
+    auto phones = _interpretation->getAnalyst()->person()->getPhones();
+    for (int i = 0; i < phones->size(); i++) {
+        QJsonObject phone;
+        phone.insert("number", phones->at(i)->getNumber());
+        analystPhone.insert(i, phone);
+    }
+    analyst.insert("phones", analystPhone);
+
+    interpretation.insert("analyst", analyst);
+    QJsonObject mandator;
+    mandator.insert("title", _interpretation->getRequest()->getPractician()->title());
+    mandator.insert("firstName", _interpretation->getRequest()->getPractician()->person()->firstname());
+    mandator.insert("lastName", _interpretation->getRequest()->getPractician()->person()->name());
+    mandator.insert("instituteName", _interpretation->getRequest()->getPractician()->institute()->name());
+    mandator.insert("instituteAddress", _interpretation->getRequest()->getPractician()->institute()->location()->address());
+    //mandator.insert("phone", _interpretation->getRequest()->getPractician()->title());
+
+    QJsonArray mandatorPhone;
+    auto mPhones = _interpretation->getRequest()->getPractician()->person()->getPhones();
+    for (int i = 0; i < mPhones->size(); i++) {
+        QJsonObject phone;
+        phone.insert("number", phones->at(i)->getNumber());
+        mandatorPhone.insert(i, phone);
+    }
+    mandator.insert("phones", mandatorPhone);
+
+    interpretation.insert("mandator", mandator);
+    QJsonObject analysis;
+    analysis.insert("expectedness", _interpretation->getAnalysis()->getExpectedness());
+    analysis.insert("warning", _interpretation->getAnalysis()->getWarning());
+    analysis.insert("remonitoring", _interpretation->getAnalysis()->getRemonitoring());
+    analysis.insert("prediction", _interpretation->getAnalysis()->getPrediction());
+    analysis.insert("suitability", _interpretation->getAnalysis()->getSuitability());
+
+    interpretation.insert("analysis", analysis);
+
+    interpretation.insert("steadyStateMin",
+                          QString("%1 mg/l").arg(_interpretation->getAnalysis()->getChartData()->getInfo("steadyStateMin")));
+    interpretation.insert("steadyStateMax",
+                          QString("%1 mg/l").arg(_interpretation->getAnalysis()->getChartData()->getInfo("steadyStateMax")));
+    interpretation.insert("steadyStateAUC24",
+                          QString("%1 mg*h/l").arg(_interpretation->getAnalysis()->getChartData()->getInfo("steadyStateAUC24")));
+
+    interpretation.insert("nextControl", _interpretation->getAnalysis()->getNextControl().toString(Qt::ISODate));
+    interpretation.insert("validationDate", _interpretation->getValidateInterpretationTime().toString(Qt::ISODate));
+    interpretation.insert("proposedDosage", _interpretation->getAnalysis()->getDosageDescription());
+
+
+    auto ds = _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages();
+    if (ds->size() > 0) {
+        auto d = ds->at(ds->size() - 1);
+        QJsonObject dosage;
+        interpretation.insert("lastDosage", QString("%1 %2").arg(d->getQuantity()->getDbvalue()).arg(d->getQuantity()->getUnitstring()));
+        interpretation.insert("lastDosageDate", d->getApplied().toString(Qt::ISODate));
+        interpretation.insert("lastDosageInterval", d->getInterval().toString());
+    }
+    else {
+        QJsonObject dosage;
+        interpretation.insert("lastDosage", "");
+        interpretation.insert("lastDosageDate", "");
+        interpretation.insert("lastDosageInterval", "");
+    }
+
+    QJsonArray parameters;
+    {
+        // Wrong: Change 0 to the time of adjustment
+        auto popPoints = chartData->getPopPred()->getPredictive()->getPredictionData()->getPoints();
+        Parameters *popParameters = nullptr;
+        if (popPoints->size() > 0) {
+            popParameters = popPoints->at(popPoints->size() - 1)->getPset()->getParameters();
+        }
+        auto aprPoints = chartData->getAprPred()->getPredictive()->getPredictionData()->getPoints();
+        Parameters *aprParameters = nullptr;
+        if (aprPoints->size() > 0) {
+            aprParameters = aprPoints->at(aprPoints->size() - 1)->getPset()->getParameters();
+        }
+
+        auto apoPoints = chartData->getApoPred()->getPredictive()->getPredictionData()->getPoints();
+        Parameters *apoParameters = nullptr;
+        if (apoPoints->size() > 0) {
+            apoParameters = apoPoints->at(apoPoints->size() - 1)->getPset()->getParameters();
+        }
+        if (popParameters != nullptr) {
+            for (int i = 0; i < popParameters->size(); i++) {
+                QJsonObject param;
+                param.insert("id", popParameters->at(i)->getName());
+                QString unit = "";
+                const auto drugParams = _interpretation->getDrugResponseAnalysis()->getDrugModel()->getParameters()->getParameters();
+                for (int j = 0; j < drugParams->size(); j++) {
+                    if (drugParams->at(j)->getName() == popParameters->at(i)->getName()) {
+                        unit = drugParams->at(j)->getQuantity()->getUnitstring();
+                    }
+                }
+                param.insert("unit", unit);
+                param.insert("popValue", roundToString(popParameters->at(i)->getQuantity()->getDbvalue()));
+                if (aprParameters != nullptr) {
+                    param.insert("aprioriValue", roundToString(aprParameters->at(i)->getQuantity()->getDbvalue()));
+                }
+                else {
+                    param.insert("aprioriValue", "-");
+                }
+                if (apoParameters != nullptr) {
+                    param.insert("aposterioriValue", roundToString(apoParameters->at(i)->getQuantity()->getDbvalue()));
+                }
+                else {
+                    param.insert("aposterioriValue", "-");
+                }
+                parameters.append(param);
+            }
+        }
+    }
+    interpretation.insert("parameters", parameters);
+
+
+    doc.setObject(interpretation);
+    std::cout << qPrintable(QString::fromUtf8(doc.toJson())) << std::endl;
+    return doc.toJson();
+
 }

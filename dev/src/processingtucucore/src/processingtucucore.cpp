@@ -579,7 +579,7 @@ ezechiel::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
         }
 
         // data:
-        ezechiel::core::FancyPoints* fpts = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoints>(ABSTRACTREPO,adjustment->getPredictionData());
+        ezechiel::core::FancyPoints* fpts = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoints>(ABSTRACTREPO, adjustment->getPredictionData());
 
         for (Tucuxi::Core::CycleData cycleData: fullDosage.m_data) {
             for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {

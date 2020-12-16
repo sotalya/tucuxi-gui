@@ -4,8 +4,8 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script src="jquery-3.1.1.js"></script>
     <script src="qwebchannel.js"></script>
-    <script src="fieldmapping.js"></script>
     <script src="moment.js"></script>
+    <!--<script src="test.js"></script> -->
     <title>Rapport</title>
     <style>
       .header-title {
@@ -81,80 +81,82 @@
     </style>
 
     <script type="text/javascript">
-      function updateFields(channel)
+      function updateFields(channel) {
+        updateFieldsFromJson(channel.objects.info.fullJson);
+        }
+      function updateFieldsFromJson(fullJson)
       {
-        var data = getInfos(channel);
-        $("#creationDate").html(moment(data["creationDate"]).format("YYYY-MM-DD"));
-        $("#creationDate2").html(moment(data["creationDate"]).format("YYYY-MM-DD"));
+        var data = JSON.parse(fullJson);
+        $("#creationDate").html(moment(data.creationDate).format("YYYY-MM-DD"));
+        $("#creationDate2").html(moment(data.creationDate).format("YYYY-MM-DD"));
 
-        $("#drugName").html(data["drugName"]);
-        $("#patientId").html(data["patientId"]);
-        $("#patientName").html(data["patientFirstName"] + " " + data["patientLastName"]);
-        //$("#patientAge").html(data["patientAge"]);
-        $("#patientWeight").html(data["patientWeight"]);
-        $("#patientGender").html(data["patientGender"]);
-        $("#patientDOB").html(moment(data["patientDOB"]).format("YYYY-MM-DD"));
+        $("#drugName").html(data.drugName);
+        $("#patientId").html(data.patient.externalId);
+        $("#patientName").html(data.patient.firstName + " " + data.patient.lastName);
+        $("#patientDOB").html(moment(data.patient.birthday).format("YYYY-MM-DD"));
 
-        $("#expectedness").html(data["expectedness"]);
-        $("#warning").html(data["warning"]);
-        $("#remonitoring").html(data["remonitoring"]);
-        $("#prediction").html(data["prediction"]);
-        $("#suitability").html(data["suitability"]);
+        $("#expectedness").html(data.analysis.expectedness);
+        $("#warning").html(data.analysis.warning);
+        $("#remonitoring").html(data.analysis.remonitoring);
+        $("#prediction").html(data.analysis.prediction);
+        $("#suitability").html(data.analysis.suitability);
 
-        $("#steadyStateAUC24").html(data["steadyStateAUC24"]);
-        $("#steadyStateMin").html(data["steadyStateMin"]);
-        $("#steadyStateMax").html(data["steadyStateMax"]);
+        $("#steadyStateAUC24").html(data.steadyStateAUC24);
+        $("#steadyStateMin").html(data.steadyStateMin);
+        $("#steadyStateMax").html(data.steadyStateMax);
 
-        var date = moment(data["lastDosageDate"])
-        $("#lastDosage").html(data["lastDosage"]);
+        var date = moment(data.lastDosageDate)
+        $("#lastDosage").html(data.lastDosage);
         $("#lastDosageDate").html(date.isValid() ? date.format("YYYY-MM-DD HH:mm") : "--");
-        $("#proposedPosology").html(data["proposedPosology"]);
-        $("#nextControl").html(data["nextControl"]);
-        $("#validationDate").html(data["validationDate"]);
+        $("#lastDosageInterval").html(data.lastDosageInterval);
 
-        $("#analystTitle").html(data["analystTitle"]);
-        $("#analystFirstName").html(data["analystFirstName"]);
-        //var interp = channel.objects.interpretation;
-        //$("#analystFirstName").html(interp.analyst.person.firstname);
+        $("#proposedDosage").html(data.proposedDosage.replace("\r\n", "<br>"));
+        $("#nextControl").html(moment(data.nextControl).format("YYYY-MM-DD HH:mm"));
+        $("#validationDate").html(moment(data.validationDate).format("YYYY-MM-DD HH:mm"));
+        $("#analystTitle").html(data.analyst.title);
+        $("#analystFirstName").html(data.analyst.firstName);
 
-        $("#analystLastName").html(data["analystLastName"]);
-        $("#analystInstituteName").html(data["analystInstituteName"]);
-        $("#analystInstituteAddresse").html(data["analystInstituteAddresse"]);
-        $("#analystPhone").html(data["analystPhone"]);
-        $("#analystRole").html(data["analystRole"]);
+        $("#analystLastName").html(data.analyst.lastName);
+        $("#analystInstituteName").html(data.analyst.instituteName);
+        $("#analystInstituteAddresse").html(data.analyst.instituteAddresse);
+        $("#analystRole").html(data.analyst.role);
 
-        $("#mandatorTitle").html(data["mandatorTitle"]);
-        $("#mandatorFirstName").html(data["mandatorFirstName"]);
-        $("#mandatorLastName").html(data["mandatorLastName"]);
-        $("#mandatorInstituteName").html(data["mandatorInstituteName"]);
-        $("#mandatorInstituteAddresse").html(data["mandatorInstituteAddresse"]);
-        $("#mandatorPhone").html(data["mandatorPhone"]);
+        $("#mandatorTitle").html(data.mandator.title);
+        $("#mandatorFirstName").html(data.mandator.firstName);
+        $("#mandatorLastName").html(data.mandator.lastName);
+        $("#mandatorInstituteName").html(data.mandator.instituteName);
+        $("#mandatorInstituteAddresse").html(data.mandator.instituteAddresse);
+        if (data.mandator.phones.length > 0) {
+            //$("#mandatorPhone").html(data.mandator.phones[0]);
+        }
 
-        $("#chartImage").attr("src", data["imageUrl"]);
+        $("#chartImage").attr("src", data.graphPath);
 
         var samplesLineElement = $("#measures");
         samplesLineElement.empty();
 
-        getMeasures(channel, function(measure) {
+        function extractMeasure(value, index, array) {
 
-          var date = moment(measure.moment);
-          var d = date.isValid() ? date.format("YYYY-MM-DD HH:mm") : "--";
-          samplesLineElement.append("<tr class='section'>" +
-          "<td class='label'>Sample from:</td>" +
-          "<td class='data'><span id='sampleDate'>" + d + "</span></td>" +
-          "<td class='label'>ID</td>" +
-          "<td class='data'><span id='sampleId'>" + measure.sampleId + "</span></td>" +
-          "<td class='label'>Result</td>" +
-          "<td class='data'><span id='sampleValue'>" + measure.sampleValue + "</span></td>" +
-          "</tr>");
-        })
+            samplesLineElement.append("<tr class='section'>" +
+            "<td class='label'>Sample from:</td>" +
+            "<td class='data'><span id='sampleDate'>" + value.sampleDate + "</span></td>" +
+            "<td class='label'>ID</td>" +
+            "<td class='data'><span id='sampleId'>" + value.sampleId + "</span></td>" +
+            "<td class='label'>Result</td>" +
+            "<td class='data'><span id='sampleValue'>" + value.sampleValue + "</span></td>" +
+            "</tr>");
+        }
+
+        data.measures.forEach(extractMeasure);
+
 
         var phoneElement = $("#analystPhones");
         phoneElement.empty();
-        getAnalystPhones(channel, function(phone) {
-            phoneElement.append("<span id='analystPhones'>" + "Tel. " + phone.number + "</span>");
-        })
+        function extractAnalystPhones(value, index, array) {
+            phoneElement.append("<span id='analystPhones'>" + "Tel. " + value.number + "</span>");
+        }
 
+        data.analyst.phones.forEach(extractAnalystPhones);
 
         var parametersLineElement = $("#parameters");
         parametersLineElement.empty();
@@ -162,84 +164,96 @@
         parametersLineElement.append("<thead><tr><td></td><td></td><td class='label'>typical p.</td><td class='label'>a priori</td><td class='label'>a post.</td></tr></thead>");
         parametersLineElement.append("<tbody>");
 
-        getParameters(channel, function(param) {
-          parametersLineElement.append("<tr><td class='label'>" + param.name + "</td><td class='label'>[" + param.unit + "]" + "</td>" +
-                                       "<td class='data'>" + param.pop + "</td>" +
-                                       "<td class='data'>" + param.apriori + "</td>" +
-                                       "<td class='data'>" + param.aposteriori + "</td></tr>");
-        });
+        for (let param of data.parameters) {
+            //var param = parameter;
+          parametersLineElement.append("<tr><td class='label'>" + param.id + "</td><td class='label'>[" + param.unit + "]" + "</td>" +
+                                       "<td class='data'>" + param.popValue + "</td>" +
+                                       "<td class='data'>" + param.aprioriValue + "</td>" +
+                                       "<td class='data'>" + param.aposterioriValue + "</td></tr>");
+        }
 
         parametersLineElement.append("</tbody>");
 
         var patientVariates = {};
-        getPatientVariates(channel, function(covariate) {
-          patientVariates[covariate.id] = covariate.value;
-        })
+        for (let patientVariate of data.covariates) {
+            patientVariates[patientVariate.id] = patientVariate.value;
+        }
+        hasPatientCovariates = (data.covariates.length > 0);
 
-        var hasPatientCovariates = hasPatientVariates(channel);
+        var hasDefaultCovariates = false;
 
         if (hasPatientCovariates) {
             var patientCovariateslineElement = $("#patientcovariates tr:first");
             patientCovariateslineElement.empty();
             patientCovariateslineElement.append("<td class='labelcovariates'>Patient covariates</td>");
-            getDrugVariates(channel, function(covariate) {
-              var value = covariate.value;
-              var isPatientValue = false;
-              for (key in patientVariates) {
-                if (key == covariate.id) {
-                  value = patientVariates[key];
-                  isPatientValue = true;
+
+            for (let drugVariate of data.drugCovariates) {
+                var value = drugVariate.value;
+                var isPatientValue = false;
+                for (const key in patientVariates) {
+                    if (key === drugVariate.id) {
+                        isPatientValue = true;
+                        value = patientVariates[key];
+                    }
                 }
-              }
-              if (covariate.id == "sex") {
-                if (value == 1) value = "Male";
-                if (value == 0) value = "Female";
-                if (value == 0.5) value = "???";
-              }
-              if (isPatientValue) {
-                patientCovariateslineElement.append("<td class='label'>" + covariate.name + ":</td>");
-                patientCovariateslineElement.append("<td class='data'>" + value + "</td>");
-              }
-              else {
-                //patientCovariateslineElement.append("<td class='dataPop'>" + value + "</td>");
-              }
-            });
+                if (!isPatientValue) {
+                    hasDefaultCovariates = true;
+                }
+                if (drugVariate.id === "sex") {
+                  if (value == 1) value = "Male";
+                  if (value == 0) value = "Female";
+                  if (value == 0.5) value = "???";
+                }
+                if (isPatientValue) {
+                  patientCovariateslineElement.append("<td class='label'>" + drugVariate.name + ":</td>");
+                  patientCovariateslineElement.append("<td class='data'>" + value + "</td>");
+                }
+                else {
+                  //patientCovariateslineElement.append("<td class='dataPop'>" + value + "</td>");
+                }
+            }
         }
 
-        var hasDefaultCovariates = hasDefaultVariates(channel);
+
         if (hasDefaultCovariates) {
             covariateslineElement = $("#defaultcovariates tr:first");
             covariateslineElement.empty();
             covariateslineElement.append("<td class='labelcovariates'>Default covariates</td>");
-            getDrugVariates(channel, function(covariate) {
-              var value = covariate.value;
-              var isPatientValue = false;
-              for (key in patientVariates) {
-                if (key == covariate.id) {
-                  value = patientVariates[key];
-                  isPatientValue = true;
+
+            for (let drugVariate of data.drugCovariates) {
+                var value = drugVariate.value;
+                var isPatientValue = false;
+                for (const key in patientVariates) {
+                    if (key === drugVariate.id) {
+                        isPatientValue = true;
+                        value = patientVariates[key];
+                    }
                 }
-              }
-              if (covariate.id == "sex") {
-                if (value == 1) value = "Male";
-                if (value == 0) value = "Female";
-                if (value == 0.5) value = "???";
-              }
-              if (isPatientValue) {
-                // covariateslineElement.append("<td class='data'>" + value + "</td>");
-              }
-              else {
-                covariateslineElement.append("<td class='label'>" + covariate.name + ":</td>");
-                covariateslineElement.append("<td class='data'>" + value + "</td>");
-              }
-            });
-        }
+                if (drugVariate.id === "sex") {
+                    if (value == 1) value = "Male";
+                    if (value == 0) value = "Female";
+                    if (value == 0.5) value = "???";
+                }
+                if (isPatientValue) {
+                }
+                else {
+                    covariateslineElement.append("<td class='label'>" + drugVariate.name + ":</td>");
+                    covariateslineElement.append("<td class='data'>" + value + "</td>");
+                }
+
+             }
+         }
+
+
 
 
       }
 
       document.addEventListener("DOMContentLoaded", function ()
       {
+      //  if (testFileContent) {
+      //    updateFieldsFromJson(testFileContent);
+      //  }
         new QWebChannel(qt.webChannelTransport, function (channel) {
             channel.objects.info.dataUpdated.connect(function() {
                 updateFields(channel);
@@ -337,6 +351,8 @@
           <td class="data"><span id="lastDosageDate">???</span></td>
           <td class="label">Dosage:</td>
           <td class="data"><span id="lastDosage">???</span></td>
+          <td class="label">Interval:</td>
+          <td class="data"><span id="lastDosageInterval">???</span></td>
         </tr>
         <!--
         <tr>
@@ -433,7 +449,7 @@
       <tbody>
         <tr>
           <td class="label">Dosage:</td>
-          <td class="data"><span id="proposedPosology">???</span></td>
+          <td class="data"><span id="proposedDosage">???</span></td>
         </tr>
         <tr>
           <td class="label">Next control:</td>

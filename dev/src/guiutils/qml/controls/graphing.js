@@ -178,6 +178,7 @@ function checkAndDisplayDomain(ctx, pred)
 
 function updateUnits()
 {
+    /*
     for (var i = 0; i < measures.length; ++i) {
         measures[i].unitstring = unit;
     }
@@ -189,6 +190,7 @@ function updateUnits()
         targets[i].tmax.unitstring = unit;
         targets[i].tbest.unitstring = unit;
     }
+    */
     interpretationController.defaultUnit = unit;
 }
 

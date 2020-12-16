@@ -136,6 +136,7 @@ DialogBase {
                 }
                 EntitySpinBox {
                     id: valueInput
+                    objectName: "measureValueInput"
                     Layout.preferredWidth: 200
                     onEditingFinished: { measureDialog.validate() }
                 }
@@ -190,6 +191,7 @@ DialogBase {
                 Button {
                     id: acceptBtn
                     text: "Ok"
+                    objectName: "okMeasure"
                     Layout.preferredWidth: 145
                     onClicked: function() {
                         if (measureDialog.apply()) {
@@ -200,6 +202,7 @@ DialogBase {
                 Button {
                     id: cancelBtn
                     text: "Cancel"
+                    objectName: "cancelMeasure"
                     Layout.preferredWidth: 145
                     onClicked: function() {
                         measureDialog.exit(false);

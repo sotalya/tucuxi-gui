@@ -64,6 +64,7 @@ Rectangle {
                     EntityListHeaderImage {
                         image.source: "qrc:/icons/buttons/add.png"
                         tooltipText : ToolTips.measureTab.add
+                        objectName: "addMeasure"
                         mousearea.onClicked: {
                             measureTabController.addMeasure();
                             measureListView.currentIndex = measureListView.count-1;
@@ -308,6 +309,7 @@ Rectangle {
 
     MeasureDialog {
         id: measureDialog
+        objectName: "measureDialog"
         function exec(model, bCreatingNewItem)
         {
             if (model) {

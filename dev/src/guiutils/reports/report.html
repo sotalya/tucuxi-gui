@@ -5,7 +5,7 @@
     <script src="jquery-3.1.1.js"></script>
     <script src="qwebchannel.js"></script>
     <script src="moment.js"></script>
-    <!--<script src="test.js"></script> -->
+    <!--<script src="new_test.js"></script> -->
     <title>Rapport</title>
     <style>
       .header-title {
@@ -87,6 +87,7 @@
       function updateFieldsFromJson(fullJson)
       {
         var data = JSON.parse(fullJson);
+        $("#version").html(data.tucuxiVersion);
         $("#creationDate").html(moment(data.creationDate).format("YYYY-MM-DD"));
         $("#creationDate2").html(moment(data.creationDate).format("YYYY-MM-DD"));
 
@@ -110,7 +111,7 @@
         $("#lastDosageDate").html(date.isValid() ? date.format("YYYY-MM-DD HH:mm") : "--");
         $("#lastDosageInterval").html(data.lastDosageInterval);
 
-        $("#proposedDosage").html(data.proposedDosage.replace("\r\n", "<br>"));
+//        $("#proposedDosage").html(data.proposedDosage.replace("\r\n", "<br>"));
         $("#nextControl").html(moment(data.nextControl).format("YYYY-MM-DD HH:mm"));
         $("#validationDate").html(moment(data.validationDate).format("YYYY-MM-DD HH:mm"));
         $("#analystTitle").html(data.analyst.title);
@@ -130,6 +131,16 @@
             //$("#mandatorPhone").html(data.mandator.phones[0]);
         }
 
+        var proposedDosages = $("#proposedDosages");
+
+        function extractAdjustments(value, index, array) {
+            proposedDosages.append("<tr><td>From " + moment(value.date).format("YYYY-MM-DD")+ " at " + moment(value.date).format("HH:mm")+
+            " : " + value.dose + " " + value.doseUnit + " every " + value.interval + " ( " + value.route + ")</td></tr> ");
+        }
+        data.adjustments.forEach(extractAdjustments);
+
+        //$("#proposedDosage").html(proposedDosages);
+
         $("#chartImage").attr("src", data.graphPath);
 
         var samplesLineElement = $("#measures");
@@ -139,7 +150,7 @@
 
             samplesLineElement.append("<tr class='section'>" +
             "<td class='label'>Sample from:</td>" +
-            "<td class='data'><span id='sampleDate'>" + value.sampleDate + "</span></td>" +
+            "<td class='data'><span id='sampleDate'>" + moment(value.sampleDate).format("YYYY-MM-DD HH:mm") + "</span></td>" +
             "<td class='label'>ID</td>" +
             "<td class='data'><span id='sampleId'>" + value.sampleId + "</span></td>" +
             "<td class='label'>Result</td>" +
@@ -251,9 +262,9 @@
 
       document.addEventListener("DOMContentLoaded", function ()
       {
-      //  if (testFileContent) {
-      //    updateFieldsFromJson(testFileContent);
-      //  }
+//        if (testFileContent) {
+//        updateFieldsFromJson(testFileContent);
+//        }
         new QWebChannel(qt.webChannelTransport, function (channel) {
             channel.objects.info.dataUpdated.connect(function() {
                 updateFields(channel);
@@ -271,10 +282,10 @@
       <tbody>
         <tr>
           <td style="width: 110px;">
-            <img style="height: 60px;" src="logo.jpeg">
+            <img style="height: 60px;" src="logo.png">
           </td>
-          <td class="header-title">DEMO VERSION!<br>
-            COOK COUNTY GENERAL HOSPITAL<br>
+          <td class="header-title">Tucuxi DEMO VERSION (version <span id="version">???</span>)<br>
+            Tucuxi General Hospital<br>
             Clinical pharmacology division<br>
             Biomedicine service<br>
           </td>
@@ -285,7 +296,7 @@
       <tbody>
         <tr>
           <td><span class="header-title">Drug laboratory</span><br>
-            Dr. Mark Greene, laboratory manager<br>
+            Dr. John Doe, laboratory manager<br>
             Tel. +41 (0) 11 222 3333<br>
             Fax +41 (0) 11 222 3334<br>
             <br>
@@ -295,6 +306,12 @@
             <span id="analystPhones">???</span>
           </td>
           <td>
+
+                <span class="header-title"><span id="mandatorInstituteName">???</span><br>
+                </span>
+                <span id="mandatorInstituteAddresse"></span><br>
+                <span id="mandatorTitle">???</span> <span id="mandatorFirstName">???</span> <span id="mandatorLastName">???</span><br>
+                <span id="mandatorPhones"></span>
             <!--
             Dr Marie Curie<br>
             Rue de la Découverte 38<br>
@@ -365,25 +382,6 @@
     <hr>
     <table>
       <tbody>
-        <tr class="section">
-          <td class="label">Predictions</td>
-          <td class="label">Extrapolated steady state AUC24:</td>
-          <td class="data" id="steadyStateAUC24">???</td>
-          <td class="label">Steady state peak:</td>
-          <td class="data" id="steadyStateMax">???</td>
-          <td class="label">Steady state trough:</td>
-          <td class="data" id="steadyStateMin">???</td>
-          <!--
-          <td class="label">Extrapolated trough:</td>
-          <td class="data">???</td>
-          <td class="label">Target trough:</td>
-          <td class="data">???</td>
-          -->
-        </tr>
-      </tbody>
-    </table>
-    <table>
-      <tbody>
         <tr>
           <td>
             <img class="image" id="chartImage" style="width:auto;height:300px">
@@ -449,7 +447,12 @@
       <tbody>
         <tr>
           <td class="label">Dosage:</td>
-          <td class="data"><span id="proposedDosage">???</span></td>
+          <td class="data">
+          <table>
+            <tbody id="proposedDosages">
+            </tbody>
+          </table>
+      </td>
         </tr>
         <tr>
           <td class="label">Next control:</td>
@@ -457,6 +460,25 @@
         </tr>
       </tbody>
     </table>
+
+    <table>
+      <tbody>
+        <tr class="section">
+          <td class="label">Predictions</td>
+          <td class="label">Extrapolated steady state AUC24:</td>
+          <td class="data" id="steadyStateAUC24">???</td>
+          <td class="label">Steady state peak:</td>
+          <td class="data" id="steadyStateMax">???</td>
+          <td class="label">Steady state trough:</td>
+          <td class="data" id="steadyStateMin">???</td>
+          <!--
+          <td class="label">Extrapolated trough:</td>
+          <td class="data">???</td>
+          <td class="label">Target trough:</td>
+          <td class="data">???</td>
+          -->
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
-

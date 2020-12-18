@@ -118,6 +118,7 @@
         <file alias="fieldmapping.js">../reports/fieldmapping.js</file>
         <file alias="jquery-3.1.1.js">../reports/jquery-3.1.1.js</file>
         <file alias="logo.jpeg">../reports/logo.jpeg</file>
+        <file alias="logo.png">../reports/logo.png</file>
         <file alias="moment.js">../reports/moment.js</file>
         <file alias="qwebchannel.js">../reports/qwebchannel.js</file>
         <file alias="report.html">../reports/report.html</file>

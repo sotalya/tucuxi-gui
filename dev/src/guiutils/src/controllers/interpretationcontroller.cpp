@@ -68,6 +68,8 @@
 #include "validationtabcontroller.h"
 #include "drugtabcontroller.h"
 
+#include "tucucore/version.h"
+
 using namespace ezechiel::core;
 
 static const double NBCYCLES_TO_COMPUTE_PERCENTILES = 20.0;
@@ -2049,11 +2051,20 @@ QString roundToString(double value)
     return QString("%1").arg(value, 0, 'f', 2);
 }
 
+QString unitStringModifier(QString unitString)
+{
+    if (unitString.contains("ug")) {
+        return unitString.replace("ug", "µg");
+    }
+    return unitString;
+}
 
 QByteArray InterpretationController::interpretationToJson()
 {
     QJsonDocument doc;
     QJsonObject interpretation;
+
+    interpretation.insert("tucuxiVersion", QString("%1.%2").arg(GIT_REVISION).arg(QString::fromStdString(Tucuxi::Core::Version::getGitRevision())));
 
     interpretation.insert("graphPath", "file://" + QApplication::applicationDirPath() + "/graph.png");
     interpretation.insert("validationDate", _interpretation->getValidateInterpretationTime().toString());
@@ -2065,12 +2076,12 @@ QByteArray InterpretationController::interpretationToJson()
         const auto c = drugCovs->at(i);
         covariate.insert("id", c->getCovariateId());
         covariate.insert("name", c->getVisualNameTranslation()->value());
-        QString unitString = c->getQuantity()->getUnitstring();
+        QString unitString = unitStringModifier(c->getQuantity()->getUnitstring());
         if ((unitString == "") || (unitString == "-")) {
             covariate.insert("value", QString("%1").arg(roundToString(c->getQuantity()->getDbvalue())));
         }
         else {
-            covariate.insert("value", QString("%1%2").arg(c->getQuantity()->getDbvalue()).arg(c->getQuantity()->getUnitstring()));
+            covariate.insert("value", QString("%1%2").arg(c->getQuantity()->getDbvalue()).arg(unitString));
         }
         drugCovariates.append(covariate);
     }
@@ -2084,12 +2095,12 @@ QByteArray InterpretationController::interpretationToJson()
 
         covariate.insert("id", c->getCovariateId());
         covariate.insert("name", c->getName());
-        QString unitString = c->getQuantity()->getUnitstring();
+        QString unitString = unitStringModifier(c->getQuantity()->getUnitstring());
         if ((unitString == "") || (unitString == "-")) {
             covariate.insert("value", QString("%1").arg(roundToString(c->getQuantity()->getDbvalue())));
         }
         else {
-            covariate.insert("value", QString("%1%2").arg(c->getQuantity()->getDbvalue()).arg(c->getQuantity()->getUnitstring()));
+            covariate.insert("value", QString("%1%2").arg(c->getQuantity()->getDbvalue()).arg(unitString));
         }
         covariates.append(covariate);
     }
@@ -2102,7 +2113,7 @@ QByteArray InterpretationController::interpretationToJson()
         QJsonObject measure;
         measure.insert("sampleId", m->sampleID());
         measure.insert("sampleDate", m->getMoment().toString(Qt::ISODate));
-        measure.insert("sampleValue", QString("%1 %2").arg(m->getConcentration()->getDbvalue()).arg(m->getConcentration()->getUnitstring()));
+        measure.insert("sampleValue", QString("%1 %2").arg(m->getConcentration()->getDbvalue()).arg(unitStringModifier(m->getConcentration()->getUnitstring())));
         measures.insert(i, measure);
     }
     interpretation.insert("measures", measures);
@@ -2167,22 +2178,38 @@ QByteArray InterpretationController::interpretationToJson()
     interpretation.insert("analysis", analysis);
 
     interpretation.insert("steadyStateMin",
-                          QString("%1 mg/l").arg(_interpretation->getAnalysis()->getChartData()->getInfo("steadyStateMin")));
+                          QString("%1 µg/l").arg(_interpretation->getAnalysis()->getChartData()->getInfo("steadyStateMin")));
     interpretation.insert("steadyStateMax",
-                          QString("%1 mg/l").arg(_interpretation->getAnalysis()->getChartData()->getInfo("steadyStateMax")));
+                          QString("%1 µg/l").arg(_interpretation->getAnalysis()->getChartData()->getInfo("steadyStateMax")));
     interpretation.insert("steadyStateAUC24",
-                          QString("%1 mg*h/l").arg(_interpretation->getAnalysis()->getChartData()->getInfo("steadyStateAUC24")));
+                          QString("%1 µg*h/l").arg(_interpretation->getAnalysis()->getChartData()->getInfo("steadyStateAUC24")));
 
     interpretation.insert("nextControl", _interpretation->getAnalysis()->getNextControl().toString(Qt::ISODate));
     interpretation.insert("validationDate", _interpretation->getValidateInterpretationTime().toString(Qt::ISODate));
     interpretation.insert("proposedDosage", _interpretation->getAnalysis()->getDosageDescription());
+
+    {
+        QJsonArray adjustments;
+        auto adjs = _interpretation->getDrugResponseAnalysis()->getTreatment()->getAdjustments();
+        for (auto const & adj : adjs->getList()) {
+            QJsonObject adjustment;
+            adjustment.insert("dose", adj->getQuantity()->getDbvalue());
+            adjustment.insert("doseUnit", adj->getQuantity()->unit().toString());
+            adjustment.insert("interval", adj->getInterval().toString());
+            adjustment.insert("infusion", adj->getTinf().toString());
+            adjustment.insert("date", adj->getApplied().toString(Qt::ISODate));
+            adjustment.insert("route", adj->getRoute()->getDescription());
+            adjustments.append(adjustment);
+        }
+        interpretation.insert("adjustments", adjustments);
+    }
 
 
     auto ds = _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages();
     if (ds->size() > 0) {
         auto d = ds->at(ds->size() - 1);
         QJsonObject dosage;
-        interpretation.insert("lastDosage", QString("%1 %2").arg(d->getQuantity()->getDbvalue()).arg(d->getQuantity()->getUnitstring()));
+        interpretation.insert("lastDosage", QString("%1 %2").arg(d->getQuantity()->getDbvalue()).arg(unitStringModifier(d->getQuantity()->getUnitstring())));
         interpretation.insert("lastDosageDate", d->getApplied().toString(Qt::ISODate));
         interpretation.insert("lastDosageInterval", d->getInterval().toString());
     }
@@ -2220,7 +2247,7 @@ QByteArray InterpretationController::interpretationToJson()
                 const auto drugParams = _interpretation->getDrugResponseAnalysis()->getDrugModel()->getParameters()->getParameters();
                 for (int j = 0; j < drugParams->size(); j++) {
                     if (drugParams->at(j)->getName() == popParameters->at(i)->getName()) {
-                        unit = drugParams->at(j)->getQuantity()->getUnitstring();
+                        unit = unitStringModifier(drugParams->at(j)->getQuantity()->getUnitstring());
                     }
                 }
                 param.insert("unit", unit);

@@ -84,17 +84,28 @@
       function updateFields(channel) {
         updateFieldsFromJson(channel.objects.info.fullJson);
         }
+
+        function formatDate(d) {
+            return moment(d).format("DD/MM/YYYY");
+        }
+
+        function formatDateTime(d) {
+            return moment(d).format("DD/MM/YYYY HH:mm");
+        }
+        function formatTime(d) {
+            return moment(d).format("HH:mm");
+        }
       function updateFieldsFromJson(fullJson)
       {
         var data = JSON.parse(fullJson);
         $("#version").html(data.tucuxiVersion);
-        $("#creationDate").html(moment(data.creationDate).format("YYYY-MM-DD"));
-        $("#creationDate2").html(moment(data.creationDate).format("YYYY-MM-DD"));
+        $("#creationDate").html(formatDate(data.creationDate));
+        $("#creationDate2").html(formatDate(data.creationDate));
 
         $("#drugName").html(data.drugName);
         $("#patientId").html(data.patient.externalId);
         $("#patientName").html(data.patient.firstName + " " + data.patient.lastName);
-        $("#patientDOB").html(moment(data.patient.birthday).format("YYYY-MM-DD"));
+        $("#patientDOB").html(formatDate(data.patient.birthday));
 
         $("#expectedness").html(data.analysis.expectedness);
         $("#warning").html(data.analysis.warning);
@@ -108,12 +119,12 @@
 
         var date = moment(data.lastDosageDate)
         $("#lastDosage").html(data.lastDosage);
-        $("#lastDosageDate").html(date.isValid() ? date.format("YYYY-MM-DD HH:mm") : "--");
+        $("#lastDosageDate").html(date.isValid() ? formatDateTime(data.lastDosageDate) : "--");
         $("#lastDosageInterval").html(data.lastDosageInterval);
 
 //        $("#proposedDosage").html(data.proposedDosage.replace("\r\n", "<br>"));
-        $("#nextControl").html(moment(data.nextControl).format("YYYY-MM-DD HH:mm"));
-        $("#validationDate").html(moment(data.validationDate).format("YYYY-MM-DD HH:mm"));
+        $("#nextControl").html(formatDateTime(data.nextControl));
+        $("#validationDate").html(formatDateTime(data.validationDate));
         $("#analystTitle").html(data.analyst.title);
         $("#analystFirstName").html(data.analyst.firstName);
 
@@ -134,8 +145,14 @@
         var proposedDosages = $("#proposedDosages");
 
         function extractAdjustments(value, index, array) {
-            proposedDosages.append("<tr><td>From " + moment(value.date).format("YYYY-MM-DD")+ " at " + moment(value.date).format("HH:mm")+
-            " : " + value.dose + " " + value.doseUnit + " every " + value.interval + " ( " + value.route + ")</td></tr> ");
+            var proposed = "<tr><td>From " + formatDate(value.date) + " at " + formatTime(value.date) +
+            " : " + value.dose + " " + value.doseUnit + " every " + value.interval;
+            if (value.infusion != "0h00") {
+                proposed += ". Infusion time : " + value.infusion + " ";
+            }
+            proposed += " ( " + value.route + ")</td></tr>";
+
+            proposedDosages.append(proposed);
         }
         data.adjustments.forEach(extractAdjustments);
 
@@ -150,7 +167,7 @@
 
             samplesLineElement.append("<tr class='section'>" +
             "<td class='label'>Sample from:</td>" +
-            "<td class='data'><span id='sampleDate'>" + moment(value.sampleDate).format("YYYY-MM-DD HH:mm") + "</span></td>" +
+            "<td class='data'><span id='sampleDate'>" + formatDateTime(value.sampleDate) + "</span></td>" +
             "<td class='label'>ID</td>" +
             "<td class='data'><span id='sampleId'>" + value.sampleId + "</span></td>" +
             "<td class='label'>Result</td>" +

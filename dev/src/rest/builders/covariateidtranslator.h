@@ -4,6 +4,7 @@
 
 #include <QString>
 #include <QMap>
+#include <QSettings>
 
 class CovariateIdTranslator
 {
@@ -32,5 +33,17 @@ private:
     QMap<QString,QString> map;
 };
 
+class ExternalCovariateIdTranslator : public CovariateIdTranslator
+{
+public:
+    ExternalCovariateIdTranslator();
+
+    void setFileName(const QString &fileName);
+
+    virtual QString restToInternalId(QString restId);
+
+private:
+    QString m_fileName;
+};
 
 #endif // COVARIATEIDTRANSLATOR_H

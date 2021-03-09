@@ -361,7 +361,9 @@ ezechiel::core::PatientVariateList * InterpretationRequestBuilder::buildCovariat
     //ToDo: set the covariate type based on the drug data
     //ToDo: set the covariate nature when added to DAL object
 
-    ChuvCovariateIdTranslator covariateIdTranslator;
+    // ChuvCovariateIdTranslator covariateIdTranslator;
+    ExternalCovariateIdTranslator covariateIdTranslator;
+    covariateIdTranslator.setFileName(QCoreApplication::applicationDirPath() + "/covariateidtranslations.ini");
 
     ezechiel::core::PatientVariateList * covariates = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariateList>(ABSTRACTREPO, patient);
 

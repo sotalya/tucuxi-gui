@@ -457,6 +457,8 @@ int main(int argc, char *argv[])
 //    Q_INIT_RESOURCE(report);
 //    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Report.");
 
+    // Let's create CORE, to modify paths from the options
+    ezechiel::core::Core::setInstance(new ezechiel::apputils::AppCore());
     parseOptions();
     EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Options.");
     initResources();
@@ -582,6 +584,10 @@ void parseOptions()
                                     QCoreApplication::translate("main", "Set the file containing the SSL certificate."),
                                     "certificate",
                                     "");
+    const QCommandLineOption drugsPathOption(QStringList() << "d" << "drugspath",
+                                             QCoreApplication::translate("main", "Drug files path."),
+                                             "drugspath",
+                                             CORE->path(ezechiel::core::Core::Drugs2));
 
     parser.addOption(basePathOption);
     const QCommandLineOption helpOption = parser.addHelpOption();
@@ -593,6 +599,7 @@ void parseOptions()
     parser.addOption(logRestOption);
     parser.addOption(logMessagesInFileOption);
     parser.addOption(certificateFileOption);
+    parser.addOption(drugsPathOption);
     const QCommandLineOption versionOption = parser.addVersionOption();
 
     parser.parse(QCoreApplication::arguments());
@@ -607,6 +614,11 @@ void parseOptions()
         NetworkAccessManager::setType(NetworkAccessManager::ManagerType::Unique);
         NetworkAccessManager::getInstance().setUniqueDefaultCaCertificate(parser.value(certificateFileOption));
 #endif // CONFIG_CONNECTED
+    }
+    if (parser.isSet(drugsPathOption)) {
+#ifndef CONFIG_DEMO
+        CORE->setPath(ezechiel::core::Core::Drugs2, parser.value(drugsPathOption));
+#endif // CONFIG_DEMO
     }
 
     //ToDo: set the standalone option in the settings, and disable request list
@@ -640,7 +652,8 @@ void parseOptions()
 
 void initResources()
 {
-    ezechiel::core::Core::setInstance(new ezechiel::apputils::AppCore());
+//    We do this in main to be able to access Core in parsing
+//    ezechiel::core::Core::setInstance(new ezechiel::apputils::AppCore());
 
     CORE->setProcessingInterface(ProcessingFactory::createProcessing());
     APPCORE->drugManager();

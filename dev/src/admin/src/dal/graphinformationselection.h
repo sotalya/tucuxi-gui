@@ -64,6 +64,9 @@ class GraphInformationSelection : public ezechiel::core::Entity
     AUTO_PROPERTY_DECL(bool, perc25_75, Perc25_75)
     AUTO_PROPERTY_DECL(bool, perc50, Perc50)
 
+    AUTO_PROPERTY_DECL(bool, displayCurrentTime, DisplayCurrentTime)
+    AUTO_PROPERTY_DECL(bool, displayCovariateChange, DisplayCovariateChange)
+
 
     public:
         void setCurrentTab(StepType::Enum step);

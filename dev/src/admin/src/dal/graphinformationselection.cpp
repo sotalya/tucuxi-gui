@@ -29,6 +29,9 @@ GraphInformationSelection::GraphInformationSelection(ezechiel::core::AbstractRep
     initStep(StepType::Validation, validationInfo);
     initStep(StepType::Report, reportInfo);
 
+    _displayCurrentTime = true;
+    _displayCovariateChange = true;
+
     loadDisplayParametersSettings();
 
 }
@@ -76,7 +79,7 @@ void GraphInformationSelection::loadDisplayParametersSettings(){
         }
     }
 
-    QList<QVariant> percentile = SETTINGS.get(ezechiel::core::Module::GUI, "GeneralDisplayParameters").toList();
+    QList<QVariant> percentile = SETTINGS.get(ezechiel::core::Module::GUI, "PercentilesDisplayParameters").toList();
     if (percentile.length() != 0){
         _perc50 = percentile[0].toBool();
         _perc25_75 = percentile[1].toBool();
@@ -89,6 +92,11 @@ void GraphInformationSelection::loadDisplayParametersSettings(){
         _perc10_90 = true;
         _perc5_95 = true;
     }
+
+    QMap<QString, QVariant> generalParameters = SETTINGS.get(ezechiel::core::Module::GUI, "GeneralDisplayParameters").toMap();
+    _displayCurrentTime = generalParameters.value("displayCurrentTime", true).toBool();
+    _displayCovariateChange = generalParameters.value("displayCovariateChange", true).toBool();
+
 }
 
 void GraphInformationSelection::setCurrentTab(StepType::Enum step)
@@ -145,6 +153,10 @@ void GraphInformationSelection::saveSettings(){
     QString currentTab = QString::fromStdString(std::to_string(_currentStep));
     QList<QVariant> parametersTypeList;
     QList<QVariant> percentiles;
+    QMap<QString, QVariant> general;
+    general["displayCurrentTime"] = _displayCurrentTime;
+    general["displayCovariateChange"] = _displayCovariateChange;
+
 
     percentiles.append(_perc50);
     percentiles.append(_perc25_75);
@@ -161,7 +173,9 @@ void GraphInformationSelection::saveSettings(){
 
     SETTINGS.set(ezechiel::core::Module::GUI, "GraphDisplayParameters" ,_parametersSettingsMap);
 
-    SETTINGS.set(ezechiel::core::Module::GUI, "GeneralDisplayParameters" ,percentiles);
+    SETTINGS.set(ezechiel::core::Module::GUI, "PercentilesDisplayParameters" ,percentiles);
+
+    SETTINGS.set(ezechiel::core::Module::GUI, "GeneralDisplayParameters", general);
 }
 
 void GraphInformationSelection::setPercentile(PercentileRangeEnum percentileRange, bool isAvailable){
@@ -257,3 +271,27 @@ AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc5_95, Perc5_95)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc10_90, Perc10_90)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc25_75, Perc25_75)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc50, Perc50)
+
+
+//AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayCurrentTime, DisplayCurrentTime)
+//AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayCovariateChange, DisplayCovariateChange)
+
+
+bool GraphInformationSelection::getDisplayCurrentTime() const { return _displayCurrentTime; }
+void GraphInformationSelection::setDisplayCurrentTime(bool value) {
+    if (_displayCurrentTime == value) return;
+    _displayCurrentTime = value;
+    _isModified = true;
+    emit displayCurrentTimeChanged(value);
+    updateProperties();
+}
+
+
+bool GraphInformationSelection::getDisplayCovariateChange() const { return _displayCovariateChange; }
+void GraphInformationSelection::setDisplayCovariateChange(bool value) {
+    if (_displayCovariateChange == value) return;
+    _displayCovariateChange = value;
+    _isModified = true;
+    emit displayCovariateChangeChanged(value);
+    updateProperties();
+}

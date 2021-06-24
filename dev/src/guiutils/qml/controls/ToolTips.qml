@@ -250,6 +250,8 @@ QtObject {
         readonly property string apostPercVisible : qsTr("Display the <i>a posteriori</i> percentiles for further measurements in this patient")
         readonly property string adjVisible : qsTr("Display i>a posteriori</i> predictions resulting from dosage adjustments")
         readonly property string revVisible : qsTr("Highlight the i>a posteriori</i> prediction resulting from the suggested dosage adjustment")
+        readonly property string displayCurrentTime : qsTr("Display the current time on the graph, thanks to a vertical line")
+        readonly property string displayCovariateChange : qsTr("Display covariate changes on the X-axis")
     }
 
     property QtObject uncastedList: QtObject {

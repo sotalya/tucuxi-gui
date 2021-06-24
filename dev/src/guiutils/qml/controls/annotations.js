@@ -12,8 +12,10 @@ function step()
     }
 
     if (graphInformationSelection.displayAprioriPrediction) {
-        for (var i = 0; i < pvars.length; ++i) {
-            annotateCovariate(ctx, pvars[i], colors[2]);
+        if (graphInformationSelection.displayCovariateChange) {
+            for (var i = 0; i < pvars.length; ++i) {
+                annotateCovariate(ctx, pvars[i], colors[2]);
+            }
         }
     }
 

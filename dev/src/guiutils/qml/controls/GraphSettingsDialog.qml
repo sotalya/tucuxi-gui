@@ -12,7 +12,7 @@ DialogBase {
     title: "Graph settings parameter"
     width: 600
     height: 450
-    minimumHeight: 450
+    minimumHeight: 550
     property var self
 
     //Constants
@@ -26,6 +26,8 @@ DialogBase {
     property var adjustmentText:    "Adjustments";
     property var targetText:        "Targets";
     property var measureText:       "Measures";
+    property var currentTimeText:   "Current time";
+    property var covariateChangeText: "Covariate change";
 
     property var currentPopPred;
     property var currentPopPerc;
@@ -42,6 +44,9 @@ DialogBase {
     property var currentPerc25_75;
     property var currentPerc10_90;
     property var currentPerc5_95;
+
+    property var currentCurrentTime;
+    property var currentCovariateChange;
 
     // Intercept Return to validate the dialog
     Shortcut {
@@ -111,6 +116,11 @@ DialogBase {
         perc50CB.checked = graphInformationSelection.perc50
         currentPerc50 = perc50CB.checked
 
+        currentTimeCB.checked = graphInformationSelection.displayCurrentTime
+        currentCurrentTime = currentTimeCB.checked
+
+        covariateChangeCB.checked = graphInformationSelection.displayCovariateChange
+        currentCovariateChange = covariateChangeCB.checked
 
     }
 
@@ -130,6 +140,9 @@ DialogBase {
         graphInformationSelection.setAvailable(2, currentAprPred)
         graphInformationSelection.setAvailable(1, currentPopPerc)
         graphInformationSelection.setAvailable(0, currentPopPred)
+
+        graphInformationSelection.displayCurrentTime = currentCurrentTime
+        graphInformationSelection.displayCovariateChange = currentCovariateChange
     }
 
 
@@ -258,16 +271,12 @@ DialogBase {
                 }
             }
             GroupBox {
-                id: generalGraphSettingsGB
-                title: qsTr("General Settings")
+                id: percentilesGraphSettingsGB
+                title: qsTr("Percentiles")
                 width: graphSettingsGB.width
 
                 ColumnLayout{
                     spacing: 1
-                    Text {
-                        id: name
-                        text: qsTr("Percentiles")
-                    }
 
                     RowLayout {
                         spacing: 2
@@ -297,6 +306,38 @@ DialogBase {
                             text:"50"
                             onClicked: {
                                 graphInformationSelection.setPercentile(3, this.checked)
+                            }
+                        }
+                    }
+                }
+            }
+            GroupBox {
+                id: generalGraphSettingsGB
+                title: qsTr("General Settings")
+                width: graphSettingsGB.width
+
+                ColumnLayout{
+                    spacing: 1
+                    Text {
+                        id: name
+                        text: qsTr("Percentiles")
+                    }
+
+                    RowLayout {
+                        CheckBox {
+                            id: currentTimeCB
+                            text: currentTimeText
+                            onClicked: { graphInformationSelection.displayCurrentTime = this.checked; }
+                            TooltipArea {
+                                text : ToolTips.chart.displayCurrentTime
+                            }
+                        }
+                        CheckBox {
+                            id: covariateChangeCB
+                            text: covariateChangeText
+                            onClicked: { graphInformationSelection.displayCovariateChange = this.checked; }
+                            TooltipArea {
+                                text : ToolTips.chart.displayCovariateChange
                             }
                         }
                     }

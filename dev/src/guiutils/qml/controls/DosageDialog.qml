@@ -80,6 +80,9 @@ DialogBase {
 //        infusionSpinBox.from = drugmodel.infusions.infusionsList[0] * Math.pow(10, doseSpinBox.decimals);
 //        infusionSpinBox.to = drugmodel.infusions.infusionsList[(drugmodel.infusions.infusionsList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
         infusionSpinBox.doValidation = function() { return getInfusion() > 0 }
+        // TODO We have an issue with these units. To be refactored at some stage
+        //infusionSpinBox.suffix = drugmodel.infusions.quantity.unitstring
+        infusionSpinBox.suffix = "minutes"
 
         var validateDates = function() {
             return getAppliedDate() <= getEndDate()
@@ -270,7 +273,7 @@ DialogBase {
                 }
                 EntitySpinBoxList {
                     id: infusionSpinBox
-                    suffix: " minutes"
+                    //suffix: " minutes"
                     horizontalAlignment: Text.AlignLeft
                     Layout.preferredWidth: 250
                 }

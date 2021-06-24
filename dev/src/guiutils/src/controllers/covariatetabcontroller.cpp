@@ -11,7 +11,8 @@ DrugVariateInfo::DrugVariateInfo(ezechiel::core::AbstractRepository *repository,
     Entity(repository,parent),
     _actualValue(ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperableAmount>(repository, this)),
     _defaultValue(ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperableAmount>(repository, this)),
-    _type(QMetaType::Int)
+    _type(QMetaType::Int),
+    _automatic(false)
 {
 }
 

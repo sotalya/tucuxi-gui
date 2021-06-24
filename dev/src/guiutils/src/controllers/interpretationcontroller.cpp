@@ -2276,3 +2276,19 @@ QByteArray InterpretationController::interpretationToJson()
     return doc.toJson();
 
 }
+
+void InterpretationController::saveGraph()
+{
+    QString dirPath;
+    QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Graph"),
+                                                    dirPath,
+                                                    tr("Image (*.png)"));
+    if (fileName.isEmpty())
+        return;
+
+    if (!fileName.endsWith(".png"))
+        fileName += ".png";
+
+
+    CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "saveGraph", Q_ARG(QVariant, QVariant::fromValue(fileName))));
+}

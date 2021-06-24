@@ -237,6 +237,12 @@ public:
 
     Q_INVOKABLE QByteArray interpretationToJson();
 
+    ///
+    /// \brief saveGraph
+    /// Opens a dialog to select a file, and then saves the current graph in it
+    ///
+    void saveGraph();
+
 signals:
     void webchannelChanged(QQmlWebChannel&);
     void drugsChanged(ezechiel::core::DrugModelList*);

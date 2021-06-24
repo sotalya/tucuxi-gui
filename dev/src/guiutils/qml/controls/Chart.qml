@@ -120,6 +120,10 @@ Canvas {
     property string unit: "ug/l"
     property real unitefforder: 1
 
+    function saveGraph(fileName) {
+        canvas.save(fileName);
+    }
+
 
     function reset() {
         //return;
@@ -470,7 +474,9 @@ if (times.length > 0) {
     onPaint: {
         updateChartDimensions();
         Graphing.step();
-        Clock.showClock();
+        if (graphInformationSelection.displayCurrentTime) {
+            Clock.showClock();
+        }
         Annotations.step();
     }
 

@@ -359,6 +359,14 @@ bool MainWindowController::event(QEvent *event)
             }
         }
     }
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
+        if (e) {
+            if ((e->key() == Qt::Key_G) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
+                interpretationController->saveGraph();
+            }
+        }
+    }
 
     return QQuickView::event(event);
 }

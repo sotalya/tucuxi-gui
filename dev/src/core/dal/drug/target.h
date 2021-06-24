@@ -33,6 +33,7 @@ class TargetMethod : public Entity
         AUCOverMicTarget, //! Soon to be supported target
         AUC24OverMicTarget, //! Soon to be supported target
         PeakDividedByMicTarget, //! Soon to be supported target
+        ResidualDividedByMicTarget, //! Soon to be supported target
         TimeOverMicTarget, //! Soon to be supported target
         UnknownTarget        //! Unknown or invalid target.
         };
@@ -174,6 +175,7 @@ static QMap<QString, TargetMethod::TargetType> createMap() {
     amap["AUCOverMicTarget"] = TargetMethod::AUCOverMicTarget;
     amap["AUC24OverMicTarget"] = TargetMethod::AUC24OverMicTarget;
     amap["PeakDividedByMic"] = TargetMethod::PeakDividedByMicTarget;
+    amap["ResidualDividedByMic"] = TargetMethod::ResidualDividedByMicTarget;
     amap["TimeOverMic"] = TargetMethod::TimeOverMicTarget;
     return amap;
 }

@@ -287,7 +287,14 @@ void LocalCalculationController::computeAdjPerc(PredictionSpec* prediction)
     //QDateTime start = prediction->getStartDate();
     QDateTime start = prediction->getAdjustmentDate();
     QDateTime end = prediction->getEndDate();
-
+/*
+ * That could happen, seems bad, but is handled by Tucucore
+    if (end < start) {
+        emit adjCalcFail();
+        emit engage();
+        return;
+    }
+*/
 /*
     ParamTraits* parametersTraits;
     if (prediction->getAnalysis()->getTreatment()->getMeasures()->isEmpty()) {

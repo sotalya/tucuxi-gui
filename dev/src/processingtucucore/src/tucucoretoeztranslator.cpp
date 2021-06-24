@@ -45,6 +45,7 @@ bool TucucoreToEzTranslator::buildTargetEvaluation(
     case Tucuxi::Core::TargetType::AucDividedByMic : newTargetType = ezechiel::core::TargetMethod::TargetType::AUCDividedByMicTarget; break;
     case Tucuxi::Core::TargetType::Auc24DividedByMic : newTargetType = ezechiel::core::TargetMethod::TargetType::AUC24DividedByMicTarget; break;
     case Tucuxi::Core::TargetType::PeakDividedByMic : newTargetType = ezechiel::core::TargetMethod::TargetType::PeakDividedByMicTarget; break;
+    case Tucuxi::Core::TargetType::ResidualDividedByMic : newTargetType = ezechiel::core::TargetMethod::TargetType::ResidualDividedByMicTarget; break;
     }
 
     method->setTargetType(newTargetType);
@@ -448,6 +449,7 @@ ezechiel::core::TargetMethod* TucucoreToEzTranslator::translate(Tucuxi::Core::Ta
     case Tucuxi::Core::TargetType::Mean : method->setTargetType(ezechiel::core::TargetMethod::TargetType::MeanTarget); break;
     case Tucuxi::Core::TargetType::Peak : method->setTargetType(ezechiel::core::TargetMethod::TargetType::PeakTarget); break;
     case Tucuxi::Core::TargetType::PeakDividedByMic : method->setTargetType(ezechiel::core::TargetMethod::TargetType::PeakDividedByMicTarget); break;
+    case Tucuxi::Core::TargetType::ResidualDividedByMic : method->setTargetType(ezechiel::core::TargetMethod::TargetType::ResidualDividedByMicTarget); break;
     case Tucuxi::Core::TargetType::Residual : method->setTargetType(ezechiel::core::TargetMethod::TargetType::ResidualTarget); break;
     case Tucuxi::Core::TargetType::TimeOverMic : method->setTargetType(ezechiel::core::TargetMethod::TargetType::TimeOverMicTarget); break;
     case Tucuxi::Core::TargetType::UnknownTarget : method->setTargetType(ezechiel::core::TargetMethod::TargetType::UnknownTarget); break;

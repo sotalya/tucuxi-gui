@@ -42,6 +42,10 @@
 
 void checkCovariate(const Tucuxi::Common::DateTime _startDate, const Tucuxi::Core::DrugTreatment &drugTreatment, const Tucuxi::Core::DrugModel &drugModel, ezechiel::core::PredictionResult& prediction, const Tucuxi::Common::DateTime _endDate)
 {
+    // This check should be done when building processing data. We keep it here to be safe.
+    if (_startDate > _endDate) {
+        return;
+    }
     Tucuxi::Core::DrugDomainConstraintsEvaluator drugDomainConstraintsEvaluator;
     std::vector<Tucuxi::Core::DrugDomainConstraintsEvaluator::EvaluationResult> evaluationResults;
     Tucuxi::Core::DrugDomainConstraintsEvaluator::Result drugDomainResult = drugDomainConstraintsEvaluator.evaluate(drugModel,
@@ -371,7 +375,6 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
             nbPointsPerHour = 4;
 //            nbPointsPerHour = static_cast<int>(5000.0 / durationInHours);
         }
-
 
         std::unique_ptr<Tucuxi::Core::ComputingTrait> computingTrait = std::make_unique<Tucuxi::Core::ComputingTraitPercentiles>(
                     std::to_string(m_requestID),

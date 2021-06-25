@@ -33,8 +33,8 @@ class TargetMethod : public Entity
         AUCOverMicTarget, //! Soon to be supported target
         AUC24OverMicTarget, //! Soon to be supported target
         PeakDividedByMicTarget, //! Soon to be supported target
-        ResidualDividedByMicTarget, //! Soon to be supported target
         TimeOverMicTarget, //! Soon to be supported target
+        ResidualDividedByMicTarget, //! Targeted residual concentration divided by MIC
         UnknownTarget        //! Unknown or invalid target.
         };
         Q_ENUM(TargetType)

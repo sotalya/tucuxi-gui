@@ -201,18 +201,19 @@ void TargetTabController::updateTvalues(int index, double &min, double &best, do
 
 QStringList TargetTabController::getTargetTypes()
 {
-    QStringList list = {"Residual",                //  0
-                        "Peak",                    //  1
-                        "Mean",                    //  2
-                        "AUC",                     //  3
-                        "AUC 24h",                 //  4
-                        "Cumulative AUC",          //  5
-                        "AUC divided by MIC",      //  6
-                        "AUC 24h divided by MIC",  //  7
-                        "AUC over MIC",            //  8
-                        "AUC 24h over MIC",        //  9
-                        "Peak divided by MIC",     // 10
-                        "Time over Mic"};          // 11
+    QStringList list = {"Residual",                 //  0
+                        "Peak",                     //  1
+                        "Mean",                     //  2
+                        "AUC",                      //  3
+                        "AUC 24h",                  //  4
+                        "Cumulative AUC",           //  5
+                        "AUC divided by MIC",       //  6
+                        "AUC 24h divided by MIC",   //  7
+                        "AUC over MIC",             //  8
+                        "AUC 24h over MIC",         //  9
+                        "Peak divided by MIC",      // 10
+                        "Time over Mic",            // 11
+                        "Residual divided by MIC"}; // 12
     return list;
 }
 
@@ -234,7 +235,8 @@ QString TargetTabController::calculateUnit(int type, QString baseUnit)
     {
         result = "ug*h/l";
     }    break;
-    case 10: {
+    case 10:
+    case 12: {
         result = "";
     }    break;
     case 6:

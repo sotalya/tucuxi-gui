@@ -118,7 +118,7 @@ Item {
         } else if(appMode.isPractice()){
             licence = "Practice license"
         } else{
-            licence = "No licence"
+            licence = "No license"
         }
         return licence;
     }

@@ -97,6 +97,7 @@ bool DrugManager::tryToAddDrugModelToRepo(ezechiel::core::DrugModel *drugModel)
                     return 0;
         }
     }
+    return false;
 }
 
 //Builds a drug

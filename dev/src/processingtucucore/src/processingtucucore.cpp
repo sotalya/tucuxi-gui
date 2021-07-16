@@ -130,7 +130,8 @@ ezechiel::ProcessingResult ProcessingTucucore::points(
                                           Tucuxi::Core::CompartmentsOption::MainCompartment,
                                           Tucuxi::Core::RetrieveStatisticsOption::RetrieveStatistics,
                                           Tucuxi::Core::RetrieveParametersOption::RetrieveParameters,
-                                          Tucuxi::Core::RetrieveCovariatesOption::RetrieveCovariates);
+                                          Tucuxi::Core::RetrieveCovariatesOption::RetrieveCovariates,
+                                          Tucuxi::Core::ForceUgPerLiterOption::Force);
 
     bool validDates = true;
     if (!traits.start.isValid()) {
@@ -362,7 +363,11 @@ ezechiel::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
 
         Tucuxi::Core::PredictionParameterType type = translator.buildParameterType(traits.traits);
 
-        Tucuxi::Core::ComputingOption options(type, Tucuxi::Core::CompartmentsOption::MainCompartment);
+        Tucuxi::Core::ComputingOption options(type, Tucuxi::Core::CompartmentsOption::MainCompartment,
+                                              Tucuxi::Core::RetrieveStatisticsOption::DoNotRetrieveStatistics,
+                                              Tucuxi::Core::RetrieveParametersOption::DoNotRetrieveParameters,
+                                              Tucuxi::Core::RetrieveCovariatesOption::DoNotRetrieveCovariates,
+                                              Tucuxi::Core::ForceUgPerLiterOption::Force);
 
         Tucuxi::Common::DateTime startDate = translator.buildDateTime(traits.start);
         Tucuxi::Common::DateTime endDate = translator.buildDateTime(traits.end);
@@ -495,14 +500,23 @@ ezechiel::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
                                                   Tucuxi::Core::CompartmentsOption::MainCompartment,
                                                   Tucuxi::Core::RetrieveStatisticsOption::RetrieveStatistics,
                                                   Tucuxi::Core::RetrieveParametersOption::RetrieveParameters,
-                                                  Tucuxi::Core::RetrieveCovariatesOption::RetrieveCovariates);
+                                                  Tucuxi::Core::RetrieveCovariatesOption::RetrieveCovariates,
+                                                  Tucuxi::Core::ForceUgPerLiterOption::Force);
     if (analysis->getTreatment()->getMeasures()->size() != 0) {
         computingOption = Tucuxi::Core::ComputingOption(Tucuxi::Core::PredictionParameterType::Aposteriori,
-                                                         Tucuxi::Core::CompartmentsOption::MainCompartment);
+                                                         Tucuxi::Core::CompartmentsOption::MainCompartment,
+                                                        Tucuxi::Core::RetrieveStatisticsOption::DoNotRetrieveStatistics,
+                                                        Tucuxi::Core::RetrieveParametersOption::DoNotRetrieveParameters,
+                                                        Tucuxi::Core::RetrieveCovariatesOption::DoNotRetrieveCovariates,
+                                                        Tucuxi::Core::ForceUgPerLiterOption::Force);
     }
     else if (analysis->getTreatment()->getCovariates()->size() != 0) {
         computingOption = Tucuxi::Core::ComputingOption(Tucuxi::Core::PredictionParameterType::Apriori,
-                                                         Tucuxi::Core::CompartmentsOption::MainCompartment);
+                                                         Tucuxi::Core::CompartmentsOption::MainCompartment,
+                                                        Tucuxi::Core::RetrieveStatisticsOption::DoNotRetrieveStatistics,
+                                                        Tucuxi::Core::RetrieveParametersOption::DoNotRetrieveParameters,
+                                                        Tucuxi::Core::RetrieveCovariatesOption::DoNotRetrieveCovariates,
+                                                        Tucuxi::Core::ForceUgPerLiterOption::Force);
     }
 
     Tucuxi::Core::SteadyStateTargetOption steadyStateOption = Tucuxi::Core::SteadyStateTargetOption::AtSteadyState;

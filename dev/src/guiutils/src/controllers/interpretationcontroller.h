@@ -407,8 +407,10 @@ private:
     QObject *covariatesView;
     QObject *domainsView;
     QObject *dosagesView;
-    QObject *drugsView;
     QObject *drugVariatesView;
+    // Added drugsView as public for testing purposes
+    public:
+    QObject *drugsView;
 public: // For RandomTest
     QObject *flowView;
 private:

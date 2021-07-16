@@ -23,7 +23,7 @@
 
 
 extern SpixGTest* srv;
-
+/*
 QObject *getObjectByName(QObject *root, std::string name)
 {
     for(auto child : root->children()) {
@@ -40,7 +40,7 @@ QObject *getObjectByName(QObject *root, std::string name)
     }
     return nullptr;
 }
-
+*/
 TEST(RandomTest, Test1)
 {
     static std::vector<std::string> paths = {

@@ -1,12 +1,15 @@
 #include <QQuickWindow>
 
 #include <QTest>
+#include <QQmlApplicationEngine>
 
 #include <gtest/gtest.h>
 
 #include <Spix/QtQmlBot.h>
 
 #include "guitest.h"
+#include "guiutils/src/controllers/interpretationcontroller.h"
+
 
 class SpixGTest;
 SpixGTest* srv;
@@ -36,6 +39,24 @@ bool SpixGTest::synchronize()
     return existsAndVisible(spix::ItemPath("paththatdonotexist"));
 }
 
+
+QObject *SpixGTest::getObjectByName(QObject *root, std::string name)
+{
+    for(auto child : root->children()) {
+        if (child->objectName().toStdString() == name) {
+            return child;
+        }
+    }
+
+    for(auto child : root->children()) {
+        auto result = getObjectByName(child, name);
+        if (result != nullptr) {
+            return result;
+        }
+    }
+    return nullptr;
+}
+
 void SpixGTest::startNewPatient()
 {
     bool isOnLaunchScreen = existsAndVisible(spix::ItemPath("mainWindow/launchView"));
@@ -48,6 +69,63 @@ void SpixGTest::startNewPatient()
     srv->waitPeriod();
 }
 
+void SpixGTest::addMeasure(double value, QDateTime date)
+{
+    srv->waitPeriod(5);
+
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
+    srv->mouseClick(spix::ItemPath("mainWindow/measuresView/addMeasure"));
+    srv->waitPeriod();
+
+//    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
+//    srv->waitPeriod();
+//    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
+
+    srv->synchronize();
+    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueInput");
+    item->setProperty("value", value * 100.0);
+    srv->waitPeriod(5);
+
+    auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleTimeInput");
+    dateItem->setProperty("date", date);
+
+    srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
+    srv->waitPeriod();
+
+
+    srv->waitPeriod(5);
+
+}
+
+void SpixGTest::printReport(QString reportFileName)
+{
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
+    srv->waitPeriod();
+
+    srv->m_mainWindowController->getInterpretationController()->setReportFileName(reportFileName);
+    srv->mouseClick(spix::ItemPath("mainWindow/reportView/printButton"));
+
+    srv->waitPeriod(10);
+}
+
+int SpixGTest::getNbProposedAdjustments()
+{
+    auto engine = srv->m_mainWindowController->engine;
+    QObject *root = engine->rootObjects().at(0);
+
+    auto adjList = getObjectByName(root, "adjustmentListView");
+
+    int nbAdjs = -1;
+    QVariant v;
+
+    if (!QMetaObject::invokeMethod(adjList, "nbProposedAdjustments", Qt::DirectConnection, Q_RETURN_ARG(QVariant, v))) {
+        std::cout << "Error with invoke" << std::endl;
+    }
+    QString s = v.toString();
+    bool ok;
+    nbAdjs = v.toInt(&ok);
+    return nbAdjs;
+}
 /*
 TEST(GTestExample, AdvancedUITest)
 {

@@ -15,6 +15,8 @@ public:
     QQuickWindow* m_window;
     MainWindowController *m_mainWindowController;
 
+    QObject *getObjectByName(QObject *root, std::string name);
+
     bool synchronize();
 
     void waitPeriod(unsigned int nbPeriods = 1)
@@ -23,6 +25,12 @@ public:
     }
 
     void startNewPatient();
+
+    void addMeasure(double value, QDateTime date);
+
+    void printReport(QString reportFileName);
+
+    int getNbProposedAdjustments();
 
 protected:
     int m_argc;

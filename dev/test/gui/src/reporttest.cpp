@@ -78,12 +78,8 @@ TEST(ReportTest, TestCefepime1)
     srv->waitPeriod();
     srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
     srv->waitPeriod();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
-    srv->waitPeriod();
-    srv->m_mainWindowController->getInterpretationController()->setReportFileName("report_cefepime1.pdf");
-    srv->mouseClick(spix::ItemPath("mainWindow/reportView/printButton"));
 
-    srv->waitPeriod(10);
+    srv->printReport("report_cefepime1.pdf");
 
     srv->synchronize();
 
@@ -149,12 +145,8 @@ TEST(ReportTest, TestImatinib1)
     srv->waitPeriod();
     srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
     srv->waitPeriod();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
-    srv->waitPeriod();
-    srv->m_mainWindowController->getInterpretationController()->setReportFileName("report_imatinib1.pdf");
-    srv->mouseClick(spix::ItemPath("mainWindow/reportView/printButton"));
 
-    srv->waitPeriod(10);
+    srv->printReport("report_imatinib1.pdf");
 
     srv->synchronize();
 
@@ -169,7 +161,7 @@ TEST(ReportTest, TestImatinibMeasures)
     srv->waitPeriod();
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugList_Imatinib"));
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugList_Apixaban"));
     srv->waitPeriod();
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
@@ -254,12 +246,8 @@ TEST(ReportTest, TestImatinibMeasures)
     srv->waitPeriod();
     srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
     srv->waitPeriod();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
-    srv->waitPeriod();
-    srv->m_mainWindowController->getInterpretationController()->setReportFileName("report_imatinib_measures.pdf");
-    srv->mouseClick(spix::ItemPath("mainWindow/reportView/printButton"));
 
-    srv->waitPeriod(10);
+    srv->printReport("report_imatinib_measures.pdf");
 
     srv->synchronize();
 
@@ -283,6 +271,29 @@ void testReportDrugModel(std::string drugName)
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
     srv->waitPeriod();
     srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+
+
+    // Now let's add a measure
+    srv->waitPeriod(15);
+    srv->synchronize();
+
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
+    srv->waitPeriod(15);
+    return;
+    srv->mouseClick(spix::ItemPath("mainWindow/measuresView/addMeasure"));
+    srv->waitPeriod();
+
+//    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
+//    srv->waitPeriod();
+//    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
+
+    srv->synchronize();
+    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueInput");
+    item->setProperty("value", 10000.0);
+    srv->waitPeriod(5);
+
+    srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
+    srv->waitPeriod();
 
     srv->waitPeriod(5);
 
@@ -327,16 +338,9 @@ void testReportDrugModel(std::string drugName)
     srv->waitPeriod();
     srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
     srv->waitPeriod();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
-    srv->waitPeriod();
-
 
     QString reportName = QString("report_%1.pdf").arg(drugName.data());
-
-    srv->m_mainWindowController->getInterpretationController()->setReportFileName(reportName);
-    srv->mouseClick(spix::ItemPath("mainWindow/reportView/printButton"));
-
-    srv->waitPeriod(10);
+    srv->printReport(reportName);
 
     srv->synchronize();
 
@@ -349,24 +353,6 @@ TEST(ReportTest, TestRifampicin)
     testReportDrugModel("Rifampicin");
 }
 
-
-QObject *getObjectByName(QObject *root, std::string name)
-{
-    for(auto child : root->children()) {
-        if (child->objectName().toStdString() == name) {
-            return child;
-        }
-    }
-
-    for(auto child : root->children()) {
-        auto result = getObjectByName(child, name);
-        if (result != nullptr) {
-            return result;
-        }
-    }
-    return nullptr;
-}
-
 #include <QQmlApplicationEngine>
 
 class GenericReportTest : public ::testing::TestWithParam<std::tuple<int, int, std::string> > {
@@ -374,6 +360,8 @@ protected:
     void testReportDrugModel()
     {
         auto param = GetParam();
+        auto drugName = std::get<2>(param);
+        std::cout << "Starting drug " << drugName << std::endl;
         srv->startNewPatient();
 
         srv->waitPeriod();
@@ -387,7 +375,7 @@ protected:
 //        auto engine = srv->m_mainWindowController->engine;
 //        QObject *root = engine->rootObjects().at(0);
 //        std::cout << "Root : " << root->objectName().toStdString() << std::endl;
-//        QObject *list = getObjectByName(root, "drugListView");
+//        QObject *list = srv->getObjectByName(root, "drugListView");
 
         QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentActiveSubstance",
                                   Q_ARG(QVariant, QVariant::fromValue(std::get<0>(param))));
@@ -405,7 +393,30 @@ protected:
         srv->waitPeriod();
         srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
 
-        srv->waitPeriod(5);
+        QDateTime dateTime;
+        dateTime.setDate(QDate(2021,07,27));
+        dateTime.setTime(QTime(17, 0, 0));
+        srv->addMeasure(100.0, dateTime);
+//        srv->waitPeriod(5);
+
+//        srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
+//        srv->mouseClick(spix::ItemPath("mainWindow/measuresView/addMeasure"));
+//        srv->waitPeriod();
+
+//    //    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
+//    //    srv->waitPeriod();
+//    //    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
+
+//        srv->synchronize();
+//        auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueInput");
+//        item->setProperty("value", 100000.0);
+//        srv->waitPeriod(5);
+
+//        srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
+//        srv->waitPeriod();
+
+
+//        srv->waitPeriod(5);
 
         srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
         srv->waitPeriod();
@@ -438,8 +449,17 @@ protected:
 
         srv->waitPeriod(5);
         */
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
 
+        srv->synchronize();
+
+
+        int nbAdjs = srv->getNbProposedAdjustments();
+        if (nbAdjs > 0) {
+            srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
+        }
+        else {
+            srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/addAdjustment"));
+        }
 
 
         srv->waitPeriod(10);
@@ -448,16 +468,10 @@ protected:
         srv->waitPeriod();
         srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
-        srv->waitPeriod();
-
 
         QString reportName = QString("report_%1.pdf").arg(std::get<2>(param).data());
 
-        srv->m_mainWindowController->getInterpretationController()->setReportFileName(reportName);
-        srv->mouseClick(spix::ItemPath("mainWindow/reportView/printButton"));
-
-        srv->waitPeriod(10);
+        srv->printReport(reportName);
 
         srv->synchronize();
 
@@ -491,13 +505,13 @@ INSTANTIATE_TEST_SUITE_P(
             std::tuple<int, int, std::string>{13, 0, "Piperacillin"},
             std::tuple<int, int, std::string>{14, 0, "Rifampicin"},
             std::tuple<int, int, std::string>{15, 0, "Tacrolimus"},
-            std::tuple<int, int, std::string>{17, 0, "Tobramycin0"},
-            std::tuple<int, int, std::string>{18, 0, "Vancomycin1"},
-            std::tuple<int, int, std::string>{18, 1, "Vancomycin2"},
-            std::tuple<int, int, std::string>{18, 2, "Vancomycin3"},
-            std::tuple<int, int, std::string>{18, 3, "Vancomycin4"},
-            std::tuple<int, int, std::string>{18, 4, "Vancomycin5"},
-            std::tuple<int, int, std::string>{18, 5, "Vancomycin6"},
-            std::tuple<int, int, std::string>{18, 6, "Vancomycin7"}
+            std::tuple<int, int, std::string>{16, 0, "Tobramycin"},
+            std::tuple<int, int, std::string>{17, 0, "Vancomycin0"},
+            std::tuple<int, int, std::string>{17, 1, "Vancomycin1"},
+            std::tuple<int, int, std::string>{17, 2, "Vancomycin2"},
+            std::tuple<int, int, std::string>{17, 3, "Vancomycin3"},
+            std::tuple<int, int, std::string>{17, 4, "Vancomycin4"},
+            std::tuple<int, int, std::string>{17, 5, "Vancomycin5"},
+            std::tuple<int, int, std::string>{17, 6, "Vancomycin6"}
             ));
 

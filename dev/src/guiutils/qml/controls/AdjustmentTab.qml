@@ -281,8 +281,13 @@ Rectangle {
 
                 EntityListView {
                     id: adjustmentListView
+                    objectName : "adjustmentListView"
                     //Layout.minimumHeight: adjustmentList.rowHeight * 5
                     property var adjustments: interpretation.analysis.chartData.revPred.adjustments;
+                    function nbProposedAdjustments() {
+                        return adjustments ? adjustments.size() : 0;
+                    }
+
                     onAdjustmentsChanged: {
                         //                console.log("# adjustments: " + adjustments.size());
                     }
@@ -441,6 +446,7 @@ Rectangle {
                     EntityListHeaderItem { Layout.preferredWidth: 80; label.text: "Duration"; tooltipText: ToolTips.adjustmentTab.infusion }
                     EntityListHeaderImage { }
                     EntityListHeaderImage {
+                        objectName: "addAdjustment"
                         image.source: !adjustmentTabController.isManualAdjustmentDefined ? "qrc:/icons/buttons/add.png" : ""
                         mousearea.onClicked: {
                             adjustmentTabController.addAdjustment();

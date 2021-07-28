@@ -170,7 +170,13 @@ void DosageTabController::addDosage()
 
     if (drugModel->getInfusions()->getQuantity()->value() > 0.0)
     {
-        dosage->setDbtinf(drugModel->getInfusions()->getQuantity()->value());
+        // The Dbtinf expects minutes, so let's do a conversion here
+        if (drugModel->getInfusions()->getQuantity()->getUnitstring() == "h") {
+            dosage->setDbtinf(drugModel->getInfusions()->getQuantity()->value() * 60.0);
+        }
+        else {
+            dosage->setDbtinf(drugModel->getInfusions()->getQuantity()->value());
+        }
     }
 
     if (_dosages->size() > 0)

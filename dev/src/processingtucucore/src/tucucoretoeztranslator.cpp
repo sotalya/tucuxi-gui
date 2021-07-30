@@ -340,6 +340,10 @@ ezechiel::core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tuc
         if (covariate.get()->isComputed()) {
             continue;
         }
+        // Do not export dose covariates to the GUI
+        if (covariate->getType() == Tucuxi::Core::CovariateType::Dose) {
+            continue;
+        }
         ezechiel::core::DrugVariate *variate = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugVariate>(ABSTRACTREPO, variateList);
         variate->setCovariateId(QString::fromStdString(covariate->getId()));
         variate->setVisualNameTranslation(translate(covariate->getName(), variate));

@@ -224,19 +224,20 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
         ezechiel::core::Target *target = *itTargets++;
         Tucuxi::Core::TargetType targetType;
         switch (target->getType()->getTargetType()) {
-        case ezechiel::core::TargetMethod::TargetType::ResidualTarget:           targetType = Tucuxi::Core::TargetType::Residual; break;
-        case ezechiel::core::TargetMethod::TargetType::PeakTarget:               targetType = Tucuxi::Core::TargetType::Peak;     break;
-        case ezechiel::core::TargetMethod::TargetType::MeanTarget:               targetType = Tucuxi::Core::TargetType::Mean;     break;
-        case ezechiel::core::TargetMethod::TargetType::AUCTarget:                targetType = Tucuxi::Core::TargetType::Auc;      break;
-        case ezechiel::core::TargetMethod::TargetType::AUC24Target:              targetType = Tucuxi::Core::TargetType::Auc24;      break;
-        case ezechiel::core::TargetMethod::TargetType::CumulativeAUCTarget :     targetType = Tucuxi::Core::TargetType::CumulativeAuc; break;
-        case ezechiel::core::TargetMethod::TargetType::AUCOverMicTarget :        targetType = Tucuxi::Core::TargetType::AucOverMic; break;
-        case ezechiel::core::TargetMethod::TargetType::AUC24OverMicTarget :      targetType = Tucuxi::Core::TargetType::Auc24OverMic; break;
-        case ezechiel::core::TargetMethod::TargetType::TimeOverMicTarget :       targetType = Tucuxi::Core::TargetType::TimeOverMic; break;
-        case ezechiel::core::TargetMethod::TargetType::AUCDividedByMicTarget :   targetType = Tucuxi::Core::TargetType::AucDividedByMic; break;
-        case ezechiel::core::TargetMethod::TargetType::AUC24DividedByMicTarget : targetType = Tucuxi::Core::TargetType::Auc24DividedByMic; break;
-        case ezechiel::core::TargetMethod::TargetType::PeakDividedByMicTarget :  targetType = Tucuxi::Core::TargetType::PeakDividedByMic; break;
-        case ezechiel::core::TargetMethod::TargetType::UnknownTarget :           targetType = Tucuxi::Core::TargetType::UnknownTarget; break;
+        case ezechiel::core::TargetMethod::TargetType::ResidualTarget:             targetType = Tucuxi::Core::TargetType::Residual; break;
+        case ezechiel::core::TargetMethod::TargetType::PeakTarget:                 targetType = Tucuxi::Core::TargetType::Peak;     break;
+        case ezechiel::core::TargetMethod::TargetType::MeanTarget:                 targetType = Tucuxi::Core::TargetType::Mean;     break;
+        case ezechiel::core::TargetMethod::TargetType::AUCTarget:                  targetType = Tucuxi::Core::TargetType::Auc;      break;
+        case ezechiel::core::TargetMethod::TargetType::AUC24Target:                targetType = Tucuxi::Core::TargetType::Auc24;      break;
+        case ezechiel::core::TargetMethod::TargetType::CumulativeAUCTarget :       targetType = Tucuxi::Core::TargetType::CumulativeAuc; break;
+        case ezechiel::core::TargetMethod::TargetType::AUCOverMicTarget :          targetType = Tucuxi::Core::TargetType::AucOverMic; break;
+        case ezechiel::core::TargetMethod::TargetType::AUC24OverMicTarget :        targetType = Tucuxi::Core::TargetType::Auc24OverMic; break;
+        case ezechiel::core::TargetMethod::TargetType::TimeOverMicTarget :         targetType = Tucuxi::Core::TargetType::TimeOverMic; break;
+        case ezechiel::core::TargetMethod::TargetType::AUCDividedByMicTarget :     targetType = Tucuxi::Core::TargetType::AucDividedByMic; break;
+        case ezechiel::core::TargetMethod::TargetType::AUC24DividedByMicTarget :   targetType = Tucuxi::Core::TargetType::Auc24DividedByMic; break;
+        case ezechiel::core::TargetMethod::TargetType::PeakDividedByMicTarget :    targetType = Tucuxi::Core::TargetType::PeakDividedByMic; break;
+        case ezechiel::core::TargetMethod::TargetType::UnknownTarget :             targetType = Tucuxi::Core::TargetType::UnknownTarget; break;
+        case ezechiel::core::TargetMethod::TargetType::ResidualDividedByMicTarget: targetType = Tucuxi::Core::TargetType::ResidualDividedByMic; break;
         }
         if (target->getTbest()->getUnitstring() == "h") {
             newTreatment->addTarget(std::make_unique<Tucuxi::Core::Target>(

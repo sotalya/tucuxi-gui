@@ -598,7 +598,7 @@ ezechiel::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
         // data:
         ezechiel::core::FancyPoints* fpts = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoints>(ABSTRACTREPO, adjustment->getPredictionData());
 
-        for (Tucuxi::Core::CycleData cycleData: fullDosage.m_data) {
+        for (Tucuxi::Core::CycleData cycleData: fullDosage.getData()) {
             for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {
                 ezechiel::core::FancyPoint* fpt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::FancyPoint>(ABSTRACTREPO, fpts);
                 //fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][i]*3600.0);// This complex next translation is required because of the epoch being different for QDateTime and DateTime, one being local and the other no

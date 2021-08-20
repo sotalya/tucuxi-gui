@@ -860,7 +860,7 @@ function acxn2screen(cdata, c)
     //console.log(cdata.minY);
     //console.log(cdata.yRatio);
     //console.log(cdata.bottomLeftY);
-    return  Math.round((-(c - cdata.minY) * cdata.yRatio) + cdata.bottomLeftY);
+    return  (-(c - cdata.minY) * cdata.yRatio) + cdata.bottomLeftY;
 }
 
 function ascreen2acxn(cdata, p)
@@ -870,7 +870,7 @@ function ascreen2acxn(cdata, p)
 
 function atime2screen(cdata, t)
 {
-    return Math.round(((t - cdata.minX) * cdata.xRatio) + cdata.bottomLeftX);
+    return ((t - cdata.minX) * cdata.xRatio) + cdata.bottomLeftX;
 }
 
 function ascreen2time(cdata, p)

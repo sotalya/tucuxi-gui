@@ -1,0 +1,66 @@
+<html>
+<head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <script type="text/javascript" src="graphing.js"></script>
+      <script type="text/javascript" src="graphdata.js"></script>
+      <script type="text/javascript" src="test_graphing.js"></script>
+</head>
+<body>
+    <button onclick="nextTest()">Next test</button> 
+    <div id="expectedMessage"></div>
+    <canvas id="myCanvas" width="1200" height="800" style="height:400px; width:600px"></canvas>
+
+    <script>
+
+    var canvas = document.getElementById("myCanvas");
+
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+
+    function runTest(testFunction)
+    {
+        let {obj, expected} = testFunction();
+
+        obj.updateChartDimensions(canvas);
+
+        document.getElementById("expectedMessage").innerHTML = expected;
+    
+        obj.img_covariates_disabled_mini = new Image();
+        obj.img_covariates_disabled_mini.src = "file:///home/ythoma/docs/tucuxi/tucuxi-gui/dev/src/guiutils/qml/controls/covariates_disabled_mini.png";
+        obj.img_covariates_disabled_mini.onload = function() {
+            obj.img_dosages_disabled_mini = new Image();
+            obj.img_dosages_disabled_mini.src = "file:///home/ythoma/docs/tucuxi/tucuxi-gui/dev/src/guiutils/qml/controls/dosages_disabled_mini.png";
+            obj.img_dosages_disabled_mini.onload = function() {
+                drawGraph(obj);
+                drawAnnotations(obj);
+
+           }
+        }
+        
+    }
+
+    allTests = [test1,
+                test2,
+                testempty,
+                testtarget0,
+                testtarget1,
+                testtarget2,
+                testtarget3,
+                testtarget5,
+                testtarget6,
+                testtarget7,
+                testtarget8,
+                testtarget9,
+                testtarget10,
+                testtarget11,
+                testtarget12];
+
+    currentTest = 0;
+    runTest(allTests[currentTest]);
+    function nextTest() {
+        currentTest = (currentTest + 1) % allTests.length;
+        runTest(allTests[currentTest]);
+    }
+    </script>
+</body>
+</html>

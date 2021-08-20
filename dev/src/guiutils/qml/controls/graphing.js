@@ -1,46 +1,47 @@
 
-function step()
+function drawGraph(cdata)
 {
     var ctx = canvas.getContext('2d');
+
     //the min max is restricted to the window after scaling. We have to apply the scale to the values
     //then project the values onto the drawn space. So you have to know and use the scale and offset first.
     //console.log("painting!")
     //Init context
-    initContext(ctx);
+    initContext(cdata, ctx);
     ctx.save();
-    extents(ctx);
+    extents(cdata, ctx);
     //    console.log(maxX + " " + minX);
 
-    var adjTabShowPop = graphInformationSelection.presentAposterioriPrediction && !hasPatientVariates && !hasMeasures;
-    var adjTabShowApr = graphInformationSelection.presentAposterioriPrediction && hasPatientVariates && !hasMeasures;
+    var adjTabShowPop = cdata.gInformationSelection.presentAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
+    var adjTabShowApr = cdata.gInformationSelection.presentAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
 
     //Draw the content
     //dont draw any curves if we cant even draw the population curves
-    if (popP) {
-        if (popP.predictive.predictionData.isValid) {
-            if (graphInformationSelection.presentPopulationPercentiles || adjTabShowPop) {
-                if (popercsP.isValid) {
-                    drawPercentiles(ctx, popercsP, colors[7], popcolors);
+    if (cdata.popP) {
+        if (cdata.popP.predictive.predictionData.isValid) {
+            if (cdata.gInformationSelection.presentPopulationPercentiles || adjTabShowPop) {
+                if (cdata.popercsP.isValid) {
+                    drawPercentiles(cdata, ctx, cdata.popercsP, cdata.colors[7], cdata.popcolors);
                 }
             }
             
             //draw apriori if indicated in show
-            if (aprP) {
-                if (aprP.predictive.predictionData.isValid) {
-                    if (graphInformationSelection.presentAprioriPercentiles || adjTabShowApr) {
-                        if (aprpercsP.isValid) {
-                            drawPercentiles(ctx, aprpercsP, colors[8], aprcolors);
+            if (cdata.aprP) {
+                if (cdata.aprP.predictive.predictionData.isValid) {
+                    if (cdata.gInformationSelection.presentAprioriPercentiles || adjTabShowApr) {
+                        if (cdata.aprpercsP.isValid) {
+                            drawPercentiles(cdata, ctx, cdata.aprpercsP, cdata.colors[8], cdata.aprcolors);
                         }
                     }
                 }
             }
 
             //draw aposteriori if indicated in show and we have measures
-            if (apoP) {
-                if (apoP.predictive.predictionData.isValid) {
-                    if (graphInformationSelection.presentAposterioriPercentiles && hasMeasures) {
+            if (cdata.apoP) {
+                if (cdata.apoP.predictive.predictionData.isValid) {
+                    if (cdata.gInformationSelection.presentAposterioriPercentiles && hasMeasures) {
                         if (apopercsP.isValid) {
-                            drawPercentiles(ctx, apopercsP, colors[6], apocolors);
+                            drawPercentiles(cdata, ctx, cdata.apopercsP, cdata.colors[6], cdata.apocolors);
                         }
                     }
                 }
@@ -51,30 +52,30 @@ function step()
 
     //Draw the content
     //dont draw any curves if we cant even draw the population curves
-    if (popP) {
-        if (popP.predictive.predictionData.isValid) {
+    if (cdata.popP) {
+        if (cdata.popP.predictive.predictionData.isValid) {
 
             //draw pop curves if indicated in show or measurestab with no measures
-            if ((graphInformationSelection.presentPopulationPrediction || adjTabShowPop) && graphInformationSelection.displayPopulationPrediction) {
-                drawPop(ctx, colors, popcolors);
+            if ((cdata.gInformationSelection.presentPopulationPrediction || adjTabShowPop) && cdata.gInformationSelection.displayPopulationPrediction) {
+                drawPop(cdata, ctx, cdata.colors, cdata.popcolors);
             }
 
             //draw apriori if indicated in show
-            if (aprP) {
-                if (aprP.predictive.predictionData.isValid) {
+            if (cdata.aprP) {
+                if (cdata.aprP.predictive.predictionData.isValid) {
 
-                    if ((graphInformationSelection.presentAprioriPrediction || adjTabShowApr) && graphInformationSelection.displayAprioriPrediction) {
-                        drawApr(ctx, colors, aprcolors);
+                    if ((cdata.gInformationSelection.presentAprioriPrediction || adjTabShowApr) && cdata.gInformationSelection.displayAprioriPrediction) {
+                        drawApr(cdata, ctx, cdata.colors, cdata.aprcolors);
                     }
                 }
             }
 
             //draw aposteriori if indicated in show and we have measures
-            if (apoP) {
-                if (apoP.predictive.predictionData.isValid) {
+            if (cdata.apoP) {
+                if (cdata.apoP.predictive.predictionData.isValid) {
 
-                    if (graphInformationSelection.presentAposterioriPrediction && hasMeasures && graphInformationSelection.displayAposterioriPrediction) {
-                        drawApo(ctx, colors, apocolors);
+                    if (cdata.gInformationSelection.presentAposterioriPrediction && hasMeasures && cdata.gInformationSelection.displayAposterioriPrediction) {
+                        drawApo(cdata, ctx, cdata.colors, cdata.apocolors);
                     }
                 }
             }
@@ -83,96 +84,96 @@ function step()
 
 
     //verify compatibility between drugmodel constraint and covariate
-    if (aprP.predictive.predictionData.isValid){
-        checkAndDisplayDomain(ctx, aprP)
+    if (cdata.aprP.predictive.predictionData.isValid){
+        checkAndDisplayDomain(cdata, ctx, cdata.aprP)
     }
 
-    if (adjP) {
-        if (graphInformationSelection.presentSelectedAdjustment && graphInformationSelection.displaySelectedAdjustment) {
+    if (cdata.adjP) {
+        if (cdata.gInformationSelection.presentSelectedAdjustment && cdata.gInformationSelection.displaySelectedAdjustment) {
 
-            if (adjpercsP.isValid) {
+            if (cdata.adjpercsP.isValid) {
 
-                if ((apoP) && (apoP.predictive.predictionData.isValid)) {
-                    drawPercentilesAdjustments(ctx, adjpercsP, apocolors[0], apocolors);
+                if ((cdata.apoP) && (cdata.apoP.predictive.predictionData.isValid)) {
+                    drawPercentilesAdjustments(cdata, ctx, cdata.adjpercsP, cdata.apocolors[0], cdata.apocolors);
                 }
                 else {
-                    drawPercentilesAdjustments(ctx, adjpercsP, aprcolors[0], aprcolors);
+                    drawPercentilesAdjustments(cdata, ctx, cdata.adjpercsP, cdata.aprcolors[0], cdata.aprcolors);
                 }
             }
 
-            if ((apoP) && (apoP.predictive.predictionData.isValid)) {
-                drawAdjustment(ctx, colors[4]);
+            if ((cdata.apoP) && (cdata.apoP.predictive.predictionData.isValid)) {
+                drawAdjustment(cdata, ctx, cdata.colors[4]);
             }
             else {
-                drawAdjustment(ctx, colors[2]);
+                drawAdjustment(cdata, ctx, cdata.colors[2]);
 
             }
         }
     }
 
     //draw adjustments if we have, and indicated in show
-    if (revP && revP.isValid) {
-        if (graphInformationSelection.presentPossibleAdjustments && graphInformationSelection.displayPossibleAdjustments) {
-            drawReverse(ctx, colors, revcolors);
+    if (cdata.revP && cdata.revP.isValid) {
+        if (cdata.gInformationSelection.presentPossibleAdjustments && cdata.gInformationSelection.displayPossibleAdjustments) {
+            drawReverse(cdata, ctx, cdata.colors, cdata.revcolors);
         }
     }
 
     //draw measures
-    if (graphInformationSelection.presentMeasures && graphInformationSelection.displayMeasures) {
-        drawMeasures(ctx);
+    if (cdata.gInformationSelection.presentMeasures && cdata.gInformationSelection.displayMeasures) {
+        drawMeasures(cdata, ctx);
         ctx.restore();
         ctx.save();
     }
 
     //draw targets if have, and indicated in show
-    if (hasTargets && graphInformationSelection.presentTargets && graphInformationSelection.displayTargets) {
-        if (apoP && apoP.predictive.predictionData.isValid) {
-            drawTargets(ctx, apoP.X, apoP.predictive.predictionData);
-        } else if (aprP && aprP.predictive.predictionData.isValid) {
-            drawTargets(ctx, aprP.X, aprP.predictive.predictionData);
-        } else if (popP && popP.predictive.predictionData.isValid) {
-            drawTargets(ctx, popP.X, popP.predictive.predictionData);
-        } else if (adjP && adjP.predictive.predictionData.isValid) {
-            drawTargets(ctx, adjP.X, adjP.predictive.predictionData);
-        } else if (revP && revP.size()>0) {
-            var predData = revP.objat(0);
+    if (cdata.hasTargets && cdata.gInformationSelection.presentTargets && cdata.gInformationSelection.displayTargets) {
+        if (cdata.apoP && cdata.apoP.predictive.predictionData.isValid) {
+            drawTargets(cdata, ctx, cdata.apoP.X, cdata.apoP.predictive.predictionData);
+        } else if (cdata.aprP && cdata.aprP.predictive.predictionData.isValid) {
+            drawTargets(cdata, ctx, cdata.aprP.X, cdata.aprP.predictive.predictionData);
+        } else if (cdata.popP && cdata.popP.predictive.predictionData.isValid) {
+            drawTargets(cdata, ctx, cdata.popP.X, cdata.popP.predictive.predictionData);
+        } else if (cdata.adjP && cdata.adjP.predictive.predictionData.isValid) {
+            drawTargets(cdata, ctx, cdata.adjP.X, cdata.adjP.predictive.predictionData);
+        } else if (cdata.revP && cdata.revP.size()>0) {
+            var predData = cdata.revP.objat(0);
             if (predData.predictionData.isValid) {
-                drawTargets(ctx, predData.X, predData.predictionData);
+                drawTargets(cdata, ctx, predData.X, predData.predictionData);
             }
         }
         else {
-            var tmin = ascreen2time(bottomLeftX)
-            var tmax = ascreen2time(bottomRightX)
-            drawTargets(ctx, [tmin, tmax], null);
+            var tmin = ascreen2time(cdata, cdata.bottomLeftX)
+            var tmax = ascreen2time(cdata, cdata.bottomRightX)
+            drawTargets(cdata, ctx, [tmin, tmax], null);
         }
         ctx.restore();
         ctx.save();
     }
 
     //clear the border to draw non plot area
-    clearBorder(ctx);
+    clearBorder(cdata, ctx);
 
     //draw non plot area (axes, legends, etc)
-    drawNonPlotArea(ctx, colors, pop);
+    drawNonPlotArea(cdata, ctx, cdata.colors, cdata.pop);
 
     //draw descriptions
 //    if (!graphInformationSelection.presentPopulationPrediction &&
 //        !graphInformationSelection.presentAprioriPrediction &&
 //        !graphInformationSelection.presentAposterioriPrediction) {
 //        if (nographdrugtext) {
-//            drawSoftwareDescription(ctx, nographdrugtext);
+//            drawSoftwareDescription(cdata, ctx, nographdrugtext);
 //        }
 //        else {
-//            drawSoftwareDescription(ctx, nographtext);
+//            drawSoftwareDescription(cdata, ctx, nographtext);
 //        }
 //    }
 }
 
-function checkAndDisplayDomain(ctx, pred)
+function checkAndDisplayDomain(cdata, ctx, pred)
 {
     if (!pred.isValidDomain){
         ctx.textAlign = 'end';
-        ctx.strokeText(pred.domainMessage, topRightX, topRightY + 10);
+        ctx.strokeText(pred.domainMessage, cdata.topRightX, cdata.topRightY + 10);
     }
 }
 
@@ -194,140 +195,140 @@ function updateUnits()
     interpretationController.defaultUnit = unit;
 }
 
-function getAdjustmentFilter(filterMax)
+function getAdjustmentFilter(cdata, filterMax)
 {
-    if (graphInformationSelection.presentSelectedAdjustment) {
-        var limit = adjustmentTabController.adjustmentDate/1000;
+    if (cdata.gInformationSelection.presentSelectedAdjustment) {
+        var limit = cdata.adjustmentController.adjustmentDate/1000;
         if (filterMax) return function(d) { return d < limit; }
         return function(d) { return d > limit; }
     }
     return
 }
 
-function drawPop(ctx, colors, popcolors)
+function drawPop(cdata, ctx, colors, popcolors)
 {
-    drawCurve(ctx, popP.predictive.predictionData, colors[1], getAdjustmentFilter(true));
+    drawCurve(cdata, ctx, cdata.popP.predictive.predictionData, colors[1], getAdjustmentFilter(cdata, true));
     ctx.restore();
     ctx.save();
 }
 
-function drawApr(ctx, colors, aprcolors)
+function drawApr(cdata, ctx, colors, aprcolors)
 {
-    drawCurve(ctx, aprP.predictive.predictionData, colors[2], getAdjustmentFilter(true));
+    drawCurve(cdata, ctx, cdata.aprP.predictive.predictionData, colors[2], getAdjustmentFilter(cdata, true));
     ctx.restore();
     ctx.save();
 }
 
-function drawApo(ctx, colors, apocolors)
+function drawApo(cdata, ctx, colors, apocolors)
 {
-    drawCurve(ctx, apoP.predictive.predictionData, colors[4], getAdjustmentFilter(true));
+    drawCurve(cdata, ctx, cdata.apoP.predictive.predictionData, colors[4], getAdjustmentFilter(cdata, true));
     ctx.restore();
     ctx.save();
 }
 
-function drawReverse(ctx, colors, revcolors)
+function drawReverse(cdata, ctx, colors, revcolors)
 {
-    for (var i = 0; i < revP.size(); ++i)
+    for (var i = 0; i < cdata.revP.size(); ++i)
     {
         // Display all adjustments if less than 6 adjustement are proposed
         // otherwise only display the currently selected one.
-        if (revP.size()<=6 || revP.objat(i).predictionData.selected) {
-            drawCurve(ctx, revP.objat(i).predictionData, colors[5], getAdjustmentFilter(false));
+        if (cdata.revP.size()<=6 || cdata.revP.objat(i).predictionData.selected) {
+            drawCurve(cdata, ctx, cdata.revP.objat(i).predictionData, colors[5], getAdjustmentFilter(cdata, false));
         }
 
         // Display the first 5 adjustments, and the selected one
         //if (i <= 4 || revP.objat(i).predictionData.selected) {
-        //    drawCurve(ctx, revP.objat(i).predictionData, colors[5], getAdjustmentFilter(false));
+        //    drawCurve(cdata, ctx, revP.objat(i).predictionData, colors[5], getAdjustmentFilter(cdata, false));
         //}
         ctx.restore();
         ctx.save();
     }
 }
 
-function drawAdjustment(ctx, color)
+function drawAdjustment(cdata, ctx, color)
 {
-    drawCurve(ctx, adjP.predictive.predictionData, color, getAdjustmentFilter(false));
+    drawCurve(cdata, ctx, adjP.predictive.predictionData, color, getAdjustmentFilter(cdata, false));
     ctx.restore();
     ctx.save();
 }
 
-function drawPercentiles(ctx, pairs, color, colors)
+function drawPercentiles(cdata, ctx, pairs, color, colors)
 {
     var displayedCurves = [];
 
     if (pairs.size() < 1){
         return;
     }
-    if (graphInformationSelection.perc5_95){
-        colorRegionBtwCurves(ctx, pairs.objat(0).predictionData,  pairs.objat(6).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(6).Y, colors[3], getAdjustmentFilter(true));
+    if (cdata.gInformationSelection.perc5_95){
+        colorRegionBtwCurves(cdata, ctx, pairs.objat(0).predictionData,  pairs.objat(6).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(6).Y, colors[3], getAdjustmentFilter(cdata, true));
         ctx.restore();
         ctx.save();
         displayedCurves.push(pairs.objat(0))
         displayedCurves.push(pairs.objat(6))
     }
 
-    if (graphInformationSelection.perc10_90){
-        colorRegionBtwCurves(ctx, pairs.objat(1).predictionData,  pairs.objat(5).predictionData, pairs.objat(0).X, pairs.objat(1).Y, pairs.objat(5).Y, colors[2], getAdjustmentFilter(true));
+    if (cdata.gInformationSelection.perc10_90){
+        colorRegionBtwCurves(cdata, ctx, pairs.objat(1).predictionData,  pairs.objat(5).predictionData, pairs.objat(0).X, pairs.objat(1).Y, pairs.objat(5).Y, colors[2], getAdjustmentFilter(cdata, true));
         ctx.restore();
         ctx.save();
         displayedCurves.push(pairs.objat(1))
         displayedCurves.push(pairs.objat(5))
     }
 
-    if (graphInformationSelection.perc25_75){
-        colorRegionBtwCurves(ctx, pairs.objat(2).predictionData,  pairs.objat(4).predictionData, pairs.objat(0).X, pairs.objat(2).Y, pairs.objat(4).Y, colors[1], getAdjustmentFilter(true));
+    if (cdata.gInformationSelection.perc25_75){
+        colorRegionBtwCurves(cdata, ctx, pairs.objat(2).predictionData,  pairs.objat(4).predictionData, pairs.objat(0).X, pairs.objat(2).Y, pairs.objat(4).Y, colors[1], getAdjustmentFilter(cdata, true));
         ctx.restore();
         ctx.save();
         displayedCurves.push(pairs.objat(2))
         displayedCurves.push(pairs.objat(4))
     }
 
-    if (graphInformationSelection.perc50){
+    if (cdata.gInformationSelection.perc50){
         displayedCurves.push(pairs.objat(3))
     }
 
     for (var i = 0; i < displayedCurves.length; ++i) {
-        drawCurve(ctx, displayedCurves[i].predictionData, color, getAdjustmentFilter(true));
+        drawCurve(cdata, ctx, displayedCurves[i].predictionData, color, getAdjustmentFilter(cdata, true));
         ctx.restore();
         ctx.save();
     }
 }
 
-function drawPercentilesAdjustments(ctx, pairs, color, colors)
+function drawPercentilesAdjustments(cdata, ctx, pairs, color, colors)
 {
     var displayedCurves = [];
 
     if (pairs.size() < 1) {return;}
-    if (graphInformationSelection.perc5_95){
-        colorRegionBtwCurves(ctx, pairs.objat(0).predictionData,  pairs.objat(6).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(6).Y, colors[3], false);
+    if (cdata.gInformationSelection.perc5_95){
+        colorRegionBtwCurves(cdata, ctx, pairs.objat(0).predictionData,  pairs.objat(6).predictionData, pairs.objat(0).X, pairs.objat(0).Y, pairs.objat(6).Y, colors[3], false);
         ctx.restore();
         ctx.save();
         displayedCurves.push(pairs.objat(0))
         displayedCurves.push(pairs.objat(6))
     }
 
-    if (graphInformationSelection.perc10_90){
-        colorRegionBtwCurves(ctx, pairs.objat(1).predictionData,  pairs.objat(5).predictionData, pairs.objat(0).X, pairs.objat(1).Y, pairs.objat(5).Y, colors[2], false);
+    if (cdata.gInformationSelection.perc10_90){
+        colorRegionBtwCurves(cdata, ctx, pairs.objat(1).predictionData,  pairs.objat(5).predictionData, pairs.objat(0).X, pairs.objat(1).Y, pairs.objat(5).Y, colors[2], false);
         ctx.restore();
         ctx.save();
         displayedCurves.push(pairs.objat(1))
         displayedCurves.push(pairs.objat(5))
     }
 
-    if (graphInformationSelection.perc25_75){
-        colorRegionBtwCurves(ctx, pairs.objat(2).predictionData,  pairs.objat(4).predictionData, pairs.objat(0).X, pairs.objat(2).Y, pairs.objat(4).Y, colors[1], false);
+    if (cdata.gInformationSelection.perc25_75){
+        colorRegionBtwCurves(cdata, ctx, pairs.objat(2).predictionData,  pairs.objat(4).predictionData, pairs.objat(0).X, pairs.objat(2).Y, pairs.objat(4).Y, colors[1], false);
         ctx.restore();
         ctx.save();
         displayedCurves.push(pairs.objat(2))
         displayedCurves.push(pairs.objat(4))
     }
 
-    if (graphInformationSelection.perc50){
+    if (cdata.gInformationSelection.perc50){
         displayedCurves.push(pairs.objat(3))
     }
 
     for (var i = 0; i < displayedCurves.length; ++i) {
-        drawCurve(ctx, displayedCurves[i].predictionData, color, getAdjustmentFilter(true));
+        drawCurve(cdata, ctx, displayedCurves[i].predictionData, color, getAdjustmentFilter(cdata, true));
         ctx.restore();
         ctx.save();
     }
@@ -335,24 +336,24 @@ function drawPercentilesAdjustments(ctx, pairs, color, colors)
     return;
 }
 
-function drawNonPlotArea(ctx, colors, index)
+function drawNonPlotArea(cdata, ctx, colors, index)
 {
     //Draw the plot
-    drawAxis(ctx);
+    drawAxis(cdata, ctx);
     ctx.restore();
     ctx.save();
-    drawAxisTicks(ctx);
-    drawAxisLabels(ctx);
+    drawAxisTicks(cdata, ctx);
+    drawAxisLabels(cdata, ctx);
     //Draw the labels
-    drawLegends(ctx, colors);
+    drawLegends(cdata, ctx, colors);
 }
 
-function drawSoftwareDescription(ctx, text)
+function drawSoftwareDescription(cdata, ctx, text)
 {
     ctx.fillText(text, 100, 50);
 }
 
-function colorRegionBtwCurves(ctx, predDataL, predDataU, dataX, dataY, dataYY, color, filter)
+function colorRegionBtwCurves(cdata, ctx, predDataL, predDataU, dataX, dataY, dataYY, color, filter)
 {
     ctx.globalAlpha = 0.2;
     ctx.globalAlpha = 1.0;
@@ -362,30 +363,30 @@ function colorRegionBtwCurves(ctx, predDataL, predDataU, dataX, dataY, dataYY, c
     ctx.beginPath();
 
     if (dataX === undefined || dataY === undefined) {
-        console.log("No data avaialable in colorRegionBtwCurves");
+        console.log("No data available in colorRegionBtwCurves");
         return;
     }
 
     var x1, x2, y1, y2;
     var j = 0;
-    x1 = atime2screen(dataX[j]);
-    y1 = acxn2screen(dataY[j]);
+    x1 = atime2screen(cdata, dataX[j]);
+    y1 = acxn2screen(cdata, dataY[j]);
     ctx.moveTo(x1, y1);
     for (; j < dataX.length - 1; j++) {
         if (filter && !filter(dataX[j+1])) {
             break;
         }
-        x2 = atime2screen(dataX[j+1]);
-        y2 = acxn2screen(dataY[j+1]);
+        x2 = atime2screen(cdata, dataX[j+1]);
+        y2 = acxn2screen(cdata, dataY[j+1]);
         ctx.lineTo(x2, y2);
     }
     ctx.lineTo(x2, y2);
-    x1 = atime2screen(dataX[j]);
-    y1 = acxn2screen(dataYY[j]);
+    x1 = atime2screen(cdata, dataX[j]);
+    y1 = acxn2screen(cdata, dataYY[j]);
     ctx.lineTo(x1, y1);
     for (; j > -1; j--) {
-        x2 = atime2screen(dataX[j-1]);
-        y2 = acxn2screen(dataYY[j-1]);
+        x2 = atime2screen(cdata, dataX[j-1]);
+        y2 = acxn2screen(cdata, dataYY[j-1]);
         ctx.lineTo(x2, y2);
     }
     ctx.closePath();
@@ -393,34 +394,34 @@ function colorRegionBtwCurves(ctx, predDataL, predDataU, dataX, dataY, dataYY, c
     ctx.fill();
 }
 
-function initContext(ctx)
+function initContext(cdata, ctx)
 {
     //Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    hasMeasures = measures && (measures.length > 0);
-    hasPatientVariates = pvars && (pvars.length > 0);
-    hasTargets = targets && (targets.length > 0);
+    hasMeasures = cdata.measures && (cdata.measures.length > 0);
+    hasPatientVariates = cdata.pvars && (cdata.pvars.length > 0);
+    hasTargets = cdata.targets && (cdata.targets.length > 0);
 
     //Default settings
-    ctx.font        = "12px " + police;
+    ctx.font        = cdata.fontSize + " " + cdata.police;
     ctx.globalAlpha = 1.0;
     ctx.lineWidth   = 1.0;
     ctx.strokeStyle = "black";
     ctx.fillStyle   = "black";
 }
 
-function manualextents(ctx)
+function manualextents(cdata, ctx)
 {
-    interpretationController.resetViewRange();
-    minX = interpretationController.getViewRangeMin();
-    maxX = interpretationController.getViewRangeMax();
+    cdata.iController.resetViewRange();
+    cdata.minX = cdata.iController.getViewRangeMin();
+    cdata.maxX = cdata.iController.getViewRangeMax();
 }
 
-function extents(ctx)
+function extents(cdata, ctx)
 {
-    minX = interpretationController.getViewRangeMin()
-    maxX = interpretationController.getViewRangeMax()
+    cdata.minX = cdata.iController.getViewRangeMin();
+    cdata.maxX = cdata.iController.getViewRangeMax();
 
     //Y max
     var aprioripercmax = 0;
@@ -434,48 +435,48 @@ function extents(ctx)
     var reversepercmax = 0;
     var reversepercmin = 0;
 
-    if (popercsP) {
-        if (!popercsP.isEmpty()) {
-            for (var i = 0; i < popercsP.size(); ++i) {
-                populationpercmax = Math.max(populationpercmax, Math.max.apply(Math, popercsP.objat(i).Y));
-                populationpercmin = Math.min(populationpercmin, Math.min.apply(Math, popercsP.objat(i).Y));
+    if (cdata.popercsP) {
+        if (!cdata.popercsP.isEmpty()) {
+            for (var i = 0; i < cdata.popercsP.size(); ++i) {
+                populationpercmax = Math.max(populationpercmax, Math.max.apply(Math, cdata.popercsP.objat(i).Y));
+                populationpercmin = Math.min(populationpercmin, Math.min.apply(Math, cdata.popercsP.objat(i).Y));
             }
         }
     }
 
-    if (aprpercsP) {
-        if (!aprpercsP.isEmpty()) {
-            for (var i = 0; i < aprpercsP.size(); ++i) {
-                aprioripercmax = Math.max(aprioripercmax, Math.max.apply(Math, aprpercsP.objat(i).Y));
-                aprioripercmin = Math.min(aprioripercmin, Math.min.apply(Math, aprpercsP.objat(i).Y));
+    if (cdata.aprpercsP) {
+        if (!cdata.aprpercsP.isEmpty()) {
+            for (var i = 0; i < cdata.aprpercsP.size(); ++i) {
+                aprioripercmax = Math.max(aprioripercmax, Math.max.apply(Math, cdata.aprpercsP.objat(i).Y));
+                aprioripercmin = Math.min(aprioripercmin, Math.min.apply(Math, cdata.aprpercsP.objat(i).Y));
             }
         }
     }
 
-    if (apopercsP) {
-        if (!apopercsP.isEmpty()) {
-            for (var i = 0; i < apopercsP.size(); ++i) {
-                aposterioripercmax = Math.max(aposterioripercmax, Math.max.apply(Math, apopercsP.objat(i).Y));
-                aposterioripercmin = Math.min(aposterioripercmin, Math.min.apply(Math, apopercsP.objat(i).Y));
+    if (cdata.apopercsP) {
+        if (!cdata.apopercsP.isEmpty()) {
+            for (var i = 0; i < cdata.apopercsP.size(); ++i) {
+                aposterioripercmax = Math.max(aposterioripercmax, Math.max.apply(Math, cdata.apopercsP.objat(i).Y));
+                aposterioripercmin = Math.min(aposterioripercmin, Math.min.apply(Math, cdata.apopercsP.objat(i).Y));
             }
         }
     }
 
-    if (adjpercsP) {
-        if (!adjpercsP.isEmpty()) {
-            for (var i = 0; i < adjpercsP.size(); ++i) {
-                adjustmentpercmax = Math.max(adjustmentpercmax, Math.max.apply(Math, adjpercsP.objat(i).Y));
-                adjustmentpercmin = Math.min(adjustmentpercmin, Math.min.apply(Math, adjpercsP.objat(i).Y));
+    if (cdata.adjpercsP) {
+        if (!cdata.adjpercsP.isEmpty()) {
+            for (var i = 0; i < cdata.adjpercsP.size(); ++i) {
+                adjustmentpercmax = Math.max(adjustmentpercmax, Math.max.apply(Math, cdata.adjpercsP.objat(i).Y));
+                adjustmentpercmin = Math.min(adjustmentpercmin, Math.min.apply(Math, cdata.adjpercsP.objat(i).Y));
             }
         }
     }
 
-    if (revP) {
-        if (!revP.isEmpty()) {
-            for (var i = 0; i < revP.size(); ++i) {
-                if (revP.size()<=5 || revP.objat(i).predictionData.selected) {
-                    reversepercmax = Math.max(reversepercmax, Math.max.apply(Math, revP.objat(i).Y));
-                    reversepercmin = Math.min(reversepercmin, Math.min.apply(Math, revP.objat(i).Y));
+    if (cdata.revP) {
+        if (!cdata.revP.isEmpty()) {
+            for (var i = 0; i < cdata.revP.size(); ++i) {
+                if (cdata.revP.size()<=5 || cdata.revP.objat(i).predictionData.selected) {
+                    reversepercmax = Math.max(reversepercmax, Math.max.apply(Math, cdata.revP.objat(i).Y));
+                    reversepercmin = Math.min(reversepercmin, Math.min.apply(Math, cdata.revP.objat(i).Y));
                 }
             }
         }
@@ -484,33 +485,33 @@ function extents(ctx)
 
     // Find the maximum Y value. Could be a function of ChartData...
     maxY = 0;
-    if (popP)
-        maxY = Math.max(maxY, Math.max.apply(Math, popP.Y));
-    if (aprP)
-        maxY = Math.max(maxY, Math.max.apply(Math, aprP.Y));
-    if (apoP)
-        maxY = Math.max(maxY, Math.max.apply(Math, apoP.Y));
-    if (adjP)
-        maxY = Math.max(maxY, Math.max.apply(Math, adjP.Y));
-    maxY = Math.max(maxY, populationpercmax, aprioripercmax, aposterioripercmax, adjustmentpercmax, reversepercmax);
+    if (cdata.popP)
+        maxY = Math.max(maxY, Math.max.apply(Math, cdata.popP.Y));
+    if (cdata.aprP)
+        maxY = Math.max(maxY, Math.max.apply(Math, cdata.aprP.Y));
+    if (cdata.apoP)
+        maxY = Math.max(maxY, Math.max.apply(Math, cdata.apoP.Y));
+    if (cdata.adjP)
+        maxY = Math.max(maxY, Math.max.apply(Math, cdata.adjP.Y));
+    cdata.maxY = Math.max(maxY, populationpercmax, aprioripercmax, aposterioripercmax, adjustmentpercmax, reversepercmax);
 
     // In case we have no other data, use target data to define the Y range...
-    if (maxY == 0) {
-        for (var targetIndex = 0; targetIndex < targets.length; ++targetIndex) {
-            var targetY = targets[targetIndex].cmax.dbvalue * targets[targetIndex].cmax.multiplier;
-            if (targetY > maxY) maxY = targetY;
+    if (cdata.maxY == 0) {
+        for (var targetIndex = 0; targetIndex < cdata.targets.length; ++targetIndex) {
+            var targetY = cdata.targets[targetIndex].cmax.dbvalue * cdata.targets[targetIndex].cmax.multiplier;
+            if (targetY > cdata.maxY) cdata.maxY = targetY;
         }
     }
 
     // Modify maxY with respect to the manual y factor
-    maxY = maxY * yFactor;
+    cdata.maxY = cdata.maxY * cdata.yFactor;
 
-    var lg10 = Math.pow(10, Math.ceil(Math.log(1.1 * maxY) / Math.LN10) - 1);
-    maxY = Math.ceil(1.1 / lg10 * maxY) * lg10;
+    var lg10 = Math.pow(10, Math.ceil(Math.log(1.1 * cdata.maxY) / Math.LN10) - 1);
+    cdata.maxY = Math.ceil(1.1 / lg10 * cdata.maxY) * lg10;
 
 
-    xRatio = plotWidth  / (maxX - minX);
-    yRatio = plotHeight / (maxY - minY);
+    cdata.xRatio = cdata.plotWidth  / (cdata.maxX - cdata.minX);
+    cdata.yRatio = cdata.plotHeight / (cdata.maxY - cdata.minY);
 
     //                console.log("maxX: " + maxX);
     //                console.log("minX: " + minX);
@@ -518,7 +519,7 @@ function extents(ctx)
     //                console.log("minY: " + minY);
 }
 
-function drawCurve(ctx, predData, color, filter)
+function drawCurve(cdata, ctx, predData, color, filter)
 {
     var dataX = predData.times();
     var dataY = predData.values();
@@ -544,10 +545,10 @@ function drawCurve(ctx, predData, color, filter)
     {
         if (!filter || filter(dataX[i+1]))
         {
-            var x1 = atime2screen(dataX[i]);
-            var y1 = acxn2screen(dataY[i]);
-            var x2 = atime2screen(dataX[i+1]);
-            var y2 = acxn2screen(dataY[i+1]);
+            var x1 = atime2screen(cdata, dataX[i]);
+            var y1 = acxn2screen(cdata, dataY[i]);
+            var x2 = atime2screen(cdata, dataX[i+1]);
+            var y2 = acxn2screen(cdata, dataY[i+1]);
 
             if (highlight) {
                 ctx.lineWidth   = 4.0;
@@ -558,7 +559,7 @@ function drawCurve(ctx, predData, color, filter)
                 ctx.strokeStyle = color + 1;
             }
 
-            if (dataX[i] > date.getTime() / 1000) {
+            if (dataX[i] > cdata.date.getTime() / 1000) {
                 if (!isFuture) {
                     ctx.stroke();
                     ctx.beginPath();
@@ -568,12 +569,13 @@ function drawCurve(ctx, predData, color, filter)
                     isFuture = true;
                 }
             }
-
-            if (x2 > topLeftX && x1 <= canvas.bottomRightX) {
+            //console.log(x2 + " " + x1 + " " + cdata.topLeftX + " " + cdata.bottomRightX);
+            if (x2 > cdata.topLeftX && x1 <= cdata.bottomRightX) {
                 if (!continueLine) {
                     ctx.moveTo(x1, y1);
                     continueLine = true;
                 }
+                //console.log("LineTo(" + x2, ", " + y2);
                 ctx.lineTo(x2, y2);
             }
         }
@@ -592,7 +594,7 @@ function drawCurve(ctx, predData, color, filter)
     ctx.stroke();
 }
 
-function drawMeasures(ctx)
+function drawMeasures(cdata, ctx)
 {
     //Settings
     ctx.fillStyle = "red";
@@ -600,13 +602,13 @@ function drawMeasures(ctx)
 
     //ToDo: Ignore filtered curves in the calculation of max and min, and move it canvas properties
 
-    var mouseX = ascreen2time(mouseArea.mouseX);
-    var mouseY = ascreen2acxn(mouseArea.mouseY);
+    var mouseX = ascreen2time(cdata, cdata.mArea.mouseX);
+    var mouseY = ascreen2acxn(cdata, cdata.mArea.mouseY);
 
     //Draw the samples
-    for (var i = 0; i < measures.length; ++i) {//measures.length; ++i) {
-        var x = atime2screen(measures[i].moment.getTime() / 1000);
-        var y = acxn2screen(measures[i].concentration.dbvalue * measures[i].concentration.multiplier);
+    for (var i = 0; i < cdata.measures.length; ++i) {//measures.length; ++i) {
+        var x = atime2screen(cdata, cdata.measures[i].moment.getTime() / 1000);
+        var y = acxn2screen(cdata, cdata.measures[i].concentration.dbvalue * cdata.measures[i].concentration.multiplier);
 
         //console.log("measurex: " + x)
         //console.log("measurey: " + y)
@@ -615,11 +617,11 @@ function drawMeasures(ctx)
         ctx.fill();
         ctx.stroke();
 
-        if (checkPointProximity(x, y, mouseX, mouseY, true) && mouseArea.isMouseOver) {
+        if (checkPointProximity(x, y, mouseX, mouseY, true) && cdata.mArea.isMouseOver) {
             currentMeasure = {
                 x: x,
                 y: y,
-                value: measures[i].concentration.dbvalue.toFixed(2) + " " + measures[i].concentration.unitstring,
+                value: cdata.measures[i].concentration.dbvalue.toFixed(2) + " " + cdata.measures[i].concentration.unitstring,
                 time: formatDateInLine(measures[i].moment),
                 color: "red"
             }
@@ -627,33 +629,36 @@ function drawMeasures(ctx)
     }
 }
 
-function drawTargets(ctx, times, predData)
+function drawTargets(cdata, ctx, times, predData)
 {
     //Settings
+    var targets = cdata.targets;
     if (!targets) return;
-    ctx.fillStyle = "blue";
-    ctx.lineWidth = 1;
 
     //ToDo: Ignore filtered curves in the calculation of max and min, and move it canvas properties
 
-    var mouseX = ascreen2time(mouseArea.mouseX);
-    var mouseY = ascreen2acxn(mouseArea.mouseY);
+    var mouseX = ascreen2time(cdata, cdata.mArea.mouseX);
+    var mouseY = ascreen2acxn(cdata, cdata.mArea.mouseY);
 
     // console.log("Nb targets = " + targets.length);
 
     for (var targetIndex = 0; targetIndex < targets.length; ++targetIndex)
     {   
+        // Settings
+        ctx.fillStyle = "blue";
+        ctx.lineWidth = 1;
+        
         var ttpe = targets[targetIndex].type.value;
-        var y_mean = acxn2screen(targets[targetIndex].cbest.dbvalue * targets[targetIndex].cbest.multiplier);
-        var y_max = acxn2screen(targets[targetIndex].cmax.dbvalue * targets[targetIndex].cmax.multiplier);
-        var y_min = acxn2screen(targets[targetIndex].cmin.dbvalue * targets[targetIndex].cmin.multiplier);
-        var first = atime2screen(times[0]);
-        var last = atime2screen(times[times.length - 1]);
+        var y_mean = acxn2screen(cdata, targets[targetIndex].cbest.dbvalue * targets[targetIndex].cbest.multiplier);
+        var y_max = acxn2screen(cdata, targets[targetIndex].cmax.dbvalue * targets[targetIndex].cmax.multiplier);
+        var y_min = acxn2screen(cdata, targets[targetIndex].cmin.dbvalue * targets[targetIndex].cmin.multiplier);
+        var first = atime2screen(cdata, times[0]);
+        var last = atime2screen(cdata, times[times.length - 1]);
 
 
-        if (ttpe !== 3) {
+        if (ttpe < 3) {
             ctx.globalAlpha = 0.05;
-            if (targetTab.index === targetIndex) {
+            if (cdata.targetTabIndex === targetIndex) {
                 ctx.globalAlpha = 0.1;
             }
             ctx.beginPath();
@@ -678,7 +683,7 @@ function drawTargets(ctx, times, predData)
             var troughs = predData.troughs;
             for (var i = 0; i < troughs.length; ++i) {
                 ctx.beginPath();
-                var t = atime2screen(predData.timeAt(troughs[i]));
+                var t = atime2screen(cdata, predData.timeAt(troughs[i]));
                 if (isFinite(t) && !isNaN(t) && !isNaN(y_mean)) {
                     var v = y_mean;
                     var leftgrd = ctx.createLinearGradient(t, y_mean, t - 20, y_mean);
@@ -693,7 +698,7 @@ function drawTargets(ctx, times, predData)
                     ctx.fillRect(t, y_min, 20, y_max - y_min);
                     ctx.stroke();
 
-                    var startY = bottomLeftY;
+                    var startY = cdata.bottomLeftY;
 
                     ctx.globalAlpha = 1;
                     ctx.beginPath();
@@ -739,7 +744,7 @@ function drawTargets(ctx, times, predData)
             var peaks = predData.peaks;
             for (var i = 0; i < peaks.length; ++i) {
                 ctx.beginPath();
-                var t = atime2screen(predData.timeAt(peaks[i]));
+                var t = atime2screen(cdata, predData.timeAt(peaks[i]));
                 var v = y_mean;
                 var leftgrd = ctx.createLinearGradient(t, y_mean, t - 20, y_mean);
                 leftgrd.addColorStop(0,"black");
@@ -753,7 +758,7 @@ function drawTargets(ctx, times, predData)
                 ctx.fillRect(t, y_min, 20, y_max - y_min);
                 ctx.stroke();
 
-                var startY = bottomLeftY;
+                var startY = cdata.bottomLeftY;
 
                 ctx.globalAlpha = 1;
                 ctx.beginPath();
@@ -803,77 +808,83 @@ function drawTargets(ctx, times, predData)
     }
 }
 
-function clearBorder(ctx)
+function clearBorder(cdata, ctx)
 {
-    ctx.clearRect(0, 0, leftMargin, plotHeight + topMargin);
-    ctx.clearRect(0, bottomLeftY, plotWidth + leftMargin, bottomMargin);
-    ctx.clearRect(topRightX, topRightY, rightMargin, plotHeight + bottomMargin);
-    ctx.clearRect(topLeftX, 0, plotWidth + rightMargin, topMargin);
+    ctx.clearRect(0, 0, cdata.leftMargin, cdata.plotHeight + cdata.topMargin);
+    ctx.clearRect(0, cdata.bottomLeftY, cdata.plotWidth + cdata.leftMargin, cdata.bottomMargin);
+    ctx.clearRect(cdata.topRightX, cdata.topRightY, cdata.rightMargin, cdata.plotHeight + cdata.bottomMargin);
+    ctx.clearRect(cdata.topLeftX, 0, cdata.plotWidth + cdata.rightMargin, cdata.topMargin);
 }
 
-function drawAxis(ctx)
+function drawAxis(cdata, ctx)
 {
+    ctx.translate(0.5, 0.5);
     //Constants
     var arrowSize = 5;
     var overrun   = 10;
 
     //X-Axis
     ctx.beginPath();
-    ctx.moveTo(bottomLeftX, bottomLeftY);
-    ctx.lineTo(bottomRightX + overrun, bottomRightY);
+    ctx.moveTo(cdata.bottomLeftX, cdata.bottomLeftY);
+    ctx.lineTo(cdata.bottomRightX + overrun, cdata.bottomRightY);
     ctx.stroke();
 
     //Y-Axis
     ctx.beginPath();
-    ctx.moveTo(bottomLeftX, bottomLeftY);
-    ctx.lineTo(topLeftX, topLeftY - overrun);
+    ctx.moveTo(cdata.bottomLeftX, cdata.bottomLeftY);
+    ctx.lineTo(cdata.topLeftX, cdata.topLeftY - overrun);
     ctx.stroke();
 
     //X-Arrow
     ctx.beginPath();
-    ctx.moveTo(bottomRightX + overrun, bottomRightY);
-    ctx.lineTo(bottomRightX + overrun - arrowSize, bottomRightY - arrowSize);
-    ctx.lineTo(bottomRightX + overrun - arrowSize, bottomRightY + arrowSize);
+    ctx.moveTo(cdata.bottomRightX + overrun, cdata.bottomRightY);
+    ctx.lineTo(cdata.bottomRightX + overrun - arrowSize, cdata.bottomRightY - arrowSize);
+    ctx.lineTo(cdata.bottomRightX + overrun - arrowSize, cdata.bottomRightY + arrowSize);
     ctx.closePath();
     ctx.stroke();
     ctx.fill();
 
     //Y-Arrow
     ctx.beginPath();
-    ctx.moveTo(topLeftX, topLeftY - overrun);
-    ctx.lineTo(topLeftX - arrowSize, topLeftY - overrun + arrowSize);
-    ctx.lineTo(topLeftX + arrowSize, topLeftY - overrun + arrowSize);
+    ctx.moveTo(cdata.topLeftX, cdata.topLeftY - overrun);
+    ctx.lineTo(cdata.topLeftX - arrowSize, cdata.topLeftY - overrun + arrowSize);
+    ctx.lineTo(cdata.topLeftX + arrowSize, cdata.topLeftY - overrun + arrowSize);
     ctx.closePath();
     ctx.stroke();
     ctx.fill();
 }
 
-function acxn2screen(c)
+function acxn2screen(cdata, c)
 {
-    return  (-(c - minY) * yRatio) + bottomLeftY;
+    //console.log(c);
+    //console.log(cdata.minY);
+    //console.log(cdata.yRatio);
+    //console.log(cdata.bottomLeftY);
+    return  Math.round((-(c - cdata.minY) * cdata.yRatio) + cdata.bottomLeftY);
 }
 
-function ascreen2acxn(p)
+function ascreen2acxn(cdata, p)
 {
-    return minY - ((p - bottomLeftY) / yRatio);
+    return cdata.minY - ((p - cdata.bottomLeftY) / cdata.yRatio);
 }
 
-function atime2screen(t)
+function atime2screen(cdata, t)
 {
-    return ((t - minX) * xRatio) + bottomLeftX;
+    return Math.round(((t - cdata.minX) * cdata.xRatio) + cdata.bottomLeftX);
 }
 
-function ascreen2time(p)
+function ascreen2time(cdata, p)
 {
-    return minX + ((p - bottomLeftX) / xRatio);
+    return cdata.minX + ((p - cdata.bottomLeftX) / cdata.xRatio);
 }
 
-function drawAxisTicks(ctx)
+function drawAxisTicks(cdata, ctx)
 {
+    ctx.translate(0.5, 0.5);
     //Settings
     ctx.textAlign    = "left";
     ctx.textBaseline = "middle";
-    ctx.font         = "10px " + police;
+    ctx.font         = cdata.axisTicksFontSize + " " + cdata.police;
 
     //ToDo: Ignore filtered curves in the calculation of max and min, and move it canvas properties
 
@@ -889,33 +900,33 @@ function drawAxisTicks(ctx)
     var remy = down_i * tickSpacingy - down;
     var firstTickY = -1.0 + remy;
 
-    var tickOffsetY = bottomLeftY - 1.0 - firstTickY;
-    var tickIncrementY = tickSpacingy * plotHeight / 2;
+    var tickOffsetY = cdata.bottomLeftY - 1.0 - firstTickY;
+    var tickIncrementY = tickSpacingy * cdata.plotHeight / 2;
 
     var nbTicksY = up_i - down_i + 1;
     if (nbTicksY > 21)
         nbTicksY = 21;
 
-    var order = (2 - Math.log(maxY - minY) / Math.LN10);
+    var order = (2 - Math.log(cdata.maxY - cdata.minY) / Math.LN10);
     if (order >= 1 && order < 4) {
-        unitefforder = 1e3;
-        unit = "ng/l";
+        cdata.unitefforder = 1e3;
+        cdata.unit = "ng/l";
     }
     if (order >= 4 && order < 7) {
-        unitefforder = 1e6;
-        unit = "pg/l";
+        cdata.unitefforder = 1e6;
+        cdata.unit = "pg/l";
     }
     if (order > -5 && order < -2) {
-        unitefforder = 1e-3;
-        unit = "mg/l";
+        cdata.unitefforder = 1e-3;
+        cdata.unit = "mg/l";
     }
     if (order > -8 && order < -5) {
-        unitefforder = 1e-6;
-        unit = "g/l";
+        cdata.unitefforder = 1e-6;
+        cdata.unit = "g/l";
     }
     if (order < 1 && order >= -2) {
-        unitefforder = 1;
-        unit = "ug/l";
+        cdata.unitefforder = 1;
+        cdata.unit = "ug/l";
     }
 
     for (var i = 0; i < nbTicksY; i++) {
@@ -923,20 +934,20 @@ function drawAxisTicks(ctx)
         var tickScaleY = ((i + down_i) % 10) ? 0.5 : 1;
 
         ctx.beginPath();
-        ctx.moveTo(bottomLeftX, y);
-        ctx.lineTo(bottomLeftX - tickSize * tickScaleY, y);
+        ctx.moveTo(cdata.bottomLeftX, y);
+        ctx.lineTo(cdata.bottomLeftX - tickSize * tickScaleY, y);
         ctx.stroke();
 
 
-        var val = minY + (0.5 * i * tickSpacingy) * (maxY - minY);
+        var val = cdata.minY + (0.5 * i * tickSpacingy) * (cdata.maxY - cdata.minY);
         //use the range of Y to calculate the required units to show max 1000 as max Y
-        ctx.fillText(Math.max(0,Math.round(unitefforder * val)), bottomLeftX - tickSize * 5.5, y);
+        ctx.fillText(Math.max(0,Math.round(cdata.unitefforder * val)), cdata.bottomLeftX - tickSize * 5.5, y);
     }
 
     //Draw x-ticks
     var ticktimes = [];
-    var earliest = ascreen2time(bottomLeftX);
-    var latest = ascreen2time(canvas.width);
+    var earliest = ascreen2time(cdata, cdata.bottomLeftX);
+    var latest = ascreen2time(cdata, canvas.width);
     var axisMaximumWidth = latest - earliest;
     var date = new Date(earliest * 1000);
     var hourHalfWidth = 14;
@@ -952,89 +963,89 @@ function drawAxisTicks(ctx)
     var oldDate;
 
     //1 tick / 15 minutes
-    timeIntervalDependingOnPrecision = chop(900, ticks, false, 15) // Maximum number of interval corresponding to precision (15 minutes)
+    timeIntervalDependingOnPrecision = chop(cdata, 900, ticks, false, 15) // Maximum number of interval corresponding to precision (15 minutes)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 30 minutes
     ticks = []
-    timeIntervalDependingOnPrecision = chop(1800, ticks, false, 30)
+    timeIntervalDependingOnPrecision = chop(cdata, 1800, ticks, false, 30)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / hr
     ticks = []
-    timeIntervalDependingOnPrecision = chop(3600, ticks, false, 1)
+    timeIntervalDependingOnPrecision = chop(cdata, 3600, ticks, false, 1)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 4 hr
     ticks = []
-    timeIntervalDependingOnPrecision = chop(14400, ticks, true, 4)
+    timeIntervalDependingOnPrecision = chop(cdata, 14400, ticks, true, 4)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 6 hr
     ticks = []
-    timeIntervalDependingOnPrecision = chop(21600, ticks, true, 6)
+    timeIntervalDependingOnPrecision = chop(cdata, 21600, ticks, true, 6)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 8 hr
     ticks = []
-    timeIntervalDependingOnPrecision = chop(28800, ticks, true, 8)
+    timeIntervalDependingOnPrecision = chop(cdata, 28800, ticks, true, 8)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 12 hr
     ticks = []
-    timeIntervalDependingOnPrecision = chop(43200, ticks, true, 12)
+    timeIntervalDependingOnPrecision = chop(cdata, 43200, ticks, true, 12)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 24 hr
     ticks = []
-    timeIntervalDependingOnPrecision = chop(86400, ticks, true, 24)
+    timeIntervalDependingOnPrecision = chop(cdata, 86400, ticks, true, 24)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 48 hr
     ticks = []
-    timeIntervalDependingOnPrecision = chop(172800, ticks, true, 24)
+    timeIntervalDependingOnPrecision = chop(cdata, 172800, ticks, true, 24)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / 72 hr
     ticks = []
-    timeIntervalDependingOnPrecision = chop(259200, ticks, true, 24)
+    timeIntervalDependingOnPrecision = chop(cdata, 259200, ticks, true, 24)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     maximumTimeInterval = (maximumTimeInterval > ticktimes.length) ? maximumTimeInterval : ticktimes.length
 
     //1 tick / week
     ticks = []
-    timeIntervalDependingOnPrecision = chop(604800, ticks, true, 24)
+    timeIntervalDependingOnPrecision = chop(cdata, 604800, ticks, true, 24)
     oldDate = new Date(ticks[0] * 1000);
-    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(ticks[ticks.length - 1]) - bottomLeftX) / ((2 * hourHalfWidth) + 10)
+    maximumTicks = (proportionnalInterval(ticks, oldDate) === 1) ? (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * dateHalfWidth) + 10) : (atime2screen(cdata, ticks[ticks.length - 1]) - cdata.bottomLeftX) / ((2 * hourHalfWidth) + 10)
     ticktimes = ((timeIntervalDependingOnPrecision > maximumTimeInterval) && (timeIntervalDependingOnPrecision <= maximumTicks)) ? ticks : ticktimes
     _1week = (ticks === ticktimes) ? true : _1week;
 
@@ -1048,11 +1059,11 @@ function drawAxisTicks(ctx)
 
         //Draw the ticks on the axis
         ctx.beginPath();
-        ctx.moveTo(atime2screen(ticktimes[i]), bottomLeftY);
-        ctx.lineTo(atime2screen(ticktimes[i]), bottomLeftY + tickSize);
+        ctx.moveTo(atime2screen(cdata, ticktimes[i]), cdata.bottomLeftY);
+        ctx.lineTo(atime2screen(cdata, ticktimes[i]), cdata.bottomLeftY + tickSize);
         ctx.stroke();
 
-        ctx.translate(atime2screen(ticktimes[i]), bottomLeftY + tickSize * 1.5);
+        ctx.translate(atime2screen(cdata, ticktimes[i]), cdata.bottomLeftY + tickSize * 1.5);
 
         var date = new Date(ticktimes[i] * 1000);
 
@@ -1061,7 +1072,7 @@ function drawAxisTicks(ctx)
         // Compute the exact position of the date on the axis
         // The date can be used for multiple ticks for example
         if (i > 0){
-            interdatesize = i > 0 ? atime2screen(ticktimes[i]) - atime2screen(ticktimes[i - 1]) : atime2screen(ticktimes[i]);
+            interdatesize = i > 0 ? atime2screen(cdata, ticktimes[i]) - atime2screen(cdata, ticktimes[i - 1]) : atime2screen(cdata, ticktimes[i]);
 
             if (oldDate.getDate() !== date.getDate()){
                 if (oldDateUsed){
@@ -1084,7 +1095,7 @@ function drawAxisTicks(ctx)
                 cumulInterDateSize += interdatesize
                 if (i === ticktimes.length - 1){
                     if (new Date(ticktimes[i] * 1000).getDate() !== new Date(ticktimes[i - 2] * 1000).getDate()){
-                        if ((atime2screen(ticktimes[i]) - atime2screen(ticktimes[i - 1])) > ((2 * dateHalfWidth) + 10)){
+                        if ((atime2screen(cdata, ticktimes[i]) - atime2screen(cdata, ticktimes[i - 1])) > ((2 * dateHalfWidth) + 10)){
                                 ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30);
                         }
                     }
@@ -1101,7 +1112,7 @@ function drawAxisTicks(ctx)
 
         oldDate = date
 
-        ctx.translate(-atime2screen(ticktimes[i]), -(bottomLeftY + tickSize * 1.5));
+        ctx.translate(-atime2screen(cdata, ticktimes[i]), -(cdata, cdata.bottomLeftY + tickSize * 1.5));
 
         // Increase length of ticks at the beggining and the end of a day
         if (!oldDateUsed){
@@ -1110,8 +1121,8 @@ function drawAxisTicks(ctx)
             }
             else{
                 ctx.beginPath();
-                ctx.moveTo(atime2screen(ticktimes[i]), bottomLeftY + 20);
-                ctx.lineTo(atime2screen(ticktimes[i]), bottomLeftY + 20 + dateTickSize);
+                ctx.moveTo(atime2screen(cdata, ticktimes[i]), cdata.bottomLeftY + 20);
+                ctx.lineTo(atime2screen(cdata, ticktimes[i]), cdata.bottomLeftY + 20 + dateTickSize);
                 ctx.stroke();
             }
         }
@@ -1163,13 +1174,13 @@ function proportionnalInterval(ticktimes, oldDate)
     return smallestChangeOfDate;
 }
 
-function chop(interval, ticktimes, isHour, time){
+function chop(cdata, interval, ticktimes, isHour, time){
     // This function is used to determine the x coordinate (time)
     // of the ticks corresponding to the precision needed
     // Return : The maximum number of ticks
 
-    var early = ascreen2time(bottomLeftX) * 1000;
-    var late = ascreen2time(canvas.width - bottomLeftX);
+    var early = ascreen2time(cdata, cdata.bottomLeftX) * 1000;
+    var late = ascreen2time(cdata, canvas.width - cdata.bottomLeftX);
     var date = new Date(early);
 
     date.setMilliseconds(0);
@@ -1196,31 +1207,32 @@ function chop(interval, ticktimes, isHour, time){
     return nbOfTimeInterval;
 }
 
-function drawAxisLabels(ctx)
+function drawAxisLabels(cdata, ctx)
 {
+   // ctx.translate(0.5, 0.5);
     //Settings
-    ctx.font = "bold 12px " + police;
+    ctx.font = "bold " + cdata.fontSize + " " + cdata.police;
 
     //Draw x-axis label
     ctx.textAlign    = "left";
     ctx.textBaseline = "middle";
-    ctx.fillText("Time", leftMargin + plotWidth + 15, topMargin + plotHeight);
+    ctx.fillText("Time", cdata.leftMargin + cdata.plotWidth + 15, cdata.topMargin + cdata.plotHeight);
 
     //Draw y-axis label
     ctx.textAlign    = "center";
     ctx.textBaseline = "bottom";
-    ctx.fillText(unit, leftMargin, topMargin - 15);
+    ctx.fillText(cdata.unit, cdata.leftMargin, cdata.topMargin - 15);
 
     ctx.restore();
     ctx.save();
 }
 
-function drawLegends(ctx, colors)
+function drawLegends(cdata, ctx, colors)
 {
     //Settings
     ctx.textAlign    = "left";
     ctx.textBaseline = "Alphabetic";
-    ctx.font         = "12px " + police;
+    ctx.font         = cdata.fontSize + " " + cdata.police;
 
     //Constants
     var populationText  = "Typical patient";
@@ -1248,59 +1260,59 @@ function drawLegends(ctx, colors)
     // Add has... checks for population and percentiles of each type
     // ////////////////////////////////////////////////////////////
 
-    var adjTabShowPop = graphInformationSelection.presentAposterioriPrediction && !hasPatientVariates && !hasMeasures;
-    var adjTabShowApr = graphInformationSelection.presentAposterioriPrediction && hasPatientVariates && !hasMeasures;
+    var adjTabShowPop = cdata.gInformationSelection.presentAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
+    var adjTabShowApr = cdata.gInformationSelection.presentAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
 
-    apoPercText += findEnablePercentiles()
-    aprPercText += findEnablePercentiles()
-    popPercText += findEnablePercentiles()
+    apoPercText += findEnablePercentiles(cdata)
+    aprPercText += findEnablePercentiles(cdata)
+    popPercText += findEnablePercentiles(cdata)
 
-    if (popP) {
-        if (popP.predictive.predictionData.isValid) {
-            if (graphInformationSelection.presentPopulationPrediction || adjTabShowPop) {
-                legends.push( {text: populationText, color: colors[1]} );
+    if (cdata.popP) {
+        if (cdata.popP.predictive.predictionData.isValid) {
+            if (cdata.gInformationSelection.presentPopulationPrediction || adjTabShowPop) {
+                legends.push( {text: populationText, color: cdata.colors[1]} );
                 legendsWidth.push(ctx.measureText(populationText).width);
                 //legendsWidth.push(ctx.measureText(popPCB.text).width);
             }
-            if (popercsP.isValid && graphInformationSelection.presentPopulationPercentiles || adjTabShowPop) {
-                legends.push( {text: popPercText, color: colors[7]} );
+            if (cdata.popercsP.isValid && cdata.gInformationSelection.presentPopulationPercentiles || adjTabShowPop) {
+                legends.push( {text: popPercText, color: cdata.colors[7]} );
                 legendsWidth.push(ctx.measureText(popPercText).width);
             }
         }
     }
-    if (aprP) {
-        if (aprP.predictive.predictionData.isValid) {
-            if (graphInformationSelection.presentAprioriPrediction || adjTabShowApr) {
-                legends.push( {text: aprioriText, color: colors[2]} );
+    if (cdata.aprP) {
+        if (cdata.aprP.predictive.predictionData.isValid) {
+            if (cdata.gInformationSelection.presentAprioriPrediction || adjTabShowApr) {
+                legends.push( {text: aprioriText, color: cdata.colors[2]} );
                 legendsWidth.push(ctx.measureText(aprioriText).width);
             }
-            if (aprpercsP.isValid && graphInformationSelection.presentAprioriPercentiles || adjTabShowApr) {
-                legends.push( {text: aprPercText, color: colors[8]} );
+            if (cdata.aprpercsP.isValid && gInformationSelection.presentAprioriPercentiles || adjTabShowApr) {
+                legends.push( {text: aprPercText, color: cdata.colors[8]} );
                 legendsWidth.push(ctx.measureText(aprPercText).width);
             }
         }
     }
-    if (apoP) {
-        if (apoP.predictive.predictionData.isValid) {
-            if (graphInformationSelection.presentAposterioriPrediction) {
-                legends.push( {text: aposterioriText, color: colors[4]} );
+    if (cdata.apoP) {
+        if (cdata.apoP.predictive.predictionData.isValid) {
+            if (cdata.gInformationSelection.presentAposterioriPrediction) {
+                legends.push( {text: aposterioriText, color: cdata.colors[4]} );
                 legendsWidth.push(ctx.measureText(aposterioriText).width);
             }
-            if (apopercsP.isValid && graphInformationSelection.presentAposterioriPercentiles) {
-                legends.push( {text: apoPercText, color: colors[6]} );
+            if (cdata.apopercsP.isValid && cdata.gInformationSelection.presentAposterioriPercentiles) {
+                legends.push( {text: apoPercText, color: cdata.colors[6]} );
                 legendsWidth.push(ctx.measureText(apoPercText).width);
             }
         }
     }
-    if (revP) {
-        if (revP.isValid && graphInformationSelection.presentPossibleAdjustments) {
-            legends.push( {text: reverseText, color: colors[5]});
+    if (cdata.revP) {
+        if (cdata.revP.isValid && cdata.gInformationSelection.presentPossibleAdjustments) {
+            legends.push( {text: reverseText, color: cdata.colors[5]});
             legendsWidth.push(ctx.measureText(reverseText).width);
         }
     }
-    if (adjP) {
-        if (adjP.predictive.predictionData.isValid && graphInformationSelection.presentSelectedAdjustment) {
-            legends.push( {text: adjustmentText, color: colors[9]} );
+    if (cdata.adjP) {
+        if (cdata.adjP.predictive.predictionData.isValid && cdata.gInformationSelection.presentSelectedAdjustment) {
+            legends.push( {text: adjustmentText, color: cdata.colors[9]} );
             legendsWidth.push(ctx.measureText(adjustmentText).width);
         }
     }
@@ -1309,13 +1321,13 @@ function drawLegends(ctx, colors)
         totalLength += legendsWidth[j] + internalSpacing * 4 + colorSize;
     totalLength += externalSpacing * (legends.length - 1);
 
-    var nLines = Math.ceil(totalLength / plotWidth);
+    var nLines = Math.ceil(totalLength / cdata.plotWidth);
     var nLegendsPerLine = legends.length/nLines;
     var nLegendsInLine = 0;
     var lengthPerLine = totalLength / nLines;
 
-    var initialX = leftMargin + (plotWidth / 2) - (lengthPerLine / 2);
-    var initialY = topMargin / 2 - boxHeight / 2 - 5;
+    var initialX = cdata.leftMargin + (cdata.plotWidth / 2) - (lengthPerLine / 2);
+    var initialY = cdata.topMargin / 2 - boxHeight / 2 - 5;
 
     var x = initialX;
     var y = initialY;
@@ -1455,7 +1467,7 @@ function publishImage()
     grabToImage(function(result) {interpretationController.getImage(result.image)}, Qt.size(canvas.width,canvas.height));
 }
 
-function findEnablePercentiles()
+function findEnablePercentiles(cdata)
 {
     var perc5Text       = "5"
     var perc10Text      = "10"
@@ -1470,22 +1482,22 @@ function findEnablePercentiles()
     var lastPercentile = false;
 
 
-    if (graphInformationSelection.perc5_95){
+    if (cdata.gInformationSelection.perc5_95){
         percTextTab[0] = perc5Text
         percTextTab[6] = perc95Text
     }
 
-    if (graphInformationSelection.perc10_90){
+    if (cdata.gInformationSelection.perc10_90){
         percTextTab[1] = perc10Text
         percTextTab[5] = perc90Text
     }
 
-    if (graphInformationSelection.perc25_75){
+    if (cdata.gInformationSelection.perc25_75){
         percTextTab[2] = perc25Text
         percTextTab[4] = perc75Text
     }
 
-    if (graphInformationSelection.perc50){
+    if (cdata.gInformationSelection.perc50){
         percTextTab[3] = perc50Text
     }
 
@@ -1504,4 +1516,493 @@ function findEnablePercentiles()
     percString = percString.slice(0, -1) + ")";
 
     return percString
+}
+
+
+
+
+
+/////////////////////////////////////////////////////////
+// Previously in annotations.js
+/////////////////////////////////////////////////////////
+
+function drawAnnotations(cdata)
+{
+    var ctx = canvas.getContext("2d");
+
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = 1.0;
+
+    if (cdata.gInformationSelection.displayPopulationPrediction && cdata.state !== "validation") {
+        annotateDosage(cdata, ctx, cdata.dosages.current, cdata.colors[1]);
+    }
+
+    if (cdata.gInformationSelection.displayAprioriPrediction) {
+        if (cdata.gInformationSelection.displayCovariateChange) {
+            for (var i = 0; i < cdata.pvars.length; ++i) {
+                annotateCovariate(cdata, ctx, cdata.pvars[i], cdata.colors[2]);
+            }
+        }
+    }
+
+    cdata.currentPoints = []
+    cdata.closestPred = ({})
+    if (!cdata.mArea.containsMouse) {
+        return;
+    }
+
+    //    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    annotatePrediction(cdata, ctx, cdata.popP, cdata.pop, cdata.colors[1]);
+    annotatePrediction(cdata, ctx, cdata.aprP, cdata.apr, cdata.colors[2]);
+    annotatePrediction(cdata, ctx, cdata.apoP, cdata.apo, cdata.colors[4]);
+    annotatePrediction(cdata, ctx, cdata.adjP, cdata.adj, cdata.adjcolors[1]);
+
+    if (cdata.revP !== null && cdata.revP.isValid) {
+        if (cdata.gInformationSelection.displayPossibleAdjustments) {
+            var pairs = cdata.revP;
+            for (var i = 0; i < pairs.size(); ++i) {
+                findClosestValue(cdata, ctx, pairs.objat(i), pairs.objat(i).predictionData, cdata.rev, cdata.colors[5]);
+            }
+        }
+    }
+}
+
+function annotatePrediction(cdata, ctx, pred, index, color)
+{
+    if (pred) {
+        if (pred.predictive.predictionData.isValid && isCurveAvailable(cdata, index)) {
+            findClosestValue(cdata, ctx, pred.predictive, pred.predictive.predictionData, index, color);
+            if (pred.predictive.percentilePairs.isValid) {
+                var pairs = pred.predictive.percentilePairs;
+                for (var i = 0; i < pairs.size(); ++i) {
+                    findClosestValue(cdata, ctx, pairs.objat(i), pairs.objat(i).predictionData, index, color);
+                }
+            }
+            if (isCurveVisible(cdata, index)) {
+                annotateCurveLoci(cdata, ctx, pred.predictive.predictionData, index, color);
+            }
+        }
+    }
+}
+
+function annotateDosage(cdata, ctx, dosage, color)
+{
+    if (!dosage) {return;}
+    var start = dosage.applied.getTime()/1000;
+    var end = dosage.endtime.getTime()/1000;
+    var startX = atime2screen(cdata, start);
+    var startY = cdata.bottomLeftY;
+    var endY = cdata.bottomLeftY;
+    var endX = atime2screen(cdata, end);
+    //these are for checking if the start and end are within view, if not we draw it differenetly
+    var startinview = true;
+    var endinview = true;
+    // console.log(start + " " + end + " " + startX + " " + endX + " " + cdata.topLeftX + " ");
+    if (startX < cdata.topLeftX && endX > cdata.topLeftX) {
+        startX = cdata.topLeftX;
+        startinview = false;
+    }
+    if (endX > cdata.bottomRightX && startX < cdata.bottomRightX) {
+        endX = cdata.bottomRightX;
+        endinview = false;
+    }
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+
+    ctx.arc(startX, startY, 5, 0, 2 * Math.PI);
+    ctx.arc(endX, endY, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    if (startinview) {
+        ctx.drawImage(cdata.img_dosages_disabled_mini, startX - 32, cdata.bottomLeftY - 32, 32, 32);
+    } else {
+        //draw a leftarrow
+    }
+
+    if (endinview) {
+        ctx.drawImage(cdata.img_dosages_disabled_mini, endX - 32, cdata.bottomLeftY - 32, 32, 32);
+    } else {
+        //draw a rightarrow
+    }
+
+    ctx.stroke();
+    //    console.log("HELLO");
+    //    console.log(start);
+    //    console.log(end);
+    //    console.log(startX);
+    //    console.log(endX);
+}
+
+function annotateCovariate(cdata, ctx, pvar, color)
+{
+    var time = pvar.date.getTime()/1000;
+    var timeX = atime2screen(cdata, time);
+    var startY = cdata.bottomLeftY;
+
+    var tl = cdata.topLeftX;
+    if (timeX < cdata.topLeftX || timeX > cdata.bottomRightX) {
+        return;
+    }
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+
+    ctx.arc(timeX, startY, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.drawImage(cdata.img_covariates_disabled_mini, timeX - 32, cdata.bottomLeftY - 32, 32, 32);
+    ctx.stroke();
+    //    console.log("HELLO");
+    //    console.log(start);
+    //    console.log(end);
+    //    console.log(startX);
+    //    console.log(endX);
+}
+
+function annotateCurveLoci(cdata, ctx, predData, index, color)
+{
+    var peaks = predData.peaks;
+    var troughs = predData.troughs;
+    var filter = getAdjustmentFilter(cdata, true);
+
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+
+    for (var i = 0; i < peaks.length; ++i) {
+        var t = atime2screen(cdata, predData.timeAt(peaks[i]));
+        var v = acxn2screen(cdata, predData.valueAt(peaks[i]));
+        if (!filter || filter(predData.timeAt(peaks[i]))) {
+            if (t > cdata.topLeftX && t < cdata.bottomRightX) {
+                ctx.beginPath();
+                ctx.arc(t, v, 2, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
+    }
+    for (var i = 0; i < troughs.length; ++i) {
+        var t = atime2screen(cdata, predData.timeAt(troughs[i]));
+        var v = acxn2screen(cdata, predData.valueAt(troughs[i]));
+        if (!filter || filter(predData.timeAt(troughs[i]))) {
+            if (t > cdata.topLeftX && t < cdata.bottomRightX) {
+                ctx.beginPath();
+                ctx.arc(t, v, 2, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+function prepareValueForDisplay(cdata, val)
+{
+  var tmp = val*cdata.unitefforder
+  return ((tmp > 100) ? Math.round(tmp) : Math.round(tmp*100)/100)
+}
+
+function findClosestValue(cdata, ctx, predictive, predData, index, color)
+{
+    if (cdata.mArea.tooltipX < 0 && cdata.mArea.tooltipY < 0) {
+        return; // Tooltip not wanted...
+    }
+
+    var x = predData.times();
+    var y = predData.values();
+    if (!predData.closestPoint)
+        return;
+    var current = predData.closestPoint.currentindex;
+    var mousexms = Math.max(0,ascreen2time(cdata, cdata.mArea.tooltipX));
+    var mouseyug = ascreen2acxn(cdata, cdata.mArea.tooltipY);
+
+    while (current < x.length && x[current] < mousexms ) {
+        current++;
+    }
+    while (current > 0 && x[current] > mousexms) {
+        current--;
+    }
+    var y1 = y[current];
+    var y2 = y[current + 1];
+    var dy = y2 - y1;
+
+    var x1 = x[current];
+    var x2 = x[current + 1];
+    var dx = x2 - x1;
+
+    var rat = cdata.xRatio;
+    var minxx = cdata.minX;
+    var val = y1 + (mousexms - x1)/dx * dy;
+
+    var pointAtMeasure = [];
+    var timeAtMeasure = [];
+    if (predictive.pointsAtMeasures) {
+        if (predictive.pointsAtMeasures.size() > 0) {
+            var measureIndex;
+            for (measureIndex = 0; measureIndex < predictive.pointsAtMeasures.size(); measureIndex ++) {
+                pointAtMeasure[measureIndex] = predictive.pointsAtMeasures.at(measureIndex).value;
+                timeAtMeasure[measureIndex] = predictive.pointsAtMeasures.at(measureIndex).time * 1000;
+            }
+        }
+    }
+
+    var currentPoint = {
+        currentindex: current,
+        pred: predData,
+        diffY: Math.abs(mouseyug - val),
+        x: mousexms,
+        y: val,
+        value: prepareValueForDisplay(cdata, val),
+        time: formatDate(new Date(1000 * mousexms)),
+        color: color,
+        predIndex: index,
+        mean: prepareValueForDisplay(cdata, predData.meanAt(current)),
+        auc: prepareValueForDisplay(cdata, predData.aucAt(current)),
+        auc24: prepareValueForDisplay(cdata, predData.auc24At(current)),
+        cumulatedAuc: prepareValueForDisplay(cdata, predData.cumulatedAucAt(current)),
+        trough: prepareValueForDisplay(cdata, predData.troughAt(current)),
+        peak: prepareValueForDisplay(cdata, predData.peakAt(current)),
+        timeAfterDose: predData.timeAfterDose(current),
+        cycleDuration: predData.cycleDuration(current),
+        measurePredicted : pointAtMeasure,
+        measureTime : timeAtMeasure
+    }
+    //    console.log(cdata.mArea.tooltipX);
+    //    console.log(topLeftX);
+/*
+    //set the closest prediction so we know which to highlight
+    predData.closestPoint = currentPoint;
+    predData.highlight = false;
+    if (!canvas.closestPred.closestPoint|| currentPoint.diffY < canvas.closestPred.closestPoint.diffY) {
+        if (currentPoint.diffY < canvas.highlightthresh) {
+            predData.highlight = true;
+        }
+        canvas.closestPred = predData;
+    }
+*/
+    if (predData.displayTooltip) {
+        cdata.currentPoints[index] = currentPoint;
+    }
+
+    //    if (Math.abs(diffY) < canvas.highlightthresh) {
+    //        currentPoint.highlight = true;
+    //        if (predData.selected && cdata.mArea.pressed) {
+    //            predData.pliable = true;
+    //        } else {
+    //            predData.pliable = false;
+    //        }
+
+    //    } else {
+    //        currentPoint.highlight = false;
+    //    }
+    drawTooltips(cdata, ctx);
+}
+
+function formatDate(date)
+{
+    var hours = date.getHours();
+    var mins  = date.getMinutes();
+    var sTime = (hours < 10 ? "0" + hours : hours) + ":" + (mins < 10 ? "0" + mins : mins);
+
+    var day   = date.getDate();
+    var month = date.getMonth() + 1;
+    var year  = date.getFullYear();
+    var sDate = (day < 10 ? "0" + day : day) + "." + (month < 10 ? "0" + month : month) + "." + year;
+
+    return sTime + " " + sDate;
+}
+
+function isCurveAvailable(cdata, index)
+{
+
+    var adjTabShowPop = cdata.gInformationSelection.presentAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
+    var adjTabShowApr = cdata.gInformationSelection.presentAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
+
+    var isAvailable = false;
+    switch(index) {
+        case cdata.pop: isAvailable = cdata.gInformationSelection.presentPopulationPrediction || adjTabShowPop; break;
+        case cdata.apr: isAvailable = cdata.gInformationSelection.presentAprioriPrediction || adjTabShowApr; break;
+        case cdata.apo: isAvailable = cdata.gInformationSelection.presentAposterioriPrediction; break;
+        case cdata.rev: isAvailable = cdata.gInformationSelection.presentPossibleAdjustments; break;
+        case cdata.mea: isAvailable = cdata.gInformationSelection.presentMeasures; break;
+        case cdata.tar: isAvailable = cdata.gInformationSelection.presentTargets; break;
+        case cdata.adj: isAvailable = cdata.gInformationSelection.presentSelectedAdjustment; break;
+        default: break;
+    }
+    //console.log("Curve " + index + " is " + (isAvailable ? "available" : "not available"))
+    return isAvailable;
+}
+
+function isCurveVisible(cdata, index)
+{
+    var isVisible = false;
+    if (isCurveAvailable(cdata, index)) {
+        switch(index) {
+            case cdata.pop: isVisible = cdata.gInformationSelection.displayPopulationPrediction; break;
+            case cdata.apr: isVisible = cdata.gInformationSelection.displayAprioriPrediction; break;
+            case cdata.apo: isVisible = cdata.gInformationSelection.displayAposterioriPrediction; break;
+            case cdata.rev: isVisible = cdata.gInformationSelection.displayPossibleAdjustments; break;
+            case cdata.mea: isVisible = cdata.gInformationSelection.displayMeasures; break;
+            case cdata.tar: isVisible = cdata.gInformationSelection.displayTargets; break;
+            case cdata.adj: isVisible = cdata.gInformationSelection.displaySelectedAdjustment; break;
+            default: break;
+        }
+    }
+    //console.log("Curve " + index + " is " + (isVisible ? "visible" : "not visible"))
+    return isVisible;
+}
+
+function drawTooltips(cdata, ctx)
+{
+    //Settings
+    ctx.font         = cdata.tooltipFontSize + " " + cdata.police;
+    ctx.textAlign    = "left";
+    ctx.textBaseline = "Alphabetic";
+
+    //Constants
+    var timeText = "Time:";
+    var timeAfterDoseText = "T after dose:";
+    var valueText = "C predicted:";
+    var averageText = "C average:";
+    var troughText = "C trough:";
+    var peakText = "C peak:";
+    var aucText = "AUC";
+    var cumulatedAucText = "Cum. AUC";
+
+    var labelsWidth = ctx.measureText(timeAfterDoseText).width + 4;
+    var valuesWidth, tooltipWidth, tooltipHeight, x, y;
+
+    var previousY = [];
+
+    for (var i = 0; i < cdata.currentPoints.length; ++i) {
+        if (cdata.currentPoints[i]) {
+            var filter = getAdjustmentFilter(cdata, cdata.currentPoints[i].predIndex !== cdata.adj);
+            var t = cdata.currentPoints[i].x;
+            if (!filter || filter(t)) {
+                if (isCurveVisible(cdata, i) && cdata.mArea.tooltipX > cdata.topLeftX) {
+                    x = atime2screen(cdata, cdata.currentPoints[i].x);
+                    y = acxn2screen(cdata, cdata.currentPoints[i].y);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, 2 * Math.PI, true);
+                    ctx.fillStyle = cdata.currentPoints[i].color;
+                    ctx.fillStyle = "#e6e6e6";
+                    ctx.fill();
+                    ctx.stroke();
+
+                    if (!cdata.currentMeasure) {
+                        valuesWidth = Math.max(ctx.measureText(cdata.currentPoints[i].value).width, ctx.measureText(cdata.currentPoints[i].time).width) + 2;
+
+                        tooltipWidth = (labelsWidth + valuesWidth);
+                        tooltipHeight = 9*14+8 + cdata.currentPoints[i].measureTime.length * 14 * 2;
+                        x = x - tooltipWidth  / 2;
+                        y = y - tooltipHeight - 10;
+
+                        for (var j = 0; j < previousY.length; ++j) {
+                            if (y + tooltipHeight + 5 > previousY[j] && y < previousY[j] + tooltipHeight + 5)
+                                y = previousY[j] - tooltipHeight - 5;
+                        }
+
+                        previousY.push(y);
+
+                        ctx.beginPath();
+                        ctx.rect(x, y, tooltipWidth, tooltipHeight);
+
+                        //ctx.globalAlpha = 0.5;
+                        ctx.globalAlpha = 1.0;
+                        ctx.fill();
+                        ctx.globalAlpha = 1.0;
+                        ctx.stroke();
+
+                        ctx.fillStyle = "black";
+                        var xText = x + 2
+                        var yText = y + 12
+                        ctx.fillText(timeText, xText, yText);
+                        ctx.fillText(cdata.currentPoints[i].time, x + labelsWidth, yText);
+                        yText = yText + 14
+                        ctx.fillText(timeAfterDoseText, xText, yText);
+                        ctx.fillText(cdata.currentPoints[i].timeAfterDose + "h", x + labelsWidth, yText);
+                        yText = yText + 14
+                        ctx.fillText(valueText, xText, yText);
+                        ctx.fillText(cdata.currentPoints[i].value + " " + cdata.unit, x + labelsWidth, yText);
+                        yText = yText + 14
+                        var mean = cdata.currentPoints[i].mean
+                        if (!(mean > 0)) mean = "-"
+                        ctx.fillText(averageText, xText, yText);
+                        ctx.fillText(mean + " " + cdata.unit, x + labelsWidth, yText);
+                        yText = yText + 14
+                        var trough = cdata.currentPoints[i].trough
+                        if (!(trough > 0)) trough = "-"
+                        ctx.fillText(troughText, xText, yText);
+                        ctx.fillText(trough + " " + cdata.unit, x + labelsWidth, yText);
+                        yText = yText + 14
+                        var peak = cdata.currentPoints[i].peak
+                        if (!(peak > 0)) peak = "-"
+                        ctx.fillText(peakText, xText, yText);
+                        ctx.fillText(peak + " " + cdata.unit, x + labelsWidth, yText);
+                        yText = yText + 14
+                        var auc = cdata.currentPoints[i].auc
+                        if (!(auc > 0)) auc = "-"
+                        ctx.fillText(aucText + " (" + cdata.currentPoints[i].cycleDuration + "h):" , xText, yText);
+                        ctx.fillText(auc + " " + cdata.unit + "*h", x + labelsWidth, yText);
+                        yText = yText + 14
+                        var auc24 = cdata.currentPoints[i].auc24
+                        if (!(auc24 > 0)) auc24 = "-"
+                        ctx.fillText(aucText + " (24h):" , xText, yText);
+                        ctx.fillText(auc24 + " " + cdata.unit + "*h", x + labelsWidth, yText);
+                        yText = yText + 14
+                        var cumulatedAuc = cdata.currentPoints[i].cumulatedAuc
+                        if (!(cumulatedAuc > 0)) cumulatedAuc = "-"
+                        ctx.fillText(cumulatedAucText, xText, yText);
+                        ctx.fillText(cumulatedAuc + " " + cdata.unit + "*h", x + labelsWidth, yText);
+
+                        if (cdata.currentPoints[i].measureTime.length > 0) {
+                            var measureIndex;
+                            for (measureIndex = 0; measureIndex < cdata.currentPoints[i].measureTime.length; measureIndex++) {
+                                yText = yText + 14;
+                                var textMeasure = "Value at ";
+                                var textMeasure2 = formatDate(new Date(cdata.currentPoints[i].measureTime[measureIndex]));
+                                ctx.fillText(textMeasure, xText, yText);
+                                ctx.fillText(textMeasure2, x + labelsWidth, yText);
+
+                                yText = yText + 14;
+                                textMeasure = "is : ";
+                                textMeasure2 = prepareValueForDisplay(cdata, cdata.currentPoints[i].measurePredicted[measureIndex]) + " " + cdata.unit;
+                                ctx.fillText(textMeasure, xText, yText);
+                                ctx.fillText(textMeasure2, x + labelsWidth, yText);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+/*
+    //currentPoints.length = 0;
+    if (canvas.currentMeasure) {
+        valuesWidth = Math.max(ctx.measureText(canvas.currentMeasure.value).width, ctx.measureText(canvas.currentMeasure.time).width) + 2;
+
+        tooltipWidth = (labelsWidth + valuesWidth);
+        tooltipHeight = 30;
+
+        var x = canvas.currentMeasure.x * canvas.scalex - tooltipWidth  / 2;
+        var y = canvas.currentMeasure.y * canvas.scaley - tooltipHeight - 10;
+
+        ctx.beginPath();
+        ctx.rect(x, y, tooltipWidth, tooltipHeight);
+
+        ctx.globalAlpha = 0.5;
+        ctx.fillStyle = canvas.currentMeasure.color;
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+        ctx.stroke();
+
+        ctx.fillStyle = "black";
+        ctx.fillText(valueText, x + 2, y + 12);
+        ctx.fillText(canvas.currentMeasure.value, x + labelsWidth, y + 12);
+        ctx.fillText(timeText, x + 2, y + 26);
+        ctx.fillText(canvas.currentMeasure.time, x + labelsWidth, y + 26);
+    }
+    canvas.currentMeasure = null;
+*/
+    ctx.restore();
+    ctx.save();
 }

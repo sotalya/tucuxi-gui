@@ -1,20 +1,20 @@
 .import "graphing.js" as Graphing;
 
-function step()
+function step(cdata)
 {
     var ctx = canvas.getContext("2d");
 
     ctx.lineWidth = 1;
     ctx.globalAlpha = 1.0;
 
-    if (graphInformationSelection.displayPopulationPrediction && canvas.state !== "validation") {
-        annotateDosage(ctx, dosages.current, colors[1]);
+    if (cdata.gInformationSelection.displayPopulationPrediction && canvas.state !== "validation") {
+        annotateDosage(cdata, ctx, cdata.dosages.current, colors[1]);
     }
 
-    if (graphInformationSelection.displayAprioriPrediction) {
-        if (graphInformationSelection.displayCovariateChange) {
-            for (var i = 0; i < pvars.length; ++i) {
-                annotateCovariate(ctx, pvars[i], colors[2]);
+    if (cdata.gInformationSelection.displayAprioriPrediction) {
+        if (cdata.gInformationSelection.displayCovariateChange) {
+            for (var i = 0; i < cdata.pvars.length; ++i) {
+                annotateCovariate(cdata, ctx, cdata.pvars[i], cdata.colors[2]);
             }
         }
     }
@@ -26,57 +26,57 @@ function step()
     }
 
     //    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    annotatePrediction(ctx, canvas.popP, canvas.pop, colors[1]);
-    annotatePrediction(ctx, aprP, apr, colors[2]);
-    annotatePrediction(ctx, apoP, apo, colors[4]);
-    annotatePrediction(ctx, adjP, adj, adjcolors[1]);
+    annotatePrediction(cdata, ctx, cdata.popP, cdata.pop, cdata.colors[1]);
+    annotatePrediction(cdata, ctx, cdata.aprP, cdata.apr, cdata.colors[2]);
+    annotatePrediction(cdata, ctx, cdata.apoP, cdata.apo, cdata.colors[4]);
+    annotatePrediction(cdata, ctx, cdata.adjP, cdata.adj, cdata.adjcolors[1]);
 
-    if (revP !== null && revP.isValid) {
-        if (graphInformationSelection.displayPossibleAdjustments) {
-            var pairs = revP;
+    if (cdata.revP !== null && cdata.revP.isValid) {
+        if (cdata.gInformationSelection.displayPossibleAdjustments) {
+            var pairs = cdata.revP;
             for (var i = 0; i < pairs.size(); ++i) {
-                findClosestValue(ctx, pairs.objat(i), pairs.objat(i).predictionData, rev, colors[5]);
+                findClosestValue(ctx, pairs.objat(i), pairs.objat(i).predictionData, rev, cdata.colors[5]);
             }
         }
     }
 }
 
-function annotatePrediction(ctx, pred, index, color)
+function annotatePrediction(cdata, ctx, pred, index, color)
 {
     if (pred) {
-        if (pred.predictive.predictionData.isValid && isCurveAvailable(index)) {
-            findClosestValue(ctx, pred.predictive, pred.predictive.predictionData, index, color);
+        if (pred.predictive.predictionData.isValid && isCurveAvailable(cdata, index)) {
+            findClosestValue(cdata, ctx, pred.predictive, pred.predictive.predictionData, index, color);
             if (pred.predictive.percentilePairs.isValid) {
                 var pairs = pred.predictive.percentilePairs;
                 for (var i = 0; i < pairs.size(); ++i) {
-                    findClosestValue(ctx, pairs.objat(i), pairs.objat(i).predictionData, index, color);
+                    findClosestValue(cdata, ctx, pairs.objat(i), pairs.objat(i).predictionData, index, color);
                 }
             }
-            if (isCurveVisible(index)) {
-                annotateCurveLoci(ctx, pred.predictive.predictionData, index, color);
+            if (isCurveVisible(cdata, index)) {
+                annotateCurveLoci(cdata, ctx, pred.predictive.predictionData, index, color);
             }
         }
     }
 }
 
-function annotateDosage(ctx, dosage, color)
+function annotateDosage(cdata, ctx, dosage, color)
 {
     if (!dosage) {return;}
     var start = dosage.applied.getTime()/1000;
     var end = dosage.endtime.getTime()/1000;
-    var startX = Graphing.atime2screen(start);
-    var startY = bottomLeftY;
-    var endY = bottomLeftY;
-    var endX = Graphing.atime2screen(end);
+    var startX = Graphing.atime2screen(cdata, start);
+    var startY = cdata.bottomLeftY;
+    var endY = cdata.bottomLeftY;
+    var endX = Graphing.atime2screen(cdata, end);
     //these are for checking if the start and end are within view, if not we draw it differenetly
     var startinview = true;
     var endinview = true;
-    if (startX < topLeftX && endX > topLeftX) {
-        startX = topLeftX;
+    if (startX < cdata.topLeftX && endX > cdata.topLeftX) {
+        startX = cdata.topLeftX;
         startinview = false;
     }
-    if (endX > bottomRightX && startX < bottomRightX) {
-        endX = bottomRightX;
+    if (endX > cdata.bottomRightX && startX < cdata.bottomRightX) {
+        endX = cdata.bottomRightX;
         endinview = false;
     }
 
@@ -88,13 +88,13 @@ function annotateDosage(ctx, dosage, color)
     ctx.arc(endX, endY, 5, 0, 2 * Math.PI);
     ctx.fill();
     if (startinview) {
-        ctx.drawImage("qrc:/icons/flow/dosages_disabled_mini.png", startX - 32, bottomLeftY - 32, 32, 32);
+        ctx.drawImage("qrc:/icons/flow/dosages_disabled_mini.png", startX - 32, cdata.bottomLeftY - 32, 32, 32);
     } else {
         //draw a leftarrow
     }
 
     if (endinview) {
-        ctx.drawImage("qrc:/icons/flow/dosages_disabled_mini.png", endX - 32, bottomLeftY - 32, 32, 32);
+        ctx.drawImage("qrc:/icons/flow/dosages_disabled_mini.png", endX - 32, cdata.bottomLeftY - 32, 32, 32);
     } else {
         //draw a rightarrow
     }
@@ -107,14 +107,14 @@ function annotateDosage(ctx, dosage, color)
     //    console.log(endX);
 }
 
-function annotateCovariate(ctx, pvar, color)
+function annotateCovariate(cdata, ctx, pvar, color)
 {
     var time = pvar.date.getTime()/1000;
-    var timeX = Graphing.atime2screen(time);
-    var startY = bottomLeftY;
+    var timeX = Graphing.atime2screen(cdata, time);
+    var startY = cdata.bottomLeftY;
 
-    var tl = topLeftX;
-    if (timeX < topLeftX || timeX > bottomRightX) {
+    var tl = cdata.topLeftX;
+    if (timeX < cdata.topLeftX || timeX > cdata.bottomRightX) {
         return;
     }
 
@@ -124,7 +124,7 @@ function annotateCovariate(ctx, pvar, color)
 
     ctx.arc(timeX, startY, 5, 0, 2 * Math.PI);
     ctx.fill();
-    ctx.drawImage("qrc:/icons/flow/covariates_disabled_mini.png", timeX - 32, bottomLeftY - 32, 32, 32);
+    ctx.drawImage("qrc:/icons/flow/covariates_disabled_mini.png", timeX - 32, cdata.bottomLeftY - 32, 32, 32);
     ctx.stroke();
     //    console.log("HELLO");
     //    console.log(start);
@@ -133,20 +133,20 @@ function annotateCovariate(ctx, pvar, color)
     //    console.log(endX);
 }
 
-function annotateCurveLoci(ctx, predData, index, color)
+function annotateCurveLoci(cdata, ctx, predData, index, color)
 {
     var peaks = predData.peaks;
     var troughs = predData.troughs;
-    var filter = Graphing.getAdjustmentFilter(true);
+    var filter = Graphing.getAdjustmentFilter(cdata, true);
 
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
 
     for (var i = 0; i < peaks.length; ++i) {
-        var t = Graphing.atime2screen(predData.timeAt(peaks[i]));
-        var v = Graphing.acxn2screen(predData.valueAt(peaks[i]));
+        var t = Graphing.atime2screen(cdata, predData.timeAt(peaks[i]));
+        var v = Graphing.acxn2screen(cdata, predData.valueAt(peaks[i]));
         if (!filter || filter(predData.timeAt(peaks[i]))) {
-            if (t > topLeftX && t < bottomRightX) {
+            if (t > cdata.topLeftX && t < cdata.bottomRightX) {
                 ctx.beginPath();
                 ctx.arc(t, v, 2, 0, 2 * Math.PI);
                 ctx.fill();
@@ -155,10 +155,10 @@ function annotateCurveLoci(ctx, predData, index, color)
         }
     }
     for (var i = 0; i < troughs.length; ++i) {
-        var t = Graphing.atime2screen(predData.timeAt(troughs[i]));
-        var v = Graphing.acxn2screen(predData.valueAt(troughs[i]));
+        var t = Graphing.atime2screen(cdata, predData.timeAt(troughs[i]));
+        var v = Graphing.acxn2screen(cdata, predData.valueAt(troughs[i]));
         if (!filter || filter(predData.timeAt(troughs[i]))) {
-            if (t > topLeftX && t < bottomRightX) {
+            if (t > topLeftX && t < cdata.bottomRightX) {
                 ctx.beginPath();
                 ctx.arc(t, v, 2, 0, 2 * Math.PI);
                 ctx.fill();
@@ -168,13 +168,13 @@ function annotateCurveLoci(ctx, predData, index, color)
     }
 }
 
-function prepareValueForDisplay(val)
+function prepareValueForDisplay(cdata, val)
 {
-  var tmp = val*unitefforder
+  var tmp = val*cdata.unitefforder
   return ((tmp > 100) ? Math.round(tmp) : Math.round(tmp*100)/100)
 }
 
-function findClosestValue(ctx, predictive, predData, index, color)
+function findClosestValue(cdata, ctx, predictive, predData, index, color)
 {
     if (mouseArea.tooltipX < 0 && mouseArea.tooltipY < 0) {
         return; // Tooltip not wanted...
@@ -185,8 +185,8 @@ function findClosestValue(ctx, predictive, predData, index, color)
     if (!predData.closestPoint)
         return;
     var current = predData.closestPoint.currentindex;
-    var mousexms = Math.max(0,Graphing.ascreen2time(mouseArea.tooltipX));
-    var mouseyug = Graphing.ascreen2acxn(mouseArea.tooltipY);
+    var mousexms = Math.max(0,Graphing.ascreen2time(cdata, mouseArea.tooltipX));
+    var mouseyug = Graphing.ascreen2acxn(cdata, mouseArea.tooltipY);
 
     while (current < x.length && x[current] < mousexms ) {
         current++;
@@ -202,8 +202,8 @@ function findClosestValue(ctx, predictive, predData, index, color)
     var x2 = x[current + 1];
     var dx = x2 - x1;
 
-    var rat = canvas.xRatio;
-    var minxx = canvas.minX;
+    var rat = cdata.xRatio;
+    var minxx = cdata.minX;
     var val = y1 + (mousexms - x1)/dx * dy;
 
     var pointAtMeasure = [];
@@ -253,7 +253,7 @@ function findClosestValue(ctx, predictive, predData, index, color)
     }
 */
     if (predData.displayTooltip) {
-        canvas.currentPoints[index] = currentPoint;
+        cdata.currentPoints[index] = currentPoint;
     }
 
     //    if (Math.abs(diffY) < canvas.highlightthresh) {
@@ -267,7 +267,7 @@ function findClosestValue(ctx, predictive, predData, index, color)
     //    } else {
     //        currentPoint.highlight = false;
     //    }
-    drawTooltips(ctx);
+    drawTooltips(cdata, ctx);
 }
 
 function formatDate(date)
@@ -284,38 +284,42 @@ function formatDate(date)
     return sTime + " " + sDate;
 }
 
-function isCurveAvailable(index)
+function isCurveAvailable(cdata, index)
 {
-    var adjTabShowPop = graphInformationSelection.presentAposterioriPrediction && !hasPatientVariates && !hasMeasures;
-    var adjTabShowApr = graphInformationSelection.presentAposterioriPrediction && hasPatientVariates && !hasMeasures;
+    if (!cdata.gInformationSelection) {
+        console.trace();
+    }
+
+    var adjTabShowPop = cdata.gInformationSelection.presentAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
+    var adjTabShowApr = cdata.gInformationSelection.presentAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
 
     var isAvailable = false;
     switch(index) {
-        case pop: isAvailable = graphInformationSelection.presentPopulationPrediction || adjTabShowPop; break;
-        case apr: isAvailable = graphInformationSelection.presentAprioriPrediction || adjTabShowApr; break;
-        case apo: isAvailable = graphInformationSelection.presentAposterioriPrediction; break;
-        case rev: isAvailable = graphInformationSelection.presentPossibleAdjustments; break;
-        case mea: isAvailable = graphInformationSelection.presentMeasures; break;
-        case tar: isAvailable = graphInformationSelection.presentTargets; break;
-        case adj: isAvailable = graphInformationSelection.presentSelectedAdjustment; break;
+        case pop: isAvailable = cdata.gInformationSelection.presentPopulationPrediction || adjTabShowPop; break;
+        case apr: isAvailable = cdata.gInformationSelection.presentAprioriPrediction || adjTabShowApr; break;
+        case apo: isAvailable = cdata.gInformationSelection.presentAposterioriPrediction; break;
+        case rev: isAvailable = cdata.gInformationSelection.presentPossibleAdjustments; break;
+        case mea: isAvailable = cdata.gInformationSelection.presentMeasures; break;
+        case tar: isAvailable = cdata.gInformationSelection.presentTargets; break;
+        case adj: isAvailable = cdata.gInformationSelection.presentSelectedAdjustment; break;
         default: break;
     }
     //console.log("Curve " + index + " is " + (isAvailable ? "available" : "not available"))
     return isAvailable;
 }
 
-function isCurveVisible(index)
+function isCurveVisible(cdata, index)
 {
     var isVisible = false;
-    if (isCurveAvailable(index)) {
+    if (isCurveAvailable(cdata, index)) {
         switch(index) {
-            case pop: isVisible = graphInformationSelection.displayPopulationPrediction; break;
-            case apr: isVisible = graphInformationSelection.displayAprioriPrediction; break;
-            case apo: isVisible = graphInformationSelection.displayAposterioriPrediction; break;
-            case rev: isVisible = graphInformationSelection.displayPossibleAdjustments; break;
-            case mea: isVisible = graphInformationSelection.displayMeasures; break;
-            case tar: isVisible = graphInformationSelection.displayTargets; break;
-            case adj: isVisible = graphInformationSelection.displaySelectedAdjustment; break;
+            case pop: isVisible = cdata.gInformationSelection.displayPopulationPrediction; break;
+            case apr: isVisible = cdata.gInformationSelection.displayAprioriPrediction; break;
+            case apo: isVisible = cdata.gInformationSelection.displayAposterioriPrediction; break;
+            case rev: isVisible = cdata.gInformationSelection.displayPossibleAdjustments; break;
+            case mea: isVisible = cdata.gInformationSelection.displayMeasures; break;
+            case tar: isVisible = cdata.gInformationSelection.displayTargets; break;
+            case adj: isVisible = cdata.gInformationSelection.displaySelectedAdjustment; break;
             default: break;
         }
     }
@@ -323,10 +327,10 @@ function isCurveVisible(index)
     return isVisible;
 }
 
-function drawTooltips(ctx)
+function drawTooltips(cdata, ctx)
 {
     //Settings
-    ctx.font         = "10px " + canvas.police;
+    ctx.font         = "10px " + cdata.police;
     ctx.textAlign    = "left";
     ctx.textBaseline = "Alphabetic";
 
@@ -345,27 +349,27 @@ function drawTooltips(ctx)
 
     var previousY = [];
 
-    for (var i = 0; i < canvas.currentPoints.length; ++i) {
-        if (canvas.currentPoints[i]) {
-            var filter = Graphing.getAdjustmentFilter(canvas.currentPoints[i].predIndex !== adj);
-            var t = canvas.currentPoints[i].x;
-            var a = canvas
+    for (var i = 0; i < cdata.currentPoints.length; ++i) {
+        if (cdata.currentPoints[i]) {
+            var filter = Graphing.getAdjustmentFilter(cdata.currentPoints[i].predIndex !== adj);
+            var t = cdata.currentPoints[i].x;
+            var a = cdata
             if (!filter || filter(t)) {
-                if (isCurveVisible(i) && mouseArea.tooltipX > topLeftX) {
-                    x = Graphing.atime2screen(canvas.currentPoints[i].x);
-                    y = Graphing.acxn2screen(canvas.currentPoints[i].y);
+                if (isCurveVisible(i) && mouseArea.tooltipX > cdata.topLeftX) {
+                    x = Graphing.atime2screen(cdata, cdata.currentPoints[i].x);
+                    y = Graphing.acxn2screen(cdata, cdata.currentPoints[i].y);
                     ctx.beginPath();
                     ctx.arc(x, y, 4, 0, 2 * Math.PI, true);
-                    ctx.fillStyle = canvas.currentPoints[i].color;
+                    ctx.fillStyle = cdata.currentPoints[i].color;
                     ctx.fillStyle = "#e6e6e6";
                     ctx.fill();
                     ctx.stroke();
 
-                    if (!canvas.currentMeasure) {
-                        valuesWidth = Math.max(ctx.measureText(canvas.currentPoints[i].value).width, ctx.measureText(canvas.currentPoints[i].time).width) + 2;
+                    if (!cdata.currentMeasure) {
+                        valuesWidth = Math.max(ctx.measureText(cdata.currentPoints[i].value).width, ctx.measureText(cdata.currentPoints[i].time).width) + 2;
 
                         tooltipWidth = (labelsWidth + valuesWidth);
-                        tooltipHeight = 9*14+8 + canvas.currentPoints[i].measureTime.length * 14 * 2;
+                        tooltipHeight = 9*14+8 + cdata.currentPoints[i].measureTime.length * 14 * 2;
                         x = x - tooltipWidth  / 2;
                         y = y - tooltipHeight - 10;
 
@@ -389,56 +393,56 @@ function drawTooltips(ctx)
                         var xText = x + 2
                         var yText = y + 12
                         ctx.fillText(timeText, xText, yText);
-                        ctx.fillText(canvas.currentPoints[i].time, x + labelsWidth, yText);
+                        ctx.fillText(cdata.currentPoints[i].time, x + labelsWidth, yText);
                         yText = yText + 14
                         ctx.fillText(timeAfterDoseText, xText, yText);
-                        ctx.fillText(canvas.currentPoints[i].timeAfterDose + "h", x + labelsWidth, yText);
+                        ctx.fillText(cdata.currentPoints[i].timeAfterDose + "h", x + labelsWidth, yText);
                         yText = yText + 14
                         ctx.fillText(valueText, xText, yText);
-                        ctx.fillText(canvas.currentPoints[i].value + " " + canvas.unit, x + labelsWidth, yText);
+                        ctx.fillText(cdata.currentPoints[i].value + " " + canvas.unit, x + labelsWidth, yText);
                         yText = yText + 14
                         var mean = canvas.currentPoints[i].mean
                         if (!(mean > 0)) mean = "-"
                         ctx.fillText(averageText, xText, yText);
-                        ctx.fillText(mean + " " + canvas.unit, x + labelsWidth, yText);
+                        ctx.fillText(mean + " " + cdata.unit, x + labelsWidth, yText);
                         yText = yText + 14
-                        var trough = canvas.currentPoints[i].trough
+                        var trough = cdata.currentPoints[i].trough
                         if (!(trough > 0)) trough = "-"
                         ctx.fillText(troughText, xText, yText);
-                        ctx.fillText(trough + " " + canvas.unit, x + labelsWidth, yText);
+                        ctx.fillText(trough + " " + cdata.unit, x + labelsWidth, yText);
                         yText = yText + 14
-                        var peak = canvas.currentPoints[i].peak
+                        var peak = cdata.currentPoints[i].peak
                         if (!(peak > 0)) peak = "-"
                         ctx.fillText(peakText, xText, yText);
-                        ctx.fillText(peak + " " + canvas.unit, x + labelsWidth, yText);
+                        ctx.fillText(peak + " " + cdata.unit, x + labelsWidth, yText);
                         yText = yText + 14
-                        var auc = canvas.currentPoints[i].auc
+                        var auc = cdata.currentPoints[i].auc
                         if (!(auc > 0)) auc = "-"
-                        ctx.fillText(aucText + " (" + canvas.currentPoints[i].cycleDuration + "h):" , xText, yText);
-                        ctx.fillText(auc + " " + canvas.unit + "*h", x + labelsWidth, yText);
+                        ctx.fillText(aucText + " (" + cdata.currentPoints[i].cycleDuration + "h):" , xText, yText);
+                        ctx.fillText(auc + " " + cdata.unit + "*h", x + labelsWidth, yText);
                         yText = yText + 14
-                        var auc24 = canvas.currentPoints[i].auc24
+                        var auc24 = cdata.currentPoints[i].auc24
                         if (!(auc24 > 0)) auc24 = "-"
                         ctx.fillText(aucText + " (24h):" , xText, yText);
-                        ctx.fillText(auc24 + " " + canvas.unit + "*h", x + labelsWidth, yText);
+                        ctx.fillText(auc24 + " " + cdata.unit + "*h", x + labelsWidth, yText);
                         yText = yText + 14
-                        var cumulatedAuc = canvas.currentPoints[i].cumulatedAuc
+                        var cumulatedAuc = cdata.currentPoints[i].cumulatedAuc
                         if (!(cumulatedAuc > 0)) cumulatedAuc = "-"
                         ctx.fillText(cumulatedAucText, xText, yText);
-                        ctx.fillText(cumulatedAuc + " " + canvas.unit + "*h", x + labelsWidth, yText);
+                        ctx.fillText(cumulatedAuc + " " + cdata.unit + "*h", x + labelsWidth, yText);
 
-                        if (canvas.currentPoints[i].measureTime.length > 0) {
+                        if (cdata.currentPoints[i].measureTime.length > 0) {
                             var measureIndex;
-                            for (measureIndex = 0; measureIndex < canvas.currentPoints[i].measureTime.length; measureIndex++) {
+                            for (measureIndex = 0; measureIndex < cdata.currentPoints[i].measureTime.length; measureIndex++) {
                                 yText = yText + 14;
                                 var textMeasure = "Value at ";
-                                var textMeasure2 = formatDate(new Date(canvas.currentPoints[i].measureTime[measureIndex]));
+                                var textMeasure2 = formatDate(new Date(cdata.currentPoints[i].measureTime[measureIndex]));
                                 ctx.fillText(textMeasure, xText, yText);
                                 ctx.fillText(textMeasure2, x + labelsWidth, yText);
 
                                 yText = yText + 14;
                                 textMeasure = "is : ";
-                                textMeasure2 = prepareValueForDisplay(canvas.currentPoints[i].measurePredicted[measureIndex]) + " " + canvas.unit;
+                                textMeasure2 = prepareValueForDisplay(cdata.currentPoints[i].measurePredicted[measureIndex]) + " " + canvas.unit;
                                 ctx.fillText(textMeasure, xText, yText);
                                 ctx.fillText(textMeasure2, x + labelsWidth, yText);
                             }

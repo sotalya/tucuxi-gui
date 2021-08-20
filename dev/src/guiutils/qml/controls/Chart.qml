@@ -11,13 +11,23 @@ import "annotations.js" as Annotations
 import "trails.js" as Trails
 import "clock.js" as Clock
 
+
 Canvas {
     id: canvas
     objectName: "chartView"
 
+    property var img_covariates_disabled_mini : "qrc:/icons/flow/covariates_disabled_mini.png";
+    property var img_dosages_disabled_mini : "qrc:/icons/flow/dosages_disabled_mini.png";
+
+    property var iController : interpretationController;
+    property var gInformationSelection : graphInformationSelection;
+    property var adjustmentController : adjustmentTabController;
+
     property alias mouseArea: mouseArea
     signal currentTimeChanged(date adate);
     property date date: new Date();
+
+    property var mArea : mouseArea;
 
     property var dosages: interpretation.drugResponseAnalysis.treatment.dosages.objlist;
     property var measures: interpretation.drugResponseAnalysis.treatment.measures.objlist;
@@ -29,6 +39,8 @@ Canvas {
     renderTarget: Canvas.FramebufferObject
 
     antialiasing: true
+
+    property int targetTabIndex: -1;
 
     //Canvas margins
     property int leftMargin:   75
@@ -59,9 +71,11 @@ Canvas {
     property bool isOffsetXEnabled: true
     property bool isOffsetYEnabled: true
 
-    property var screenConversions: ({})
-
     property string police: "sans-serif"
+    property string fontSize: "12px"
+    property string axisTicksFontSize: "10px"
+    property string tooltipFontSize: "10px"
+
     property bool hasMeasures: false
     property bool hasPatientVariates: false;
     property bool hasTargets: false
@@ -94,7 +108,6 @@ Canvas {
     readonly property int adj: 6
 
     readonly property var indices: ["pop", "apr", "apo", "rev", "mea", "tar", "adj"]
-    property var closest: [0,0,0]
     property var popP: chartData.popPred
     property var aprP: chartData.aprPred
     property var apoP: chartData.apoPred
@@ -231,7 +244,6 @@ Canvas {
 
         timestart = Date.now();
 
-        closest = [0,0,0];
         //        popP = chartData.popPred;
         //        aprP = chartData.aprPred;
         //        apoP = chartData.apoPred;
@@ -340,6 +352,7 @@ Canvas {
     Connections {
         target: targetTab
         onCurrentIndexChanged: {
+            canvas.targetTabIndex = index;
             requestPaint();
         }
     }
@@ -410,32 +423,21 @@ Canvas {
         }
     }
 
-    function predUpdate(prediction, predType) {
+
+    function preparePrediction(prediction, predType) {
         if (!prediction.predictive.predictionData.isValid) {
-            // YTA : I removed this log
-            //console.log("!!! " + predType + " data are not valid");
-            requestPaint(); // Needed to erase old curve
             return;
         }
-/*
-var times = prediction.predictive.predictionData.times();
-if (times.length > 0) {
-    var xs = Graphing.atime2screen(times[0]);
-    var xe = Graphing.atime2screen(times[times.length-1]);
-    console.log("Display data for " + predType + ": From " + new Date(times[0]*1000) + " (" + xs + ") to " + new Date(times[times.length-1]*1000) + "(" + xe + ")");
-}
-*/
         prediction.X = prediction.predictive.predictionData.times();
         prediction.Y = prediction.predictive.predictionData.values();
         prediction.predictive.predictionData.displayTooltip = true;
         prediction.predictive.predictionData.closestPoint = {
             currentindex: 0
         }
-        requestPaint();
     }
 
 
-    function updatePercs(pairs) {
+    function preparePercs(pairs) {
         if (!pairs.isValid) {return;}
         if (pairs.size() === 0) {return;}
         for (var i = 0; i < pairs.size(); ++i) {
@@ -447,6 +449,16 @@ if (times.length > 0) {
                 }
             }
         }
+    }
+
+    function predUpdate(prediction, predType) {
+        preparePrediction(prediction, predType);
+        requestPaint();
+    }
+
+
+    function updatePercs(pairs) {
+        preparePercs(pairs);
         requestPaint();
     }
 
@@ -473,11 +485,11 @@ if (times.length > 0) {
 
     onPaint: {
         updateChartDimensions();
-        Graphing.step();
+        Graphing.drawGraph(this);
         if (graphInformationSelection.displayCurrentTime) {
             Clock.showClock();
         }
-        Annotations.step();
+        Graphing.drawAnnotations(this);
     }
 
     Timer {

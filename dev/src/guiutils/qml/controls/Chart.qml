@@ -7,7 +7,6 @@ import guiutils.qml.controls 1.0
 
 import ezechiel 1.0
 import "graphing.js" as Graphing
-import "annotations.js" as Annotations
 import "trails.js" as Trails
 import "clock.js" as Clock
 

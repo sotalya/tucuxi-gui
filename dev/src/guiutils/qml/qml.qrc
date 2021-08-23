@@ -25,7 +25,6 @@
         <file alias="ValidationTab.qml">controls/ValidationTab.qml</file>
         <file alias="ReportTab.qml">controls/ReportTab.qml</file>
         <file alias="graphing.js">controls/graphing.js</file>
-        <file alias="annotations.js">controls/annotations.js</file>
         <file alias="trails.js">controls/trails.js</file>
         <file alias="clock.js">controls/clock.js</file>
         <file alias="DrugInfo.qml">controls/DrugInfo.qml</file>

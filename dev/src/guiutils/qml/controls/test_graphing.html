@@ -6,40 +6,57 @@
       <script type="text/javascript" src="test_graphing.js"></script>
 </head>
 <body>
-    <button onclick="nextTest()">Next test</button> 
-    <div id="expectedMessage"></div>
-    <canvas id="myCanvas" width="600" height="400" style="height:400px; width:600px"></canvas>
 
+    <div id="alltests"></div>
     <script>
 
-    var canvas = document.getElementById("myCanvas");
 
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-
-    function runTest(testFunction)
+    img_covariates_disabled_mini = new Image();
+    img_covariates_disabled_mini.src = "file:///home/ythoma/docs/tucuxi/tucuxi-gui/dev/src/guiutils/qml/controls/covariates_disabled_mini.png";
+    img_covariates_disabled_mini.onload = function() {
+    img_dosages_disabled_mini = new Image();
+    img_dosages_disabled_mini.src = "file:///home/ythoma/docs/tucuxi/tucuxi-gui/dev/src/guiutils/qml/controls/dosages_disabled_mini.png";
+    img_dosages_disabled_mini.onload = function() {
+            
+    function runTest(testFunction, testnb, scale, width, height)
     {
+        testsdiv = document.getElementById("alltests");
+        test = document.createElement("div");
+        test.setAttribute("style", "border-style: solid;border-width:1px;margin:3px");
+        message = document.createElement("div");
+        test.appendChild(message);
+        can = document.createElement("canvas");
+        can.setAttribute("id", "myCanvas" + testnb);
+        can.setAttribute("width", width);
+        can.setAttribute("height", height);
+        can.setAttribute("style", "height:400px; width:600px;border-style: solid;border-width:1px;margin:3px;");
+        test.appendChild(can);
+
+        testsdiv.appendChild(test);
+        
+
         let {obj, expected} = testFunction();
+        obj.scale = scale;
+
+        var canvas = document.getElementById("myCanvas" + testnb);
 
         obj.updateChartDimensions(canvas);
+        obj.canvas = canvas;
 
-        document.getElementById("expectedMessage").innerHTML = expected;
+        //document.getElementById("expectedMessage" + testnb).innerHTML = expected;
+        message.innerHTML = expected + "<br/>Scale : " + scale + ", width : " + width + ", height: " + height;
     
-        obj.img_covariates_disabled_mini = new Image();
-        obj.img_covariates_disabled_mini.src = "file:///home/ythoma/docs/tucuxi/tucuxi-gui/dev/src/guiutils/qml/controls/covariates_disabled_mini.png";
-        obj.img_covariates_disabled_mini.onload = function() {
-            obj.img_dosages_disabled_mini = new Image();
-            obj.img_dosages_disabled_mini.src = "file:///home/ythoma/docs/tucuxi/tucuxi-gui/dev/src/guiutils/qml/controls/dosages_disabled_mini.png";
-            obj.img_dosages_disabled_mini.onload = function() {
-                drawGraph(obj);
-                drawAnnotations(obj);
-
-           }
-        }
+        obj.img_covariates_disabled_mini = img_covariates_disabled_mini;
+        obj.img_dosages_disabled_mini = img_dosages_disabled_mini;
         
+        drawGraph(obj);
+        drawAnnotations(obj);
+
     }
 
     allTests = [test1,
+                test1,
+                test1,
                 test2,
                 testempty,
                 testtarget0,
@@ -54,13 +71,16 @@
                 testtarget10,
                 testtarget11,
                 testtarget12];
-
-    currentTest = 0;
-    runTest(allTests[currentTest]);
-    function nextTest() {
-        currentTest = (currentTest + 1) % allTests.length;
-        runTest(allTests[currentTest]);
+    
+    runTest(allTests[0], 0, 1, 600, 400);
+    runTest(allTests[1], 1, 2, 1200, 800);
+    runTest(allTests[2], 2, 4, 2400, 1600);
+    for(var i = 3; i < allTests.length; i++) {
+        runTest(allTests[i], i, 2, 1200, 800);
     }
+
+}
+}
     </script>
 </body>
 </html>

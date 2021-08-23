@@ -321,6 +321,9 @@ class GraphFullData {
 
     constructor(scale = 1) {
         this.scale = scale;
+
+        // The canvas shall be set before this object is used
+        this.canvas = null;
         
         this.colors = ["#bfbfbf",    // Unused
         "#3c4042",    // popPrediction
@@ -447,6 +450,29 @@ class GraphFullData {
     // to precalculate values.
     updateChartDimensions(canvas)
     {
+
+        if (this.scale <= 1.5) {
+            this.fontSize = "12px";
+            this.axisTicksFontSize = "10px";
+            this.tooltipFontSize = "10px";
+        }
+        else if (this.scale <= 2.5) {
+            this.fontSize = "24px";
+            this.axisTicksFontSize = "20px";
+            this.tooltipFontSize = "20px";    
+        }
+        else if (this.scale <= 4.5) {
+            this.fontSize = "48px";
+            this.axisTicksFontSize = "40px";
+            this.tooltipFontSize = "40px";    
+        }
+
+        //Canvas margins
+        this.leftMargin =   75 * this.scale;
+        this.rightMargin =  75 * this.scale;
+        this.topMargin =    75 * this.scale;
+        this.bottomMargin = 75 * this.scale;
+
         this.topLeftX = this.leftMargin;
         this.topLeftY = this.topMargin;
 
@@ -461,6 +487,7 @@ class GraphFullData {
 
         this.plotWidth =  this.topRightX   - this.topLeftX;
         this.plotHeight = this.bottomLeftY - this.topLeftY;
+
     }
 
     

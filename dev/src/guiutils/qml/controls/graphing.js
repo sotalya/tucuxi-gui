@@ -1,7 +1,7 @@
 
 function drawGraph(cdata)
 {
-    var ctx = canvas.getContext('2d');
+    var ctx = cdata.canvas.getContext('2d');
 
     //the min max is restricted to the window after scaling. We have to apply the scale to the values
     //then project the values onto the drawn space. So you have to know and use the scale and offset first.
@@ -397,7 +397,7 @@ function colorRegionBtwCurves(cdata, ctx, predDataL, predDataU, dataX, dataY, da
 function initContext(cdata, ctx)
 {
     //Clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, cdata.canvas.width, cdata.canvas.height);
 
     hasMeasures = cdata.measures && (cdata.measures.length > 0);
     hasPatientVariates = cdata.pvars && (cdata.pvars.length > 0);
@@ -536,7 +536,7 @@ function drawCurve(cdata, ctx, predData, color, filter)
     //    ctx.path = "";
     ctx.beginPath();
     var isFuture = false;
-    var highlight = predData === canvas.closestPred && canvas.closestPred.highlight;
+    var highlight = predData === cdata.canvas.closestPred && cdata.canvas.closestPred.highlight;
 
     // This variable is used to know if we need to move before drawing the line.
     var continueLine = false;
@@ -947,7 +947,7 @@ function drawAxisTicks(cdata, ctx)
     //Draw x-ticks
     var ticktimes = [];
     var earliest = ascreen2time(cdata, cdata.bottomLeftX);
-    var latest = ascreen2time(cdata, canvas.width);
+    var latest = ascreen2time(cdata, cdata.canvas.width);
     var axisMaximumWidth = latest - earliest;
     var date = new Date(earliest * 1000);
     var hourHalfWidth = 14 * cdata.scale;
@@ -1180,7 +1180,7 @@ function chop(cdata, interval, ticktimes, isHour, time){
     // Return : The maximum number of ticks
 
     var early = ascreen2time(cdata, cdata.bottomLeftX) * 1000;
-    var late = ascreen2time(cdata, canvas.width - cdata.bottomLeftX);
+    var late = ascreen2time(cdata, cdata.canvas.width - cdata.bottomLeftX);
     var date = new Date(early);
 
     date.setMilliseconds(0);
@@ -1463,7 +1463,7 @@ function shift(dScreenX)
 function publishImage()
 {
     //TODO done hardcode this size, figure it out
-    grabToImage(function(result) {interpretationController.getImage(result.image)}, Qt.size(canvas.width,canvas.height));
+    grabToImage(function(result) {interpretationController.getImage(result.image)}, Qt.size(cdata.canvas.width,cdata.canvas.height));
 }
 
 function findEnablePercentiles(cdata)
@@ -1527,7 +1527,7 @@ function findEnablePercentiles(cdata)
 
 function drawAnnotations(cdata)
 {
-    var ctx = canvas.getContext("2d");
+    var ctx = cdata.canvas.getContext("2d");
 
     ctx.lineWidth = 1;
     ctx.globalAlpha = 1.0;
@@ -1550,7 +1550,7 @@ function drawAnnotations(cdata)
         return;
     }
 
-    //    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //    ctx.clearRect(0, 0, cdata.canvas.width, cdata.canvas.height);
     annotatePrediction(cdata, ctx, cdata.popP, cdata.pop, cdata.colors[1]);
     annotatePrediction(cdata, ctx, cdata.aprP, cdata.apr, cdata.colors[2]);
     annotatePrediction(cdata, ctx, cdata.apoP, cdata.apo, cdata.colors[4]);
@@ -1774,18 +1774,18 @@ function findClosestValue(cdata, ctx, predictive, predData, index, color)
     //set the closest prediction so we know which to highlight
     predData.closestPoint = currentPoint;
     predData.highlight = false;
-    if (!canvas.closestPred.closestPoint|| currentPoint.diffY < canvas.closestPred.closestPoint.diffY) {
-        if (currentPoint.diffY < canvas.highlightthresh) {
+    if (!cdata.canvas.closestPred.closestPoint|| currentPoint.diffY < cdata.canvas.closestPred.closestPoint.diffY) {
+        if (currentPoint.diffY < cdata.canvas.highlightthresh) {
             predData.highlight = true;
         }
-        canvas.closestPred = predData;
+        cdata.canvas.closestPred = predData;
     }
 */
     if (predData.displayTooltip) {
         cdata.currentPoints[index] = currentPoint;
     }
 
-    //    if (Math.abs(diffY) < canvas.highlightthresh) {
+    //    if (Math.abs(diffY) < cdata.canvas.highlightthresh) {
     //        currentPoint.highlight = true;
     //        if (predData.selected && cdata.mArea.pressed) {
     //            predData.pliable = true;
@@ -1979,31 +1979,31 @@ function drawTooltips(cdata, ctx)
     }
 /*
     //currentPoints.length = 0;
-    if (canvas.currentMeasure) {
-        valuesWidth = Math.max(ctx.measureText(canvas.currentMeasure.value).width, ctx.measureText(canvas.currentMeasure.time).width) + 2;
+    if (cdata.canvas.currentMeasure) {
+        valuesWidth = Math.max(ctx.measureText(cdata.canvas.currentMeasure.value).width, ctx.measureText(cdata.canvas.currentMeasure.time).width) + 2;
 
         tooltipWidth = (labelsWidth + valuesWidth);
         tooltipHeight = 30;
 
-        var x = canvas.currentMeasure.x * canvas.scalex - tooltipWidth  / 2;
-        var y = canvas.currentMeasure.y * canvas.scaley - tooltipHeight - 10;
+        var x = cdata.canvas.currentMeasure.x * cdata.canvas.scalex - tooltipWidth  / 2;
+        var y = cdata.canvas.currentMeasure.y * cdata.canvas.scaley - tooltipHeight - 10;
 
         ctx.beginPath();
         ctx.rect(x, y, tooltipWidth, tooltipHeight);
 
         ctx.globalAlpha = 0.5;
-        ctx.fillStyle = canvas.currentMeasure.color;
+        ctx.fillStyle = cdata.canvas.currentMeasure.color;
         ctx.fill();
         ctx.globalAlpha = 1.0;
         ctx.stroke();
 
         ctx.fillStyle = "black";
         ctx.fillText(valueText, x + 2, y + 12);
-        ctx.fillText(canvas.currentMeasure.value, x + labelsWidth, y + 12);
+        ctx.fillText(cdata.canvas.currentMeasure.value, x + labelsWidth, y + 12);
         ctx.fillText(timeText, x + 2, y + 26);
-        ctx.fillText(canvas.currentMeasure.time, x + labelsWidth, y + 26);
+        ctx.fillText(cdata.canvas.currentMeasure.time, x + labelsWidth, y + 26);
     }
-    canvas.currentMeasure = null;
+    cdata.canvas.currentMeasure = null;
 */
     ctx.restore();
     ctx.save();

@@ -274,9 +274,9 @@ AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc50, Perc50)
 
 
 //AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayCurrentTime, DisplayCurrentTime)
-//AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayCovariateChange, DisplayCovariateChange)
 
-
+// We write the two functions here instead of using the macros, to add
+// updateProperties() in case of modification
 bool GraphInformationSelection::getDisplayCurrentTime() const { return _displayCurrentTime; }
 void GraphInformationSelection::setDisplayCurrentTime(bool value) {
     if (_displayCurrentTime == value) return;
@@ -286,7 +286,10 @@ void GraphInformationSelection::setDisplayCurrentTime(bool value) {
     updateProperties();
 }
 
+//AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayCovariateChange, DisplayCovariateChange)
 
+// We write the two functions here instead of using the macros, to add
+// updateProperties() in case of modification
 bool GraphInformationSelection::getDisplayCovariateChange() const { return _displayCovariateChange; }
 void GraphInformationSelection::setDisplayCovariateChange(bool value) {
     if (_displayCovariateChange == value) return;

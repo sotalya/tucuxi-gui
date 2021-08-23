@@ -64,6 +64,7 @@ Canvas {
     property int plotWidth:  topRightX   - topLeftX
     property int plotHeight: bottomLeftY - topLeftY
 
+    property real scale : 1 // Default scale, only used for the web front end
     //Chart properties
     property real scaleMax: 2e1
     property real scaleMin: 2e-3

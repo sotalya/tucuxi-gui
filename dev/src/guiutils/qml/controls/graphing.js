@@ -357,7 +357,7 @@ function colorRegionBtwCurves(cdata, ctx, predDataL, predDataU, dataX, dataY, da
 {
     ctx.globalAlpha = 0.2;
     ctx.globalAlpha = 1.0;
-    ctx.lineWidth   = 2.0;// / scalex;
+    ctx.lineWidth   = 2.0 * cdata.scale;// / scalex;
     ctx.lineCap     = "round";
     ctx.lineJoin    = "round";
     ctx.beginPath();
@@ -526,7 +526,7 @@ function drawCurve(cdata, ctx, predData, color, filter)
 
     //Settings
     ctx.strokeStyle = color;
-    ctx.lineWidth   = 2.0;
+    ctx.lineWidth   = 2.0 * cdata.scale;
     ctx.lineCap     = "butt";
     ctx.lineJoin    = "round";
 
@@ -551,11 +551,11 @@ function drawCurve(cdata, ctx, predData, color, filter)
             var y2 = acxn2screen(cdata, dataY[i+1]);
 
             if (highlight) {
-                ctx.lineWidth   = 4.0;
+                ctx.lineWidth   = 4.0 * cdata.scale;
             }
 
             if (predData.selected) {
-                ctx.lineWidth   = 6.0;
+                ctx.lineWidth   = 6.0 * cdata.scale;
                 ctx.strokeStyle = color + 1;
             }
 
@@ -584,10 +584,10 @@ function drawCurve(cdata, ctx, predData, color, filter)
         }
     }
     if (highlight) {
-        ctx.lineWidth   = 4.0;
+        ctx.lineWidth   = 4.0 * cdata.scale;
     }
     if (predData.selected) {
-        ctx.lineWidth   = 6.0;
+        ctx.lineWidth   = 6.0 * cdata.scale;
         ctx.strokeStyle = color + 1;
     }
 
@@ -598,7 +598,7 @@ function drawMeasures(cdata, ctx)
 {
     //Settings
     ctx.fillStyle = "red";
-    ctx.lineWidth = 1;// / scalex;
+    ctx.lineWidth = 1 * cdata.scale;// / scalex;
 
     //ToDo: Ignore filtered curves in the calculation of max and min, and move it canvas properties
 
@@ -613,7 +613,7 @@ function drawMeasures(cdata, ctx)
         //console.log("measurex: " + x)
         //console.log("measurey: " + y)
         ctx.beginPath();
-        ctx.arc(x, y, 5, 0, 2 * Math.PI, true);
+        ctx.arc(x, y, 5 * cdata.scale, 0, 2 * Math.PI, true);
         ctx.fill();
         ctx.stroke();
 
@@ -646,7 +646,7 @@ function drawTargets(cdata, ctx, times, predData)
     {   
         // Settings
         ctx.fillStyle = "blue";
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 1 * cdata.scale;
         
         var ttpe = targets[targetIndex].type.value;
         var y_mean = acxn2screen(cdata, targets[targetIndex].cbest.dbvalue * targets[targetIndex].cbest.multiplier);
@@ -685,17 +685,18 @@ function drawTargets(cdata, ctx, times, predData)
                 ctx.beginPath();
                 var t = atime2screen(cdata, predData.timeAt(troughs[i]));
                 if (isFinite(t) && !isNaN(t) && !isNaN(y_mean)) {
+                    var gradientSize = 20 * cdata.scale;
                     var v = y_mean;
-                    var leftgrd = ctx.createLinearGradient(t, y_mean, t - 20, y_mean);
+                    var leftgrd = ctx.createLinearGradient(t, y_mean, t - gradientSize, y_mean);
                     leftgrd.addColorStop(0,"black");
                     leftgrd.addColorStop(1,"white");
-                    var rightgrd = ctx.createLinearGradient(t, y_mean, t + 20, y_mean);
+                    var rightgrd = ctx.createLinearGradient(t, y_mean, t + gradientSize, y_mean);
                     rightgrd.addColorStop(0,"black");
                     rightgrd.addColorStop(1,"white");
                     ctx.fillStyle = leftgrd
-                    ctx.fillRect(t - 20, y_min, 20, y_max - y_min);
+                    ctx.fillRect(t - gradientSize, y_min, gradientSize, y_max - y_min);
                     ctx.fillStyle = rightgrd
-                    ctx.fillRect(t, y_min, 20, y_max - y_min);
+                    ctx.fillRect(t, y_min, gradientSize, y_max - y_min);
                     ctx.stroke();
 
                     var startY = cdata.bottomLeftY;
@@ -703,11 +704,11 @@ function drawTargets(cdata, ctx, times, predData)
                     ctx.globalAlpha = 1;
                     ctx.beginPath();
                     // Bottom arrow
-                    var arrowWidth = 3;
-                    var arrowHeight = 4;
-                    var diamondWidth = 4;
-                    var diamondHeight = 5;
-                    var crossSize = 6;
+                    var arrowWidth = 3 * cdata.scale;
+                    var arrowHeight = 4 * cdata.scale;
+                    var diamondWidth = 4 * cdata.scale;
+                    var diamondHeight = 5 * cdata.scale;
+                    var crossSize = 6 * cdata.scale;
                     ctx.moveTo(t, y_mean + crossSize);
                     ctx.lineTo(t, y_mean - crossSize);
                     ctx.moveTo(t - crossSize, y_mean);
@@ -743,19 +744,20 @@ function drawTargets(cdata, ctx, times, predData)
         if (ttpe === 1 && predData !== null) {
             var peaks = predData.peaks;
             for (var i = 0; i < peaks.length; ++i) {
+                var gradientSize = 20 * cdata.scale;
                 ctx.beginPath();
                 var t = atime2screen(cdata, predData.timeAt(peaks[i]));
                 var v = y_mean;
-                var leftgrd = ctx.createLinearGradient(t, y_mean, t - 20, y_mean);
+                var leftgrd = ctx.createLinearGradient(t, y_mean, t - gradientSize, y_mean);
                 leftgrd.addColorStop(0,"black");
                 leftgrd.addColorStop(1,"white");
-                var rightgrd = ctx.createLinearGradient(t, y_mean, t + 20, y_mean);
+                var rightgrd = ctx.createLinearGradient(t, y_mean, t + gradientSize, y_mean);
                 rightgrd.addColorStop(0,"black");
                 rightgrd.addColorStop(1,"white");
-                ctx.fillStyle = leftgrd
-                ctx.fillRect(t - 20, y_min, 20, y_max - y_min);
+                ctx.fillStyle = leftgrd;
+                ctx.fillRect(t - gradientSize, y_min, gradientSize, y_max - y_min);
                 ctx.fillStyle = rightgrd
-                ctx.fillRect(t, y_min, 20, y_max - y_min);
+                ctx.fillRect(t, y_min, gradientSize, y_max - y_min);
                 ctx.stroke();
 
                 var startY = cdata.bottomLeftY;
@@ -763,12 +765,12 @@ function drawTargets(cdata, ctx, times, predData)
                 ctx.globalAlpha = 1;
                 ctx.beginPath();
                 // Bottom arrow
-                var arrowWidth = 3;
-                var arrowHeight = 4;
-                var diamondWidth = 4;
-                var diamondHeight = 5;
+                var arrowWidth = 3 * cdata.scale;
+                var arrowHeight = 4 * cdata.scale;
+                var diamondWidth = 4 * cdata.scale;
+                var diamondHeight = 5 * cdata.scale;
 
-                var crossSize = 6;
+                var crossSize = 6 * cdata.scale;
                 ctx.moveTo(t, y_mean + crossSize);
                 ctx.lineTo(t, y_mean - crossSize);
                 ctx.moveTo(t - crossSize, y_mean);
@@ -818,10 +820,9 @@ function clearBorder(cdata, ctx)
 
 function drawAxis(cdata, ctx)
 {
-    ctx.translate(0.5, 0.5);
     //Constants
-    var arrowSize = 5;
-    var overrun   = 10;
+    var arrowSize = 5 * cdata.scale;
+    var overrun   = 10 * cdata.scale;
 
     //X-Axis
     ctx.beginPath();
@@ -880,7 +881,6 @@ function ascreen2time(cdata, p)
 
 function drawAxisTicks(cdata, ctx)
 {
-    ctx.translate(0.5, 0.5);
     //Settings
     ctx.textAlign    = "left";
     ctx.textBaseline = "middle";
@@ -888,9 +888,9 @@ function drawAxisTicks(cdata, ctx)
 
     //ToDo: Ignore filtered curves in the calculation of max and min, and move it canvas properties
 
-    var tickSize = 10;
-    var dateTickSize = 30;
-    var tickSpacingy = 0.2;
+    var tickSize = 10 * cdata.scale;
+    var dateTickSize = 30 * cdata.scale;
+    var tickSpacingy = 0.2 * cdata.scale;
 
     //Draw y-ticks
     var down = -1.0;
@@ -950,7 +950,7 @@ function drawAxisTicks(cdata, ctx)
     var latest = ascreen2time(cdata, canvas.width);
     var axisMaximumWidth = latest - earliest;
     var date = new Date(earliest * 1000);
-    var hourHalfWidth = 14;
+    var hourHalfWidth = 14 * cdata.scale;
     var dateHalfWidth = 2 * hourHalfWidth;
 
 
@@ -1076,17 +1076,17 @@ function drawAxisTicks(cdata, ctx)
 
             if (oldDate.getDate() !== date.getDate()){
                 if (oldDateUsed){
-                    ctx.fillText(formatDay(oldDate), - ((cumulInterDateSize + interdatesize) / 2) - dateHalfWidth, 30);
+                    ctx.fillText(formatDay(oldDate), - ((cumulInterDateSize + interdatesize) / 2) - dateHalfWidth, 30 * cdata.scale);
                     cumulInterDateSize = 0
                 }
                 else if(_1week){
                     if (i === ticktimes.length - 1){
-                        ctx.fillText(formatDay(date), - dateHalfWidth, 15);
+                        ctx.fillText(formatDay(date), - dateHalfWidth, 15 * cdata.scale);
                     }
-                    ctx.fillText(formatDay(oldDate), - (interdatesize) - dateHalfWidth, 15);
+                    ctx.fillText(formatDay(oldDate), - (interdatesize) - dateHalfWidth, 15 * cdata.scale);
                 }
                 else{
-                    ctx.fillText(formatDay(oldDate), - (interdatesize/2) - dateHalfWidth, 30);
+                    ctx.fillText(formatDay(oldDate), - (interdatesize/2) - dateHalfWidth, 30 * cdata.scale);
                 }
 
                 oldDateUsed = false
@@ -1096,18 +1096,18 @@ function drawAxisTicks(cdata, ctx)
                 if (i === ticktimes.length - 1){
                     if (new Date(ticktimes[i] * 1000).getDate() !== new Date(ticktimes[i - 2] * 1000).getDate()){
                         if ((atime2screen(cdata, ticktimes[i]) - atime2screen(cdata, ticktimes[i - 1])) > ((2 * dateHalfWidth) + 10)){
-                                ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30);
+                                ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30 * cdata.scale);
                         }
                     }
                     else{
-                        ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30);
+                        ctx.fillText(formatDay(date), - (cumulInterDateSize / 2) - dateHalfWidth, 30 * cdata.scale);
                     }
                 }
                 oldDateUsed = true
             }
         }
         else if(_1week && ticktimes.length === 1){
-            ctx.fillText(formatDay(oldDate), - (interdatesize) - dateHalfWidth, 15);
+            ctx.fillText(formatDay(oldDate), - (interdatesize) - dateHalfWidth, 15 * cdata.scale);
         }
 
         oldDate = date
@@ -1121,8 +1121,8 @@ function drawAxisTicks(cdata, ctx)
             }
             else{
                 ctx.beginPath();
-                ctx.moveTo(atime2screen(cdata, ticktimes[i]), cdata.bottomLeftY + 20);
-                ctx.lineTo(atime2screen(cdata, ticktimes[i]), cdata.bottomLeftY + 20 + dateTickSize);
+                ctx.moveTo(atime2screen(cdata, ticktimes[i]), cdata.bottomLeftY + 20 * cdata.scale);
+                ctx.lineTo(atime2screen(cdata, ticktimes[i]), cdata.bottomLeftY + 20 * cdata.scale + dateTickSize);
                 ctx.stroke();
             }
         }
@@ -1209,19 +1209,18 @@ function chop(cdata, interval, ticktimes, isHour, time){
 
 function drawAxisLabels(cdata, ctx)
 {
-   // ctx.translate(0.5, 0.5);
     //Settings
     ctx.font = "bold " + cdata.fontSize + " " + cdata.police;
 
     //Draw x-axis label
     ctx.textAlign    = "left";
     ctx.textBaseline = "middle";
-    ctx.fillText("Time", cdata.leftMargin + cdata.plotWidth + 15, cdata.topMargin + cdata.plotHeight);
+    ctx.fillText("Time", cdata.leftMargin + cdata.plotWidth + 15 * cdata.scale, cdata.topMargin + cdata.plotHeight);
 
     //Draw y-axis label
     ctx.textAlign    = "center";
     ctx.textBaseline = "bottom";
-    ctx.fillText(cdata.unit, cdata.leftMargin, cdata.topMargin - 15);
+    ctx.fillText(cdata.unit, cdata.leftMargin, cdata.topMargin - 15 * cdata.scale);
 
     ctx.restore();
     ctx.save();
@@ -1244,11 +1243,11 @@ function drawLegends(cdata, ctx, colors)
     var aprPercText		= "A priori percentiles"
     var apoPercText		= "A posteriori percentiles"
 
-    var internalSpacing = 5;
-    var externalSpacing = 10;
+    var internalSpacing = 5 * cdata.scale;
+    var externalSpacing = 10 * cdata.scale;
 
-    var colorSize = 10;
-    var boxHeight = 20;
+    var colorSize = 10 * cdata.scale;
+    var boxHeight = 20 * cdata.scale;
 
     //Variables
     var legends      = [];
@@ -1598,7 +1597,8 @@ function annotateDosage(cdata, ctx, dosage, color)
     var startinview = true;
     var endinview = true;
     // console.log(start + " " + end + " " + startX + " " + endX + " " + cdata.topLeftX + " ");
-    if (startX < cdata.topLeftX && endX > cdata.topLeftX) {
+    // Here the -1 is to avoid some imprecision in atime2screen calculation
+    if ((startX < cdata.topLeftX - 1) && endX > cdata.topLeftX) {
         startX = cdata.topLeftX;
         startinview = false;
     }
@@ -1611,17 +1611,18 @@ function annotateDosage(cdata, ctx, dosage, color)
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
 
-    ctx.arc(startX, startY, 5, 0, 2 * Math.PI);
-    ctx.arc(endX, endY, 5, 0, 2 * Math.PI);
+    ctx.arc(startX, startY, 5 * cdata.scale, 0, 2 * Math.PI);
+    ctx.arc(endX, endY, 5 * cdata.scale, 0, 2 * Math.PI);
     ctx.fill();
+    var imageSize = 32 * cdata.scale;
     if (startinview) {
-        ctx.drawImage(cdata.img_dosages_disabled_mini, startX - 32, cdata.bottomLeftY - 32, 32, 32);
+        ctx.drawImage(cdata.img_dosages_disabled_mini, startX - imageSize, cdata.bottomLeftY - imageSize, imageSize, imageSize);
     } else {
         //draw a leftarrow
     }
 
     if (endinview) {
-        ctx.drawImage(cdata.img_dosages_disabled_mini, endX - 32, cdata.bottomLeftY - 32, 32, 32);
+        ctx.drawImage(cdata.img_dosages_disabled_mini, endX - imageSize, cdata.bottomLeftY - imageSize, imageSize, imageSize);
     } else {
         //draw a rightarrow
     }
@@ -1649,9 +1650,10 @@ function annotateCovariate(cdata, ctx, pvar, color)
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
 
-    ctx.arc(timeX, startY, 5, 0, 2 * Math.PI);
+    ctx.arc(timeX, startY, 5 * cdata.scale, 0, 2 * Math.PI);
     ctx.fill();
-    ctx.drawImage(cdata.img_covariates_disabled_mini, timeX - 32, cdata.bottomLeftY - 32, 32, 32);
+    var imageSize = 32 * cdata.scale;
+    ctx.drawImage(cdata.img_covariates_disabled_mini, timeX - imageSize, cdata.bottomLeftY - imageSize, imageSize, imageSize);
     ctx.stroke();
     //    console.log("HELLO");
     //    console.log(start);
@@ -1675,7 +1677,7 @@ function annotateCurveLoci(cdata, ctx, predData, index, color)
         if (!filter || filter(predData.timeAt(peaks[i]))) {
             if (t > cdata.topLeftX && t < cdata.bottomRightX) {
                 ctx.beginPath();
-                ctx.arc(t, v, 2, 0, 2 * Math.PI);
+                ctx.arc(t, v, 2 * cdata.scale, 0, 2 * Math.PI);
                 ctx.fill();
                 ctx.stroke();
             }
@@ -1687,7 +1689,7 @@ function annotateCurveLoci(cdata, ctx, predData, index, color)
         if (!filter || filter(predData.timeAt(troughs[i]))) {
             if (t > cdata.topLeftX && t < cdata.bottomRightX) {
                 ctx.beginPath();
-                ctx.arc(t, v, 2, 0, 2 * Math.PI);
+                ctx.arc(t, v, 2 * cdata.scale, 0, 2 * Math.PI);
                 ctx.fill();
                 ctx.stroke();
             }
@@ -1868,7 +1870,7 @@ function drawTooltips(cdata, ctx)
     var aucText = "AUC";
     var cumulatedAucText = "Cum. AUC";
 
-    var labelsWidth = ctx.measureText(timeAfterDoseText).width + 4;
+    var labelsWidth = ctx.measureText(timeAfterDoseText).width + 4 * cdata.scale;
     var valuesWidth, tooltipWidth, tooltipHeight, x, y;
 
     var previousY = [];
@@ -1882,7 +1884,7 @@ function drawTooltips(cdata, ctx)
                     x = atime2screen(cdata, cdata.currentPoints[i].x);
                     y = acxn2screen(cdata, cdata.currentPoints[i].y);
                     ctx.beginPath();
-                    ctx.arc(x, y, 4, 0, 2 * Math.PI, true);
+                    ctx.arc(x, y, 4 * cdata.scale, 0, 2 * Math.PI, true);
                     ctx.fillStyle = cdata.currentPoints[i].color;
                     ctx.fillStyle = "#e6e6e6";
                     ctx.fill();
@@ -1892,13 +1894,13 @@ function drawTooltips(cdata, ctx)
                         valuesWidth = Math.max(ctx.measureText(cdata.currentPoints[i].value).width, ctx.measureText(cdata.currentPoints[i].time).width) + 2;
 
                         tooltipWidth = (labelsWidth + valuesWidth);
-                        tooltipHeight = 9*14+8 + cdata.currentPoints[i].measureTime.length * 14 * 2;
+                        tooltipHeight = (9*14+8 + cdata.currentPoints[i].measureTime.length * 14 * 2) * cdata.scale;
                         x = x - tooltipWidth  / 2;
-                        y = y - tooltipHeight - 10;
+                        y = y - tooltipHeight - 10 * cdata.scale;
 
                         for (var j = 0; j < previousY.length; ++j) {
-                            if (y + tooltipHeight + 5 > previousY[j] && y < previousY[j] + tooltipHeight + 5)
-                                y = previousY[j] - tooltipHeight - 5;
+                            if (y + tooltipHeight + 5 * cdata.scale > previousY[j] && y < previousY[j] + tooltipHeight + 5 * cdata.scale)
+                                y = previousY[j] - tooltipHeight - 5 * cdata.scale;
                         }
 
                         previousY.push(y);
@@ -1914,41 +1916,41 @@ function drawTooltips(cdata, ctx)
 
                         ctx.fillStyle = "black";
                         var xText = x + 2
-                        var yText = y + 12
+                        var yText = y + 12 * cdata.scale
                         ctx.fillText(timeText, xText, yText);
                         ctx.fillText(cdata.currentPoints[i].time, x + labelsWidth, yText);
-                        yText = yText + 14
+                        yText = yText + 14 * cdata.scale
                         ctx.fillText(timeAfterDoseText, xText, yText);
                         ctx.fillText(cdata.currentPoints[i].timeAfterDose + "h", x + labelsWidth, yText);
-                        yText = yText + 14
+                        yText = yText + 14 * cdata.scale
                         ctx.fillText(valueText, xText, yText);
                         ctx.fillText(cdata.currentPoints[i].value + " " + cdata.unit, x + labelsWidth, yText);
-                        yText = yText + 14
+                        yText = yText + 14 * cdata.scale
                         var mean = cdata.currentPoints[i].mean
                         if (!(mean > 0)) mean = "-"
                         ctx.fillText(averageText, xText, yText);
                         ctx.fillText(mean + " " + cdata.unit, x + labelsWidth, yText);
-                        yText = yText + 14
+                        yText = yText + 14 * cdata.scale
                         var trough = cdata.currentPoints[i].trough
                         if (!(trough > 0)) trough = "-"
                         ctx.fillText(troughText, xText, yText);
                         ctx.fillText(trough + " " + cdata.unit, x + labelsWidth, yText);
-                        yText = yText + 14
+                        yText = yText + 14 * cdata.scale
                         var peak = cdata.currentPoints[i].peak
                         if (!(peak > 0)) peak = "-"
                         ctx.fillText(peakText, xText, yText);
                         ctx.fillText(peak + " " + cdata.unit, x + labelsWidth, yText);
-                        yText = yText + 14
+                        yText = yText + 14 * cdata.scale
                         var auc = cdata.currentPoints[i].auc
                         if (!(auc > 0)) auc = "-"
                         ctx.fillText(aucText + " (" + cdata.currentPoints[i].cycleDuration + "h):" , xText, yText);
                         ctx.fillText(auc + " " + cdata.unit + "*h", x + labelsWidth, yText);
-                        yText = yText + 14
+                        yText = yText + 14 * cdata.scale
                         var auc24 = cdata.currentPoints[i].auc24
                         if (!(auc24 > 0)) auc24 = "-"
                         ctx.fillText(aucText + " (24h):" , xText, yText);
                         ctx.fillText(auc24 + " " + cdata.unit + "*h", x + labelsWidth, yText);
-                        yText = yText + 14
+                        yText = yText + 14 * cdata.scale
                         var cumulatedAuc = cdata.currentPoints[i].cumulatedAuc
                         if (!(cumulatedAuc > 0)) cumulatedAuc = "-"
                         ctx.fillText(cumulatedAucText, xText, yText);
@@ -1957,13 +1959,13 @@ function drawTooltips(cdata, ctx)
                         if (cdata.currentPoints[i].measureTime.length > 0) {
                             var measureIndex;
                             for (measureIndex = 0; measureIndex < cdata.currentPoints[i].measureTime.length; measureIndex++) {
-                                yText = yText + 14;
+                                yText = yText + 14 * cdata.scale;
                                 var textMeasure = "Value at ";
                                 var textMeasure2 = formatDate(new Date(cdata.currentPoints[i].measureTime[measureIndex]));
                                 ctx.fillText(textMeasure, xText, yText);
                                 ctx.fillText(textMeasure2, x + labelsWidth, yText);
 
-                                yText = yText + 14;
+                                yText = yText + 14 * cdata.scale;
                                 textMeasure = "is : ";
                                 textMeasure2 = prepareValueForDisplay(cdata, cdata.currentPoints[i].measurePredicted[measureIndex]) + " " + cdata.unit;
                                 ctx.fillText(textMeasure, xText, yText);

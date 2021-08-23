@@ -78,12 +78,12 @@ function test1() {
 
 
     obj.mArea = new GraphMouseArea();
-    obj.mArea.mouseX = 300;
-    obj.mArea.mouseY = 200;
+    obj.mArea.mouseX = 300 * obj.scale;
+    obj.mArea.mouseY = 200 * obj.scale;
     obj.mArea.containsMouse = true;
     obj.mArea.isMouseOver = true;
-    obj.mArea.tooltipX = 300;
-    obj.mArea.tooltipY = 200;
+    obj.mArea.tooltipX = 300 * obj.scale;
+    obj.mArea.tooltipY = 200 * obj.scale;
 
     expected = "We shall see a lot of things here";
     return {obj, expected};
@@ -141,12 +141,12 @@ function test2() {
 
 
     obj.mArea = new GraphMouseArea();
-    obj.mArea.mouseX = 300;
-    obj.mArea.mouseY = 200;
+    obj.mArea.mouseX = 300 * obj.scale;
+    obj.mArea.mouseY = 200 * obj.scale;
     obj.mArea.containsMouse = true;
     obj.mArea.isMouseOver = true;
-    obj.mArea.tooltipX = 300;
-    obj.mArea.tooltipY = 200;
+    obj.mArea.tooltipX = 300 * obj.scale;
+    obj.mArea.tooltipY = 200 * obj.scale;
 
     expected = "We shall see a lot of things here";
     return {obj, expected};    

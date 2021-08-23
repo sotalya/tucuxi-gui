@@ -319,7 +319,8 @@ class GraphMouseArea {
 
 class GraphFullData {
 
-    constructor() {
+    constructor(scale = 1) {
+        this.scale = scale;
         
         this.colors = ["#bfbfbf",    // Unused
         "#3c4042",    // popPrediction
@@ -384,10 +385,21 @@ class GraphFullData {
         this.scaleMin = 2e-3
         this.police = "sans-serif";
 
-        this.fontSize = "12 px";
-        this.axisTicksFontSize = "10px";
-        this.tooltipFontSize = "10px";
-
+        if (scale == 1) {
+            this.fontSize = "12px";
+            this.axisTicksFontSize = "10px";
+            this.tooltipFontSize = "10px";
+        }
+        else if (scale == 2) {
+            this.fontSize = "24px";
+            this.axisTicksFontSize = "20px";
+            this.tooltipFontSize = "20px";    
+        }
+        else if (scale == 4) {
+            this.fontSize = "48px";
+            this.axisTicksFontSize = "40px";
+            this.tooltipFontSize = "40px";    
+        }
         this.yFactor = 1.0;
         this.date = new Date();
 
@@ -420,10 +432,10 @@ class GraphFullData {
         this.timestart = Date.now();
 
         //Canvas margins
-        this.leftMargin =   75;
-        this.rightMargin =  75;
-        this.topMargin =    75;
-        this.bottomMargin = 75;
+        this.leftMargin =   75 * this.scale;
+        this.rightMargin =  75 * this.scale;
+        this.topMargin =    75 * this.scale;
+        this.bottomMargin = 75 * this.scale;
 
         this.targetTabIndex = -1;
 

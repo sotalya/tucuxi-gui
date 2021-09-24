@@ -33,8 +33,8 @@ function test1() {
     
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
+    
+    obj.currentDosage = obj.dosages[0];
     
     // Let's add covariates
     obj.pvars.push(new GraphCovariate(new Date(Date.now() - 12 * 3600 * 1000)));
@@ -96,8 +96,8 @@ function test2() {
 
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
+    
+    obj.currentDosage = obj.dosages[0];
     
     // Let's add covariates
     obj.pvars.push(new GraphCovariate(new Date(Date.now() - 12 * 3600 * 1000)));
@@ -159,8 +159,6 @@ function testtarget0() {
     
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     
     // Let's add targets
     obj.targets.push(new GraphTarget(0, 2, 4, 6));
@@ -180,8 +178,6 @@ function testtarget1() {
     
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     
     // Let's add targets
     obj.targets.push(new GraphTarget(1, 2, 4, 6));
@@ -200,8 +196,6 @@ function testtarget2() {
     
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     
     // Let's add targets
     obj.targets.push(new GraphTarget(2, 2, 4, 6));
@@ -221,8 +215,6 @@ function testtarget3() {
     
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     
     // Let's add targets
     obj.targets.push(new GraphTarget(3, 2, 4, 6));
@@ -242,8 +234,6 @@ function testtarget4() {
     
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     
     // Let's add targets
     obj.targets.push(new GraphTarget(4, 2, 4, 6));
@@ -263,8 +253,6 @@ function testtarget5() {
 
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     // Let's add targets
     obj.targets.push(new GraphTarget(5, 2, 4, 6));
     obj.targets.push(new GraphTarget(5, 12, 14, 18));
@@ -280,8 +268,6 @@ function testtarget6() {
 
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     // Let's add targets
     obj.targets.push(new GraphTarget(6, 2, 4, 6));
     obj.targets.push(new GraphTarget(6, 12, 14, 18));
@@ -297,8 +283,6 @@ function testtarget7() {
 
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     // Let's add targets
     obj.targets.push(new GraphTarget(7, 2, 4, 6));
     obj.targets.push(new GraphTarget(7, 12, 14, 18));
@@ -314,8 +298,6 @@ function testtarget8() {
 
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     // Let's add targets
     obj.targets.push(new GraphTarget(8, 2, 4, 6));
     obj.targets.push(new GraphTarget(8, 12, 14, 18));
@@ -331,8 +313,6 @@ function testtarget9() {
 
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     // Let's add targets
     obj.targets.push(new GraphTarget(9, 2, 4, 6));
     obj.targets.push(new GraphTarget(9, 12, 14, 18));
@@ -348,8 +328,6 @@ function testtarget10() {
 
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     // Let's add targets
     obj.targets.push(new GraphTarget(10, 2, 4, 6));
     obj.targets.push(new GraphTarget(10, 12, 14, 18));
@@ -365,8 +343,6 @@ function testtarget11() {
 
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     // Let's add targets
     obj.targets.push(new GraphTarget(11, 2, 4, 6));
     obj.targets.push(new GraphTarget(11, 12, 14, 18));
@@ -382,8 +358,6 @@ function testtarget12() {
 
     // Let's add dosages
     obj.dosages.push(new GraphDosage());
-    // strange hack. To be checked
-    obj.dosages.current = obj.dosages[0];
     // Let's add targets
     obj.targets.push(new GraphTarget(12, 2, 4, 6));
     obj.targets.push(new GraphTarget(12, 12, 14, 18));

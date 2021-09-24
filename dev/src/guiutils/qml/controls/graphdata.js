@@ -134,15 +134,8 @@ class GraphPredictionResult {
     constructor() {
         this.predictive = new GraphPredictive();
     }
-};
+}
 
-// This class represents a C++ controller.
-// Here it only needs to return the range that should be shown on the X axis.
-// It could be refactored at some stage.
-class GraphInterpretationController {
-	getViewRangeMin() {var newdate = new Date(); return newdate.getTime() / 1000 - 24 * 3600;}
-	getViewRangeMax() {var newdate = new Date(); return newdate.getTime() / 1000;}
-};
 
 // This class embeds information about what to show or not on the graph.
 // graphing.js uses that to know whether some curves or annotations shall be
@@ -418,6 +411,7 @@ class GraphFullData {
         this.currentPoints = []
         this.closestPred = ({})
         this.currentMeasure = null
+        this.currentDosage = null
 
         this.antialiasing = true;
 
@@ -429,7 +423,6 @@ class GraphFullData {
         this.unit = "ug/l";
         this.unitefforder = 1;
 
-        this.iController = new GraphInterpretationController();
         this.gInformationSelection = new GraphInformationSelection();
 
         this.timestart = Date.now();
@@ -445,6 +438,11 @@ class GraphFullData {
         this.mArea = new GraphMouseArea();
 
     }
+
+
+	getViewRangeMin() {var newdate = new Date(); return newdate.getTime() / 1000 - 24 * 3600;}
+	
+    getViewRangeMax() {var newdate = new Date(); return newdate.getTime() / 1000;}
 
     // This function shall be called before printing the graph,
     // to precalculate values.
@@ -491,7 +489,7 @@ class GraphFullData {
     }
 
     
-};
+}
 
 // This function should be called when a prediction is ready,
 // to generate the .X and .Y data

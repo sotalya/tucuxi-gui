@@ -10,7 +10,6 @@ import "graphing.js" as Graphing
 import "trails.js" as Trails
 import "clock.js" as Clock
 
-
 Canvas {
     id: canvas
     objectName: "chartView"
@@ -19,6 +18,8 @@ Canvas {
     property var img_dosages_disabled_mini : "qrc:/icons/flow/dosages_disabled_mini.png";
 
     property var canvas : this;
+
+    property var module: Canvas.FramebufferObject;
 
     property var iController : interpretationController;
     property var gInformationSelection : graphInformationSelection;
@@ -34,6 +35,8 @@ Canvas {
     property var measures: interpretation.drugResponseAnalysis.treatment.measures.objlist;
     property var targets: interpretation.drugResponseAnalysis.treatment.targets.objlist;
     property var pvars: interpretation.drugResponseAnalysis.treatment.covariates.objlist;
+
+    property var adjustmentDate : adjustmentController.adjustmentDate;
 
     //Canvas properties
     renderStrategy: Canvas.Threaded
@@ -87,6 +90,7 @@ Canvas {
     property var currentPoints: []
     property var closestPred: ({})
     property var currentMeasure: null
+    property var currentDosage : null
 
     property var colors: [];
     property var popcolors: [];
@@ -179,6 +183,7 @@ Canvas {
         currentPoints = [];
         closestPred = ({});
         currentMeasure = null;
+        currentDosage = null;
 /*
         colors = ["#bfbfbf",    // Unused
                   "#21B035",    // popPrediction
@@ -286,6 +291,62 @@ Canvas {
         plotHeight = bottomLeftY - topLeftY;
     }
 
+    function getViewRangeMin() {
+        return interpretationController.getViewRangeMin();
+    }
+
+    function getViewRangeMax() {
+        return interpretationController.getViewRangeMax();
+    }
+
+    function zoomY(nSteps)
+    {
+        yFactor = yFactor * (1.0 - nSteps * 0.1);
+    }
+
+    function zoom(nSteps)
+    {
+        var f = 1.0 - nSteps*0.1;
+        interpretationController.zoomViewRange(f);
+    }
+
+    function shift(dScreenX)
+    {
+        var dX = -dScreenX/xRatio
+        interpretationController.shiftViewRange(dX);
+    }
+
+    function publishImage()
+    {
+        //TODO done hardcode this size, figure it out
+        grabToImage(function(result) {interpretationController.getImage(result.image)}, Qt.size(cdata.canvas.width,cdata.canvas.height));
+    }
+
+    function manualextents(cdata)
+    {
+        cdata.iController.resetViewRange();
+        cdata.minX = cdata.iController.getViewRangeMin();
+        cdata.maxX = cdata.iController.getViewRangeMax();
+    }
+
+    function updateUnits()
+    {
+        /*
+        for (var i = 0; i < measures.length; ++i) {
+            measures[i].unitstring = unit;
+        }
+        for (var i = 0; i < targets.length; ++i) {
+            targets[i].cmin.unitstring = unit;
+            targets[i].cmax.unitstring = unit;
+            targets[i].cbest.unitstring = unit;
+            targets[i].tmin.unitstring = unit;
+            targets[i].tmax.unitstring = unit;
+            targets[i].tbest.unitstring = unit;
+        }
+        */
+        interpretationController.defaultUnit = unit;
+    }
+
     Connections {
         target: graphInformationSelection
         onHasBeenModified: {
@@ -346,7 +407,7 @@ Canvas {
                 //    console.log(dosages[j].applied)
                 //    console.log(dosages[j].endtime)
             }
-            dosages.current = dosages[index];
+            canvas.currentDosage = dosages[index];
             requestPaint();
         }
     }
@@ -466,7 +527,7 @@ Canvas {
 
 
     onUnitChanged: {
-        Graphing.updateUnits();
+        updateUnits();
         requestPaint();
     }
 
@@ -477,7 +538,7 @@ Canvas {
         //        var yu = isImageLoading("qrc:/icons/flow/dosages_disabled_mini.png");
         //        var yu2 = isImageLoading("qrc:/icons/flow/covariates_disabled_mini.png");
         //        console.log("IMAGE LOADING: " + yu);
-        Graphing.updateUnits();
+        updateUnits();
         requestPaint();
     }
     onImageLoaded: {
@@ -517,7 +578,7 @@ Canvas {
         property int tooltipY: -1
 
         onDoubleClicked: {
-            Graphing.manualextents();
+            manualextents(canvas);
             tooltipX = -1;  // Clear tooltip
             canvas.requestPaint();
         }
@@ -559,7 +620,7 @@ Canvas {
         onPositionChanged: {
             if (pressed && containsMouse) {
                 var dx = mouse.x - pressX
-                canvas.isOffsetXEnabled ? Graphing.shift(dx) : 0;
+                canvas.isOffsetXEnabled ? shift(dx) : 0;
                 pressX = mouse.x;
                 tooltipX = -1; // Clear tooltip
             }
@@ -569,12 +630,12 @@ Canvas {
 
         onWheel: {
             if (wheel.modifiers & Qt.ShiftModifier) {
-                Graphing.zoomY(wheel.angleDelta.y/120);
+                zoomY(wheel.angleDelta.y/120);
                 requestPaint();
             }
             else {
                 // For most mice, 120 equals one step of the wheel.
-                Graphing.zoom(wheel.angleDelta.y/120);
+                zoom(wheel.angleDelta.y/120);
                 tooltipX = -1; // Clear tooltip
             }
         }

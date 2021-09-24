@@ -39,8 +39,8 @@ function drawGraph(cdata)
             //draw aposteriori if indicated in show and we have measures
             if (cdata.apoP) {
                 if (cdata.apoP.predictive.predictionData.isValid) {
-                    if (cdata.gInformationSelection.presentAposterioriPercentiles && hasMeasures) {
-                        if (apopercsP.isValid) {
+                    if (cdata.gInformationSelection.presentAposterioriPercentiles && cdata.hasMeasures) {
+                        if (cdata.apopercsP.isValid) {
                             drawPercentiles(cdata, ctx, cdata.apopercsP, cdata.colors[6], cdata.apocolors);
                         }
                     }
@@ -74,7 +74,7 @@ function drawGraph(cdata)
             if (cdata.apoP) {
                 if (cdata.apoP.predictive.predictionData.isValid) {
 
-                    if (cdata.gInformationSelection.presentAposterioriPrediction && hasMeasures && cdata.gInformationSelection.displayAposterioriPrediction) {
+                    if (cdata.gInformationSelection.presentAposterioriPrediction && cdata.hasMeasures && cdata.gInformationSelection.displayAposterioriPrediction) {
                         drawApo(cdata, ctx, cdata.colors, cdata.apocolors);
                     }
                 }
@@ -177,28 +177,11 @@ function checkAndDisplayDomain(cdata, ctx, pred)
     }
 }
 
-function updateUnits()
-{
-    /*
-    for (var i = 0; i < measures.length; ++i) {
-        measures[i].unitstring = unit;
-    }
-    for (var i = 0; i < targets.length; ++i) {
-        targets[i].cmin.unitstring = unit;
-        targets[i].cmax.unitstring = unit;
-        targets[i].cbest.unitstring = unit;
-        targets[i].tmin.unitstring = unit;
-        targets[i].tmax.unitstring = unit;
-        targets[i].tbest.unitstring = unit;
-    }
-    */
-    interpretationController.defaultUnit = unit;
-}
 
 function getAdjustmentFilter(cdata, filterMax)
 {
     if (cdata.gInformationSelection.presentSelectedAdjustment) {
-        var limit = cdata.adjustmentController.adjustmentDate/1000;
+        var limit = cdata.adjustmentDate/1000;
         if (filterMax) return function(d) { return d < limit; }
         return function(d) { return d > limit; }
     }
@@ -247,7 +230,7 @@ function drawReverse(cdata, ctx, colors, revcolors)
 
 function drawAdjustment(cdata, ctx, color)
 {
-    drawCurve(cdata, ctx, adjP.predictive.predictionData, color, getAdjustmentFilter(cdata, false));
+    drawCurve(cdata, ctx, cdata.adjP.predictive.predictionData, color, getAdjustmentFilter(cdata, false));
     ctx.restore();
     ctx.save();
 }
@@ -399,9 +382,9 @@ function initContext(cdata, ctx)
     //Clear the canvas
     ctx.clearRect(0, 0, cdata.canvas.width, cdata.canvas.height);
 
-    hasMeasures = cdata.measures && (cdata.measures.length > 0);
-    hasPatientVariates = cdata.pvars && (cdata.pvars.length > 0);
-    hasTargets = cdata.targets && (cdata.targets.length > 0);
+    cdata.hasMeasures = cdata.measures && (cdata.measures.length > 0);
+    cdata.hasPatientVariates = cdata.pvars && (cdata.pvars.length > 0);
+    cdata.hasTargets = cdata.targets && (cdata.targets.length > 0);
 
     //Default settings
     ctx.font        = cdata.fontSize + " " + cdata.police;
@@ -411,17 +394,16 @@ function initContext(cdata, ctx)
     ctx.fillStyle   = "black";
 }
 
-function manualextents(cdata, ctx)
-{
-    cdata.iController.resetViewRange();
-    cdata.minX = cdata.iController.getViewRangeMin();
-    cdata.maxX = cdata.iController.getViewRangeMax();
-}
 
 function extents(cdata, ctx)
 {
-    cdata.minX = cdata.iController.getViewRangeMin();
-    cdata.maxX = cdata.iController.getViewRangeMax();
+    // /!\ var has a weird scope: it spreads in all the function, meaning that 2 for loops declaring a "var i" variable
+    // will trigger a "i is already defined" error in eslint. The "let" keyword to declare variable has a more
+    // natural scope (only spreads in inner blocks) but may not be supported by QT.
+    var i;
+
+    cdata.minX = cdata.getViewRangeMin();
+    cdata.maxX = cdata.getViewRangeMax();
 
     //Y max
     var aprioripercmax = 0;
@@ -437,7 +419,7 @@ function extents(cdata, ctx)
 
     if (cdata.popercsP) {
         if (!cdata.popercsP.isEmpty()) {
-            for (var i = 0; i < cdata.popercsP.size(); ++i) {
+            for (i = 0; i < cdata.popercsP.size(); ++i) {
                 populationpercmax = Math.max(populationpercmax, Math.max.apply(Math, cdata.popercsP.objat(i).Y));
                 populationpercmin = Math.min(populationpercmin, Math.min.apply(Math, cdata.popercsP.objat(i).Y));
             }
@@ -446,7 +428,7 @@ function extents(cdata, ctx)
 
     if (cdata.aprpercsP) {
         if (!cdata.aprpercsP.isEmpty()) {
-            for (var i = 0; i < cdata.aprpercsP.size(); ++i) {
+            for (i = 0; i < cdata.aprpercsP.size(); ++i) {
                 aprioripercmax = Math.max(aprioripercmax, Math.max.apply(Math, cdata.aprpercsP.objat(i).Y));
                 aprioripercmin = Math.min(aprioripercmin, Math.min.apply(Math, cdata.aprpercsP.objat(i).Y));
             }
@@ -455,7 +437,7 @@ function extents(cdata, ctx)
 
     if (cdata.apopercsP) {
         if (!cdata.apopercsP.isEmpty()) {
-            for (var i = 0; i < cdata.apopercsP.size(); ++i) {
+            for (i = 0; i < cdata.apopercsP.size(); ++i) {
                 aposterioripercmax = Math.max(aposterioripercmax, Math.max.apply(Math, cdata.apopercsP.objat(i).Y));
                 aposterioripercmin = Math.min(aposterioripercmin, Math.min.apply(Math, cdata.apopercsP.objat(i).Y));
             }
@@ -464,7 +446,7 @@ function extents(cdata, ctx)
 
     if (cdata.adjpercsP) {
         if (!cdata.adjpercsP.isEmpty()) {
-            for (var i = 0; i < cdata.adjpercsP.size(); ++i) {
+            for (i = 0; i < cdata.adjpercsP.size(); ++i) {
                 adjustmentpercmax = Math.max(adjustmentpercmax, Math.max.apply(Math, cdata.adjpercsP.objat(i).Y));
                 adjustmentpercmin = Math.min(adjustmentpercmin, Math.min.apply(Math, cdata.adjpercsP.objat(i).Y));
             }
@@ -473,7 +455,7 @@ function extents(cdata, ctx)
 
     if (cdata.revP) {
         if (!cdata.revP.isEmpty()) {
-            for (var i = 0; i < cdata.revP.size(); ++i) {
+            for (i = 0; i < cdata.revP.size(); ++i) {
                 if (cdata.revP.size()<=5 || cdata.revP.objat(i).predictionData.selected) {
                     reversepercmax = Math.max(reversepercmax, Math.max.apply(Math, cdata.revP.objat(i).Y));
                     reversepercmin = Math.min(reversepercmin, Math.min.apply(Math, cdata.revP.objat(i).Y));
@@ -484,7 +466,7 @@ function extents(cdata, ctx)
 
 
     // Find the maximum Y value. Could be a function of ChartData...
-    maxY = 0;
+    var maxY = 0;
     if (cdata.popP)
         maxY = Math.max(maxY, Math.max.apply(Math, cdata.popP.Y));
     if (cdata.aprP)
@@ -618,11 +600,11 @@ function drawMeasures(cdata, ctx)
         ctx.stroke();
 
         if (checkPointProximity(x, y, mouseX, mouseY, true) && cdata.mArea.isMouseOver) {
-            currentMeasure = {
+            cdata.currentMeasure = {
                 x: x,
                 y: y,
                 value: cdata.measures[i].concentration.dbvalue.toFixed(2) + " " + cdata.measures[i].concentration.unitstring,
-                time: formatDateInLine(measures[i].moment),
+                time: formatDate(cdata.measures[i].moment), //formatDateInLine(cdata.measures[i].moment),
                 color: "red"
             }
         }
@@ -643,11 +625,12 @@ function drawTargets(cdata, ctx, times, predData)
     // console.log("Nb targets = " + targets.length);
 
     for (var targetIndex = 0; targetIndex < targets.length; ++targetIndex)
-    {   
+    {
         // Settings
         ctx.fillStyle = "blue";
         ctx.lineWidth = 1 * cdata.scale;
         
+        var i, t, v, leftgrd, rightgrd, startY, crossSize, gradientSize;
         var ttpe = targets[targetIndex].type.value;
         var y_mean = acxn2screen(cdata, targets[targetIndex].cbest.dbvalue * targets[targetIndex].cbest.multiplier);
         var y_max = acxn2screen(cdata, targets[targetIndex].cmax.dbvalue * targets[targetIndex].cmax.multiplier);
@@ -681,16 +664,15 @@ function drawTargets(cdata, ctx, times, predData)
 
         if (ttpe === 0 && predData !== null) {
             var troughs = predData.troughs;
-            for (var i = 0; i < troughs.length; ++i) {
+            for (i = 0; i < troughs.length; ++i) {
                 ctx.beginPath();
-                var t = atime2screen(cdata, predData.timeAt(troughs[i]));
+                t = atime2screen(cdata, predData.timeAt(troughs[i]));
                 if (isFinite(t) && !isNaN(t) && !isNaN(y_mean)) {
-                    var gradientSize = 20 * cdata.scale;
-                    var v = y_mean;
-                    var leftgrd = ctx.createLinearGradient(t, y_mean, t - gradientSize, y_mean);
+                    gradientSize = 20 * cdata.scale;
+                    leftgrd = ctx.createLinearGradient(t, y_mean, t - gradientSize, y_mean);
                     leftgrd.addColorStop(0,"black");
                     leftgrd.addColorStop(1,"white");
-                    var rightgrd = ctx.createLinearGradient(t, y_mean, t + gradientSize, y_mean);
+                    rightgrd = ctx.createLinearGradient(t, y_mean, t + gradientSize, y_mean);
                     rightgrd.addColorStop(0,"black");
                     rightgrd.addColorStop(1,"white");
                     ctx.fillStyle = leftgrd
@@ -699,16 +681,18 @@ function drawTargets(cdata, ctx, times, predData)
                     ctx.fillRect(t, y_min, gradientSize, y_max - y_min);
                     ctx.stroke();
 
-                    var startY = cdata.bottomLeftY;
+                    startY = cdata.bottomLeftY;
 
                     ctx.globalAlpha = 1;
                     ctx.beginPath();
                     // Bottom arrow
+                    /*
                     var arrowWidth = 3 * cdata.scale;
                     var arrowHeight = 4 * cdata.scale;
                     var diamondWidth = 4 * cdata.scale;
                     var diamondHeight = 5 * cdata.scale;
-                    var crossSize = 6 * cdata.scale;
+                    */
+                    crossSize = 6 * cdata.scale;
                     ctx.moveTo(t, y_mean + crossSize);
                     ctx.lineTo(t, y_mean - crossSize);
                     ctx.moveTo(t - crossSize, y_mean);
@@ -743,15 +727,14 @@ function drawTargets(cdata, ctx, times, predData)
 
         if (ttpe === 1 && predData !== null) {
             var peaks = predData.peaks;
-            for (var i = 0; i < peaks.length; ++i) {
-                var gradientSize = 20 * cdata.scale;
+            for (i = 0; i < peaks.length; ++i) {
+                gradientSize = 20 * cdata.scale;
                 ctx.beginPath();
-                var t = atime2screen(cdata, predData.timeAt(peaks[i]));
-                var v = y_mean;
-                var leftgrd = ctx.createLinearGradient(t, y_mean, t - gradientSize, y_mean);
+                t = atime2screen(cdata, predData.timeAt(peaks[i]));
+                leftgrd = ctx.createLinearGradient(t, y_mean, t - gradientSize, y_mean);
                 leftgrd.addColorStop(0,"black");
                 leftgrd.addColorStop(1,"white");
-                var rightgrd = ctx.createLinearGradient(t, y_mean, t + gradientSize, y_mean);
+                rightgrd = ctx.createLinearGradient(t, y_mean, t + gradientSize, y_mean);
                 rightgrd.addColorStop(0,"black");
                 rightgrd.addColorStop(1,"white");
                 ctx.fillStyle = leftgrd;
@@ -760,17 +743,19 @@ function drawTargets(cdata, ctx, times, predData)
                 ctx.fillRect(t, y_min, gradientSize, y_max - y_min);
                 ctx.stroke();
 
-                var startY = cdata.bottomLeftY;
+                startY = cdata.bottomLeftY;
 
                 ctx.globalAlpha = 1;
                 ctx.beginPath();
                 // Bottom arrow
+                /*
                 var arrowWidth = 3 * cdata.scale;
                 var arrowHeight = 4 * cdata.scale;
                 var diamondWidth = 4 * cdata.scale;
                 var diamondHeight = 5 * cdata.scale;
+                */
 
-                var crossSize = 6 * cdata.scale;
+                crossSize = 6 * cdata.scale;
                 ctx.moveTo(t, y_mean + crossSize);
                 ctx.lineTo(t, y_mean - crossSize);
                 ctx.moveTo(t - crossSize, y_mean);
@@ -1065,7 +1050,7 @@ function drawAxisTicks(cdata, ctx)
 
         ctx.translate(atime2screen(cdata, ticktimes[i]), cdata.bottomLeftY + tickSize * 1.5);
 
-        var date = new Date(ticktimes[i] * 1000);
+        date = new Date(ticktimes[i] * 1000);
 
         ctx.fillText(formatHour(date), -hourHalfWidth, 1)
 
@@ -1112,11 +1097,11 @@ function drawAxisTicks(cdata, ctx)
 
         oldDate = date
 
-        ctx.translate(-atime2screen(cdata, ticktimes[i]), -(cdata, cdata.bottomLeftY + tickSize * 1.5));
+        ctx.translate(-atime2screen(cdata, ticktimes[i]), -(cdata.bottomLeftY + tickSize * 1.5));
 
         // Increase length of ticks at the beggining and the end of a day
         if (!oldDateUsed){
-            if ((i === 0 && date.getHours() !== 0) || _1week){
+            if ((i === 0 && date.getHours() !== 0) || _1week){ // eslint-disable-line
 
             }
             else{
@@ -1285,7 +1270,7 @@ function drawLegends(cdata, ctx, colors)
                 legends.push( {text: aprioriText, color: cdata.colors[2]} );
                 legendsWidth.push(ctx.measureText(aprioriText).width);
             }
-            if (cdata.aprpercsP.isValid && gInformationSelection.presentAprioriPercentiles || adjTabShowApr) {
+            if (cdata.aprpercsP.isValid && cdata.gInformationSelection.presentAprioriPercentiles || adjTabShowApr) {
                 legends.push( {text: aprPercText, color: cdata.colors[8]} );
                 legendsWidth.push(ctx.measureText(aprPercText).width);
             }
@@ -1443,29 +1428,6 @@ function formatDate(date)
     return sTime + " " + sDate;
 }
 
-function zoomY(nSteps)
-{
-    yFactor = yFactor * (1.0 - nSteps * 0.1);
-}
-
-function zoom(nSteps)
-{
-    var f = 1.0 - nSteps*0.1;
-    interpretationController.zoomViewRange(f);
-}
-
-function shift(dScreenX)
-{
-    var dX = -dScreenX/xRatio
-    interpretationController.shiftViewRange(dX);
-}
-
-function publishImage()
-{
-    //TODO done hardcode this size, figure it out
-    grabToImage(function(result) {interpretationController.getImage(result.image)}, Qt.size(cdata.canvas.width,cdata.canvas.height));
-}
-
 function findEnablePercentiles(cdata)
 {
     var perc5Text       = "5"
@@ -1527,18 +1489,19 @@ function findEnablePercentiles(cdata)
 
 function drawAnnotations(cdata)
 {
+    var i;
     var ctx = cdata.canvas.getContext("2d");
 
     ctx.lineWidth = 1;
     ctx.globalAlpha = 1.0;
 
     if (cdata.gInformationSelection.displayPopulationPrediction && cdata.state !== "validation") {
-        annotateDosage(cdata, ctx, cdata.dosages.current, cdata.colors[1]);
+        annotateDosage(cdata, ctx, cdata.currentDosage, cdata.colors[1]);
     }
 
     if (cdata.gInformationSelection.displayAprioriPrediction) {
         if (cdata.gInformationSelection.displayCovariateChange) {
-            for (var i = 0; i < cdata.pvars.length; ++i) {
+            for (i = 0; i < cdata.pvars.length; ++i) {
                 annotateCovariate(cdata, ctx, cdata.pvars[i], cdata.colors[2]);
             }
         }
@@ -1559,7 +1522,7 @@ function drawAnnotations(cdata)
     if (cdata.revP !== null && cdata.revP.isValid) {
         if (cdata.gInformationSelection.displayPossibleAdjustments) {
             var pairs = cdata.revP;
-            for (var i = 0; i < pairs.size(); ++i) {
+            for (i = 0; i < pairs.size(); ++i) {
                 findClosestValue(cdata, ctx, pairs.objat(i), pairs.objat(i).predictionData, cdata.rev, cdata.colors[5]);
             }
         }
@@ -1664,6 +1627,7 @@ function annotateCovariate(cdata, ctx, pvar, color)
 
 function annotateCurveLoci(cdata, ctx, predData, index, color)
 {
+    var i, t, v;
     var peaks = predData.peaks;
     var troughs = predData.troughs;
     var filter = getAdjustmentFilter(cdata, true);
@@ -1671,9 +1635,9 @@ function annotateCurveLoci(cdata, ctx, predData, index, color)
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
 
-    for (var i = 0; i < peaks.length; ++i) {
-        var t = atime2screen(cdata, predData.timeAt(peaks[i]));
-        var v = acxn2screen(cdata, predData.valueAt(peaks[i]));
+    for (i = 0; i < peaks.length; ++i) {
+        t = atime2screen(cdata, predData.timeAt(peaks[i]));
+        v = acxn2screen(cdata, predData.valueAt(peaks[i]));
         if (!filter || filter(predData.timeAt(peaks[i]))) {
             if (t > cdata.topLeftX && t < cdata.bottomRightX) {
                 ctx.beginPath();
@@ -1683,9 +1647,9 @@ function annotateCurveLoci(cdata, ctx, predData, index, color)
             }
         }
     }
-    for (var i = 0; i < troughs.length; ++i) {
-        var t = atime2screen(cdata, predData.timeAt(troughs[i]));
-        var v = acxn2screen(cdata, predData.valueAt(troughs[i]));
+    for (i = 0; i < troughs.length; ++i) {
+        t = atime2screen(cdata, predData.timeAt(troughs[i]));
+        v = acxn2screen(cdata, predData.valueAt(troughs[i]));
         if (!filter || filter(predData.timeAt(troughs[i]))) {
             if (t > cdata.topLeftX && t < cdata.bottomRightX) {
                 ctx.beginPath();
@@ -1797,20 +1761,6 @@ function findClosestValue(cdata, ctx, predictive, predData, index, color)
     //        currentPoint.highlight = false;
     //    }
     drawTooltips(cdata, ctx);
-}
-
-function formatDate(date)
-{
-    var hours = date.getHours();
-    var mins  = date.getMinutes();
-    var sTime = (hours < 10 ? "0" + hours : hours) + ":" + (mins < 10 ? "0" + mins : mins);
-
-    var day   = date.getDate();
-    var month = date.getMonth() + 1;
-    var year  = date.getFullYear();
-    var sDate = (day < 10 ? "0" + day : day) + "." + (month < 10 ? "0" + month : month) + "." + year;
-
-    return sTime + " " + sDate;
 }
 
 function isCurveAvailable(cdata, index)

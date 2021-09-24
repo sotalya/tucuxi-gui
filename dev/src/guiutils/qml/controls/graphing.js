@@ -12,14 +12,14 @@ function drawGraph(cdata)
     extents(cdata, ctx);
     //    console.log(maxX + " " + minX);
 
-    var adjTabShowPop = cdata.gInformationSelection.presentAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
-    var adjTabShowApr = cdata.gInformationSelection.presentAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
+    var adjTabShowPop = cdata.gInformationSelection.displayAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
+    var adjTabShowApr = cdata.gInformationSelection.displayAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
 
     //Draw the content
     //dont draw any curves if we cant even draw the population curves
     if (cdata.popP) {
         if (cdata.popP.predictive.predictionData.isValid) {
-            if (cdata.gInformationSelection.presentPopulationPercentiles || adjTabShowPop) {
+            if (cdata.gInformationSelection.displayPopulationPercentiles || adjTabShowPop) {
                 if (cdata.popercsP.isValid) {
                     drawPercentiles(cdata, ctx, cdata.popercsP, cdata.colors[7], cdata.popcolors);
                 }
@@ -28,7 +28,7 @@ function drawGraph(cdata)
             //draw apriori if indicated in show
             if (cdata.aprP) {
                 if (cdata.aprP.predictive.predictionData.isValid) {
-                    if (cdata.gInformationSelection.presentAprioriPercentiles || adjTabShowApr) {
+                    if (cdata.gInformationSelection.displayAprioriPercentiles || adjTabShowApr) {
                         if (cdata.aprpercsP.isValid) {
                             drawPercentiles(cdata, ctx, cdata.aprpercsP, cdata.colors[8], cdata.aprcolors);
                         }
@@ -39,7 +39,7 @@ function drawGraph(cdata)
             //draw aposteriori if indicated in show and we have measures
             if (cdata.apoP) {
                 if (cdata.apoP.predictive.predictionData.isValid) {
-                    if (cdata.gInformationSelection.presentAposterioriPercentiles && cdata.hasMeasures) {
+                    if (cdata.gInformationSelection.displayAposterioriPercentiles && cdata.hasMeasures) {
                         if (cdata.apopercsP.isValid) {
                             drawPercentiles(cdata, ctx, cdata.apopercsP, cdata.colors[6], cdata.apocolors);
                         }
@@ -56,7 +56,7 @@ function drawGraph(cdata)
         if (cdata.popP.predictive.predictionData.isValid) {
 
             //draw pop curves if indicated in show or measurestab with no measures
-            if ((cdata.gInformationSelection.presentPopulationPrediction || adjTabShowPop) && cdata.gInformationSelection.displayPopulationPrediction) {
+            if (cdata.gInformationSelection.displayPopulationPrediction || adjTabShowPop) {
                 drawPop(cdata, ctx, cdata.colors, cdata.popcolors);
             }
 
@@ -64,7 +64,7 @@ function drawGraph(cdata)
             if (cdata.aprP) {
                 if (cdata.aprP.predictive.predictionData.isValid) {
 
-                    if ((cdata.gInformationSelection.presentAprioriPrediction || adjTabShowApr) && cdata.gInformationSelection.displayAprioriPrediction) {
+                    if (cdata.gInformationSelection.displayAprioriPrediction || adjTabShowApr) {
                         drawApr(cdata, ctx, cdata.colors, cdata.aprcolors);
                     }
                 }
@@ -74,7 +74,7 @@ function drawGraph(cdata)
             if (cdata.apoP) {
                 if (cdata.apoP.predictive.predictionData.isValid) {
 
-                    if (cdata.gInformationSelection.presentAposterioriPrediction && cdata.hasMeasures && cdata.gInformationSelection.displayAposterioriPrediction) {
+                    if (cdata.gInformationSelection.displayAposterioriPrediction && cdata.hasMeasures){
                         drawApo(cdata, ctx, cdata.colors, cdata.apocolors);
                     }
                 }
@@ -89,7 +89,7 @@ function drawGraph(cdata)
     }
 
     if (cdata.adjP) {
-        if (cdata.gInformationSelection.presentSelectedAdjustment && cdata.gInformationSelection.displaySelectedAdjustment) {
+        if (cdata.gInformationSelection.displaySelectedAdjustment) {
 
             if (cdata.adjpercsP.isValid) {
 
@@ -113,20 +113,20 @@ function drawGraph(cdata)
 
     //draw adjustments if we have, and indicated in show
     if (cdata.revP && cdata.revP.isValid) {
-        if (cdata.gInformationSelection.presentPossibleAdjustments && cdata.gInformationSelection.displayPossibleAdjustments) {
+        if (cdata.gInformationSelection.displayPossibleAdjustments) {
             drawReverse(cdata, ctx, cdata.colors, cdata.revcolors);
         }
     }
 
     //draw measures
-    if (cdata.gInformationSelection.presentMeasures && cdata.gInformationSelection.displayMeasures) {
+    if (cdata.gInformationSelection.displayMeasures) {
         drawMeasures(cdata, ctx);
         ctx.restore();
         ctx.save();
     }
 
     //draw targets if have, and indicated in show
-    if (cdata.hasTargets && cdata.gInformationSelection.presentTargets && cdata.gInformationSelection.displayTargets) {
+    if (cdata.hasTargets && cdata.gInformationSelection.displayTargets) {
         if (cdata.apoP && cdata.apoP.predictive.predictionData.isValid) {
             drawTargets(cdata, ctx, cdata.apoP.X, cdata.apoP.predictive.predictionData);
         } else if (cdata.aprP && cdata.aprP.predictive.predictionData.isValid) {
@@ -157,9 +157,9 @@ function drawGraph(cdata)
     drawNonPlotArea(cdata, ctx, cdata.colors, cdata.pop);
 
     //draw descriptions
-//    if (!graphInformationSelection.presentPopulationPrediction &&
-//        !graphInformationSelection.presentAprioriPrediction &&
-//        !graphInformationSelection.presentAposterioriPrediction) {
+//    if (!graphInformationSelection.displayPopulationPrediction &&
+//        !graphInformationSelection.displayAprioriPrediction &&
+//        !graphInformationSelection.displayAposterioriPrediction) {
 //        if (nographdrugtext) {
 //            drawSoftwareDescription(cdata, ctx, nographdrugtext);
 //        }
@@ -180,7 +180,7 @@ function checkAndDisplayDomain(cdata, ctx, pred)
 
 function getAdjustmentFilter(cdata, filterMax)
 {
-    if (cdata.gInformationSelection.presentSelectedAdjustment) {
+    if (cdata.gInformationSelection.displaySelectedAdjustment) {
         var limit = cdata.adjustmentDate/1000;
         if (filterMax) return function(d) { return d < limit; }
         return function(d) { return d > limit; }
@@ -1244,8 +1244,8 @@ function drawLegends(cdata, ctx, colors)
     // Add has... checks for population and percentiles of each type
     // ////////////////////////////////////////////////////////////
 
-    var adjTabShowPop = cdata.gInformationSelection.presentAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
-    var adjTabShowApr = cdata.gInformationSelection.presentAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
+    var adjTabShowPop = cdata.gInformationSelection.displayAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
+    var adjTabShowApr = cdata.gInformationSelection.displayAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
 
     apoPercText += findEnablePercentiles(cdata)
     aprPercText += findEnablePercentiles(cdata)
@@ -1253,12 +1253,12 @@ function drawLegends(cdata, ctx, colors)
 
     if (cdata.popP) {
         if (cdata.popP.predictive.predictionData.isValid) {
-            if (cdata.gInformationSelection.presentPopulationPrediction || adjTabShowPop) {
+            if (cdata.gInformationSelection.displayPopulationPrediction || adjTabShowPop) {
                 legends.push( {text: populationText, color: cdata.colors[1]} );
                 legendsWidth.push(ctx.measureText(populationText).width);
                 //legendsWidth.push(ctx.measureText(popPCB.text).width);
             }
-            if (cdata.popercsP.isValid && cdata.gInformationSelection.presentPopulationPercentiles || adjTabShowPop) {
+            if (cdata.popercsP.isValid && cdata.gInformationSelection.displayPopulationPercentiles || adjTabShowPop) {
                 legends.push( {text: popPercText, color: cdata.colors[7]} );
                 legendsWidth.push(ctx.measureText(popPercText).width);
             }
@@ -1266,11 +1266,11 @@ function drawLegends(cdata, ctx, colors)
     }
     if (cdata.aprP) {
         if (cdata.aprP.predictive.predictionData.isValid) {
-            if (cdata.gInformationSelection.presentAprioriPrediction || adjTabShowApr) {
+            if (cdata.gInformationSelection.displayAprioriPrediction || adjTabShowApr) {
                 legends.push( {text: aprioriText, color: cdata.colors[2]} );
                 legendsWidth.push(ctx.measureText(aprioriText).width);
             }
-            if (cdata.aprpercsP.isValid && cdata.gInformationSelection.presentAprioriPercentiles || adjTabShowApr) {
+            if (cdata.aprpercsP.isValid && cdata.gInformationSelection.displayAprioriPercentiles || adjTabShowApr) {
                 legends.push( {text: aprPercText, color: cdata.colors[8]} );
                 legendsWidth.push(ctx.measureText(aprPercText).width);
             }
@@ -1278,24 +1278,24 @@ function drawLegends(cdata, ctx, colors)
     }
     if (cdata.apoP) {
         if (cdata.apoP.predictive.predictionData.isValid) {
-            if (cdata.gInformationSelection.presentAposterioriPrediction) {
+            if (cdata.gInformationSelection.displayAposterioriPrediction) {
                 legends.push( {text: aposterioriText, color: cdata.colors[4]} );
                 legendsWidth.push(ctx.measureText(aposterioriText).width);
             }
-            if (cdata.apopercsP.isValid && cdata.gInformationSelection.presentAposterioriPercentiles) {
+            if (cdata.apopercsP.isValid && cdata.gInformationSelection.displayAposterioriPercentiles) {
                 legends.push( {text: apoPercText, color: cdata.colors[6]} );
                 legendsWidth.push(ctx.measureText(apoPercText).width);
             }
         }
     }
     if (cdata.revP) {
-        if (cdata.revP.isValid && cdata.gInformationSelection.presentPossibleAdjustments) {
+        if (cdata.revP.isValid && cdata.gInformationSelection.displayPossibleAdjustments) {
             legends.push( {text: reverseText, color: cdata.colors[5]});
             legendsWidth.push(ctx.measureText(reverseText).width);
         }
     }
     if (cdata.adjP) {
-        if (cdata.adjP.predictive.predictionData.isValid && cdata.gInformationSelection.presentSelectedAdjustment) {
+        if (cdata.adjP.predictive.predictionData.isValid && cdata.gInformationSelection.displaySelectedAdjustment) {
             legends.push( {text: adjustmentText, color: cdata.colors[9]} );
             legendsWidth.push(ctx.measureText(adjustmentText).width);
         }
@@ -1766,18 +1766,18 @@ function findClosestValue(cdata, ctx, predictive, predData, index, color)
 function isCurveAvailable(cdata, index)
 {
 
-    var adjTabShowPop = cdata.gInformationSelection.presentAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
-    var adjTabShowApr = cdata.gInformationSelection.presentAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
+    var adjTabShowPop = cdata.gInformationSelection.displayAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
+    var adjTabShowApr = cdata.gInformationSelection.displayAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
 
     var isAvailable = false;
     switch(index) {
-        case cdata.pop: isAvailable = cdata.gInformationSelection.presentPopulationPrediction || adjTabShowPop; break;
-        case cdata.apr: isAvailable = cdata.gInformationSelection.presentAprioriPrediction || adjTabShowApr; break;
-        case cdata.apo: isAvailable = cdata.gInformationSelection.presentAposterioriPrediction; break;
-        case cdata.rev: isAvailable = cdata.gInformationSelection.presentPossibleAdjustments; break;
-        case cdata.mea: isAvailable = cdata.gInformationSelection.presentMeasures; break;
-        case cdata.tar: isAvailable = cdata.gInformationSelection.presentTargets; break;
-        case cdata.adj: isAvailable = cdata.gInformationSelection.presentSelectedAdjustment; break;
+        case cdata.pop: isAvailable = cdata.gInformationSelection.displayPopulationPrediction || adjTabShowPop; break;
+        case cdata.apr: isAvailable = cdata.gInformationSelection.displayAprioriPrediction || adjTabShowApr; break;
+        case cdata.apo: isAvailable = cdata.gInformationSelection.displayAposterioriPrediction; break;
+        case cdata.rev: isAvailable = cdata.gInformationSelection.displayPossibleAdjustments; break;
+        case cdata.mea: isAvailable = cdata.gInformationSelection.displayMeasures; break;
+        case cdata.tar: isAvailable = cdata.gInformationSelection.displayTargets; break;
+        case cdata.adj: isAvailable = cdata.gInformationSelection.displaySelectedAdjustment; break;
         default: break;
     }
     //console.log("Curve " + index + " is " + (isAvailable ? "available" : "not available"))
@@ -1786,21 +1786,7 @@ function isCurveAvailable(cdata, index)
 
 function isCurveVisible(cdata, index)
 {
-    var isVisible = false;
-    if (isCurveAvailable(cdata, index)) {
-        switch(index) {
-            case cdata.pop: isVisible = cdata.gInformationSelection.displayPopulationPrediction; break;
-            case cdata.apr: isVisible = cdata.gInformationSelection.displayAprioriPrediction; break;
-            case cdata.apo: isVisible = cdata.gInformationSelection.displayAposterioriPrediction; break;
-            case cdata.rev: isVisible = cdata.gInformationSelection.displayPossibleAdjustments; break;
-            case cdata.mea: isVisible = cdata.gInformationSelection.displayMeasures; break;
-            case cdata.tar: isVisible = cdata.gInformationSelection.displayTargets; break;
-            case cdata.adj: isVisible = cdata.gInformationSelection.displaySelectedAdjustment; break;
-            default: break;
-        }
-    }
-    //console.log("Curve " + index + " is " + (isVisible ? "visible" : "not visible"))
-    return isVisible;
+    return isCurveAvailable(cdata, index);
 }
 
 function drawTooltips(cdata, ctx)

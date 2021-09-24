@@ -29,34 +29,24 @@ class GraphInformationSelection : public ezechiel::core::Entity
 
     ADMIN_ENTITY_UTILS(GraphInformationSelection)
 
-    AUTO_PROPERTY_DECL(bool, presentPopulationPrediction, PresentPopulationPrediction)
     AUTO_PROPERTY_DECL(bool, displayPopulationPrediction, DisplayPopulationPrediction)
 
-    AUTO_PROPERTY_DECL(bool, presentAprioriPrediction, PresentAprioriPrediction)
     AUTO_PROPERTY_DECL(bool, displayAprioriPrediction, DisplayAprioriPrediction)
 
-    AUTO_PROPERTY_DECL(bool, presentAposterioriPrediction, PresentAposterioriPrediction)
     AUTO_PROPERTY_DECL(bool, displayAposterioriPrediction, DisplayAposterioriPrediction)
 
-    AUTO_PROPERTY_DECL(bool, presentPopulationPercentiles, PresentPopulationPercentiles)
     AUTO_PROPERTY_DECL(bool, displayPopulationPercentiles, DisplayPopulationPercentiles)
 
-    AUTO_PROPERTY_DECL(bool, presentAprioriPercentiles, PresentAprioriPercentiles)
     AUTO_PROPERTY_DECL(bool, displayAprioriPercentiles, DisplayAprioriPercentiles)
 
-    AUTO_PROPERTY_DECL(bool, presentAposterioriPercentiles, PresentAposterioriPercentiles)
     AUTO_PROPERTY_DECL(bool, displayAposterioriPercentiles, DisplayAposterioriPercentiles)
 
-    AUTO_PROPERTY_DECL(bool, presentPossibleAdjustments, PresentPossibleAdjustments)
     AUTO_PROPERTY_DECL(bool, displayPossibleAdjustments, DisplayPossibleAdjustments)
 
-    AUTO_PROPERTY_DECL(bool, presentSelectedAdjustment, PresentSelectedAdjustment)
     AUTO_PROPERTY_DECL(bool, displaySelectedAdjustment, DisplaySelectedAdjustment)
 
-    AUTO_PROPERTY_DECL(bool, presentMeasures, PresentMeasures)
     AUTO_PROPERTY_DECL(bool, displayMeasures, DisplayMeasures)
 
-    AUTO_PROPERTY_DECL(bool, presentTargets, PresentTargets)
     AUTO_PROPERTY_DECL(bool, displayTargets, DisplayTargets)
 
     AUTO_PROPERTY_DECL(bool, perc5_95, Perc5_95)
@@ -70,8 +60,6 @@ class GraphInformationSelection : public ezechiel::core::Entity
 
     public:
         void setCurrentTab(StepType::Enum step);
-        Q_INVOKABLE void setVisible(CurveType::Enum curveType, bool isVisible);
-        Q_INVOKABLE void setVisible(StepType::Enum stepType, CurveType::Enum curveType, bool isVisible);
         Q_INVOKABLE void setAvailable(CurveType::Enum curveType, bool isAvailable);
         Q_INVOKABLE void setAvailable(StepType::Enum stepType, CurveType::Enum curveType, bool isAvailable);
         Q_INVOKABLE void saveSettings();

@@ -64,43 +64,43 @@ DialogBase {
         graphSettingsGB.title = graphInformationSelection.getCurrentTab() + " settings"
 
         popPCB.visible = true
-        popPCB.checked = graphInformationSelection.presentPopulationPrediction
+        popPCB.checked = graphInformationSelection.displayPopulationPrediction
         currentPopPred = popPCB.checked //Keep current value for cancel
 
         popPerCB.visible = true
-        popPerCB.checked = graphInformationSelection.presentPopulationPercentiles
+        popPerCB.checked = graphInformationSelection.displayPopulationPercentiles
         currentPopPerc = popPerCB.checked
 
         aprPCB.visible = true
-        aprPCB.checked = graphInformationSelection.presentAprioriPrediction
+        aprPCB.checked = graphInformationSelection.displayAprioriPrediction
         currentAprPred = aprPCB.checked
 
         aprPerCB.visible = true
-        aprPerCB.checked = graphInformationSelection.presentAprioriPercentiles
+        aprPerCB.checked = graphInformationSelection.displayAprioriPercentiles
         currentAprPerc = aprPerCB.checked
 
         apoPCB.visible = true
-        apoPCB.checked = graphInformationSelection.presentAposterioriPrediction
+        apoPCB.checked = graphInformationSelection.displayAposterioriPrediction
         currentApoPred = apoPCB.checked
 
         apoPerCB.visible = true
-        apoPerCB.checked = graphInformationSelection.presentAposterioriPercentiles
+        apoPerCB.checked = graphInformationSelection.displayAposterioriPercentiles
         currentApoPerc = apoPerCB.checked
 
         targetCB.visible = true
-        targetCB.checked = graphInformationSelection.presentTargets
+        targetCB.checked = graphInformationSelection.displayTargets
         currentTargets = targetCB.checked
 
         measureCB.visible = true
-        measureCB.checked = graphInformationSelection.presentMeasures
+        measureCB.checked = graphInformationSelection.displayMeasures
         currentMeasures = measureCB.checked
 
         revCB.visible = true
-        revCB.checked = graphInformationSelection.presentPossibleAdjustments
+        revCB.checked = graphInformationSelection.displayPossibleAdjustments
         currentPossAdj = revCB.checked
 
         adjCB.visible = true
-        adjCB.checked = graphInformationSelection.presentSelectedAdjustment
+        adjCB.checked = graphInformationSelection.displaySelectedAdjustment
         currentSelAdj = adjCB.checked
 
 

@@ -105,23 +105,6 @@ void GraphInformationSelection::setCurrentTab(StepType::Enum step)
 	updateProperties();
 }
 
-void GraphInformationSelection::setVisible(CurveType::Enum curveType, bool isVisible)
-{
-    setVisible(_currentStep, curveType, isVisible);
-}
-
-void GraphInformationSelection::setVisible(StepType::Enum stepType, CurveType::Enum curveType, bool isVisible)
-{
-    if (_graphInfo[stepType][curveType].visible != isVisible)
-    {
-        _graphInfo[stepType][curveType].visible = isVisible;
-        if (stepType == _currentStep)
-        {
-            updateProperties();
-        }
-    }
-}
-
 void GraphInformationSelection::setAvailable(CurveType::Enum curveType, bool isAvailable)
 {
     setAvailable(_currentStep, curveType, isAvailable);
@@ -204,67 +187,47 @@ void GraphInformationSelection::setPercentile(PercentileRangeEnum percentileRang
 
 void GraphInformationSelection::updateProperties()
 {
-    _presentPopulationPrediction = _graphInfo[_currentStep][CurveType::PopulationPrediction].available;
-    _displayPopulationPrediction = _graphInfo[_currentStep][CurveType::PopulationPrediction].visible;
+    _displayPopulationPrediction = _graphInfo[_currentStep][CurveType::PopulationPrediction].available;
 
-    _presentPopulationPercentiles = _graphInfo[_currentStep][CurveType::PopulationPercentiles].available;
-    _displayPopulationPercentiles = _graphInfo[_currentStep][CurveType::PopulationPercentiles].visible;
+    _displayPopulationPercentiles = _graphInfo[_currentStep][CurveType::PopulationPercentiles].available;
 
-    _presentAprioriPrediction = _graphInfo[_currentStep][CurveType::APrioriPrediction].available;
-    _displayAprioriPrediction = _graphInfo[_currentStep][CurveType::APrioriPrediction].visible;
+    _displayAprioriPrediction = _graphInfo[_currentStep][CurveType::APrioriPrediction].available;
 
-    _presentAprioriPercentiles = _graphInfo[_currentStep][CurveType::AprioriPercentiles].available;
-    _displayAprioriPercentiles = _graphInfo[_currentStep][CurveType::AprioriPercentiles].visible;
+    _displayAprioriPercentiles = _graphInfo[_currentStep][CurveType::AprioriPercentiles].available;
 
-    _presentAposterioriPrediction = _graphInfo[_currentStep][CurveType::APosterioriPrediction].available;
-    _displayAposterioriPrediction = _graphInfo[_currentStep][CurveType::APosterioriPrediction].visible;
+    _displayAposterioriPrediction = _graphInfo[_currentStep][CurveType::APosterioriPrediction].available;
 
-    _presentAposterioriPercentiles = _graphInfo[_currentStep][CurveType::APosterioriPercentiles].available;
-    _displayAposterioriPercentiles = _graphInfo[_currentStep][CurveType::APosterioriPercentiles].visible;
+    _displayAposterioriPercentiles = _graphInfo[_currentStep][CurveType::APosterioriPercentiles].available;
 
-    _presentMeasures = _graphInfo[_currentStep][CurveType::Measure].available;
-    _displayMeasures = _graphInfo[_currentStep][CurveType::Measure].visible;
+    _displayMeasures = _graphInfo[_currentStep][CurveType::Measure].available;
 
-    _presentPossibleAdjustments = _graphInfo[_currentStep][CurveType::PossibleAdjustments].available;
-    _displayPossibleAdjustments = _graphInfo[_currentStep][CurveType::PossibleAdjustments].visible;
+    _displayPossibleAdjustments = _graphInfo[_currentStep][CurveType::PossibleAdjustments].available;
 
-    _presentSelectedAdjustment = _graphInfo[_currentStep][CurveType::SelectedAdjustments].available;
-    _displaySelectedAdjustment = _graphInfo[_currentStep][CurveType::SelectedAdjustments].visible;
+    _displaySelectedAdjustment = _graphInfo[_currentStep][CurveType::SelectedAdjustments].available;
 
-    _presentTargets = _graphInfo[_currentStep][CurveType::Target].available;
-    _displayTargets = _graphInfo[_currentStep][CurveType::Target].visible;
+    _displayTargets = _graphInfo[_currentStep][CurveType::Target].available;
 
     setModified(true);
 }
 
-AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentPopulationPrediction, PresentPopulationPrediction)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayPopulationPrediction, DisplayPopulationPrediction)
 
-AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentAprioriPrediction, PresentAprioriPrediction)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayAprioriPrediction, DisplayAprioriPrediction)
 
-AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentAposterioriPrediction, PresentAposterioriPrediction)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayAposterioriPrediction, DisplayAposterioriPrediction)
 
-AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentPopulationPercentiles, PresentPopulationPercentiles)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayPopulationPercentiles, DisplayPopulationPercentiles)
 
-AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentAprioriPercentiles, PresentAprioriPercentiles)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayAprioriPercentiles, DisplayAprioriPercentiles)
 
-AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentAposterioriPercentiles, PresentAposterioriPercentiles)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayAposterioriPercentiles, DisplayAposterioriPercentiles)
 
-AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentPossibleAdjustments, PresentPossibleAdjustments)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayPossibleAdjustments, DisplayPossibleAdjustments)
 
-AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentSelectedAdjustment, PresentSelectedAdjustment)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displaySelectedAdjustment, DisplaySelectedAdjustment)
 
-AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentMeasures, PresentMeasures)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayMeasures, DisplayMeasures)
 
-AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, presentTargets, PresentTargets)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayTargets, DisplayTargets)
 
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc5_95, Perc5_95)

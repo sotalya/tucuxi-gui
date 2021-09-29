@@ -396,7 +396,7 @@
                 <formulation>parenteral solution</formulation><!-- dictionnaire -->
                 <administrationName>champ libre</administrationName>
                 <administrationRoute>intravenousDrip</administrationRoute> <!-- dictionnaire -->
-                <absorptionModelId>infusion</absorptionModelId>
+                <absorptionModel>infusion</absorptionModel>
 
 
                 <!-- Drug dosages -->

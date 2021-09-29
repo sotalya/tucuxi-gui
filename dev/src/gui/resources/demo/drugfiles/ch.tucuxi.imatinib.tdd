@@ -563,7 +563,7 @@ Bayesian and Alternative Methods to Predict Trough Levels</name>
                         <formulation>parenteral solution</formulation>
                         <administrationName>champ libre</administrationName>
                         <administrationRoute>oral</administrationRoute>
-                        <absorptionModelId>extra</absorptionModelId>
+                        <absorptionModel>extra</absorptionModel>
                         <dosages>
                             <analyteConversions>
                                 <analyteConversion>
@@ -607,7 +607,7 @@ Bayesian and Alternative Methods to Predict Trough Levels</name>
                         <absorptionParameters>
                             <parameterSetAnalyteGroup>
                                 <analyteGroupId>imatinib</analyteGroupId>
-                                <absorptionModelId>extra</absorptionModelId>
+                                <absorptionModel>extra</absorptionModel>
                                 <parameterSet>
                                     <parameters>
                                         <parameter>

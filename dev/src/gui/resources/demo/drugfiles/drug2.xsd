@@ -145,7 +145,7 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="absorptionModelId">
+    <xs:simpleType name="absorptionModel">
         <xs:restriction base="notEmptyToken">
             <xs:enumeration value="extra" />
             <xs:enumeration value="infusion" />
@@ -692,7 +692,7 @@
         <xs:complexType name="parameterSetAnalyteGroup">
             <xs:sequence>
                 <xs:element name="analyteGroupId" type="notEmptyString" />
-                <xs:element name="absorptionModelId" type="absorptionModelId" />
+                <xs:element name="absorptionModel" type="absorptionModel" />
                 <xs:element name="parameterSet" type="parameterSet"/>
             </xs:sequence>
         </xs:complexType>
@@ -781,7 +781,7 @@
                 <xs:element name="formulation" type="xs:string" />
                 <xs:element name="administrationName" type="xs:string" />
                 <xs:element name="administrationRoute" type="xs:string" />
-                <xs:element name="absorptionModelId" type="absorptionModelId" />
+                <xs:element name="absorptionModel" type="absorptionModel" />
                 <xs:element ref="dosages" />
                 <xs:element name="absorptionParameters" type="groupParameters" />
             </xs:sequence>

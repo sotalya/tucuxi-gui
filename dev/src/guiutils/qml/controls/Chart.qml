@@ -550,7 +550,7 @@ Canvas {
         updateChartDimensions();
         Graphing.drawGraph(this);
         if (graphInformationSelection.displayCurrentTime) {
-            Clock.showClock();
+            Clock.showClock(this);
         }
         Graphing.drawAnnotations(this);
     }
@@ -642,14 +642,14 @@ Canvas {
     }
 
     function resume() {
-        Trails.setTargetSize(0);
+        Trails.setTargetSize(overlay, 0);
         overlay.fadeout = true;
     }
 
     function wait() {
         overlay.fadeout = false;
         overlay.visible = true;
-        Trails.setTargetSize(1);
+        Trails.setTargetSize(overlay, 1);
         waittima.start();
     }
     //    function showClock() {
@@ -662,6 +662,8 @@ Canvas {
         objectName: "chartOverlayView"
         visible: false
         anchors.fill: parent
+        property var overlay: this
+        property var mouseArea: canvas.mouseArea
 
         property int screen_width: width;
         property int screen_height: height;
@@ -682,11 +684,11 @@ Canvas {
 
 
         Component.onCompleted: {
-            Trails.init();
-            Trails.setTargetSize(0);
+            Trails.init(overlay);
+            Trails.setTargetSize(overlay, 0);
         }
         onPaint: {
-            Trails.loop();
+            Trails.loop(overlay);
         }
     }
 

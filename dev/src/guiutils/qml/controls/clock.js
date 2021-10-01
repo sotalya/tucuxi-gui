@@ -1,17 +1,22 @@
 //http://www.encodedna.com/html5/canvas/simple-analog-clock-using-canvas-javascript.htm
 .import "graphing.js" as Graphing;
 
-function showClock() {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function showClock(cdata) {
 
-    if (!popP) {return;}
+    if (!cdata.popP) {
+        return;
+    }
+
     // DEFINE CANVAS AND ITS CONTEXT.
+    var canvas = cdata.canvas;
     var ctx = canvas.getContext('2d');
 
     var angle;
     var secHandLength = 10;
 
-    var nowsecs = date.getTime() / 1000;
-    var centerx = Graphing.atime2screen(nowsecs);
+    var nowsecs = cdata.date.getTime() / 1000;
+    var centerx = atime2screen(cdata, nowsecs);
     //    var centerx = canvas.width * 0.5;
     var centery = canvas.height * 0.2;
     // CLEAR EVERYTHING ON THE CANVAS. RE-DRAW NEW ELEMENTS EVERY SECOND.
@@ -80,7 +85,7 @@ function showClock() {
 
     function show_seconds() {
 
-        var sec = date.getSeconds();
+        var sec = cdata.date.getSeconds();
         angle = ((Math.PI * 2) * (sec / 60)) - ((Math.PI * 2) / 4);
         ctx.lineWidth = 0.5;              // HAND WIDTH.
 
@@ -103,7 +108,7 @@ function showClock() {
 
     function show_minutes() {
 
-        var min = date.getMinutes();
+        var min = cdata.date.getMinutes();
         angle = ((Math.PI * 2) * (min / 60)) - ((Math.PI * 2) / 4);
         ctx.lineWidth = 1.5;              // HAND WIDTH.
 
@@ -119,8 +124,8 @@ function showClock() {
 
     function show_hours() {
 
-        var hour = date.getHours();
-        var min = date.getMinutes();
+        var hour = cdata.date.getHours();
+        var min = cdata.date.getMinutes();
         angle = ((Math.PI * 2) * ((hour * 5 + (min / 60) * 5) / 60)) - ((Math.PI * 2) / 4);
         ctx.lineWidth = 1.5;              // HAND WIDTH.
 
@@ -140,7 +145,7 @@ function showClock() {
         ctx.globalAlpha = 0.1;
         ctx.beginPath();
         ctx.moveTo(centerx, centery + secHandLength + 5);
-        ctx.lineTo(centerx, bottomLeftY);
+        ctx.lineTo(centerx, cdata.bottomLeftY);
         ctx.stroke();
     }
 
@@ -156,5 +161,15 @@ function showClock() {
 
     draw_time_line();
 
-    overlay.requestPaint();
+    // FC: what does this here? Overlay seems related to trail.js, not clock.js
+    //overlay.requestPaint();
+}
+
+/**
+ * FC: This function is the same as in graphing.js. Unfortunately it cannot be imported in a way that is
+ * compatible with both the QT app and webpack, so let's copy it there instead.
+ */
+function atime2screen(cdata, t)
+{
+    return ((t - cdata.minX) * cdata.xRatio) + cdata.bottomLeftX;
 }

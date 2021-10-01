@@ -1,20 +1,23 @@
 
 /**
  * adapted from http://hakim.se/experiments/
+ * FC: wrapped all globally injected properties inside a "tdata" parameter passed to all functions.
  */
 
-function init() {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function init(tdata) {
 
-    if (overlay && overlay.getContext) {
-        //var context = overlay.getContext('2d');
-        createParticles();
+    // FC: put overlay inside tdata instead of attaching extra properties to overlay
+    if (tdata.overlay && tdata.overlay.getContext) {
+        //var context = tdata.overlay.getContext('2d');
+        createParticles(tdata);
     }
 }
 
-function createParticles() {
-    overlay.particles = [];
+function createParticles(tdata) {
+    tdata.particles = [];
 
-    for (var i = 0; i < overlay.quantity; i++) {
+    for (var i = 0; i < tdata.quantity; i++) {
         var particle = {
             position: { x: 0, y: 0 },
             shift: { x: 0, y: 0 },
@@ -25,22 +28,23 @@ function createParticles() {
             speed: 0.01+Math.random()*0.04,
             targetSize: 1,
             fillColor: '#' + (Math.random() * 0x404040 + 0xaaaaaa | 0).toString(16),
-            orbit: overlay.radius*.5 + (overlay.radius* .5 * Math.random())
+            orbit: tdata.radius*.5 + (tdata.radius* .5 * Math.random())
         };
 
-        overlay.particles.push( particle );
+        tdata.particles.push( particle );
     }
 }
 
-function setTargetSize(tsize) {
-    for (var i = 0; i < overlay.particles.length; i++) {
-        overlay.particles[i].targetSize = tsize;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function setTargetSize(tdata, tsize) {
+    for (var i = 0; i < tdata.particles.length; i++) {
+        tdata.particles[i].targetSize = tsize;
     }
 }
 
-function isCleared() {
-    for (var i = 0, len = overlay.particles.length; i < len; i++) {
-        if (overlay.particles[i].size > 0.1) {
+function isCleared(tdata) {
+    for (var i = 0, len = tdata.particles.length; i < len; i++) {
+        if (tdata.particles[i].size > 0.1) {
             return false;
         }
     }
@@ -48,31 +52,33 @@ function isCleared() {
 
 }
 
-function loop() {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function loop(tdata) {
 
-    var context = overlay.getContext('2d');
-    if( mouseArea.pressed) {
+    var context = tdata.overlay.getContext('2d');
+    if( tdata.mouseArea.pressed) {
         // Scale upward to the max scale
-        overlay.radius_scale += ( overlay.radius_scale_max - overlay.radius_scale) * (0.02);
+        tdata.radius_scale += ( tdata.radius_scale_max - tdata.radius_scale) * (0.02);
     }
     else {
         // Scale downward to the min scale
-        overlay.radius_scale -= ( overlay.radius_scale - overlay.radius_scale_min) * (0.02);
+        tdata.radius_scale -= ( tdata.radius_scale - tdata.radius_scale_min) * (0.02);
     }
 
-    overlay.radius_scale = Math.min( overlay.radius_scale, overlay.radius_scale_max);
+    tdata.radius_scale = Math.min( tdata.radius_scale, tdata.radius_scale_max);
 
     // Fade out the lines slowly by drawing a rectangle over the entire overlay
-    if (overlay.fadeout && isCleared()) {
-        waittima.stop();
-        context.clearRect(0, 0, overlay.width, overlay.height);
-        return;
+    if (tdata.fadeout && isCleared(tdata)) {
+        context.clearRect(0, 0, tdata.overlay.width, tdata.overlay.height);
+        return false;   // FC: return false so the controller can know it should stop calling loop()
     }
-    context.fillStyle = Qt.rgba(1,1,1,0.05);
-    context.fillRect(0, 0, overlay.width, overlay.height);
 
-    for (var i = 0, len = overlay.particles.length; i < len; i++) {
-        var particle = overlay.particles[i];
+    // FC: using a string instead of Qt.rgba(), not sure it is compatible with Qt. Maybe pass this with tdata instead
+    context.fillStyle = "rgba(255, 255, 255, 0.05)";
+    context.fillRect(0, 0, tdata.overlay.width, tdata.overlay.height);
+
+    for (var i = 0, len = tdata.particles.length; i < len; i++) {
+        var particle = tdata.particles[i];
 
         var lp = { x: particle.position.x, y: particle.position.y };
 
@@ -86,12 +92,12 @@ function loop() {
 //        particle.shift.y += ( mouseArea.mouseY - particle.shift.y) * (particle.speed);
 
         // Apply position
-        particle.position.x = particle.shift.x + Math.cos(i + particle.angle) * (particle.orbit*overlay.radius_scale);
-        particle.position.y = particle.shift.y + Math.sin(i + particle.angle) * (particle.orbit*overlay.radius_scale);
+        particle.position.x = particle.shift.x + Math.cos(i + particle.angle) * (particle.orbit*tdata.radius_scale);
+        particle.position.y = particle.shift.y + Math.sin(i + particle.angle) * (particle.orbit*tdata.radius_scale);
 
         // Limit to screen bounds
-        particle.position.x = Math.max( Math.min( particle.position.x, overlay.width), 0 );
-        particle.position.y = Math.max( Math.min( particle.position.y, overlay.height), 0 );
+        particle.position.x = Math.max( Math.min( particle.position.x, tdata.overlay.width), 0 );
+        particle.position.y = Math.max( Math.min( particle.position.y, tdata.overlay.height), 0 );
 
         particle.size += ( particle.targetSize - particle.size ) * 0.05;
 
@@ -110,8 +116,6 @@ function loop() {
         context.arc(particle.position.x, particle.position.y, particle.size/2, 0, Math.PI*2, true);
         context.fill();
     }
+
+    return true;    // FC: return true so the controller can know it should continue calling loop()
 }
-
-
-
-

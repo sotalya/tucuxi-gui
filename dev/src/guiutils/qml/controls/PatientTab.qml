@@ -489,7 +489,7 @@ Rectangle {
         //Physician
         EntityView {
             id: physicianInCharge
-            Layout.preferredHeight: 220
+            Layout.preferredHeight: 260
             Layout.minimumHeight:   150
             property var model: patientListView.currentItem? patientListView.currentItem.selected_model : 0
 
@@ -562,6 +562,26 @@ Rectangle {
                         onTextChanged: {
                             if (!patientExtra.model) {return;}
                             interpretation.request.practician.institute.name = text;
+                        }
+                    }
+                }
+                ,
+                RowLayout {
+                    Layout.preferredHeight: physicianInCharge.rowHeight
+                    Layout.minimumHeight:   physicianInCharge.rowHeight
+                    spacing: 2
+
+                    EntityLabel {
+                        Layout.preferredWidth: 75
+                        text: "Address:"
+                    }
+                    EntityTextField {
+                        Layout.fillWidth:  true
+                        placeholderText: "address"
+                        text: interpretation.request.practician ? interpretation.request.practician.institute.location.address : ""
+                        onTextChanged: {
+                            if (!patientExtra.model) {return;}
+                            interpretation.request.practician.institute.location.address = text;
                         }
                     }
                 }

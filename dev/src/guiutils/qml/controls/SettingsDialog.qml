@@ -13,7 +13,7 @@ DialogBase {
     id: root
     title: "Application settings"
     width: 600
-    height: 400
+    height: 440
 
     property var self
 
@@ -25,6 +25,7 @@ DialogBase {
         analyst.person.firstname = analystFirstname.text
         analyst.person.name = analystLastname.text
         analyst.role = analystRole.text
+        analyst.institute.location.address = analystAddress.text
         analyst.person.location.city = analystCity.text
         analyst.person.location.postcode = analystPostcode.text
         analyst.person.location.state = analystState.text
@@ -80,6 +81,8 @@ DialogBase {
         analystLastname.text = analyst.person.name
         analystFirstname.text = analyst.person.firstname
 
+        if (analyst.institute)
+            analystAddress.text = analyst.institute.location.address
         analystCity.text = analyst.person.location.city
         analystPostcode.text = analyst.person.location.postcode
         analystState.text = analyst.person.location.state
@@ -238,6 +241,24 @@ DialogBase {
                                 id: analystAffiliation
                                 Layout.fillWidth:  true
                                 placeholderText: "affiliation"
+
+                            }
+                        }
+
+                        RowLayout {
+                            //Layout.preferredHeight: physicianInCharge.rowHeight
+                            //Layout.minimumHeight:   physicianInCharge.rowHeight
+                            Layout.minimumWidth: 400
+                            spacing: 2
+
+                            EntityLabel {
+                                Layout.preferredWidth: 75
+                                text: "Address:"
+                            }
+                            EntityTextField {
+                                id: analystAddress
+                                Layout.fillWidth:  true
+                                placeholderText: "address"
 
                             }
                         }

@@ -28,6 +28,7 @@ DialogBase {
     property var measureText:       "Measures";
     property var currentTimeText:   "Current time";
     property var covariateChangeText: "Covariate change";
+    property var liveAnnotationsText: "Live annotations";
 
     property var currentPopPred;
     property var currentPopPerc;
@@ -47,6 +48,7 @@ DialogBase {
 
     property var currentCurrentTime;
     property var currentCovariateChange;
+    property var currentLiveAnnotations;
 
     // Intercept Return to validate the dialog
     Shortcut {
@@ -122,6 +124,9 @@ DialogBase {
         covariateChangeCB.checked = graphInformationSelection.displayCovariateChange
         currentCovariateChange = covariateChangeCB.checked
 
+        liveAnnotationsCB.checked = graphInformationSelection.displayLiveAnnotations
+        currentLiveAnnotations = liveAnnotationsCB.checked
+
     }
 
     function restore(){
@@ -143,6 +148,7 @@ DialogBase {
 
         graphInformationSelection.displayCurrentTime = currentCurrentTime
         graphInformationSelection.displayCovariateChange = currentCovariateChange
+        graphInformationSelection.displayLiveAnnotations = currentLiveAnnotations
     }
 
 
@@ -318,10 +324,6 @@ DialogBase {
 
                 ColumnLayout{
                     spacing: 1
-                    Text {
-                        id: name
-                        text: qsTr("Percentiles")
-                    }
 
                     RowLayout {
                         CheckBox {
@@ -338,6 +340,14 @@ DialogBase {
                             onClicked: { graphInformationSelection.displayCovariateChange = this.checked; }
                             TooltipArea {
                                 text : ToolTips.chart.displayCovariateChange
+                            }
+                        }
+                        CheckBox {
+                            id: liveAnnotationsCB
+                            text: liveAnnotationsText
+                            onClicked: { graphInformationSelection.displayLiveAnnotations = this.checked; }
+                            TooltipArea {
+                                text : ToolTips.chart.displayLiveAnnotations
                             }
                         }
                     }

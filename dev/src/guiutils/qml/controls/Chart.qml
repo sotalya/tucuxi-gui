@@ -18,6 +18,8 @@ Canvas {
     property var img_dosages_disabled_mini : "qrc:/icons/flow/dosages_disabled_mini.png";
 
     property var canvas : this;
+    property var annotationsCanvas : overlayAnnotations;
+    property var clockCanvas : this;
 
     property var module: Canvas.FramebufferObject;
 
@@ -138,6 +140,11 @@ Canvas {
     //ToDo: remove default unit
     property string unit: "ug/l"
     property real unitefforder: 1
+
+    function rePaint() {
+        requestPaint();
+        overlayAnnotations.requestPaint();
+    }
 
     function saveGraph(fileName) {
         canvas.save(fileName);
@@ -350,7 +357,7 @@ Canvas {
     Connections {
         target: graphInformationSelection
         onHasBeenModified: {
-            canvas.requestPaint();
+            canvas.rePaint();
         }
     }
 
@@ -369,14 +376,14 @@ Canvas {
                 case 7: canvas.state = "validation"; break;
                 case 8: canvas.state = "report"; break;
             }
-            canvas.requestPaint();
+            canvas.rePaint();
         }
     }
 
     Connections {
         target: reportTab
         onToggleShow: {
-            canvas.requestPaint();
+            canvas.rePaint();
         }
         onPublishReport: {
             canvas.save(appPath + "/graph.png");
@@ -392,7 +399,7 @@ Canvas {
                 canvas.revP.objat(i).predictionData.selected = false;
             }
             canvas.revP.objat(index).predictionData.selected = true;
-            canvas.requestPaint();
+            canvas.rePaint();
         }
     }
     signal curveSelectionEvent(bool selected, int index);
@@ -408,7 +415,7 @@ Canvas {
                 //    console.log(dosages[j].endtime)
             }
             canvas.currentDosage = dosages[index];
-            requestPaint();
+            rePaint();
         }
     }
 
@@ -416,7 +423,7 @@ Canvas {
         target: targetTab
         onCurrentIndexChanged: {
             canvas.targetTabIndex = index;
-            requestPaint();
+            rePaint();
         }
     }
 
@@ -516,19 +523,19 @@ Canvas {
 
     function predUpdate(prediction, predType) {
         preparePrediction(prediction, predType);
-        requestPaint();
+        rePaint();
     }
 
 
     function updatePercs(pairs) {
         preparePercs(pairs);
-        requestPaint();
+        rePaint();
     }
 
 
     onUnitChanged: {
         updateUnits();
-        requestPaint();
+        rePaint();
     }
 
     Component.onCompleted: {
@@ -539,7 +546,7 @@ Canvas {
         //        var yu2 = isImageLoading("qrc:/icons/flow/covariates_disabled_mini.png");
         //        console.log("IMAGE LOADING: " + yu);
         updateUnits();
-        requestPaint();
+        rePaint();
     }
     onImageLoaded: {
         //        var yes = isImageLoaded("qrc:/icons/flow/dosages_disabled_mini.png");
@@ -552,13 +559,39 @@ Canvas {
         if (graphInformationSelection.displayCurrentTime) {
             Clock.showClock(this);
         }
-        Graphing.drawAnnotations(this);
+        //Graphing.drawAnnotations(this);
     }
 
     Timer {
         id: clocktima
         interval: 1000; running: true; repeat: true
         onTriggered: date = new Date();
+    }
+
+    Canvas {
+        id: overlayAnnotations
+        z: 2
+        objectName: "chartOverlayAnnotationsView"
+        visible: true
+        anchors.fill: parent
+        property var overlay: this
+        property var mouseArea: canvas.mouseArea
+
+        property int screen_width: width;
+        property int screen_height: height;
+        property real radius: 50;
+        property real radius_scale: 1;
+        property real radius_scale_min: 1;
+        property real radius_scale_max: 1.5;
+        property int quantity: 25;
+        property var particles: [];
+        property real fadealpha: 0.05;
+        property bool fadeout: false
+
+        onPaint: {
+            getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+            Graphing.drawAnnotations(canvas);
+        }
     }
 
     //ToDo: horizontal offset and zoom only
@@ -577,10 +610,12 @@ Canvas {
         property int tooltipX: -1
         property int tooltipY: -1
 
+        propagateComposedEvents: true
+
         onDoubleClicked: {
             manualextents(canvas);
             tooltipX = -1;  // Clear tooltip
-            canvas.requestPaint();
+            canvas.rePaint();
         }
 
         onClicked: {
@@ -590,7 +625,7 @@ Canvas {
         onReleased: {
             if (mouse.button  == Qt.LeftButton) {
                 closestPred.selected = !closestPred.selected && closestPred.highlight;
-                canvas.requestPaint();
+                overlayAnnotations.requestPaint();
             }
         }
 
@@ -626,12 +661,17 @@ Canvas {
             }
             isMouseOver = mouse.x >= canvas.topLeftX && mouse.x <= canvas.topRightX &&
                           mouse.y >= canvas.topLeftY && mouse.y <= canvas.bottomLeftY;
+            if (graphInformationSelection.displayLiveAnnotations) {
+                tooltipX = mouse.x;
+                tooltipY = mouse.y;
+                overlayAnnotations.requestPaint();
+            }
         }
 
         onWheel: {
             if (wheel.modifiers & Qt.ShiftModifier) {
                 zoomY(wheel.angleDelta.y/120);
-                requestPaint();
+                rePaint();
             }
             else {
                 // For most mice, 120 equals one step of the wheel.

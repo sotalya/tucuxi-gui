@@ -1490,7 +1490,7 @@ function findEnablePercentiles(cdata)
 function drawAnnotations(cdata)
 {
     var i;
-    var ctx = cdata.canvas.getContext("2d");
+    var ctx = cdata.annotationsCanvas.getContext("2d");
 
     ctx.lineWidth = 1;
     ctx.globalAlpha = 1.0;

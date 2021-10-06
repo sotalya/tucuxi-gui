@@ -9,7 +9,7 @@ function showClock(cdata) {
     }
 
     // DEFINE CANVAS AND ITS CONTEXT.
-    var canvas = cdata.canvas;
+    var canvas = cdata.clockCanvas;
     var ctx = canvas.getContext('2d');
 
     var angle;

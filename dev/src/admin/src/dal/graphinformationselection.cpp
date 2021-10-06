@@ -96,6 +96,7 @@ void GraphInformationSelection::loadDisplayParametersSettings(){
     QMap<QString, QVariant> generalParameters = SETTINGS.get(ezechiel::core::Module::GUI, "GeneralDisplayParameters").toMap();
     _displayCurrentTime = generalParameters.value("displayCurrentTime", true).toBool();
     _displayCovariateChange = generalParameters.value("displayCovariateChange", true).toBool();
+    _displayLiveAnnotations = generalParameters.value("displayLiveAnnotations", true).toBool();
 
 }
 
@@ -139,6 +140,7 @@ void GraphInformationSelection::saveSettings(){
     QMap<QString, QVariant> general;
     general["displayCurrentTime"] = _displayCurrentTime;
     general["displayCovariateChange"] = _displayCovariateChange;
+    general["displayLiveAnnotations"] = _displayLiveAnnotations;
 
 
     percentiles.append(_perc50);
@@ -234,6 +236,8 @@ AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc5_95, Perc5_95)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc10_90, Perc10_90)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc25_75, Perc25_75)
 AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, perc50, Perc50)
+
+AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayLiveAnnotations, DisplayLiveAnnotations)
 
 
 //AUTO_PROPERTY_IMPL(GraphInformationSelection, bool, displayCurrentTime, DisplayCurrentTime)

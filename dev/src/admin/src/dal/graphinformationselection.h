@@ -56,6 +56,7 @@ class GraphInformationSelection : public ezechiel::core::Entity
 
     AUTO_PROPERTY_DECL(bool, displayCurrentTime, DisplayCurrentTime)
     AUTO_PROPERTY_DECL(bool, displayCovariateChange, DisplayCovariateChange)
+    AUTO_PROPERTY_DECL(bool, displayLiveAnnotations, DisplayLiveAnnotations)
 
 
     public:

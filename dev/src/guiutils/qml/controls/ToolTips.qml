@@ -252,6 +252,7 @@ QtObject {
         readonly property string revVisible : qsTr("Highlight the i>a posteriori</i> prediction resulting from the suggested dosage adjustment")
         readonly property string displayCurrentTime : qsTr("Display the current time on the graph, thanks to a vertical line")
         readonly property string displayCovariateChange : qsTr("Display covariate changes on the X-axis")
+        readonly property string displayLiveAnnotations : qsTr("Display annotations when the mouse is on the graph")
     }
 
     property QtObject uncastedList: QtObject {

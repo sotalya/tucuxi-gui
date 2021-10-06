@@ -155,7 +155,12 @@ void ChartDataController::initiateUpdateAdjPred()
         chartData->setAdjPred(ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
+    // Here we add 2 months to get the steady state values in ChartDataController::receiveResultsAdjPred()
+    QDateTime oldEndDate = predictionspec->getEndDate();
+    predictionspec->setEndDate(oldEndDate.addMonths(2));
     calculationController->computeAdjPred(predictionspec);
+    // And back to the initial end date
+    predictionspec->setEndDate(oldEndDate);
 }
 
 void ChartDataController::initiateUpdateAdjPerc()
@@ -180,6 +185,8 @@ void ChartDataController::receiveResultsAdjPred(ezechiel::core::PredictionResult
     pred->setParent(chartData);
     chartData->setAdjPred(pred);
 
+    // Getting the steady state only works if we really reached steady state.
+    // It means it is not very right for drugs for neonates where the age in days can have an influence
     ezechiel::core::PredictionData *data = pred->getPredictive()->getPredictionData();
     int statIndex = data->getNbCycles() - 2;
     if (statIndex >= 0) {

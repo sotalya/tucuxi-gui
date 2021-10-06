@@ -1533,15 +1533,15 @@ function annotatePrediction(cdata, ctx, pred, index, color)
 {
     if (pred) {
         if (pred.predictive.predictionData.isValid && isCurveAvailable(cdata, index)) {
+            if (isCurveVisible(cdata, index)) {
+                annotateCurveLoci(cdata, ctx, pred.predictive.predictionData, index, color);
+            }
             findClosestValue(cdata, ctx, pred.predictive, pred.predictive.predictionData, index, color);
             if (pred.predictive.percentilePairs.isValid) {
                 var pairs = pred.predictive.percentilePairs;
                 for (var i = 0; i < pairs.size(); ++i) {
                     findClosestValue(cdata, ctx, pairs.objat(i), pairs.objat(i).predictionData, index, color);
                 }
-            }
-            if (isCurveVisible(cdata, index)) {
-                annotateCurveLoci(cdata, ctx, pred.predictive.predictionData, index, color);
             }
         }
     }

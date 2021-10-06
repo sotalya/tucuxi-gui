@@ -1,5 +1,5 @@
 
-function drawGraph(cdata)
+function drawGraph(cdata)   //eslint-disable-line @typescript-eslint/no-unused-vars
 {
     var ctx = cdata.canvas.getContext('2d');
 
@@ -9,7 +9,7 @@ function drawGraph(cdata)
     //Init context
     initContext(cdata, ctx);
     ctx.save();
-    extents(cdata, ctx);
+    extents(cdata);
     //    console.log(maxX + " " + minX);
 
     var adjTabShowPop = cdata.gInformationSelection.displayAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
@@ -57,7 +57,7 @@ function drawGraph(cdata)
 
             //draw pop curves if indicated in show or measurestab with no measures
             if (cdata.gInformationSelection.displayPopulationPrediction || adjTabShowPop) {
-                drawPop(cdata, ctx, cdata.colors, cdata.popcolors);
+                drawPop(cdata, ctx, cdata.colors);
             }
 
             //draw apriori if indicated in show
@@ -65,7 +65,7 @@ function drawGraph(cdata)
                 if (cdata.aprP.predictive.predictionData.isValid) {
 
                     if (cdata.gInformationSelection.displayAprioriPrediction || adjTabShowApr) {
-                        drawApr(cdata, ctx, cdata.colors, cdata.aprcolors);
+                        drawApr(cdata, ctx, cdata.colors);
                     }
                 }
             }
@@ -75,7 +75,7 @@ function drawGraph(cdata)
                 if (cdata.apoP.predictive.predictionData.isValid) {
 
                     if (cdata.gInformationSelection.displayAposterioriPrediction && cdata.hasMeasures){
-                        drawApo(cdata, ctx, cdata.colors, cdata.apocolors);
+                        drawApo(cdata, ctx, cdata.colors);
                     }
                 }
             }
@@ -154,7 +154,7 @@ function drawGraph(cdata)
     clearBorder(cdata, ctx);
 
     //draw non plot area (axes, legends, etc)
-    drawNonPlotArea(cdata, ctx, cdata.colors, cdata.pop);
+    drawNonPlotArea(cdata, ctx);
 
     //draw descriptions
 //    if (!graphInformationSelection.displayPopulationPrediction &&
@@ -188,28 +188,30 @@ function getAdjustmentFilter(cdata, filterMax)
     return
 }
 
-function drawPop(cdata, ctx, colors, popcolors)
+function drawPop(cdata, ctx, colors)
 {
     drawCurve(cdata, ctx, cdata.popP.predictive.predictionData, colors[1], getAdjustmentFilter(cdata, true));
     ctx.restore();
     ctx.save();
 }
 
-function drawApr(cdata, ctx, colors, aprcolors)
+function drawApr(cdata, ctx, colors)
 {
     drawCurve(cdata, ctx, cdata.aprP.predictive.predictionData, colors[2], getAdjustmentFilter(cdata, true));
     ctx.restore();
     ctx.save();
 }
 
-function drawApo(cdata, ctx, colors, apocolors)
+function drawApo(cdata, ctx, colors)
 {
     drawCurve(cdata, ctx, cdata.apoP.predictive.predictionData, colors[4], getAdjustmentFilter(cdata, true));
     ctx.restore();
     ctx.save();
 }
 
-function drawReverse(cdata, ctx, colors, revcolors)
+// FC: leaving the unused revcolors parameter, was probably intended to be used to draw multiple adjustments in
+// different colors.
+function drawReverse(cdata, ctx, colors, revcolors)     //eslint-disable-line @typescript-eslint/no-unused-vars
 {
     for (var i = 0; i < cdata.revP.size(); ++i)
     {
@@ -319,7 +321,7 @@ function drawPercentilesAdjustments(cdata, ctx, pairs, color, colors)
     return;
 }
 
-function drawNonPlotArea(cdata, ctx, colors, index)
+function drawNonPlotArea(cdata, ctx)
 {
     //Draw the plot
     drawAxis(cdata, ctx);
@@ -328,10 +330,11 @@ function drawNonPlotArea(cdata, ctx, colors, index)
     drawAxisTicks(cdata, ctx);
     drawAxisLabels(cdata, ctx);
     //Draw the labels
-    drawLegends(cdata, ctx, colors);
+    drawLegends(cdata, ctx);
 }
 
-function drawSoftwareDescription(cdata, ctx, text)
+// FC: this function is called from a commented out piece of code, so let's keep it
+function drawSoftwareDescription(cdata, ctx, text)  //eslint-disable-line @typescript-eslint/no-unused-vars
 {
     ctx.fillText(text, 100, 50);
 }
@@ -395,7 +398,7 @@ function initContext(cdata, ctx)
 }
 
 
-function extents(cdata, ctx)
+function extents(cdata)
 {
     // /!\ var has a weird scope: it spreads in all the function, meaning that 2 for loops declaring a "var i" variable
     // will trigger a "i is already defined" error in eslint. The "let" keyword to declare variable has a more
@@ -619,9 +622,6 @@ function drawTargets(cdata, ctx, times, predData)
 
     //ToDo: Ignore filtered curves in the calculation of max and min, and move it canvas properties
 
-    var mouseX = ascreen2time(cdata, cdata.mArea.mouseX);
-    var mouseY = ascreen2acxn(cdata, cdata.mArea.mouseY);
-
     // console.log("Nb targets = " + targets.length);
 
     for (var targetIndex = 0; targetIndex < targets.length; ++targetIndex)
@@ -630,7 +630,7 @@ function drawTargets(cdata, ctx, times, predData)
         ctx.fillStyle = "blue";
         ctx.lineWidth = 1 * cdata.scale;
         
-        var i, t, v, leftgrd, rightgrd, startY, crossSize, gradientSize;
+        var i, t, leftgrd, rightgrd, crossSize, gradientSize;
         var ttpe = targets[targetIndex].type.value;
         var y_mean = acxn2screen(cdata, targets[targetIndex].cbest.dbvalue * targets[targetIndex].cbest.multiplier);
         var y_max = acxn2screen(cdata, targets[targetIndex].cmax.dbvalue * targets[targetIndex].cmax.multiplier);
@@ -680,8 +680,6 @@ function drawTargets(cdata, ctx, times, predData)
                     ctx.fillStyle = rightgrd
                     ctx.fillRect(t, y_min, gradientSize, y_max - y_min);
                     ctx.stroke();
-
-                    startY = cdata.bottomLeftY;
 
                     ctx.globalAlpha = 1;
                     ctx.beginPath();
@@ -742,8 +740,6 @@ function drawTargets(cdata, ctx, times, predData)
                 ctx.fillStyle = rightgrd
                 ctx.fillRect(t, y_min, gradientSize, y_max - y_min);
                 ctx.stroke();
-
-                startY = cdata.bottomLeftY;
 
                 ctx.globalAlpha = 1;
                 ctx.beginPath();
@@ -932,8 +928,6 @@ function drawAxisTicks(cdata, ctx)
     //Draw x-ticks
     var ticktimes = [];
     var earliest = ascreen2time(cdata, cdata.bottomLeftX);
-    var latest = ascreen2time(cdata, cdata.canvas.width);
-    var axisMaximumWidth = latest - earliest;
     var date = new Date(earliest * 1000);
     var hourHalfWidth = 14 * cdata.scale;
     var dateHalfWidth = 2 * hourHalfWidth;
@@ -1211,7 +1205,7 @@ function drawAxisLabels(cdata, ctx)
     ctx.save();
 }
 
-function drawLegends(cdata, ctx, colors)
+function drawLegends(cdata, ctx)
 {
     //Settings
     ctx.textAlign    = "left";
@@ -1354,6 +1348,8 @@ function drawLegends(cdata, ctx, colors)
     ctx.save();
 }
 
+// FC: not called anywhere but may be useful ?
+//eslint-disable-next-line @typescript-eslint/no-unused-vars
 function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY)
 {
     var denominator, a, b, numerator1, numerator2, result = {
@@ -1389,7 +1385,8 @@ function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, l
     return result;
 }
 
-function checkPointProximity(x1, y1, x2, y2, useScale)
+// FC: useScale parameter is not used (yet). Not sure if it will be or was used for something, so I let it live for now
+function checkPointProximity(x1, y1, x2, y2, useScale)  //eslint-disable-line @typescript-eslint/no-unused-vars
 {
     var tolerance = 10;
     return Math.abs(x1 - x2) <= tolerance && Math.abs(y1 - y2) <= tolerance;
@@ -1487,7 +1484,7 @@ function findEnablePercentiles(cdata)
 // Previously in annotations.js
 /////////////////////////////////////////////////////////
 
-function drawAnnotations(cdata)
+function drawAnnotations(cdata)     //eslint-disable-line @typescript-eslint/no-unused-vars
 {
     var i;
     var ctx = cdata.annotationsCanvas.getContext("2d");
@@ -1536,6 +1533,7 @@ function annotatePrediction(cdata, ctx, pred, index, color)
             if (isCurveVisible(cdata, index)) {
                 annotateCurveLoci(cdata, ctx, pred.predictive.predictionData, index, color);
             }
+
             findClosestValue(cdata, ctx, pred.predictive, pred.predictive.predictionData, index, color);
             if (pred.predictive.percentilePairs.isValid) {
                 var pairs = pred.predictive.percentilePairs;
@@ -1604,7 +1602,6 @@ function annotateCovariate(cdata, ctx, pvar, color)
     var timeX = atime2screen(cdata, time);
     var startY = cdata.bottomLeftY;
 
-    var tl = cdata.topLeftX;
     if (timeX < cdata.topLeftX || timeX > cdata.bottomRightX) {
         return;
     }
@@ -1695,8 +1692,6 @@ function findClosestValue(cdata, ctx, predictive, predData, index, color)
     var x2 = x[current + 1];
     var dx = x2 - x1;
 
-    var rat = cdata.xRatio;
-    var minxx = cdata.minX;
     var val = y1 + (mousexms - x1)/dx * dy;
 
     var pointAtMeasure = [];

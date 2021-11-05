@@ -48,7 +48,7 @@ DateTime EzToTucucoreTranslator::buildDateTime(const QDateTime &qDate)
 
 Tucuxi::Common::TucuUnit EzToTucucoreTranslator::buildUnit(const QString &_strUnit)
 {
-    return Tucuxi::Common::TucuUnit(_strUnit.toLatin1().data());
+    return Tucuxi::Common::TucuUnit(_strUnit.toStdString());
 }
 
 Tucuxi::Core::PredictionParameterType EzToTucucoreTranslator::buildParameterType(const ezechiel::core::ParamTraits *traits)

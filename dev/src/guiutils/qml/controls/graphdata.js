@@ -317,6 +317,8 @@ class GraphFullData {
 
         // The canvas shall be set before this object is used
         this.canvas = null;
+        this.annotationsCanvas = null;
+        this.clockCanvas = null;
         
         this.colors = ["#bfbfbf",    // Unused
         "#3c4042",    // popPrediction

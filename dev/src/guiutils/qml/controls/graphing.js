@@ -525,6 +525,7 @@ function drawCurve(cdata, ctx, predData, color, filter)
 
     // This variable is used to know if we need to move before drawing the line.
     var continueLine = false;
+    var currentDate = cdata.date.getTime() / 1000;
 
     for (var i = 0; i < dataX.length - 2; i++)
     {
@@ -544,13 +545,12 @@ function drawCurve(cdata, ctx, predData, color, filter)
                 ctx.strokeStyle = color + 1;
             }
 
-            if (dataX[i] > cdata.date.getTime() / 1000) {
+            if (dataX[i] > currentDate) {
                 if (!isFuture) {
                     ctx.stroke();
                     ctx.beginPath();
                     ctx.globalAlpha = 0.6;
                     continueLine = false;
-                } else {
                     isFuture = true;
                 }
             }
@@ -671,10 +671,14 @@ function drawTargets(cdata, ctx, times, predData)
                     gradientSize = 20 * cdata.scale;
                     leftgrd = ctx.createLinearGradient(t, y_mean, t - gradientSize, y_mean);
                     leftgrd.addColorStop(0,"black");
-                    leftgrd.addColorStop(1,"white");
+                    //leftgrd.addColorStop(1,"white");
+                    //leftgrd.addColorStop(1,"#DEE2F1");
+                    leftgrd.addColorStop(1,"#F2F2FF");
                     rightgrd = ctx.createLinearGradient(t, y_mean, t + gradientSize, y_mean);
                     rightgrd.addColorStop(0,"black");
-                    rightgrd.addColorStop(1,"white");
+                    //rightgrd.addColorStop(1,"white");
+                    //rightgrd.addColorStop(1,"#DEE2F1");
+                    rightgrd.addColorStop(1,"#F2F2FF");
                     ctx.fillStyle = leftgrd
                     ctx.fillRect(t - gradientSize, y_min, gradientSize, y_max - y_min);
                     ctx.fillStyle = rightgrd

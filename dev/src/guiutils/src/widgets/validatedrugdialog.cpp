@@ -5,6 +5,7 @@
 
 #include "apputils/src/appcore.h"
 
+#include "tucucore/drugmodel/drugmodel.h"
 #include "tucucore/drugmodelchecker.h"
 #include "tucucore/drugmodelimport.h"
 #include "tucucore/pkmodel.h"
@@ -152,13 +153,16 @@ void ValidateDrugDialog::validateDrug()
     //Scan the drug
 
     Tucuxi::Core::DrugModel *dModel;
+    std::unique_ptr<Tucuxi::Core::DrugModel> uniqueDrugModel;
 
     Tucuxi::Core::DrugModelImport importer;
-    if (importer.importFromFile(dModel, filePath.toStdString()) != Tucuxi::Common::IImport::Status::Ok) {
+    if (importer.importFromFile(uniqueDrugModel, filePath.toStdString()) != Tucuxi::Common::IImport::Status::Ok) {
         _errorMessage = "Can not import the drug file.\n\n" + importer.getErrorMessage();
         setErrorMessages(_VALIDATION_INIT, _VALIDATION_ERROR, _ERROR_MESSAGE, _WARNING_COLOR, _error_icon);
         return;
     }
+
+    dModel = uniqueDrugModel.release();
 
     _ui->errorWidget->appendPlainText(tr(_SCAN_INIT) + " " + tr(_OK));
     _ui->errorWidget->appendPlainText(tr(_BUILD_INIT) + " " + tr(_OK));

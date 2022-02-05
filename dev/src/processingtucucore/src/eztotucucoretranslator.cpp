@@ -337,9 +337,10 @@ Tucuxi::Core::DrugModel *EzToTucucoreTranslator::buildDrugModel(const ezechiel::
         std::string fileName = fileNameMap[originalDrugModelId];
         Tucuxi::Core::DrugModelImport importer;
         Tucuxi::Common::IImport::Status result;
-        result = importer.importFromFile(pDrugModel, fileName);
+        std::unique_ptr<Tucuxi::Core::DrugModel> uniqueDrugModel;
+        result = importer.importFromFile(uniqueDrugModel, fileName);
         if (result == Tucuxi::Common::IImport::Status::Ok) {
-            return pDrugModel;
+            return uniqueDrugModel.release();
         }
     }
 

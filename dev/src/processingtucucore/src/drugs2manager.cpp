@@ -57,7 +57,9 @@ Tucuxi::Core::DrugModel* Drugs2Manager::scanDrug(const QString & fileName)
         return nullptr;
     }
     std::string content = f.readAll().data();
-    result = importer.importFromString(pDrugModel, content);
+    std::unique_ptr<Tucuxi::Core::DrugModel> uniqueDrugModel;
+    result = importer.importFromString(uniqueDrugModel, content);
+    pDrugModel = uniqueDrugModel.release();
 
     if (result != Tucuxi::Common::IImport::Status::Ok) {
         return nullptr;
@@ -165,14 +167,15 @@ void Drugs2Manager::buildAllDrugModels(std::string dirName)
 
 #include "tucucore/../../test/tucucore/drugmodels/buildconstantelimination.h"
 #include "tucucore/../../test/tucucore/drugmodels/buildpkasymptotic.h"
-#include "tucucore/../../test/tucucore/drugmodels/buildmultianalytesmultiactivemoieties.h"
+#include "tucucore/../../test/tucucore/drugmodels/buildmultianalytessingleactivemoiety.h"
+// #include "tucucore/../../test/tucucore/drugmodels/buildmultianalytesmultiactivemoieties.h"
 
 void Drugs2Manager::addDrugModelTests()
 {
     {
 
         BuildConstantElimination builder;
-        Tucuxi::Core::DrugModel *drug = builder.buildDrugModel(
+        auto drug = builder.buildDrugModel(
         ResidualErrorType::PROPORTIONAL,std::vector<Value>({0.2}));
         // Add targets
         TargetDefinition *target = new TargetDefinition(TargetType::Residual,
@@ -191,18 +194,18 @@ void Drugs2Manager::addDrugModelTests()
         drug->m_activeMoieties[0]->addTarget(std::unique_ptr<TargetDefinition>(target));
 
         TucucoreToEzTranslator translator;
-        ezechiel::core::DrugModel *newModel = translator.buildLightDrugModel(drug);
+        ezechiel::core::DrugModel *newModel = translator.buildLightDrugModel(drug.get());
         if (newModel != nullptr) {
             // Store the Tucuxi and ezechiel drug models
-            m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug;
-            m_tucuxiDrugModels.push_back(drug);
+            m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug.get();
+            m_tucuxiDrugModels.push_back(drug.release());
             m_ezechielDrugModels.push_back(newModel);
         }
     }
     {
 
         BuildPkAsymptotic builder;
-        Tucuxi::Core::DrugModel *drug = builder.buildDrugModel(
+        auto drug = builder.buildDrugModel(
         ResidualErrorType::PROPORTIONAL,std::vector<Value>({0.2}));
         // Add targets
         TargetDefinition *target = new TargetDefinition(TargetType::Residual,
@@ -221,17 +224,17 @@ void Drugs2Manager::addDrugModelTests()
         drug->m_activeMoieties[0]->addTarget(std::unique_ptr<TargetDefinition>(target));
 
         TucucoreToEzTranslator translator;
-        ezechiel::core::DrugModel *newModel = translator.buildLightDrugModel(drug);
+        ezechiel::core::DrugModel *newModel = translator.buildLightDrugModel(drug.get());
         if (newModel != nullptr) {
             // Store the Tucuxi and ezechiel drug models
-            m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug;
-            m_tucuxiDrugModels.push_back(drug);
+            m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug.get();
+            m_tucuxiDrugModels.push_back(drug.release());
             m_ezechielDrugModels.push_back(newModel);
         }
     }
     {
-        BuildMultiAnalytesMultiActiveMoieties builder;
-        Tucuxi::Core::DrugModel *drug = builder.buildDrugModel(0.3,
+        BuildMultiAnalytesSingleActiveMoiety builder;
+        auto drug = builder.buildDrugModel(0.3,
                                                                0.7,
                                                                ResidualErrorType::ADDITIVE,
                                                                {100.0},
@@ -245,11 +248,11 @@ void Drugs2Manager::addDrugModelTests()
                                                                0.0);
 
         TucucoreToEzTranslator translator;
-        ezechiel::core::DrugModel *newModel = translator.buildLightDrugModel(drug);
+        ezechiel::core::DrugModel *newModel = translator.buildLightDrugModel(drug.get());
         if (newModel != nullptr) {
             // Store the Tucuxi and ezechiel drug models
-            m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug;
-            m_tucuxiDrugModels.push_back(drug);
+            m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug.get();
+            m_tucuxiDrugModels.push_back(drug.release());
             m_ezechielDrugModels.push_back(newModel);
         }
     }

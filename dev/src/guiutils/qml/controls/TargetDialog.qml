@@ -65,7 +65,7 @@ DialogBase {
 
         micInput.decimals = 2;
         micInput.setRealValue(mic.dbvalue)
-        micInput.suffix = " " + currentUnit
+        micInput.suffix = " " + mic.unitstring
 
         cMinInput.doValidation = function () { return cMinInput.getRealValue() >= 0 && cMinInput.getRealValue() <= cBestInput.getRealValue() }
         cBestInput.doValidation = function () { return cBestInput.getRealValue() >= 0 }

@@ -129,6 +129,7 @@ void TargetTabController::addTarget()
     target->getCbest()->setUnit(defaultUnit);
     target->getCmax()->setUnit(defaultUnit);
     target->getCmin()->setUnit(defaultUnit);
+    target->getMic()->setUnit(defaultUnit);
     tlist->append(target);
 }
 

@@ -37,6 +37,10 @@ Rectangle {
         }
     }
 
+    function setLoadingDose(state) {
+        //...?
+    }
+
     anchors.fill: parent
     color: Style.table.background.table
 
@@ -137,18 +141,24 @@ Rectangle {
                                 */
                                 DatePicker {
                                     id: atDateSettingInput
+                                    // @disable-check M16
                                     objectName: "atDateSettingInput"
                                     Layout.preferredWidth: 150
+                                    // @disable-check M16
                                     date: adjustmentTabController.adjustmentDate
+                                    // @disable-check M16
                                     onEditingFinished: {
                                         adjustmentTabController.adjustmentDate = (new Date(atDateSettingInput.date.getFullYear(), atDateSettingInput.date.getMonth(), atDateSettingInput.date.getDate(), atMinutesSettingInput.date.getHours(), atMinutesSettingInput.date.getMinutes()));
                                     }
                                 }
                                 TimePicker {
                                     id: atMinutesSettingInput
+                                    // @disable-check M16
                                     objectName: "atMinutesSettingInput"
                                     Layout.fillWidth: true
+                                    // @disable-check M16
                                     date: adjustmentTabController.adjustmentDate
+                                    // @disable-check M16
                                     onEditingFinished: {
                                         adjustmentTabController.adjustmentDate = (new Date(atDateSettingInput.date.getFullYear(), atDateSettingInput.date.getMonth(), atDateSettingInput.date.getDate(), atMinutesSettingInput.date.getHours(), atMinutesSettingInput.date.getMinutes()));
                                     }
@@ -190,6 +200,7 @@ Rectangle {
 
                                 CheckBox {
                                     id: withLoadingDose
+                                    objectName: "withLoadingDose"
                                     text: "Loading dose?"
                                     checked: adjustmentTabController.adjustmentWithLoadingDose
 
@@ -211,6 +222,7 @@ Rectangle {
 
                                 CheckBox {
                                     id: withRestPeriod
+                                    objectName: "withRestPeriod"
                                     text: "Rest period?"
                                     checked: adjustmentTabController.adjustmentWithRestPeriod
 
@@ -515,6 +527,7 @@ Rectangle {
                                 label.color: manualAdjustmentListDelegate.mousearea.hovered ? manualAdjustmentList.rowForegroundHover : (manualAdjustmentListDelegate.ListView.isCurrentItem ? manualAdjustmentList.rowForegroundSelected : manualAdjustmentList.rowForeground)
                             },
                             EntityListImage {
+                                objectName: "editAdjustments" + index;
                                 image.source: "qrc:/icons/buttons/edit.png"
                                 mousearea.onClicked: {
                                     manualAdjustmentListView.currentIndex = index
@@ -533,6 +546,7 @@ Rectangle {
                                 tooltipText: ToolTips.adjustmentTab.edit
                             },
                             EntityListImage {
+                                objectName: "removeAdjustment_" + index;
                                 image.source: "qrc:/icons/buttons/remove.png"
                                 mousearea.onClicked: {
                                     adjustmentTabController.removeAdjustment(index);

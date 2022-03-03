@@ -132,6 +132,7 @@ Rectangle {
                                 label.color: root.mousearea.hovered ? measureList.rowForegroundHover : (root.ListView.isCurrentItem ? measureList.rowForegroundSelected : measureList.rowForeground)
                             },
                             EntityListImage {
+                                objectName: "editMeasure_" + index;                       // JRT 23.02.2022
                                 image.source: "qrc:/icons/buttons/edit.png"
                                 mousearea.onClicked: {
                                     measureListView.currentIndex = index;
@@ -140,6 +141,7 @@ Rectangle {
                                 tooltipText : ToolTips.measureTab.modify
                             },
                             EntityListImage {
+                                objectName: "removeMeasure_" + index;
                                 image.source: "qrc:/icons/buttons/remove.png"
                                 mousearea.onClicked: {
                                     measureTabController.removeMeasure(index);

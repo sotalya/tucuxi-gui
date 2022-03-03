@@ -122,6 +122,7 @@ DialogBase {
                 }
                 EntityTextField {
                     id: sampleIdField
+                    objectName: "sampleIdField"
                     placeholderText: "sample id"
                     Layout.preferredWidth: 200
                 }

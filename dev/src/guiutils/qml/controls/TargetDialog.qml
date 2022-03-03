@@ -100,6 +100,14 @@ DialogBase {
         return bOk
     }
 
+    // This function is used for automated tests, called from the C++ of GuiTests   JRT 23.02.2022
+    function setActiveType(typeIndex) {
+        typeInput.currentIndex = typeIndex;
+        //switchActiveType(typeIndex);
+
+    }
+
+
     GridLayout {
         anchors.fill: parent
         rows: 3
@@ -151,7 +159,6 @@ DialogBase {
 //                        tBestInput.suffix= " " + tbest.unitstring
 //                        tMaxInput.suffix= " " + tmax.unitstring
                     }
-
                 }
             }
 
@@ -172,6 +179,7 @@ DialogBase {
                 }
                 EntitySpinBox {
                     id: cMinInput
+                    objectName: "cMinInput"                        // JRT 23.02.2022
                     Layout.preferredWidth: 200
                     onEditingFinished: { root.validate() }
                 }
@@ -188,6 +196,7 @@ DialogBase {
 
                 EntitySpinBox {
                     id: cBestInput
+                    objectName: "cBestInput"
                     Layout.preferredWidth: 200
                     onEditingFinished: { root.validate() }
                 }
@@ -203,6 +212,7 @@ DialogBase {
                 }
                 EntitySpinBox {
                     id: cMaxInput
+                    objectName: "cMaxInput"
                     Layout.preferredWidth: 200
                     onEditingFinished: { root.validate() }
                 }
@@ -227,6 +237,7 @@ DialogBase {
                 }
                 EntitySpinBox {
                     id: tMinInput
+                    objectName: "tMinInput"
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex === 1
                     onEditingFinished: { root.validate() }
@@ -244,6 +255,7 @@ DialogBase {
                 }
                 EntitySpinBox {
                     id: tBestInput
+                    objectName: "tBestInput"
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex === 1
                     onEditingFinished: { root.validate() }
@@ -261,6 +273,7 @@ DialogBase {
                 }
                 EntitySpinBox {
                     id: tMaxInput
+                    objectName: "tMaxInput"
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex === 1
                     onEditingFinished: { root.validate() }
@@ -279,6 +292,7 @@ DialogBase {
                 }
                 EntitySpinBox {
                     id: micInput
+                    objectName: "micInput"
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex > 5
                     onEditingFinished: { root.validate() }

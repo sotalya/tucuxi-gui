@@ -6,6 +6,41 @@
 
 class QQuickWindow;
 
+struct DosageData {
+    double dosage;
+    double interval;
+    double infusion;
+    bool steadyState;
+    QDateTime dateTimeDos1;
+    QDateTime dateTimeDos2;
+};
+
+struct TargetData {                 // JRT 23.02.2022
+    int targetType;
+    double cMinInput;
+    double cBestInput;
+    double cMaxInput;
+    double tMinInput;
+    double tBestInput;
+    double tMaxInput;
+    double micInput;
+};
+
+struct AdjustmentsData {
+    QDateTime dateTimeAdj;
+    bool loadingDose;
+    bool restPeriod;
+    int suggestAdjNum;
+};
+
+struct CovariatesData {
+    QString covarName;
+    QString sex;
+    double weight;
+    double scc;
+    QDateTime dateTimeCovar;
+
+};
 
 class SpixGTest : public spix::TestServer {
 public:
@@ -26,7 +61,30 @@ public:
 
     void startNewPatient();
 
-    void addMeasure(double value, QDateTime date);
+    void findObjectAndSetValue(QString objectName, int inputProperty);
+
+    void selectDrugInList(int drugIndex, int modelIndex);
+
+    void addDosage(struct DosageData);
+    void editDosage(struct DosageData, int editIndex);
+    QVariant getSteadyStateDosage();
+    void setSteadyStateDosage(bool value);
+    void fillInDosageData(struct DosageData);
+
+    void addCovariates(struct CovariatesData);
+    void editCovariates(struct CovariatesData, int editIndex);
+    void fillInCovariatesData(struct CovariatesData);
+
+    void addMeasure(double value, QDateTime dateTime);
+    void editMeasure(double value, QDateTime dateTime, int editIndex);
+    void fillInMeasureData(double value, QDateTime dateTime);
+
+    void addTarget(struct TargetData);
+    void editTarget(struct TargetData, int editIndex);
+    void fillInTargetData(struct TargetData);
+    void removeFromList(std::string removeFrom, int removeIndex);
+
+    void setAdjustments(struct AdjustmentsData);
 
     void printReport(QString reportFileName);
 

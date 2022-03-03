@@ -527,7 +527,7 @@ int main(int argc, char *argv[])
 
 #ifdef CONFIG_GUITEST
     // Instantiate and run tests
-//    GuiTests tests(mainWindow->getWindow());
+    //GuiTests tests(mainWindow->getWindow());
     SpixGTest tests(mainWindow, mainWindow->getWindow(), argc, argv);
     auto bot = new spix::QtQmlBot();
     bot->runTestServer(tests);

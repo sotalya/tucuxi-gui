@@ -222,6 +222,7 @@ public:
     Q_INVOKABLE QString handleFileChosen(const QString &urlString);
 
 
+    //Q_INVOKABLE void setExtCurrentActiveType(int index);        // JRT 24.02.2022
     ///
     /// \brief saveStatistics
     /// Saves statistics in a file
@@ -402,22 +403,26 @@ private:
 
     ChartDataController *_chartDataController;
 
-    QObject *adjustmentsView;
     QObject *chartView;
-    QObject *covariatesView;
     QObject *domainsView;
     QObject *dosagesView;
     QObject *drugVariatesView;
-    // Added drugsView as public for testing purposes
+    // Added drugsView & targetsView as public for testing purposes
     public:
     QObject *drugsView;
+    QObject *targetDialog;
+    QObject *adjustmentsView;
+    QObject *covariatesView;
+    QObject *covariateDialog;
+
+
 public: // For RandomTest
     QObject *flowView;
 private:
     QObject *measuresView;
     QObject *patientsView;
-    QObject *studiesView;
     QObject *targetsView;
+    QObject *studiesView;
     QObject *validationView;
     QObject *reportView;
     QObject *webengineView;

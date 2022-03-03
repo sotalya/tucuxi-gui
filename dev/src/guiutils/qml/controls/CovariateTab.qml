@@ -11,6 +11,11 @@ import guiutils.qml.controls 1.0
 import ezechiel 1.0
 
 Rectangle {
+
+    function setCovariateType(i){                           // JRT 02.003.2022
+        drugVariateListView.currentIndex = i;
+    } // Runs ok !
+
     id: covariatePanel
     property int index:  -1
     property int status: Status.invalid;
@@ -85,6 +90,7 @@ Rectangle {
                 EntityHeaderEnd {
                     visible: true
                 },
+
 
                 //DrugVariateList view
                 EntityListView {
@@ -222,6 +228,7 @@ Rectangle {
                         tooltipText : ToolTips.covariateTab.date
                     }
                     EntityListHeaderImage {
+                        objectName: "addCovariate";
                         image.source: drugVariateListView.currentIndex == -1 ? "qrc:/icons/buttons/add_disabled.png" :
                                                                                (drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].automatic ?
                                                                                     "qrc:/icons/buttons/add_disabled.png" : "qrc:/icons/buttons/add.png")
@@ -300,6 +307,7 @@ Rectangle {
                                 label.color: patientVariateListDelegate.mousearea.hovered ? patientVariateList.rowForegroundHover : (patientVariateListDelegate.ListView.isCurrentItem ? patientVariateList.rowForegroundSelected : (/* hided ? patientVariateList.rowForegroundGray : */patientVariateList.rowForeground))
                             },
                             EntityListImage {
+                                objectName: "editCovariate_" + index;
                                 image.source: "qrc:/icons/buttons/edit.png"
                                 mousearea.onClicked: {
                                     // Do not modify the age
@@ -313,6 +321,7 @@ Rectangle {
                                 }
                             },
                             EntityListImage {
+                                objectName: "removeCovariate_" + index;
                                 image.source: "qrc:/icons/buttons/remove.png"
                                 mousearea.onClicked: {
                                     // Do not modify the age
@@ -538,6 +547,7 @@ Rectangle {
 
     CovariateDialog {
         id: covariateDialog
+        objectName: "covariateDialog"
         function exec(model, bCreatingNewItem)
         {
             if (model) {

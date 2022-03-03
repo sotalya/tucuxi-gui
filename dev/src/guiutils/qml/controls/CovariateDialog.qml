@@ -98,6 +98,12 @@ DialogBase {
         return bOk;
     }
 
+    function setCovariateValue(i){
+//        valueGenderControl.currentIndex(i);
+//        valueDoubleControl.setRealValue(i);
+        setCovariateValue(i);
+    }
+
     GridLayout {
         anchors.fill: parent
         rows: 3
@@ -143,8 +149,9 @@ DialogBase {
                     Layout.preferredWidth: 100
                     tooltipText: ToolTips.covariateDialog.value
                 }
-                EntitySpinBox {
+                EntitySpinBoxList {
                     id: valueDoubleControl
+                    objectName: "valueDoubleControl"
                     Layout.preferredWidth: 200
                     onEditingFinished: { covariateDialog.validate() }
                 }
@@ -156,6 +163,7 @@ DialogBase {
                 }
                 EntityComboBox {
                     id: valueGenderControl
+                    objectName: "valueGenderControl"
                     Layout.preferredWidth: 200
                     model: [ "Female", "Male", "Unknown" ]
                     onCurrentIndexChanged: { covariateDialog.validate() }
@@ -197,6 +205,7 @@ DialogBase {
             RowLayout {
                 Button {
                     id: acceptBtn
+                    objectName: "okCovariate"
                     text: "Ok"
                     Layout.preferredWidth: 145
                     onClicked: function() {

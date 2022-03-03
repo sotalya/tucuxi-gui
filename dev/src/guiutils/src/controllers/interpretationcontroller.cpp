@@ -399,6 +399,9 @@ void InterpretationController::retrieveViewsFromQml()
     targetsView = root->findChild<QObject *>("targetsView");
     Q_ASSERT(targetsView);
 
+    targetDialog = root->findChild<QObject *>("targetDialog");      // JRT 24.02.2022
+    Q_ASSERT(targetDialog);
+
     reportView = root->findChild<QObject *>("reportView");
     Q_ASSERT(reportView);
 

@@ -213,6 +213,7 @@ DialogBase {
                 }
                 EntitySpinBoxList {
                     id: doseSpinBox
+                    objectName: "doseSpinBox"                   // JRT 17.02.2022
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
                     onEditingFinished: {doValidation() }
@@ -229,6 +230,7 @@ DialogBase {
                 }
                 EntitySpinBoxList {
                     id: intervalSpinBox
+                    objectName: "intervalSpinBox"                 // JRT 17.02.2022
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
                     suffix: " hours"
@@ -257,6 +259,7 @@ DialogBase {
 
                 EntityTextField {
                     id: routeText
+                    objectName: "routeText"                         // JRT 18.02.2022
                     visible : !root.multipleRoutes
                     readOnly: true
                     Layout.preferredWidth: 250
@@ -273,6 +276,7 @@ DialogBase {
                 }
                 EntitySpinBoxList {
                     id: infusionSpinBox
+                    objectName: "infusionSpinBox"
                     //suffix: " minutes"
                     horizontalAlignment: Text.AlignLeft
                     Layout.preferredWidth: 250
@@ -282,6 +286,7 @@ DialogBase {
             RowLayout {
                 CheckBox {
                     id: atSteadyState
+                    objectName: "atSteadyState"
                     text: "At steady state?"
                     checked: true
 
@@ -308,6 +313,9 @@ DialogBase {
                 }
                 DatePicker {
                     id: appliedDateInput
+                    // @disable-check M16
+                    objectName: "LastDoseOrFromDateInput"      // JRT 17.02.2022
+                    // @disable-check M16
                     onEditingFinished: {
                         self.validate();
                         updateEndDate();
@@ -320,6 +328,9 @@ DialogBase {
                 }
                 TimePicker {
                     id: appliedTimeInput
+                    // @disable-check M16
+                    objectName: "LastDoseOrFromTimeInput"      // JRT 17.02.2022
+                    // @disable-check M16
                     onEditingFinished: {
                         self.validate();
                         updateEndDate();
@@ -354,6 +365,9 @@ DialogBase {
 */
                         DatePicker {
                             id: stoppedDateInput
+                            // @disable-check M16
+                            objectName: "stoppedDateInput"
+                            // @disable-check M16
                             onEditingFinished: { self.validate() }
                             //isEnabled: noEndDateRadio.checked === false
                         }
@@ -364,6 +378,9 @@ DialogBase {
                         }
                         TimePicker {
                             id: stoppedTimeInput
+                            // @disable-check M16
+                            objectName: "stoppedTimeInput"
+                            // @disable-check M16
                             onEditingFinished: { self.validate() }
                             //isEnabled: noEndDateRadio.checked === false
                         }

@@ -9,6 +9,7 @@ import guiutils.qml.styles 1.0
 
 TextField {
     id: root
+    objectName: "timePickerObj"                      // JRT 21.02.2022
     implicitWidth: 60
 
     property string separator: ":"
@@ -98,7 +99,7 @@ TextField {
         var parts = text.split(":")
 
         // Check if we have hours and minutes
-        if (parts.length != 2) {
+        if (parts.length !== 2) {
             return false
         }
 

@@ -161,6 +161,7 @@ DialogBase {
 
                                         Button{
                                             id: globalDeleteBtn
+                                            objectName: "globalDeleteButton_" + index
                                             spacing: 2
                                             visible: paletteChoice
                                             enabled: paletteChoice
@@ -194,6 +195,7 @@ DialogBase {
                                 visible: !paletteChoice
                                 enabled: !paletteChoice
                                 id :addgloballistbtn
+                                objectName: "addGlobalListButton"
                                 Layout.preferredWidth: 45
                                 background: Rectangle{
                                     color: "white"
@@ -272,6 +274,7 @@ DialogBase {
 
                                         Button{
                                             id: specificDeleteBtn
+                                            objectName: "specificDeleteButton_" + index
                                             spacing: 2
                                             visible: paletteChoice
                                             enabled: paletteChoice
@@ -302,6 +305,7 @@ DialogBase {
                             },
                             Button{
                                 id: addspecificlistbtn
+                                objectName: "addSpecificListButton"
                                 Layout.alignment: Qt.AlignHCenter
                                 visible: !paletteChoice
                                 enabled: !paletteChoice
@@ -337,6 +341,7 @@ DialogBase {
                 Layout.alignment: Qt.AlignHCenter
                 Button {
                     id: closeBtn
+                    objectName: "validationCloseButton"
                     text: "Close"
                     Layout.preferredWidth: 125
                     onClicked: function() {

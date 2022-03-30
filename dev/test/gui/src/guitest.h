@@ -6,6 +6,19 @@
 
 class QQuickWindow;
 
+struct PatientData {
+    QString firstName;
+    QString lastName;
+    QDate birthDate;
+    int gender;
+    QString identifier;
+    QString stayNumber;
+    QString titlePhy;
+    QString firstNamePhy;
+    QString lastNamePhy;
+};
+
+
 struct DosageData {
     double dosage;
     double interval;
@@ -13,6 +26,20 @@ struct DosageData {
     bool steadyState;
     QDateTime dateTimeDos1;
     QDateTime dateTimeDos2;
+};
+
+struct CovariatesData {
+    QString sex;
+    double weight;
+    double scc;
+    QDateTime dateTimeCovar;
+
+};
+
+struct MeasureData {
+    QString name;
+    double value;
+    QDateTime dateTimeMeas;
 };
 
 struct TargetData {                 // JRT 23.02.2022
@@ -33,14 +60,15 @@ struct AdjustmentsData {
     int suggestAdjNum;
 };
 
-struct CovariatesData {
-    QString covarName;
-    QString sex;
-    double weight;
-    double scc;
-    QDateTime dateTimeCovar;
-
+struct ValidationData {
+    QDateTime dateTimeVal;
+    QString expectedness;
+    QString suitability;
+    QString prediction;
+    QString remonitoring;
+    QString warning;
 };
+
 
 class SpixGTest : public spix::TestServer {
 public:
@@ -57,7 +85,10 @@ public:
     void waitPeriod(unsigned int nbPeriods = 1)
     {
         wait(m_period * nbPeriods);
+        synchronize();
     }
+
+    void waitForSync();
 
     void startNewPatient();
 
@@ -65,26 +96,34 @@ public:
 
     void selectDrugInList(int drugIndex, int modelIndex);
 
+    void fillInPatientData(struct PatientData);
+
     void addDosage(struct DosageData);
     void editDosage(struct DosageData, int editIndex);
     QVariant getSteadyStateDosage();
     void setSteadyStateDosage(bool value);
     void fillInDosageData(struct DosageData);
 
-    void addCovariates(struct CovariatesData);
-    void editCovariates(struct CovariatesData, int editIndex);
-    void fillInCovariatesData(struct CovariatesData);
+    void addCovariates(struct CovariatesData, int covariateType);
+    void editCovariates(struct CovariatesData, int covariateType, int editIndex);
+    void fillInCovariatesData(struct CovariatesData, int covariateType);
 
-    void addMeasure(double value, QDateTime dateTime);
-    void editMeasure(double value, QDateTime dateTime, int editIndex);
-    void fillInMeasureData(double value, QDateTime dateTime);
+    void addMeasure(struct MeasureData);
+    void editMeasure(struct MeasureData, int editIndex);
+    void fillInMeasureData(struct MeasureData);
 
     void addTarget(struct TargetData);
     void editTarget(struct TargetData, int editIndex);
     void fillInTargetData(struct TargetData);
     void removeFromList(std::string removeFrom, int removeIndex);
 
-    void setAdjustments(struct AdjustmentsData);
+    void addAdjustments(struct AdjustmentsData);
+
+    void fillInValidationData(struct ValidationData);
+    void saveValidationComment(QString commentType, int globalSpecificIndex);
+    void deleteValidationComment(QString commentType, int globalSpecifixIndex, int commentIndex);
+    void validateInterpretation();
+
 
     void printReport(QString reportFileName);
 

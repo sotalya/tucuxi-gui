@@ -141,6 +141,9 @@ Canvas {
     property string unit: "ug/l"
     property real unitefforder: 1
 
+
+    property bool isRunning : false             // JRT 14.03.2022
+
     function rePaint() {
         requestPaint();
         overlayAnnotations.requestPaint();
@@ -692,9 +695,7 @@ Canvas {
         Trails.setTargetSize(overlay, 1);
         waittima.start();
     }
-    //    function showClock() {
-    //        clocktima.start();
-    //    }
+
 
     Canvas {
         id: overlay
@@ -715,6 +716,7 @@ Canvas {
         property var particles: [];
         property real fadealpha: 0.05;
         property bool fadeout: false
+        property bool waitStatus : isRunning
 
         Timer {
             id: waittima
@@ -726,10 +728,15 @@ Canvas {
         Component.onCompleted: {
             Trails.init(overlay);
             Trails.setTargetSize(overlay, 0);
+//            waitStatus = false;
+
         }
         onPaint: {
-            Trails.loop(overlay);
+            isRunning = Trails.loop(overlay);
+            waitStatus = isRunning;
+//             isRunning = Trails.waitStatus();
         }
+
     }
 
 }

@@ -78,7 +78,7 @@ TEST(ReportTest, TestCefepime1)
     srv->waitPeriod();
     srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
     srv->waitPeriod();
-
+    srv->synchronize();
     srv->printReport("report_cefepime1.pdf");
 
     srv->synchronize();
@@ -106,7 +106,7 @@ TEST(ReportTest, TestImatinib1)
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->waitPeriod();
-/*
+
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
@@ -134,7 +134,7 @@ TEST(ReportTest, TestImatinib1)
     srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"), spix::KeyCodes::Enter, 0); // Enter
 
     srv->waitPeriod(5);
-    */
+
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
 
 
@@ -396,7 +396,7 @@ protected:
         QDateTime dateTime;
         dateTime.setDate(QDate(2021,07,27));
         dateTime.setTime(QTime(17, 0, 0));
-        srv->addMeasure(100.0, dateTime);
+//        srv->addMeasure(100.0, dateTime);
 //        srv->waitPeriod(5);
 
 //        srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));

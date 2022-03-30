@@ -28,6 +28,16 @@ Rectangle {
         patientListView.clearSelection();
     }
 
+    function extPatientData (yearPat, monthPat, dayPat) {
+
+        patientExtraExpandHeader.expanded = true
+        physicianInChargeHeader.expanded = true
+
+        patientRequired.model.person.birthday = (new Date(yearPat.toString(), monthPat.toString(), dayPat.toString()));
+//        patientRequired.model.person.birthday = new Date("1912", "11", "01");
+
+    }
+
     onIndexChanged:  currentIndexChanged(index)
 
     anchors.fill: parent
@@ -214,6 +224,7 @@ Rectangle {
                     }
 
                     EntityTextField {
+                        objectName: "patientFirstName"
                         Layout.fillWidth:  true
                         text: patientRequired.model ? patientRequired.model.person.firstname : ""
                         onTextChanged: {
@@ -227,6 +238,7 @@ Rectangle {
                         Layout.preferredWidth: 100
                     }
                     EntityTextField {
+                        objectName: "patientLastName"
                         placeholderText: "last name"
                         text: patientRequired.model ? patientRequired.model.person.name : ""
                         onTextChanged: {
@@ -248,6 +260,7 @@ Rectangle {
                     }
                     DatePicker {
                         id: birthDateInput
+                        objectName: "birthDateInput"
                         Layout.fillWidth: true
                         Binding { target: birthDateInput; property: "date"; value: patientRequired.model ? patientRequired.model.person.birthday : new Date() }
                         onEditingFinished: {
@@ -266,6 +279,7 @@ Rectangle {
 //                    }
                     RadioButton {
                         id: maleRadioInput
+                        objectName: "maleRadioInput"
                         text: "Male"
                         //exclusiveGroup: genderGroup
                         //Binding { target: maleRadioInput; property: "checked"; value: patientRequired.model ? (patientRequired.model.person.gender === 0 ? true : false) : false}
@@ -288,6 +302,7 @@ Rectangle {
 */                    }
                     RadioButton {
                         id: femaleRadioInput
+                        objectName: "femaleRadioInput"
                         text: "Female"
                         //exclusiveGroup: genderGroup
                         //Binding { target: femaleRadioInput; property: "checked"; value: patientRequired.model ? (patientRequired.model.person.gender === 1 ? true : false) : false }
@@ -342,7 +357,7 @@ Rectangle {
         EntityTitle {
             label.text: "Patient Extra Informations"
             id: patientExtraExpandHeader
-            expanded: false
+            expanded: false  // modified in extPatientData for GUI-tests    JRT 21.03.2022
             visible : patientRequired.model ? 1 : 0
         }
 
@@ -366,6 +381,7 @@ Rectangle {
                         text: "Identifier:"
                     }
                     EntityTextField {
+                        objectName: "patientIdentifier"
                         placeholderText: "id"
                         text: patientExtra.model ? patientExtra.model.externalId: ""
                         onTextChanged: patientExtra.model.externalId = text
@@ -377,6 +393,7 @@ Rectangle {
                         Layout.preferredWidth: 100
                     }
                     EntityTextField {
+                        objectName: "patientStayNumber"
                         placeholderText: "stay number"
                         text: patientExtra.model ? patientExtra.model.stayNumber : ""
                         onTextChanged: patientExtra.model.stayNumber = text
@@ -482,7 +499,7 @@ Rectangle {
         EntityTitle {
             label.text: "Physician in charge"
             id: physicianInChargeHeader
-            expanded: false
+            expanded: false         // modified in extPatientData       JRT 21.03.2022
             visible : patientRequired.model ? 1 : 0
         }
 
@@ -506,6 +523,7 @@ Rectangle {
                         text: "Title:"
                     }
                     EntityTextField {
+                        objectName: "titlePhy"
                         placeholderText: "title"
                         text: interpretation.request.practician ? interpretation.request.practician.title : ""
                         onTextChanged: interpretation.request.practician.title = text
@@ -523,6 +541,7 @@ Rectangle {
                     }
 
                     EntityTextField {
+                        objectName: "firstNamePhy"
                         Layout.fillWidth:  true
                         text: interpretation.request.practician ? interpretation.request.practician.person.firstname : ""
                         onTextChanged: {
@@ -536,6 +555,7 @@ Rectangle {
                         Layout.preferredWidth: 100
                     }
                     EntityTextField {
+                        objectName: "lastNamePhy"
                         placeholderText: "last name"
                         text: interpretation.request.practician ? interpretation.request.practician.person.name : ""
                         onTextChanged: {

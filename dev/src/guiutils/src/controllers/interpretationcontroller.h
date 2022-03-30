@@ -403,27 +403,30 @@ private:
 
     ChartDataController *_chartDataController;
 
-    QObject *chartView;
+//    QObject *chartView;
     QObject *domainsView;
     QObject *dosagesView;
     QObject *drugVariatesView;
     // Added drugsView & targetsView as public for testing purposes
     public:
+    QObject *patientsView;
     QObject *drugsView;
     QObject *targetDialog;
     QObject *adjustmentsView;
     QObject *covariatesView;
     QObject *covariateDialog;
+    QObject *validationView;
+    QObject *sentencePaletteDialog;
+    QObject *chartView;
 
 
 public: // For RandomTest
     QObject *flowView;
 private:
     QObject *measuresView;
-    QObject *patientsView;
     QObject *targetsView;
     QObject *studiesView;
-    QObject *validationView;
+
     QObject *reportView;
     QObject *webengineView;
     QQmlWebChannel *_webchannel;
@@ -434,6 +437,7 @@ private:
     CovariateTabController *covariateTabController;
     AdjustmentTabController *adjustmentTabController;
     ValidationTabController *validationTabController;
+
     DrugTabController *drugTabController;
 
     QScopedPointer<QPrinter> printer;

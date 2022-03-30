@@ -31,6 +31,10 @@ DialogBase {
 
     }
 
+    function extValidateDialog(tct){
+        validationDialog.exit();
+    }
+
     Rectangle {
         Layout.fillWidth:  true
         Layout.minimumHeight:   analysis.rowHeight * 1

@@ -94,6 +94,8 @@ DialogBase {
         dateInput.focus = true
 
         var bOk = valueDoubleControl.validate()
+        bOk = dateInput.validate() && bOk
+        bOk = timeInput.validate() && bOk
         bOk = valueGenderControl.validate() && bOk
         return bOk;
     }
@@ -103,6 +105,7 @@ DialogBase {
 //        valueDoubleControl.setRealValue(i);
         setCovariateValue(i);
     }
+
 
     GridLayout {
         anchors.fill: parent
@@ -179,6 +182,10 @@ DialogBase {
                 }
                 DatePicker {
                     id: dateInput
+                    // @disable-check M16
+                    objectName: "dateInputCovar"
+                    // @disable-check M16
+                    onEditingFinished: { covariateDialog.validate() }
                 }
                 EntityLabel {
                     text: "at:"
@@ -187,6 +194,10 @@ DialogBase {
                 }
                 TimePicker {
                     id: timeInput
+                    // @disable-check M16
+                    objectName: "timeInputCovar"
+                    // @disable-check M16
+                    onEditingFinished: { covariateDialog.validate() }
                 }
             }
 

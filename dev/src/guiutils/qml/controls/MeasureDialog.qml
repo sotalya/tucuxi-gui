@@ -153,6 +153,7 @@ DialogBase {
                 DatePicker {
                     id: sampleDateInput
                     objectName : "sampleDateInput"
+                    // @disable-check M16
                     onEditingFinished: { measureDialog.validate() }
                 }
                 EntityLabel {
@@ -162,7 +163,9 @@ DialogBase {
                 }
                 TimePicker {
                     id: sampleTimeInput
+                    // @disable-check M16
                     objectName : "sampleTimeInput"
+                    // @disable-check M16
                     onEditingFinished: { measureDialog.validate() }
                 }
             }

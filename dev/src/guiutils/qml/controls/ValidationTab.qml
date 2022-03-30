@@ -1,4 +1,4 @@
-    import QtQuick 2.5
+import QtQuick 2.5
 import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.0
 
@@ -18,6 +18,16 @@ Rectangle {
     {
         graphInformationSelection.setVisible(index, value);
         return 1;
+    }
+
+    // Used for automated Gui tests, fills in text entries - JRT 09.03.2022
+    function extTextInputs(expectednessText, suitabilityText, predictionText, remonitoringText, warningText){
+
+        expectednessInput.text  = expectednessText;
+        suitabilityInput.text   = suitabilityText;
+        predictionInput.text    = predictionText;
+        remonitoringInput.text  = remonitoringText;
+        warningInput.text       = warningText;
     }
 	
     //property var show: [1,1,1,1,1,1,1,1,1,1]
@@ -443,6 +453,7 @@ Rectangle {
                         }
                         DatePicker {
                             id: nextControlDate
+                            objectName: "nextControlDate"
                             Layout.preferredWidth: 150
                             date: analysisFrame.model.nextControl
                             onEditingFinished: {
@@ -451,6 +462,7 @@ Rectangle {
                         }
                         TimePicker {
                             id: nextControlTime
+                            objectName: "nextControlTime"
                             Layout.preferredWidth: 60
                             date: analysisFrame.model.nextControl
                             onEditingFinished: {
@@ -487,6 +499,7 @@ Rectangle {
 
                                 TextArea.flickable: TextArea {
                                     id: expectednessInput
+                                    objectName: "expectednessInput"
                                     placeholderText: "Please fill in"
                                     clip: true
                                     anchors.margins:1
@@ -522,14 +535,16 @@ Rectangle {
                                     }
                                 }
 
-
                                 ScrollBar.vertical: ScrollBar {}
                             }
                         }
+
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 50
+                            id: expectSaveButton                // JRT 09.03.2022
+                            objectName: "expectednessSaveButton"
                             text: "Save"
                             onClicked: {
                                 expectednessPalette.init(expectednessInput.text, 0, expectednessInput, expectednessLabel.text, false)
@@ -541,6 +556,7 @@ Rectangle {
                             Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 40
                             id: expectPaletteBTN
+                            objectName: "expectednessPaletteButton"
                             background: Rectangle{
                                 color: "white"
                             }
@@ -615,17 +631,19 @@ Rectangle {
                             spacing: 1
                             Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 50
+                            objectName: "suitabilitySaveButton"
                             text: "Save"
                             onClicked: {
                                 suitablePalette.init(suitabilityInput.text, 1, suitabilityInput, suitabilityLabel.text, false)
                                 suitablePalette.open(true)
                             }
                         }
-                        Button{
+                        Button{//    srv->mouseClick(spix::ItemPath("mainWindow/flowView/expectSaveButton"));
                             spacing: 1
                             Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 40
                             id: suitablePaletteBTN
+                            objectName: "suitablePaletteButton"
                             background: Rectangle{
                                 color: "white"
                             }
@@ -697,6 +715,7 @@ Rectangle {
                             spacing: 1
                             Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 50
+                            objectName: "predictionSaveButton"
                             text: "Save"
                             onClicked: {
                                 predictionPalette.init(predictionInput.text, 2, predictionInput, predictionLabel.text, false)
@@ -708,6 +727,7 @@ Rectangle {
                             Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 40
                             id: predictionPaletteBTN
+                            objectName: "predictionPaletteButton"
                             background: Rectangle{
                                 color: "white"
                             }
@@ -779,6 +799,7 @@ Rectangle {
                             spacing: 1
                             Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 50
+                            objectName: "remonitoringSaveButton"
                             text: "Save"
                             onClicked: {
                                 remonitoringPalette.init(remonitoringInput.text, 3, remonitoringInput, remonitoringLabel.text, false)
@@ -793,6 +814,7 @@ Rectangle {
                                 color: "white"
                             }
                             id: remonitoringPaletteBTN
+                            objectName: "remonitoringPaletteButton"
                             onClicked: {
                                 remonitoringPalette.init(remonitoringInput.text, 3, remonitoringInput, remonitoringLabel.text, true)
                                 remonitoringPalette.open(true)
@@ -871,6 +893,7 @@ Rectangle {
                             spacing: 1
                             Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 50
+                            objectName: "warningSaveButton"
                             text: "Save"
 
                             onClicked: {
@@ -883,6 +906,7 @@ Rectangle {
                             Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 40
                             id: warningPaletteBTN
+                            objectName: "warningPaletteButton"
                             background: Rectangle{
                                 color: "white"
                             }
@@ -904,7 +928,6 @@ Rectangle {
                             }
                         }
                     }
-
 
                     TucuButton {
                         objectName: "validateInterpretation"
@@ -928,7 +951,7 @@ Rectangle {
 
     ValidationTextDialog {
         id: validationDialog
-        objectName: "validationTextDialog"
+        objectName: "validationDialog"
 
         function exec()
         {
@@ -938,21 +961,26 @@ Rectangle {
 
     SentencePaletteDialog{
         id: expectednessPalette
+        objectName: "expectednessPalette"
     }
 
     SentencePaletteDialog{
         id: warningPalette
+        objectName: "warningPalette"
     }
 
     SentencePaletteDialog{
         id: remonitoringPalette
+        objectName: "remonitoringPalette"
     }
 
     SentencePaletteDialog{
         id: predictionPalette
+        objectName: "predictionPalette"
     }
 
     SentencePaletteDialog{
         id: suitablePalette
+        objectName: "suitabilityPalette"
     }
 }

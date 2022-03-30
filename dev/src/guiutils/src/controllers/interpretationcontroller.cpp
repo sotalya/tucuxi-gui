@@ -412,6 +412,9 @@ void InterpretationController::retrieveViewsFromQml()
 
     validationView = root->findChild<QObject *>("validationView");
     Q_ASSERT(validationView);
+
+    sentencePaletteDialog = root->findChild<QObject *>("expectednessPalette");
+    Q_ASSERT(sentencePaletteDialog);
 }
 
 void InterpretationController::initViewConnexions()
@@ -1791,6 +1794,8 @@ void InterpretationController::validateInterpretation(bool isValid)
                                                           "<br/><br/>Processing time from starting the interpretation was :  <br/><b>%2</b>"
                                        "<br/><br/>Go to settings if you wish to disable this dialog.").arg(processingTimeFromData.toLongString()).arg(processingTime.toLongString()));
             messageBox.setTextFormat(Qt::TextFormat::RichText);
+            messageBox.setWindowModality(Qt::NonModal);     // make window non modal (allows interaction with other windows) JRT 10.03.2022
+            messageBox.show();                              // creates non modal window
             messageBox.exec();
 //        QMessageBox::information(0, "Processing time", QString("Interpretation total processing time from last data was : \n<b>%1</b> "
 //                                                               "\n\nProcessing time from starting the interpretation was :  \n<b>%2</b>").arg(processingTimeFromData.toLongString()).arg(processingTime.toLongString()));

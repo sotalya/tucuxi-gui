@@ -15,6 +15,9 @@ Rectangle {
     id: adjustmentPanel
     property int status: Status.invalid;
     property bool enabled: false;
+
+    property bool withLoadingDoseYN: true;       // JRT 17.03.2022
+
     signal imUpdated();
     signal currentIndexChanged(int index)
     signal settingsValidated(date adate)
@@ -37,8 +40,17 @@ Rectangle {
         }
     }
 
-    function setLoadingDose(state) {
-        //...?
+    function extAdjDate(yearAdj, monthAdj, dayAdj, hourAdj, minuteAdj) {                    // JRT 17.03.2022
+//        adjustmentTabController.adjustmentDate = (new Date("2027","08","09","00","00"));
+        adjustmentTabController.adjustmentDate = (new Date(yearAdj, monthAdj, dayAdj, hourAdj, minuteAdj));
+    }
+
+    function extLoadingDose(input) {            // not able to edit Loading dose or Rest time. To be continued...
+
+//        withLoadingDose.checked = true
+//        withRestPeriod.checked = true
+//        adjustmentTabController.adjustmentWithLoadingDose = true
+//        adjustmentTabController.adjustmentWithRestPeriod = withLoadingDoseYN
     }
 
     anchors.fill: parent
@@ -201,9 +213,9 @@ Rectangle {
                                 CheckBox {
                                     id: withLoadingDose
                                     objectName: "withLoadingDose"
-                                    text: "Loading dose?"
-                                    checked: adjustmentTabController.adjustmentWithLoadingDose
 
+                                    text: "Loading dose?"
+                                    checked: adjustmentTabController.adjustmentWithLoadingDose  // JRT 17.03.2022
                                     onCheckStateChanged: adjustmentTabController.adjustmentWithLoadingDose = checked
 
                                     ToolTip.visible: (show_tooltip) ? withLoadingDoseMousearea.containsMouse : false
@@ -211,11 +223,13 @@ Rectangle {
 
                                     MouseArea {
                                         id: withLoadingDoseMousearea
+                                        objectName: "withLoadingDoseMousearea"
                                         anchors.top: parent.top
                                         anchors.bottom: parent.bottom
                                         anchors.right: parent.right
                                         width: parent.width - 30
                                         hoverEnabled: true
+
                                     }
                                 }
 
@@ -225,7 +239,6 @@ Rectangle {
                                     objectName: "withRestPeriod"
                                     text: "Rest period?"
                                     checked: adjustmentTabController.adjustmentWithRestPeriod
-
                                     onCheckStateChanged: adjustmentTabController.adjustmentWithRestPeriod = checked
 
                                     ToolTip.visible: (show_tooltip) ? withRestPeriodMousearea.containsMouse : false
@@ -463,7 +476,7 @@ Rectangle {
                         mousearea.onClicked: {
                             adjustmentTabController.addAdjustment();
                             manualAdjustmentListView.currentIndex = manualAdjustmentListView.count-1;
-                        }
+                            }
                         tooltipText: ToolTips.adjustmentTab.add
                     }
                 },
@@ -527,7 +540,7 @@ Rectangle {
                                 label.color: manualAdjustmentListDelegate.mousearea.hovered ? manualAdjustmentList.rowForegroundHover : (manualAdjustmentListDelegate.ListView.isCurrentItem ? manualAdjustmentList.rowForegroundSelected : manualAdjustmentList.rowForeground)
                             },
                             EntityListImage {
-                                objectName: "editAdjustments" + index;
+                                objectName: "editAdjustments_" + index;
                                 image.source: "qrc:/icons/buttons/edit.png"
                                 mousearea.onClicked: {
                                     manualAdjustmentListView.currentIndex = index
@@ -578,3 +591,5 @@ Rectangle {
         }
     }
 }
+
+

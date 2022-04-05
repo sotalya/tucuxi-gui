@@ -20,12 +20,12 @@ struct PatientData {
 
 
 struct DosageData {
-    double dosage;
-    double interval;
-    double infusion;
-    bool steadyState;
-    QDateTime dateTimeDos1;
-    QDateTime dateTimeDos2;
+    double dosage = 5555;
+    double interval = 2400;
+    double infusion = 2468;
+    bool steadyState = true;
+    QDateTime dateTimeDos1 = QDateTime::currentDateTime();
+    QDateTime dateTimeDos2 = QDateTime::currentDateTime().addDays(7);
 };
 
 struct CovariatesData {
@@ -89,6 +89,8 @@ public:
     }
 
     void waitForSync();
+
+    int getCurrentTabIndex();
 
     void startNewPatient();
 

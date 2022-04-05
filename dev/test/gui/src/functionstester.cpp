@@ -399,9 +399,11 @@ TEST(FunctionsTester, Test1)
     patientData1.lastNamePhy    = "Cleaner";
 
     srv->fillInPatientData(patientData1);
-
-    srv->selectDrugInList(6, 0);
     srv->waitPeriod(waitTime1);
+    srv->selectDrugInList(13, 0);
+    srv->waitPeriod(waitTime1);
+
+    srv->waitPeriod(10);
 
     int n = 1;
 /*
@@ -422,12 +424,25 @@ TEST(FunctionsTester, Test1)
         covariatesData1.dateTimeCovar.setDate(QDate(2022, n, n));
         covariatesData1.dateTimeCovar.setTime(QTime(n, n));
 
+*/
 
-        measureData1.name   = "Sample_1234_b";
-        measureData1.value  = n*100 + n*100 + n*10 + n*1;
-        measureData1.dateTimeMeas.setDate(QDate(2022, 05, 04));
+    srv->addDosage(dosageData1);
+    srv->waitPeriod(waitTime1*15);
+    srv->synchronize();
+
+    for (n = 1; n <= 15; n++)
+    {
+        measureData1.name   = "Sample_1234_b" + QString::number(n);
+        measureData1.value  = n*250 + n*10 + n*1;
+        measureData1.dateTimeMeas.setDate(QDate::currentDate().addDays(n-1));
         measureData1.dateTimeMeas.setTime(QTime(n, n));
 
+        srv->waitPeriod(waitTime1);
+        srv->addMeasure(measureData1);
+        srv->waitForSync();
+    }
+
+/*
 
         targetData1.targetType  = 8;
         targetData1.cMinInput   = n*100 + n*10 + n;
@@ -437,7 +452,6 @@ TEST(FunctionsTester, Test1)
         targetData1.tBestInput  = (n+1)*10;
         targetData1.tMaxInput   = (n+2)*10;
         targetData1.micInput    = (n*100) + 1000;
-
 
         //_____Add dosage_______________________________________________
 

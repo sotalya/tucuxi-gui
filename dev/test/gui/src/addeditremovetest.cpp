@@ -56,9 +56,9 @@ TEST(AddEditRemoveTest, Test1)
 
     int drugIndex   = 6;                                               // drug index : 6 = Cefepime, 13 = Imatinib, ...
     int modelIndex  = 0;                                                // model index: domain & study
-
+    srv->getCurrentTabIndex();
     srv->selectDrugInList(drugIndex, modelIndex);
-
+    srv->getCurrentTabIndex();
     srv->waitPeriod(waitTimeLong);
 
     //_____Adding dosage, covariates, measure & target (n times)___________________________________________________________________________________
@@ -66,12 +66,11 @@ TEST(AddEditRemoveTest, Test1)
     DosageData dosageData1;
     CovariatesData covariatesData1;
     MeasureData measureData1;
-    QDateTime dateTimeMeas1;
     TargetData targetData1;
 
     int n = 1;
 
-    for (n = 1; n <= 1; n++)        // index of loop is used to modify variables to avoid having to do it manually for each iteratnon
+    for (n = 1; n <= 3; n++)        // index of loop is used to modify variables to avoid having to do it manually for each iteratnon
     {
 
         //_____Add dosage_______________________________________________
@@ -85,13 +84,10 @@ TEST(AddEditRemoveTest, Test1)
         dosageData1.dateTimeDos2.setDate(QDate(2022, n+1, n+1));        // end date(i)
         dosageData1.dateTimeDos2.setTime(QTime(n+1, n+1));              // end time(i)
 
-
-        srv->addDosage(dosageData1);      
         srv->waitForSync();
-//        srv->waitPeriod(waitTime1);
+        srv->addDosage(dosageData1);
 
-
-/*
+        srv->waitPeriod(waitTime1);
 
         //_____Add covariates___________________________________________
 
@@ -133,7 +129,7 @@ TEST(AddEditRemoveTest, Test1)
         srv->addTarget(targetData1);
 
         srv->waitPeriod(waitTimeLong);
-*/
+
    }
 /*
 

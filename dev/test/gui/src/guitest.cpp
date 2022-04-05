@@ -52,21 +52,42 @@ void SpixGTest::waitForSync()
 {
     QVariant waitStatus = false;
     bool isRunning = false;
-    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("chartOverlayView");
 
-    srv->waitPeriod();
-    srv->synchronize();
+    if (getCurrentTabIndex() != (0) and (1))
+    {
+        auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("chartOverlayView");
 
-    do {
         srv->waitPeriod();
         srv->synchronize();
 
-        waitStatus = item->property("waitStatus");
-        isRunning = waitStatus.toBool();
-        std::cout << "Sync : Is still running ..." << std::endl;
-    } while (isRunning == true);
+        do {
+            srv->waitPeriod();
+            srv->synchronize();
 
+            waitStatus = item->property("waitStatus");
+            isRunning = waitStatus.toBool();
+            std::cout << "Sync : Is still running ..." << std::endl;
+
+        } while (isRunning == true);
+
+    }
+    //else std::cout << "Tab index 0 or 1";
     std::cout << "Sync : OK" << std::endl;
+}
+
+int SpixGTest::getCurrentTabIndex()
+{
+    int currentTabIndex = 666;
+
+//    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->flowView, "extGetTabIndex",
+//                              Q_RETURN_ARG(QVariant, currentTabIndex));
+
+    currentTabIndex = srv->m_mainWindowController->getInterpretationController()->flowView->property("currentIndex").toInt();
+    std::cout << "Current tab index : " << currentTabIndex << std::endl;
+
+    srv->waitPeriod(waitTime1);
+
+    return currentTabIndex;
 }
 
 QObject *SpixGTest::getObjectByName(QObject *root, std::string name)
@@ -104,7 +125,9 @@ void SpixGTest::startNewPatient()
 void SpixGTest::findObjectAndSetValue(QString objectName, int propertyInput)
 {
     auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>(objectName);
+    if (item != (0x0))
     item->setProperty("value", propertyInput);
+    else std::cout << "Item not found !" << std::endl;
     srv->waitPeriod(waitTime1);
 }
 
@@ -275,7 +298,7 @@ QVariant SpixGTest::getSteadyStateDosage()
 
 void SpixGTest::fillInDosageData(DosageData dosageData1)
 {
-    // fills in Dose, Interval, reads Route, fills in Infusion,
+    // fills in Dose, Interval, reads Route, fills in Infusion, ...
 
     QString dateDos = dosageData1.dateTimeDos1.date().toString("dd.MM.yyyy");
     QString timeDos = dosageData1.dateTimeDos1.time().toString("HH:mm:ss");
@@ -548,15 +571,17 @@ void SpixGTest::fillInTargetData(TargetData targetData1)
                               Q_ARG(QVariant, QVariant::fromValue(targetData1.targetType)));
     srv->synchronize();
 
-    findObjectAndSetValue("cMinInput",  targetData1.cMinInput);
-    findObjectAndSetValue("cBestInput", targetData1.cBestInput);
+    // cMax & tMax values are filled in first to avoir red font color warning due to value inconsistency (cMin > cMax, which = 0 before edition)
+
     findObjectAndSetValue("cMaxInput",  targetData1.cMaxInput);
+    findObjectAndSetValue("cBestInput", targetData1.cBestInput);
+    findObjectAndSetValue("cMinInput",  targetData1.cMinInput);
 
     if (targetData1.targetType == 1)        // target type 1 = Peak
     {
-        findObjectAndSetValue("tMinInput",  targetData1.tMinInput);
-        findObjectAndSetValue("tBestInput", targetData1.tBestInput);
         findObjectAndSetValue("tMaxInput",  targetData1.tMaxInput);
+        findObjectAndSetValue("tBestInput", targetData1.tBestInput);
+        findObjectAndSetValue("tMinInput",  targetData1.tMinInput);
     }
 
     if (targetData1.targetType > 5)         // target types over 5 include MIC
@@ -572,8 +597,6 @@ void SpixGTest::fillInTargetData(TargetData targetData1)
 
 //    qInfo() << "Target type : " << targetData1.targetType;
 }
-
-
 
 
 void SpixGTest::addAdjustments(AdjustmentsData adjustmentsData1)
@@ -629,7 +652,6 @@ void SpixGTest::addAdjustments(AdjustmentsData adjustmentsData1)
     srv->synchronize();
 
 }
-
 
 
 void SpixGTest::fillInValidationData(ValidationData validationData1)

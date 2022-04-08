@@ -20,19 +20,19 @@ struct PatientData {
 
 
 struct DosageData {
-    double dosage = 5555;
-    double interval = 2400;
-    double infusion = 2468;
-    bool steadyState = true;
+    double dosage       = 5555;
+    double interval     = 2400;
+    double infusion     = 2468;
+    bool steadyState    = true;
     QDateTime dateTimeDos1 = QDateTime::currentDateTime();
     QDateTime dateTimeDos2 = QDateTime::currentDateTime().addDays(7);
 };
 
 struct CovariatesData {
     QString sex;
-    double weight;
+    double weight = 5566;
     double scc;
-    QDateTime dateTimeCovar;
+    QDateTime dateTimeCovar = QDateTime::currentDateTime();
 
 };
 
@@ -42,11 +42,11 @@ struct MeasureData {
     QDateTime dateTimeMeas;
 };
 
-struct TargetData {                 // JRT 23.02.2022
-    int targetType;
-    double cMinInput;
-    double cBestInput;
-    double cMaxInput;
+struct TargetData {
+    int targetType      = 0;
+    double cMinInput    = 3000;
+    double cBestInput   = 3500;
+    double cMaxInput    = 4000;
     double tMinInput;
     double tBestInput;
     double tMaxInput;

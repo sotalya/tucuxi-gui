@@ -424,6 +424,7 @@ DialogBase {
                 }
                 Button {
                     id: cancelBtn
+                    objectName: "cancelDosage"
                     text: "Cancel"
                     Layout.preferredWidth: 125
                     onClicked: function() {

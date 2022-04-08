@@ -227,6 +227,7 @@ DialogBase {
                 }
                 Button {
                     id: cancelBtn
+                    objectName: "cancelCovariate"
                     text: "Cancel"
                     Layout.preferredWidth: 145
                     onClicked: function() {

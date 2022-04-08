@@ -139,6 +139,7 @@ TEST(ValidationTest, Test1)
     srv->deleteValidationComment("prediction", 0, 1);                   // deletes prediction comment, global, index 1
     srv->deleteValidationComment("prediction", 1, 2);                   // deletes prediction comment, specific, index 2
     srv->deleteValidationComment("prediction", 2, 1);                   // deletes prediction comment, both global & specific, index 1
+    srv->waitPeriod(waitTime1*5);
     srv->deleteValidationComment("prediction", 2, 0);                   // deletes prediction comment, both, any saved comment
 
     srv->validateInterpretation();
@@ -149,7 +150,7 @@ TEST(ValidationTest, Test1)
     //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
     srv->waitForSync();
-    srv->waitPeriod(waitTime1*100);
+    srv->waitPeriod(waitTime1*10);
     srv->synchronize();
 
     std::cout << "End of test..." << std::endl;

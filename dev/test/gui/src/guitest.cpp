@@ -53,7 +53,9 @@ void SpixGTest::waitForSync()
     QVariant waitStatus = false;
     bool isRunning = false;
 
-    if (getCurrentTabIndex() != (0) and (1))
+    int tabIndex = getCurrentTabIndex();
+
+    if (tabIndex != 0 and tabIndex != 1)
     {
         auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("chartOverlayView");
 
@@ -126,8 +128,9 @@ void SpixGTest::findObjectAndSetValue(QString objectName, int propertyInput)
 {
     auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>(objectName);
     if (item != (0x0))
-    item->setProperty("value", propertyInput);
+        item->setProperty("value", propertyInput);
     else std::cout << "Item not found !" << std::endl;
+
     srv->waitPeriod(waitTime1);
 }
 
@@ -173,7 +176,7 @@ void SpixGTest::selectDrugInList(int drugIndex, int modelIndex)
 
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentActiveSubstance",
                               Q_ARG(QVariant, QVariant::fromValue(drugIndex)));
-    srv->waitPeriod();
+//    srv->waitPeriod();
 
     // model = DOMAIN & STUDY
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentDrugModel",
@@ -266,7 +269,7 @@ void SpixGTest::editDosage(DosageData dosageData1, int editIndex)
     if (srv->existsAndVisible(spix::ItemPath(editPath)))
     {
         srv->synchronize();
-//        srv->mouseClick(spix::ItemPath("mainWindow/flowView/editDosage_1"));
+//        srv->mouseClick(spix::ItemPath("mainWindow/flowView/editDosage_0"));
         srv->mouseClick(spix::ItemPath(editPath));
         srv->waitPeriod(waitTime1);
 
@@ -388,7 +391,6 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
     // closes Dosage dialog window when editing is done
     srv->synchronize();
     srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
-    qInfo() << "Ok Dosage";
     srv->waitPeriod(waitTime1);
     srv->synchronize();
     // Runs ok
@@ -407,7 +409,7 @@ void SpixGTest::addCovariates(CovariatesData covariatesData1, int covariateType)
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->covariatesView, "setCovariateType",
                               Q_ARG(QVariant, QVariant::fromValue(covariateType)));
 
-    srv->mouseClick(spix::ItemPath("mainWindow/covariatesView/addCovariate"));      // will open Covariate dialog
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addCovariate"));      // will open Covariate dialog
     srv->waitPeriod(waitTime1);
 
     fillInCovariatesData(covariatesData1, covariateType);
@@ -452,10 +454,6 @@ void SpixGTest::fillInCovariatesData(CovariatesData covariatesData1, int covaria
 
         srv->synchronize();
         srv->waitPeriod(waitTime1);
-
-
-        if (existsAndVisible(spix::ItemPath("covariatesDialog/dateInput/wholeDate")))
-            qInfo() << "Covariates Path found !";
 
         auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("dateInputCovar");
         dateItem->setProperty("date", covariatesData1.dateTimeCovar.date());
@@ -571,7 +569,7 @@ void SpixGTest::fillInTargetData(TargetData targetData1)
                               Q_ARG(QVariant, QVariant::fromValue(targetData1.targetType)));
     srv->synchronize();
 
-    // cMax & tMax values are filled in first to avoir red font color warning due to value inconsistency (cMin > cMax, which = 0 before edition)
+    // cMax & tMax values are filled in first to avoir red font color warning due to value inconsistency : cMin > cMax (which = 0 before edition)
 
     findObjectAndSetValue("cMaxInput",  targetData1.cMaxInput);
     findObjectAndSetValue("cBestInput", targetData1.cBestInput);
@@ -735,13 +733,13 @@ void SpixGTest::deleteValidationComment(QString commentType, int globalSpecificI
 
     if (commentIndex == 0) {
 
-        if (globalSpecificIndex == (0) or (2)) {
+        if (globalSpecificIndex == (0) or globalSpecificIndex == (2)) {
             while (srv->existsAndVisible(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(0)))) {
                 srv->mouseClick(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(0)));
                 srv->waitPeriod();
             }
         }
-        if (globalSpecificIndex == (1) or (2)) {
+        if (globalSpecificIndex == (1) or globalSpecificIndex == (2)) {
             while (srv->existsAndVisible(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(0)))) {
                 srv->mouseClick(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(0)));
                 srv->waitPeriod();

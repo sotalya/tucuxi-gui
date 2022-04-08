@@ -406,53 +406,52 @@ TEST(FunctionsTester, Test1)
     srv->waitPeriod(10);
 
     int n = 1;
-/*
-    for (n = 1; n <= 1; n++)                                            // index of loop is used to modify variables to avoid having to do it manually for each iteratnon
-    {
-        dosageData1.dosage      = n*1000 + n*200 + n*30 + n*4;          // dosage(n) = {1234, 2345, 3456, 4567, ...}
-        dosageData1.infusion    = n*1000;                               // infusion(i) = {100, 200, 300, 400, ...}
-        dosageData1.interval    = n*1200;                               // interval(i) = {1200, 2400, 3600, 4800, ...}
-        dosageData1.steadyState = false;                                // if steadyState = false -> start date & end date needed
-        dosageData1.dateTimeDos1.setDate(QDate(2022, n, n));            // start date(i)
-        dosageData1.dateTimeDos1.setTime(QTime(n, n));                  // start time(i)
-        dosageData1.dateTimeDos2.setDate(QDate(2022, n+1, n+1));        // end date(i)
-        dosageData1.dateTimeDos2.setTime(QTime(n+1, n+1));              // end time(i)
 
+    //    for (n = 1; n <= 1; n++)                                            // index of loop is used to modify variables to avoid having to do it manually for each iteratnon
+    //    {
+    dosageData1.dosage      = n*1000 + n*200 + n*30 + n*4;          // dosage(n) = {1234, 2345, 3456, 4567, ...}
+    dosageData1.infusion    = n*1000;                               // infusion(i) = {100, 200, 300, 400, ...}
+    dosageData1.interval    = n*1200;                               // interval(i) = {1200, 2400, 3600, 4800, ...}
+    dosageData1.steadyState = false;                                // if steadyState = false -> start date & end date needed
+    dosageData1.dateTimeDos1.setDate(QDate(2022, n, n));            // start date(i)
+    dosageData1.dateTimeDos1.setTime(QTime(n, n));                  // start time(i)
+    dosageData1.dateTimeDos2.setDate(QDate(2022, n+1, n+1));        // end date(i)
+    dosageData1.dateTimeDos2.setTime(QTime(n+1, n+1));              // end time(i)
 
+    srv->addDosage(dosageData1);
+    srv->waitPeriod(waitTime1);
+
+    /*
         int covarTypeIndex = 0;                                         // covariable type index 0 = weight
         covariatesData1.weight = n*4000 + n*200 + n*30 + n*4;           // same as Dosage (see above)
         covariatesData1.dateTimeCovar.setDate(QDate(2022, n, n));
         covariatesData1.dateTimeCovar.setTime(QTime(n, n));
+    */
 
-*/
+    /*
+    measureData1.name   = "Sample_1234_b" + QString::number(n);
+    measureData1.value  = n*250 + n*10 + n*1;
+    measureData1.dateTimeMeas.setDate(QDate::currentDate().addDays(n-1));
+    measureData1.dateTimeMeas.setTime(QTime(n, n));
 
-    srv->addDosage(dosageData1);
-    srv->waitPeriod(waitTime1*15);
-    srv->synchronize();
+    srv->waitPeriod(waitTime1);
+    srv->addMeasure(measureData1);
+    srv->waitForSync();
+    */
 
-    for (n = 1; n <= 15; n++)
-    {
-        measureData1.name   = "Sample_1234_b" + QString::number(n);
-        measureData1.value  = n*250 + n*10 + n*1;
-        measureData1.dateTimeMeas.setDate(QDate::currentDate().addDays(n-1));
-        measureData1.dateTimeMeas.setTime(QTime(n, n));
+    targetData1.targetType  = 8;
+    targetData1.cMinInput   = n*100 + n*10 + n;
+    targetData1.cBestInput  = (n+1)*100 + (n+1)*10 + (n+1);
+    targetData1.cMaxInput   = (n+2)*100 + (n+2)*10 + (n+2);
+    targetData1.tMinInput   = n*10;
+    targetData1.tBestInput  = (n+1)*10;
+    targetData1.tMaxInput   = (n+2)*10;
+    targetData1.micInput    = (n*100) + 1000;
 
-        srv->waitPeriod(waitTime1);
-        srv->addMeasure(measureData1);
-        srv->waitForSync();
-    }
+    srv->addTarget(targetData1);
+    srv->waitPeriod(waitTime1*10);
 
 /*
-
-        targetData1.targetType  = 8;
-        targetData1.cMinInput   = n*100 + n*10 + n;
-        targetData1.cBestInput  = (n+1)*100 + (n+1)*10 + (n+1);
-        targetData1.cMaxInput   = (n+2)*100 + (n+2)*10 + (n+2);
-        targetData1.tMinInput   = n*10;
-        targetData1.tBestInput  = (n+1)*10;
-        targetData1.tMaxInput   = (n+2)*10;
-        targetData1.micInput    = (n*100) + 1000;
-
         //_____Add dosage_______________________________________________
 
 //        srv->waitForSync();

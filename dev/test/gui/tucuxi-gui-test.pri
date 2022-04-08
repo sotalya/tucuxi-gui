@@ -6,6 +6,7 @@ SOURCES += $$PWD/src/guitest.cpp \
     $$PWD/src/adjustmenttest.cpp \
     $$PWD/src/cachetest.cpp \
     $$PWD/src/functionstester.cpp \
+    $$PWD/src/guidedstresstest.cpp \
     $$PWD/src/issueshighlighter.cpp \
     $$PWD/src/randomtest.cpp \
     $$PWD/src/reporttest.cpp \

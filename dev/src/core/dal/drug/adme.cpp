@@ -59,6 +59,21 @@ QString formulationAndRoutedescription(const Tucuxi::Core::FormulationAndRoute& 
 
 void Admin::setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute formulationAndRoute) {
     _formulationAndRoute = formulationAndRoute;
+    switch (formulationAndRoute.getAbsorptionModel()) {
+    case Tucuxi::Core::AbsorptionModel::Extravascular : {
+        setRoute(Route::EXTRA);
+    } break;
+    case Tucuxi::Core::AbsorptionModel::ExtravascularLag : {
+        setRoute(Route::EXTRALAG);
+    } break;
+    case Tucuxi::Core::AbsorptionModel::Infusion : {
+        setRoute(Route::INFUSION);
+    } break;
+    case Tucuxi::Core::AbsorptionModel::Intravascular : {
+        setRoute(Route::BOLUS);
+    } break;
+    }
+
     setDescription(formulationAndRoutedescription(_formulationAndRoute));
 }
 

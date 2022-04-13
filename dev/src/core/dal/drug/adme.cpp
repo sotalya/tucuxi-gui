@@ -59,6 +59,8 @@ QString formulationAndRoutedescription(const Tucuxi::Core::FormulationAndRoute& 
 
 void Admin::setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute formulationAndRoute) {
     _formulationAndRoute = formulationAndRoute;
+
+    // Here we update the route. Important for a correct display by the QML DialogTab
     switch (formulationAndRoute.getAbsorptionModel()) {
     case Tucuxi::Core::AbsorptionModel::Extravascular : {
         setRoute(Route::EXTRA);

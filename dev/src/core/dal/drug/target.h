@@ -35,6 +35,7 @@ class TargetMethod : public Entity
         PeakDividedByMicTarget, //! Soon to be supported target
         TimeOverMicTarget, //! Soon to be supported target
         ResidualDividedByMicTarget, //! Targeted residual concentration divided by MIC
+        FractionTimeOverMicTarget, //! Fraction of time spent over the MIC [0,1]
         UnknownTarget        //! Unknown or invalid target.
         };
         Q_ENUM(TargetType)
@@ -177,6 +178,7 @@ static QMap<QString, TargetMethod::TargetType> createMap() {
     amap["PeakDividedByMic"] = TargetMethod::PeakDividedByMicTarget;
     amap["ResidualDividedByMic"] = TargetMethod::ResidualDividedByMicTarget;
     amap["TimeOverMic"] = TargetMethod::TimeOverMicTarget;
+    amap["FractionTimeOverMic"] = TargetMethod::FractionTimeOverMicTarget;
     return amap;
 }
 

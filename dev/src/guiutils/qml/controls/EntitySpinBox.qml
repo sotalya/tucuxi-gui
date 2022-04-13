@@ -3,16 +3,15 @@ import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 
-import guiutils.qml.styles 1.0
-import guiutils.qml.controls 1.0
-
-import ezechiel 1.0
 
 SpinBox {
 
     id: root
 
     property bool isOk: true
+
+    property string currentText : ""
+    property double currentValue : 0.0
 
     // doValidation is used as a function, so can be set by the instantiator
     property var doValidation: function() { return true;}
@@ -41,15 +40,22 @@ SpinBox {
 
     signal editingFinished
 
+    function getValue()
+    {
+        return value;
+    }
+
     function setRealValue(val)
     {
         value = Math.pow(10, decimals) * val;
         txtInput.text = root.textFromValue(root.value, root.locale);
+        currentText = txtInput.text;
+        currentValue = value;
     }
 
     function getRealValue()
     {
-        return value / Math.pow(10,decimals);
+        return currentValue / Math.pow(10,decimals);
     }
 
     from : minimumValue * Math.pow(10,decimals)
@@ -64,6 +70,10 @@ SpinBox {
 
     onValueChanged: {
         var t = root.textFromValue(root.value, root.locale);
+        txtInput.text = t;
+        currentText = t;
+        /*
+        var t = root.textFromValue(root.value, root.locale);
         if (!(t === txtInput.text) && root.value !== 0) {
             var curPosFromBack = txtInput.text.length - txtInput.cursorPosition
             txtInput.text = t;
@@ -72,7 +82,7 @@ SpinBox {
         if (root.value === 0) {
             txtInput.cursorPosition = 0; // Keep the cursor on the left when deleting a char results in a value of 0.
         }
-        validate();
+        */
     }
 
     property string baseColor: "black" // "#007194"
@@ -94,13 +104,16 @@ SpinBox {
             verticalAlignment: Qt.AlignVCenter
 
             readOnly: !root.editable
+            // validator: regExpValidator // (root.decimals === 0) ? root.intValidator : root.doubleValidator
             validator: (root.decimals === 0) ? root.intValidator : root.doubleValidator
             inputMethodHints: Qt.ImhFormattedNumbersOnly
 
             onTextChanged: {
-                root.value = valueFromText(text, root.locale);
+                root.currentValue = valueFromText(text, root.locale);
+                //root.value = valueFromText(text, root.locale);
+                validate();
             }
-
+/*
             // Handle delete keys manually because standard behavior is user friendly when
             // deleting the left most character
             Keys.onPressed: {
@@ -120,7 +133,7 @@ SpinBox {
                     }
                 }
             }
-
+*/
             onEditingFinished: root.editingFinished
         }
         Text{
@@ -133,6 +146,10 @@ SpinBox {
             horizontalAlignment: Text.AlignLeft
             text: suffix
         }
+    }
+
+    property var regExpValidator: RegExpValidator{
+        regExp: /(\d+)([.,]\d+)?$/
     }
 
     property var intValidator: IntValidator {
@@ -160,7 +177,7 @@ SpinBox {
             val = Number.fromLocaleString(locale, spaceFreeText) * Math.pow(10, root.decimals);
         }
         catch (e) {
-            val = root.value;
+            val = root.currentValue;
             isOk = false;
         }
         return val;

@@ -3,12 +3,9 @@ import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 
-import guiutils.qml.styles 1.0
-import guiutils.qml.controls 1.0
-
-import ezechiel 1.0
 
 EntitySpinBox {
+    id : root
 
     property var valuesList: null
 
@@ -30,7 +27,11 @@ EntitySpinBox {
         stepSize = 0
         for (var i = 0; i < valuesList.length; i++){
             if(valuesList[i] > getRealValue()){
-                stepSize = (valuesList[i] - getRealValue()) * Math.pow(10, decimals)
+                value = getRealValue() * Math.pow(10, decimals);
+                stepSize = (valuesList[i]) * Math.pow(10, decimals) - getValue()
+                //console.log("CurrentValue : " + currentValue);
+                //console.log("value : " + getValue());
+                //console.log("stepUp : " + stepSize);
                 return
             }
         }
@@ -41,7 +42,12 @@ EntitySpinBox {
         stepSize = 0
         for (var i = valuesList.length - 1; i >= 0; i--){
             if(valuesList[i] < getRealValue()){
-                stepSize = (getRealValue() - valuesList[i]) * Math.pow(10, decimals)
+                value = getRealValue() * Math.pow(10, decimals);
+                //console.log("valueList : " + valuesList[i]);
+                stepSize = getValue() - (valuesList[i]) * Math.pow(10, decimals)
+                //console.log("value : " + getValue());
+                //console.log("CurrentValue : " + currentValue);
+                //console.log("stepDown : " + stepSize);
                 return
             }
         }

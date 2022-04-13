@@ -37,6 +37,7 @@ bool TucucoreToEzTranslator::buildTargetEvaluation(
     case Tucuxi::Core::TargetType::Auc24 : newTargetType = ezechiel::core::TargetMethod::TargetType::AUC24Target; break;
     case Tucuxi::Core::TargetType::CumulativeAuc : newTargetType = ezechiel::core::TargetMethod::TargetType::CumulativeAUCTarget; break;
     case Tucuxi::Core::TargetType::UnknownTarget : newTargetType = ezechiel::core::TargetMethod::TargetType::UnknownTarget; break;
+    case Tucuxi::Core::TargetType::FractionTimeOverMic: newTargetType = ezechiel::core::TargetMethod::TargetType::FractionTimeOverMicTarget; break;
 
         // The 4 following target types are not yet supported
     case Tucuxi::Core::TargetType::AucOverMic : newTargetType = ezechiel::core::TargetMethod::TargetType::AUCOverMicTarget; break;
@@ -456,6 +457,7 @@ ezechiel::core::TargetMethod* TucucoreToEzTranslator::translate(Tucuxi::Core::Ta
     case Tucuxi::Core::TargetType::ResidualDividedByMic : method->setTargetType(ezechiel::core::TargetMethod::TargetType::ResidualDividedByMicTarget); break;
     case Tucuxi::Core::TargetType::Residual : method->setTargetType(ezechiel::core::TargetMethod::TargetType::ResidualTarget); break;
     case Tucuxi::Core::TargetType::TimeOverMic : method->setTargetType(ezechiel::core::TargetMethod::TargetType::TimeOverMicTarget); break;
+    case Tucuxi::Core::TargetType::FractionTimeOverMic : method->setTargetType(ezechiel::core::TargetMethod::TargetType::FractionTimeOverMicTarget); break;
     case Tucuxi::Core::TargetType::UnknownTarget : method->setTargetType(ezechiel::core::TargetMethod::TargetType::UnknownTarget); break;
     }
     return method;

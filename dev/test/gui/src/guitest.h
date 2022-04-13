@@ -20,12 +20,12 @@ struct PatientData {
 
 
 struct DosageData {
-    double dosage       = 5555;
-    double interval     = 2400;
-    double infusion     = 2468;
-    bool steadyState    = true;
-    QDateTime dateTimeDos1 = QDateTime::currentDateTime();
-    QDateTime dateTimeDos2 = QDateTime::currentDateTime().addDays(7);
+    double dosage           = 5555;
+    double interval         = 2400;
+    double infusion         = 2468;
+    bool steadyState        = true;
+    QDateTime dateTimeDos1  = QDateTime::currentDateTime().addDays(2);
+    QDateTime dateTimeDos2  = QDateTime::currentDateTime().addDays(7);
 };
 
 struct CovariatesData {
@@ -54,10 +54,10 @@ struct TargetData {
 };
 
 struct AdjustmentsData {
-    QDateTime dateTimeAdj;
-    bool loadingDose;
-    bool restPeriod;
-    int suggestAdjNum;
+    QDateTime dateTimeAdj   = QDateTime::currentDateTime().addDays(2);
+    bool loadingDose        = true;
+    bool restPeriod         = false;
+    int suggestAdjNum       = 1;
 };
 
 struct ValidationData {

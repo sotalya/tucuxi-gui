@@ -51,7 +51,7 @@ TEST(ValidationTest, Test1)
     patientData1.lastNamePhy    = "Cleaner";
 
     DosageData dosageData1;
-    dosageData1.dosage      = 750000;
+    dosageData1.dosage      = 7500;
     dosageData1.infusion    = 900;
     dosageData1.interval    = 4800;
     dosageData1.steadyState = false;
@@ -62,7 +62,7 @@ TEST(ValidationTest, Test1)
 
     CovariatesData covariatesData1;
     covariatesData1.sex     = "Unknown";
-    covariatesData1.weight  = 1234;
+    covariatesData1.weight  = 4321;
     covariatesData1.scc     = 3720;
     covariatesData1.dateTimeCovar.setDate(QDate(2022, 12, 12));
     covariatesData1.dateTimeCovar.setTime(QTime(06,06));

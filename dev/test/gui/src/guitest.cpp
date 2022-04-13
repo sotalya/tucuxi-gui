@@ -22,6 +22,7 @@ SpixGTest* srv;
 
 
 int waitTime1 = 1;
+int waitTimeLong = 10;
 
 SpixGTest::SpixGTest(MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[])
 {
@@ -307,7 +308,6 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
     QString timeDos = dosageData1.dateTimeDos1.time().toString("HH:mm:ss");
 
     // fills in Dose value, in [µg]
-    srv->synchronize();
     srv->waitPeriod(waitTime1);
 
     findObjectAndSetValue("doseSpinBox", dosageData1.dosage);
@@ -336,6 +336,7 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
 
     QVariant steadyStateValue = getSteadyStateDosage();
 
+    /*
     //srv->synchronize();
     srv->mouseClick(spix::ItemPath("dosageDialog/LastDoseOrFromDateInput/wholeDate"));
     srv->waitPeriod(waitTime1);
@@ -352,12 +353,22 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
 
     srv->waitPeriod(waitTime1);
 
-    // Runs ok
+    // Runs ok but not used anymore 11.04.2022
+    */
+
+    auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("LastDoseOrFromDateInput");
+    dateItem->setProperty("date", dosageData1.dateTimeDos1.date());
+
+    auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("LastDoseOrFromTimeInput");
+    timeItem->setProperty("date", dosageData1.dateTimeDos1.time());
+
+    srv->waitPeriod(waitTime1);
 
     if (steadyStateValue == false)
     {
 //        qInfo() << "At steady state? NO";
 
+        /*
         //srv->synchronize();
         // double click on second date entry (for loop necessary) needs second click to get out of first date entry box
 
@@ -380,7 +391,17 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
 
         srv->waitPeriod(waitTime1);
 
-        // Runs ok
+        // Runs ok but not used anymore 11.04.2022
+    */
+
+        auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("stoppedDateInput");
+        dateItem->setProperty("date", dosageData1.dateTimeDos2.date());
+
+        auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("stoppedTimeInput");
+        timeItem->setProperty("date", dosageData1.dateTimeDos2.time());
+
+        srv->waitPeriod(waitTime1);
+
     }
 
 //    else qInfo() << "At steady state? YES";
@@ -636,11 +657,11 @@ void SpixGTest::addAdjustments(AdjustmentsData adjustmentsData1)
     srv->synchronize();
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/addAdjustment"));
-//    srv->waitPeriod(waitTime1);
+    srv->waitPeriod(waitTime1);
 //    srv->synchronize();
 
-//    srv->mouseClick(spix::ItemPath("mainWindow/flowView/editAdjustments_0"));
-//    srv->waitPeriod(waitTime1*10);
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/editAdjustments_0"));
+    srv->waitPeriod(waitTime1*10);
 //    srv->synchronize();
 
 //    srv->waitForSync();

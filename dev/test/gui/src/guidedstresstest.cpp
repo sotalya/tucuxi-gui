@@ -61,7 +61,7 @@ TEST(GuidedStressTest, DrugTab)
                                   Q_ARG(QVariant, QVariant::fromValue(modelIndex)));
     }
 
-    drugIndex = 20;
+    drugIndex = 20;                                                 // drugIndex : 20 = Vancomycin
 
     for (modelIndex = 0; modelIndex <= 7; modelIndex++)
     {
@@ -89,7 +89,7 @@ TEST(GuidedStressTest, DrugTab)
     {
         srv->waitPeriod(waitTime1);
 
-        drugIndex = rand() % 20;                                // generates random index between 1 and 20
+        drugIndex = rand() % 20;                                    // generates random index between 1 and 20
         std::cout << "DrugIndex : " << drugIndex << std::endl;
 
         QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentActiveSubstance",
@@ -142,7 +142,7 @@ TEST(GuidedStressTest, DosageTab)
 
         "mainWindow/flowView/dosageButton",
         "mainWindow/flowView/addDosage",
-        "mainWindow/flowView/editDosage_",                                 // '_' at the end of string to add Dosage index later in test
+        "mainWindow/flowView/editDosage_",                          // '_' at the end of string to add Dosage index later in test
         "mainWindow/flowView/removeDosage_",
         "dosageDialog/okDosage",
         "dosageDialog/applyDosage",
@@ -248,7 +248,7 @@ TEST(GuidedStressTest, CovariateTab)
 }
 
 
-TEST(GuidedStressTest,  MeasureTab)
+TEST(GuidedStressTest, MeasureTab)
 {
     int waitTime1 = 1;
     int waitTimeLong = 5;

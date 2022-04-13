@@ -85,7 +85,6 @@ Rectangle {
                         label.text: "Infusion"
                         tooltipText: ToolTips.dosageTab.infusion
                     }
-
                     EntityListHeaderImage {
                         objectName: "addDosage"
                         image.source: dosageTabController.canHaveMoreDosages ? "qrc:/icons/buttons/add.png" : ""

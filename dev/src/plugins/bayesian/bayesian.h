@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef BAYESIAN_H
 #define BAYESIAN_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PREDICTIVE_H
 #define PREDICTIVE_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 // File title       :   functionstester.cpp
 // Test title       :   FunctionsTester
 // Author           :   Julien Rosset
@@ -36,52 +38,56 @@ TEST(FunctionsTester, Test1)
     int waitTime1 = 1;
     int waitTimeLong = 4;
 
-    srv->waitPeriod(waitTime1);             // default (when no arg.) value : 1/2 [s]
+    srv->waitPeriod(waitTime1);                 // default (when no arg.) value : 1/2 [s]
 
     //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
-        srv->startNewPatient();                 // call function which clicks on "New patient" icon
-        srv->waitPeriod(waitTime1);
-
-        srv->selectDrugInList(13, 0);
-        srv->waitPeriod(waitTime1);
-
-
-    //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-
-    //    PatientData patientData1;
-    //    patientData1.firstName = "Joan";
-    //    patientData1.lastName = "Of Arc";
-    //    patientData1.birthDate.setDate(1914, 11, 11);
-    //    patientData1.gender = 0;                         // male = 1, female = 0
-    //    patientData1.identifier = "Patient_0_virusT";
-    //    patientData1.stayNumber = "Private drive n°4";
-    //    patientData1.titlePhy = "Dr.";
-    //    patientData1.firstNamePhy = "Window";
-    //    patientData1.lastNamePhy = "Cleaner";
-
-
-    //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-
-    DosageData dosageData1;
-
-    dosageData1.interval = 1750;
-    dosageData1.dateTimeDos1.setDate(QDate(2022, 02, 10));
-    dosageData1.dateTimeDos1.setTime(QTime(7, 30));
-    dosageData1.steadyState = false;
-    dosageData1.dateTimeDos2.setDate(QDate(2022, 03, 05));
-    dosageData1.dateTimeDos2.setTime(QTime(8, 32));
-    srv->addDosage(dosageData1);
-
+    srv->startNewPatient();                     // call function which clicks on "New patient" icon
     srv->waitPeriod(waitTime1);
 
-    TargetData targetData1;
-    srv->addTarget(targetData1);
+    PatientData patientData1;
+    srv->fillInPatientData(patientData1);
+    srv->waitPeriod(waitTime1*20);
 
-    AdjustmentsData adjustmentsData1;
-    srv->addAdjustments(adjustmentsData1);
+    srv->selectDrugInList(6, 0);
+    srv->waitPeriod(waitTime1);
 
-    srv->waitPeriod(waitTimeLong);
+    CovariatesData covariatesData1;
+    int covariateType   = 3;                      // covariateType : 3 = Serum creatinin concentration
+    int sccInitialValue = 8010;
+
+    for (int n = 1; n <= 10; n++)
+    {
+        covariatesData1.scc = sccInitialValue + n*1;
+        covariatesData1.dateTimeCovar.setDate(QDate::currentDate().addDays(-n));
+        srv->addCovariates(covariatesData1, covariateType);
+        srv->waitPeriod(waitTime1*4);
+        srv->synchronize();
+    }
+
+        srv->waitPeriod(waitTimeLong*2);
+    //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+
+//    DosageData dosageData1;
+
+
+//    srv->addDosage(dosageData1);
+//    srv->waitPeriod(waitTime1);
+
+//    MeasureData measureData1;
+//    srv->addMeasure(measureData1);
+//    srv->waitPeriod(waitTime1);
+
+//    TargetData targetData1;
+//    srv->addTarget(targetData1);
+
+//    AdjustmentsData adjustmentsData1;
+
+//    srv->addAdjustments(adjustmentsData1);          // manually add new adjustment
+//    srv->selectAdjustments(1);                      // select suggested adjustment from list
+//    srv->waitPeriod(waitTime1);
+//    srv->editAdjustments(adjustmentsData1, 0);
+//    srv->waitPeriod(waitTimeLong*4);
 
     //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 

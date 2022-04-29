@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PREDICTIONSPECCOPIER_H
 #define PREDICTIONSPECCOPIER_H
 

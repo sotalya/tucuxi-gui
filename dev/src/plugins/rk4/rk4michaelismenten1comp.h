@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef RK4MMPREDICTOR_H
 #define RK4MMPREDICTOR_H
 

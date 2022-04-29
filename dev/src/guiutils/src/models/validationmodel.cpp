@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "validationmodel.h"
 
 #include "core/dal/prediction.h"

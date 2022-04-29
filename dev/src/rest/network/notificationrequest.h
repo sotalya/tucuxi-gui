@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef NOTIFICATIONREQUEST_H
 #define NOTIFICATIONREQUEST_H
 

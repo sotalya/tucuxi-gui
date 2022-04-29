@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "adjustmentsettingsmodel.h"
 
 AdjustmentSettingsModel::AdjustmentSettingsModel(QObject *parent) :

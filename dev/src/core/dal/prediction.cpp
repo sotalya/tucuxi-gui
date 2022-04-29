@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/prediction.h"
 //#include "core/corerepository.h"
 #include "core/core.h"

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "rk4genericmodel.h"
 #include "version.h"
 #include <math.h>

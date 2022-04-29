@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "persistentfiledialog.h"
 
 PersistentFileDialog::PersistentFileDialog(QWidget *parent, Qt::WindowFlags flags) : QFileDialog(parent, flags)

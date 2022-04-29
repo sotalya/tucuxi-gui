@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ACKLISTXMLMESSAGE_H
 #define ACKLISTXMLMESSAGE_H
 

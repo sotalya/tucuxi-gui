@@ -1,3 +1,5 @@
+//@@license@@
+
 //#include "core/interfaces/genericdatabase.h"
 #include "patientaction.h"
 

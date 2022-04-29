@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "dosagelistmodel.h"
 #include "core/corefactory.h"
 #include "core/corerepository.h"

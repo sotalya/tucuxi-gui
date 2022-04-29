@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef EZCHOICE_H
 #define EZCHOICE_H
 

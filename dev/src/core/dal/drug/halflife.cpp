@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/drug/halflife.h"
 #include "core/dal/drug/translatablestring.h"
 

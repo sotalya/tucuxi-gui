@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "chartitemgroup.h"
 #include "chartitem.h"
 #include "percentilecurve.h"

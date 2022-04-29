@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef QUERYLISTMESSAGEBUILDER_H
 #define QUERYLISTMESSAGEBUILDER_H
 

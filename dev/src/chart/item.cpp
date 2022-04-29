@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "item.h"
 
 #include <algorithm>

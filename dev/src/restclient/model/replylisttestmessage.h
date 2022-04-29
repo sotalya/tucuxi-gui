@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REPLYLISTTESTMESSAGE_H
 #define REPLYLISTTESTMESSAGE_H
 

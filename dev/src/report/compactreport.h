@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COMPACTREPORT_H
 #define COMPACTREPORT_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "targetinterval.h"
 #include "core.h"
 #include "coremessagehandler.h"

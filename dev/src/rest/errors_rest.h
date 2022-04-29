@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ERRORS_REST_H
 #define ERRORS_REST_H
 

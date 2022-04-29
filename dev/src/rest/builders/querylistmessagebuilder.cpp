@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <QDomDocument>
 
 #include "querylistmessagebuilder.h"

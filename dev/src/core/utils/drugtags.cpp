@@ -1,3 +1,5 @@
+//@@license@@
+
 /* Declaration of the tags encountered in the drugs XML files.
  * Only the tags that needs a translated name or that are used
  * in more the one parser are declared. The macro below is used

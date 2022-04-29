@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "restconfigdialog.h"
 #include "ui_restconfigdialog.h"
 

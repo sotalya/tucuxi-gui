@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef GENERICUSER_H
 #define GENERICUSER_H
 

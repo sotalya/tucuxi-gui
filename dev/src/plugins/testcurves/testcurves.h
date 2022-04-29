@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef TESTCURVES_H
 #define TESTCURVES_H
 

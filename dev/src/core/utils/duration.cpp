@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/utils/duration.h"
 
 #include <QDate>

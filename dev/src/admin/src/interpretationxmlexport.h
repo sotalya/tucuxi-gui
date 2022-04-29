@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef INTERPRETATIONXMLEXPORT_H
 #define INTERPRETATIONXMLEXPORT_H
 

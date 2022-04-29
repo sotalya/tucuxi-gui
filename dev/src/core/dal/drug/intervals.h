@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef INTERVALS_H
 #define INTERVALS_H
 

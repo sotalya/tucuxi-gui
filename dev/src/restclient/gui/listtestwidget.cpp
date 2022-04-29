@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <QStandardItemModel>
 #include <QItemSelectionModel>
 #include <QDate>

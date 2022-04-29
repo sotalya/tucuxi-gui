@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <QCoreApplication>
 #include <QDir>
 #include <QLocale>

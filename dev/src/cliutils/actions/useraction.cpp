@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "useraction.h"
 #include "core/core.h"
 #include "apputils/src/appcore.h"

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <FOCE.h>
 
 #include "core.h"

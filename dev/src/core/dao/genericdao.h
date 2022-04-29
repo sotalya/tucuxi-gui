@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef GENERICDAO_H
 #define GENERICDAO_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef STARTUPWINDOW_H
 #define STARTUPWINDOW_H
 

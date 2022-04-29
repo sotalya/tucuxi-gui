@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "eztotucucoretranslator.h"
 
 #include "core/dal/predictionspec.h"

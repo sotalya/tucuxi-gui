@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/percentile.h"
 
 namespace ezechiel {

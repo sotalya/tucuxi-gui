@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "convert.h"
 
 #include <QObject>

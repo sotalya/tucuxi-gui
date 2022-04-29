@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ADMINFACTORY_H
 #define ADMINFACTORY_H
 

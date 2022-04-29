@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "restlogger.h"
 
 #include <QDateTime>

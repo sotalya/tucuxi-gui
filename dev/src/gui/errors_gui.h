@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef GUERRORS
 #define GUERRORS
 

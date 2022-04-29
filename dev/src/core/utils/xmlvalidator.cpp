@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/utils/xmlvalidator.h"
 //#include "coremessagehandler.h"
 //#include "core_errors.h"

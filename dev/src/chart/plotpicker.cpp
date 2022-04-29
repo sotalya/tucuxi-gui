@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "plotpicker.h"
 
 #include "coremessagehandler.h"

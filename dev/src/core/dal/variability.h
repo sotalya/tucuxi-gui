@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef VARIABILITY_H
 #define VARIABILITY_H
 

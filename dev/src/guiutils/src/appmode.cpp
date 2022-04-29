@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "appmode.h"
 
 AppMode* AppMode::m_instance = nullptr;

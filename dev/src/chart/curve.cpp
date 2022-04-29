@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "curve.h"
 
 #include <qwt_plot.h>

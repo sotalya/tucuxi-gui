@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "drugtohtml.h"
 
 #include "core/dal/drug/drug.h"

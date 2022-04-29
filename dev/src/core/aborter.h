@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ABORTER_H
 #define ABORTER_H
 

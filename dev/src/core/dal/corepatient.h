@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COREPATIENT_H
 #define COREPATIENT_H
 

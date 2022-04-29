@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "httplistener.h"
 #include "restserver/network/requestmapper.h"
 #include "restserver/utils/settings.h"

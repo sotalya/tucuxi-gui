@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "patientlistmodel.h"
 #include "admin/src/adminfactory.h"
 #include "admin/src/stdadminrepository.h"

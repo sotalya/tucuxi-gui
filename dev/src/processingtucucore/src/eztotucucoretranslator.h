@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef EZTOTUCUCORETRANSLATOR_H
 #define EZTOTUCUCORETRANSLATOR_H
 

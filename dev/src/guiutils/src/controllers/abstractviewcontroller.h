@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ABSTRACTVIEWCONTROLLER_H
 #define ABSTRACTVIEWCONTROLLER_H
 

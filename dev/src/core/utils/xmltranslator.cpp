@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/utils/xmltranslator.h"
 #include "tag.h"
 #include "core/core.h"

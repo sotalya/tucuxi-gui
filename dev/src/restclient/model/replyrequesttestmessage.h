@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REPLYREQUESTTESTMESSAGE_H
 #define REPLYREQUESTTESTMESSAGE_H
 

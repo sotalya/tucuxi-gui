@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef IMPORTACTION_H
 #define IMPORTACTION_H
 

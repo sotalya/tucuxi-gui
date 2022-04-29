@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "percentilepair.h"
 
 namespace ezechiel {

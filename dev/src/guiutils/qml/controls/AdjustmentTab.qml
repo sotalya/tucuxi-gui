@@ -42,10 +42,10 @@ Rectangle {
 
     function extAdjDate(yearAdj, monthAdj, dayAdj, hourAdj, minuteAdj) {                    // JRT 17.03.2022
 //        adjustmentTabController.adjustmentDate = (new Date("2027","08","09","00","00"));
-        adjustmentTabController.adjustmentDate = (new Date(yearAdj, monthAdj, dayAdj, hourAdj, minuteAdj));
+        adjustmentTabController.adjustmentDate = (new Date(yearAdj, monthAdj, dayAdj, hourAdj, minuteAdj))
     }
 
-    function extLoadingDose(input) {            // not able to edit Loading dose or Rest time. To be continued...
+    function extLoadingDose(input) {            // not able to edit Loading dose or Rest time. To be continued... JRT 17.03.2022
 
 //        withLoadingDose.checked = true
 //        withRestPeriod.checked = true
@@ -540,7 +540,7 @@ Rectangle {
                                 label.color: manualAdjustmentListDelegate.mousearea.hovered ? manualAdjustmentList.rowForegroundHover : (manualAdjustmentListDelegate.ListView.isCurrentItem ? manualAdjustmentList.rowForegroundSelected : manualAdjustmentList.rowForeground)
                             },
                             EntityListImage {
-                                objectName: "editAdjustments_" + index;
+                                objectName: "editAdjustment_" + index;
                                 image.source: "qrc:/icons/buttons/edit.png"
                                 mousearea.onClicked: {
                                     manualAdjustmentListView.currentIndex = index

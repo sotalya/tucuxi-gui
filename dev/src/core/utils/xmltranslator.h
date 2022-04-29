@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DOMTRANSLATOR_H
 #define DOMTRANSLATOR_H
 

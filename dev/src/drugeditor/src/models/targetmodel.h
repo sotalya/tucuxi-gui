@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef TARGETMODEL_H
 #define TARGETMODEL_H
 

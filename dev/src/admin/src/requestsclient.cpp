@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "requestsclient.h"
 
 RequestsClient::RequestsClient(QObject *parent) :

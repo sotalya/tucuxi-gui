@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "flowcontroller.h"
 #include "admin/src/dal/interpretation.h"
 #include "admin/src/dal/interpretationrequest.h"

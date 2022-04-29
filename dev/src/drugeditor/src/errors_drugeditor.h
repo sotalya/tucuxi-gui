@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ERRORS_DRUGEDITOR_H
 #define ERRORS_DRUGEDITOR_H
 

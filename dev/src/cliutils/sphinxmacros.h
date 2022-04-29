@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef SPHINXMACROS_H
 #define SPHINXMACROS_H
 

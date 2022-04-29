@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PROCESSINGPROXY_H
 #define PROCESSINGPROXY_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DemoRequestsClient_H
 #define DemoRequestsClient_H
 

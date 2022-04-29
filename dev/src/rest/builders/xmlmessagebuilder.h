@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef XMLMESSAGEBUILDER_H
 #define XMLMESSAGEBUILDER_H
 

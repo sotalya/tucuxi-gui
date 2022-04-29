@@ -1,3 +1,5 @@
+//@@lisence@@ 
+
 #include "adjustment.h"
 #include "dal/drug/target.h"
 

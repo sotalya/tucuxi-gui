@@ -1,3 +1,4 @@
+//@@license@@
 
 #include <iostream>
 #include <algorithm>
@@ -1870,6 +1871,8 @@ void InterpretationController::saveInterpretation()
 
     if (!fileName.endsWith(".tui"))
         fileName += ".tui";
+
+    //qInfo() << fileName;
 
     dirPath = QFileInfo(fileName).absoluteDir().absolutePath();
     SETTINGS.set(ezechiel::core::Module::GUI,"interpretationDirPath", dirPath);

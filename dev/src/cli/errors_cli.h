@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CLIERRORS
 #define CLIERRORS
 

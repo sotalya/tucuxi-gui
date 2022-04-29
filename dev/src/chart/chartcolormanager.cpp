@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "chartcolormanager.h"
 
 const QMap<ParameterType, QList<QColor> > ChartColorManager::refColors = initColors();

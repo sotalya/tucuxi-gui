@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "abstractentitylistmodel.h"
 
 #include <QUndoStack>

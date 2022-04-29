@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ABIINTRAPREDICTOR_H
 #define ABIINTRAPREDICTOR_H
 

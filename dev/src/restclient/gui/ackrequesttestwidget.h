@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ACKREQUESTTESTWIDGET_H
 #define ACKREQUESTTESTWIDGET_H
 

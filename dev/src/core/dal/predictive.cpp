@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "predictive.h"
 
 namespace ezechiel {

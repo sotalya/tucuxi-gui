@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "errors_drugeditor.h"
 #include "gui/errors_gui.h"
 

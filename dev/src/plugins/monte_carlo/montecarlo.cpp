@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "montecarlo.h"
 
 #include <QFile>

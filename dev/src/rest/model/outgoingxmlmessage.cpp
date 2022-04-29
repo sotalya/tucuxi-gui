@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "outgoingxmlmessage.h"
 
 OutgoingXmlMessage::OutgoingXmlMessage(QObject *parent) :

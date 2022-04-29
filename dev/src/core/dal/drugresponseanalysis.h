@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DRUGRESPONSEANALYSIS_H
 #define DRUGRESPONSEANALYSIS_H
 

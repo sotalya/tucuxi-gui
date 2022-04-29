@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef STARTUPSCREEN_H
 #define STARTUPSCREEN_H
 

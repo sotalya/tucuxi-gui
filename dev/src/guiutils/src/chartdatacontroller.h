@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CHARTDATACONTROLLER_H
 #define CHARTDATACONTROLLER_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "importaction.h"
 #include "core/utils/xmlvalidator.h"
 #include "core/definitionmanager.h"

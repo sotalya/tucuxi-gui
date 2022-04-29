@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "percentilecurve.h"
 
 #include <QPen>

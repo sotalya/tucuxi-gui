@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ABSTRACTENTITYMODEL_H
 #define ABSTRACTENTITYMODEL_H
 

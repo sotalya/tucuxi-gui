@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "dbplugin.h"
 
 #include "core.h"

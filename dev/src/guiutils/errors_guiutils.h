@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef GUIERRORS
 #define GUIERRORS
 

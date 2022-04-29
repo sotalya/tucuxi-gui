@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "querylistxmlmessage.h"
 #include "core/utils/xmlvalidator.h"
 

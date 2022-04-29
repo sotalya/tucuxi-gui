@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/drugtreatment.h"
 #include "core/core.h"
 //#include "core_errors.h"

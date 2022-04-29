@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "networkaccessmanager.h"
 
 #include <QFile>

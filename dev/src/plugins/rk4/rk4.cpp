@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "rk4.h"
 
 #include "ezxmlreader.h"

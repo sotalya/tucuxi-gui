@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "requestmapper.h"
 #include "querymapper.h"
 

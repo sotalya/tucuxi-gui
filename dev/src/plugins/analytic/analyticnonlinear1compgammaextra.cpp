@@ -1,3 +1,4 @@
+//@@license@@
 
 #include "analyticnonlinear1compgammaextra.h"
 

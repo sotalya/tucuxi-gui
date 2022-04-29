@@ -1,3 +1,5 @@
+//@@license@@s
+
 #ifndef RESTREQUESTSCLIENT_H
 #define RESTREQUESTSCLIENT_H
 

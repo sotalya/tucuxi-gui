@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef NOTIFICATIONTESTMESSAGE_H
 #define NOTIFICATIONTESTMESSAGE_H
 

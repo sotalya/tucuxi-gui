@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <QQuickWindow>
 
 #include <QTest>
@@ -110,6 +112,11 @@ QObject *SpixGTest::getObjectByName(QObject *root, std::string name)
     return nullptr;
 }
 
+void SpixGTest::saveInterpretation(QString fileName)
+{
+    // WORK IN PROGRESS
+}
+
 void SpixGTest::startNewPatient()
 {
     srv->synchronize();
@@ -205,35 +212,38 @@ void SpixGTest::fillInPatientData(PatientData patientData1)
 
     srv->synchronize();
 
-    // invoke method to expand Patient and Physician tabs
+    // invoke method to expand Patient and Physician tabs and then fill in data
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->patientsView, "extPatientData",
                               Q_ARG(QVariant, QVariant::fromValue(yearPat)),
                               Q_ARG(QVariant, QVariant::fromValue(monthPat)),
-                              Q_ARG(QVariant, QVariant::fromValue(dayPat)));
+                              Q_ARG(QVariant, QVariant::fromValue(dayPat)),
+
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.firstName)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.lastName)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.identifier)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.stayNumber)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.titlePhy)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.firstNamePhy)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.lastNamePhy)));
 
     srv->waitPeriod(waitTime1);
 
-    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientFirstName");
-    item->setProperty("text", patientData1.firstName);
+//    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientFirstName");
+//    item->setProperty("text", patientData1.firstName);
+//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientLastName");
+//    item->setProperty("text", patientData1.lastName);
+//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientIdentifier");
+//    item->setProperty("text", patientData1.identifier);
+//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientStayNumber");
+//    item->setProperty("text", patientData1.stayNumber);
+//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("titlePhy");
+//    item->setProperty("text", patientData1.titlePhy);
+//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("firstNamePhy");
+//    item->setProperty("text", patientData1.firstNamePhy);
+//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("lastNamePhy");
+//    item->setProperty("text", patientData1.lastNamePhy);
 
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientLastName");
-    item->setProperty("text", patientData1.lastName);
-
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientIdentifier");
-    item->setProperty("text", patientData1.identifier);
-
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientStayNumber");
-    item->setProperty("text", patientData1.stayNumber);
-
-
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("titlePhy");
-    item->setProperty("text", patientData1.titlePhy);
-
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("firstNamePhy");
-    item->setProperty("text", patientData1.firstNamePhy);
-
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("lastNamePhy");
-    item->setProperty("text", patientData1.lastNamePhy);
+//    srv->inputText(spix::ItemPath("mainWindow/flowView/patientsView/patientFirstName"), patientData1.firstName.toStdString());
 
     srv->waitPeriod(waitTime1);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/patientButton"));
@@ -336,26 +346,6 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
 
     QVariant steadyStateValue = getSteadyStateDosage();
 
-    /*
-    //srv->synchronize();
-    srv->mouseClick(spix::ItemPath("dosageDialog/LastDoseOrFromDateInput/wholeDate"));
-    srv->waitPeriod(waitTime1);
-
-    for(int i = 0; i < 10; i++) {
-        srv->enterKey(spix::ItemPath("dosageDialog/LastDoseOrFromDateInput/wholeDate"), spix::KeyCodes::Backspace, 0);
-    }
-    srv->inputText(spix::ItemPath("dosageDialog/LastDoseOrFromDateInput/wholeDate"), dateDos.toStdString());
-    srv->waitPeriod(waitTime1);
-    //    qInfo() << "TIME :" << timeDos;
-
-    auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("LastDoseOrFromTimeInput");
-    timeItem->setProperty("text", timeDos);
-
-    srv->waitPeriod(waitTime1);
-
-    // Runs ok but not used anymore 11.04.2022
-    */
-
     auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("LastDoseOrFromDateInput");
     dateItem->setProperty("date", dosageData1.dateTimeDos1.date());
 
@@ -368,32 +358,6 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
     {
 //        qInfo() << "At steady state? NO";
 
-        /*
-        //srv->synchronize();
-        // double click on second date entry (for loop necessary) needs second click to get out of first date entry box
-
-        srv->mouseClick(spix::ItemPath("dosageDialog/stoppedDateInput/wholeDate"));
-        srv->mouseClick(spix::ItemPath("dosageDialog/stoppedDateInput/wholeDate"));
-        srv->waitPeriod(waitTime1);
-
-        for(int i = 0; i < 10; i++) {
-            srv->enterKey(spix::ItemPath("dosageDialog/stoppedDateInput/wholeDate"), spix::KeyCodes::Backspace, 0);
-            //srv->waitPeriod(waitTime1);
-        }
-        dateDos = dosageData1.dateTimeDos2.toString("dd.MM.yyyy");
-        timeDos = dosageData1.dateTimeDos2.toString("HH:mm:ss");
-
-        srv->inputText(spix::ItemPath("dosageDialog/stoppedDateInput/wholeDate"), dateDos.toStdString());
-        srv->waitPeriod(waitTime1);
-
-        auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("stoppedTimeInput");
-        timeItem->setProperty("text", timeDos);
-
-        srv->waitPeriod(waitTime1);
-
-        // Runs ok but not used anymore 11.04.2022
-    */
-
         auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("stoppedDateInput");
         dateItem->setProperty("date", dosageData1.dateTimeDos2.date());
 
@@ -401,7 +365,6 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
         timeItem->setProperty("date", dosageData1.dateTimeDos2.time());
 
         srv->waitPeriod(waitTime1);
-
     }
 
 //    else qInfo() << "At steady state? YES";
@@ -431,7 +394,7 @@ void SpixGTest::addCovariates(CovariatesData covariatesData1, int covariateType)
                               Q_ARG(QVariant, QVariant::fromValue(covariateType)));
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/addCovariate"));      // will open Covariate dialog
-    srv->waitPeriod(waitTime1);
+    srv->waitPeriod(waitTime1*4);
 
     fillInCovariatesData(covariatesData1, covariateType);
 
@@ -467,26 +430,32 @@ void SpixGTest::fillInCovariatesData(CovariatesData covariatesData1, int covaria
 {
     srv->synchronize();
 
+    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("valueDoubleControl");
+    //    qInfo() << item;
+
     if (covariateType == 0)                             // if covariateType == Total Body Weight
     {
-        auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("valueDoubleControl");
-        //    qInfo() << item;
         item->setProperty("value", covariatesData1.weight);
-
-        srv->synchronize();
-        srv->waitPeriod(waitTime1);
-
-        auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("dateInputCovar");
-        dateItem->setProperty("date", covariatesData1.dateTimeCovar.date());
-        auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("timeInputCovar");
-        timeItem->setProperty("date", covariatesData1.dateTimeCovar.time());
-        srv->synchronize();
-        srv->waitPeriod(waitTime1);
-
-        srv->mouseClick(spix::ItemPath("covariateDialog/okCovariate"));
-
-        srv->waitPeriod(waitTime1);
     }
+    else if (covariateType == 3)
+    {
+        item->setProperty("value", covariatesData1.scc + QTime::currentTime().second());
+    }
+
+    srv->synchronize();
+    srv->waitPeriod(waitTime1);
+
+    auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("dateInputCovar");
+    dateItem->setProperty("date", covariatesData1.dateTimeCovar.date());
+    auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("timeInputCovar");
+    timeItem->setProperty("date", covariatesData1.dateTimeCovar.time());
+    srv->synchronize();
+    srv->waitPeriod(waitTime1);
+
+    srv->mouseClick(spix::ItemPath("covariateDialog/okCovariate"));
+
+    srv->waitPeriod(waitTime1);
+
 
     // Runs ok
 }
@@ -524,8 +493,11 @@ void SpixGTest::editMeasure(MeasureData measureData1, int editIndex)
 void SpixGTest::fillInMeasureData(MeasureData measureData1)
 {
     srv->synchronize();
-    auto idItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleIdField");
-    idItem->setProperty("text", measureData1.name);
+//    auto idItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleIdField");
+//    idItem->setProperty("text", measureData1.name);
+    srv->mouseClick(spix::ItemPath("measureDialog/sampleIdField"));
+    srv->inputText(spix::ItemPath("measureDialog/sampleIdField"), measureData1.name.toStdString());
+
     srv->waitPeriod(waitTime1);
 
     auto valueItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueInput");
@@ -631,20 +603,6 @@ void SpixGTest::addAdjustments(AdjustmentsData adjustmentsData1)
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->waitPeriod(waitTime1);
 
-    //    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->adjustmentsView, "extLoadingDose",
-    //                              Q_ARG(QVariant, QVariant::fromValue(true)));
-
-    //    item->setProperty("checked", true);
-    //    srv->waitPeriod(waitTime1);
-
-    //    auto restPeriodItem = srv->m_mainWindowController->getInterpretationController()->findChild<QObject*>("withRestPeriod");
-    //    qInfo() << restPeriodItem;
-    //    restPeriodItem->setProperty("checked", true);
-
-    //    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/withLoadingDoseMousearea"));
-    //    srv->waitPeriod(waitTime1*4);
-    //    srv->synchronize();
-
     // can't pass arg type QDate to QML function, string type also allows to segregate years, months, ...
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->adjustmentsView, "extAdjDate",
                               Q_ARG(QVariant, QVariant::fromValue(yearAdj)),
@@ -654,21 +612,63 @@ void SpixGTest::addAdjustments(AdjustmentsData adjustmentsData1)
                               Q_ARG(QVariant, QVariant::fromValue(minuteAdj)));
 
     srv->waitPeriod(waitTime1);
-    srv->synchronize();
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/addAdjustment"));
     srv->waitPeriod(waitTime1);
-//    srv->synchronize();
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/editAdjustments_0"));
-    srv->waitPeriod(waitTime1*10);
-//    srv->synchronize();
-
-//    srv->waitForSync();
+    srv->waitPeriod(waitTime1);
 
 //    srv->mouseClick(spix::ItemPath("mainWindow/flowView/selectAdjustment_3"));    // Runs ok
     srv->waitPeriod(waitTime1*10);
     srv->synchronize();
+
+}
+
+void SpixGTest::selectAdjustments(int selectIndex)
+{
+    std::string selectPath = "mainWindow/flowView/selectAdjustment_" + std::to_string(selectIndex);
+
+    srv->synchronize();
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->waitPeriod(waitTime1);
+
+    if (srv->existsAndVisible(spix::ItemPath(selectPath)))
+    {
+        srv->synchronize();
+        //        srv->mouseClick(spix::ItemPath("mainWindow/flowView/editDosage_0"));
+        srv->mouseClick(spix::ItemPath(selectPath));
+        srv->waitPeriod(waitTime1);
+    }
+}
+
+void SpixGTest::editAdjustments(AdjustmentsData adjustmentsData1, int editIndex)
+{
+    std::string editPath = "mainWindow/flowView/editAdjustment_" + std::to_string(editIndex);
+
+    srv->synchronize();
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->waitPeriod(waitTime1);
+
+    if (srv->existsAndVisible(spix::ItemPath(editPath)))
+    {
+        srv->synchronize();
+        srv->mouseClick(spix::ItemPath(editPath));
+        srv->waitPeriod(waitTime1);
+
+//        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->adjustmentsView, "extInputData",
+
+        srv->synchronize();
+        srv->findObjectAndSetValue("doseSpinBoxAdj", adjustmentsData1.dose);
+        srv->findObjectAndSetValue("intervalSpinBoxAdj", adjustmentsData1.interval);
+
+        srv->waitPeriod(waitTimeLong);
+
+        srv->mouseClick(spix::ItemPath("adjustmentDialog/applyAdj"));
+        srv->mouseClick(spix::ItemPath("adjustmentDialog/okAdj"));
+        srv->synchronize();
+
+    }
 
 }
 

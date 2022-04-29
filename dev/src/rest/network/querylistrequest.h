@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef QUERYLISTREQUEST_H
 #define QUERYLISTREQUEST_H
 

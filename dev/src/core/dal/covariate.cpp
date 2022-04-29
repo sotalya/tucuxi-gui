@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <QString>
 
 #include "core/dal/covariate.h"

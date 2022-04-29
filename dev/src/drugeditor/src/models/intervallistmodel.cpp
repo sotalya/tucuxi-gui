@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "intervallistmodel.h"
 #include "core/dal/drug/doses.h"
 #include "core/dal/drug/intervals.h"

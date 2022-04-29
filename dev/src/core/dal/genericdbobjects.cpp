@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "genericdbobjects.h"
 //#include "curvemanager.h"
 

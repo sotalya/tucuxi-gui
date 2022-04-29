@@ -1,3 +1,5 @@
+//@@license@@
+
 /**
  * @file elitism.cpp
  * @author Yvan Da Silva <yvan.m.silva AT gmail.com>

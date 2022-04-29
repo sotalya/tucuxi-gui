@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/utils/ezutils.h"
 
 #include "core/utils/units.h"

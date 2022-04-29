@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "svm_predict.h"
 #include "ezxmlreader.h"
 #include "core_errors.h"

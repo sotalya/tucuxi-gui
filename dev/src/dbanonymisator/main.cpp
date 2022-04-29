@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "mainwindow.h"
 #include <QApplication>
 

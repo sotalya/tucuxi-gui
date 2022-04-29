@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "commentlistmodel.h"
 
 CommentListModel::CommentListModel(QObject *parent):

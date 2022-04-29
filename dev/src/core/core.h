@@ -1,3 +1,5 @@
+//@@license@@
+
 /** \mainpage Tucuxi code documentation
  *
  * Tucuxi is a medical software designed to predict the drug concentration in a patient's body.

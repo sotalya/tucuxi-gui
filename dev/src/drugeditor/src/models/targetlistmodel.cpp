@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "targetlistmodel.h"
 #include "adminfactory.h"
 #include "stdadminrepository.h"

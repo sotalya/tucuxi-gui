@@ -1,3 +1,5 @@
+//@@license@@s
+
 #ifndef APPMODE_H
 #define APPMODE_H
 

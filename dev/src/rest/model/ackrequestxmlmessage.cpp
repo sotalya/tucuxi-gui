@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "ackrequestxmlmessage.h"
 #include "core/utils/xmlvalidator.h"
 

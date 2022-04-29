@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "tucucoretoeztranslator.h"
 
 #include "core/dal/adjustment.h"

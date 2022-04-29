@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef AUTOPROPERTY
 #define AUTOPROPERTY
 

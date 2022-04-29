@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef QUERYREQUESTXMLMESSAGE_H
 #define QUERYREQUESTXMLMESSAGE_H
 

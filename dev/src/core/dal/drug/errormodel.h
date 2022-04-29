@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ERRORMODEL_H
 #define ERRORMODEL_H
 

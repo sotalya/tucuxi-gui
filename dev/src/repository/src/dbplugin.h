@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DBPLUGIN_H
 #define DBPLUGIN_H
 

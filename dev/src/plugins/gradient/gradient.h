@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef GradientREVERSE_H
 #define GradientREVERSE_H
 

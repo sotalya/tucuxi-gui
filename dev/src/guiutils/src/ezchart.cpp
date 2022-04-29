@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "ezchart.h"
 
 #include <QtQuick/qquickwindow.h>

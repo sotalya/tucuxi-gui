@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "meldworkerthread.h"
 
 #include <QFile>

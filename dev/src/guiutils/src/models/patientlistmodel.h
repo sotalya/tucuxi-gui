@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PATIENTLISTMODEL_H
 #define PATIENTLISTMODEL_H
 

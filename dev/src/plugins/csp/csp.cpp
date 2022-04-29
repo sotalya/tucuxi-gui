@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "csp.h"
 
 #include "coremessagehandler.h"

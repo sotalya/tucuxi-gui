@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef TUCUCORETOEZTRANSLATOR_H
 #define TUCUCORETOEZTRANSLATOR_H
 

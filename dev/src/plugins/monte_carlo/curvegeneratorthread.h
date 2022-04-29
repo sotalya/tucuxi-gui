@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CURVEGENERATORTHREAD_H
 #define CURVEGENERATORTHREAD_H
 

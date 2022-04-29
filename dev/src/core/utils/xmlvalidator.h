@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef XMLVALIDATOR_H
 #define XMLVALIDATOR_H
 

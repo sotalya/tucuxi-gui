@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "drugvariatelistmodel.h"
 #include "core/corefactory.h"
 #include "core/corerepository.h"

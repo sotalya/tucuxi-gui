@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COVARIATETABCONTROLLER_H
 #define COVARIATETABCONTROLLER_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef TARGETINTERVAL_H
 #define TARGETINTERVAL_H
 

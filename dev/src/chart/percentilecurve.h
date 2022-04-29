@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PERCENTILECURVE_H
 #define PERCENTILECURVE_H
 

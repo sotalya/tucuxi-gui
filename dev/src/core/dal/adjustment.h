@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ADJUSTMENT_H
 #define ADJUSTMENT_H
 

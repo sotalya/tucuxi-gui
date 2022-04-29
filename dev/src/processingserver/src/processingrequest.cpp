@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "processingrequest.h"
 
 #include "drugresponseanalysis.h"

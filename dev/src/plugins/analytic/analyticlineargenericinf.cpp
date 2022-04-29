@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "analyticlineargenericinf.h"
 
 AnalyticLinearGenericInf::AnalyticLinearGenericInf()

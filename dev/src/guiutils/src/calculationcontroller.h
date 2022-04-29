@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CALCULATIONCONTROLLER_H
 #define CALCULATIONCONTROLLER_H
 

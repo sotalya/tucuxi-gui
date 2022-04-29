@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CUSTOMREPORT_H
 #define CUSTOMREPORT_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef RESTACTION_H
 #define RESTACTION_H
 

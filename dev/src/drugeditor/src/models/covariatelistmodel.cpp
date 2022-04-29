@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "covariatelistmodel.h"
 #include "corefactory.h"
 #include "stdadminrepository.h"

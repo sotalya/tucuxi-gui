@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef EPHEMERALDB_H
 #define EPHEMERALDB_H
 

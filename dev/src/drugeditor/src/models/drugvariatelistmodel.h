@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DRUGVARIATELISTMODEL_H
 #define DRUGVARIATELISTMODEL_H
 

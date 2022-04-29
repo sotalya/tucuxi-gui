@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef INTERPRETATIONCONTROLER_H
 #define INTERPRETATIONCONTROLER_H
 

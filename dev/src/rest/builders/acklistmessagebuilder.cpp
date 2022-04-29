@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "acklistmessagebuilder.h"
 #include "rest/model/acklistxmlmessage.h"
 

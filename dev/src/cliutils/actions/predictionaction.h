@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PREDICTIONACTION_H
 #define PREDICTIONACTION_H
 

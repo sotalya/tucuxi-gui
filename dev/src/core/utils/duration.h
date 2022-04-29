@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DURATION_H
 #define DURATION_H
 

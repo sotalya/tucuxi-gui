@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef RK4_H
 #define RK4_H
 

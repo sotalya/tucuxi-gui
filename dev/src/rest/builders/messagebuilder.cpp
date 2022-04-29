@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "messagebuilder.h"
 
 #include "rest/model/message.h"

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REPLYREQUESTXMLMESSAGE_H
 #define REPLYREQUESTXMLMESSAGE_H
 

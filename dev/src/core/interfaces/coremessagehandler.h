@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COREMESSAGEHANDLER_H
 #define COREMESSAGEHANDLER_H
 

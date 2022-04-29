@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/utils/ezxmlreader.h"
 
 //#include "core_errors.h"

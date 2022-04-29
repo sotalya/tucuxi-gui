@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef RESTCONFIGDIALOG_H
 #define RESTCONFIGDIALOG_H
 

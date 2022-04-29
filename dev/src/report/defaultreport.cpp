@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "defaultreport.h"
 #include "core.h"
 

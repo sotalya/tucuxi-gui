@@ -1,3 +1,5 @@
+//@@license@@
+
 
 #include <QApplication>
 #include <QCommandLineParser>

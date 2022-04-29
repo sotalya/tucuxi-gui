@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef UNDOCOMMANDS_H
 #define UNDOCOMMANDS_H
 

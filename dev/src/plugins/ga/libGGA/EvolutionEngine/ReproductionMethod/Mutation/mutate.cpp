@@ -1,3 +1,5 @@
+//@@license@@
+
 /**
  * @file mutate.cpp
  * @author Yvan Da Silva <yvan.m.silva AT gmail.com>

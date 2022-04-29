@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ACKLISTMESSAGEBUILDER_H
 #define ACKLISTMESSAGEBUILDER_H
 

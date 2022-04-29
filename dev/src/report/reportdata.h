@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REPORTDATA_H
 #define REPORTDATA_H
 

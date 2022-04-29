@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef MEASURETABCONTROLLER_H
 #define MEASURETABCONTROLLER_H
 

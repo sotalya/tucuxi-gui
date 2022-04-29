@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "reporttemplatexmlfactory.h"
 #include "reporttemplate.h"
 #include "core.h"

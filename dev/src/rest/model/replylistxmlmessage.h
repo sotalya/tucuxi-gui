@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REPLYLISTXMLMESSAGE_H
 #define REPLYLISTXMLMESSAGE_H
 

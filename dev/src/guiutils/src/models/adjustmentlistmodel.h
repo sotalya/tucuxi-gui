@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ADJUSTMENTLISTMODEL_H
 #define ADJUSTMENTLISTMODEL_H
 

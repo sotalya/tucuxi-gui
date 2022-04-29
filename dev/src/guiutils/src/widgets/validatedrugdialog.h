@@ -1,3 +1,5 @@
+//@@license@@s
+
 #ifndef VALIDATEDRUG_H
 #define VALIDATEDRUG_H
 

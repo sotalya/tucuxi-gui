@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "FOCETaylorModel.h"
 #include "distribution.h"
 #include "prediction.h"

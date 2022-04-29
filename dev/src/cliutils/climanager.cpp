@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "climanager.h"
 
 #include <signal.h>

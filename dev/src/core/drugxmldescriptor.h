@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DRUGXMLDESCRIPTOR_H
 #define DRUGXMLDESCRIPTOR_H
 

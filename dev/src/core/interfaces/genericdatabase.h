@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef GDATABASE
 #define GDATABASE
 

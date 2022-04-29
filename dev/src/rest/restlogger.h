@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef RESTLOGGER_H
 #define RESTLOGGER_H
 

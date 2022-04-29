@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "rk4linear2comp.h"
 
 #include "core.h"

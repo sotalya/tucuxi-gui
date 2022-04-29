@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PRACTICIANLISTMODEL_H
 #define PRACTICIANLISTMODEL_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COVARIATE_H
 #define COVARIATE_H
 

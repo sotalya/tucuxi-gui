@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "notificationtestmessage.h"
 #include "restclient/utils/xmltestlibrary.h"
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "undoredocontroller.h"
 
 #include "apputils/src/appcore.h"

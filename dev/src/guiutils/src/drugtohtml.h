@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DRUGTOHTML_H
 #define DRUGTOHTML_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef OUTGOINGXMLMESSAGE_H
 #define OUTGOINGXMLMESSAGE_H
 

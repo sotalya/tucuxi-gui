@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "processingfactory.h"
 
 #ifdef COMPILE_WITH_TUCUCORE

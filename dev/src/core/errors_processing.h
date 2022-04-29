@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PROCESSINGERRORS
 #define PROCESSINGERRORS
 

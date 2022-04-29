@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "rest/network/mirthrequest.h"
 #include "rest/model/message.h"
 

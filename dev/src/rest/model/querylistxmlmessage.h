@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef QUERYLISTXMLMESSAGE_H
 #define QUERYLISTXMLMESSAGE_H
 

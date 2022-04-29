@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ADJUSTMENTTABCONTROLLER_H
 #define ADJUSTMENTTABCONTROLLER_H
 

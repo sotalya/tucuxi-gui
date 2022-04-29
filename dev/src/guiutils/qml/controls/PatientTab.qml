@@ -28,13 +28,19 @@ Rectangle {
         patientListView.clearSelection();
     }
 
-    function extPatientData (yearPat, monthPat, dayPat) {
-
+    function extPatientData(yearPat, monthPat, dayPat, firstName, lastName, identifier, stayNumber, titlePhy, firstNamePhy, lastNamePhy) {
         patientExtraExpandHeader.expanded = true
         physicianInChargeHeader.expanded = true
 
         patientRequired.model.person.birthday = (new Date(yearPat.toString(), monthPat.toString(), dayPat.toString()));
-//        patientRequired.model.person.birthday = new Date("1912", "11", "01");
+//        patientRequired.model.person.birthday = new Date("1912", "11", "01");         // for manual testing only
+        patientFirstNameId.text     = firstName
+        patientLastNameId.text      = lastName
+        patientIdentifierId.text    = identifier
+        patientStayNumberId.text    = stayNumber
+        titlePhyId.text             = titlePhy
+        firstNamePhyId.text         = firstNamePhy
+        lastNamePhyId.text          = lastNamePhy
 
     }
 
@@ -224,6 +230,7 @@ Rectangle {
                     }
 
                     EntityTextField {
+                        id: patientFirstNameId
                         objectName: "patientFirstName"
                         Layout.fillWidth:  true
                         text: patientRequired.model ? patientRequired.model.person.firstname : ""
@@ -238,6 +245,7 @@ Rectangle {
                         Layout.preferredWidth: 100
                     }
                     EntityTextField {
+                        id: patientLastNameId
                         objectName: "patientLastName"
                         placeholderText: "last name"
                         text: patientRequired.model ? patientRequired.model.person.name : ""
@@ -381,6 +389,7 @@ Rectangle {
                         text: "Identifier:"
                     }
                     EntityTextField {
+                        id: patientIdentifierId
                         objectName: "patientIdentifier"
                         placeholderText: "id"
                         text: patientExtra.model ? patientExtra.model.externalId: ""
@@ -393,6 +402,7 @@ Rectangle {
                         Layout.preferredWidth: 100
                     }
                     EntityTextField {
+                        id: patientStayNumberId
                         objectName: "patientStayNumber"
                         placeholderText: "stay number"
                         text: patientExtra.model ? patientExtra.model.stayNumber : ""
@@ -523,6 +533,7 @@ Rectangle {
                         text: "Title:"
                     }
                     EntityTextField {
+                        id: titlePhyId
                         objectName: "titlePhy"
                         placeholderText: "title"
                         text: interpretation.request.practician ? interpretation.request.practician.title : ""
@@ -541,6 +552,7 @@ Rectangle {
                     }
 
                     EntityTextField {
+                        id: firstNamePhyId
                         objectName: "firstNamePhy"
                         Layout.fillWidth:  true
                         text: interpretation.request.practician ? interpretation.request.practician.person.firstname : ""
@@ -555,6 +567,7 @@ Rectangle {
                         Layout.preferredWidth: 100
                     }
                     EntityTextField {
+                        id: lastNamePhyId
                         objectName: "lastNamePhy"
                         placeholderText: "last name"
                         text: interpretation.request.practician ? interpretation.request.practician.person.name : ""

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "targettabcontroller.h"
 #include "interpretationcontroller.h"
 #include "core/dal/drug/target.h"

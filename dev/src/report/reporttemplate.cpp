@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "reporttemplate.h"
 
 ReportTemplate::ReportTemplate() :

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "notificationxmlmessage.h"
 #include "core/utils/xmlvalidator.h"
 

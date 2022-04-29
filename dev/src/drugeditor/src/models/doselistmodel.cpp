@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "doselistmodel.h"
 #include "core/dal/drug/doses.h"
 #include "core/dal/drug/translatablestring.h"

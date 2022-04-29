@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "standardtreatment.h"
 
 namespace ezechiel {

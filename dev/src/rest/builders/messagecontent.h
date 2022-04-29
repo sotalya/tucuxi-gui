@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef MESSAGECONTENT_H
 #define MESSAGECONTENT_H
 

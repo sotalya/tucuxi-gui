@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef XMLMESSAGE_H
 #define XMLMESSAGE_H
 

@@ -1,3 +1,5 @@
+//@@license@@s
+
 #ifndef REQUESTCONTROLLER_H
 #define REQUESTCONTROLLER_H
 

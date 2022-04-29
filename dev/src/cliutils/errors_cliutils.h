@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CLIUTILSERRORS
 #define CLIUTILSERRORS
 

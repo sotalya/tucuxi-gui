@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef TARGETLISTMODEL_H
 #define TARGETLISTMODEL_H
 

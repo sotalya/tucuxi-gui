@@ -1,3 +1,5 @@
+//@@license@@
+
 // File title       :   guidedstresstest.cpp
 // Test title       :   Guided stress test
 // Author           :   Julien Rosset
@@ -29,7 +31,7 @@
 extern SpixGTest* srv;
 
 
-TEST(GuidedStressTest, DrugTab)
+TEST(GuidedStressTest, DrugsTab)
 {
 
     int waitTime1 = 0;
@@ -122,7 +124,7 @@ TEST(GuidedStressTest, DrugTab)
 }
 
 
-TEST(GuidedStressTest, DosageTab)
+TEST(GuidedStressTest, DosagesTab)
 {
     int waitTime1 = 1;
     int waitTimeLong = 5;
@@ -183,7 +185,7 @@ TEST(GuidedStressTest, DosageTab)
 }
 
 
-TEST(GuidedStressTest, CovariateTab)
+TEST(GuidedStressTest, CovariatesTab)
 {
     int waitTime1 = 1;
     int waitTimeLong = 5;
@@ -248,7 +250,7 @@ TEST(GuidedStressTest, CovariateTab)
 }
 
 
-TEST(GuidedStressTest, MeasureTab)
+TEST(GuidedStressTest, MeasuresTab)
 {
     int waitTime1 = 1;
     int waitTimeLong = 5;
@@ -314,7 +316,7 @@ TEST(GuidedStressTest, MeasureTab)
 }
 
 
-TEST(GuidedStressTest, TargetTab)
+TEST(GuidedStressTest, TargetsTab)
 {
     int waitTime1       = 1;
     int waitTimeLong    = 5;

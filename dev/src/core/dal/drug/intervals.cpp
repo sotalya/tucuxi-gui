@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/drug/intervals.h"
 
 namespace ezechiel {

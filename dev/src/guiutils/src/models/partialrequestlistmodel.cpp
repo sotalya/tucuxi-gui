@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <QtGlobal>
 //#include <QBrush>
 

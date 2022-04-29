@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/drug/operableamount.h"
 #include "core/dal/drug/operation.h"
 

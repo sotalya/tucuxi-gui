@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef EVOLUTIONEZECHIEL_H
 #define EVOLUTIONEZECHIEL_H
 

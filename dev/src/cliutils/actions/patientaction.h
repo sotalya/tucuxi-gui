@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PATIENTACTION_H
 #define PATIENTACTION_H
 

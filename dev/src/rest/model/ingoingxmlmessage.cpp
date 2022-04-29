@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "ingoingxmlmessage.h"
 
 IngoingXmlMessage::IngoingXmlMessage(QObject *parent) :

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef VALIDATIONTABCONTROLLER_H
 #define VALIDATIONTABCONTROLLER_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "testmessagevalidator.h"
 #include "restclient/utils/meldworkerthread.h"
 #include "restclient/utils/settings.h"

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COVARIATEIDTRANSLATOR_H
 #define COVARIATEIDTRANSLATOR_H
 

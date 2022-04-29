@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "querymapper.h"
 #include "processingrequesthandler.h"
 

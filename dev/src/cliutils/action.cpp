@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "action.h"
 
 namespace ezechiel {

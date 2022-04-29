@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DEFAULTREPORT_H
 #define DEFAULTREPORT_H
 

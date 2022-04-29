@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "compactreport.h"
 #include "core.h"
 

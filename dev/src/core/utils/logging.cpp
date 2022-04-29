@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/utils/logging.h"
 #include <QFile>
 

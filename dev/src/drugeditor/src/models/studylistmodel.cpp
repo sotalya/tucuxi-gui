@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "studylistmodel.h"
 
 StudyListModel::StudyListModel(QObject *parent) :

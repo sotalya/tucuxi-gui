@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CHARTDATA_H
 #define CHARTDATA_H
 

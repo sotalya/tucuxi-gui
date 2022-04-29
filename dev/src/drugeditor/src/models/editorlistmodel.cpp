@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "editorlistmodel.h"
 
 EditorListModel::EditorListModel(QObject *parent):

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DRUGS2MANAGER_H
 #define DRUGS2MANAGER_H
 

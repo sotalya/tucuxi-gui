@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "adjustmentlistmodel.h"
 #include "core/utils/errorenums.h"
 

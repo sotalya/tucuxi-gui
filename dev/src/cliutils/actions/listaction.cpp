@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "listaction.h"
 
 #include "core/pluginmanager.h"

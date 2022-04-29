@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef VALIDATIONMODEL_H
 #define VALIDATIONMODEL_H
 

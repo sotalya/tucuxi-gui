@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "svm_test.h"
 
 #include "ezxmlreader.h"

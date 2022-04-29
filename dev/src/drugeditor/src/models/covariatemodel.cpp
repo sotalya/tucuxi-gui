@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "covariatemodel.h"
 
 #include "core/utils/units.h"

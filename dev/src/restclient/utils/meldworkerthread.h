@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef MELDWORKERTHREAD_H
 #define MELDWORKERTHREAD_H
 

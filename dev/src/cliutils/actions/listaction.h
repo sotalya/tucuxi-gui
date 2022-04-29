@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef LISTACTION_H
 #define LISTACTION_H
 

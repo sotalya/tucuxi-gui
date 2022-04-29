@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "exchangeaction.h"
 
 namespace ezechiel {

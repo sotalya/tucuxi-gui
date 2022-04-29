@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ANALYTICLINEAR1COMPINF_1_H
 #define ANALYTICLINEAR1COMPINF_1_H
 

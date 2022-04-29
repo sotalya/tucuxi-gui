@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "interpretationrequesttoxmlrest.h"
 
 InterpretationRequestToXmlRest::InterpretationRequestToXmlRest()

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "licensedialog.h"
 
 #include <QVBoxLayout>

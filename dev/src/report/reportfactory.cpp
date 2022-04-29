@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "reportfactory.h"
 #include "reportdata.h"
 #include "report.h"

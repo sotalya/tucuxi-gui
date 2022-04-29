@@ -1,3 +1,5 @@
+//@@license@@s
+
 #include "requesttestwidget.h"
 #include "ui_requesttestwidget.h"
 

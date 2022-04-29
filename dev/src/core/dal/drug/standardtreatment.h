@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef STANDARDTREATMENT_H
 #define STANDARDTREATMENT_H
 

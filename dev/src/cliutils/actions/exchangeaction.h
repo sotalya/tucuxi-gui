@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef EXCHANGEACTION_H
 #define EXCHANGEACTION_H
 

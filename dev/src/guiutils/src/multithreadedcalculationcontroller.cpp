@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "multithreadedcalculationcontroller.h"
 
 #include "core/dal/predictionspec.h"

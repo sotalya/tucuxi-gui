@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/pluginmanager.h"
 
 #include <QDir>

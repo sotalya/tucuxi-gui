@@ -1,3 +1,5 @@
+//@@license@@s
+
 #ifndef ACKREQUESTREQUEST_H
 #define ACKREQUESTREQUEST_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef LOGGING
 #define LOGGING
 

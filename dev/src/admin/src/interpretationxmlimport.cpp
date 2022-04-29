@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "interpretationxmlimport.h"
 
 #include "dal/interpretation.h"

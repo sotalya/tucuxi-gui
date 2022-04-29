@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REQUESTTESTWIDGET_H
 #define REQUESTTESTWIDGET_H
 

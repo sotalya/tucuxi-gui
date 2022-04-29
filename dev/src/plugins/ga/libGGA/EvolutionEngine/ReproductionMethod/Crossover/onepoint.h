@@ -1,3 +1,5 @@
+//@@license@@
+
 /**
   * @file   onepoint.h
   * @author Yvan Da Silva <yvan.dasilva_at_heig-vd.ch>

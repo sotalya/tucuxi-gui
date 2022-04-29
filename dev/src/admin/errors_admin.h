@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ADMINERRORS
 #define ADMINERRORS
 

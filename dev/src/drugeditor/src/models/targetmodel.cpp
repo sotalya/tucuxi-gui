@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "targetmodel.h"
 #include "errors_guiutils.h"
 

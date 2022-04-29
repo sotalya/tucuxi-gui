@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ROUTETRANSLATOR_H
 #define ROUTETRANSLATOR_H
 

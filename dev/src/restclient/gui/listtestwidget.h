@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef LISTTESTWIDGET_H
 #define LISTTESTWIDGET_H
 

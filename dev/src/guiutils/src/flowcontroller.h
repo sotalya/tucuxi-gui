@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef FLOWCONTROLLER_H
 #define FLOWCONTROLLER_H
 

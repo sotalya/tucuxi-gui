@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ISYPEMACTION_H
 #define ISYPEMACTION_H
 

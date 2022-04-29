@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DRUGIDTRANSLATOR_H
 #define DRUGIDTRANSLATOR_H
 

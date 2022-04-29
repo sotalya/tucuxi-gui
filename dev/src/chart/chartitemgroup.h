@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CHARTITEMGROUP_H
 #define CHARTITEMGROUP_H
 

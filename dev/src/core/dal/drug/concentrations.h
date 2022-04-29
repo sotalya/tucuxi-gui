@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CONCENTRATIONS_H
 #define CONCENTRATIONS_H
 

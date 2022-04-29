@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/uncastedvalue.h"
 
 namespace ezechiel {

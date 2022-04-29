@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REPLYLISTMESSAGEBUILDER_H
 #define REPLYLISTMESSAGEBUILDER_H
 

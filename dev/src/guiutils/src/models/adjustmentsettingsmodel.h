@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ADJUSTMENTSETTINGSMODEL_H
 #define ADJUSTMENTSETTINGSMODEL_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CHARTCOLORMANAGER_H
 #define CHARTCOLORMANAGER_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "errorhandler.h"
 #include "httpresponse.h"
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef WEBSOCKETTRANSPORT_H
 #define WEBSOCKETTRANSPORT_H
 

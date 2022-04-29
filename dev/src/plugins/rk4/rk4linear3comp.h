@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef RK4LINEAR3MODEL_H
 #define RK4LINEAR3MODEL_H
 

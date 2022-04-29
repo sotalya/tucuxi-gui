@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "drugtabcontroller.h"
 #include "core/dal/drug/drug.h"
 #include "guiutils/src/drugtohtml.h"

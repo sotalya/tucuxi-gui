@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef EZXMLREADER_H
 #define EZXMLREADER_H
 

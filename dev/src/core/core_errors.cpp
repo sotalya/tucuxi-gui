@@ -1,3 +1,5 @@
+//@@license@@
+
 //Defines the Core's errors
 
 //! This code is returned when the program executed without error.

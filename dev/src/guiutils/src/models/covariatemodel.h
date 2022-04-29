@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COVARIATEMODEL_H
 #define COVARIATEMODEL_H
 

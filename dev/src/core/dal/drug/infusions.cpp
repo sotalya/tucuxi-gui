@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/drug/infusions.h"
 
 namespace ezechiel {

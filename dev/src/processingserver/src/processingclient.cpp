@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "processingclient.h"
 
 #include <QTcpSocket>

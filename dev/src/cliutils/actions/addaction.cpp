@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "addaction.h"
 #include "core/core.h"
 #include "apputils/src/drugmanager.h"

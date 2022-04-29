@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DOSAGETABCONTROLLER_H
 #define DOSAGETABCONTROLLER_H
 

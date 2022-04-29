@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "replylisttestmessage.h"
 #include "restclient/utils/xmltestlibrary.h"
 #include "restclient/utils/utils.h"

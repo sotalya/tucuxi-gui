@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "restclient/utils/xmltestlibrary.h"
 
 #include "core/utils/xmlvalidator.h"

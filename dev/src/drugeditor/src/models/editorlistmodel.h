@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef EDITORLISTMODEL_H
 #define EDITORLISTMODEL_H
 

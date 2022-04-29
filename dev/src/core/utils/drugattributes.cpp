@@ -1,3 +1,5 @@
+//@@license@@
+
 /* Declaration of the tags attributes encountered in the drugs XML files.
  * Only the attributes used in more the one parser are declared. */
 

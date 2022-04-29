@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef EZCHART_H
 #define EZCHART_H
 

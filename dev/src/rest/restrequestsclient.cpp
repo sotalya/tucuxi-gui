@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "restrequestsclient.h"
 
 #include "core/core.h"

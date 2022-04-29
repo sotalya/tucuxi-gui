@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "percentilethread.h"
 
 PercentileThread::PercentileThread(QObject *parent) :

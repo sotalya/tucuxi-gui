@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CONTROLID_H
 #define CONTROLID_H
 

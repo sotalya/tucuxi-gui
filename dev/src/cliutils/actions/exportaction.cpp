@@ -1,3 +1,4 @@
+//@@license@@
 
 #include <QFile>
 #include <QFileInfo>

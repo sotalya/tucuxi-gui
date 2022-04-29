@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "processingserver.h"
 #include "networkutils.h"
 #include "processingrequest.h"

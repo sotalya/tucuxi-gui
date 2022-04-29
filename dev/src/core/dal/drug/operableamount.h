@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef OPERABLEAMOUNT_H
 #define OPERABLEAMOUNT_H
 

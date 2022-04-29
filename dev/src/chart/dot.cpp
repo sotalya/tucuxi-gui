@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "dot.h"
 
 Dot::Dot(QwtSymbol::Style style) :

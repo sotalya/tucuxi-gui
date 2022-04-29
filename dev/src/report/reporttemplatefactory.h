@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REPORTTEMPLATEFACTORY_H
 #define REPORTTEMPLATEFACTORY_H
 

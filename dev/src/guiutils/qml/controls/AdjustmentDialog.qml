@@ -146,6 +146,7 @@ DialogBase {
                 }
                 EntitySpinBox {
                     id: doseSpinBox
+                    objectName: "doseSpinBoxAdj"
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
                     onEditingFinished: { self.validate() }
@@ -161,6 +162,7 @@ DialogBase {
                 }
                 EntitySpinBox {
                     id: intervalSpinBox
+                    objectName: "intervalSpinBoxAdj"
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
                     suffix: " hours"
@@ -272,6 +274,7 @@ DialogBase {
                 spacing: 10
                 Button {
                     id: acceptBtn
+                    objectName: "okAdj"
                     text: "Ok"
                     Layout.preferredWidth: 125
                     onClicked: function() {
@@ -282,6 +285,7 @@ DialogBase {
                 }
                 Button {
                     id: applyBtn
+                    objectName: "applyAdj"
                     text: "Apply"
                     Layout.preferredWidth: 125
                     onClicked: function() {
@@ -290,6 +294,7 @@ DialogBase {
                 }
                 Button {
                     id: cancelBtn
+                    objectName: "cancelAdj"
                     text: "Cancel"
                     Layout.preferredWidth: 125
                     onClicked: function() {

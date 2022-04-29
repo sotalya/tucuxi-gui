@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REVERSEMODEL_H
 #define REVERSEMODEL_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/drug/editors.h"
 
 namespace ezechiel {

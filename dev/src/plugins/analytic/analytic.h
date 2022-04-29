@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ANALYTIC_H
 #define ANALYTIC_H
 

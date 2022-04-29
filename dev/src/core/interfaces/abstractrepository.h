@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ABSTRACTREPOSITORY_H
 #define ABSTRACTREPOSITORY_H
 

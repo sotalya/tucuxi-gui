@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PERCENTILEPAIR_H
 #define PERCENTILEPAIR_H
 

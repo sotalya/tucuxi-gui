@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/corepatient.h"
 
 namespace ezechiel {

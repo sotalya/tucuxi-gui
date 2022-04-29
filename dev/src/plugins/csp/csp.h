@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CSPREVERSE_H
 #define CSPREVERSE_H
 

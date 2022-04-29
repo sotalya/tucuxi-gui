@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/utils/version.h"
 
 #include <QRegExp>

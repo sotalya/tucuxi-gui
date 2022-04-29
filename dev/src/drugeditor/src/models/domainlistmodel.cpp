@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "domainlistmodel.h"
 
 DomainListModel::DomainListModel(QObject *parent) :

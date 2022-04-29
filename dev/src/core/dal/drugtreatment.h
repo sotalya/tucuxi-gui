@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DRUGTREATMENT_H
 #define DRUGTREATMENT_H
 

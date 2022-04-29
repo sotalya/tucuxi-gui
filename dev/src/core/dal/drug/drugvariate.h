@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DRUGVARIATE_H
 #define DRUGVARIATE_H
 

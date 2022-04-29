@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "analytic.h"
 
 #include "ezxmlreader.h"

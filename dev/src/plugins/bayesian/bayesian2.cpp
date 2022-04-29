@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core.h"
 #include "core_errors.h"
 #include "coremessagehandler.h"

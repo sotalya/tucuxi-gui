@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef EDITORMODEL_H
 #define EDITORMODEL_H
 

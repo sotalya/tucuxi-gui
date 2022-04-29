@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/coremeasure.h"
 #include "core/dal/uncastedvalue.h"
 

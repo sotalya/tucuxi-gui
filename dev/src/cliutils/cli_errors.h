@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CLI_ERRORS_H
 #define CLI_ERRORS_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "rk4michaelismenten1comp.h"
 
 #include "core.h"

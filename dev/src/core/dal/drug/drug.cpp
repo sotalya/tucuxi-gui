@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/drug/drug.h"
 #include "core/drugxmldescriptor.h"
 #include "core/core.h"

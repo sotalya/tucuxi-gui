@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DRUGTABCONTROLLER_H
 #define DRUGTABCONTROLLER_H
 

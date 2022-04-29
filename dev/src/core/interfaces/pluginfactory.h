@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PLUGINFACTORY_H
 #define PLUGINFACTORY_H
 

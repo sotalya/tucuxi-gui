@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "querylistrequest.h"
 
 const char *const QueryListRequest::_PATH = "query";

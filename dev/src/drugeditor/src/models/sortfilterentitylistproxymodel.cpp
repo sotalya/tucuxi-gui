@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "sortfilterentitylistproxymodel.h"
 #include "abstractentitylistmodel.h"
 

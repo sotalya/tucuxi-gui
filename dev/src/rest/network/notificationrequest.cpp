@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "notificationrequest.h"
 
 const char *const NotificationRequest::_PATH = "notify";

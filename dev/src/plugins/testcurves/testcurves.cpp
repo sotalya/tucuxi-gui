@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "testcurves.h"
 
 #include "ezxmlreader.h"

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef STDPARAMNAMES_H
 #define STDPARAMNAMES_H
 

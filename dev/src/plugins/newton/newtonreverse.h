@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef NEWTONREVERSE_H
 #define NEWTONREVERSE_H
 

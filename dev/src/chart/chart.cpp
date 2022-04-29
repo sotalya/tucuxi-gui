@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "chart.h"
 
 #include "coremessagehandler.h"

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PROCESSINGCLIENT_H
 #define PROCESSINGCLIENT_H
 

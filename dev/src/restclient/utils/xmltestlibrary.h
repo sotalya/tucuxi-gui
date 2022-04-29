@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef XMLTESTLIBRARY_H
 #define XMLTESTLIBRARY_H
 

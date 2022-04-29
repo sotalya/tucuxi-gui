@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "analyticlinear2compbolus.h"
 
 #include "core_errors.h"

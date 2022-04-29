@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef STDADMINREPOSITORY_H
 #define STDADMINREPOSITORY_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/predictionresult.h"
 #include "core/dal/entity.h"
 

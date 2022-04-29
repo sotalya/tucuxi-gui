@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "line.h"
 
 #include <QPainter>

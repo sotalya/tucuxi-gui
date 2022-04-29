@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "ackrequesttestwidget.h"
 
 #include "rest/network/queryrequestrequest.h"

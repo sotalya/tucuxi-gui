@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DEMOREQUESTFILECLIENT_H
 #define DEMOREQUESTFILECLIENT_H
 

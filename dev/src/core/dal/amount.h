@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef AMOUNT_H
 #define AMOUNT_H
 

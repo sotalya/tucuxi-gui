@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "predictionspeccopier.h"
 #include "core/dal/predictionspec.h"
 #include "core/dal/drugresponseanalysis.h"

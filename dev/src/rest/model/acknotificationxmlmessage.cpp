@@ -1,3 +1,4 @@
+//@@license@@
 #include "acknotificationxmlmessage.h"
 #include "core/utils/xmlvalidator.h"
 

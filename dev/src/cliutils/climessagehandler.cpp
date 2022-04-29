@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "climessagehandler.h"
 #include "logging.h"
 #include "errors_cliutils.h"

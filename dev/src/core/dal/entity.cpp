@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/entity.h"
 //#include "core/corerepository.h"
 

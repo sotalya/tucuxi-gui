@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DBCONTAINER_H
 #define DBCONTAINER_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 // File title       :   validationtest.cpp
 // Test title       :   ValidationTest
 // Author           :   Julien Rosset
@@ -109,7 +111,7 @@ TEST(ValidationTest, Test1)
     srv->fillInPatientData(patientData1);
 
 
-    int drugIndex = 15;                                                  // drugIndex : 6 = Cefepime
+    int drugIndex = 15;                                                 // drugIndex : 6 = Cefepime
     int modelIndex = 0;                                                 // domain & study
     srv->selectDrugInList(drugIndex, modelIndex);
 

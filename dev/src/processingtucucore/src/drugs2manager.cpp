@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "drugs2manager.h"
 
 #include "core/utils/logging.h"

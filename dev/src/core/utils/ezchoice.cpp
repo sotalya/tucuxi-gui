@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "ezchoice.h"
 
 //#include "coremessagehandler.h"

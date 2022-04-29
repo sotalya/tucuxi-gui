@@ -1,3 +1,4 @@
+//@@license@@
 
 #ifndef FILE_CONNECT_H
 #define FILE_CONNECT_H

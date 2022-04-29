@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef NOTIFICATIONTESTWIDGET_H
 #define NOTIFICATIONTESTWIDGET_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/drug/doses.h"
 
 namespace ezechiel {

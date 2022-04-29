@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef TIMESCALEDRAW_H
 #define TIMESCALEDRAW_H
 

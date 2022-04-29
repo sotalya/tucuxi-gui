@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CHARTITEM_H
 #define CHARTITEM_H
 

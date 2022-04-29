@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "controlid.h"
 
 ControlId &ControlId::getInstance()

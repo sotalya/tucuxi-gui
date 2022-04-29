@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "genericrepository.h"
 
 #include <QSqlQuery>

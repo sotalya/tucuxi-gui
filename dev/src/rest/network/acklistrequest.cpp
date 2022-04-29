@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "acklistrequest.h"
 
 const char *const AckListRequest::_PATH = "query";

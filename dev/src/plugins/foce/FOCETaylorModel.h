@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef FOCETAYLORMODEL_H
 #define FOCETAYLORMODEL_H
 

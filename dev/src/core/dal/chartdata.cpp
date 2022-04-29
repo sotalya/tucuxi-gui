@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/chartdata.h"
 
 namespace ezechiel {

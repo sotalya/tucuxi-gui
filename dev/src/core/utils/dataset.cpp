@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/utils/dataset.h"
 
 #include <QFile>

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "localdb.h"
 
 #include <QSqlQuery>

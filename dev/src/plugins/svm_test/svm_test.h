@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef SVMTEST_H
 #define SVMTEST_H
 

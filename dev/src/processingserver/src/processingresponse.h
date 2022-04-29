@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PROCESSINGRESPONSE_H
 #define PROCESSINGRESPONSE_H
 

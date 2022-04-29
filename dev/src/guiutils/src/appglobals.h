@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef APPGLOBALS_H
 #define APPGLOBALS_H
 

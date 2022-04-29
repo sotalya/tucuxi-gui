@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REQUESTMAPPER_H
 #define REQUESTMAPPER_H
 

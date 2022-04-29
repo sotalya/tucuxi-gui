@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "websockettransport.h"
 
 #include <QJsonDocument>

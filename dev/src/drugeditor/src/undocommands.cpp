@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "undocommands.h"
 
 #include "undoredocontroller.h"

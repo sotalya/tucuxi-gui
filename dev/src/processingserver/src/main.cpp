@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "processingserver.h"
 #include <QCoreApplication>
 

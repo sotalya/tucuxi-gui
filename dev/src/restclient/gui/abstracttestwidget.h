@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ABSTRACTTESTWIDGET_H
 #define ABSTRACTTESTWIDGET_H
 

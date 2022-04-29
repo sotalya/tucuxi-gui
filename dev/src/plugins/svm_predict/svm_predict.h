@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef SVMPREDICT_H
 #define SVMPREDICT_H
 

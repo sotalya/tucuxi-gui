@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef HALFLIFE_H
 #define HALFLIFE_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 //Determine the current Tucuxi version
 #define EZECHIEL_VERSION "0.2.11"
 

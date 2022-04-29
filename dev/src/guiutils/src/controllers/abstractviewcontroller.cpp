@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "abstractviewcontroller.h"
 #include "interpretationcontroller.h"
 

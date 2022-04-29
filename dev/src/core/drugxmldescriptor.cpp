@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/drugxmldescriptor.h"
 
 #include <QFile>

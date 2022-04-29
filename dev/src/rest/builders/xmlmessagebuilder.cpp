@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "xmlmessagebuilder.h"
 
 #include "rest/utils/controlid.h"

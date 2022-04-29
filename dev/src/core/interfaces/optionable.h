@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef OPTIONABLE_H
 #define OPTIONABLE_H
 

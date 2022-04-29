@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REPORTREPOSITORY_H
 #define REPORTREPOSITORY_H
 

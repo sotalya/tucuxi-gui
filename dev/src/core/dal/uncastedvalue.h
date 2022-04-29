@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef UNCASTEDVALUE_H
 #define UNCASTEDVALUE_H
 

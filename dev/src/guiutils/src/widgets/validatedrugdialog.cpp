@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "validatedrugdialog.h"
 #include "ui_validatedrugdialog.h"
 #include "core/core.h"

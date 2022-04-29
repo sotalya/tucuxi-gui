@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef QUERYREQUESTHANDLER_H
 #define QUERYREQUESTHANDLER_H
 

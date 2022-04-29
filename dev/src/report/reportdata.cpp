@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "reportdata.h"
 #include "identifiers.h"
 

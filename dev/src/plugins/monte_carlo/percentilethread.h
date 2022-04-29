@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PERCENTILETHREAD_H
 #define PERCENTILETHREAD_H
 

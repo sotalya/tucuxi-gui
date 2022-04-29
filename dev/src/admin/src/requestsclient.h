@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef REQUESTSCLIENT_H
 #define REQUESTSCLIENT_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PROCESSINGINTERFACE_H
 #define PROCESSINGINTERFACE_H
 

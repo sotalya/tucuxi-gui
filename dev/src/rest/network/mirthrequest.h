@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef MIRTHREQUEST_H
 #define MIRTHREQUEST_H
 

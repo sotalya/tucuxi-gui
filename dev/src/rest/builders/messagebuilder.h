@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef MESSAGEBUILDER_H
 #define MESSAGEBUILDER_H
 

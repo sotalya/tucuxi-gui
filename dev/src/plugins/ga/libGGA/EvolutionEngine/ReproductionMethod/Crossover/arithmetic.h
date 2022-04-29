@@ -1,3 +1,5 @@
+//@@license@@
+
 /**
  * @file arithmetic.h
  * @author Yvan Da Silva <yvan.m.silva AT gmail.com>

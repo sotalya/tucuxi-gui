@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PERSISTENTFILEDIALOG_H
 #define PERSISTENTFILEDIALOG_H
 

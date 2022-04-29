@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef MAINWINDOWCONTROLLER_H
 #define MAINWINDOWCONTROLLER_H
 

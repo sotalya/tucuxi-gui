@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <QDebug>
 #include <QMessageBox>
 #include <QNetworkReply>

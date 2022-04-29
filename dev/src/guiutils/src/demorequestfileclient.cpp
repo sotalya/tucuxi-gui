@@ -1,3 +1,5 @@
+//@@license@@s
+
 #include "demorequestfileclient.h"
 #include "rest/builders/interpretationrequestbuilder.h"
 #include "core/dal/drugresponseanalysis.h"

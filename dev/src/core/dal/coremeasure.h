@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COREMEASURE_H
 #define COREMEASURE_H
 

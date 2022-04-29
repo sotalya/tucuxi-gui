@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "message.h"
 
 Message::Message(QObject *parent) :

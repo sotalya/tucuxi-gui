@@ -1,3 +1,5 @@
+//@@license@@
+
 /**
  * @file toggling.cpp
  * @author Yvan Da Silva <yvan.m.silva AT gmail.com>

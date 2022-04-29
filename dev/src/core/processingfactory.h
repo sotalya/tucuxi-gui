@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PROCESSINGFACTORY_H
 #define PROCESSINGFACTORY_H
 

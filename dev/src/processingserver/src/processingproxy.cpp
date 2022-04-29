@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "processingproxy.h"
 #include "processingrequest.h"
 #include "processingresponse.h"

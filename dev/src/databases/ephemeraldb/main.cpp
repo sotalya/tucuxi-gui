@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "ephemeraldb.h"
 #include "server.h"
 

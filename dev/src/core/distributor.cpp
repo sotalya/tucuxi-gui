@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "distributor.h"
 #include "core/core.h"
 //#include "coremessagehandler.h"

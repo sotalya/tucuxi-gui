@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "appglobals.h"
 
 #include "core/settings.h"

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "analyticlinear1compextra.h"
 
 #include "core_errors.h"

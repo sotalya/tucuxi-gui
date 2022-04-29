@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "fakepatientscreator.h"
 
 #include "core/dal/corepatient.h"

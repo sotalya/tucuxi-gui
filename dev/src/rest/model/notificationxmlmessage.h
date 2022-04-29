@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef NOTIFICATIONXMLMESSAGE_H
 #define NOTIFICATIONXMLMESSAGE_H
 

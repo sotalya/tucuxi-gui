@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "measuretabcontroller.h"
 
 #include "core/corefactory.h"

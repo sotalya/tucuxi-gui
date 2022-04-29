@@ -1,3 +1,5 @@
+//@@license@@
+
 //Defines the CLI errors
 
 //! The user's password is needed but not given, see the -P global option.

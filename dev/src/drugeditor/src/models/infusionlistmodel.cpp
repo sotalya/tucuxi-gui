@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "infusionlistmodel.h"
 #include "core/dal/drug/infusions.h"
 

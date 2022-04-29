@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "settings.h"
 
 Settings &Settings::getInstance()

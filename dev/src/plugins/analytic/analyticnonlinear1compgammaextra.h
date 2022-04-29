@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef AnalyticNonlinear1CompGammaExtra_H
 #define AnalyticNonlinear1CompGammaExtra_H
 

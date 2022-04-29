@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "druglistmodel.h"
 
 #include "apputils/src/apputilsrepository.h"

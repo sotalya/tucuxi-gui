@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef QUERYREQUESTTESTMESSAGE_H
 #define QUERYREQUESTTESTMESSAGE_H
 

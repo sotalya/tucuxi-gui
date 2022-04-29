@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DOSAGE_H
 #define DOSAGE_H
 

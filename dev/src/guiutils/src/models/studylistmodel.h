@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef STUDYLISTMODEL_H
 #define STUDYLISTMODEL_H
 

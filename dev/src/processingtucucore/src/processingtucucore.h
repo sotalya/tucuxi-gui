@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PROCESSINGTUCUCORE_H
 #define PROCESSINGTUCUCORE_H
 

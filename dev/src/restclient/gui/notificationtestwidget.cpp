@@ -1,3 +1,5 @@
+//@@license@@s
+
 #include "notificationtestwidget.h"
 #include "restclient/model/acknotificationtestmessage.h"
 

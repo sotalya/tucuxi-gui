@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ERRORS_RESTCLIENT_H
 #define ERRORS_RESTCLIENT_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DRUGLISTMODEL_H
 #define DRUGLISTMODEL_H
 

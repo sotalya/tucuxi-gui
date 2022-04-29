@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PLOTPICKER_H
 #define PLOTPICKER_H
 

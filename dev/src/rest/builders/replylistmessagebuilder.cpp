@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "rest/builders/replylistmessagebuilder.h"
 #include "rest/model/replylistxmlmessage.h"
 #include "core/utils/logging.h"

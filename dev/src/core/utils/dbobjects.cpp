@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "dbobjects.h"
 //#include "core/dal/drugresponseanalysis.h"
 #include "core/dal/drugtreatment.h"

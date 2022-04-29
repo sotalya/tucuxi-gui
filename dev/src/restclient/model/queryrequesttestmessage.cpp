@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "queryrequesttestmessage.h"
 #include "restclient/utils/xmltestlibrary.h"
 

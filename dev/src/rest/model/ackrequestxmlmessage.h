@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ACKREQUESTXMLMESSAGE_H
 #define ACKREQUESTXMLMESSAGE_H
 

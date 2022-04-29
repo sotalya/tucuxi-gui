@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "curvemodel.h"
 
 #include "drugmodelengine.h"

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PROCESSINGREQUEST_H
 #define PROCESSINGREQUEST_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "timescaledraw.h"
 
 #include "core.h"

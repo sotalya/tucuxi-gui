@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "predictiondata.h"
 
 namespace ezechiel {

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef GAREVERSE_H
 #define GAREVERSE_H
 

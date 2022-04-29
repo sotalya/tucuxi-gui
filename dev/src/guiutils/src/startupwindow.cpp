@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "startupwindow.h"
 
 #include <QQmlContext>

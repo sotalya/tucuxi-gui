@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "reversemodel.h"
 
 ReverseModel::ReverseModel(QObject *parent) :

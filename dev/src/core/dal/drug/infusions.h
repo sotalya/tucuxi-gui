@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef INFUSIONS_H
 #define INFUSIONS_H
 

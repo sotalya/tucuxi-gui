@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "websocketclientwrapper.h"
 
 #include <QtWebSockets/QWebSocketServer>

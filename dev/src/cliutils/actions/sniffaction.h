@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef SNIFFACTION_H
 #define SNIFFACTION_H
 

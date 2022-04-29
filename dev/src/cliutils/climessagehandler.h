@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CLIMESSAGEHANDLER_H
 #define CLIMESSAGEHANDLER_H
 

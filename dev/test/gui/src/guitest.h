@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <QTest>
 
 #include <Spix/QtQmlBot.h>
@@ -7,15 +9,15 @@
 class QQuickWindow;
 
 struct PatientData {
-    QString firstName;
-    QString lastName;
-    QDate birthDate;
-    int gender;
-    QString identifier;
-    QString stayNumber;
-    QString titlePhy;
-    QString firstNamePhy;
-    QString lastNamePhy;
+    QString firstName       = "Joan";
+    QString lastName        = "Of Arc";
+    QDate birthDate         = QDate(1934, 11, 10);
+    int gender              = 0;                    // gender : 1 = male, 0 = female
+    QString identifier      = "Patient_0";
+    QString stayNumber      = "Private Drive 4";
+    QString titlePhy        = "Dr.";
+    QString firstNamePhy    = "Doo";
+    QString lastNamePhy     = "Little";
 };
 
 
@@ -24,29 +26,28 @@ struct DosageData {
     double interval         = 2400;
     double infusion         = 2468;
     bool steadyState        = true;
-    QDateTime dateTimeDos1  = QDateTime::currentDateTime().addDays(2);
+    QDateTime dateTimeDos1  = QDateTime::currentDateTime().addDays(0);
     QDateTime dateTimeDos2  = QDateTime::currentDateTime().addDays(7);
 };
 
 struct CovariatesData {
     QString sex;
-    double weight = 5566;
-    double scc;
+    double weight           = 5566;
+    double scc              = 80;
     QDateTime dateTimeCovar = QDateTime::currentDateTime();
-
 };
 
 struct MeasureData {
-    QString name;
-    double value;
-    QDateTime dateTimeMeas;
+    QString name = "Sample_a_124";
+    double value = 1589;
+    QDateTime dateTimeMeas = QDateTime::currentDateTime();
 };
 
 struct TargetData {
-    int targetType      = 0;
-    double cMinInput    = 3000;
-    double cBestInput   = 3500;
-    double cMaxInput    = 4000;
+    int targetType          = 0;
+    double cMinInput        = 3000;
+    double cBestInput       = 3500;
+    double cMaxInput        = 4000;
     double tMinInput;
     double tBestInput;
     double tMaxInput;
@@ -58,15 +59,17 @@ struct AdjustmentsData {
     bool loadingDose        = true;
     bool restPeriod         = false;
     int suggestAdjNum       = 1;
+    int dose                = 666;
+    int interval            = 36;
 };
 
 struct ValidationData {
-    QDateTime dateTimeVal;
-    QString expectedness;
-    QString suitability;
-    QString prediction;
-    QString remonitoring;
-    QString warning;
+    QDateTime dateTimeVal   = QDateTime::currentDateTime().addDays(7);
+    QString expectedness    = "Full rehabilitation";
+    QString suitability     = "Any";
+    QString prediction      = "Sunny but windy this afternoon";
+    QString remonitoring    = "None";
+    QString warning         = "Don't invest in Bitcoin";
 };
 
 
@@ -91,6 +94,8 @@ public:
     void waitForSync();
 
     int getCurrentTabIndex();
+
+    void saveInterpretation(QString fileName);
 
     void startNewPatient();
 
@@ -120,6 +125,9 @@ public:
     void removeFromList(std::string removeFrom, int removeIndex);
 
     void addAdjustments(struct AdjustmentsData);
+    void selectAdjustments(int editIndex);
+    void editAdjustments(AdjustmentsData adjustmentsData1, int editIndex);
+
 
     void fillInValidationData(struct ValidationData);
     void saveValidationComment(QString commentType, int globalSpecificIndex);

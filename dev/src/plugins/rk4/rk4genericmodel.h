@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef RK4GENERICMODEL_H
 #define RK4GENERICMODEL_H
 

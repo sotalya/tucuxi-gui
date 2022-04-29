@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef BSV_H
 #define BSV_H
 

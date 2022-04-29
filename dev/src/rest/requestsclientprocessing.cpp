@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "requestsclientprocessing.h"
 #include "rest/builders/interpretationrequestbuilder.h"
 #include "core/dal/drugresponseanalysis.h"

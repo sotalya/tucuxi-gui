@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <QString>
 #include <QApplication>
 #include <QCoreApplication>

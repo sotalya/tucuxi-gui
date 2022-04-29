@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef GENERICDBOBJECTS_H
 #define GENERICDBOBJECTS_H
 

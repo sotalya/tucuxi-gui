@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "processingresponse.h"
 
 #include <iostream>

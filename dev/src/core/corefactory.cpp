@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/corefactory.h"
 
 namespace ezechiel {

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "dosagetabcontroller.h"
 #include "interpretationcontroller.h"
 #include "core/dal/dosage.h"

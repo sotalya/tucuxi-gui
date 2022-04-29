@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef QUERYMAPPER_H
 #define QUERYMAPPER_H
 

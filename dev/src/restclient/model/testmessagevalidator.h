@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef TESTMESSAGEVALIDATOR_H
 #define TESTMESSAGEVALIDATOR_H
 

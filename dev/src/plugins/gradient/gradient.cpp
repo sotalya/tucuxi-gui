@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "gradient.h"
 
 #include "coremessagehandler.h"

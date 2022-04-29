@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ADME_H
 #define ADME_H
 

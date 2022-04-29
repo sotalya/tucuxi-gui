@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef INGOINGXMLMESSAGE_H
 #define INGOINGXMLMESSAGE_H
 

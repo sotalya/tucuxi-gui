@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "ga.h"
 
 #include "coremessagehandler.h"

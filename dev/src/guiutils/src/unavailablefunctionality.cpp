@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "unavailablefunctionality.h"
 #include <QMessageBox>
 

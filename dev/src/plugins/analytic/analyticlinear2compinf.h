@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef ABIPERFPREDICTOR_H
 #define ABIPERFPREDICTOR_H
 

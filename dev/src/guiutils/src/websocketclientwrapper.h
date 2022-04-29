@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef WEBSOCKETCLIENTWRAPPER_H
 #define WEBSOCKETCLIENTWRAPPER_H
 

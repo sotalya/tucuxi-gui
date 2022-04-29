@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DOSAGELISTMODEL_H
 #define DOSAGELISTMODEL_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef USERACTION_H
 #define USERACTION_H
 

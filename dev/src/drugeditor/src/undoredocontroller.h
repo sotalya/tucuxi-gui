@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef UNDOREDOCONTROLLER_H
 #define UNDOREDOCONTROLLER_H
 

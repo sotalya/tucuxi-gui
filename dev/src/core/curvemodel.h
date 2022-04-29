@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef CURVEMODEL_H
 #define CURVEMODEL_H
 

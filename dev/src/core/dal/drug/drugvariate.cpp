@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/drug/drugvariate.h"
 #include "core/core.h"
 #include "core/definitionmanager.h"

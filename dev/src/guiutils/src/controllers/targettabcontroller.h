@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef TARGETTABCONTROLLER_H
 #define TARGETTABCONTROLLER_H
 

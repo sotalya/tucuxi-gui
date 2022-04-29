@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef AMONOINTRAPREDICTOR_H
 #define AMONOINTRAPREDICTOR_H
 

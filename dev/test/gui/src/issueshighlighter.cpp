@@ -1,3 +1,5 @@
+//@@license@@
+
 // File title       :   issuesHighlighter.cpp
 // Test title       :   Issues Highlighter
 // Author           :   Julien Rosset

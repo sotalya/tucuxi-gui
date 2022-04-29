@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PARTIALREQUESTLISTMODEL_H
 #define PARTIALREQUESTLISTMODEL_H
 

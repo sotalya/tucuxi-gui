@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "mysqldb.h"
 
 #include <QSqlQuery>

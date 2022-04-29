@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef MEASURELISTMODEL_H
 #define MEASURELISTMODEL_H
 

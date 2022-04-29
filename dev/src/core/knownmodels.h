@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef KNOWNMODELS_H
 #define KNOWNMODELS_H
 

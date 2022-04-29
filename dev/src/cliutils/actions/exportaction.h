@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef EXPORTACTION_H
 #define EXPORTACTION_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/drug/metadata.h"
 #include "core/dal/drug/editors.h"
 #include "references.h"

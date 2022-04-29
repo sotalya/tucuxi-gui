@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "ackrequestrequest.h"
 
 const char *const AckRequestRequest::_PATH = "query";

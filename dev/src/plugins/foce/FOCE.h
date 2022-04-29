@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef FOCE_H
 #define FOCE_H
 

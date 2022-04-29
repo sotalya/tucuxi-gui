@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COREERRORS
 #define COREERRORS
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "processingproxy.h"
 #include "networkutils.h"
 #include <QCoreApplication>

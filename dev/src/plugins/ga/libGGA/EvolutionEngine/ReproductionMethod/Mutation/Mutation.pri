@@ -1,3 +1,5 @@
+//@@license@@
+
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 

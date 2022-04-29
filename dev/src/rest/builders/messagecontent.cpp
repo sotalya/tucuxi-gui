@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "messagecontent.h"
 
 MessageContent::MessageContent() :

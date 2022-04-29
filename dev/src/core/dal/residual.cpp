@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "core/dal/residual.h"
 
 namespace ezechiel {

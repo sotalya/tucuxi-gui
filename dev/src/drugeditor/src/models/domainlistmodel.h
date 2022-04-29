@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef DOMAINLISTMODEL_H
 #define DOMAINLISTMODEL_H
 

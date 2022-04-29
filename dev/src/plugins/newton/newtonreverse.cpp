@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "newtonreverse.h"
 
 #include "coremessagehandler.h"

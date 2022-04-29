@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef RESTERRORS
 #define RESTERRORS
 

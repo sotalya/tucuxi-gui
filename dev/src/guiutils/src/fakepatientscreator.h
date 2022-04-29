@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef FAKEPATIENTSCREATOR_H
 #define FAKEPATIENTSCREATOR_H
 

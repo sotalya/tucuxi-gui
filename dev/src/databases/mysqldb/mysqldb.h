@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef MySqlDB_H
 #define MySqlDB_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COREFACTORY_H
 #define COREFACTORY_H
 

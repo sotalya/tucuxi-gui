@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef TAYLOR_H
 #define TAYLOR_H
 

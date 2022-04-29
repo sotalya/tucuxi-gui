@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "variability.h"
 
 #include "core/dal/drug/translatablestring.h"

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef COMMENTLISTMODEL_H
 #define COMMENTLISTMODEL_H
 

@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "covariatetabcontroller.h"
 #include "core/dal/drug/drugvariate.h"
 #include "core/dal/covariate.h"

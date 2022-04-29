@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "covariateidtranslator.h"
 #include "drugidtranslator.h"
 

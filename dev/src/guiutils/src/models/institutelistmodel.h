@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef INSTITUTELISTMODEL_H
 #define INSTITUTELISTMODEL_H
 

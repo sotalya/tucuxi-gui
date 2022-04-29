@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef PROCESSINGTRAITS
 #define PROCESSINGTRAITS
 

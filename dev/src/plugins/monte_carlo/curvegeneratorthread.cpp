@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "curvegeneratorthread.h"
 #include "prediction.h"
 

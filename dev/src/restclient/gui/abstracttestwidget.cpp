@@ -1,3 +1,5 @@
+//@@license@@
+
 #include "abstracttestwidget.h"
 
 #include "rest/network/networkaccessmanager.h"

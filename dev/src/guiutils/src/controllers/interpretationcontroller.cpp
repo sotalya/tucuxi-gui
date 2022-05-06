@@ -1851,7 +1851,7 @@ void InterpretationController::updateSexAndAgeCovariates()
 //}
 
 
-void InterpretationController::saveInterpretation()
+void InterpretationController::goToSaveInterpretation()
 {
 #ifndef CONFIG_DEMO
     QString dirPath;
@@ -1876,6 +1876,13 @@ void InterpretationController::saveInterpretation()
 
     dirPath = QFileInfo(fileName).absoluteDir().absolutePath();
     SETTINGS.set(ezechiel::core::Module::GUI,"interpretationDirPath", dirPath);
+
+    saveInterpretation(fileName);
+
+}
+
+void InterpretationController::saveInterpretation(QString fileName)
+    {
 
 //    InterpretationToRequestXmlExport exporter;
     InterpretationXmlExport exporter;

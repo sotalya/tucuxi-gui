@@ -15,6 +15,16 @@ class Interpretation;
 class QQmlApplicationEngine;
 #endif // CONFIG_GUITEST
 
+
+class fromGuiTest: public QObject
+{
+    Q_OBJECT
+public:
+    void toMainWindowController(QString filename);
+signals:
+    void loadInterpretation(QString);
+};
+
 class MainWindowController : public QQuickView
 {
     Q_OBJECT
@@ -37,7 +47,7 @@ public:
 #endif // CONFIG_GUITEST
     QQmlContext *getRootContext();
 
-    QObject*getRootObject();
+    QObject *getRootObject();
 public slots:
 
     void monitorStatus(QQuickView::Status status);
@@ -61,6 +71,9 @@ public slots:
 
     void interpretationReady(Interpretation *interpretation);
 
+    void loadInterpretationFile(const QString &fileName);
+
+    void signal1();
 
 protected:
 
@@ -75,6 +88,8 @@ protected:
     } currentView;
 
     InterpretationController *interpretationController;
+
+    QObject *testObj;
 
     QObject *mainView;
     QObject *launchView;
@@ -98,7 +113,7 @@ protected:
     /// This function tries to open the interpretation file. If it succeeds, then it creates
     /// the interpretation and emits a signal that will start the GUI interpretation
     ///
-    void loadInterpretationFile(const QString &fileName);
+//    void loadInterpretationFile(const QString &fileName);
 
     QObject *requestsView;
     RequestsController *requestsController;

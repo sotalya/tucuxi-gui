@@ -49,7 +49,7 @@ TEST(FunctionsTester, Test1)
     srv->fillInPatientData(patientData1);
     srv->waitPeriod(waitTime1*20);
 
-    srv->selectDrugInList(6, 0);
+    srv->selectDrugInList(6, 1);
     srv->waitPeriod(waitTime1);
 
     CovariatesData covariatesData1;

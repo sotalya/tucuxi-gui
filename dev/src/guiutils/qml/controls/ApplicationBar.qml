@@ -76,10 +76,10 @@ Rectangle {
             Layout.preferredHeight: parent.height
             icon:       "qrc:/icons/toolbar/save.png"
             icon_hover: "qrc:/icons/toolbar/save_hover.png"
-            onPressed: interpretationController.saveInterpretation()
+            onPressed: interpretationController.goToSaveInterpretation()
             Shortcut {
                 sequence: "Ctrl+S"
-                onActivated: interpretationController.saveInterpretation()
+                onActivated: interpretationController.goToSaveInterpretation()
             }
             tooltipText: ToolTips.applicationBar.save
         }

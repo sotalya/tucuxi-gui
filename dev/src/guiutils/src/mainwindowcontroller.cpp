@@ -188,6 +188,12 @@ void MainWindowController::retrieveViewsFromQml()
 
 #include <QAction>
 
+
+void fromGuiTest::toMainWindowController(QString loadName)
+{
+    emit loadInterpretation(loadName);
+}
+
 void MainWindowController::initViewConnections() {
 
     // To detect errors with Qml
@@ -195,14 +201,16 @@ void MainWindowController::initViewConnections() {
 
     CONNECT(launchView, SIGNAL(optionSelected(int)), this, SLOT(processStartupWindow(int)));
 
-    //Rest specific
+    // Rest specific
     CONNECT(requestsView,      SIGNAL(requestSelected(QString, QString, QString)),         requestsController, SLOT(queryRequest(QString, QString, QString)));
     CONNECT(requestsController,      SIGNAL(requestReady(InterpretationRequest*)),         this, SLOT(requestReady(InterpretationRequest*)));
+
+    // From GUI-tests (JRT 06.05.2022)
+    //CONNECT(, SIGNAL(loadInter()), this, SLOT(loadInterpretationFile(QString)));
 }
 
 void MainWindowController::requestReady(InterpretationRequest *request)
 {
-
     interpretationController->startInterpretationRequest(request);
     currentView = FLOW;
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(mainView, "showFlow"));
@@ -395,6 +403,11 @@ void MainWindowController::goToLoadInterpretation()
 #else
     UnavailableFunctionality::displayMessage();
 #endif // CONFIG_DEMO
+}
+
+void MainWindowController::signal1()
+{
+    loadInterpretationFile("save_1.tui");
 }
 
 void MainWindowController::loadInterpretationFile(const QString &fileName)

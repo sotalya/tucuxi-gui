@@ -73,6 +73,7 @@ struct ValidationData {
 };
 
 
+
 class SpixGTest : public spix::TestServer {
 public:
     SpixGTest(MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[]);
@@ -95,9 +96,10 @@ public:
 
     int getCurrentTabIndex();
 
-    void saveInterpretation(QString fileName);
-
     void startNewPatient();
+
+    void saveIntepretation(QString saveName);
+    void loadIntepretation(QString loadName);
 
     void findObjectAndSetValue(QString objectName, int inputProperty);
 
@@ -138,6 +140,9 @@ public:
     void printReport(QString reportFileName);
 
     int getNbProposedAdjustments();
+
+signals:
+    void loadInterpretation(QString);
 
 protected:
     int m_argc;

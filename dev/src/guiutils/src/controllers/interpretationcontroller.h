@@ -261,7 +261,8 @@ signals:
 
 public slots:
 
-    void saveInterpretation();
+    void goToSaveInterpretation();
+    void saveInterpretation(QString);
 
     void publishReport(QImage);
     void resetReqState();
@@ -411,6 +412,10 @@ private:
     QObject *drugVariatesView;
     // Added drugsView & targetsView as public for testing purposes
     public:
+
+//    ChartDataController *_chartDataController;        // JRT
+//    ezechiel::core::ChartData* chartData;             // JRT
+
     QObject *patientsView;
     QObject *drugsView;
     QObject *targetDialog;

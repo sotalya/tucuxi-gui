@@ -112,11 +112,6 @@ QObject *SpixGTest::getObjectByName(QObject *root, std::string name)
     return nullptr;
 }
 
-void SpixGTest::saveInterpretation(QString fileName)
-{
-    // WORK IN PROGRESS
-}
-
 void SpixGTest::startNewPatient()
 {
     srv->synchronize();
@@ -127,6 +122,27 @@ void SpixGTest::startNewPatient()
         srv->waitPeriod(waitTime1);
     }
     mouseClick(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
+    srv->waitPeriod(waitTime1);
+}
+
+void SpixGTest::saveIntepretation(QString saveName)
+{
+    if (!saveName.endsWith(".tui"))
+        saveName += ".tui";
+    srv->m_mainWindowController->getInterpretationController()->saveInterpretation(saveName);
+    srv->waitPeriod(waitTime1);
+}
+
+void SpixGTest::loadInterpretation(QString loadName)
+{
+    if (!loadName.endsWith(".tui"))
+        loadName += ".tui";
+
+    fromGuiTest obj;
+    if (QObject::connect(&obj, SIGNAL(loadInterpretation(QString)), srv->m_mainWindowController, SLOT(loadInterpretationFile(QString))) != 0) {
+        std::cout << "Aie" << std::endl;
+    }
+    obj.toMainWindowController(loadName);
     srv->waitPeriod(waitTime1);
 }
 

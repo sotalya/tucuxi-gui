@@ -53,7 +53,7 @@ public:
     CalcTraits(ParamTraits* ptraits,
                const QDateTime& _start,
                const QDateTime& _end,
-               const int _nbPoints) : traits(ptraits), start(_start), end(_end), nbPoints(_nbPoints){}
+               const int _nbPoints) : traits(ptraits), nbPoints(_nbPoints), start(_start), end(_end){}
 
     virtual bool check() {
         if (traits == 0)
@@ -72,7 +72,7 @@ class PercentilesTraits : public CalcTraits
 {
 public:
     PercentilesTraits(){}
-    void operator=(const PercentilesTraits& traits){*this = traits;}
+
     PercentilesTraits(const int _nbPoints,
                       const std::vector<double> _percs,
                       const QDateTime _start,
@@ -89,7 +89,7 @@ class PointsTraits : public CalcTraits
 {
 public:
     PointsTraits(){}
-    void operator=(const PointsTraits& traits){*this = traits;}
+
     PointsTraits(const QDateTime& _start,
                  const QDateTime& _end,
                  const int _nbPoints,
@@ -105,7 +105,7 @@ class PointTraits : public CalcTraits
 {
 public:
     PointTraits(){}
-    void operator=(const PointTraits& traits){*this = traits;}
+
     PointTraits(const QDateTime& _start,
                 const QDateTime& _end,
                 const QDateTime& _time,
@@ -122,7 +122,7 @@ class PeakTraits : public CalcTraits
 {
 public:
     PeakTraits(){}
-    void operator=(const PeakTraits& traits){*this = traits;}
+
     PeakTraits(const QDateTime& _start,
                const QDateTime& _end,
                const QDateTime& _time,
@@ -138,7 +138,7 @@ class ReverseTraits : public CalcTraits
 {
 public:
     ReverseTraits() : adjWithLoadingDose(false), adjWithRestPeriod(false){}
-    void operator=(const ReverseTraits& traits){*this = traits;}
+
     ReverseTraits(
             bool _adjWithLoadingDose,
             bool _adjWithRestPeriod,

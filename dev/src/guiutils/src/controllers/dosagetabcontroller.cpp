@@ -140,11 +140,12 @@ void DosageTabController::setAtSteadyState(int index, bool isAtSteadyState, QDat
     if (!isIndexValid(index)) return;
     _dosages->at(index)->setIsAtSteadyState(isAtSteadyState);
     if (isAtSteadyState) {
-        //_dosages->at(index)->setApplied(lastDoseTime.addMonths(-2));
-        //_dosages->at(index)->setEndTime(lastDoseTime.addMonths(12));
+        _dosages->at(index)->setApplied(lastDoseTime.addMonths(-2));
+        _dosages->at(index)->setEndTime(lastDoseTime.addMonths(12));
         // Because of changing clock, the two next lines are better than the two previous
-        _dosages->at(index)->setApplied(lastDoseTime.addSecs(-2*30*24*3600));
-        _dosages->at(index)->setEndTime(lastDoseTime.addSecs(12*30*24*3600));
+        // Well, that was true previously, but now it is not
+//        _dosages->at(index)->setApplied(lastDoseTime.addSecs(-2*30*24*3600));
+//        _dosages->at(index)->setEndTime(lastDoseTime.addSecs(12*30*24*3600));
         _dosages->at(index)->setSteadyStateLastDoseDate(lastDoseTime);
     }
 }

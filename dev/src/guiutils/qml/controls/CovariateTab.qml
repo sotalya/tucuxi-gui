@@ -12,7 +12,7 @@ import ezechiel 1.0
 
 Rectangle {
 
-    function setCovariateType(i){                           // JRT 02.003.2022
+    function setCovariateType(i){                           // JRT 02.03.2022
         drugVariateListView.currentIndex = i;
     } // Runs ok !
 
@@ -137,7 +137,7 @@ Rectangle {
                                         }
                                     }
 
-                                    return modelData.defaultValue.dbvalue + " " + modelData.defaultValue.unitstring;
+                                    return  modelData.defaultValue.dbvalue + " " + modelData.defaultValue.unitstring;
                                 }
                             },
                             EntityListDelegateItem {
@@ -229,11 +229,11 @@ Rectangle {
                     }
                     EntityListHeaderImage {
                         objectName: "addCovariate";
+
                         image.source: drugVariateListView.currentIndex == -1 ? "qrc:/icons/buttons/add_disabled.png" :
                                                                                (drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].automatic ?
                                                                                     "qrc:/icons/buttons/add_disabled.png" : "qrc:/icons/buttons/add.png")
                         tooltipText : ToolTips.covariateTab.add
-
 
                         mousearea.onClicked: {
                             if (drugVariateListView.currentIndex === -1)
@@ -241,7 +241,7 @@ Rectangle {
                             // Do not modify the age
                             if (drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].automatic) {
                                 messageNoAgeDialog.open();
-                            //    covariateTabController.removePatientVariate(patientVariateListView.currentIndex);
+//                                covariateTabController.removePatientVariate(patientVariateListView.currentIndex);
                             }
                             else {
                                 covariateTabController.addPatientVariate(drugVariateListView.currentIndex);
@@ -250,6 +250,8 @@ Rectangle {
                                 covariateDialog.exec(model, true)
                             }
                         }
+
+
                     }
                 },
 
@@ -322,7 +324,9 @@ Rectangle {
                             },
                             EntityListImage {
                                 objectName: "removeCovariate_" + index;
-                                image.source: "qrc:/icons/buttons/remove.png"
+                                image.source: drugVariateListView.currentIndex == -1 ? "qrc:/icons/buttons/remove_disabled.png" :
+                                                                                                                       (drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].automatic ?
+                                                                                                                            "qrc:/icons/buttons/remove_disabled.png" : "qrc:/icons/buttons/remove.png")
                                 mousearea.onClicked: {
                                     // Do not modify the age
                                     if (modelData.covariateId === "age") {

@@ -15,6 +15,8 @@ DialogBase {
     height: 230
 
     property var dataType
+    property bool textIsOk
+    property var textValue
 
     // Intercept Return to validate the dialog
     Shortcut {
@@ -34,8 +36,11 @@ DialogBase {
         valueBoolControl.visible = false
         valueDoubleControl.visible = false
         valueGenderControl.visible = false
+        textInputFrame.visible = false
+        textInput.visible = false
+        textSuffix.visible = false
 
-        valueDoubleControl.doValidation = function() { return !valueDoubleControl.visible || (valueDoubleControl.visible && getValue() >= 0) }
+//        valueDoubleControl.doValidation = function() { return !valueDoubleControl.visible || (valueDoubleControl.visible && getValue() >= 0) }
         valueGenderControl.doValidation = function() { return !valueGenderControl.visible || (valueGenderControl.visible && getValue() < 2) }
 
         // Set basic info
@@ -54,15 +59,23 @@ DialogBase {
             valueBoolControl.currentIndex = value.dbvalue === 0.5 ? 2 : value.dbvalue;
         }
         else {
-            valueDoubleControl.visible = true
-            valueDoubleControl.decimals = 2
-            if (type === "int") {
-                valueDoubleControl.decimals = 0
-            }
-            valueDoubleControl.setRealValue(value.dbvalue)
-            valueDoubleControl.minimumValue = 0
-            valueDoubleControl.maximumValue = 1000000 // Number.POSITIVE_INFINITY
-            valueDoubleControl.suffix = " " + value.unitstring
+//            valueDoubleControl.visible = true
+//            valueDoubleControl.decimals = 2
+//            if (type === "int") {
+//                valueDoubleControl.decimals = 0
+//            }
+//            valueDoubleControl.setRealValue(value.dbvalue)
+//            valueDoubleControl.minimumValue = 0
+//            valueDoubleControl.maximumValue = 1000000 // Number.POSITIVE_INFINITY
+//            valueDoubleControl.suffix = " " + value.unitstring
+
+            textInputFrame.visible = true
+//            placeHolderText.text = "Insert new value"
+            textInput.visible = true
+            textInput.text = value.dbvalue
+            textInput.maximumLength = 7
+            textSuffix.visible = true
+            textSuffix.text = value.unitstring
         }
 
         validate()
@@ -76,7 +89,8 @@ DialogBase {
         if (dataType === "bool") {
             return valueBoolControl.currentIndex === 2 ? 0.5 : valueBoolControl.currentIndex
         }
-        return valueDoubleControl.getRealValue();
+//        return  valueDoubleControl.getRealValue();
+        return Number.fromLocaleString(textInput.text).toFixed(2)
     }
 
     function getDate() {
@@ -97,6 +111,7 @@ DialogBase {
         bOk = dateInput.validate() && bOk
         bOk = timeInput.validate() && bOk
         bOk = valueGenderControl.validate() && bOk
+        bOk = textIsOk && bOk
         return bOk;
     }
 
@@ -105,6 +120,32 @@ DialogBase {
 //        valueDoubleControl.setRealValue(i);
         setCovariateValue(i);
     }
+
+    function textInputControl(){
+        var minValue = 0
+        var maxValue = 1000000
+
+        if (isNaN(textInput.text) || textInput.text > maxValue || textInput.text < minValue || textInput.text == "")
+        {
+            console.log("NaN");
+//            textInputFrame.border.color = 'red';
+            textInput.color = 'red';
+
+            if (textInput.text == "")
+                textInput.color = 'black';
+
+            textIsOk = false;
+        }
+        else
+        {
+            console.log(textInput.text);
+            // textInputFrame.border.color = 'lightGray';
+            textInput.color = 'black';
+            console.log(parseFloat(textInput.text));
+            textIsOk = true;
+        }
+    }
+
 
 
     GridLayout {
@@ -152,6 +193,53 @@ DialogBase {
                     Layout.preferredWidth: 100
                     tooltipText: ToolTips.covariateDialog.value
                 }
+                Rectangle {
+                 id: textInputFrame
+                 Layout.preferredWidth: 200
+                 height: 30
+                 border.color: 'lightGray'
+                 border.width: 1
+//                 Text {
+//                     id: placeHolderText
+//                     anchors.fill: parent
+//                     anchors.margins: 4
+//                     text: "Insert value"
+//                     color: 'lightGray'
+//                     verticalAlignment: Text.AlignVCenter
+//                 }
+
+                 TextInput {
+                     id: textInput
+                     objectName: "textInput"
+                     onTextChanged: {
+//                         placeHolderText.visible = false
+                         textInputControl()
+                     }
+                     validator: DoubleValidator {       // allow only 2 decimals
+                         decimals: 2
+                     }
+                     font.family: Style.form.font.input
+                     font.pixelSize: Style.form.size.input
+                     anchors.fill: parent
+                     anchors.margins: 4
+                     verticalAlignment: TextInput.AlignVCenter
+                     onEditingFinished: {
+                         if (textInput.text < 1)        // convert ".56" to "0.56" when closing dialog
+                             textInput.text = parseFloat(textInput.text);
+                         covariateDialog.validate() }
+                 }
+                 Text {
+                     id: textSuffix
+                     font: textInput.font
+                     color: 'black'
+                     anchors.fill: parent
+                     anchors.rightMargin: 4
+                     horizontalAlignment: Qt.AlignRight
+                     verticalAlignment: Text.AlignVCenter
+
+                 }
+
+                }
                 EntitySpinBoxList {
                     id: valueDoubleControl
                     objectName: "valueDoubleControl"
@@ -172,6 +260,7 @@ DialogBase {
                     onCurrentIndexChanged: { covariateDialog.validate() }
                 }
             }
+
 
             RowLayout {
                 spacing: 2

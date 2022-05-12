@@ -32,8 +32,6 @@
 #include "admin/src/interpretationtorequestxmlexport.h"
 #include "admin/src/interpretationxmlimport.h"
 
-#include "core/corefactory.h"
-#include "core/core.h"
 
 extern SpixGTest* srv;
 
@@ -51,12 +49,15 @@ TEST(SavedTestComparison, Test1)
     srv->startNewPatient();
     srv->waitPeriod(waitTime1);
 
-    int drugIndex   = 4;           // drugIndex : 13 = Imatinib
+    int drugIndex   = 13;           // drugIndex : 13 = Imatinib
     int modelIndex  = 0;            // modelIndex : 0 = only model available
     srv->selectDrugInList(drugIndex, modelIndex);
     srv->waitPeriod(waitTime1);
 
-    // ...
+
+    DosageData dosageData1;
+    dosageData1.dosage = 6666;
+    srv->addDosage(dosageData1);
 
     srv->waitForSync();
 
@@ -64,19 +65,19 @@ TEST(SavedTestComparison, Test1)
 
     // SAVING interpretation in Xml file
 
-    QString saveName =  "save_1b";       //"/Documents/Perso_stock_doc/Tests/save_1.tui";
+    QString saveName =  "save_1P";       //"/Documents/Perso_stock_doc/Tests/save_1.tui";
 
     srv->saveIntepretation(saveName);
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
     // Get to Startup window
-
+/*
     drugIndex = 20;                     // drugIndex : 20 = Vancomycin
     modelIndex = 3;
     srv->selectDrugInList(drugIndex, modelIndex);
     srv->waitPeriod(waitTime1);
-
+*/
     srv->m_mainWindowController->goToHome();
     srv->waitPeriod(waitTimeLong);
 
@@ -94,6 +95,21 @@ TEST(SavedTestComparison, Test1)
 //    srv->loadIntepretation(loadName);
     srv->waitPeriod(waitTime1);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+
+    srv->waitPeriod(waitTimeLong);
+
+    // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+
+    QFile fileToRead("save_1p.tui");
+    if (!f.open(QFile::ReadOnly))
+        std::cout << "Error : could not open file" << std::endl;
+
+    QXmlStreamReader xmlData(&fileToRead);
+
+
+
+
+    }
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 

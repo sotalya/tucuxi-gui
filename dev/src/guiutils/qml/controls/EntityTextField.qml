@@ -9,10 +9,16 @@ import guiutils.qml.controls 1.0
 import ezechiel 1.0
 
 TextField {
-//    Layout.fillWidth:  true
+    Layout.fillWidth:  true
     font.family: Style.form.font.input
     font.pixelSize: Style.form.size.input
     verticalAlignment: Text.AlignVCenter
     horizontalAlignment: Text.AlignLeft
+
+    property var doValidation: function() { return true; }
+
+
+
+
 
 }

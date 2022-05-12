@@ -219,7 +219,7 @@ void CovariateTabController::setSinglePatientVariate(QString id, double value)
     }
 
     if (id == "pna") {
-        // Remove the age if it exists
+        // Remove the pna if it exists
         for(int i = 0; i < _patientVariates->size() ; i++) {
             if (_patientVariates->at(i)->getCovariateId() == "pna") {
                 _patientVariates->remove(i);

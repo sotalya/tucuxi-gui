@@ -42,42 +42,45 @@ TEST(MinimalDataTest, Test1)
     ValidationData validationData1;
 
     int waitTime1 = 1;
-    int waitTimeLong = 1;
+    int waitTimeLong = 2;
 
     srv->waitPeriod(waitTime1);
 
     srv->startNewPatient();
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
 
     srv->fillInPatientData(patientData1);
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
 
     srv->selectDrugInList(13, 0);
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
 
     srv->addDosage(dosageData1);
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
 
     srv->addCovariates(covariatesData1, 0);
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
 
     srv->addMeasure(measureData1);
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
 
     srv->addTarget(targetData1);
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
 
     srv->addAdjustments(adjustmentsData1);
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
 
     srv->fillInValidationData(validationData1);
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
+
+    srv->deleteValidationComment("warning", 2, 0);
+    srv->waitPeriod(waitTime1);
 
     srv->saveValidationComment("warning", 2);
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
 
     srv->validateInterpretation();
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTime1);
 
 
     srv->waitPeriod(waitTimeLong);

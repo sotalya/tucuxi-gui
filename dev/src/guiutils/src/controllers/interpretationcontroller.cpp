@@ -446,7 +446,7 @@ bool InterpretationController::isFlowRequest() const
 }
 
 bool InterpretationController::acceptAndQuit()
-{
+{/*
     // Check if we can loose the work done
     if (QMessageBox::warning(QApplication::activeWindow(),
                              tr("Be careful"),
@@ -454,7 +454,7 @@ bool InterpretationController::acceptAndQuit()
                              QMessageBox::Yes,
                              QMessageBox::No) == QMessageBox::No)
         return false;
-
+*/
     // Stop every calculation
     calculationController->abortAll();
 
@@ -1883,6 +1883,7 @@ void InterpretationController::goToSaveInterpretation()
 
 void InterpretationController::saveInterpretation(QString fileName)
     {
+
 
 //    InterpretationToRequestXmlExport exporter;
     InterpretationXmlExport exporter;

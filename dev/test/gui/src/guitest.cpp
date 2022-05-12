@@ -140,7 +140,7 @@ void SpixGTest::loadInterpretation(QString loadName)
 
     fromGuiTest obj;
     if (QObject::connect(&obj, SIGNAL(loadInterpretation(QString)), srv->m_mainWindowController, SLOT(loadInterpretationFile(QString))) != 0) {
-        std::cout << "Aie" << std::endl;
+        std::cout << "Interpretation load : Ok" << std::endl;
     }
     obj.toMainWindowController(loadName);
     srv->waitPeriod(waitTime1);
@@ -150,6 +150,7 @@ void SpixGTest::loadInterpretation(QString loadName)
 
 void SpixGTest::findObjectAndSetValue(QString objectName, int propertyInput)
 {
+    // retrieves object by name and puts it into an item to set or get its properties (value)
     auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>(objectName);
     if (item != (0x0))
         item->setProperty("value", propertyInput);
@@ -243,25 +244,6 @@ void SpixGTest::fillInPatientData(PatientData patientData1)
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.lastNamePhy)));
 
     srv->waitPeriod(waitTime1);
-
-//    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientFirstName");
-//    item->setProperty("text", patientData1.firstName);
-//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientLastName");
-//    item->setProperty("text", patientData1.lastName);
-//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientIdentifier");
-//    item->setProperty("text", patientData1.identifier);
-//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientStayNumber");
-//    item->setProperty("text", patientData1.stayNumber);
-//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("titlePhy");
-//    item->setProperty("text", patientData1.titlePhy);
-//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("firstNamePhy");
-//    item->setProperty("text", patientData1.firstNamePhy);
-//    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("lastNamePhy");
-//    item->setProperty("text", patientData1.lastNamePhy);
-
-//    srv->inputText(spix::ItemPath("mainWindow/flowView/patientsView/patientFirstName"), patientData1.firstName.toStdString());
-
-    srv->waitPeriod(waitTime1);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/patientButton"));
     srv->synchronize();
 }
@@ -343,14 +325,13 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
 
     //srv->synchronize();
     auto routeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("routeText");
-    auto routeText = routeItem->property("text").toString();
+    QString routeText = routeItem->property("text").toString();
 //    qInfo() << "Route : " << routeText;
 
     if (routeText == "Intravenous drip")
     {
         // Infusion parameter only to be filled if Route = Intravenous drip != Oral
 //        qInfo() << "Infusion value to be filled in";
-
         findObjectAndSetValue("infusionSpinBox", dosageData1.infusion);
 
     }
@@ -652,7 +633,6 @@ void SpixGTest::selectAdjustments(int selectIndex)
     if (srv->existsAndVisible(spix::ItemPath(selectPath)))
     {
         srv->synchronize();
-        //        srv->mouseClick(spix::ItemPath("mainWindow/flowView/editDosage_0"));
         srv->mouseClick(spix::ItemPath(selectPath));
         srv->waitPeriod(waitTime1);
     }

@@ -16,6 +16,26 @@
 #include "guiutils/src/controllers/adjustmenttabcontroller.h"
 #include "admin/src/dal/interpretation.h"
 
+//MCI include test
+#include "admin/src/dal/interpretationanalysis.h"
+#include "core/dal/drugresponseanalysis.h"
+#include "core/dal/drugtreatment.h"
+#include "core/dal/corepatient.h"
+#include "admin/src/dal/patient.h"
+#include "admin/src/dal/practician.h"
+#include "admin/src/dal/person.h"
+
+
+
+#include "core/dal/covariate.h"
+#include "core/dal/adjustment.h"
+#include "core/dal/drug/drug.h"
+#include "core/dal/dosage.h"
+#include "core/dal/drug/concentrations.h"
+
+
+
+
 #include <QMessageBox>
 
 
@@ -859,6 +879,105 @@ int SpixGTest::getNbProposedAdjustments()
     bool ok;
     nbAdjs = v.toInt(&ok);
     return nbAdjs;
+}
+
+QMap<QString, QString> SpixGTest::fillMapWithInterpreation(Interpretation *interpretation)
+{
+    QMap<QString, QString> map;
+
+    //Analyse informations
+    auto analysis = interpretation->getAnalysis();
+    map["nextControl"]          = analysis->getNextControl().toString();
+    map["dosageDescription"]    = analysis->getDosageDescription();
+    map["expectedness"]         = analysis->getExpectedness();
+    map["suitability"]          = analysis->getSuitability();
+    map["prediction"]           = analysis->getPrediction();
+    map["remonitoring"]         = analysis->getRemonitoring();
+    map["warning"]              = analysis->getWarning();
+    //End Analyse informations
+
+    //Substance information
+    map["activeSubstanceId"] = interpretation->getDrugResponseAnalysis()->getTreatment()->getActiveSubstanceId();
+    // End of Substance information
+
+    //Patient informations
+    auto corePatient        = interpretation->getDrugResponseAnalysis()->getTreatment()->getPatient();
+    auto patient            = dynamic_cast<Patient*>(corePatient);
+    auto patientPerson      = patient->person();
+    auto patientLocation    = patientPerson->location();
+
+    map["patientExternalId"]    = patient->externalId();
+    map["patientStayNumber"]    = patient->stayNumber();
+//    map["patientPersonId"]      = patient->person_id(); //voir si doit laisser MCI
+
+
+    map["patientName"]              = patientPerson->name();
+    map["patientFirstName"]         = patientPerson->firstname();
+    map["patientBirthday"]          = patientPerson->birthday().toString();
+    map["patientGender"]            = patientPerson->gender();
+//    map["practicianLocation_id"]    = patientPerson->location_id(); //voir si doit laisser MCI
+
+
+    map["patientAdress"]        = patientLocation->address();
+    map["patientPostcode"]      = patientLocation->postcode();
+    map["patientCity"]          = patientLocation->city();
+    map["patientState"]         = patientLocation->state();
+    map["patientCountry"]       = patientLocation->country();
+//    map["patientLocation_id"]   = patientPerson->location_id(); //voir si doit laisser MCI
+    //End of Patient informations
+
+    //Practician informations
+    auto practician            = interpretation->getAnalyst();
+    auto practicianPerson      = practician->person();
+    auto practicianLocation    = practicianPerson->location();
+
+    map["practicianExternalId"]     = practician->externalId();
+    map["practicianTitle"]          = practician->title();
+    map["practicianRole"]           = practician->role();
+//    map["practicianPersonId"]       = practician->person_id(); //voir si doit laisser MCI
+//    map["practicianInstituteId"]    = practician->institute_id(); //voir si doit laisser MCI
+
+    map["practicianName"]           = practicianPerson->name();
+    map["practicianFirstName"]      = practicianPerson->firstname();
+//    map["practicianLocation_id"]    = practicianPerson->location_id(); //voir si doit laisser MCI
+
+    map["practicianAdress"]     = practicianLocation->address();
+    map["practicianPostcode"]   = practicianLocation->postcode();
+    map["practicianCity"]       = practicianLocation->city();
+    map["practicianState"]      = practicianLocation->state();
+    map["practicianCountry"]    = practicianLocation->country();
+    //End of Practician informations
+
+    //Dosage informations
+    //TODO
+    //End of Dosage informations
+
+    //Covariates informations
+//    auto info = interpretationSave->getDrugResponseAnalysis()->getTreatment()->getCovariates();
+    //TODO
+    //End of Covariates informations
+
+    //Covariates informations
+    //TODO
+    //End of Covariates informations
+
+    //Measures informations
+    //TODO
+    //End of Measures informations
+
+    //Targets informations
+    //TODO
+    //End of Targets informations
+
+    //Adjustments informations
+    //TODO
+    //End of Adjustments informations
+
+    //Validation informations
+    //TODO
+    //End of Validation informations
+
+    return map;
 }
 /*
 TEST(GTestExample, AdvancedUITest)

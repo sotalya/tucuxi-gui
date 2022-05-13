@@ -25,6 +25,15 @@
 #include "core/dal/drugtreatment.h"
 #include "core/dal/drug/target.h"
 
+//Include MCI
+#include "admin/src/dal/interpretationanalysis.h"
+#include "core/dal/drugresponseanalysis.h"
+#include "core/dal/drugtreatment.h"
+#include "core/dal/corepatient.h"
+#include "admin/src/dal/patient.h"
+#include "admin/src/dal/practician.h"
+#include "admin/src/dal/person.h"
+
 #include <QDebug>
 #include <QMessageBox>
 
@@ -40,6 +49,18 @@ extern SpixGTest* srv;
 
 TEST(SavedTestComparison, Test1)
 {
+    //Creating two maps
+    QMap<QString, QString> mapSave;
+    QMap<QString, QString> mapLoad;
+
+    // Declaration of structures
+    PatientData patientData;
+    DosageData dosageData;
+    CovariatesData covariatesData;
+    MeasureData measureData;
+    TargetData targetData;
+    AdjustmentsData adjustmentsData;
+    ValidationData validationData;
 
     // initier test (créer patient, selectionner substance)
     // save fichier
@@ -49,14 +70,16 @@ TEST(SavedTestComparison, Test1)
     int waitTimeLong    = 10;
 
     srv->startNewPatient();
+    srv->fillInPatientData(patientData);
     srv->waitPeriod(waitTime1);
 
     int drugIndex   = 4;           // drugIndex : 13 = Imatinib
     int modelIndex  = 0;            // modelIndex : 0 = only model available
     srv->selectDrugInList(drugIndex, modelIndex);
-    srv->waitPeriod(waitTime1);
 
-    // ...
+    srv->addDosage(dosageData);
+
+    srv->waitPeriod(waitTime1);
 
     srv->waitForSync();
 
@@ -65,6 +88,15 @@ TEST(SavedTestComparison, Test1)
     // SAVING interpretation in Xml file
 
     QString saveName =  "save_1b";       //"/Documents/Perso_stock_doc/Tests/save_1.tui";
+
+    Interpretation *interpretationSave = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
+
+//    mapSave = srv->fillMapWithInterpreation(interpretationSave);
+//    QMapIterator<QString, QString> iSave(mapSave);
+//    while (iSave.hasNext()) {
+//        iSave.next();
+//        qInfo() << "key =" << iSave.key() << "value =" << iSave.value();
+//    }
 
     srv->saveIntepretation(saveName);
 
@@ -77,26 +109,37 @@ TEST(SavedTestComparison, Test1)
     srv->selectDrugInList(drugIndex, modelIndex);
     srv->waitPeriod(waitTime1);
 
+    srv->addDosage(dosageData);
+
     srv->m_mainWindowController->goToHome();
     srv->waitPeriod(waitTimeLong);
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
     // LOADING interpretation from Xml file
-
-    //    srv->m_mainWindowController->loadInterpretationFile(saveName);
-    srv->waitPeriod(waitTimeLong);
-
-    QString loadName = saveName; // "save_1.tui";
+    QString loadName = "save_1b"; // "save_1.tui";
 
     srv->loadInterpretation(loadName);
 
-//    srv->loadIntepretation(loadName);
+    Interpretation *interpretationLoad = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
+
+//    mapLoad = srv->fillMapWithInterpreation(interpretationLoad);
+//    QMapIterator<QString, QString> iLoad(mapLoad);
+//    while (iLoad.hasNext()) {
+//        iLoad.next();
+//        qInfo() << "key =" << iLoad.key() << "value =" << iLoad.value();
+//    }
+
+//    if(mapSave == mapLoad)
+//        qInfo("Les interprétations sont égales");
+//    else if(mapSave != mapLoad)
+//        qInfo("Les interprétations NE sont PAS égales");
+
     srv->waitPeriod(waitTime1);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
-    srv->waitPeriod(waitTimeLong);
+    srv->waitPeriod(waitTimeLong*10);
     std::cout << "End of program ..." << std::endl;
 }

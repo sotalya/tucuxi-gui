@@ -141,6 +141,8 @@ public:
 
     int getNbProposedAdjustments();
 
+    QMap<QString, QString> fillMapWithInterpreation(Interpretation *interpretation);
+
 signals:
     void loadInterpretation(QString);
 

@@ -47,7 +47,7 @@ TEST(ValidationLoadFile, Test1)
 
     srv->waitPeriod(waitTime1); //MCI
 
-    QString loadName = "save_1m.tui"; // "save_1.tui";
+    QString loadName = "save_1c"; // "save_1.tui";
 
     srv->loadInterpretation(loadName);
 

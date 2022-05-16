@@ -77,7 +77,7 @@ TEST(SavedTestComparison, Test1)
     int modelIndex  = 0;            // modelIndex : 0 = only model available
     srv->selectDrugInList(drugIndex, modelIndex);
 
-    srv->addDosage(dosageData);
+//    srv->addDosage(dosageData);
 
     srv->waitPeriod(waitTime1);
 
@@ -87,7 +87,7 @@ TEST(SavedTestComparison, Test1)
 
     // SAVING interpretation in Xml file
 
-    QString saveName =  "save_1b";       //"/Documents/Perso_stock_doc/Tests/save_1.tui";
+    QString saveName =  "save_1c";       //"/Documents/Perso_stock_doc/Tests/save_1.tui";
 
     Interpretation *interpretationSave = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
 
@@ -109,7 +109,7 @@ TEST(SavedTestComparison, Test1)
     srv->selectDrugInList(drugIndex, modelIndex);
     srv->waitPeriod(waitTime1);
 
-    srv->addDosage(dosageData);
+//    srv->addDosage(dosageData);
 
     srv->m_mainWindowController->goToHome();
     srv->waitPeriod(waitTimeLong);
@@ -117,7 +117,7 @@ TEST(SavedTestComparison, Test1)
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
     // LOADING interpretation from Xml file
-    QString loadName = "save_1b"; // "save_1.tui";
+    QString loadName = saveName; // "save_1.tui";
 
     srv->loadInterpretation(loadName);
 

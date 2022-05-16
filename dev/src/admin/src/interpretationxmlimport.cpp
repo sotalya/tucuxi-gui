@@ -604,6 +604,10 @@ Person *InterpretationXmlImport::loadPerson(const QString &tagName, QObject *par
                 }
                 person->gender(gender);
             }
+            //Try to get address from xml file
+            else if (name == "address"){
+                person->location()->address(extractor());
+            }
         }
     }
     return person;

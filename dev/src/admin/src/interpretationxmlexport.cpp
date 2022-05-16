@@ -330,6 +330,9 @@ bool InterpretationXmlExport::save(Person *person)
 
     // This is a light version of a person. Could include more info later on
 
+    // Try to set address in xml file
+    writer.writeTextElement("address", person->location()->address());
+
     writer.writeEndElement(); // patient
     return true;
 }

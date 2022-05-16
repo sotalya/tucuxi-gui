@@ -92,17 +92,12 @@ TEST(SavedTestComparison, Test1)
 
     Interpretation *interpretationSave = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
 
-    auto physician = interpretationSave->getRequest()->getPractician();
-    auto physicianTitle = physician->title();
-
-    qInfo() << physicianTitle;
-
-//    mapSave = srv->fillMapWithInterpreation(interpretationSave);
-//    QMapIterator<QString, QString> iSave(mapSave);
-//    while (iSave.hasNext()) {
-//        iSave.next();
-//        qInfo() << "key =" << iSave.key() << "value =" << iSave.value();
-//    }
+    mapSave = srv->fillMapWithInterpreation(interpretationSave);
+    QMapIterator<QString, QString> iSave(mapSave);
+    while (iSave.hasNext()) {
+        iSave.next();
+        qInfo() << "key =" << iSave.key() << "value =" << iSave.value();
+    }
 
     srv->saveIntepretation(saveName);
 
@@ -129,17 +124,17 @@ TEST(SavedTestComparison, Test1)
 
     Interpretation *interpretationLoad = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
 
-//    mapLoad = srv->fillMapWithInterpreation(interpretationLoad);
-//    QMapIterator<QString, QString> iLoad(mapLoad);
-//    while (iLoad.hasNext()) {
-//        iLoad.next();
-//        qInfo() << "key =" << iLoad.key() << "value =" << iLoad.value();
-//    }
+    mapLoad = srv->fillMapWithInterpreation(interpretationLoad);
+    QMapIterator<QString, QString> iLoad(mapLoad);
+    while (iLoad.hasNext()) {
+        iLoad.next();
+        qInfo() << "key =" << iLoad.key() << "value =" << iLoad.value();
+    }
 
-//    if(mapSave == mapLoad)
-//        qInfo("Les interprétations sont égales");
-//    else if(mapSave != mapLoad)
-//        qInfo("Les interprétations NE sont PAS égales");
+    if(mapSave == mapLoad)
+        qInfo("Les interprétations sont égales");
+    else if(mapSave != mapLoad)
+        qInfo("Les interprétations NE sont PAS égales");
 
     srv->waitPeriod(waitTime1);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));

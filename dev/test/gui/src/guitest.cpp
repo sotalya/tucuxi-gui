@@ -24,6 +24,7 @@
 #include "admin/src/dal/patient.h"
 #include "admin/src/dal/practician.h"
 #include "admin/src/dal/person.h"
+#include "admin/src/dal/interpretationrequest.h"
 
 
 
@@ -915,7 +916,7 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpreation(Interpretation *inter
     map["patientFirstName"]         = patientPerson->firstname();
     map["patientBirthday"]          = patientPerson->birthday().toString();
     map["patientGender"]            = patientPerson->gender();
-//    map["practicianLocation_id"]    = patientPerson->location_id(); //voir si doit laisser MCI
+//    map["physicianLocation_id"]    = patientPerson->location_id(); //voir si doit laisser MCI
 
 
     map["patientAdress"]        = patientLocation->address();
@@ -926,27 +927,27 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpreation(Interpretation *inter
 //    map["patientLocation_id"]   = patientPerson->location_id(); //voir si doit laisser MCI
     //End of Patient informations
 
-    //Practician informations
-    auto practician            = interpretation->getAnalyst();
-    auto practicianPerson      = practician->person();
-    auto practicianLocation    = practicianPerson->location();
+    //Physician informations
+    auto physician            = interpretation->getRequest()->getPractician();
+    auto physicianPerson      = physician->person();
+    auto physicianLocation    = physicianPerson->location();
 
-    map["practicianExternalId"]     = practician->externalId();
-    map["practicianTitle"]          = practician->title();
-    map["practicianRole"]           = practician->role();
-//    map["practicianPersonId"]       = practician->person_id(); //voir si doit laisser MCI
-//    map["practicianInstituteId"]    = practician->institute_id(); //voir si doit laisser MCI
+    map["physicianExternalId"]     = physician->externalId();
+    map["physicianTitle"]          = physician->title();
+    map["physicianRole"]           = physician->role();
+//    map["physicianPersonId"]       = physician->person_id(); //voir si doit laisser MCI
+//    map["physicianInstituteId"]    = physician->institute_id(); //voir si doit laisser MCI
 
-    map["practicianName"]           = practicianPerson->name();
-    map["practicianFirstName"]      = practicianPerson->firstname();
-//    map["practicianLocation_id"]    = practicianPerson->location_id(); //voir si doit laisser MCI
+    map["physicianName"]           = physicianPerson->name();
+    map["physicianFirstName"]      = physicianPerson->firstname();
+//    map["physicianLocation_id"]    = physicianPerson->location_id(); //voir si doit laisser MCI
 
-    map["practicianAdress"]     = practicianLocation->address();
-    map["practicianPostcode"]   = practicianLocation->postcode();
-    map["practicianCity"]       = practicianLocation->city();
-    map["practicianState"]      = practicianLocation->state();
-    map["practicianCountry"]    = practicianLocation->country();
-    //End of Practician informations
+    map["physicianAdress"]     = physicianLocation->address();
+    map["physicianPostcode"]   = physicianLocation->postcode();
+    map["physicianCity"]       = physicianLocation->city();
+    map["physicianState"]      = physicianLocation->state();
+    map["physicianCountry"]    = physicianLocation->country();
+    //End of physician informations
 
     //Dosage informations
     //TODO

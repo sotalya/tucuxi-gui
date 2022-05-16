@@ -33,6 +33,7 @@
 #include "admin/src/dal/patient.h"
 #include "admin/src/dal/practician.h"
 #include "admin/src/dal/person.h"
+#include "admin/src/dal/interpretationrequest.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -90,6 +91,11 @@ TEST(SavedTestComparison, Test1)
     QString saveName =  "save_1c";       //"/Documents/Perso_stock_doc/Tests/save_1.tui";
 
     Interpretation *interpretationSave = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
+
+    auto physician = interpretationSave->getRequest()->getPractician();
+    auto physicianTitle = physician->title();
+
+    qInfo() << physicianTitle;
 
 //    mapSave = srv->fillMapWithInterpreation(interpretationSave);
 //    QMapIterator<QString, QString> iSave(mapSave);

@@ -101,7 +101,7 @@ TEST(SavedTestComparison, Test1)
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
     QFile fileToRead("save_1p.tui");
-    if (!f.open(QFile::ReadOnly))
+    if (!fileToRead.open(QFile::ReadOnly))
         std::cout << "Error : could not open file" << std::endl;
 
     QXmlStreamReader xmlData(&fileToRead);
@@ -109,7 +109,6 @@ TEST(SavedTestComparison, Test1)
 
 
 
-    }
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 

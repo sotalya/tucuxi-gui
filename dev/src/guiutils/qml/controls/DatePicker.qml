@@ -11,7 +11,7 @@ import guiutils.qml.styles 1.0
 
 Rectangle {
     id: defaultStyle
-//    implicitWidth: wholeDate.implicitWidth - 20
+    //    implicitWidth: wholeDate.implicitWidth - 20
     implicitHeight:wholeDate.height
 
     width : 150
@@ -33,9 +33,11 @@ Rectangle {
     property string fontFamily: Style.form.font.input
     property int fontSize:      Style.form.size.input
 
+    property var savedDate
+
     signal editingFinished()
 
-//    property bool hasFocus: daysInput.activeFocus || monthsInput.activeFocus || yearsInput.activeFocus
+    //    property bool hasFocus: daysInput.activeFocus || monthsInput.activeFocus || yearsInput.activeFocus
 
     anchors.bottomMargin: -1
     color: "#44ffffff"
@@ -53,8 +55,20 @@ Rectangle {
         //    GradientStop {color: "#fff" ; position: 0.1}
         //    GradientStop {color: "#fff" ; position: 1}
         //}
+
     }
 
+//    Text {
+//        id: dateFormatHint
+//        anchors.left: parent.left
+//        font.family:    parent.fontFamily
+//        font.pixelSize: parent.fontSize
+//        verticalAlignment: defaultStyle.AlignVCenter
+//        text: "dd/mm/yyyy"
+//        color: "black" // "lightGray"
+//        enabled: isEnabled
+//        visible: true
+//    }
 
     TextField {
         id : wholeDate
@@ -81,7 +95,26 @@ Rectangle {
                 color = "#FF0000";
             }
         }
+
+//        MouseArea {
+//            anchors.fill: parent
+//            hoverEnabled: true
+//            onEntered: {
+////                wholeDate.opacity = 0.2
+
+//            }
+//            onExited: { console.log("EXITED zone")
+////                wholeDate.opacity = 1
+//                //            wholeDate.text = defaultStyle.date.toLocaleString(Qt.locale(),"dd/MM/yyyy")
+//            }
+//            onClicked: {
+////                wholeDate.opacity = 1
+//                //            wholeDate.text = defaultStyle.date.toLocaleString(Qt.locale(), "dd/MM/yyyy")
+//            }
+//        }
     }
+
+
 
     Image {
         id: calendarInput
@@ -122,3 +155,4 @@ Rectangle {
         }
     }
 }
+

@@ -32,7 +32,7 @@ struct DosageData {
 
 struct CovariatesData {
     QString sex;
-    double weight           = 5566;
+    double weight           = 67.87;
     double scc              = 80;
     QDateTime dateTimeCovar = QDateTime::currentDateTime();
 };

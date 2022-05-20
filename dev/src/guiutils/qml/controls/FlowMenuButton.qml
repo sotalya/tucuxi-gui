@@ -167,15 +167,17 @@ Item {
         height: 38
         visible: parent.isEnabled
         source: {
-            if (parent.status === Status.invalid)
-                return "qrc:/icons/states/invalid.png";
-            if (parent.status === Status.valid)
-                return "qrc:/icons/states/valid.png";
+            if (parent.status === Status.invalid) {
+//                console.log("1");
+                return "qrc:/icons/states/invalid.png"; }
+            if (parent.status === Status.valid) {
+//                console.log("2");
+                return "qrc:/icons/states/valid.png"; }
 
             return "qrc:/icons/states/complete.png";
-        }
-        antialiasing: true
-        mipmap: true
+            }
+            antialiasing: true
+            mipmap: true
         fillMode: Image.PreserveAspectFit
     }
 

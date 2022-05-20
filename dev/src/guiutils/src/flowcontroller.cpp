@@ -239,29 +239,32 @@ void FlowController::generateStatuses()
         bool hasDrugCovariates = !drugModel->getCovariates()->isEmpty();
         bool areDrugCovariatesOk = (!hasDrugCovariates || drugModel->getCovariates()->isValid());
         bool arePatientCovariatesOk = (drugTreatment->getCovariates() != nullptr && drugTreatment->getCovariates()->isValid());
-        bool isValid = (areDrugCovariatesOk && arePatientCovariatesOk);
+        bool isDosageOk = currentStatus->getValidationStatus(StepType::Dosage);
+//        std::cout << "Dosage status : " << (isDosageOk ? "OK" : "NOK") << std::endl;
+        bool isValid = (areDrugCovariatesOk && arePatientCovariatesOk && isDosageOk);
         currentStatus->setDataStatus(StepType::Covariate, isValid ? DataStatusType::ValidData : DataStatusType::InvalidData);
-        if (isValid) {
-            // Set validated as soon as we have at least one patient variable for each drug variable
-            QSet<QString> drugVariateIds;
-            for (ezechiel::core::DrugVariate *variate: drugModel->getCovariates()->getList()) {
-                if ((!variate->getAutomatic()) && (variate->getCovariateId() != "birthdate")) {
-                    drugVariateIds.insert(variate->getCovariateId());
-                }
-            }
-            bool isOk = true;
-            for (ezechiel::core::PatientVariate *variate: drugTreatment->getCovariates()->getList()) {
-                if (drugVariateIds.contains(variate->getCovariateId())) {
-                    drugVariateIds.remove(variate->getCovariateId());
-                }
-                else {
-                    // No real reason to invalidate in that case
-                    // isOk = false;
-                }
-            }
-            isOk &= drugVariateIds.size() == 0;
-            currentStatus->setValidationStatus(StepType::Covariate, isOk ? ValidationStatus::Validated : ValidationStatus::UnValidated);
-        }
+        isValid = false;
+//        if (isValid) {
+//            // Set validated as soon as we have at least one patient variable for each drug variable
+//            QSet<QString> drugVariateIds;
+//            for (ezechiel::core::DrugVariate *variate: drugModel->getCovariates()->getList()) {
+//                if ((!variate->getAutomatic()) && (variate->getCovariateId() != "birthdate")) {
+//                    drugVariateIds.insert(variate->getCovariateId());
+//                }
+//            }
+//            bool isOk = true;
+//            for (ezechiel::core::PatientVariate *variate: drugTreatment->getCovariates()->getList()) {
+//                if (drugVariateIds.contains(variate->getCovariateId())) {
+//                    drugVariateIds.remove(variate->getCovariateId());
+//                }
+//                else {
+//                    // No real reason to invalidate in that case
+//                    // isOk = false;
+//                }
+//            }
+//            isOk &= drugVariateIds.size() == 0;
+//            currentStatus->setValidationStatus(StepType::Covariate, isOk ? ValidationStatus::Validated : ValidationStatus::UnValidated);
+//        }
     }
 
     // Measures

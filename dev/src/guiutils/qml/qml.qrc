@@ -72,6 +72,7 @@
         <file alias="GraphSettingsDialog.qml">controls/GraphSettingsDialog.qml</file>
         <file alias="SettingsDialog.qml">controls/SettingsDialog.qml</file>
         <file alias="SentencePaletteDialog.qml">controls/SentencePaletteDialog.qml</file>
+        <file>EntityTextValueEntry.qml</file>
     </qresource>
     <qresource prefix="/windows">
         <file alias="MainWindow.qml">windows/MainWindow.qml</file>

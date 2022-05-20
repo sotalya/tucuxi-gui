@@ -52,13 +52,16 @@ TEST(MinimalDataTest, Test1)
     srv->fillInPatientData(patientData1);
     srv->waitPeriod(waitTime1);
 
-    srv->selectDrugInList(13, 0);
+    srv->selectDrugInList(6, 0);
     srv->waitPeriod(waitTime1);
 
     srv->addDosage(dosageData1);
     srv->waitPeriod(waitTime1);
 
     srv->addCovariates(covariatesData1, 0);
+    srv->waitPeriod(waitTime1);
+
+    srv->addCovariates(covariatesData1, 3);
     srv->waitPeriod(waitTime1);
 
     srv->addMeasure(measureData1);

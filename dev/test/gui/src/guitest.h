@@ -18,6 +18,12 @@ struct PatientData {
     QString titlePhy        = "Dr.";
     QString firstNamePhy    = "Doo";
     QString lastNamePhy     = "Little";
+
+    QString address  = "Rue du test";
+    QString city     = "Neuch";
+    QString state    = "NE";
+    QString postcode = "2000";
+    QString country  = "Swiss";
 };
 
 
@@ -141,7 +147,7 @@ public:
 
     int getNbProposedAdjustments();
 
-    QMap<QString, QString> fillMapWithInterpreation(Interpretation *interpretation);
+    QMap<QString, QString> fillMapWithInterpretation(Interpretation *interpretation);
 
 signals:
     void loadInterpretation(QString);

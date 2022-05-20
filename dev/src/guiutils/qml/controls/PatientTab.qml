@@ -28,7 +28,7 @@ Rectangle {
         patientListView.clearSelection();
     }
 
-    function extPatientData(yearPat, monthPat, dayPat, firstName, lastName, identifier, stayNumber, titlePhy, firstNamePhy, lastNamePhy) {
+    function extPatientData(yearPat, monthPat, dayPat, firstName, lastName, identifier, stayNumber) {
         patientExtraExpandHeader.expanded = true
         physicianInChargeHeader.expanded = true
 
@@ -38,11 +38,22 @@ Rectangle {
         patientLastNameId.text      = lastName
         patientIdentifierId.text    = identifier
         patientStayNumberId.text    = stayNumber
+    }
+
+    function extPatientDataContact(address, city, state, postcode, country){
+        patientAddressId.text   = address
+        patientCityId.text      = city
+        patientStateId.text     = state
+        patientPostcodeId.text  = postcode
+        patientCountryId.text   = country
+    }
+
+    function extPhysicianData(titlePhy, firstNamePhy, lastNamePhy){
         titlePhyId.text             = titlePhy
         firstNamePhyId.text         = firstNamePhy
         lastNamePhyId.text          = lastNamePhy
-
     }
+
 
     onIndexChanged:  currentIndexChanged(index)
 
@@ -421,6 +432,7 @@ Rectangle {
                         text: "Address:"
                     }
                     EntityTextField {
+                        id: patientAddressId
                         Layout.fillWidth:  true
                         placeholderText: "address"
                         text: patientExtra.model ? patientExtra.model.person.location.address : ""
@@ -440,6 +452,7 @@ Rectangle {
                         text: "City:"
                     }
                     EntityTextField {
+                        id: patientCityId
                         Layout.fillWidth:  true
                         placeholderText: "city"
                         text: patientExtra.model ? patientExtra.model.person.location.city : ""
@@ -454,6 +467,7 @@ Rectangle {
                         Layout.preferredWidth: 100
                     }
                     EntityTextField {
+                        id: patientPostcodeId
                         Layout.fillWidth:  true
                         placeholderText: "postcode"
                         text: patientExtra.model ? patientExtra.model.person.location.postcode : ""
@@ -473,6 +487,7 @@ Rectangle {
                         text: "State:"
                     }
                     EntityTextField {
+                        id: patientStateId
                         Layout.fillWidth:  true
                         placeholderText: "state"
                         text: patientExtra.model ? patientExtra.model.person.location.state : ""
@@ -487,6 +502,7 @@ Rectangle {
                         Layout.preferredWidth: 100
                     }
                     EntityTextField {
+                        id: patientCountryId
                         Layout.fillWidth:  true
                         placeholderText: "country"
                         text: patientExtra.model ? patientExtra.model.person.location.country : ""

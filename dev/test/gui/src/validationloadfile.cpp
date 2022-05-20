@@ -36,6 +36,10 @@
 #include "core/corefactory.h"
 #include "core/core.h"
 
+//include test
+#include "admin/src/dal/practician.h"
+#include "admin/src/dal/interpretationrequest.h"
+
 extern SpixGTest* srv;
 
 TEST(ValidationLoadFile, Test1)
@@ -47,16 +51,9 @@ TEST(ValidationLoadFile, Test1)
 
     srv->waitPeriod(waitTime1); //MCI
 
-    QString loadName = "save_1c"; // "save_1.tui";
+    QString loadName = "save_1b"; // "save_1.tui";
 
     srv->loadInterpretation(loadName);
-
-//    Interpretation *interpretation = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
-//    auto y = interpretation->getDrugResponseAnalysis()->getTreatment()->getActiveSubstanceId();
-//    auto warning = interpretation->getAnalysis()->getWarning();
-//    qInfo() << warning;
-
-
 //--------------------------------------------------
 //    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientFirstName");
 //    auto patientFirstName = item->property("text").toString();

@@ -39,6 +39,9 @@
 #include "core/dal/drug/errormodel.h"
 #include "core/dal/drug/parameters.h"
 
+#include "admin/src/dal/practician.h"
+
+
 InterpretationXmlExport::InterpretationXmlExport()
 {}
 
@@ -76,10 +79,10 @@ QString InterpretationXmlExport::toXml(Interpretation *interpretation)
     writer.writeTextElement("interpretationType", interpretationTypeToString(interpretation->getInterpretationType()));
 
     ok &= save(interpretation->getAnalysis());
-    if (interpretation->getInterpretationType() == Interpretation::InterpretationType::FromRequest)
+//    if (interpretation->getInterpretationType() == Interpretation::InterpretationType::FromRequest)
         ok &= save(interpretation->getRequest());
     ok &= save(interpretation->getDrugResponseAnalysis());
-    ok &= save(interpretation->getAnalyst());
+    ok &= save(interpretation->getAnalyst(), "analyst");
     ok &= save(interpretation->getValidationStatus());
 
     writer.writeStartElement("adjustment");
@@ -150,6 +153,7 @@ bool InterpretationXmlExport::save(InterpretationRequest *request)
     bool ok = true;
     // TODO We just save the clinicals now. To be more complete later
     ok &= save(request->getClinicals());
+    save(request->getPractician(), "physician");
     writer.writeEndElement(); // interpretationRequest
 
     return true;
@@ -191,17 +195,22 @@ bool InterpretationXmlExport::save(ezechiel::core::DrugResponseAnalysis *drugRes
 }
 
 
-bool InterpretationXmlExport::save(Practician *analyst)
+bool InterpretationXmlExport::save(Practician *analyst, QString name)
 {
     // Not implemented yet, as it is not relevant for software usage
-    writer.writeStartElement("practician");
+    writer.writeStartElement(name);
+    writer.writeTextElement("personId", QString::number(analyst->person_id()));
+    writer.writeTextElement("externalId", analyst->externalId());
+    writer.writeTextElement("title", analyst->title());
+    writer.writeTextElement("role", analyst->role());
+    save(analyst->person());
     writer.writeEndElement(); // practician
 
     return true;
 
 }
 
-QString stepToString(int step)
+QString InterpretationXmlExport::stepToString(int step)
 {
     switch(step) {
     case StepType::Patient : return "patient";
@@ -219,7 +228,7 @@ QString stepToString(int step)
     return "unknown";
 }
 
-QString toString(ValidationStatus::ValidationStatusType status)
+QString InterpretationXmlExport::toStringValidation(ValidationStatus::ValidationStatusType status)
 {
     switch(status) {
     case ValidationStatus::ValidationStatusType::UnValidated : return "unvalidated";
@@ -237,7 +246,7 @@ bool InterpretationXmlExport::save(ValidationStatus *validationStatus)
     for(auto step = StepType::first; step <= StepType::last; step ++) {
         writer.writeStartElement("stepStatus");
         writer.writeTextElement("step", stepToString(step));
-        QString s = toString(validationStatus->getValidationStatus(StepType::convert(step)));
+        QString s = toStringValidation(validationStatus->getValidationStatus(StepType::convert(step)));
         writer.writeTextElement("status", s);
         writer.writeEndElement(); // stepStatus
     }
@@ -332,6 +341,10 @@ bool InterpretationXmlExport::save(Person *person)
 
     // Try to set address in xml file
     writer.writeTextElement("address", person->location()->address());
+    writer.writeTextElement("city", person->location()->city());
+    writer.writeTextElement("postcode", person->location()->postcode());
+    writer.writeTextElement("state", person->location()->state());
+    writer.writeTextElement("country", person->location()->country());
 
     writer.writeEndElement(); // patient
     return true;
@@ -479,7 +492,8 @@ bool InterpretationXmlExport::save(ezechiel::core::PatientVariateList *list)
         writer.writeTextElement("name", variate->getCovariateId());
         writer.writeTextElement("date", writeDate(variate->getDate()));
         writer.writeTextElement("valueAsString", variate->getValueAsString());
-        saveOperableAmount("quantity", variate->getQuantity());
+        if(variate->getCovariateId() != "birthdate")
+            saveOperableAmount("quantity", variate->getQuantity());
         writer.writeTextElement("type", QMetaType::typeName(variate->getType()));
         writer.writeTextElement("forced", variate->getForced() ? "true" : "false");
         save(variate->getUncastedValues());

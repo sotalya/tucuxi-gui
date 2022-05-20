@@ -41,6 +41,8 @@
 #include "core/dal/covariate.h"
 #include "core/dal/dosage.h"
 
+#include "admin/src/dal/practician.h"
+
 #include "core/utils/duration.h"
 
 #include <iostream>
@@ -343,7 +345,19 @@ Clinical *InterpretationXmlImport::loadClinical(const QString &tagName, QObject 
 
 Practician *InterpretationXmlImport::loadPractician(const QString &tagName, QObject *parent)
 {
-    return nullptr;
+    Practician *practician = ezechiel::core::CoreFactory::createEntity<Practician>(ADMINREPO, parent);
+
+    WHILE_NOT_END_ELEM(tagName){
+
+        if(isOk && reader.readNextStartElement()){
+            QString name = reader.name().toString();
+
+            if (name == "title") {
+                practician->title(extractor());
+            }
+        }
+    }
+    return practician;
 }
 
 ValidationStatus::ValidationStatusType statusFromString(const QString &status)
@@ -607,6 +621,18 @@ Person *InterpretationXmlImport::loadPerson(const QString &tagName, QObject *par
             //Try to get address from xml file
             else if (name == "address"){
                 person->location()->address(extractor());
+            }
+            else if (name == "city"){
+                person->location()->city(extractor());
+            }
+            else if (name == "postcode"){
+                person->location()->postcode(extractor());
+            }
+            else if (name == "state"){
+                person->location()->state(extractor());
+            }
+            else if (name == "country"){
+                person->location()->country(extractor());
             }
         }
     }

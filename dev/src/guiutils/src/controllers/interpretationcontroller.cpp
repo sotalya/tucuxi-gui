@@ -1879,11 +1879,15 @@ void InterpretationController::goToSaveInterpretation()
 
     saveInterpretation(fileName);
 
+#else
+    UnavailableFunctionality::displayMessage();
+#endif // CONFIG_DEMO
 }
 
 void InterpretationController::saveInterpretation(QString fileName)
     {
 
+#ifndef CONFIG_DEMO
 
 //    InterpretationToRequestXmlExport exporter;
     InterpretationXmlExport exporter;

@@ -48,9 +48,7 @@ TEST(ValidationTest, Test1)
     patientData1.gender         = 0;                        // male = 1, female = 0
     patientData1.identifier     = "Patient_0_virusT";
     patientData1.stayNumber     = "Private drive n°4";
-    patientData1.titlePhy       = "Dr.";
-    patientData1.firstNamePhy   = "Window";
-    patientData1.lastNamePhy    = "Cleaner";
+
 
     DosageData dosageData1;
     dosageData1.dosage      = 7500;

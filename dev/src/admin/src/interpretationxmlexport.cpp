@@ -195,15 +195,17 @@ bool InterpretationXmlExport::save(ezechiel::core::DrugResponseAnalysis *drugRes
 }
 
 
-bool InterpretationXmlExport::save(Practician *analyst, QString name)
+bool InterpretationXmlExport::save(Practician *practician, QString name)
 {
-    // Not implemented yet, as it is not relevant for software usage
     writer.writeStartElement(name);
-    writer.writeTextElement("personId", QString::number(analyst->person_id()));
-    writer.writeTextElement("externalId", analyst->externalId());
-    writer.writeTextElement("title", analyst->title());
-    writer.writeTextElement("role", analyst->role());
-    save(analyst->person());
+    writer.writeTextElement("personId", QString::number(practician->person_id()));
+    writer.writeTextElement("externalId", practician->externalId());
+    writer.writeTextElement("title", practician->title());
+    if(name == "analyst")
+        writer.writeTextElement("role", practician->role());
+    writer.writeTextElement("address", practician->institute()->location()->address());
+    writer.writeTextElement("affilition", practician->institute()->name());
+    save(practician->person(), name);
     writer.writeEndElement(); // practician
 
     return true;
@@ -323,31 +325,39 @@ bool InterpretationXmlExport::save(Patient *patient)
     writer.writeTextElement("personId", QString::number(patient->person_id()));
     writer.writeTextElement("externalId", patient->externalId());
     writer.writeTextElement("stayNumber", patient->stayNumber());
-    save(patient->person());
+    save(patient->person(), "patient");
     writer.writeEndElement(); // patient
     return true;
 }
 
 
-bool InterpretationXmlExport::save(Person *person)
+bool InterpretationXmlExport::save(Person *person, QString name)
 {
     writer.writeStartElement("person");
     writer.writeTextElement("name", person->name());
     writer.writeTextElement("firstname", person->firstname());
-    writer.writeTextElement("birthday", person->birthday().toString(Qt::ISODate));
-    writer.writeTextElement("gender", (person->gender() == Person::Male) ? "male" : "female");
-
-    // This is a light version of a person. Could include more info later on
-
-    // Try to set address in xml file
-    writer.writeTextElement("address", person->location()->address());
+    if(name == "patient"){
+        writer.writeTextElement("birthday", person->birthday().toString(Qt::ISODate));
+        writer.writeTextElement("gender", (person->gender() == Person::Male) ? "male" : "female");
+        writer.writeTextElement("address", person->location()->address());
+    }
     writer.writeTextElement("city", person->location()->city());
     writer.writeTextElement("postcode", person->location()->postcode());
     writer.writeTextElement("state", person->location()->state());
     writer.writeTextElement("country", person->location()->country());
-
+    if(name == "analyst")
+        save(person->getPhones());
     writer.writeEndElement(); // patient
     return true;
+}
+
+bool InterpretationXmlExport::save(PhoneList *list)
+{
+    writer.writeStartElement("phoneNumber");
+    foreach(Phone *phone, list->getList()) {
+        writer.writeTextElement("number", phone->getNumber());
+    }
+    writer.writeEndElement();
 }
 
 

@@ -15,15 +15,21 @@ struct PatientData {
     int gender              = 0;                    // gender : 1 = male, 0 = female
     QString identifier      = "Patient_0";
     QString stayNumber      = "Private Drive 4";
-    QString titlePhy        = "Dr.";
-    QString firstNamePhy    = "Doo";
-    QString lastNamePhy     = "Little";
+    QString address         = "Rue du Flon 1";
+    QString city            = "Lausanne";
+    QString state           = "VD";
+    QString postcode        = "1003";
+    QString country         = "Switzerland";
 
-    QString address  = "Rue du test";
-    QString city     = "Neuch";
-    QString state    = "NE";
-    QString postcode = "2000";
-    QString country  = "Swiss";
+    QString titlePhy       = "Dr.";
+    QString firstNamePhy   = "Doo";
+    QString lastNamePhy    = "Little";
+    QString affiliationPhy = "Aff";
+    QString addressPhy     = "Rte de Cheseaux 1";
+    QString cityPhy        = "Yverdon-les-Bains";
+    QString statePhy       = "VD";
+    QString postcodePhy    = "1400";
+    QString countryPhy     = "Switzerland";
 };
 
 
@@ -41,6 +47,24 @@ struct CovariatesData {
     double weight           = 5566;
     double scc              = 80;
     QDateTime dateTimeCovar = QDateTime::currentDateTime();
+
+    double dayNightDosing                     = 100;
+    double asian                              = 100;
+    double nonValvularAtrialFibriliation       = 0;
+    double acuteCoronarySyndrome              = 0;
+    double StrongModerateCytochromeInhibitors = 100;
+    double dose                               = 410;
+    double glomerularFiltrationRate           = 9500;
+
+    double atazanavirWithWithoutBooster = 0;
+    double darunavir                    = 1;
+    double rifampicin                   = 0;
+    double currentSmoking               = 1;
+
+    double gestionalAge             = 2600;
+    double heamatologicalMalignacy  = 100;
+
+
 };
 
 struct MeasureData {
@@ -76,6 +100,22 @@ struct ValidationData {
     QString prediction      = "Sunny but windy this afternoon";
     QString remonitoring    = "None";
     QString warning         = "Don't invest in Bitcoin";
+};
+
+struct AnalystData {
+    QString analystTitle       = "Dre";
+    QString analystFirstName   = "Jane";
+    QString analystLastName    = "Doe";
+    QString analystRole        = "Analyst";
+    QString analystPhoneNumber = "123456789";
+    QString analystAffiliation = "AffiliationName";
+    QString analystAddress     = "Rue du Bugnon 46";
+    QString analystCity        = "Lausanne";
+    QString analystPostcode    = "1011";
+    QString analystState       = "VD";
+    QString analystCountry     = "Switzerland";
+
+
 };
 
 
@@ -123,6 +163,10 @@ public:
     void editCovariates(struct CovariatesData, int covariateType, int editIndex);
     void fillInCovariatesData(struct CovariatesData, int covariateType);
 
+    //MCI
+    void addCovariatesByDrug(CovariatesData covariatesData1, int covariateType, int drugIndex);
+    void fillInCovariatesDataByDrug(struct CovariatesData, int covariateType, int drugIndex);
+
     void addMeasure(struct MeasureData);
     void editMeasure(struct MeasureData, int editIndex);
     void fillInMeasureData(struct MeasureData);
@@ -148,6 +192,8 @@ public:
     int getNbProposedAdjustments();
 
     QMap<QString, QString> fillMapWithInterpretation(Interpretation *interpretation);
+
+    void fillInAnalystData(struct AnalystData);
 
 signals:
     void loadInterpretation(QString);

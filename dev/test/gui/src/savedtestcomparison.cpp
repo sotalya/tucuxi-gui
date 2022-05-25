@@ -61,6 +61,7 @@ TEST(SavedTestComparison, Test1)
 
     // Declaration of structures
     PatientData patientData;
+    AnalystData analystData;
     DosageData dosageData;
     CovariatesData covariatesData;
     MeasureData measureData;
@@ -71,45 +72,260 @@ TEST(SavedTestComparison, Test1)
     // initier test (créer patient, selectionner substance)
     // save fichier
     // load fichier
+    srand(time(0));
+    int scenario = 0;
+    int nbScenario = 9;
+    scenario = 9 /*(rand() % nbScenario) + 1*/;
+    qInfo() << "Scenario :" << scenario;
 
     int waitTime1       = 4;
     int waitTimeLong    = 10;
 
     srv->startNewPatient();
-    srv->fillInPatientData(patientData);
+
+    if(scenario == 1)
+    {
+        srv->fillInPatientData(patientData);
+        srv->fillInAnalystData(analystData);
+        srv->waitPeriod(waitTime1);
+
+        int drugIndex   = 4;            // drugIndex  : 4 = Busulfan
+        int modelIndex  = 0;            // modelIndex : 0 = only model available
+        srv->selectDrugInList(drugIndex, modelIndex);
+
+        srv->addDosage(dosageData);
+
+        int covariateType = 1;
+        srv->addCovariates(covariatesData, covariateType);
+
+        srv->addMeasure(measureData);
+
+        srv->addTarget(targetData);
+
+        srv->addAdjustments(adjustmentsData);
+
+        srv->fillInValidationData(validationData);
+    }
+
+    else if(scenario == 2)
+    {
+        srv->fillInPatientData(patientData);
+        srv->fillInAnalystData(analystData);
+        srv->waitPeriod(waitTime1);
+
+        int drugIndex   = 13;           // drugIndex  : 13 = Imatinib
+        int modelIndex  = 0;            // modelIndex : 0  = only model available
+        srv->selectDrugInList(drugIndex, modelIndex);
+
+        srv->addDosage(dosageData);
+
+        int covariateType = 1;
+        srv->addCovariates(covariatesData, covariateType);
+
+        srv->addMeasure(measureData);
+
+        measureData.name = "Sample_test";
+        measureData.value = 3654;
+        measureData.dateTimeMeas = QDateTime(QDate(2022, 05, 10));
+        srv->addMeasure(measureData);
+
+        srv->addTarget(targetData);
+
+        srv->addAdjustments(adjustmentsData);
+
+        srv->fillInValidationData(validationData);
+    }
+
+    else if (scenario == 3)
+    {
+        patientData.firstName = "Charles";
+        patientData.lastName = "Hugo";
+        patientData.gender = 1;
+        srv->fillInPatientData(patientData);
+        srv->waitPeriod(waitTime1);
+
+        int drugIndex   = 10;           // drugIndex  : 13 = Imatinib
+        int modelIndex  = 0;            // modelIndex : 0  = only model available
+        srv->selectDrugInList(drugIndex, modelIndex);
+
+        srv->addDosage(dosageData);
+
+        int covariateType = 1;
+        srv->addCovariates(covariatesData, covariateType);
+
+        srv->addMeasure(measureData);
+
+        measureData.name = "Sample_test";
+        measureData.value = 3654;
+        measureData.dateTimeMeas = QDateTime(QDate(2022, 05, 10));
+        srv->addMeasure(measureData);
+
+        srv->addTarget(targetData);
+
+        srv->addAdjustments(adjustmentsData);
+
+        srv->fillInValidationData(validationData);
+    }
+
+    else if (scenario == 4)
+    {
+        int drugIndex   = 20;               // drugIndex  : 20 = Vancomycin
+        int modelIndex  = (rand() % 8);     // modelIndex : 0  = model 0:7 -- random num between 0 to 7
+        srv->selectDrugInList(drugIndex, modelIndex);
+
+        srv->addDosage(dosageData);
+
+        srv->addAdjustments(adjustmentsData);
+    }
+
+    else if (scenario == 5)
+    {
+        patientData.firstName   = "";
+        patientData.lastName    = "";
+        patientData.identifier  = "";
+        patientData.stayNumber  = "";
+        patientData.address     = "";
+        patientData.city        = "";
+        patientData.state       = "";
+        patientData.postcode    = "";
+        patientData.country     = "";
+
+        patientData.titlePhy        = "";
+        patientData.firstNamePhy    = "";
+        patientData.lastNamePhy     = "";
+        patientData.affiliationPhy  = "";
+        patientData.addressPhy      = "";
+        patientData.cityPhy         = "";
+        patientData.statePhy        = "";
+        patientData.postcodePhy     = "";
+        patientData.countryPhy      = "";
+
+        analystData.analystTitle       = "";
+        analystData.analystFirstName   = "";
+        analystData.analystLastName    = "";
+        analystData.analystRole        = "";
+        analystData.analystPhoneNumber = "";
+        analystData.analystAffiliation = "";
+        analystData.analystAddress     = "";
+        analystData.analystCity        = "";
+        analystData.analystPostcode    = "";
+        analystData.analystState       = "";
+        analystData.analystCountry     = "";
+
+        srv->fillInPatientData(patientData);
+        srv->fillInAnalystData(analystData);
+        srv->waitPeriod(waitTime1);
+
+
+        dosageData.dosage       = 1;
+        dosageData.interval     = 100;
+        dosageData.steadyState  = 1;
+        dosageData.dateTimeDos1 = QDateTime::currentDateTime();
+        dosageData.dateTimeDos2 = QDateTime::currentDateTime();
+
+        adjustmentsData.dateTimeAdj     = QDateTime::currentDateTime();
+        adjustmentsData.loadingDose     = 0;
+        adjustmentsData.restPeriod      = 0;
+        adjustmentsData.suggestAdjNum   = 0;
+        adjustmentsData.dose            = 0;
+        adjustmentsData.interval        = 0;
+
+        int drugIndex   = 0;           // drugIndex  : 20 = Vancomycin
+        int modelIndex  = 0;            // modelIndex : 0  = model 0:7
+        srv->selectDrugInList(drugIndex, modelIndex);
+
+        srv->addDosage(dosageData);
+
+        srv->addAdjustments(adjustmentsData);
+    }
+
+    else if (scenario == 6)
+    {
+        int drugIndex   = 2;     // drugIndex  : 2 = Apixaban
+        int modelIndex  = 0;     // modelIndex : 0
+        srv->selectDrugInList(drugIndex, modelIndex);
+
+        srv->addDosage(dosageData);
+
+        for(int covariateType = 2; covariateType <= 9; covariateType++)
+        {
+            srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+        }
+
+        srv->addAdjustments(adjustmentsData);
+    }
+
+    else if (scenario == 7)
+    {
+        int drugIndex   = 9;     // drugIndex  : 9 = Dolutegravir
+        int modelIndex  = 0;     // modelIndex : 0
+        srv->selectDrugInList(drugIndex, modelIndex);
+
+        srv->addDosage(dosageData);
+
+        for(int covariateType = 2; covariateType <= 5; covariateType++)
+        {
+            srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+        }
+
+        srv->addAdjustments(adjustmentsData);
+    }
+
+    else if (scenario == 8)
+    {
+        int drugIndex   = 20;     // drugIndex  : 20 = Vancomycin
+        int modelIndex  = 0;      // modelIndex : 0
+        srv->selectDrugInList(drugIndex, modelIndex);
+
+        srv->addDosage(dosageData);
+
+        covariatesData.scc = 7660;
+        for(int covariateType = 0; covariateType <= 6; covariateType++)
+        {
+            if(!(covariateType == 1 || covariateType == 2 || covariateType == 5))
+                srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+        }
+
+        srv->addAdjustments(adjustmentsData);
+    }
+
+    else if (scenario == 9)
+    {
+        int drugIndex   = 13;     // drugIndex  : 13 = Imatinib
+        int modelIndex  = 0;      // modelIndex : 0
+        srv->selectDrugInList(drugIndex, modelIndex);
+
+        for (int n = 1; n <= 10; n++)        // index of loop is used to modify variables to avoid having to do it manually for each iteratnon
+        {
+
+            //_____Add dosage_______________________________________________
+
+            dosageData.dosage      = n*1000 + n*200 + n*30 + n*1;          // dosage(n) = {1234, 2345, 3456, 4567, ...}
+            dosageData.infusion    = n*1000;                               // infusion(n) = {100, 200, 300, 400, ...}
+            dosageData.interval    = n*1200;                               // interval(n) = {1200, 2400, 3600, 4800, ...}
+            dosageData.steadyState = false;                                // if steadyState = false -> start date & end date needed
+            dosageData.dateTimeDos1.setDate(QDate(2022, n, n));            // start date(n)
+            dosageData.dateTimeDos1.setTime(QTime(n, n));                  // start time(n)
+            dosageData.dateTimeDos2.setDate(QDate(2022, n+1, n+1));        // end date(n)
+            dosageData.dateTimeDos2.setTime(QTime(n+1, n+1));              // end time(n)
+
+//            srv->waitForSync();
+            srv->addDosage(dosageData);
+
+            srv->waitPeriod(waitTime1);
+        }
+
+        srv->addAdjustments(adjustmentsData);
+    }
+
     srv->waitPeriod(waitTime1);
-
-    int drugIndex   = 4;           // drugIndex : 13 = Imatinib
-    int modelIndex  = 0;            // modelIndex : 0 = only model available
-//    srv->selectDrugInList(drugIndex, modelIndex);
-
-//    srv->addDosage(dosageData);
-
-//    int covariateType = 1;
-//    srv->addCovariates(covariatesData, covariateType);
-
-//    srv->addMeasure(measureData);
-
-//    measureData.name = "Sample_test";
-//    measureData.value = 3654;
-//    measureData.dateTimeMeas = QDateTime(QDate(2022, 05, 10));
-//    srv->addMeasure(measureData);
-
-//    srv->addTarget(targetData);
-
-//    srv->addAdjustments(adjustmentsData);
-
-//    srv->fillInValidationData(validationData);
-
-    srv->waitPeriod(waitTime1*1000);
-
     srv->waitForSync();
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
     // SAVING interpretation in Xml file
 
-    QString saveName =  "save_1b";       //"/Documents/Perso_stock_doc/Tests/save_1.tui";
+    QString saveName =  "scenario" + QString::number(scenario);       //"/Documents/Perso_stock_doc/Tests/save_1.tui";
 
     Interpretation *interpretationSave = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
 
@@ -121,13 +337,15 @@ TEST(SavedTestComparison, Test1)
     }
 
     srv->saveIntepretation(saveName);
+    qInfo() << "Saved";
+    srv->waitPeriod(waitTime1);
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
     // Get to Startup window
 
-    drugIndex = 20;                     // drugIndex : 20 = Vancomycin
-    modelIndex = 3;
+    int drugIndex = 20;                     // drugIndex : 20 = Vancomycin
+    int modelIndex = 3;
     srv->selectDrugInList(drugIndex, modelIndex);
     srv->waitPeriod(waitTime1);
 
@@ -142,6 +360,10 @@ TEST(SavedTestComparison, Test1)
     QString loadName = saveName; // "save_1.tui";
 
     srv->loadInterpretation(loadName);
+    qInfo() << "loaded";
+
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/patientButton"));
+    srv->waitPeriod(waitTime1);
 
     Interpretation *interpretationLoad = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
 
@@ -154,11 +376,17 @@ TEST(SavedTestComparison, Test1)
 
     if(mapSave == mapLoad)
         qInfo("Les interprétations sont égales");
-    else if(mapSave != mapLoad)
+    else if(mapSave != mapLoad){
         qInfo("Les interprétations NE sont PAS égales");
-
-    srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+        QMapIterator<QString, QString> iSave(mapSave);
+        QMapIterator<QString, QString> iLoad(mapLoad);
+        while(iSave.hasNext() || iLoad.hasNext()) {
+            iSave.next();
+            iLoad.next();
+            if(iSave.value() != iLoad.value())
+                qInfo() << "La clé qui n'est égale est : " << iSave.key();
+        }
+    }
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 

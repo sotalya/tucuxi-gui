@@ -49,11 +49,14 @@ TEST(ValidationLoadFile, Test1)
 
     // LOADING interpretation from Xml file
 
-    srv->waitPeriod(waitTime1); //MCI
-
-    QString loadName = "save_1b"; // "save_1.tui";
+    QString loadName = "save_1c"; // "save_1.tui";
 
     srv->loadInterpretation(loadName);
+
+    srv->waitPeriod(waitTime1);
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/patientButton"));
+    srv->waitPeriod(waitTime1);
+
 //--------------------------------------------------
 //    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientFirstName");
 //    auto patientFirstName = item->property("text").toString();

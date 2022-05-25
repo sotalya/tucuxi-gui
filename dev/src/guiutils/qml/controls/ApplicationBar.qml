@@ -141,6 +141,7 @@ Rectangle {
 
         ApplicationBarButton {
             id: settingsAction
+            objectName: "settingsAction"
             Layout.preferredWidth:  parent.height
             Layout.preferredHeight: parent.height
             icon:       "qrc:/icons/toolbar/settings.png"

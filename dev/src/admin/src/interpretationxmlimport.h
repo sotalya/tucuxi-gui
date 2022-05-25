@@ -19,6 +19,7 @@ class Patient;
 class Person;
 class ClinicalSet;
 class Clinical;
+class PhoneList;
 
 namespace ezechiel {
 namespace core {
@@ -116,6 +117,7 @@ protected:
     ValidationStatus *loadValidationStatus(const QString &tagName, QObject *parent);
     ClinicalSet *loadClinicals(const QString &tagName, QObject *parent);
     Clinical *loadClinical(const QString &tagName, QObject *parent);
+    PhoneList *loadPhoneNumber(const QString &tagName, QObject *parent);
 
     ezechiel::core::Admin *loadAdmin(const QString &tagName, QObject *parent);
 

@@ -194,8 +194,8 @@ Interpretation *InterpretationXmlImport::loadInterpretation(const QString &tagNa
                 }
                 interpretation->setDrugResponseAnalysis(analysis);
             }
-            else if (name == "request") {
-                interpretation->setRequest(loadRequest("request", interpretation));
+            else if (name == "interpretationRequest") {
+                interpretation->setRequest(loadRequest("interpretationRequest", interpretation));
             }
             else if (name == "analyst") {
                 interpretation->setAnalyst(loadPractician("analyst", interpretation));
@@ -297,6 +297,9 @@ InterpretationRequest *InterpretationXmlImport::loadRequest(const QString &tagNa
             if (name == "clinicals") {
                 request->setClinicals(loadClinicals("clinicals", request));
             }
+            if(name == "physician"){
+                request->setPractician(loadPractician("physician", request));
+            }
         }
     }
     return request;
@@ -314,7 +317,6 @@ ClinicalSet *InterpretationXmlImport::loadClinicals(const QString &tagName, QObj
 
             if (name == "clinical") {
                 clinicals->append(loadClinical("clinical", nullptr));
-
             }
         }
     }
@@ -351,10 +353,20 @@ Practician *InterpretationXmlImport::loadPractician(const QString &tagName, QObj
 
         if(isOk && reader.readNextStartElement()){
             QString name = reader.name().toString();
-
-            if (name == "title") {
+            if (name == "personId")
+                practician->person_id(extractInt());
+            else if (name == "externalId")
+                practician->externalId(extractor());
+            else if (name == "title")
                 practician->title(extractor());
-            }
+            else if (name == "role")
+                practician->role(extractor());
+            else if (name == "address")
+                practician->institute()->location()->address(extractor());
+            else if (name == "affilition")
+                practician->institute()->name(extractor());
+            else if (name == "person")
+                practician->person(loadPerson("person", practician));
         }
     }
     return practician;
@@ -618,27 +630,38 @@ Person *InterpretationXmlImport::loadPerson(const QString &tagName, QObject *par
                 }
                 person->gender(gender);
             }
-            //Try to get address from xml file
-            else if (name == "address"){
+            else if (name == "address")
                 person->location()->address(extractor());
-            }
-            else if (name == "city"){
+            else if (name == "city")
                 person->location()->city(extractor());
-            }
-            else if (name == "postcode"){
+            else if (name == "postcode")
                 person->location()->postcode(extractor());
-            }
-            else if (name == "state"){
+            else if (name == "state")
                 person->location()->state(extractor());
-            }
-            else if (name == "country"){
+            else if (name == "country")
                 person->location()->country(extractor());
-            }
+            else if (name == "phoneNumber")
+                person->setPhones(loadPhoneNumber("phoneNumber", person));
         }
     }
     return person;
 }
 
+PhoneList *InterpretationXmlImport::loadPhoneNumber(const QString &tagName, QObject *parent)
+{
+    PhoneList *phoneListSet = ezechiel::core::CoreFactory::createEntity<PhoneList>(ABSTRACTREPO, parent);
+
+    WHILE_NOT_END_ELEM(tagName){
+        if(reader.readNextStartElement() && isOk){
+            Phone *phone = ezechiel::core::CoreFactory::createEntity<Phone>(ABSTRACTREPO, phoneListSet);
+            phone->setNumber(extractor());
+            phoneListSet->append(phone);
+        }
+    }
+
+    checkReaderError();
+    return phoneListSet;
+}
 
 ezechiel::core::PatientVariateList *InterpretationXmlImport::loadPatientVariates(const QString &tagName, QObject *parent)
 {

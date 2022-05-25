@@ -13,6 +13,7 @@ class InterpretationAnalysis;
 class InterpretationRequest;
 class Practician;
 class ValidationStatus;
+class PhoneList;
 
 class ClinicalSet;
 class Patient;
@@ -57,11 +58,12 @@ protected:
     bool save(InterpretationRequest *request);
     bool save(ezechiel::core::DrugResponseAnalysis *drugResponseAnalysis);
     bool save(ezechiel::core::DrugTreatment *drugResponseAnalysis);
-    bool save(Practician *analyst, QString name);
+    bool save(Practician *practician, QString name);
     bool save(ValidationStatus *validationStatus);
     bool save(Patient *patient);
-    bool save(Person *person);
+    bool save(Person *person, QString name);
     bool save(ClinicalSet *clinicals);
+    bool save(PhoneList *list);
 
 
     QString writeDate(QDateTime date);

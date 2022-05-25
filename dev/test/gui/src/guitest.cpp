@@ -258,12 +258,23 @@ void SpixGTest::fillInPatientData(PatientData patientData1)
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.identifier)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.stayNumber)));
 
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->patientsView, "extPatientDataContact",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->patientsView, "extPatientContactData",
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.address)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.city)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.state)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.postcode)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.country)));
+
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->patientsView, "extPhysicianData",
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.titlePhy)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.firstNamePhy)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.lastNamePhy)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.affiliationPhy)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.addressPhy)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.cityPhy)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.statePhy)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.postcodePhy)),
+                              Q_ARG(QVariant, QVariant::fromValue(patientData1.countryPhy)));
 
     srv->waitPeriod(waitTime1);
 
@@ -288,7 +299,6 @@ void SpixGTest::fillInPatientData(PatientData patientData1)
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/patientButton"));
     srv->synchronize();
 }
-
 
 void SpixGTest::addDosage(DosageData dosageData1)
 {
@@ -472,6 +482,7 @@ void SpixGTest::fillInCovariatesData(CovariatesData covariatesData1, int covaria
     auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("valueDoubleControl");
     //    qInfo() << item;
 
+
     if (covariateType == 1)                             // if covariateType == Total Body Weight
     {
         item->setProperty("value", covariatesData1.weight);
@@ -480,6 +491,93 @@ void SpixGTest::fillInCovariatesData(CovariatesData covariatesData1, int covaria
     {
         item->setProperty("value", covariatesData1.scc + QTime::currentTime().second());
     }
+
+    srv->synchronize();
+    srv->waitPeriod(waitTime1);
+
+    auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("dateInputCovar");
+    dateItem->setProperty("date", covariatesData1.dateTimeCovar.date());
+    auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("timeInputCovar");
+    timeItem->setProperty("date", covariatesData1.dateTimeCovar.time());
+    srv->synchronize();
+    srv->waitPeriod(waitTime1);
+
+    srv->mouseClick(spix::ItemPath("covariateDialog/okCovariate"));
+
+    srv->waitPeriod(waitTime1);
+
+
+    // Runs ok
+}
+
+void SpixGTest::addCovariatesByDrug(CovariatesData covariatesData1, int covariateType, int drugIndex)
+{
+    srv->synchronize();
+    srv->waitPeriod(waitTime1);
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/covariateButton"));
+
+    srv->synchronize();
+
+    // selects covariate (index) to edit {Sex, Weight, ...}
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->covariatesView, "setCovariateType",
+                              Q_ARG(QVariant, QVariant::fromValue(covariateType)));
+
+    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addCovariate"));
+    srv->waitPeriod(waitTime1*4);
+
+    fillInCovariatesDataByDrug(covariatesData1, covariateType, drugIndex);
+}
+
+void SpixGTest::fillInCovariatesDataByDrug(CovariatesData covariatesData1, int covariateType, int drugIndex)
+{
+    srv->synchronize();
+
+    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("valueDoubleControl");
+
+    if (drugIndex == 2) //Apixaban
+    {
+        if (covariateType == 2)
+            item->setProperty("value", covariatesData1.dayNightDosing);
+        else if (covariateType == 3)
+            item->setProperty("value", covariatesData1.weight);
+        else if (covariateType == 4)
+            item->setProperty("value", covariatesData1.asian);
+        else if (covariateType == 5)
+            item->setProperty("value", covariatesData1.nonValvularAtrialFibriliation);
+        else if (covariateType == 6)
+            item->setProperty("value", covariatesData1.acuteCoronarySyndrome);
+        else if (covariateType == 7)
+            item->setProperty("value", covariatesData1.StrongModerateCytochromeInhibitors);
+        else if (covariateType == 8)
+            item->setProperty("value", covariatesData1.dose);
+        else if (covariateType == 9)
+            item->setProperty("value", covariatesData1.glomerularFiltrationRate);
+    }
+
+    else if (drugIndex == 9) //Dolutegravir
+    {
+        if (covariateType == 2)
+            item->setProperty("value", covariatesData1.atazanavirWithWithoutBooster);
+        else if (covariateType == 3)
+            item->setProperty("value", covariatesData1.darunavir);
+        else if (covariateType == 4)
+            item->setProperty("value", covariatesData1.rifampicin);
+        else if (covariateType == 5)
+            item->setProperty("value", covariatesData1.currentSmoking);
+    }
+
+    else if (drugIndex == 20) //Vancomycin
+    {
+        if (covariateType == 0)
+            item->setProperty("value", covariatesData1.weight);
+        else if (covariateType == 3)
+            item->setProperty("value", covariatesData1.scc);
+        else if (covariateType == 4)
+            item->setProperty("value", covariatesData1.gestionalAge);
+        else if (covariateType == 6)
+            item->setProperty("value", covariatesData1.heamatologicalMalignacy);
+    }
+
 
     srv->synchronize();
     srv->waitPeriod(waitTime1);
@@ -918,7 +1016,7 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
 //    map["physicianLocation_id"]    = patientPerson->location_id(); //voir si doit laisser MCI
 
 
-    map["patientAddress"]        = patientLocation->address();
+    map["patientAddress"]       = patientLocation->address();
     map["patientPostcode"]      = patientLocation->postcode();
     map["patientCity"]          = patientLocation->city();
     map["patientState"]         = patientLocation->state();
@@ -983,7 +1081,6 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
     foreach(Phone *phone, analystPhoneList->getList()) {
         map["analystPhoneNumber"] = phone->getNumber();
     }
-
     //End of analyst information
 
     //----------------------------------------
@@ -1023,12 +1120,12 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
     auto patientVariateList = interpretation->getDrugResponseAnalysis()->getTreatment()->getCovariates();
 
     foreach(ezechiel::core::PatientVariate *variate, patientVariateList->getList()) {
-        map["covariatesCovariateId_"+ QString::number(i)]    = variate->getCovariateId();
-        map["covariatesDateCovariate_"+ QString::number(i)]  = variate->getDate().toString(Qt::ISODate);
-        if(map["covariatesCovariateId_"+ QString::number(i)] == "birthdate")
-            map["covariatesValueCovariate_"+ QString::number(i)] = variate->getValueAsString();
+        map["covariateCovariateId_"     + QString::number(i)]    = variate->getCovariateId();
+        map["covariateDateCovariate_"   + QString::number(i)]  = variate->getDate().toString(Qt::ISODate);
+        if(map["covariateCovariateId_"  + QString::number(i)] == "birthdate")
+            map["covariateValueCovariate_"  + QString::number(i)] = variate->getValueAsString();
         else
-            map["covariatesValueCovariate_"+ QString::number(i)] = QString::number(variate->getQuantity()->getDbvalue());
+            map["covariateValueCovariate_"  + QString::number(i)] = QString::number(variate->getQuantity()->getDbvalue());
         i++;
     }
     //End of Covariates informations
@@ -1040,10 +1137,10 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
 
     foreach(ezechiel::core::CoreMeasure *coreMeasure, coreMeasureList->getList()) {
         Measure *measure = dynamic_cast<Measure*>(coreMeasure);
-        map["measuresSampleId_"+ QString::number(j)]      = measure->sampleID();
-        map["measuresArrivalDate_"+ QString::number(j)]   = measure->arrivalDate().toString(Qt::ISODate);
-        map["measuresMoment_"+ QString::number(j)]        = measure->getMoment().toString(Qt::ISODate);
-        map["measuresConcentration_"+ QString::number(j)] = QString::number(measure->getConcentration()->getDbvalue());
+        map["measureSampleId_"     + QString::number(j)]   = measure->sampleID();
+        map["measureArrivalDate_"  + QString::number(j)]   = measure->arrivalDate().toString(Qt::ISODate);
+        map["measureMoment_"       + QString::number(j)]   = measure->getMoment().toString(Qt::ISODate);
+        map["measureConcentration_"+ QString::number(j)]   = QString::number(measure->getConcentration()->getDbvalue());
         j++;
     }
     //End of Measure informations
@@ -1054,14 +1151,14 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
     auto targetList = interpretation->getDrugResponseAnalysis()->getTreatment()->getTargets();
 
     foreach(ezechiel::core::Target *target, targetList->getList()) {
-        map["targetMethod_"+ QString::number(k)]              = target->getType()->getLabel();
-        map["targetConcentrationsCmin_"+ QString::number(k)]  = QString::number(target->getCmin()->getDbvalue());
-        map["targetConcentrationsCmax_"+ QString::number(k)]  = QString::number(target->getCmax()->getDbvalue());
-        map["targetConcentrationsCbest_"+ QString::number(k)] = QString::number(target->getCbest()->getDbvalue());
-        map["targetConcentrationsTmin_"+ QString::number(k)]  = QString::number(target->getTmin()->getDbvalue());
-        map["targetConcentrationsTmax_"+ QString::number(k)]  = QString::number(target->getTmax()->getDbvalue());
-        map["targetConcentrationsTbest_"+ QString::number(k)] = QString::number(target->getTbest()->getDbvalue());
-        map["targetConcentrationsMic_"+ QString::number(k)]   = QString::number(target->getMic()->getDbvalue());
+        map["targetMethod_"             + QString::number(k)]   = target->getType()->getLabel();
+        map["targetConcentrationsCmin_" + QString::number(k)]   = QString::number(target->getCmin()->getDbvalue());
+        map["targetConcentrationsCmax_" + QString::number(k)]   = QString::number(target->getCmax()->getDbvalue());
+        map["targetConcentrationsCbest_"+ QString::number(k)]   = QString::number(target->getCbest()->getDbvalue());
+        map["targetConcentrationsTmin_" + QString::number(k)]   = QString::number(target->getTmin()->getDbvalue());
+        map["targetConcentrationsTmax_" + QString::number(k)]   = QString::number(target->getTmax()->getDbvalue());
+        map["targetConcentrationsTbest_"+ QString::number(k)]   = QString::number(target->getTbest()->getDbvalue());
+        map["targetConcentrationsMic_"  + QString::number(k)]   = QString::number(target->getMic()->getDbvalue());
         k++;
     }
     //End of Targets informations
@@ -1096,7 +1193,7 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
     //----------------------------------------
     auto analysis = interpretation->getAnalysis();
     map["analysNextControl"]          = QVariant(analysis->getNextControl()).toString();
-    map["analyDsosageDescription"]    = analysis->getDosageDescription();
+    map["analysDosageDescription"]    = analysis->getDosageDescription();
     map["analysExpectedness"]         = analysis->getExpectedness();
     map["analysSuitability"]          = analysis->getSuitability();
     map["analysPrediction"]           = analysis->getPrediction();
@@ -1110,13 +1207,52 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
     for(auto step = StepType::first; step <= StepType::last; step ++) {
         QString status = interpretationXmlExport->toStringValidation(interpretation->getValidationStatus()->getValidationStatus(StepType::convert(step)));
 
-        map["Status " + interpretationXmlExport->stepToString(step)] = status;
+        map["status " + interpretationXmlExport->stepToString(step)] = status;
     }
     //End of VValidation status
 
-
     return map;
 }
+
+void SpixGTest::fillInAnalystData(AnalystData analystData1)
+{
+    srv->synchronize();
+    srv->mouseClick(spix::ItemPath("mainWindow/applicationBarView/settingsAction"));
+    srv->waitPeriod(waitTime1);
+
+    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystTitle");
+    item->setProperty("text", analystData1.analystTitle);
+    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystFirstname");
+    item->setProperty("text", analystData1.analystFirstName);
+    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystLastname");
+    item->setProperty("text", analystData1.analystLastName);
+    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystRole");
+    item->setProperty("text", analystData1.analystRole);
+    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystPhone");
+    item->setProperty("text", analystData1.analystPhoneNumber);
+    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystAffiliation");
+    item->setProperty("text", analystData1.analystAffiliation);
+    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystAddress");
+    item->setProperty("text", analystData1.analystAddress);
+    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystCity");
+    item->setProperty("text", analystData1.analystCity);
+    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystPostcode");
+    item->setProperty("text", analystData1.analystPostcode);
+    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystState");
+    item->setProperty("text", analystData1.analystState);
+    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystCountry");
+    item->setProperty("text", analystData1.analystCountry);
+
+    srv->synchronize();
+    srv->mouseClick(spix::ItemPath("settingsDialog/applySettings"));
+    srv->waitPeriod(waitTime1);
+
+    srv->mouseClick(spix::ItemPath("settingsDialog/okSettings"));
+    srv->waitPeriod(waitTime1);
+}
+
+
+
 /*
 TEST(GTestExample, AdvancedUITest)
 {

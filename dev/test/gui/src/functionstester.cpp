@@ -36,7 +36,7 @@ TEST(FunctionsTester, Test1)
 {
 
     int waitTime1 = 1;
-    int waitTimeLong = 4;
+    int waitTimeLong = 5;
 
     srv->waitPeriod(waitTime1);                 // default (when no arg.) value : 1/2 [s]
 
@@ -47,25 +47,44 @@ TEST(FunctionsTester, Test1)
 
     PatientData patientData1;
     srv->fillInPatientData(patientData1);
-    srv->waitPeriod(waitTime1*20);
-
-    srv->selectDrugInList(6, 1);
     srv->waitPeriod(waitTime1);
 
-    CovariatesData covariatesData1;
-    int covariateType   = 3;                      // covariateType : 3 = Serum creatinin concentration
-    int sccInitialValue = 8010;
+    srv->selectDrugInList(6, 0);
+    srv->waitPeriod(waitTime1);
 
-    for (int n = 1; n <= 10; n++)
-    {
-        covariatesData1.scc = sccInitialValue + n*1;
-        covariatesData1.dateTimeCovar.setDate(QDate::currentDate().addDays(-n));
-        srv->addCovariates(covariatesData1, covariateType);
-        srv->waitPeriod(waitTime1*4);
-        srv->synchronize();
-    }
+    DosageData dosageData1;
+    dosageData1.dosage = 323232;
+    dosageData1.steadyState = false;
+    dosageData1.dateTimeDos1.setDate(QDate(2021, 03, 26));
+    dosageData1.dateTimeDos1.setTime(QTime(8, 00));
+    dosageData1.dateTimeDos2.setDate(QDate(2021, 04, 02));
+    dosageData1.dateTimeDos2.setTime(QTime(8, 01));
+    dosageData1.interval = 2400;
+    srv->addDosage(dosageData1);
+    srv->waitForSync();
 
-        srv->waitPeriod(waitTimeLong*2);
+    srv->waitPeriod(50);
+
+//    CovariatesData covariatesData1;
+//    covariatesData1.weight = 67.45;
+//    covariatesData1.scc = 8123;
+//    srv->addCovariates(covariatesData1, 0);
+//    srv->addCovariates(covariatesData1, 3);
+
+//    CovariatesData covariatesData1;
+//    int covariateType   = 3;                   // covariateType : 3 = Serum creatinin concentration
+//    int sccInitialValue = 8010;
+
+//    for (int n = 1; n <= 10; n++)
+//    {
+//        covariatesData1.scc = sccInitialValue + n*1;
+//        covariatesData1.dateTimeCovar.setDate(QDate::currentDate().addDays(-n));
+//        srv->addCovariates(covariatesData1, covariateType);
+//        srv->waitPeriod(waitTime1*4);
+//        srv->synchronize();
+//    }
+
+//        srv->waitPeriod(waitTimeLong);
     //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
 //    DosageData dosageData1;

@@ -44,6 +44,7 @@ SpinBox {
     locale : Qt.locale("C");
 
     signal editingFinished
+    signal textChangedSignal
 
     function getValue()
     {
@@ -62,6 +63,7 @@ SpinBox {
     {
         return currentValue / Math.pow(10,decimals);
     }
+
 
     from : minimumValue * Math.pow(10,decimals)
     to : maximumValue * Math.pow(10,decimals)
@@ -100,25 +102,27 @@ SpinBox {
             id: txtInput
             Layout.fillWidth: true
             Layout.fillHeight: true
-           // text: root.textFromValue(root.value, root.locale)
+            // text: root.textFromValue(root.value, root.locale)
             font: root.font
             color: isOk ? Qt.darker(baseColor, root.enabled ? 1 : 0.7) : "red"
             selectionColor: baseColor
             selectedTextColor: "#ffffff"
             horizontalAlignment: Qt.AlignRight
             verticalAlignment: Qt.AlignVCenter
-
             readOnly: !root.editable
+            maximumLength: 10
             // validator: regExpValidator // (root.decimals === 0) ? root.intValidator : root.doubleValidator
-            validator: (root.decimals === 0) ? root.intValidator : root.doubleValidator
+            validator: DoubleValidator { decimals: 2 } // (root.decimals === 0) ? root.intValidator : root.doubleValidator;
             inputMethodHints: Qt.ImhFormattedNumbersOnly
 
             onTextChanged: {
+                //                console.log("textChanged");
                 root.currentValue = valueFromText(text, root.locale);
                 //root.value = valueFromText(text, root.locale);
-                validate();
+                textChangedSignal();
+                //                validate();
             }
-/*
+            /*
             // Handle delete keys manually because standard behavior is user friendly when
             // deleting the left most character
             Keys.onPressed: {
@@ -139,7 +143,7 @@ SpinBox {
                 }
             }
 */
-            onEditingFinished: root.editingFinished
+            onEditingFinished: { root.editingFinished }
         }
         Text{
             Layout.preferredWidth: contentWidth

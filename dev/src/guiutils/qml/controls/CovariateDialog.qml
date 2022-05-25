@@ -15,8 +15,6 @@ DialogBase {
     height: 230
 
     property var dataType
-//    property bool textIsOk
-//    property var textValue
 
     // Intercept Return to validate the dialog
     Shortcut {
@@ -34,7 +32,7 @@ DialogBase {
 
         // Hide all value controls
         valueBoolControl.visible = false
-        valueDoubleControl.visible = false
+//        valueDoubleControl.visible = false
         valueGenderControl.visible = false
 //        textInputFrame.visible = false
         textEntry.visible = false
@@ -107,11 +105,13 @@ DialogBase {
         // ... force a change of focus to ensure TimePicker values are actually used
         dateInput.focus = true
 
-        var bOk = valueDoubleControl.validate()
+//        var bOk = valueDoubleControl.validate()
+        var bOk = textEntry.textIsOk
         bOk = dateInput.validate() && bOk
         bOk = timeInput.validate() && bOk
         bOk = valueGenderControl.validate() && bOk
-        bOk = textEntry.textIsOk && bOk
+
+        console.log(bOk)
 
         return bOk;
     }
@@ -238,17 +238,17 @@ DialogBase {
 
                 EntityTextValueEntry {
                     id: textEntry
-                    objectName: "textValueEntry"
+                    objectName: "covarValueEntry"   // if changed -> change in EntityValueTextEntry too
                     Layout.preferredWidth: 200
                     onEditingFinished: { covariateDialog.validate() }
                 }
-
-                EntitySpinBoxList {
-                    id: valueDoubleControl
-                    objectName: "valueDoubleControl"
-                    Layout.preferredWidth: 200
-                    onEditingFinished: { covariateDialog.validate() }
-                }
+                // Spinbox not used anymore
+//                EntitySpinBoxList {
+//                    id: valueDoubleControl
+//                    objectName: "valueDoubleControl"
+//                    Layout.preferredWidth: 200
+//                    onEditingFinished: { covariateDialog.validate() }
+//                }
                 EntityComboBox {
                     id: valueBoolControl
                     Layout.preferredWidth: 200

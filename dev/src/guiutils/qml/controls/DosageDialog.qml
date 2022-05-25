@@ -51,7 +51,7 @@ DialogBase {
         doseSpinBox.doValidation = function() { return getQuantity() > 0 }
 
         // intervals
-        intervalSpinBox.decimals = 2;
+        intervalSpinBox.decimals = 0;
         intervalSpinBox.setRealValue(interval);
         intervalSpinBox.valuesList = drugmodel.intervals.intervalsList
         //intervalSpinBox.from = drugmodel.intervals.intervalsList[0] * Math.pow(10, doseSpinBox.decimals);
@@ -74,7 +74,7 @@ DialogBase {
 
         // infusions
         infusionRow.visible = route.label === "INFUSION"
-        infusionSpinBox.decimals = 2;
+        infusionSpinBox.decimals = 0;   // 2
         infusionSpinBox.setRealValue(tinf);
         infusionSpinBox.valuesList = drugmodel.infusions.infusionsList
 //        infusionSpinBox.from = drugmodel.infusions.infusionsList[0] * Math.pow(10, doseSpinBox.decimals);

@@ -28,9 +28,15 @@ DialogBase {
     function init(sampleId, value, sampleDate, arrivalDate)
     {
         sampleIdField.text = sampleId
-        valueInput.decimals = 2
-        valueInput.setRealValue(value.dbvalue)
-        valueInput.suffix = " " + value.unitstring
+
+//        valueInput.decimals = 2
+//        valueInput.setRealValue(value.dbvalue)
+//        valueInput.suffix = " " + value.unitstring
+
+        valueEntry.visible = true
+        valueEntry.maxLength = 7
+        valueEntry.text = value.dbvalue
+        valueEntry.suffix = value.unitstring
 
         var validateDates = function() {
             if (interpretationController.isFlowRequest()) {
@@ -57,7 +63,7 @@ DialogBase {
     }
 
     function getSampleId()    { return sampleIdField.text }
-    function getValue()       { return valueInput.getRealValue() }
+    function getValue()       { return Number.fromLocaleString(valueEntry.text).toFixed(2) }//return valueInput.getRealValue() }
 
     function getSampleDate() {
         return new Date(sampleDateInput.date.getFullYear(),
@@ -81,7 +87,8 @@ DialogBase {
         // ... force a change of focus to ensure TimePicker values are actually used
         sampleDateInput.focus = true
 
-        var bOk = valueInput.validate()
+//        var bOk = valueInput.validate()
+        var bOk = valueEntry.textIsOk
         bOk = sampleDateInput.validate() && bOk
         bOk = sampleTimeInput.validate() && bOk
         bOk = arrivalDateInput.validate() && bOk
@@ -135,9 +142,16 @@ DialogBase {
                     Layout.preferredWidth: 100
                     tooltipText: ToolTips.measureDialog.value
                 }
-                EntitySpinBox {
-                    id: valueInput
-                    objectName: "measureValueInput"
+//                EntitySpinBox {
+//                    id: valueInput
+//                    objectName: "measureValueInput"
+//                    Layout.preferredWidth: 200
+//                    onEditingFinished: { measureDialog.validate() }
+//                }
+
+                EntityTextValueEntry {
+                    id: valueEntry
+                    objectName: "measureValueEntry"     // if changed -> change in EntityValueTextEntry too
                     Layout.preferredWidth: 200
                     onEditingFinished: { measureDialog.validate() }
                 }

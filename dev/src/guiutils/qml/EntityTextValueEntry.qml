@@ -22,6 +22,7 @@ Item {
     property bool textIsOk
     property string textValue
     property int maxLength
+    property bool trigger: false
 
     // output singnals
     signal editingFinished
@@ -53,7 +54,7 @@ Item {
         }
     }
 
-        Rectangle {
+    Rectangle {
         id: textInputFrame
         Layout.preferredWidth: 200
         height: 35
@@ -67,15 +68,34 @@ Item {
             onTextChanged: textInputControl()
             validator: DoubleValidator { decimals: 2 }
             font.family: Style.form.font.input
+            font.pixelSize: 13
             anchors.fill: parent
             anchors.margins: 4
+            anchors.leftMargin: 10
             verticalAlignment: TextInput.AlignVCenter
             onEditingFinished: {
                 if (textInput.text < 1)
                     textInput.text = parseFloat(textInput.text);
-                covariateDialog.validate()
+
+                if (root.objectName === "covarValueEntry")
+                    covariateDialog.validate()
+                else if (root.objectName === "measureValueEntry")
+                    measureDialog.validate()
             }
             maximumLength: maxLength
+            onActiveFocusChanged: {
+                if (trigger == false) {
+                    textInputFrame.border.color = 'blue'
+                    textInputFrame.border.width = 2
+                    trigger = true
+
+                }
+                else {
+                    textInputFrame.border.color = 'lightGray'
+                    textInputFrame.border.width = 1
+                    trigger = false
+                }
+            }
         }
 
         Text {

@@ -428,7 +428,7 @@ void SpixGTest::fillInCovariatesData(CovariatesData covariatesData1, int covaria
     srv->synchronize();
 
 //    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("valueDoubleControl");  // old spinbox
-    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("textValueEntry");        // new textEntry
+    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("covarValueEntry");        // new textEntry
     //    qInfo() << item;
 
     if (covariateType == 0)                             // if covariateType == Total Body Weight
@@ -500,8 +500,8 @@ void SpixGTest::fillInMeasureData(MeasureData measureData1)
 
     srv->waitPeriod(waitTime1);
 
-    auto valueItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueInput");
-    valueItem->setProperty("value", measureData1.value * 100.0);
+    auto valueItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueEntry");
+    valueItem->setProperty("text", measureData1.value * 100.0);
     srv->waitPeriod(waitTime1);
 
     auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleDateInput");

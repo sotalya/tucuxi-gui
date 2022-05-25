@@ -39,6 +39,23 @@ Rectangle {
 
     //    property bool hasFocus: daysInput.activeFocus || monthsInput.activeFocus || yearsInput.activeFocus
 
+    property bool opacityOnOff: false
+
+    function opacityHandler()
+    {
+        if (opacityOnOff == false)  {
+//            wholeDate.opacity = 0.5
+//            dateFormatHint.opacity = 1
+            dateFormatHint.visible = true
+            opacityOnOff = true
+        } else {
+//            wholeDate.opacity = 1
+//            dateFormatHint.opacity = 0
+            dateFormatHint.visible = false
+            opacityOnOff = false
+        }
+    }
+
     anchors.bottomMargin: -1
     color: "#44ffffff"
     radius: 0 // baserect.radius
@@ -58,23 +75,14 @@ Rectangle {
 
     }
 
-//    Text {
-//        id: dateFormatHint
-//        anchors.left: parent.left
-//        font.family:    parent.fontFamily
-//        font.pixelSize: parent.fontSize
-//        verticalAlignment: defaultStyle.AlignVCenter
-//        text: "dd/mm/yyyy"
-//        color: "black" // "lightGray"
-//        enabled: isEnabled
-//        visible: true
-//    }
+
 
     TextField {
         id : wholeDate
         objectName: "wholeDate"
+        anchors.top: parent.top
         anchors.left: parent.left
-        font.family:    parent.fontFamily
+        font.family: parent.fontFamily
         font.pixelSize: parent.fontSize
         implicitWidth: 150
         inputMask: "00/00/0000"
@@ -83,7 +91,12 @@ Rectangle {
         color: isOk ? "black" : "red"
         enabled: isEnabled
 
-        onFocusChanged: if (activeFocus) selectAll()
+        onFocusChanged: if (activeFocus)
+                            selectAll()
+
+        onHoveredChanged: {
+            opacityHandler()
+        }
 
         onEditingFinished: {
             var theDate = Date.fromLocaleString(Qt.locale(), text, "dd/MM/yyyy");
@@ -112,6 +125,22 @@ Rectangle {
 //                //            wholeDate.text = defaultStyle.date.toLocaleString(Qt.locale(), "dd/MM/yyyy")
 //            }
 //        }
+    }
+
+    Text {
+        id: dateFormatHint
+        anchors {
+            //        anchors.horizontalCenter: wholeDate.horizontalCenter
+            left: wholeDate.left
+            leftMargin: 12
+            top: wholeDate.bottom
+            topMargin: -13
+        }
+        font.pixelSize: parent.fontSize-3
+        text: "dd / mm / yyyy"
+        color: "gray" // "blue"
+        enabled: isEnabled
+        visible: false
     }
 
 

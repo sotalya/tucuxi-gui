@@ -24,7 +24,7 @@ struct PatientData {
 struct DosageData {
     double dosage           = 5555;
     double interval         = 2400;
-    double infusion         = 2468;
+    double infusion         = 6543;
     bool steadyState        = true;
     QDateTime dateTimeDos1  = QDateTime::currentDateTime().addDays(0);
     QDateTime dateTimeDos2  = QDateTime::currentDateTime().addDays(7);

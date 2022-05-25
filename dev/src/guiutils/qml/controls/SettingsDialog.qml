@@ -345,7 +345,7 @@ DialogBase {
                             CheckBox {
                                 id: showProcessingTime
                                 text: "Show interpretation processing time when you validate?"
-                                checked: true
+                                checked: false // true
                                 enabled: !appMode.isDemo()
 
                                 //ToolTip.visible: (show_tooltip) ? steadyStateMousearea.containsMouse : false

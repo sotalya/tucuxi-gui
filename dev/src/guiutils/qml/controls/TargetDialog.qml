@@ -67,12 +67,19 @@ DialogBase {
         micInput.setRealValue(mic.dbvalue)
         micInput.suffix = " " + mic.unitstring
 
-        cMinInput.doValidation = function () { return cMinInput.getRealValue() >= 0 && cMinInput.getRealValue() <= cBestInput.getRealValue() }
-        cBestInput.doValidation = function () { return cBestInput.getRealValue() >= 0 }
-        cMaxInput.doValidation = function () { return cMaxInput.getRealValue() >= 0 && cMaxInput.getRealValue() >= cBestInput.getRealValue() }
-        tMinInput.doValidation = function () { return tMinInput.getRealValue() >= 0 && tMinInput.getRealValue() <= tBestInput.getRealValue() }
-        tBestInput.doValidation = function () { return tBestInput.getRealValue() >= 0 }
-        tMaxInput.doValidation = function () { return tMaxInput.getRealValue() >= 0 && tMaxInput.getRealValue() >= tBestInput.getRealValue() }
+        // left cMin in red (check not dynamic), to be replaced (see below)
+//        cMinInput.doValidation = function () { return cMinInput.getRealValue() >= 0 && cMinInput.getRealValue() <= cBestInput.getRealValue() }
+//        cBestInput.doValidation = function () { return cBestInput.getRealValue() >= 0 }
+//        cMaxInput.doValidation = function () { return cMaxInput.getRealValue() >= 0 && cMaxInput.getRealValue() >= cBestInput.getRealValue() }
+
+        cMinInput.doValidation = function () { /*console.log("c1");*/ return cMinInput.getRealValue() >= 0 }
+        cBestInput.doValidation = function () { /*console.log("c2");*/ return cBestInput.getRealValue() >= cMinInput.getRealValue() }
+        cMaxInput.doValidation = function () { /*console.log("c3");*/ return cMaxInput.getRealValue() >= cBestInput.getRealValue() && cMaxInput.getRealValue() >= cMinInput.getRealValue() }
+
+        tMinInput.doValidation = function () { /*console.log("t1");*/ return tMinInput.getRealValue() >= 0 }
+        tBestInput.doValidation = function () { /*console.log("t2");*/ return tBestInput.getRealValue() >= tMinInput.getRealValue()}
+        tMaxInput.doValidation = function () { /*console.log("t3");*/ return tMaxInput.getRealValue() >= tBestInput.getRealValue() && tMaxInput.getRealValue() >= tMinInput.getRealValue() }
+
         micInput.doValidation = function () { return micInput.getRealValue() >= 0 }
 
         validate()
@@ -105,6 +112,13 @@ DialogBase {
         typeInput.currentIndex = typeIndex;
         //switchActiveType(typeIndex);
 
+    }
+
+    function checkValues() {
+//        console.log("check *all* spinbox values")
+        cMinInput.validate()
+        cBestInput.validate()
+        cMaxInput.validate()
     }
 
 
@@ -181,6 +195,7 @@ DialogBase {
                     id: cMinInput
                     objectName: "cMinInput"                        // JRT 23.02.2022
                     Layout.preferredWidth: 200
+                    onTextChangedSignal: { checkValues() }
                     onEditingFinished: { root.validate() }
                 }
             }
@@ -198,6 +213,7 @@ DialogBase {
                     id: cBestInput
                     objectName: "cBestInput"
                     Layout.preferredWidth: 200
+                    onTextChangedSignal: { checkValues() }
                     onEditingFinished: { root.validate() }
                 }
             }
@@ -214,6 +230,7 @@ DialogBase {
                     id: cMaxInput
                     objectName: "cMaxInput"
                     Layout.preferredWidth: 200
+                    onTextChangedSignal: { checkValues() }
                     onEditingFinished: { root.validate() }
                 }
 
@@ -240,6 +257,7 @@ DialogBase {
                     objectName: "tMinInput"
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex === 1
+                    onTextChangedSignal: { checkValues() }
                     onEditingFinished: { root.validate() }
                 }
             }
@@ -258,6 +276,7 @@ DialogBase {
                     objectName: "tBestInput"
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex === 1
+                    onTextChangedSignal: { checkValues() }
                     onEditingFinished: { root.validate() }
                 }
             }
@@ -276,6 +295,7 @@ DialogBase {
                     objectName: "tMaxInput"
                     Layout.preferredWidth: 200
                     enabled: typeInput.currentIndex === 1
+                    onTextChangedSignal: { checkValues() }
                     onEditingFinished: { root.validate() }
                 }
             }

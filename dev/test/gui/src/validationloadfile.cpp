@@ -49,32 +49,13 @@ TEST(ValidationLoadFile, Test1)
 
     // LOADING interpretation from Xml file
 
-    QString loadName = "save_1c"; // "save_1.tui";
+    QString loadName = "scenario8"; // "save_1.tui";
 
     srv->loadInterpretation(loadName);
 
     srv->waitPeriod(waitTime1);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/patientButton"));
     srv->waitPeriod(waitTime1);
-
-//--------------------------------------------------
-//    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("patientFirstName");
-//    auto patientFirstName = item->property("text").toString();
-
-//    QFile MyFile("save_1b.tui");
-//    MyFile.open(QIODevice::ReadWrite);
-//    QTextStream in (&MyFile);
-//    const QString content = in.readAll();
-//    if(content.contains("<firstname>"+patientFirstName+"</firstname>"))
-//    {
-//        qInfo() << "Chaine de caractere trouvé";
-//    }
-//    else
-//    {
-//        qInfo() << "Chaine de caractere PAS trouve";
-//    }
-//    MyFile.close();
-
 
 //--------------------------------------------------
     srv->waitPeriod(waitTime1);

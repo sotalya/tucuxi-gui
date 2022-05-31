@@ -73,9 +73,8 @@ TEST(SavedTestComparison, Test1)
     // save fichier
     // load fichier
     srand(time(0));
-    int scenario = 0;
-    int nbScenario = 9;
-    scenario = 9 /*(rand() % nbScenario) + 1*/;
+    int nbScenario = 8;
+    int scenario = (rand() % nbScenario) + 1;
     qInfo() << "Scenario :" << scenario;
 
     int waitTime1       = 4;
@@ -83,7 +82,7 @@ TEST(SavedTestComparison, Test1)
 
     srv->startNewPatient();
 
-    if(scenario == 1)
+    if (scenario == 1)
     {
         srv->fillInPatientData(patientData);
         srv->fillInAnalystData(analystData);
@@ -95,8 +94,8 @@ TEST(SavedTestComparison, Test1)
 
         srv->addDosage(dosageData);
 
-        int covariateType = 1;
-        srv->addCovariates(covariatesData, covariateType);
+        int covariateType = 1; // Weight
+        srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
 
         srv->addMeasure(measureData);
 
@@ -107,20 +106,23 @@ TEST(SavedTestComparison, Test1)
         srv->fillInValidationData(validationData);
     }
 
-    else if(scenario == 2)
+    else if (scenario == 2)
     {
         srv->fillInPatientData(patientData);
         srv->fillInAnalystData(analystData);
         srv->waitPeriod(waitTime1);
 
-        int drugIndex   = 13;           // drugIndex  : 13 = Imatinib
+        int drugIndex   = 6;            // drugIndex  : 6  = Cefepime
         int modelIndex  = 0;            // modelIndex : 0  = only model available
         srv->selectDrugInList(drugIndex, modelIndex);
 
         srv->addDosage(dosageData);
 
-        int covariateType = 1;
-        srv->addCovariates(covariatesData, covariateType);
+        for(int covariateType = 0; covariateType <= 3; covariateType++)
+        {
+            if (!(covariateType == 1 || covariateType == 2))
+                srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+        }
 
         srv->addMeasure(measureData);
 
@@ -134,51 +136,26 @@ TEST(SavedTestComparison, Test1)
         srv->addAdjustments(adjustmentsData);
 
         srv->fillInValidationData(validationData);
+
+        srv->waitForSync();
+
+        srv->validateInterpretation();
+
+        srv->printReport("Report_1234_b");
     }
 
     else if (scenario == 3)
     {
-        patientData.firstName = "Charles";
-        patientData.lastName = "Hugo";
-        patientData.gender = 1;
-        srv->fillInPatientData(patientData);
-        srv->waitPeriod(waitTime1);
-
-        int drugIndex   = 10;           // drugIndex  : 13 = Imatinib
-        int modelIndex  = 0;            // modelIndex : 0  = only model available
+        int drugIndex   = 20;               // drugIndex  : 20 = Vancomycin
+        int modelIndex  = (rand() % 8);     // modelIndex : model 0:7 --> random num between 0 to 7
         srv->selectDrugInList(drugIndex, modelIndex);
 
         srv->addDosage(dosageData);
 
-        int covariateType = 1;
-        srv->addCovariates(covariatesData, covariateType);
-
-        srv->addMeasure(measureData);
-
-        measureData.name = "Sample_test";
-        measureData.value = 3654;
-        measureData.dateTimeMeas = QDateTime(QDate(2022, 05, 10));
-        srv->addMeasure(measureData);
-
-        srv->addTarget(targetData);
-
         srv->addAdjustments(adjustmentsData);
-
-        srv->fillInValidationData(validationData);
     }
 
     else if (scenario == 4)
-    {
-        int drugIndex   = 20;               // drugIndex  : 20 = Vancomycin
-        int modelIndex  = (rand() % 8);     // modelIndex : 0  = model 0:7 -- random num between 0 to 7
-        srv->selectDrugInList(drugIndex, modelIndex);
-
-        srv->addDosage(dosageData);
-
-        srv->addAdjustments(adjustmentsData);
-    }
-
-    else if (scenario == 5)
     {
         patientData.firstName   = "";
         patientData.lastName    = "";
@@ -230,8 +207,8 @@ TEST(SavedTestComparison, Test1)
         adjustmentsData.dose            = 0;
         adjustmentsData.interval        = 0;
 
-        int drugIndex   = 0;           // drugIndex  : 20 = Vancomycin
-        int modelIndex  = 0;            // modelIndex : 0  = model 0:7
+        int drugIndex   = 0;
+        int modelIndex  = 0;
         srv->selectDrugInList(drugIndex, modelIndex);
 
         srv->addDosage(dosageData);
@@ -239,7 +216,7 @@ TEST(SavedTestComparison, Test1)
         srv->addAdjustments(adjustmentsData);
     }
 
-    else if (scenario == 6)
+    else if (scenario == 5)
     {
         int drugIndex   = 2;     // drugIndex  : 2 = Apixaban
         int modelIndex  = 0;     // modelIndex : 0
@@ -255,7 +232,7 @@ TEST(SavedTestComparison, Test1)
         srv->addAdjustments(adjustmentsData);
     }
 
-    else if (scenario == 7)
+    else if (scenario == 6)
     {
         int drugIndex   = 9;     // drugIndex  : 9 = Dolutegravir
         int modelIndex  = 0;     // modelIndex : 0
@@ -271,7 +248,7 @@ TEST(SavedTestComparison, Test1)
         srv->addAdjustments(adjustmentsData);
     }
 
-    else if (scenario == 8)
+    else if (scenario == 7)
     {
         int drugIndex   = 20;     // drugIndex  : 20 = Vancomycin
         int modelIndex  = 0;      // modelIndex : 0
@@ -282,41 +259,80 @@ TEST(SavedTestComparison, Test1)
         covariatesData.scc = 7660;
         for(int covariateType = 0; covariateType <= 6; covariateType++)
         {
-            if(!(covariateType == 1 || covariateType == 2 || covariateType == 5))
+            if (!(covariateType == 1 || covariateType == 2 || covariateType == 5))
                 srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
         }
 
         srv->addAdjustments(adjustmentsData);
     }
 
-    else if (scenario == 9)
+    else if (scenario == 8)
     {
-        int drugIndex   = 13;     // drugIndex  : 13 = Imatinib
+        int drugIndex   = 2;      // drugIndex  : 2 = Apixaban
         int modelIndex  = 0;      // modelIndex : 0
         srv->selectDrugInList(drugIndex, modelIndex);
 
-        for (int n = 1; n <= 10; n++)        // index of loop is used to modify variables to avoid having to do it manually for each iteratnon
+        for (int n = 1; n <= 3; n++)        // index of loop is used to modify variables to avoid having to do it manually for each iteration
         {
 
             //_____Add dosage_______________________________________________
-
             dosageData.dosage      = n*1000 + n*200 + n*30 + n*1;          // dosage(n) = {1234, 2345, 3456, 4567, ...}
             dosageData.infusion    = n*1000;                               // infusion(n) = {100, 200, 300, 400, ...}
             dosageData.interval    = n*1200;                               // interval(n) = {1200, 2400, 3600, 4800, ...}
             dosageData.steadyState = false;                                // if steadyState = false -> start date & end date needed
-            dosageData.dateTimeDos1.setDate(QDate(2022, n, n));            // start date(n)
+            dosageData.dateTimeDos1.setDate(QDate(2022, 05, 18+n));            // start date(n)
             dosageData.dateTimeDos1.setTime(QTime(n, n));                  // start time(n)
-            dosageData.dateTimeDos2.setDate(QDate(2022, n+1, n+1));        // end date(n)
+            dosageData.dateTimeDos2.setDate(QDate(2022, 05, 19+n));        // end date(n)
             dosageData.dateTimeDos2.setTime(QTime(n+1, n+1));              // end time(n)
 
-//            srv->waitForSync();
+            srv->waitForSync();
             srv->addDosage(dosageData);
+            srv->waitPeriod(waitTime1);
+        }
 
+        covariatesData.dateTimeCovar.setDate(QDate(2022, 05, 24));
+
+        for(int covariateType = 2; covariateType <= 9; covariateType++)
+        {
+            srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+        }
+
+        for (int n = 1; n <= 3; n++)        // index of loop is used to modify variables to avoid having to do it manually for each iteration
+        {
+            //_____Add measure______________________________________________
+
+            measureData.name   = "Sample_" + QString::number(n);
+            measureData.value  = 500 + n*100 + n*100 + n*10 + n*1;
+            measureData.dateTimeMeas.setDate(QDate(2022, 05, 24+n));
+            measureData.dateTimeMeas.setTime(QTime(n, n));
+
+            srv->waitForSync();
+            srv->addMeasure(measureData);
+            srv->waitPeriod(waitTime1);
+        }
+
+        for (int n = 1; n <= 3; n++)        // index of loop is used to modify variables to avoid having to do it manually for each iteration
+        {
+            //_____Add target_______________________________________________
+
+            targetData.targetType  = rand() % 14;
+            targetData.cMinInput   = n*100 + n*10 + n;
+            targetData.cBestInput  = (n+1)*100 + (n+1)*10 + (n+1);
+            targetData.cMaxInput   = (n+2)*100 + (n+2)*10 + (n+2);
+            targetData.tMinInput   = n*10;
+            targetData.tBestInput  = (n+1)*10;
+            targetData.tMaxInput   = (n+2)*10;
+            targetData.micInput    = (n*100) + 1000;
+
+            srv->waitForSync();
+            srv->addTarget(targetData);
             srv->waitPeriod(waitTime1);
         }
 
         srv->addAdjustments(adjustmentsData);
     }
+
+
 
     srv->waitPeriod(waitTime1);
     srv->waitForSync();
@@ -325,7 +341,7 @@ TEST(SavedTestComparison, Test1)
 
     // SAVING interpretation in Xml file
 
-    QString saveName =  "scenario" + QString::number(scenario);       //"/Documents/Perso_stock_doc/Tests/save_1.tui";
+    QString saveName =  "scenario" + QString::number(scenario);       //"/Documents/tucuxi-gui/dev/build-tucuxi-Desktop-DebugGui/dist/
 
     Interpretation *interpretationSave = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
 
@@ -374,16 +390,16 @@ TEST(SavedTestComparison, Test1)
         qInfo() << "key =" << iLoad.key() << "value =" << iLoad.value();
     }
 
-    if(mapSave == mapLoad)
+    if (mapSave == mapLoad)
         qInfo("Les interprétations sont égales");
-    else if(mapSave != mapLoad){
+    else if (mapSave != mapLoad){
         qInfo("Les interprétations NE sont PAS égales");
         QMapIterator<QString, QString> iSave(mapSave);
         QMapIterator<QString, QString> iLoad(mapLoad);
         while(iSave.hasNext() || iLoad.hasNext()) {
             iSave.next();
             iLoad.next();
-            if(iSave.value() != iLoad.value())
+            if (iSave.value() != iLoad.value())
                 qInfo() << "La clé qui n'est égale est : " << iSave.key();
         }
     }

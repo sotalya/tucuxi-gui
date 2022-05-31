@@ -52,7 +52,7 @@ struct CovariatesData {
     double asian                              = 100;
     double nonValvularAtrialFibriliation       = 0;
     double acuteCoronarySyndrome              = 0;
-    double StrongModerateCytochromeInhibitors = 100;
+    double strongModerateCytochromeInhibitors = 100;
     double dose                               = 410;
     double glomerularFiltrationRate           = 9500;
 
@@ -63,8 +63,6 @@ struct CovariatesData {
 
     double gestionalAge             = 2600;
     double heamatologicalMalignacy  = 100;
-
-
 };
 
 struct MeasureData {

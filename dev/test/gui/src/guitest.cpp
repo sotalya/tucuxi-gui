@@ -483,7 +483,7 @@ void SpixGTest::fillInCovariatesData(CovariatesData covariatesData1, int covaria
     //    qInfo() << item;
 
 
-    if (covariateType == 1)                             // if covariateType == Total Body Weight
+    if (covariateType == 0)                             // if covariateType == Total Body Weight
     {
         item->setProperty("value", covariatesData1.weight);
     }
@@ -534,7 +534,7 @@ void SpixGTest::fillInCovariatesDataByDrug(CovariatesData covariatesData1, int c
 
     auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("valueDoubleControl");
 
-    if (drugIndex == 2) //Apixaban
+    if(drugIndex == 2) // Apixaban
     {
         if (covariateType == 2)
             item->setProperty("value", covariatesData1.dayNightDosing);
@@ -547,14 +547,28 @@ void SpixGTest::fillInCovariatesDataByDrug(CovariatesData covariatesData1, int c
         else if (covariateType == 6)
             item->setProperty("value", covariatesData1.acuteCoronarySyndrome);
         else if (covariateType == 7)
-            item->setProperty("value", covariatesData1.StrongModerateCytochromeInhibitors);
+            item->setProperty("value", covariatesData1.strongModerateCytochromeInhibitors);
         else if (covariateType == 8)
             item->setProperty("value", covariatesData1.dose);
         else if (covariateType == 9)
             item->setProperty("value", covariatesData1.glomerularFiltrationRate);
     }
 
-    else if (drugIndex == 9) //Dolutegravir
+    else if(drugIndex == 4) // Busulfan
+    {
+        if (covariateType == 1)
+            item->setProperty("value", covariatesData1.weight);
+    }
+
+    else if (drugIndex == 6) // Cefepime
+    {
+        if (covariateType == 0)
+            item->setProperty("value", covariatesData1.weight);
+        else if (covariateType == 3)
+            item->setProperty("value", covariatesData1.scc);
+    }
+
+    else if(drugIndex == 9) // Dolutegravir
     {
         if (covariateType == 2)
             item->setProperty("value", covariatesData1.atazanavirWithWithoutBooster);
@@ -566,7 +580,13 @@ void SpixGTest::fillInCovariatesDataByDrug(CovariatesData covariatesData1, int c
             item->setProperty("value", covariatesData1.currentSmoking);
     }
 
-    else if (drugIndex == 20) //Vancomycin
+    else if (drugIndex == 13) // Imanitib
+    {
+        if (covariateType == 0)
+            item->setProperty("value", covariatesData1.weight);
+    }
+
+    else if (drugIndex == 20) // Vancomycin
     {
         if (covariateType == 0)
             item->setProperty("value", covariatesData1.weight);

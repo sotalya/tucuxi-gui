@@ -12,7 +12,7 @@ import ezechiel 1.0
 Item {
     id: root
     width: 200
-    height: 35
+    height: 38
 
     // inputs
     property alias text: textInput.text
@@ -27,29 +27,29 @@ Item {
     // output singnals
     signal editingFinished
 
-
     function textInputControl()
     {
-        var minValue = 0
+        var minValue = 0.1
         var maxValue = 10000000
         textValue = textInput.text
 
-        if (isNaN(textInput.text) || textInput.text > maxValue || textInput.text < minValue || textInput === "")
+        if (isNaN(textInput.text) || textInput.text > maxValue || textInput.text <= minValue || !textInput.text)
         {
             console.log("NaN");
             // textInputFrame.border.color = 'red';
             textInput.color = 'red'
 
-            if (textInput.text == "")
+            if (!textInput.text) {
                 textInput.color = 'black';
-
+//                console.log("EMPTY STRING")
+            }
             textIsOk = false;
         }
         else
         {
             textInput.color = 'black'
-            console.log(textInput.text);
-            console.log(parseFloat(textInput.text));
+//            console.log(textInput.text);
+//            console.log(parseFloat(textInput.text));
             textIsOk = true;
         }
     }
@@ -57,7 +57,6 @@ Item {
     Rectangle {
         id: textInputFrame
         Layout.preferredWidth: 200
-        height: 35
         anchors.fill: parent
         border.color: 'lightGray'
         border.width: 1
@@ -74,8 +73,8 @@ Item {
             anchors.leftMargin: 10
             verticalAlignment: TextInput.AlignVCenter
             onEditingFinished: {
-                if (textInput.text < 1)
-                    textInput.text = parseFloat(textInput.text);
+//                if (textInput.text < 1 && !textInput)
+//                    textInput.text = parseFloat(textInput.text);
 
                 if (root.objectName === "covarValueEntry")
                     covariateDialog.validate()

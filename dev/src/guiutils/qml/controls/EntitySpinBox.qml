@@ -112,15 +112,13 @@ SpinBox {
             readOnly: !root.editable
             maximumLength: 10
             // validator: regExpValidator // (root.decimals === 0) ? root.intValidator : root.doubleValidator
-            validator: DoubleValidator { decimals: 2 } // (root.decimals === 0) ? root.intValidator : root.doubleValidator;
+            validator: DoubleValidator { decimals: root.decimals } // (root.decimals === 0) ? root.intValidator : root.doubleValidator;
             inputMethodHints: Qt.ImhFormattedNumbersOnly
 
             onTextChanged: {
-                //                console.log("textChanged");
+//                console.log("textChanged");
                 root.currentValue = valueFromText(text, root.locale);
-                //root.value = valueFromText(text, root.locale);
-                textChangedSignal();
-                //                validate();
+                root.textChangedSignal();
             }
             /*
             // Handle delete keys manually because standard behavior is user friendly when

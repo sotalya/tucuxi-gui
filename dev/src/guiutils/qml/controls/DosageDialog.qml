@@ -42,7 +42,7 @@ DialogBase {
         availableRoutes = routes;
 
         // doses
-        doseSpinBox.decimals = 2;
+//        doseSpinBox.decimals = 3;
         doseSpinBox.setRealValue(quantity.dbvalue);
         doseSpinBox.suffix = " " + quantity.unitstring;
         doseSpinBox.valuesList = drugmodel.doses.dosesList
@@ -51,12 +51,12 @@ DialogBase {
         doseSpinBox.doValidation = function() { return getQuantity() > 0 }
 
         // intervals
-        intervalSpinBox.decimals = 0;
+//        intervalSpinBox.decimals = 2;
         intervalSpinBox.setRealValue(interval);
         intervalSpinBox.valuesList = drugmodel.intervals.intervalsList
         //intervalSpinBox.from = drugmodel.intervals.intervalsList[0] * Math.pow(10, doseSpinBox.decimals);
         //intervalSpinBox.to = drugmodel.intervals.intervalsList[(drugmodel.intervals.intervalsList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
-        intervalSpinBox.doValidation = function() { return getInterval () > 0 }
+        intervalSpinBox.doValidation = function() { return getInterval () >= 1 }
 
         multipleRoutes = (routes.objlist.length > 1);
 
@@ -74,12 +74,12 @@ DialogBase {
 
         // infusions
         infusionRow.visible = route.label === "INFUSION"
-        infusionSpinBox.decimals = 0;   // 2
+//        infusionSpinBox.decimals = 2;   // 2
         infusionSpinBox.setRealValue(tinf);
         infusionSpinBox.valuesList = drugmodel.infusions.infusionsList
 //        infusionSpinBox.from = drugmodel.infusions.infusionsList[0] * Math.pow(10, doseSpinBox.decimals);
 //        infusionSpinBox.to = drugmodel.infusions.infusionsList[(drugmodel.infusions.infusionsList.length - 1)] * Math.pow(10, doseSpinBox.decimals);
-        infusionSpinBox.doValidation = function() { return getInfusion() > 0 }
+        infusionSpinBox.doValidation = function() { return getInfusion() >= 1 }
         // TODO We have an issue with these units. To be refactored at some stage
         //infusionSpinBox.suffix = drugmodel.infusions.quantity.unitstring
         infusionSpinBox.suffix = "minutes"
@@ -161,6 +161,8 @@ DialogBase {
 
         var bOk = doseSpinBox.validate()
         bOk = intervalSpinBox.validate() && bOk
+        if (routeText.text === "Intravenous drip")
+            bOk = infusionSpinBox.validate() && bOk     // if infusion time exists : make infusion value check active
         bOk = appliedDateInput.validate() && bOk
         bOk = stoppedDateInput.validate() && bOk
         bOk = appliedTimeInput.validate() && bOk
@@ -216,8 +218,9 @@ DialogBase {
                     objectName: "doseSpinBox"                   // JRT 17.02.2022
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
-                    onEditingFinished: {doValidation() }
-
+                    decimals: 2
+                    onTextChangedSignal: { validate() }
+                    onEditingFinished: { doValidation() }
                 }
             }
 
@@ -233,7 +236,9 @@ DialogBase {
                     objectName: "intervalSpinBox"                 // JRT 17.02.2022
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
+                    decimals: 0
                     suffix: " hours"
+                    onTextChangedSignal: { validate() }
                     onEditingFinished: { self.validate() }
                 }
             }
@@ -280,6 +285,9 @@ DialogBase {
                     //suffix: " minutes"
                     horizontalAlignment: Text.AlignLeft
                     Layout.preferredWidth: 250
+                    decimals: 0
+                    onTextChangedSignal: { validate() }
+                    onEditingFinished: { self.validate() }
                 }
             }
 

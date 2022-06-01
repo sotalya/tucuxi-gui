@@ -98,11 +98,22 @@ Rectangle {
             opacityHandler()
         }
 
+//        onTextChanged: {
+//            var theDate = Date.fromLocaleString(Qt.locale(), text, "dd/MM/yyyy");
+//            if (theDate.toLocaleString(Qt.locale(),"dd/MM/yyyy") === text) {
+//                parent.date = theDate;
+//                parent.editingFinished();
+//                color = "black";
+//            }
+//            else color = "#FF0000"
+//        }
+
         onEditingFinished: {
             var theDate = Date.fromLocaleString(Qt.locale(), text, "dd/MM/yyyy");
             if (theDate.toLocaleString(Qt.locale(),"dd/MM/yyyy") === text) {
                 parent.date = theDate;
                 parent.editingFinished();
+                color = "black";
             }
             else {
                 color = "#FF0000";

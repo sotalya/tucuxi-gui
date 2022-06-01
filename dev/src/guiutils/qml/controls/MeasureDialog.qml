@@ -35,7 +35,11 @@ DialogBase {
 
         valueEntry.visible = true
         valueEntry.maxLength = 7
-        valueEntry.text = value.dbvalue
+
+        if (value.dbvalue === 0)
+            valueEntry.text = ""
+        else valueEntry.text = value.dbvalue
+
         valueEntry.suffix = value.unitstring
 
         var validateDates = function() {
@@ -151,7 +155,7 @@ DialogBase {
 
                 EntityTextValueEntry {
                     id: valueEntry
-                    objectName: "measureValueEntry"     // if changed -> change in EntityValueTextEntry too
+                    objectName: "measureValueEntry"     // if changed -> change in EntityValueTextEntry.qml too
                     Layout.preferredWidth: 200
                     onEditingFinished: { measureDialog.validate() }
                 }

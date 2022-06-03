@@ -40,6 +40,7 @@ void ChartData::initialize()
     _apoPred = CoreFactory::createEntity<PredictionResult>(_repository, this);
     _revPred = CoreFactory::createEntity<PredictionResult>(_repository, this);
     _adjPred = CoreFactory::createEntity<PredictionResult>(_repository, this);
+
 }
 
 }

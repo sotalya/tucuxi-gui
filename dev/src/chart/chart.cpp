@@ -85,6 +85,13 @@ Chart::~Chart()
         delete group;
 }
 
+double Chart::getTakeTime()
+{
+    takeTime = 666
+
+    return takeTime
+}
+
 void Chart::attachItem(QwtPlotItem *item)
 {
     //Attach the item

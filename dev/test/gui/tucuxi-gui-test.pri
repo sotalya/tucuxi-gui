@@ -5,6 +5,7 @@ SOURCES += $$PWD/src/guitest.cpp \
     $$PWD/src/addeditremovetest.cpp \
     $$PWD/src/adjustmenttest.cpp \
     $$PWD/src/cachetest.cpp \
+    $$PWD/src/daylightsavingtest.cpp \
     $$PWD/src/functionstester.cpp \
     $$PWD/src/guidedstresstest.cpp \
     $$PWD/src/issueshighlighter.cpp \

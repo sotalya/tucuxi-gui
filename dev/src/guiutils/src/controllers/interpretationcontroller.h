@@ -172,6 +172,7 @@ public:
 
     void initAfterQmlLoading(QObject *root, QQmlContext *rootContext);
 
+    void extSetViewRange(const QDateTime& minX, const QDateTime& maxX);
 
     Patient* _currentPatient;
 
@@ -388,7 +389,7 @@ private:
     double _chartscale;
     QString _defaultUnit;
 
-    ezechiel::core::ChartData* chartData;
+//    ezechiel::core::ChartData* chartData;     // JRT
 
     ezechiel::core::PredictionSpec* predictionspec;
     ezechiel::core::DrugModelList* _drugs;
@@ -404,7 +405,7 @@ private:
     FlowController* flowController;
     CalculationController* calculationController;
 
-    ChartDataController *_chartDataController;
+//    ChartDataController *_chartDataController;        // JRT
 
 //    QObject *chartView;
     QObject *domainsView;
@@ -413,8 +414,8 @@ private:
     // Added drugsView & targetsView as public for testing purposes
     public:
 
-//    ChartDataController *_chartDataController;        // JRT
-//    ezechiel::core::ChartData* chartData;             // JRT
+    ChartDataController *_chartDataController;        // JRT
+    ezechiel::core::ChartData* chartData;             // JRT
 
     QObject *patientsView;
     QObject *drugsView;

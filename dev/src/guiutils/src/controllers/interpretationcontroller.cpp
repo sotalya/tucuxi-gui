@@ -1553,6 +1553,12 @@ void InterpretationController::setDateViewRange(const QDateTime &date)
     setViewRange(dMin, dMax);
 }
 
+void InterpretationController::extSetViewRange(const QDateTime& minX, const QDateTime& maxX)
+{
+    setViewRange(minX, maxX);
+}
+
+
 void InterpretationController::setViewRange(const QDateTime &minX, const QDateTime &maxX)
 {
     _userRequestedMinX = minX;
@@ -1576,6 +1582,7 @@ void InterpretationController::setViewRange(const QDateTime &minX, const QDateTi
         CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "requestPaint"));
     }
 }
+
 
 bool InterpretationController::updateInterpretationRange(EViewRangeUpdateContext context)
 {
@@ -1879,11 +1886,15 @@ void InterpretationController::goToSaveInterpretation()
 
     saveInterpretation(fileName);
 
+#else
+    UnavailableFunctionality::displayMessage();
+#endif // CONFIG_DEMO
 }
 
 void InterpretationController::saveInterpretation(QString fileName)
     {
 
+#ifndef CONFIG_DEMO
 
 //    InterpretationToRequestXmlExport exporter;
     InterpretationXmlExport exporter;

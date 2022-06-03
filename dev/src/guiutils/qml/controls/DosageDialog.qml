@@ -259,7 +259,6 @@ DialogBase {
                     onCurrentIndexChanged: {
                         root.refresh()
                     }
-
                 }
 
                 EntityTextField {

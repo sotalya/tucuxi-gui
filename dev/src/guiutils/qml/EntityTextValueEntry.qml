@@ -29,11 +29,11 @@ Item {
 
     function textInputControl()
     {
-        var minValue = 0.1
+        var minValue = 0.0
         var maxValue = 10000000
         textValue = textInput.text
 
-        if (isNaN(textInput.text) || textInput.text > maxValue || textInput.text <= minValue || !textInput.text)
+        if (isNaN(textInput.text) || textInput.text > maxValue || textInput.text < minValue || !textInput.text)
         {
             console.log("NaN");
             // textInputFrame.border.color = 'red';

@@ -146,6 +146,15 @@ void SpixGTest::loadInterpretation(QString loadName)
     srv->waitPeriod(waitTime1);
 }
 
+void SpixGTest::extSetView()
+{
+    fromGuiTest obj;
+    QObject::connect(&obj, SIGNAL(extSetViewRange()), srv->m_mainWindowController, SLOT(emptySlot()));
+    obj.toIntController();
+
+
+}
+
 //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
 void SpixGTest::findObjectAndSetValue(QString objectName, int propertyInput)

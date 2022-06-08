@@ -143,6 +143,7 @@ public:
 
 signals:
     void loadInterpretation(QString);
+    void extSetView();
 
 protected:
     int m_argc;

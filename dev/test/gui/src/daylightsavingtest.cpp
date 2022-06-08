@@ -22,6 +22,7 @@
 #include "guiutils/src/controllers/interpretationcontroller.h"
 #include "guiutils/src/controllers/targettabcontroller.h"
 #include "guiutils/src/chartdatacontroller.h"
+#include <QQmlApplicationEngine>
 
 #include "admin/src/dal/interpretation.h"
 #include "core/dal/drugresponseanalysis.h"
@@ -30,7 +31,6 @@
 
 
 #include "core/dal/chartdata.h"
-//#include "core/dal/predictionresult.h"
 
 
 #include <QDebug>
@@ -98,36 +98,49 @@ TEST(DaylightSavingTest, Test1)
 
             pIndex++;       // skip a point because last 2 points before new take have the same value
         }
+
+
+//        srv->waitPeriod(4);
+            // work fine in non-steady state
+//        srv->extSetView();
+//        srv->m_mainWindowController->getInterpretationController()->InterpretationController::setViewRange(dosageData1.dateTimeDos1, dosageData1.dateTimeDos2);
+
     }
-    else    // if at steadyState
+    else    // steadyState
     {
         // apparently, the point of index = 0 is 1st of June 2022
 
         //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
-        //    srv->m_mainWindowController->getInterpretationController()->setDateViewRange(dosageData1.dateTimeDos1);   // works only with non-steadyState Dosage
-        srv->m_mainWindowController->getInterpretationController()->extSetViewRange(dosageData1.dateTimeDos1, dosageData1.dateTimeDos2);
-        //    srv->m_mainWindowController->getInterpretationController()->zoomViewRange(dosageData1.dateTimeDos1.toMSecsSinceEpoch()/1000);
-        //    QDateTime fDate1 = QDateTime::fromMSecsSinceEpoch(range);
-        //    std::cout << fDate1.toString("yyyy/MM/dd hh:mm.ss").toStdString() << "\n" << std::endl;
-        //    srv->m_mainWindowController->getInterpretationController()->goToPreviousEvent();
-        srv->waitPeriod(30);
+//        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->chartView, "extSetView",
+//                                  Q_ARG(QVariant, QVariant::fromValue(666)));
+
+        srv->extSetView();
+        srv->waitPeriod(4);
+//                srv->m_mainWindowController->getInterpretationController()->InterpretationController::extSetViewRange(dosageData1.dateTimeDos1, dosageData1.dateTimeDos2);
+//        srv->m_mainWindowController->getInterpretationController()->InterpretationController::setViewRange(dosageData1.dateTimeDos1, dosageData1.dateTimeDos1.addDays(4));
+
+        //                srv->m_mainWindowController->getInterpretationController()->goToPreviousEvent();
+
+
+        //        QDateTime fDate1 = QDateTime::fromMSecsSinceEpoch(range);
+        //        std::cout << fDate1.toString("yyyy/MM/dd hh:mm.ss").toStdString() << "\n" << std::endl;
+
 
         //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
-//        while (fDateMin.daysTo(dosageData1.dateTimeDos1) > 0)
-//        {
-//        while(pIndex < 10000)
-//        {
-//            fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(pIndex)->getTime()*1000));
-//            std::cout << fDateMin.toString("dd.MM.yyyy").toStdString() << std::endl;
-//            pIndex++;
-//        }
-        ;
+        //        while (fDateMin.daysTo(dosageData1.dateTimeDos1) > 0)
+        //        {
+        //        while(pIndex < 10000)
+        //        {
+        //            fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(pIndex)->getTime()*1000));
+        //            std::cout << fDateMin.toString("dd.MM.yyyy").toStdString() << std::endl;
+        //            pIndex++;
+        //        }
 
     }
 
-    srv->waitPeriod(100);
+    srv->waitPeriod(40);
 
 
     srv->waitForSync();

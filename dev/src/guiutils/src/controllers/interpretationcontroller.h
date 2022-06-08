@@ -172,8 +172,6 @@ public:
 
     void initAfterQmlLoading(QObject *root, QQmlContext *rootContext);
 
-    void extSetViewRange(const QDateTime& minX, const QDateTime& maxX);
-
     Patient* _currentPatient;
 
     void setCurrentPatient(Patient *patient);
@@ -206,7 +204,7 @@ public:
     Q_INVOKABLE void shiftViewRange(double dX);
     Q_INVOKABLE void zoomViewRange(double f);
     void setDateViewRange(const QDateTime &date);
-    Q_INVOKABLE void setViewRange(const QDateTime& minX, const QDateTime& maxX);
+    Q_INVOKABLE void setViewRange(const QDateTime &minX, const QDateTime &maxX);
     Q_INVOKABLE void goToNextEvent();
     Q_INVOKABLE void goToPreviousEvent();
     QList<QDateTime> buildEventsList();
@@ -315,6 +313,8 @@ public:
      * This function is one of the three to start an interpretation flow.
      */
     void loadInterpretation(Interpretation *interpretation);
+    void extSetViewRange();
+//    void extSetViewRange();
 
     ezechiel::core::PredictionSpec *getPredictionSpec() const;
 
@@ -470,7 +470,7 @@ public slots:
     void adjustmentDateUpdated();
     void adjustmentSettingsUpdated();
     void adjustmentUpdated();
-
+//    void extSetViewRange();
     bool exportReport(Report *report);
     bool printReport(Report *report);
     bool sendReport(Report *report);

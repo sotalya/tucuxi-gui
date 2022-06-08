@@ -21,8 +21,10 @@ class fromGuiTest: public QObject
     Q_OBJECT
 public:
     void toMainWindowController(QString filename);
+    void toIntController();
 signals:
     void loadInterpretation(QString);
+    void extSetViewRange();
 };
 
 class MainWindowController : public QQuickView
@@ -72,8 +74,9 @@ public slots:
     void interpretationReady(Interpretation *interpretation);
 
     void loadInterpretationFile(const QString &fileName);
+    void emptySlot();
 
-    void signal1();
+//    void signal1();
 
 protected:
 

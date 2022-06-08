@@ -194,6 +194,17 @@ void fromGuiTest::toMainWindowController(QString loadName)
     emit loadInterpretation(loadName);
 }
 
+void fromGuiTest::toIntController()
+{
+    emit extSetViewRange();
+}
+
+void MainWindowController::emptySlot()
+{
+    ;
+}
+
+
 void MainWindowController::initViewConnections() {
 
     // To detect errors with Qml
@@ -205,8 +216,6 @@ void MainWindowController::initViewConnections() {
     CONNECT(requestsView,      SIGNAL(requestSelected(QString, QString, QString)),         requestsController, SLOT(queryRequest(QString, QString, QString)));
     CONNECT(requestsController,      SIGNAL(requestReady(InterpretationRequest*)),         this, SLOT(requestReady(InterpretationRequest*)));
 
-    // From GUI-tests (JRT 06.05.2022)
-    //CONNECT(, SIGNAL(loadInter()), this, SLOT(loadInterpretationFile(QString)));
 }
 
 void MainWindowController::requestReady(InterpretationRequest *request)
@@ -405,10 +414,6 @@ void MainWindowController::goToLoadInterpretation()
 #endif // CONFIG_DEMO
 }
 
-void MainWindowController::signal1()
-{
-    loadInterpretationFile("save_1.tui");
-}
 
 void MainWindowController::loadInterpretationFile(const QString &fileName)
 {

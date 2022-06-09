@@ -146,12 +146,13 @@ void SpixGTest::loadInterpretation(QString loadName)
     srv->waitPeriod(waitTime1);
 }
 
-void SpixGTest::extSetView()
+void SpixGTest::extSetView(QDateTime startView, QDateTime endView)
 {
     fromGuiTest obj;
-    QObject::connect(&obj, SIGNAL(extSetViewRange()), srv->m_mainWindowController, SLOT(emptySlot()));
-    obj.toIntController();
-
+    if (QObject::connect(&obj, SIGNAL(extSignalSetView(QDateTime, QDateTime)), srv->m_mainWindowController, SLOT(extSlotSetView(QDateTime, QDateTime)/*emptySlot()*/)) != 0) {
+//        std::cout << "setViewRange : Ok" << std::endl;
+    }else std::cout << "setViewRange : Nok" << std::endl;
+    obj.toIntController(startView, endView);
 
 }
 

@@ -1553,27 +1553,6 @@ void InterpretationController::setDateViewRange(const QDateTime &date)
     setViewRange(dMin, dMax);
 }
 
-
-//void fromGuiTest2::extSetViewRange()
-//{
-//    QDateTime minX = QDateTime::currentDateTime().addDays(14);
-//    QDateTime maxX = minX.addDays(3);
-//    QDateTime _userRequestedMinX = minX;
-//    QDateTime _userRequestedMaxX = maxX;
-
-//    setViewRange(minX, maxX);
-
-//}
-
-void InterpretationController::extSetViewRange()
-{
-    QDateTime minX = QDateTime::currentDateTime().addDays(14);
-    QDateTime maxX = minX.addDays(3);
-    std::cout << "in extSetViewRange()" << std::endl;
-    setViewRange(minX, maxX);
-}
-
-
 void InterpretationController::setViewRange(const QDateTime &minX, const QDateTime &maxX)
 {
     std::cout << "in setViewRange()";
@@ -1594,11 +1573,9 @@ void InterpretationController::setViewRange(const QDateTime &minX, const QDateTi
     if (updateInterpretationRange(EViewRangeUpdateContext::UserResize)) {
         flowController->evaluate();
         _chartDataController->viewRangeUpdated(shouldPercentilesBeComputed);
-        qInfo() << "IF";
     }
     else {
         CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "requestPaint"));
-        qInfo() << "ELSE";
     }
 }
 

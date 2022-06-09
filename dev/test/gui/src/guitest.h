@@ -99,7 +99,6 @@ public:
     void startNewPatient();
 
     void saveIntepretation(QString saveName);
-    void loadIntepretation(QString loadName);
 
     void findObjectAndSetValue(QString objectName, int inputProperty);
 
@@ -143,7 +142,7 @@ public:
 
 signals:
     void loadInterpretation(QString);
-    void extSetView();
+    void extSetView(QDateTime, QDateTime);
 
 protected:
     int m_argc;

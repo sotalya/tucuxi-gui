@@ -29,9 +29,7 @@
 #include "core/dal/drugtreatment.h"
 #include "core/dal/drug/target.h"
 
-
 #include "core/dal/chartdata.h"
-
 
 #include <QDebug>
 #include <QMessageBox>
@@ -51,14 +49,14 @@ TEST(DaylightSavingTest, Test1)
     srv->startNewPatient();
     srv->waitPeriod(waitTime1);
 
-    srv->selectDrugInList(13, 0);
+    srv->selectDrugInList(13, 0);       // drugModel index = 13 : Cefepime
     srv->waitPeriod(waitTime1);
 
     DosageData dosageData1;
     dosageData1.steadyState = true;
-    dosageData1.dateTimeDos1.setDate(QDate(2022, 03, 25));
+    dosageData1.dateTimeDos1.setDate(QDate(2022, 03, 24));
     dosageData1.dateTimeDos1.setTime(QTime(8, 00));
-    dosageData1.dateTimeDos2.setDate(QDate(2022, 03, 30));
+    dosageData1.dateTimeDos2.setDate(QDate(2022, 04, 15));
     dosageData1.dateTimeDos2.setTime(QTime(9, 00));
     dosageData1.interval = 24;
     srv->addDosage(dosageData1);
@@ -66,82 +64,57 @@ TEST(DaylightSavingTest, Test1)
 
     //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
-
-    // Fancy points are only the points visible
-    ezechiel::core::FancyPoints* fPoints = srv->m_mainWindowController->getInterpretationController()->chartData->getPopPred()->getPredictive()->getPredictionData()->getPoints();
-
-    int pIndex = 1;
-    double fValueMin = 0;
+    int pIndex = 1;             // point index
+    double fValueMin = 0;       // c value [g/L]
     QDateTime fDateMin;
-    int daysToGo = dosageData1.dateTimeDos1.daysTo(dosageData1.dateTimeDos2);
+    int daysToGo = dosageData1.dateTimeDos1.daysTo(dosageData1.dateTimeDos2);   // number of days between two chosen dates
 
-    (daysToGo > 15) ? (daysToGo = 15) : (daysToGo);
     std::cout << "Days to go : " << daysToGo << std::endl;
 
-    if (!dosageData1.steadyState)
+    //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+
+    if (dosageData1.steadyState)    // steady state
     {
-        for (int minimumIndex = 1; minimumIndex <= daysToGo; minimumIndex++)
-        {
-            while (pIndex < 100000 && !(fPoints->at(pIndex)->getValue() <= fPoints->at(pIndex-1)->getValue() and fPoints->at(pIndex)->getValue() < fPoints->at(pIndex+1)->getValue()))
-            {
-                //            std::cout << "Point index : " << pIndex << "\t value : " << fPoints->at(pIndex)->getValue();
-                //            fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(pIndex)->getTime()*1000));
-                //            std::cout << "\t||\t date : " << fDateMin.toString("yyyy/MM/dd hh:mm.ss").toStdString() << std::endl;
-                pIndex++;
-            }
-            fValueMin = fPoints->at(pIndex)->getValue();
-            fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(pIndex)->getTime()*1000));
-
-            std::cout << "\nMinimum n°" << minimumIndex;
-            std::cout << " :\t value : " << fValueMin;
-            std::cout << "\t||\t date : " << fDateMin.toString("yyyy/MM/dd hh:mm.ss").toStdString() << "\n" << std::endl;
-
-            pIndex++;       // skip a point because last 2 points before new take have the same value
-        }
-
-
-//        srv->waitPeriod(4);
-            // work fine in non-steady state
-//        srv->extSetView();
-//        srv->m_mainWindowController->getInterpretationController()->InterpretationController::setViewRange(dosageData1.dateTimeDos1, dosageData1.dateTimeDos2);
-
+        // set a constant number of days to show on screen at steady state (6 days is enough)
+        daysToGo = 6;
     }
-    else    // steadyState
+    else                            // non steady state
     {
-        // apparently, the point of index = 0 is 1st of June 2022
+        (daysToGo > 10) ? (daysToGo = 10) : (daysToGo);     // allow up to 10 days to show on screen
+        // work fine in non-steady state. Had to create extSetView & signal-slot to set view range at steady state
+        //        srv->m_mainWindowController->getInterpretationController()->InterpretationController::setViewRange(dosageData1.dateTimeDos1, dosageData1.dateTimeDos2);
+    }
 
-        //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+    srv->extSetView(dosageData1.dateTimeDos1, dosageData1.dateTimeDos1.addDays(daysToGo));
+    srv->waitPeriod(8);     // wait plenty to make sure new view has been set
 
-//        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->chartView, "extSetView",
-//                                  Q_ARG(QVariant, QVariant::fromValue(666)));
+    // Fancy points are only visible points on screen !
+    ezechiel::core::FancyPoints* fPoints = srv->m_mainWindowController->getInterpretationController()->chartData->getPopPred()->getPredictive()->getPredictionData()->getPoints();
 
-        srv->extSetView();
-        srv->waitPeriod(4);
-//                srv->m_mainWindowController->getInterpretationController()->InterpretationController::extSetViewRange(dosageData1.dateTimeDos1, dosageData1.dateTimeDos2);
-//        srv->m_mainWindowController->getInterpretationController()->InterpretationController::setViewRange(dosageData1.dateTimeDos1, dosageData1.dateTimeDos1.addDays(4));
+    //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
-        //                srv->m_mainWindowController->getInterpretationController()->goToPreviousEvent();
+    for (int minimumIndex = 1; minimumIndex <= daysToGo; minimumIndex++)
+    {
+        while (pIndex < 100000 && !(fPoints->at(pIndex)->getValue() <= fPoints->at(pIndex-1)->getValue() and fPoints->at(pIndex)->getValue() < fPoints->at(pIndex+1)->getValue()))
+        {   // uncomment to print full point data
+            //            std::cout << "Point index : " << pIndex << "\t value : " << fPoints->at(pIndex)->getValue();
+            //            fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(pIndex)->getTime()*1000));
+            //            std::cout << "\t||\t date : " << fDateMin.toString("yyyy/MM/dd hh:mm.ss").toStdString() << std::endl;
+            pIndex++;
+        }
+        fValueMin = fPoints->at(pIndex)->getValue();
+        fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(pIndex)->getTime()*1000));
 
+        std::cout << "\nMinimum n°" << minimumIndex;
+        std::cout << " :\t value : " << fValueMin;
+        std::cout << "\t||\t date : " << fDateMin.toString("yyyy/MM/dd hh:mm.ss").toStdString() << "\n" << std::endl;
 
-        //        QDateTime fDate1 = QDateTime::fromMSecsSinceEpoch(range);
-        //        std::cout << fDate1.toString("yyyy/MM/dd hh:mm.ss").toStdString() << "\n" << std::endl;
-
-
-        //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-
-        //        while (fDateMin.daysTo(dosageData1.dateTimeDos1) > 0)
-        //        {
-        //        while(pIndex < 10000)
-        //        {
-        //            fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(pIndex)->getTime()*1000));
-        //            std::cout << fDateMin.toString("dd.MM.yyyy").toStdString() << std::endl;
-        //            pIndex++;
-        //        }
-
+        pIndex++;       // skip a point because the last 2 points before new take have the same value
     }
 
     srv->waitPeriod(40);
 
+    //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
     srv->waitForSync();
     srv->waitPeriod(waitTimeLong);

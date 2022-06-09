@@ -4,12 +4,14 @@
 #define MAINWINDOWCONTROLLER_H
 
 #include <QQuickView>
+#include <QDateTime>
 
 class InterpretationController;
 class RequestsController;
 class InterpretationRequest;
 class ValidateDrugDialog;
 class Interpretation;
+
 
 #ifdef CONFIG_GUITEST
 class QQmlApplicationEngine;
@@ -21,10 +23,10 @@ class fromGuiTest: public QObject
     Q_OBJECT
 public:
     void toMainWindowController(QString filename);
-    void toIntController();
+    void toIntController(QDateTime startView, QDateTime endView);
 signals:
     void loadInterpretation(QString);
-    void extSetViewRange();
+    void extSignalSetView(QDateTime, QDateTime);//extSetViewRange();
 };
 
 class MainWindowController : public QQuickView
@@ -74,9 +76,8 @@ public slots:
     void interpretationReady(Interpretation *interpretation);
 
     void loadInterpretationFile(const QString &fileName);
-    void emptySlot();
+    void extSlotSetView(const QDateTime &startView, const QDateTime &endView);//emptySlot();
 
-//    void signal1();
 
 protected:
 

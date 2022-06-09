@@ -194,14 +194,16 @@ void fromGuiTest::toMainWindowController(QString loadName)
     emit loadInterpretation(loadName);
 }
 
-void fromGuiTest::toIntController()
+void fromGuiTest::toIntController(QDateTime startView, QDateTime endView)
 {
-    emit extSetViewRange();
+        emit extSignalSetView(startView, endView);//extSetViewRange();
 }
 
-void MainWindowController::emptySlot()
+void MainWindowController::extSlotSetView(const QDateTime &startView, const QDateTime &endView)//emptySlot()
 {
-    ;
+//    std::cout << startView.toString("dd.MM.yyyy hh:mm").toStdString() << std::endl;
+//    QDateTime  endView = startView.addDays(6);
+    this->interpretationController->setViewRange(startView, endView);
 }
 
 

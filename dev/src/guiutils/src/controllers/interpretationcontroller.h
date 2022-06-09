@@ -313,8 +313,6 @@ public:
      * This function is one of the three to start an interpretation flow.
      */
     void loadInterpretation(Interpretation *interpretation);
-    void extSetViewRange();
-//    void extSetViewRange();
 
     ezechiel::core::PredictionSpec *getPredictionSpec() const;
 

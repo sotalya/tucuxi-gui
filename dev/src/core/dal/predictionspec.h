@@ -10,7 +10,7 @@
 #include "core/dal/drug/parameters.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 class PredictionSpec : public Entity
@@ -69,7 +69,7 @@ protected:
         _adjustmentWithRestPeriod(false),
         _clearCache(true)
     {
-        //  _analysis = ezechiel::core::CoreFactory::createEntity<DrugResponseAnalysis>(repository);
+        //  _analysis = ezechiel::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(repository);
     }
 };
 
@@ -77,7 +77,7 @@ protected:
 } // namespace ezechiel
 
 
-Q_DECLARE_METATYPE(ezechiel::core::PredictionSpec*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::PredictionSpec*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::PredictionSpec*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::PredictionSpec*>)
 
 #endif // PREDICTIONSPEC_H

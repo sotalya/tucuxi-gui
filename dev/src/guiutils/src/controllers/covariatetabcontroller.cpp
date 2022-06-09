@@ -9,10 +9,10 @@
 
 
 
-DrugVariateInfo::DrugVariateInfo(ezechiel::core::AbstractRepository *repository, QObject *parent) :
+DrugVariateInfo::DrugVariateInfo(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
-    _actualValue(ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperableAmount>(repository, this)),
-    _defaultValue(ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperableAmount>(repository, this)),
+    _actualValue(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperableAmount>(repository, this)),
+    _defaultValue(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperableAmount>(repository, this)),
     _type(QMetaType::Int),
     _automatic(false)
 {
@@ -21,26 +21,26 @@ DrugVariateInfo::DrugVariateInfo(ezechiel::core::AbstractRepository *repository,
 AUTO_PROPERTY_IMPL(DrugVariateInfo, QString, covariateId, CovariateId)
 AUTO_PROPERTY_IMPL(DrugVariateInfo, QString, name, Name)
 AUTO_PROPERTY_IMPL(DrugVariateInfo, QDateTime, date, Date)
-AUTO_PROPERTY_IMPL(DrugVariateInfo, ezechiel::core::OperableAmount*, actualValue, ActualValue)
-AUTO_PROPERTY_IMPL(DrugVariateInfo, ezechiel::core::OperableAmount*, defaultValue, DefaultValue)
+AUTO_PROPERTY_IMPL(DrugVariateInfo, ezechiel::GuiCore::OperableAmount*, actualValue, ActualValue)
+AUTO_PROPERTY_IMPL(DrugVariateInfo, ezechiel::GuiCore::OperableAmount*, defaultValue, DefaultValue)
 AUTO_PROPERTY_IMPL(DrugVariateInfo, QMetaType::Type, type, Type)
 AUTO_PROPERTY_IMPL(DrugVariateInfo, bool, automatic, Automatic)
 QML_POINTERLIST_CLASS_IMPL(DrugVariateInfoList, DrugVariateInfo)
 
 STD_PROPERTY_IMPL(CovariateTabController, DrugVariateInfoList*, drugVariateInfos, DrugVariateInfos)
-STD_PROPERTY_IMPL(CovariateTabController, ezechiel::core::PatientVariateList*, fileredVariates, FileredVariates)
-STD_PROPERTY_IMPL(CovariateTabController, ezechiel::core::PatientVariateList*, patientVariates, PatientVariates)
+STD_PROPERTY_IMPL(CovariateTabController, ezechiel::GuiCore::PatientVariateList*, fileredVariates, FileredVariates)
+STD_PROPERTY_IMPL(CovariateTabController, ezechiel::GuiCore::PatientVariateList*, patientVariates, PatientVariates)
 
 
 
 CovariateTabController::CovariateTabController(QObject *parent) : AbstractViewController(parent)
 {
-    _drugVariateInfos = ezechiel::core::CoreFactory::createEntity<DrugVariateInfoList>(ABSTRACTREPO, this);
-    _fileredVariates = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariateList>(ABSTRACTREPO, this);
-    _patientVariates = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariateList>(ABSTRACTREPO, this);
+    _drugVariateInfos = ezechiel::GuiCore::CoreFactory::createEntity<DrugVariateInfoList>(ABSTRACTREPO, this);
+    _fileredVariates = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariateList>(ABSTRACTREPO, this);
+    _patientVariates = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariateList>(ABSTRACTREPO, this);
 }
 
-void CovariateTabController::reset(ezechiel::core::DrugVariateList* drugVariates)
+void CovariateTabController::reset(ezechiel::GuiCore::DrugVariateList* drugVariates)
 {
     _drugVariateInfos->clear();
     _fileredVariates->clearWithoutDeletion();
@@ -49,9 +49,9 @@ void CovariateTabController::reset(ezechiel::core::DrugVariateList* drugVariates
         return;
 
     // Create a copy of all drug variates
-    foreach (ezechiel::core::DrugVariate* dv, drugVariates->getList())
+    foreach (ezechiel::GuiCore::DrugVariate* dv, drugVariates->getList())
     {
-        DrugVariateInfo *copy = ezechiel::core::CoreFactory::createEntity<DrugVariateInfo>(ABSTRACTREPO, _drugVariateInfos);
+        DrugVariateInfo *copy = ezechiel::GuiCore::CoreFactory::createEntity<DrugVariateInfo>(ABSTRACTREPO, _drugVariateInfos);
         // copy->setName(dv->getCovariateId());
         copy->setCovariateId(dv->getCovariateId());
         copy->setName(dv->getVisualNameTranslation()->value());
@@ -74,7 +74,7 @@ void CovariateTabController::selectDrugVariate(int drugVariateFromIndex)
 
     // Refresh our list containing the history for the currently selected drug variate
     _fileredVariates->clear();
-    foreach (ezechiel::core::PatientVariate* patientVariate, _patientVariates->getList())
+    foreach (ezechiel::GuiCore::PatientVariate* patientVariate, _patientVariates->getList())
     {
         if (patientVariate->getCovariateId() == drugVariate->getCovariateId())
         {
@@ -91,7 +91,7 @@ void CovariateTabController::addPatientVariate(const int drugVariateFromIndex)
     DrugVariateInfo *drugVariate = _drugVariateInfos->at(drugVariateFromIndex);
     QString variateName = drugVariate->getCovariateId();
 
-    ezechiel::core::PatientVariate* pv = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariate>(ABSTRACTREPO, _patientVariates);
+    ezechiel::GuiCore::PatientVariate* pv = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
     pv->setDate(QDateTime::currentDateTime());
     pv->setCovariateId(variateName);
     pv->setName(drugVariate->getName());
@@ -119,14 +119,14 @@ void CovariateTabController::setBirthdate(QDateTime date)
         }
     }
 
-    ezechiel::core::PatientVariate* pv = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariate>(ABSTRACTREPO, _patientVariates);
+    ezechiel::GuiCore::PatientVariate* pv = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
     pv->setDate(QDateTime::currentDateTime());
     pv->setValueAsString(date.toString(Qt::ISODate));
     pv->setCovariateId("birthdate");
     pv->setName("birthdate");
     pv->setType(QMetaType::Type::Int);
     pv->getQuantity()->setDbvalue(date.toMSecsSinceEpoch() / (qint64)1000);
-    pv->getQuantity()->setUnit(ezechiel::core::Unit("s"));
+    pv->getQuantity()->setUnit(ezechiel::GuiCore::Unit("s"));
     _patientVariates->append(pv);
 
 
@@ -158,7 +158,7 @@ void CovariateTabController::setBirthdate(QDateTime date)
     foreach (DrugVariateInfo* drugVariate, _drugVariateInfos->getList())
     {
         if (drugVariate->getCovariateId() == variateName) {
-            ezechiel::core::PatientVariate* pv = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariate>(ABSTRACTREPO, _patientVariates);
+            ezechiel::GuiCore::PatientVariate* pv = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
             pv->setDate(QDateTime::currentDateTime());
             pv->setCovariateId(variateName);
             pv->setName(drugVariate->getName());
@@ -180,7 +180,7 @@ void CovariateTabController::setBirthdate(QDateTime date)
     foreach (DrugVariateInfo* drugVariate, _drugVariateInfos->getList())
     {
         if (drugVariate->getCovariateId() == variateName) {
-            ezechiel::core::PatientVariate* pv = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariate>(ABSTRACTREPO, _patientVariates);
+            ezechiel::GuiCore::PatientVariate* pv = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
             pv->setDate(QDateTime::currentDateTime());
             pv->setCovariateId(variateName);
             pv->setName(drugVariate->getName());
@@ -245,7 +245,7 @@ void CovariateTabController::setSinglePatientVariate(QString id, double value)
     foreach (DrugVariateInfo* drugVariate, _drugVariateInfos->getList())
     {
         if (drugVariate->getCovariateId() == id) {
-            ezechiel::core::PatientVariate* pv = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariate>(ABSTRACTREPO, _patientVariates);
+            ezechiel::GuiCore::PatientVariate* pv = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
             pv->setDate(QDateTime::currentDateTime());
             pv->setCovariateId(variateName);
             pv->setName(drugVariate->getName());
@@ -270,7 +270,7 @@ void CovariateTabController::setSinglePatientVariate(QString id, double value)
     }
 /*
     if (id == "birthdate") {
-        ezechiel::core::PatientVariate* pv = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariate>(ABSTRACTREPO, _patientVariates);
+        ezechiel::GuiCore::PatientVariate* pv = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
         pv->setDate(QDateTime::currentDateTime());
         pv->setCovariateId("birthdate");
         pv->setName("birthdate");
@@ -288,7 +288,7 @@ void CovariateTabController::removePatientVariate(int index)
     if (!isPatientIndexValid(index)) return;
 
     // Remove the variate from the list of displayed variates
-    ezechiel::core::PatientVariate* pv = _fileredVariates->at(index);
+    ezechiel::GuiCore::PatientVariate* pv = _fileredVariates->at(index);
     _fileredVariates->remove(index);
 
     QString variateName = pv->getCovariateId();
@@ -313,7 +313,7 @@ void CovariateTabController::setDbValue(int index, double value)
 {
     if (!isPatientIndexValid(index)) return;
 
-    ezechiel::core::PatientVariate *pv = _fileredVariates->at(index);
+    ezechiel::GuiCore::PatientVariate *pv = _fileredVariates->at(index);
     if (pv->getQuantity()->getDbvalue() != value)
     {
         pv->getQuantity()->setDbvalue(value);
@@ -325,7 +325,7 @@ void CovariateTabController::setDate(int index, QDateTime time)
 {
     if (!isPatientIndexValid(index)) return;
 
-    ezechiel::core::PatientVariate *pv = _fileredVariates->at(index);
+    ezechiel::GuiCore::PatientVariate *pv = _fileredVariates->at(index);
     if (pv->getDate() != time)
     {
         pv->setDate(time);
@@ -339,7 +339,7 @@ void CovariateTabController::updateAllActualValues()
     {
          // Update the "latest value" field with the value of the latest variate
         qint64 latestDate = std::numeric_limits < qint64 >::min();
-        foreach (ezechiel::core::PatientVariate *pv, _patientVariates->getList())
+        foreach (ezechiel::GuiCore::PatientVariate *pv, _patientVariates->getList())
         {
             if (pv->getCovariateId() == dv->getCovariateId())
             {
@@ -373,7 +373,7 @@ void CovariateTabController::updateActualValue(QString variateName)
         {
             // Update the "latest value" field with the value of the latest variate
             qint64 latestDate = 0;
-            foreach (ezechiel::core::PatientVariate *pv, _patientVariates->getList())
+            foreach (ezechiel::GuiCore::PatientVariate *pv, _patientVariates->getList())
             {
                 if (pv->getCovariateId() == variateName)
                 {
@@ -414,7 +414,7 @@ bool CovariateTabController::isDrugIndexValid(int index)
     return (index >= 0) && (index < _drugVariateInfos->size());
 }
 
-bool CovariateTabController::compareVariate(const ezechiel::core::PatientVariate* a, const ezechiel::core::PatientVariate* b)
+bool CovariateTabController::compareVariate(const ezechiel::GuiCore::PatientVariate* a, const ezechiel::GuiCore::PatientVariate* b)
 {
     return (a->getDate() < b->getDate());
 }

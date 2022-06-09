@@ -3,7 +3,7 @@
 #include "core/dal/drug/operation.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(Operation, OperationType, type, Type)
 AUTO_PROPERTY_IMPL(Operation, QString, formula, Formula)

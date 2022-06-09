@@ -8,7 +8,7 @@
 #include <QObject>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 class Descriptor;
@@ -62,6 +62,6 @@ namespace distribution
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::distribution::DistributionType)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::distribution::DistributionType)
 
 #endif // DISTRIBUTION_H

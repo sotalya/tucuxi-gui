@@ -23,7 +23,7 @@ class EditTextCommand : public QUndoCommand
 {
 public:
 
-    EditTextCommand(ezechiel::core::Entity *entity,QString propertyName,QVariant newValue, QUndoCommand *parent = 0);
+    EditTextCommand(ezechiel::GuiCore::Entity *entity,QString propertyName,QVariant newValue, QUndoCommand *parent = 0);
 
     void undo() Q_DECL_OVERRIDE;
     void redo() Q_DECL_OVERRIDE;
@@ -33,7 +33,7 @@ public:
 
 
 private:
-    ezechiel::core::Entity *_entity;
+    ezechiel::GuiCore::Entity *_entity;
     QString _propertyName;
     QVariant _oldValue, _newValue;
 };
@@ -98,18 +98,18 @@ private:
 class EditCommentCommand : public QUndoCommand
 {
 public:
-    EditCommentCommand(ezechiel::core::TranslatableString *comments, QString newValue,QString reference,void (UndoRedoController::*signal)(ezechiel::core::TranslatableString*),UndoRedoController *signalClass,bool isLangChanging = false,QUndoCommand *parent = 0);
-    EditCommentCommand(ezechiel::core::TranslatableString *comments, QString newValue,QString reference,void (UndoRedoController::*signal)(),UndoRedoController *signalClass,bool isLangChanging = false,QUndoCommand *parent = 0);
+    EditCommentCommand(ezechiel::GuiCore::TranslatableString *comments, QString newValue,QString reference,void (UndoRedoController::*signal)(ezechiel::GuiCore::TranslatableString*),UndoRedoController *signalClass,bool isLangChanging = false,QUndoCommand *parent = 0);
+    EditCommentCommand(ezechiel::GuiCore::TranslatableString *comments, QString newValue,QString reference,void (UndoRedoController::*signal)(),UndoRedoController *signalClass,bool isLangChanging = false,QUndoCommand *parent = 0);
 
     void undo() Q_DECL_OVERRIDE;
     void redo() Q_DECL_OVERRIDE;
 
 private:
 
-    ezechiel::core::TranslatableString *_comments;
+    ezechiel::GuiCore::TranslatableString *_comments;
     QString _oldValue, _newValue, _reference;
     bool _isLangChanging;
-    void (UndoRedoController::*_signal)(ezechiel::core::TranslatableString*);
+    void (UndoRedoController::*_signal)(ezechiel::GuiCore::TranslatableString*);
     void (UndoRedoController::*_signalEntity)();
     UndoRedoController *_signalClass;
 
@@ -120,7 +120,7 @@ private:
 class AddCommentCommand : public QUndoCommand
 {
 public:
-    AddCommentCommand(ezechiel::core::TranslatableString *comments,int index,void (UndoRedoController::*signal)(ezechiel::core::TranslatableString*),UndoRedoController *signalClass,QUndoCommand *parent = 0);
+    AddCommentCommand(ezechiel::GuiCore::TranslatableString *comments,int index,void (UndoRedoController::*signal)(ezechiel::GuiCore::TranslatableString*),UndoRedoController *signalClass,QUndoCommand *parent = 0);
 
     void undo() Q_DECL_OVERRIDE;
     void redo() Q_DECL_OVERRIDE;
@@ -129,10 +129,10 @@ private:
 
 
 
-    ezechiel::core::TranslatableString *_comments;
+    ezechiel::GuiCore::TranslatableString *_comments;
     QString _lang, _comment;
     int _index;
-    void (UndoRedoController::*_signal)(ezechiel::core::TranslatableString*);
+    void (UndoRedoController::*_signal)(ezechiel::GuiCore::TranslatableString*);
     UndoRedoController *_signalClass;
 };
 

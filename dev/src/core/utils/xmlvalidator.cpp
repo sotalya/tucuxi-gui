@@ -12,7 +12,7 @@
 #include <QFile>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //Drug XML schemas
 const char *const XmlValidator::Drug = ":/schemas/drug.xsd";

@@ -73,7 +73,7 @@ void test()
 
     DrugXmlImport importer;
 
-    ezechiel::core::DrugModel *drug = importer.load(inputFileName);
+    ezechiel::GuiCore::DrugModel *drug = importer.load(inputFileName);
     if (!drug) {
         std::cout << "Can not import" << std::endl;
         return;
@@ -125,31 +125,31 @@ int main(int argc, char *argv[])
 //    CHECK_REGISTER(qmlRegisterUncreatableType<DoseModel>("ezechiel", 1, 0, "DosageModel", QObject::tr("Cannot instantiate type 'DosageModel'")));
     CHECK_REGISTER(qmlRegisterUncreatableType<DrugListModel>("ezechiel", 1, 0, "DrugListModel", QObject::tr("Cannot instantiate type 'DrugListModel'")));
     CHECK_REGISTER(qmlRegisterUncreatableType<DrugVariateListModel>("ezechiel", 1, 0, "DrugVariateListModel", QObject::tr("Cannot instantiate type 'DrugVariateListModel'")));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::DrugModelList*>("DrugList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::DrugModel*>("Drug*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::MetaData*>("MetaData*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::EditorList*>("EditorList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::TranslatableString*>("TranslatableString*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::ValidDoses*>("ValidDoses*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::DoseList*>("DoseList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::IdentifiableAmount*>("IdentifiableAmount*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::IntervalList*>("IntervalList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::ValidIntervals*>("ValidIntervals*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::InfusionList*>("InfusionList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::ValidInfusions*>("ValidInfusions*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::TargetList*>("TargetList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::ADME*>("ADME*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::Halflife*>("Halflife*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::ErrorModel*>("ErrorModel*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::Parameters*>("Parameters*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::Bsv*>("Bsv*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::DrugVariateList*>("DrugVariateList*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::DrugModelList*>("DrugList*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::DrugModel*>("Drug*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::MetaData*>("MetaData*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::EditorList*>("EditorList*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::TranslatableString*>("TranslatableString*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::ValidDoses*>("ValidDoses*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::DoseList*>("DoseList*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::IdentifiableAmount*>("IdentifiableAmount*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::IntervalList*>("IntervalList*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::ValidIntervals*>("ValidIntervals*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::InfusionList*>("InfusionList*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::ValidInfusions*>("ValidInfusions*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::TargetList*>("TargetList*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::ADME*>("ADME*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::Halflife*>("Halflife*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::ErrorModel*>("ErrorModel*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::Parameters*>("Parameters*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::Bsv*>("Bsv*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::DrugVariateList*>("DrugVariateList*"));
     CHECK_REGISTER(qRegisterMetaType<QMetaType::Type>("Type"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::DrugVariate*>("DrugVariate*"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::DrugVariate*>("DrugVariate*"));
 
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::core::Unit>("Unit"));
+    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::Unit>("Unit"));
 
-    //    qRegisterMetaType<ezechiel::core::TranslatableStringList*>("TranslatableString*");
+    //    qRegisterMetaType<ezechiel::GuiCore::TranslatableStringList*>("TranslatableString*");
     //    qmlRegisterUncreatableType<InstituteListModel>("ezechiel", 1, 0, "InstituteListModel", QObject::tr("Cannot instantiate type 'InstituteListModel'"));
 //    qmlRegisterUncreatableType<CommentListModel>("ezechiel",1 ,0 ,"editor");
 
@@ -225,7 +225,7 @@ void parseOptions()
 
 void initResources()
 {
-    ezechiel::core::Core::setInstance(new ezechiel::apputils::AppCore());
+    ezechiel::GuiCore::Core::setInstance(new ezechiel::apputils::AppCore());
 
 //    CORE->setProcessingInterface(new ProcessingMath());
     APPCORE->drugManager();
@@ -235,10 +235,10 @@ void initResources()
 
 void resetStaticModel(){
 
-    QScopedPointer<QList<ezechiel::core::DrugModel*>> drugs(new QList<ezechiel::core::DrugModel*>());
+    QScopedPointer<QList<ezechiel::GuiCore::DrugModel*>> drugs(new QList<ezechiel::GuiCore::DrugModel*>());
 
 
-    if (APPUTILSREPO->getDrugsList(*drugs.data()).error != ezechiel::core::NoError)
+    if (APPUTILSREPO->getDrugsList(*drugs.data()).error != ezechiel::GuiCore::NoError)
         EXLOG(QtFatalMsg, ezechiel::gui::NOEZERROR, "Drugs list not retreived."); //FIXME wrong error
 
 //    patientListModel->setModelData(patients.data());

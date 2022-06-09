@@ -12,7 +12,7 @@
 #include "admin/src/adminfactory.h"
 #include "admin/src/stdadminrepository.h"
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 TargetModel::TargetModel(QObject *parent) :
     AbstractEntityModel(parent),
@@ -107,7 +107,7 @@ int TargetModel::rowCount(const QModelIndex &parent) const
     return !_target ? 0 : 1;
 }
 
-void TargetModel::setModelData(ezechiel::core::Target* target)
+void TargetModel::setModelData(ezechiel::GuiCore::Target* target)
 {
     beginResetModel();
     _target = target;
@@ -126,16 +126,16 @@ void TargetModel::setDataImpl(const QModelIndex &index, const QVariant &value, i
     case TypeRole:
         switch (value.toInt()) {
         case 0:
-            _target->setType(ezechiel::core::ResidualTarget);
+            _target->setType(ezechiel::GuiCore::ResidualTarget);
             break;
         case 1:
-            _target->setType(ezechiel::core::PeakTarget);
+            _target->setType(ezechiel::GuiCore::PeakTarget);
             break;
         case 2:
-            _target->setType(ezechiel::core::MeanTarget);
+            _target->setType(ezechiel::GuiCore::MeanTarget);
             break;
         default:
-            _target->setType(ezechiel::core::UnknownTarget);
+            _target->setType(ezechiel::GuiCore::UnknownTarget);
             break;
         }
         break;

@@ -17,7 +17,7 @@
 #define DATE_FORMAT "dd/mm/yyyy"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //! \brief Safe conversion between QString and QVariant

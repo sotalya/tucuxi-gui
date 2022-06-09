@@ -2,7 +2,7 @@
 #include "reportdata.h"
 #include "identifiers.h"
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 TargetBuilderModule::TargetBuilderModule(const QList<Target*> *targets, QObject *parent) :
     _targets(*targets)
@@ -26,14 +26,14 @@ bool TargetBuilderModule::setData(ReportData *data)
         // When refactoring, find a generic way to deal with targets type and their values count.
         // ////////////////////////////////////////////////////////////////////////////////////////
 
-        data->setValue(QString(ID::Targets::Target::Count).arg(i), target->getType()->getTargetType() == ezechiel::core::TargetMethod::PeakTarget ? "2" :  "1");
+        data->setValue(QString(ID::Targets::Target::Count).arg(i), target->getType()->getTargetType() == ezechiel::GuiCore::TargetMethod::PeakTarget ? "2" :  "1");
 
         data->setValue(QString(ID::Targets::Target::Value::Unit).arg(i).arg(0), target->getCbest()->unit().toString());
         data->setValue(QString(ID::Targets::Target::Value::Min).arg(i).arg(0), QString::number(target->getCmin()->value()));
         data->setValue(QString(ID::Targets::Target::Value::Max).arg(i).arg(0), QString::number(target->getCmax()->value()));
         data->setValue(QString(ID::Targets::Target::Value::Best).arg(i).arg(0), QString::number(target->getCbest()->value()));
 
-        if (target->getType()->getTargetType() == ezechiel::core::TargetMethod::PeakTarget) {
+        if (target->getType()->getTargetType() == ezechiel::GuiCore::TargetMethod::PeakTarget) {
             data->setValue(QString(ID::Targets::Target::Value::Unit).arg(i).arg(1), "h");
             data->setValue(QString(ID::Targets::Target::Value::Min).arg(i).arg(1), QString::number(target->getTmin()->value()));
             data->setValue(QString(ID::Targets::Target::Value::Max).arg(i).arg(1), QString::number(target->getTmax()->value()));

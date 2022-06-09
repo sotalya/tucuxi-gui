@@ -11,7 +11,7 @@ enum class PhoneType {
     UnknownPhoneType
 };
 
-class Phone : public ezechiel::core::Entity
+class Phone : public ezechiel::GuiCore::Entity
 {
     Q_OBJECT
 
@@ -22,8 +22,8 @@ class Phone : public ezechiel::core::Entity
 
 public:
 
-    Q_INVOKABLE Phone(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);
-    Q_INVOKABLE Phone(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE Phone(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE Phone(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
     void setTypeFromString(const QString &type);
     QString typeToString() const;

@@ -9,7 +9,7 @@
 #include "core/utils/duration.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 class ValidInterval : public Entity
@@ -64,7 +64,7 @@ public:
         _quantity->setValue(defaultinterval);
         _quantity->setUnit(unit);
         foreach( double _i, intervals) {
-            ValidInterval* _vi = ezechiel::core::CoreFactory::createEntity<ValidInterval>(repository);
+            ValidInterval* _vi = ezechiel::GuiCore::CoreFactory::createEntity<ValidInterval>(repository);
             _vi->getQuantity()->setUnit(Unit(unit.toString()));
             this->append(_vi);
         }
@@ -95,8 +95,8 @@ QML_POINTERLIST_CLASS_DECL(IntervalList,ValidInterval)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::ValidInterval*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::ValidInterval*>)
-Q_DECLARE_METATYPE(ezechiel::core::ValidIntervals*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ValidInterval*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ValidInterval*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ValidIntervals*)
 
 #endif // INTERVALS_H

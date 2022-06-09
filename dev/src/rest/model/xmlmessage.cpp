@@ -33,7 +33,7 @@ bool XmlMessage::isValid()
         return false;
     }
 
-    ezechiel::core::XmlValidator validator;
+    ezechiel::GuiCore::XmlValidator validator;
     if (!validator.validate(d, schemaPath())) {
         setErrorString(tr("The message type '%1' is invalid (%2)").arg(messageType(), validator.errorMessage()));
         return false;

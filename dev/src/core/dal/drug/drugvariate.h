@@ -11,7 +11,7 @@
 #include "core/dal/drug/operableamount.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class OperationList;
 class TranslatableString;
@@ -90,8 +90,8 @@ QML_POINTERLIST_CLASS_DECL(DrugVariateList, DrugVariate)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::DrugVariate*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::DrugVariate*>)
-Q_DECLARE_METATYPE(ezechiel::core::DrugVariateList*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugVariate*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::DrugVariate*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugVariateList*)
 
 #endif // DRUGVARIATE_H

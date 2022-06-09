@@ -3,9 +3,9 @@
 #include "core/dal/corepatient.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
-ezechiel::core::CorePatientSet::CorePatientSet(ezechiel::core::AbstractRepository *repository, QObject *parent, const ezechiel::core::CorePatientSet* &other)
+ezechiel::GuiCore::CorePatientSet::CorePatientSet(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent, const ezechiel::GuiCore::CorePatientSet* &other)
 {
     foreach (CorePatient* _p, *other) {
         CorePatient* _np = CoreFactory::createEntity<CorePatient>(repository, parent);

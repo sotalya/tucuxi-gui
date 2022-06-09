@@ -9,7 +9,7 @@
 #include "core/utils/units.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class CorePatient;
 class ActiveSubstance;
@@ -84,6 +84,6 @@ private:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::DrugTreatment*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::DrugTreatment*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugTreatment*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::DrugTreatment*>)
 #endif // DRUGTREATMENT_H

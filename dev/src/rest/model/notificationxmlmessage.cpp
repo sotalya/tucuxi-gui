@@ -18,7 +18,7 @@ NotificationXmlMessage::~NotificationXmlMessage()
 
 QString NotificationXmlMessage::schemaPath() const
 {
-    return ezechiel::core::XmlValidator::Notification;
+    return ezechiel::GuiCore::XmlValidator::Notification;
 }
 
 QString NotificationXmlMessage::messageType() const

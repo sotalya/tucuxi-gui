@@ -11,7 +11,7 @@
 class CalculationController;
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class ChartData;
 class PredictionSpec;
 class PredictionResult;
@@ -50,23 +50,23 @@ public slots:
 
 
     void initiateUpdatePopPred();
-    void receiveResultsPopPred(ezechiel::core::PredictionResult*);
+    void receiveResultsPopPred(ezechiel::GuiCore::PredictionResult*);
     void initiateUpdatePopPerc();
-    void receiveResultsPopPerc(ezechiel::core::PredictionResult*);
+    void receiveResultsPopPerc(ezechiel::GuiCore::PredictionResult*);
     void initiateUpdateAprPred();
-    void receiveResultsAprPred(ezechiel::core::PredictionResult*);
+    void receiveResultsAprPred(ezechiel::GuiCore::PredictionResult*);
     void initiateUpdateAprPerc();
-    void receiveResultsAprPerc(ezechiel::core::PredictionResult*);
+    void receiveResultsAprPerc(ezechiel::GuiCore::PredictionResult*);
     void initiateUpdateApoPred();
-    void receiveResultsApoPred(ezechiel::core::PredictionResult*);
+    void receiveResultsApoPred(ezechiel::GuiCore::PredictionResult*);
     void initiateUpdateApoPerc();
-    void receiveResultsApoPerc(ezechiel::core::PredictionResult*);
+    void receiveResultsApoPerc(ezechiel::GuiCore::PredictionResult*);
     void initiateUpdateRevPred();
-    void receiveResultsRevPred(ezechiel::core::PredictionResult*);
+    void receiveResultsRevPred(ezechiel::GuiCore::PredictionResult*);
     void initiateUpdateAdjPred();
-    void receiveResultsAdjPred(ezechiel::core::PredictionResult*);
+    void receiveResultsAdjPred(ezechiel::GuiCore::PredictionResult*);
     void initiateUpdateAdjPerc();
-    void receiveResultsAdjPerc(ezechiel::core::PredictionResult*);
+    void receiveResultsAdjPerc(ezechiel::GuiCore::PredictionResult*);
 
 
 protected:
@@ -84,9 +84,9 @@ protected:
 
 public:
 
-    ezechiel::core::ChartData* chartData;
+    ezechiel::GuiCore::ChartData* chartData;
 
-    ezechiel::core::PredictionSpec* predictionspec;
+    ezechiel::GuiCore::PredictionSpec* predictionspec;
 };
 
 #endif // CHARTDATACONTROLLER_H

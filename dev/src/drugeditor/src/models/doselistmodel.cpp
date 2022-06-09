@@ -73,7 +73,7 @@ int DoseListModel::rowCount(const QModelIndex &parent) const
         return 0;
 }
 
-void DoseListModel::setModelData(ezechiel::core::ValidDoses* doses)
+void DoseListModel::setModelData(ezechiel::GuiCore::ValidDoses* doses)
 {
     beginResetModel();
     _doses = doses;
@@ -81,7 +81,7 @@ void DoseListModel::setModelData(ezechiel::core::ValidDoses* doses)
 
 }
 
-void DoseListModel::setModelData(ezechiel::core::DrugModel *drug)
+void DoseListModel::setModelData(ezechiel::GuiCore::DrugModel *drug)
 {
     Q_ASSERT(drug);
 
@@ -92,9 +92,9 @@ void DoseListModel::setModelData(ezechiel::core::DrugModel *drug)
 
 //void DoseListModel::setDataImpl(const QModelIndex &index, const QVariant &value, int role){    Q_ASSERT(index.isValid());    Q_ASSERT(value.isValid());    Q_ASSERT(_roleNames.contains(role));    int row = index.row();    Q_ASSERT(row < rowCount());}
 
-//void DoseListModel::insertRowsImpl(int at, int count, const ezechiel::core::SharedEntitySet &entities){}
+//void DoseListModel::insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities){}
 
-//ezechiel::core::SharedEntitySet DoseListModel::removeRowsImpl(int at, int count){Q_ASSERT(at >= 0 && at + count <= rowCount());Q_ASSERT(count > 0);}
+//ezechiel::GuiCore::SharedEntitySet DoseListModel::removeRowsImpl(int at, int count){Q_ASSERT(at >= 0 && at + count <= rowCount());Q_ASSERT(count > 0);}
 
 void DoseListModel::init()
 {

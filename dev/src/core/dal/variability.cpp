@@ -5,7 +5,7 @@
 #include "core/dal/drug/translatablestring.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(Variability, QString, distributionId, DistributionId)
 AUTO_PROPERTY_IMPL(Variability, OperableDoubleList*, stdDeviations, StdDeviations)

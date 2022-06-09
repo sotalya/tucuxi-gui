@@ -42,14 +42,14 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(ezechiel::core::PredictionResult*);
-//    void setModelData(const QList<ezechiel::core::Dosage*> &adjustments);
+    void setModelData(ezechiel::GuiCore::PredictionResult*);
+//    void setModelData(const QList<ezechiel::GuiCore::Dosage*> &adjustments);
 
 private:
     void init();
 
-    ezechiel::core::PredictionResult* _pred;
-//    QList<ezechiel::core::Dosage*> _adjustments;
+    ezechiel::GuiCore::PredictionResult* _pred;
+//    QList<ezechiel::GuiCore::Dosage*> _adjustments;
     QHash<int, QByteArray> _roleNames;
 };
 

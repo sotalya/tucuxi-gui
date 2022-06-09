@@ -9,7 +9,7 @@
 #define LEVELS 3
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 /** Handle the Tucuxi's version numbering.

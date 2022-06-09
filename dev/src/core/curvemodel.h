@@ -27,7 +27,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class DrugModelEngine;
 class PercentileEngine;

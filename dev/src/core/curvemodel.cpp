@@ -22,7 +22,7 @@
 #include <cmath>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 #define PNA_MAX 100

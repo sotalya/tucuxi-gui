@@ -15,7 +15,7 @@
 #include <iostream>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 DataSet::DataSet () :

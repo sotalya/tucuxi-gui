@@ -7,7 +7,7 @@
 #include <QMetaType>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 /** Simple class that handle duration.
  * \ingroup utils
@@ -239,6 +239,6 @@ private:
 } // namespace ezechiel
 
 //Declare this type to Qt
-Q_DECLARE_METATYPE(ezechiel::core::Duration)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Duration)
 
 #endif // DURATION_H

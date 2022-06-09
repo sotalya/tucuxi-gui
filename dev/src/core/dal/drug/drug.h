@@ -8,7 +8,7 @@
 #include "core/dal/amount.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class DrugXmlDescriptor;
 class ValidDoses;
@@ -181,9 +181,9 @@ QML_POINTERLIST_CLASS_DECL(DrugModelList, DrugModel)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::ActiveSubstance*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ActiveSubstance*)
 
-Q_DECLARE_METATYPE(ezechiel::core::DrugModel*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::DrugModel*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugModel*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::DrugModel*>)
 
 #endif // DRUG_H

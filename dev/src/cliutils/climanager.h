@@ -59,7 +59,7 @@ signals:
     void start();
 private:
     QCoreApplication *m_app;
-//    void connect(ezechiel::core::DBAccount &account);
+//    void connect(ezechiel::GuiCore::DBAccount &account);
     void setLanguage(CliCommand*);
 };
 }

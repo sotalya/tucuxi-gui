@@ -6,7 +6,7 @@
 #include "core/dal/entity.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 class Bsv : public Entity
@@ -31,7 +31,7 @@ protected:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::Bsv*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Bsv*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Bsv*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Bsv*>)
 
 #endif // BSV_H

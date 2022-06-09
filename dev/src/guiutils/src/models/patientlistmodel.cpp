@@ -161,7 +161,7 @@ void PatientListModel::setDataImpl(const QModelIndex &index, const QVariant &val
     emit updateStatus();
 }
 
-void PatientListModel::insertRowsImpl(int at, int count, const ezechiel::core::SharedEntitySet &entities)
+void PatientListModel::insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
@@ -184,12 +184,12 @@ void PatientListModel::insertRowsImpl(int at, int count, const ezechiel::core::S
     emit updateStatus();
 }
 
-ezechiel::core::SharedEntitySet PatientListModel::removeRowsImpl(int at, int count)
+ezechiel::GuiCore::SharedEntitySet PatientListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    ezechiel::core::SharedEntitySet removed;
+    ezechiel::GuiCore::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _patients->takeAt(at);
 

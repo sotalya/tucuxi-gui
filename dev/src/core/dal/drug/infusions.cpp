@@ -3,7 +3,7 @@
 #include "core/dal/drug/infusions.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(ValidInfusion, IdentifiableAmount*, quantity, Quantity)
 

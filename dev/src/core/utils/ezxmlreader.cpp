@@ -16,7 +16,7 @@
 #include <QMetaType>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //Create the reader

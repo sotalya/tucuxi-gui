@@ -4,7 +4,7 @@
 #define DATABASE_H
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
     enum DATABASEENGINE {
         SQLITE3,
         MYSQL

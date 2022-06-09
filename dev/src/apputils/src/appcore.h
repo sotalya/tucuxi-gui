@@ -45,7 +45,7 @@
 #include "core/core.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
     class SecurityManager;
 }
 }
@@ -55,8 +55,8 @@ namespace core {
 
 
 //------------- Shortcuts for objects ----------------
-#define APPCORE (static_cast<ezechiel::apputils::AppCore *>(ezechiel::core::Core::instance()))
-#define SECURITY (static_cast<ezechiel::apputils::AppCore *>(ezechiel::core::Core::instance())->securityManager())
+#define APPCORE (static_cast<ezechiel::apputils::AppCore *>(ezechiel::GuiCore::Core::instance()))
+#define SECURITY (static_cast<ezechiel::apputils::AppCore *>(ezechiel::GuiCore::Core::instance())->securityManager())
 
 
 namespace ezechiel {
@@ -70,17 +70,17 @@ class DrugManager;
    The difference between a normal singleton is that an instance of core can be given, thus enabling a library to load the main core and then use it
   */
 
-class AppCore : public ezechiel::core::Core
+class AppCore : public ezechiel::GuiCore::Core
 {
 public:
 
     //! Get the security manager.
-    ezechiel::core::SecurityManager *securityManager();
+    ezechiel::GuiCore::SecurityManager *securityManager();
 
     //Constructor
     AppCore();
 
-    ezechiel::core::ThreadDrugLoader *drugloader;
+    ezechiel::GuiCore::ThreadDrugLoader *drugloader;
 
     void preloadDrugs ();
     void createDrugManager ();
@@ -99,13 +99,13 @@ private:
     ~AppCore();
 
     //The pseudo-singletons
-    ezechiel::core::SecurityManager *_securityManager;
+    ezechiel::GuiCore::SecurityManager *_securityManager;
 
 };
 } //namespace apputils
 } //namespace ezechiel
 
-class ezechiel::core::ThreadDrugLoader : public QThread
+class ezechiel::GuiCore::ThreadDrugLoader : public QThread
 {
     Q_OBJECT
 public:

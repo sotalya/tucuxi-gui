@@ -6,7 +6,7 @@
 
 #include <QDateTime>
 
-class BaseBuilderModule :public ezechiel::core::Entity, public ReportBuilderModule
+class BaseBuilderModule :public ezechiel::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
 

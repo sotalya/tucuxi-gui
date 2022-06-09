@@ -11,7 +11,7 @@ class ClinicalSet;
 class Patient;
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class ActiveSubstance;
 class DosageHistory;
 class CoreMeasureList;
@@ -28,10 +28,10 @@ public:
 
 protected:
 
-    bool saveActiveSubstance(ezechiel::core::ActiveSubstance *activeSubstance);
-    bool saveDosages(ezechiel::core::DosageHistory *dosageHistory);
-    bool saveSamples(ezechiel::core::CoreMeasureList *samples);
-    bool saveCovariates(ezechiel::core::PatientVariateList *covariates);
+    bool saveActiveSubstance(ezechiel::GuiCore::ActiveSubstance *activeSubstance);
+    bool saveDosages(ezechiel::GuiCore::DosageHistory *dosageHistory);
+    bool saveSamples(ezechiel::GuiCore::CoreMeasureList *samples);
+    bool saveCovariates(ezechiel::GuiCore::PatientVariateList *covariates);
     bool saveClinicals(ClinicalSet *clinicals);
     bool savePatient(Patient *patient);
 

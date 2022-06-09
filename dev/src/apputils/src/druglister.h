@@ -7,7 +7,7 @@
 #include <QXmlStreamReader>
 
 namespace ezechiel {
-    namespace core {
+    namespace GuiCore {
         class DrugXmlDescriptor;
     }
 }
@@ -75,18 +75,18 @@ public:
      * @param filePath The absolute path to the drug XML file.
      * @return A pointer to the corresponding XML descriptor.
      */
-    const ezechiel::core::DrugXmlDescriptor *scanDrug(const QString &filePath);
+    const ezechiel::GuiCore::DrugXmlDescriptor *scanDrug(const QString &filePath);
 
     /** \brief Return the XML descriptor of a drug.
      * @param drugModelId The drug ID.
      * @return The drug XML descriptor.
      */
-    const ezechiel::core::DrugXmlDescriptor *drug(const QString &drugModelId) const;
+    const ezechiel::GuiCore::DrugXmlDescriptor *drug(const QString &drugModelId) const;
 
     /** \brief Return the list of the drugs' XML descriptors.
      * @return The list of the drugs' XML descriptors.
      */
-    QList<const ezechiel::core::DrugXmlDescriptor *> drugs() const;
+    QList<const ezechiel::GuiCore::DrugXmlDescriptor *> drugs() const;
 
     /** \brief Remove a drug from the lister.
      * @param drugModelId The drug ID.
@@ -145,7 +145,7 @@ private:
     void validateVersion();
 
     //Scans a <drug> element and create the corresponding drug xml descriptor
-    ezechiel::core::DrugXmlDescriptor *buildDescriptor(const QString &filePath);
+    ezechiel::GuiCore::DrugXmlDescriptor *buildDescriptor(const QString &filePath);
 
     //Deletes the existing drugs XML descriptors
     void resetDrugs();
@@ -160,7 +160,7 @@ private:
     QList<QDir> _directories;
 
     //QMap of <Drug model ID, Drug XML descriptor>
-    QMap<QString, const ezechiel::core::DrugXmlDescriptor *> _drugs;
+    QMap<QString, const ezechiel::GuiCore::DrugXmlDescriptor *> _drugs;
 };
 
 } //namespace apputils

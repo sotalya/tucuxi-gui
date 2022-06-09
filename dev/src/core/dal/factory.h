@@ -12,7 +12,7 @@ template<typename entity>
 class Creator
 {
 public:
-    virtual entity *createEntity(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr)
+    virtual entity *createEntity(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr)
     {
         return new entity(repository, parent);
     }
@@ -35,7 +35,7 @@ public:
         _creator = creator;
     }
 
-    T* createEntity(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr)
+    T* createEntity(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr)
     {
         return _creator->createEntity(repository, parent);
     }

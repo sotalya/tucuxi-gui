@@ -10,7 +10,7 @@
 #include "core/dal/dosage.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(Prediction, QString, name, Name)
 AUTO_PROPERTY_IMPL(Prediction, QString, comment, Comment)
@@ -23,7 +23,7 @@ Prediction::Prediction(AbstractRepository *repository, QObject* parent, DrugResp
     : Entity(repository, parent), _name(""), _comment(""), _curveType(CurveType::Continous),
       _paramsType(ParameterType::POPULATION),
     _analysis(analysis),
-    _spec(ezechiel::core::CoreFactory::createEntity<PredictionSpec>(repository))
+    _spec(ezechiel::GuiCore::CoreFactory::createEntity<PredictionSpec>(repository))
 {
 }
 
@@ -31,12 +31,12 @@ Prediction::Prediction(AbstractRepository *repository, QObject* parent, DrugResp
 Prediction::Prediction(AbstractRepository *repository, QObject* parent)
     : Entity(repository, parent), _name(""), _comment(""), _curveType(CurveType::Continous),
       _paramsType(ParameterType::POPULATION) //,
-      //_spec(ezechiel::core::CoreFactory::createEntity<PredictionSpec>(repository)),
-      //_analysis(ezechiel::core::CoreFactory::createEntity<DrugResponseAnalysis>(repository))
+      //_spec(ezechiel::GuiCore::CoreFactory::createEntity<PredictionSpec>(repository)),
+      //_analysis(ezechiel::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(repository))
 {
 
-          _spec=(ezechiel::core::CoreFactory::createEntity<PredictionSpec>(repository));
-          _analysis=(ezechiel::core::CoreFactory::createEntity<DrugResponseAnalysis>(repository));
+          _spec=(ezechiel::GuiCore::CoreFactory::createEntity<PredictionSpec>(repository));
+          _analysis=(ezechiel::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(repository));
 //    LOG(QtDebugMsg, NOEZERROR, "Prediction Constructor");
 }
 

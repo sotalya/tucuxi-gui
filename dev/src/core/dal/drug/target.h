@@ -9,7 +9,7 @@
 #include "core/utils/ezutils.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //class OperableAmount;
 class TranslatableString;
@@ -91,11 +91,11 @@ QML_POINTERLIST_CLASS_DECL(TargetMethodList, TargetMethod)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::TargetMethod*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::TargetMethod*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::TargetMethod*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::TargetMethod*>)
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class Target : public Entity
 {
@@ -197,8 +197,8 @@ QML_POINTERLIST_CLASS_DECL(TargetList, Target)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::Target*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Target*>)
-Q_DECLARE_METATYPE(ezechiel::core::TargetList*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Target*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Target*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::TargetList*)
 
 #endif // TARGET_H

@@ -43,7 +43,7 @@
 
 namespace ezechiel {
 //    class EphemeralDB;
-namespace core {
+namespace GuiCore {
 
 //The settings names
 const char *const Core::_stgLanguage       = "language";
@@ -59,7 +59,7 @@ void Core::init()
     if (!data.exists()) {
         //Use a path relative to the executable if it's relative
         QString global = QFileInfo(APPDATA).isAbsolute() ? APPDATA : path(Executable) + "/" + APPDATA;
-        LOG(QtDebugMsg, ezechiel::core::NOEZERROR, QObject::tr("Copying the global directory to the local one (%1 -> %2)").arg(global,data.path()));
+        LOG(QtDebugMsg, ezechiel::GuiCore::NOEZERROR, QObject::tr("Copying the global directory to the local one (%1 -> %2)").arg(global,data.path()));
         Core::cpDir(global,data.absolutePath());
     }
 }
@@ -239,10 +239,10 @@ void Core::setPath(Core::PathType type, const QString &p)
         SETTINGS.set(Module::Core, _stgCustomDrugPath, path);
 }
 
-ezechiel::core::AbstractRepository *Core::repository()
+ezechiel::GuiCore::AbstractRepository *Core::repository()
 {
     if (_repository == nullptr) {
-        LOG(QtDebugMsg, ezechiel::core::NOEZERROR, QObject::tr("loading db"));
+        LOG(QtDebugMsg, ezechiel::GuiCore::NOEZERROR, QObject::tr("loading db"));
         _repository = pluginManager()->loadDatabase(SQLITE3);
     }
     return _repository;

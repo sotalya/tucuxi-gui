@@ -5,7 +5,7 @@
 #include "core/dal/drugtreatment.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //Set the Location default values

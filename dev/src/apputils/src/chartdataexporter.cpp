@@ -4,7 +4,7 @@
 #include "core/dal/predictionresult.h"
 #include "core/dal/predictiondata.h"
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 ChartDataExporter::ChartDataExporter()
 {
@@ -30,7 +30,7 @@ QString ChartDataExporter::exportPrediction(PredictionResult *pred)
     return content;
 }
 
-QString ChartDataExporter::exportData(const ezechiel::core::ChartData *chartData, int what)
+QString ChartDataExporter::exportData(const ezechiel::GuiCore::ChartData *chartData, int what)
 {
     QString content;
     content += QString("File generated at date :;%1\n\n").arg(QDateTime::currentDateTime().toString(Qt::ISODate));
@@ -97,7 +97,7 @@ QString ChartDataHtmlExporter::exportPrediction(PredictionResult *pred)
     return content;
 }
 
-QString ChartDataHtmlExporter::exportData(const ezechiel::core::ChartData *chartData, int what)
+QString ChartDataHtmlExporter::exportData(const ezechiel::GuiCore::ChartData *chartData, int what)
 {
     QString content;
     content += "<html>";

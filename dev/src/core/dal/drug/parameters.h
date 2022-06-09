@@ -14,7 +14,7 @@
 #include "core/dal/drug/operableamount.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class Bsv;
 class Operation;
@@ -257,11 +257,11 @@ private:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::ParameterType)
-Q_DECLARE_METATYPE(QList<ezechiel::core::ParameterType*>)
-Q_DECLARE_METATYPE(ezechiel::core::Parameter*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Parameter*>)
-Q_DECLARE_METATYPE(ezechiel::core::Parameters*);
-Q_DECLARE_METATYPE(ezechiel::core::ParameterSet*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ParameterType)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ParameterType*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Parameter*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Parameter*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Parameters*);
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ParameterSet*)
 
 #endif // PARAMETERS_H

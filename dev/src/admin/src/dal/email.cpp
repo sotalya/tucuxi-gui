@@ -3,7 +3,7 @@
 AUTO_PROPERTY_IMPL(Email, QString, email, Email)
 AUTO_PROPERTY_IMPL(Email, Type, type, Type)
 
-Email::Email(ezechiel::core::AbstractRepository *repository, QObject *parent) :
+Email::Email(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _email(),
     _type(Type::Professional)
@@ -11,7 +11,7 @@ Email::Email(ezechiel::core::AbstractRepository *repository, QObject *parent) :
     setId(-1);
 }
 
-Email::Email(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent) :
+Email::Email(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
     Entity(repository,id, parent),
     _email(),
     _type(Type::Professional)

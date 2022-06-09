@@ -3,7 +3,7 @@
 #include "core/dal/drug/editors.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(Editor,QString,name,Name)
 AUTO_PROPERTY_IMPL(Editor,QString, institution,Institution)

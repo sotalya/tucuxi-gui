@@ -9,7 +9,7 @@
 #include "core/dal/drug/translatablestring.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class Editor : public Entity
 {
@@ -52,9 +52,9 @@ QML_POINTERLIST_CLASS_DECL(EditorList,Editor)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::Editor*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Editor*>)
-// Q_DECLARE_METATYPE(ezechiel::core::EditorSet*)
-Q_DECLARE_METATYPE(ezechiel::core::EditorList*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Editor*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Editor*>)
+// Q_DECLARE_METATYPE(ezechiel::GuiCore::EditorSet*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::EditorList*)
 
 #endif // EDITOR_H

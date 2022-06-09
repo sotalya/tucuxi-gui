@@ -7,7 +7,7 @@
 #include "core/utils/ezutils.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //Array of possible distributions

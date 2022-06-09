@@ -9,7 +9,7 @@
 #include "core/dal/drug/operation.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class IdentifiableAmount : public Entity, public Amount
 {
@@ -97,11 +97,11 @@ POINTERLIST_CLASS_DECL(OperableValueList, OperableValue)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::IdentifiableAmount*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::IdentifiableAmount*>)
-Q_DECLARE_METATYPE(ezechiel::core::OperableAmount*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::OperableAmount*>)
-Q_DECLARE_METATYPE(ezechiel::core::OperableValue*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::OperableValue*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::IdentifiableAmount*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::IdentifiableAmount*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::OperableAmount*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::OperableAmount*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::OperableValue*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::OperableValue*>)
 
 #endif // OPERABLEAMOUNT_H

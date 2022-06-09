@@ -16,7 +16,7 @@
 #include "core/utils/duration.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //#define MODELUTILITIES(CLASSNAME) \
@@ -93,6 +93,6 @@ typedef DrugModelEngine* SharedModel;
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::DrugModelEngine*);
+Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugModelEngine*);
 
 #endif // MODEL_H

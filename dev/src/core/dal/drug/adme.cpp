@@ -10,7 +10,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(ADME, Admin*, defaultIntake, DefaultIntake)
 AUTO_PROPERTY_IMPL(ADME, QString, distribution, Distribution)

@@ -9,7 +9,7 @@
 #include <QSourceLocation>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 class XmlValidator

@@ -14,7 +14,7 @@
 
 #include <QDebug>
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 namespace ezechiel {
 namespace apputils {
 

@@ -9,7 +9,7 @@
 #include <QXmlStreamReader>
 #include <QDir>
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 const char *const ReportTemplateXmlFactory::_TEMPLATES_XML_FILE = ":/templates.xml";
 const char *const ReportTemplateXmlFactory::_TEMPLATES_XSD_FILE = ":/schemas/templates.xsd";
 

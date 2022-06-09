@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //The settings names

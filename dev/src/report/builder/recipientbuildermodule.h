@@ -7,7 +7,7 @@
 #include "institute.h"
 #include "reportbuildermodule.h"
 
-class RecipientBuilderModule : public ezechiel::core::Entity, public ReportBuilderModule
+class RecipientBuilderModule : public ezechiel::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
     AUTO_PROPERTY_DECL(Practician*, practician, Practician)

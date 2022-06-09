@@ -9,7 +9,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //AUTO_PROPERTY_IMPL(Dosage, ADME::Route, route, Route)
 AUTO_PROPERTY_IMPL(Dosage, IdentifiableAmount*, quantity, Quantity)

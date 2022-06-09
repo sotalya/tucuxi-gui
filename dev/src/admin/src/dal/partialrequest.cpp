@@ -3,7 +3,7 @@
 #include "core/corefactory.h"
 #include "core/dal/drug/drug.h"
 
-PartialRequest::PartialRequest(ezechiel::core::AbstractRepository *repository, QObject *parent) :
+PartialRequest::PartialRequest(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent) :
     Entity(repository, parent)
 {
     setId(-1);
@@ -13,13 +13,13 @@ PartialRequest::PartialRequest(ezechiel::core::AbstractRepository *repository, Q
     _sample = AdminFactory::createEntity<Measure>(repository);
 }
 
-PartialRequest::PartialRequest(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent) :
+PartialRequest::PartialRequest(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
     Entity(repository, id, parent)
 {
     setId(id);
 }
 
-PartialRequestSet::PartialRequestSet(ezechiel::core::AbstractRepository *repository, QObject *parent, const PartialRequestSet* &other)
+PartialRequestSet::PartialRequestSet(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent, const PartialRequestSet* &other)
 {
     foreach (SharedPartialRequest _pr, *other) {
         SharedPartialRequest _npr = SharedPartialRequest(new PartialRequest(repository, parent));

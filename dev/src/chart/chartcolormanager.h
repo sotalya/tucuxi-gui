@@ -7,7 +7,7 @@
 
 #include <QColor>
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 class ChartColorManager
 {
 public:

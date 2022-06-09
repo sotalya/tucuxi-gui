@@ -8,7 +8,7 @@
 #include "core/errors_core.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 EzChoice::EzChoice(QObject *parent) :

@@ -7,7 +7,7 @@
 #include "core/dal/entity.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 class Results : public Entity

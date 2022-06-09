@@ -46,7 +46,7 @@
 class User;
 namespace ezechiel {
 
-using namespace core;
+using namespace GuiCore;
 
 template<class T>
 class EntityList: public QList<T>
@@ -277,7 +277,7 @@ class EphemeralDB : public QObject, public CoreRepository, public AppUtilsReposi
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "ch.heig-vd.ezechiel.ephemeralDBInterface/0.1")
     Q_INTERFACES(AppUtilsRepository StdAdminDbInterface)
-    Q_INTERFACES(ezechiel::core::CoreRepository)
+    Q_INTERFACES(ezechiel::GuiCore::CoreRepository)
 public:
 
 EphemeralDB() : _encryption(Unknown)
@@ -299,7 +299,7 @@ Descriptor getDescriptor() {return descriptor();}
 Descriptor descriptor();
 QString databaseName() const;
 
-bool init(Core *core);
+bool init(Core *GuiCore);
 
 bool tryRequest(const Response&, const QString&, QString&) {return false;}
 

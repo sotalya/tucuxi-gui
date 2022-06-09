@@ -10,7 +10,7 @@
 #include "core/dal/drug/parameters.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class ParamTraits {
 public:

@@ -6,7 +6,7 @@
 #include "stdparamnames.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //----------------------- DESCRIPTOR --------------------------

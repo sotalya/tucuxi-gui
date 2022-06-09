@@ -72,7 +72,7 @@ QString User::privateKey() const
         return QString();
 
     //Retrieve the key from the database
-    if (APPUTILSREPO->getUserKey(_username, key).error != ezechiel::core::NoError)
+    if (APPUTILSREPO->getUserKey(_username, key).error != ezechiel::GuiCore::NoError)
         return QString();
 
     return key;
@@ -86,7 +86,7 @@ bool User::setPrivateKey(const QString &key)
         return false;
 
     //Sets the user private key
-    if (APPUTILSREPO->setUserKey(_username, key).error != ezechiel::core::NoError)
+    if (APPUTILSREPO->setUserKey(_username, key).error != ezechiel::GuiCore::NoError)
         return false;
 
     return true;

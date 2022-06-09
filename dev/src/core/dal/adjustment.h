@@ -12,7 +12,7 @@
 #include "core/dal/drug/target.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 /**
  * @brief The TargetEvaluationResult class
@@ -72,10 +72,10 @@ QML_POINTERLIST_CLASS_DECL(Adjustments, Adjustment)
 }
 }
 
-Q_DECLARE_METATYPE(ezechiel::core::TargetEvaluationResult*)
-Q_DECLARE_METATYPE(ezechiel::core::TargetEvaluationResults*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::TargetEvaluationResult*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::TargetEvaluationResults*)
 
-Q_DECLARE_METATYPE(ezechiel::core::Adjustment*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Adjustment*>)
-Q_DECLARE_METATYPE(ezechiel::core::Adjustments*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Adjustment*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Adjustment*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Adjustments*)
 #endif // ADJUSTMENT_H

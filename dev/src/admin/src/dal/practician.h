@@ -6,7 +6,7 @@
 #include "institute.h"
 
 
-class Practician : public ezechiel::core::Entity
+class Practician : public ezechiel::GuiCore::Entity
 {
     Q_OBJECT
     ADMIN_ENTITY_UTILS(Practician)
@@ -26,8 +26,8 @@ class Practician : public ezechiel::core::Entity
 //    void copyTo(Practician *other);
 
 public:
-    Q_INVOKABLE Practician(ezechiel::core::AbstractRepository *repository = 0, QObject *parent = nullptr);
-    Q_INVOKABLE Practician(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE Practician(ezechiel::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE Practician(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };
 Q_DECLARE_METATYPE(Practician*)
@@ -36,8 +36,8 @@ Q_DECLARE_METATYPE(QList<Practician*>)
 class PracticianSet : public QList<Practician*>
 {
 public :
-    PracticianSet(ezechiel::core::AbstractRepository *repository, QObject* parent = 0) {}
-    PracticianSet(ezechiel::core::AbstractRepository *repository, QObject* parent, const PracticianSet* &other);
+    PracticianSet(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent = 0) {}
+    PracticianSet(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent, const PracticianSet* &other);
 };
 Q_DECLARE_METATYPE(PracticianSet*)
 

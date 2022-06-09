@@ -6,7 +6,7 @@
 #include "core/dal/entity.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class EditorList;
 class ReferenceList;
@@ -35,7 +35,7 @@ class MetaData : public Entity
 } //namespace core
 } //namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::MetaData*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::MetaData*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::MetaData*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::MetaData*>)
 
 #endif // METADATA_H

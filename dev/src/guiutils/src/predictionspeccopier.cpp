@@ -26,10 +26,10 @@ PredictionSpecCopier::PredictionSpecCopier()
 
 }
 
-ezechiel::core::PredictionSpec *PredictionSpecCopier::copy(ezechiel::core::PredictionSpec *spec, QObject *parent)
+ezechiel::GuiCore::PredictionSpec *PredictionSpecCopier::copy(ezechiel::GuiCore::PredictionSpec *spec, QObject *parent)
 {
-    ezechiel::core::PredictionSpec *newSpec;
-    newSpec = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionSpec>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::PredictionSpec *newSpec;
+    newSpec = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionSpec>(ABSTRACTREPO,parent);
     newSpec->setCalculationType(spec->getCalculationType());
     newSpec->setAdjustmentDate(spec->getAdjustmentDate());
     newSpec->setAdjustmentWithLoadingDose(spec->getAdjustmentWithLoadingDose());
@@ -48,10 +48,10 @@ ezechiel::core::PredictionSpec *PredictionSpecCopier::copy(ezechiel::core::Predi
 }
 
 
-ezechiel::core::DrugResponseAnalysis *PredictionSpecCopier::copy(ezechiel::core::DrugResponseAnalysis *analysis, QObject *parent)
+ezechiel::GuiCore::DrugResponseAnalysis *PredictionSpecCopier::copy(ezechiel::GuiCore::DrugResponseAnalysis *analysis, QObject *parent)
 {
-    ezechiel::core::DrugResponseAnalysis *newAnalysis;
-    newAnalysis = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugResponseAnalysis>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::DrugResponseAnalysis *newAnalysis;
+    newAnalysis = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugResponseAnalysis>(ABSTRACTREPO,parent);
 
     newAnalysis->setTreatment(copy(analysis->getTreatment(), newAnalysis));
     newAnalysis->setDrugModel(copy(analysis->getDrugModel(), newAnalysis));
@@ -60,10 +60,10 @@ ezechiel::core::DrugResponseAnalysis *PredictionSpecCopier::copy(ezechiel::core:
 }
 
 
-ezechiel::core::IdentifiableAmount *PredictionSpecCopier::copy(ezechiel::core::IdentifiableAmount *amount, QObject *parent)
+ezechiel::GuiCore::IdentifiableAmount *PredictionSpecCopier::copy(ezechiel::GuiCore::IdentifiableAmount *amount, QObject *parent)
 {
-    ezechiel::core::IdentifiableAmount *newAmount;
-    newAmount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::IdentifiableAmount *newAmount;
+    newAmount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::IdentifiableAmount>(ABSTRACTREPO,parent);
 
     newAmount->setAmountId(amount->getAmountId());
     newAmount->setDbvalue(amount->getDbvalue());
@@ -73,10 +73,10 @@ ezechiel::core::IdentifiableAmount *PredictionSpecCopier::copy(ezechiel::core::I
     return newAmount;
 }
 
-ezechiel::core::OperableAmount *PredictionSpecCopier::copy(ezechiel::core::OperableAmount *amount, QObject *parent)
+ezechiel::GuiCore::OperableAmount *PredictionSpecCopier::copy(ezechiel::GuiCore::OperableAmount *amount, QObject *parent)
 {
-    ezechiel::core::OperableAmount *newAmount;
-    newAmount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperableAmount>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::OperableAmount *newAmount;
+    newAmount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperableAmount>(ABSTRACTREPO,parent);
 
     newAmount->setAmountId(amount->getAmountId());
     newAmount->setDbvalue(amount->getDbvalue());
@@ -90,10 +90,10 @@ ezechiel::core::OperableAmount *PredictionSpecCopier::copy(ezechiel::core::Opera
 }
 
 
-ezechiel::core::PatientVariate* PredictionSpecCopier::copy(ezechiel::core::PatientVariate* variate, QObject *parent)
+ezechiel::GuiCore::PatientVariate* PredictionSpecCopier::copy(ezechiel::GuiCore::PatientVariate* variate, QObject *parent)
 {
-    ezechiel::core::PatientVariate *newVariate;
-    newVariate = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariate>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::PatientVariate *newVariate;
+    newVariate = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO,parent);
     // To be completed
     newVariate->setDate(variate->getDate());
     newVariate->setForced(variate->getForced());
@@ -105,21 +105,21 @@ ezechiel::core::PatientVariate* PredictionSpecCopier::copy(ezechiel::core::Patie
     return newVariate;
 }
 
-ezechiel::core::PatientVariateList* PredictionSpecCopier::copy(ezechiel::core::PatientVariateList* list, QObject *parent)
+ezechiel::GuiCore::PatientVariateList* PredictionSpecCopier::copy(ezechiel::GuiCore::PatientVariateList* list, QObject *parent)
 {
-    ezechiel::core::PatientVariateList *newList;
-    newList = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariateList>(ABSTRACTREPO,parent);
-    foreach(ezechiel::core::PatientVariate *variate, list->getList())
+    ezechiel::GuiCore::PatientVariateList *newList;
+    newList = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariateList>(ABSTRACTREPO,parent);
+    foreach(ezechiel::GuiCore::PatientVariate *variate, list->getList())
         newList->append(copy(variate, newList));
 
     return newList;
 }
 
 
-ezechiel::core::Admin* PredictionSpecCopier::copy(ezechiel::core::Admin* admin, QObject *parent)
+ezechiel::GuiCore::Admin* PredictionSpecCopier::copy(ezechiel::GuiCore::Admin* admin, QObject *parent)
 {
-    ezechiel::core::Admin *newAdmin;
-    newAdmin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::Admin *newAdmin;
+    newAdmin = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO,parent);
     newAdmin->setRoute(admin->getRoute());
     newAdmin->setValue(admin->getValue());
     newAdmin->setFormulationAndRoute(admin->getFormulationAndRoute());
@@ -127,10 +127,10 @@ ezechiel::core::Admin* PredictionSpecCopier::copy(ezechiel::core::Admin* admin, 
     return newAdmin;
 }
 
-ezechiel::core::Dosage* PredictionSpecCopier::copy(ezechiel::core::Dosage* dosage, QObject *parent)
+ezechiel::GuiCore::Dosage* PredictionSpecCopier::copy(ezechiel::GuiCore::Dosage* dosage, QObject *parent)
 {
-    ezechiel::core::Dosage *newDosage;
-    newDosage = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Dosage>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::Dosage *newDosage;
+    newDosage = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Dosage>(ABSTRACTREPO,parent);
     newDosage->setApplied(dosage->getApplied());
     newDosage->setDbinterval(dosage->getDbinterval());
     newDosage->setDbtinf(dosage->getDbtinf());
@@ -145,50 +145,50 @@ ezechiel::core::Dosage* PredictionSpecCopier::copy(ezechiel::core::Dosage* dosag
     return newDosage;
 }
 
-ezechiel::core::DosageHistory* PredictionSpecCopier::copy(ezechiel::core::DosageHistory* history, QObject *parent)
+ezechiel::GuiCore::DosageHistory* PredictionSpecCopier::copy(ezechiel::GuiCore::DosageHistory* history, QObject *parent)
 {
-    ezechiel::core::DosageHistory *newHistory;
-    newHistory = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DosageHistory>(ABSTRACTREPO,parent);
-    foreach(ezechiel::core::Dosage* dosage, history->getList())
+    ezechiel::GuiCore::DosageHistory *newHistory;
+    newHistory = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DosageHistory>(ABSTRACTREPO,parent);
+    foreach(ezechiel::GuiCore::Dosage* dosage, history->getList())
         newHistory->append(copy(dosage, newHistory));
 
     return newHistory;
 }
 
 
-ezechiel::core::AdminList* PredictionSpecCopier::copy(ezechiel::core::AdminList* list, QObject *parent)
+ezechiel::GuiCore::AdminList* PredictionSpecCopier::copy(ezechiel::GuiCore::AdminList* list, QObject *parent)
 {
-    ezechiel::core::AdminList *newList;
-    newList = ezechiel::core::CoreFactory::createEntity<ezechiel::core::AdminList>(ABSTRACTREPO,parent);
-    foreach(ezechiel::core::Admin* admin, list->getList())
+    ezechiel::GuiCore::AdminList *newList;
+    newList = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::AdminList>(ABSTRACTREPO,parent);
+    foreach(ezechiel::GuiCore::Admin* admin, list->getList())
         newList->append(copy(admin, newList));
 
     return newList;
 }
 
-ezechiel::core::DrugVariateList* PredictionSpecCopier::copy(ezechiel::core::DrugVariateList* list, QObject *parent)
+ezechiel::GuiCore::DrugVariateList* PredictionSpecCopier::copy(ezechiel::GuiCore::DrugVariateList* list, QObject *parent)
 {
-    ezechiel::core::DrugVariateList *newList;
-    newList = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugVariateList>(ABSTRACTREPO,parent);
-    foreach(ezechiel::core::DrugVariate* variate, list->getList())
+    ezechiel::GuiCore::DrugVariateList *newList;
+    newList = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugVariateList>(ABSTRACTREPO,parent);
+    foreach(ezechiel::GuiCore::DrugVariate* variate, list->getList())
         newList->append(copy(variate, newList));
 
     return newList;
 }
 
-ezechiel::core::Concentrations* PredictionSpecCopier::copy(ezechiel::core::Concentrations* concentrations, QObject *parent)
+ezechiel::GuiCore::Concentrations* PredictionSpecCopier::copy(ezechiel::GuiCore::Concentrations* concentrations, QObject *parent)
 {
-    ezechiel::core::Concentrations *newConcentrations;
-    newConcentrations = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Concentrations>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::Concentrations *newConcentrations;
+    newConcentrations = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Concentrations>(ABSTRACTREPO,parent);
     newConcentrations->setQuantity(concentrations->getQuantity());
 
     return newConcentrations;
 }
 
-ezechiel::core::DrugVariate* PredictionSpecCopier::copy(ezechiel::core::DrugVariate* variate, QObject *parent)
+ezechiel::GuiCore::DrugVariate* PredictionSpecCopier::copy(ezechiel::GuiCore::DrugVariate* variate, QObject *parent)
 {
-    ezechiel::core::DrugVariate *newVariate;
-    newVariate = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugVariate>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::DrugVariate *newVariate;
+    newVariate = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugVariate>(ABSTRACTREPO,parent);
     newVariate->setQuantity(copy(variate->getQuantity(), newVariate));
     newVariate->setCovariateId(variate->getCovariateId());
     newVariate->setType(variate->getType());
@@ -197,10 +197,10 @@ ezechiel::core::DrugVariate* PredictionSpecCopier::copy(ezechiel::core::DrugVari
     return newVariate;
 }
 
-ezechiel::core::ADME* PredictionSpecCopier::copy(ezechiel::core::ADME* adme, QObject *parent)
+ezechiel::GuiCore::ADME* PredictionSpecCopier::copy(ezechiel::GuiCore::ADME* adme, QObject *parent)
 {
-    ezechiel::core::ADME *newAdme;
-    newAdme = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ADME>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ADME *newAdme;
+    newAdme = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ADME>(ABSTRACTREPO,parent);
     newAdme->setDefaultIntake(copy(adme->getDefaultIntake(), newAdme));
     newAdme->setDistribution(adme->getDistribution());
     newAdme->setElimination(adme->getElimination());
@@ -209,10 +209,10 @@ ezechiel::core::ADME* PredictionSpecCopier::copy(ezechiel::core::ADME* adme, QOb
     return newAdme;
 }
 
-ezechiel::core::DrugModel* PredictionSpecCopier::copy(ezechiel::core::DrugModel *drug, QObject *parent)
+ezechiel::GuiCore::DrugModel* PredictionSpecCopier::copy(ezechiel::GuiCore::DrugModel *drug, QObject *parent)
 {
-    ezechiel::core::DrugModel *newDrug;
-    newDrug = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugModel>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::DrugModel *newDrug;
+    newDrug = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugModel>(ABSTRACTREPO,parent);
     newDrug->setAdme(copy(drug->getAdme(), newDrug));
     newDrug->setActiveSubstance(copy(drug->getActiveSubstance(), newDrug));
     newDrug->setConcentrations(copy(drug->getConcentrations(), newDrug));
@@ -234,25 +234,25 @@ ezechiel::core::DrugModel* PredictionSpecCopier::copy(ezechiel::core::DrugModel 
 }
 
 
-ezechiel::core::StandardTreatment* PredictionSpecCopier::copy(ezechiel::core::StandardTreatment* treatment, QObject *parent)
+ezechiel::GuiCore::StandardTreatment* PredictionSpecCopier::copy(ezechiel::GuiCore::StandardTreatment* treatment, QObject *parent)
 {
     if (treatment == nullptr)
         return nullptr;
 
-    ezechiel::core::StandardTreatment *newTreatment;
-    newTreatment = ezechiel::core::CoreFactory::createEntity<ezechiel::core::StandardTreatment>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::StandardTreatment *newTreatment;
+    newTreatment = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::StandardTreatment>(ABSTRACTREPO,parent);
     newTreatment->setIsFixedDuration(treatment->getIsFixedDuration());
     newTreatment->setDuration(treatment->getDuration());
     return newTreatment;
 }
 
-ezechiel::core::ActiveSubstance* PredictionSpecCopier::copy(ezechiel::core::ActiveSubstance *drug, QObject *parent)
+ezechiel::GuiCore::ActiveSubstance* PredictionSpecCopier::copy(ezechiel::GuiCore::ActiveSubstance *drug, QObject *parent)
 {
     if (drug == nullptr)
         return nullptr;
 
-    ezechiel::core::ActiveSubstance *newDrug;
-    newDrug = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ActiveSubstance>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ActiveSubstance *newDrug;
+    newDrug = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ActiveSubstance>(ABSTRACTREPO,parent);
     newDrug->setAtc(drug->getAtc());
     newDrug->setBrands(drug->getBrands());
     newDrug->setSubstanceId(drug->getSubstanceId());
@@ -262,10 +262,10 @@ ezechiel::core::ActiveSubstance* PredictionSpecCopier::copy(ezechiel::core::Acti
 
 }
 
-ezechiel::core::DrugTreatment* PredictionSpecCopier::copy(ezechiel::core::DrugTreatment *treatment, QObject *parent)
+ezechiel::GuiCore::DrugTreatment* PredictionSpecCopier::copy(ezechiel::GuiCore::DrugTreatment *treatment, QObject *parent)
 {
-    ezechiel::core::DrugTreatment *newTreatment;
-    newTreatment = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugTreatment>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::DrugTreatment *newTreatment;
+    newTreatment = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugTreatment>(ABSTRACTREPO,parent);
     newTreatment->setCovariates(copy(treatment->getCovariates(), newTreatment));
     newTreatment->setDosages(copy(treatment->getDosages(), newTreatment));
     newTreatment->setAdjustments(copy(treatment->getAdjustments(), newTreatment));
@@ -279,10 +279,10 @@ ezechiel::core::DrugTreatment* PredictionSpecCopier::copy(ezechiel::core::DrugTr
 
 
 
-ezechiel::core::ValidDoses* PredictionSpecCopier::copy(ezechiel::core::ValidDoses* list, QObject *parent)
+ezechiel::GuiCore::ValidDoses* PredictionSpecCopier::copy(ezechiel::GuiCore::ValidDoses* list, QObject *parent)
 {
-    ezechiel::core::ValidDoses *newList;
-    newList = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidDoses>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ValidDoses *newList;
+    newList = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidDoses>(ABSTRACTREPO,parent);
     newList->setAnyDose(list->getAnyDose());
     newList->setQuantity(copy(list->getQuantity(), newList));
     newList->setFromDose(copy(list->getFromDose(), newList));
@@ -295,10 +295,10 @@ ezechiel::core::ValidDoses* PredictionSpecCopier::copy(ezechiel::core::ValidDose
 }
 
 
-ezechiel::core::ErrorModel* PredictionSpecCopier::copy(ezechiel::core::ErrorModel *model, QObject *parent)
+ezechiel::GuiCore::ErrorModel* PredictionSpecCopier::copy(ezechiel::GuiCore::ErrorModel *model, QObject *parent)
 {
-    ezechiel::core::ErrorModel *newModel;
-    newModel = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ErrorModel>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ErrorModel *newModel;
+    newModel = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ErrorModel>(ABSTRACTREPO,parent);
     newModel->setAdditive(model->getAdditive());
     newModel->setProportional(model->getProportional());
 
@@ -306,10 +306,10 @@ ezechiel::core::ErrorModel* PredictionSpecCopier::copy(ezechiel::core::ErrorMode
 }
 
 
-ezechiel::core::Halflife* PredictionSpecCopier::copy(ezechiel::core::Halflife *halflife, QObject *parent)
+ezechiel::GuiCore::Halflife* PredictionSpecCopier::copy(ezechiel::GuiCore::Halflife *halflife, QObject *parent)
 {
-    ezechiel::core::Halflife *newHalflife;
-    newHalflife = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Halflife>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::Halflife *newHalflife;
+    newHalflife = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Halflife>(ABSTRACTREPO,parent);
     newHalflife->setMultiplier(halflife->getMultiplier());
     newHalflife->setUnit(halflife->getUnit());
     newHalflife->setValue(halflife->getValue());
@@ -318,19 +318,19 @@ ezechiel::core::Halflife* PredictionSpecCopier::copy(ezechiel::core::Halflife *h
 }
 
 
-ezechiel::core::ValidInfusion* PredictionSpecCopier::copy(ezechiel::core::ValidInfusion *source, QObject *parent)
+ezechiel::GuiCore::ValidInfusion* PredictionSpecCopier::copy(ezechiel::GuiCore::ValidInfusion *source, QObject *parent)
 {
-    ezechiel::core::ValidInfusion *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusion>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ValidInfusion *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidInfusion>(ABSTRACTREPO,parent);
     target->setQuantity(copy(source->getQuantity(), target));
 
     return target;
 }
 
-ezechiel::core::ValidInfusions* PredictionSpecCopier::copy(ezechiel::core::ValidInfusions *source, QObject *parent)
+ezechiel::GuiCore::ValidInfusions* PredictionSpecCopier::copy(ezechiel::GuiCore::ValidInfusions *source, QObject *parent)
 {
-    ezechiel::core::ValidInfusions *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusions>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ValidInfusions *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidInfusions>(ABSTRACTREPO,parent);
     target->setAny(source->getAny());
     target->setQuantity(copy(source->getQuantity(), target));
     for(int i=0;i<source->size();i++)
@@ -340,19 +340,19 @@ ezechiel::core::ValidInfusions* PredictionSpecCopier::copy(ezechiel::core::Valid
 }
 
 
-ezechiel::core::ValidInterval* PredictionSpecCopier::copy(ezechiel::core::ValidInterval *source, QObject *parent)
+ezechiel::GuiCore::ValidInterval* PredictionSpecCopier::copy(ezechiel::GuiCore::ValidInterval *source, QObject *parent)
 {
-    ezechiel::core::ValidInterval *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInterval>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ValidInterval *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidInterval>(ABSTRACTREPO,parent);
     target->setQuantity(copy(source->getQuantity(), target));
 
     return target;
 }
 
-ezechiel::core::ValidIntervals* PredictionSpecCopier::copy(ezechiel::core::ValidIntervals *source, QObject *parent)
+ezechiel::GuiCore::ValidIntervals* PredictionSpecCopier::copy(ezechiel::GuiCore::ValidIntervals *source, QObject *parent)
 {
-    ezechiel::core::ValidIntervals *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidIntervals>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ValidIntervals *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidIntervals>(ABSTRACTREPO,parent);
     target->setAny(source->getAny());
     target->setQuantity(copy(source->getQuantity(), target));
     for(int i=0;i<source->size();i++)
@@ -363,10 +363,10 @@ ezechiel::core::ValidIntervals* PredictionSpecCopier::copy(ezechiel::core::Valid
 
 
 
-ezechiel::core::Target* PredictionSpecCopier::copy(ezechiel::core::Target* source, QObject *parent)
+ezechiel::GuiCore::Target* PredictionSpecCopier::copy(ezechiel::GuiCore::Target* source, QObject *parent)
 {
-    ezechiel::core::Target *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Target>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::Target *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Target>(ABSTRACTREPO,parent);
     target->setCbest(copy(source->getCbest(), target));
     target->setCmax(copy(source->getCmax(), target));
     target->setCmin(copy(source->getCmin(), target));
@@ -380,40 +380,40 @@ ezechiel::core::Target* PredictionSpecCopier::copy(ezechiel::core::Target* sourc
 }
 
 
-ezechiel::core::TargetList* PredictionSpecCopier::copy(ezechiel::core::TargetList* source, QObject *parent)
+ezechiel::GuiCore::TargetList* PredictionSpecCopier::copy(ezechiel::GuiCore::TargetList* source, QObject *parent)
 {
-    ezechiel::core::TargetList *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::TargetList>(ABSTRACTREPO,parent);
-    foreach(ezechiel::core::Target* t, source->getList())
+    ezechiel::GuiCore::TargetList *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TargetList>(ABSTRACTREPO,parent);
+    foreach(ezechiel::GuiCore::Target* t, source->getList())
         target->append(copy(t, target));
 
     return target;
 }
 
 
-ezechiel::core::CorePatient* PredictionSpecCopier::copy(ezechiel::core::CorePatient* source, QObject *parent)
+ezechiel::GuiCore::CorePatient* PredictionSpecCopier::copy(ezechiel::GuiCore::CorePatient* source, QObject *parent)
 {
-    ezechiel::core::CorePatient *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::CorePatient>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::CorePatient *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::CorePatient>(ABSTRACTREPO,parent);
     // No field in corepatient...
 
     return target;
 }
 
-ezechiel::core::CoreMeasureList* PredictionSpecCopier::copy(ezechiel::core::CoreMeasureList* source, QObject *parent)
+ezechiel::GuiCore::CoreMeasureList* PredictionSpecCopier::copy(ezechiel::GuiCore::CoreMeasureList* source, QObject *parent)
 {
-    ezechiel::core::CoreMeasureList *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::CoreMeasureList>(ABSTRACTREPO,parent);
-    foreach(ezechiel::core::CoreMeasure* t, source->getList())
+    ezechiel::GuiCore::CoreMeasureList *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::CoreMeasureList>(ABSTRACTREPO,parent);
+    foreach(ezechiel::GuiCore::CoreMeasure* t, source->getList())
         target->append(copy(t, target));
 
     return target;
 }
 
-ezechiel::core::CoreMeasure* PredictionSpecCopier::copy(ezechiel::core::CoreMeasure* source, QObject *parent)
+ezechiel::GuiCore::CoreMeasure* PredictionSpecCopier::copy(ezechiel::GuiCore::CoreMeasure* source, QObject *parent)
 {
-    ezechiel::core::CoreMeasure *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::CoreMeasure>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::CoreMeasure *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::CoreMeasure>(ABSTRACTREPO,parent);
     target->setConcentration(copy(source->getConcentration(), target));
     target->setSdrug(source->getSdrug());
     target->setMoment(source->getMoment());
@@ -423,10 +423,10 @@ ezechiel::core::CoreMeasure* PredictionSpecCopier::copy(ezechiel::core::CoreMeas
 }
 
 
-ezechiel::core::ValidDose* PredictionSpecCopier::copy(ezechiel::core::ValidDose* source, QObject *parent)
+ezechiel::GuiCore::ValidDose* PredictionSpecCopier::copy(ezechiel::GuiCore::ValidDose* source, QObject *parent)
 {
-    ezechiel::core::ValidDose *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidDose>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ValidDose *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidDose>(ABSTRACTREPO,parent);
     target->setQuantity(copy(source->getQuantity(), target));
     target->setRoute(copy(source->getRoute(), target));
 
@@ -434,10 +434,10 @@ ezechiel::core::ValidDose* PredictionSpecCopier::copy(ezechiel::core::ValidDose*
 
 }
 
-ezechiel::core::TargetMethod* PredictionSpecCopier::copy(ezechiel::core::TargetMethod* source, QObject *parent)
+ezechiel::GuiCore::TargetMethod* PredictionSpecCopier::copy(ezechiel::GuiCore::TargetMethod* source, QObject *parent)
 {
-    ezechiel::core::TargetMethod *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::TargetMethod>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::TargetMethod *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TargetMethod>(ABSTRACTREPO,parent);
     target->setTargetType(source->getTargetType());
     target->setValue(source->getValue());
 
@@ -446,21 +446,21 @@ ezechiel::core::TargetMethod* PredictionSpecCopier::copy(ezechiel::core::TargetM
 }
 
 
-ezechiel::core::OperationList *PredictionSpecCopier::copy(ezechiel::core::OperationList *source, QObject *parent)
+ezechiel::GuiCore::OperationList *PredictionSpecCopier::copy(ezechiel::GuiCore::OperationList *source, QObject *parent)
 {
-    ezechiel::core::OperationList *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperationList>(ABSTRACTREPO,parent);
-    foreach(ezechiel::core::Operation* t, source->getList())
+    ezechiel::GuiCore::OperationList *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperationList>(ABSTRACTREPO,parent);
+    foreach(ezechiel::GuiCore::Operation* t, source->getList())
         target->append(copy(t, target));
 
     return target;
 }
 
 
-ezechiel::core::Operation *PredictionSpecCopier::copy(ezechiel::core::Operation *source, QObject *parent)
+ezechiel::GuiCore::Operation *PredictionSpecCopier::copy(ezechiel::GuiCore::Operation *source, QObject *parent)
 {
-    ezechiel::core::Operation *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Operation>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::Operation *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Operation>(ABSTRACTREPO,parent);
     target->setFormula(source->getFormula());
     target->setType(source->getType());
 
@@ -468,10 +468,10 @@ ezechiel::core::Operation *PredictionSpecCopier::copy(ezechiel::core::Operation 
 }
 
 
-ezechiel::core::ParameterSet *PredictionSpecCopier::copy(ezechiel::core::ParameterSet *source, QObject *parent)
+ezechiel::GuiCore::ParameterSet *PredictionSpecCopier::copy(ezechiel::GuiCore::ParameterSet *source, QObject *parent)
 {
-    ezechiel::core::ParameterSet *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ParameterSet>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ParameterSet *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ParameterSet>(ABSTRACTREPO,parent);
     target->setTime(source->getTime());
     target->setType(source->type());
     for(int i=0;i<source->getParameters()->getList().size();i++)
@@ -484,21 +484,21 @@ ezechiel::core::ParameterSet *PredictionSpecCopier::copy(ezechiel::core::Paramet
     return target;
 }
 
-ezechiel::core::Parameters *PredictionSpecCopier::copy(ezechiel::core::Parameters *source, QObject *parent)
+ezechiel::GuiCore::Parameters *PredictionSpecCopier::copy(ezechiel::GuiCore::Parameters *source, QObject *parent)
 {
     return source;
-    ezechiel::core::Parameters *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Parameters>(ABSTRACTREPO,parent);
-    foreach(ezechiel::core::Parameter* t, source->getList())
+    ezechiel::GuiCore::Parameters *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Parameters>(ABSTRACTREPO,parent);
+    foreach(ezechiel::GuiCore::Parameter* t, source->getList())
         target->append(copy(t, target));
 
     return target;
 }
 
-ezechiel::core::Parameter *PredictionSpecCopier::copy(ezechiel::core::Parameter *source, QObject *parent)
+ezechiel::GuiCore::Parameter *PredictionSpecCopier::copy(ezechiel::GuiCore::Parameter *source, QObject *parent)
 {
-    ezechiel::core::Parameter *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Parameter>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::Parameter *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Parameter>(ABSTRACTREPO,parent);
     target->setBsv(copy(source->getBsv(), target));
     target->setMax(source->getMax());
     target->setMin(source->getMin());
@@ -512,10 +512,10 @@ ezechiel::core::Parameter *PredictionSpecCopier::copy(ezechiel::core::Parameter 
     return target;
 }
 
-ezechiel::core::Bsv *PredictionSpecCopier::copy(ezechiel::core::Bsv *source, QObject *parent)
+ezechiel::GuiCore::Bsv *PredictionSpecCopier::copy(ezechiel::GuiCore::Bsv *source, QObject *parent)
 {
-    ezechiel::core::Bsv *target;
-    target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Bsv>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::Bsv *target;
+    target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Bsv>(ABSTRACTREPO,parent);
     target->setProportional(source->getProportional());
     target->setStandard(source->getStandard());
 

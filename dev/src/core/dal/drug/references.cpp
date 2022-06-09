@@ -3,7 +3,7 @@
 #include "references.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(Reference,QString, text, Text)
 AUTO_PROPERTY_IMPL(Reference,QString, type, Type)

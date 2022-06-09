@@ -6,7 +6,7 @@ class Chart;
 #include "entity.h"
 #include "reportbuildermodule.h"
 
-class ChartBuilderModule : public ezechiel::core::Entity, public ReportBuilderModule
+class ChartBuilderModule : public ezechiel::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
 

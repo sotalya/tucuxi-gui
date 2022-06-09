@@ -17,7 +17,7 @@
 #include <QFlags>
 #include <QFile>
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 //! Use this macro to send an error and quit (both CLI and Core errors)
 //! doesnt work in static methods
@@ -61,7 +61,7 @@ using namespace ezechiel::core;
 
 namespace ezechiel {
 namespace cliutils {
-class CliMessageHandler : public ezechiel::core::CoreMessageHandler
+class CliMessageHandler : public ezechiel::GuiCore::CoreMessageHandler
 {
     Q_OBJECT
 public:

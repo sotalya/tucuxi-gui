@@ -19,7 +19,7 @@ class CurveModel;
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class Dosage;
 }
 namespace cliutils {
@@ -40,15 +40,15 @@ public:
     bool addMeasure(const QString &firstname, const QString &name, const QString &drugName, const QString &dateStr, const QString &concentrationStr);
     bool addDosage(const QString &firstname, const QString &name, const QString &drugName, const QString &dateStr, const QString &doseStr, const QString &intervalStr);
 
-    bool lastMeasure(Measure * measure, ezechiel::core::ident &patientId);
-    bool lastDosage(ezechiel::core::Dosage* &dosage, ezechiel::core::ident &curveId);
+    bool lastMeasure(Measure * measure, ezechiel::GuiCore::ident &patientId);
+    bool lastDosage(ezechiel::GuiCore::Dosage* &dosage, ezechiel::GuiCore::ident &curveId);
 
 private:
     static const char *const _separator;
 
     bool loadPatients();
     bool patientExists(const QString &name, const QString &firstname) const;
-    ezechiel::core::ident patientId(const QString &name, const QString &firstname) const;
+    ezechiel::GuiCore::ident patientId(const QString &name, const QString &firstname) const;
 
     bool getPatient(const QString &firstname, const QString &name, SharedPatient &patient);
     bool getDrugId(const QString &drugName, QString &drugId);
@@ -56,17 +56,17 @@ private:
     bool getValue(const QString &valueStr, double &value);
     bool getValue(const QString &valueStr, int &value);
 
-    bool setDosage(const ezechiel::core::ident curveId, ezechiel::core::Dosage* &dosage);
-    bool setCurve(const QString drugId, const QString &curveName, const SharedPatient &patient, ezechiel::core::Dosage* &dosage);
+    bool setDosage(const ezechiel::GuiCore::ident curveId, ezechiel::GuiCore::Dosage* &dosage);
+    bool setCurve(const QString drugId, const QString &curveName, const SharedPatient &patient, ezechiel::GuiCore::Dosage* &dosage);
 
-    bool tryRequest(const ezechiel::core::Response &r, const QString &msg);
+    bool tryRequest(const ezechiel::GuiCore::Response &r, const QString &msg);
 
-    QHash<QString, ezechiel::core::ident> _patients;
+    QHash<QString, ezechiel::GuiCore::ident> _patients;
 
     Measure * _lastMeasure;
-    ezechiel::core::Dosage* _lastDosage;
-    ezechiel::core::ident _lastPatientId;
-    ezechiel::core::ident _lastCurveId;
+    ezechiel::GuiCore::Dosage* _lastDosage;
+    ezechiel::GuiCore::ident _lastPatientId;
+    ezechiel::GuiCore::ident _lastCurveId;
 
 };
 } //namespace cliutils

@@ -11,7 +11,7 @@
 #include "core/dal/drug/parameters.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class DrugResponseAnalysis;
 class DrugTreatment;
@@ -61,7 +61,7 @@ private:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::Prediction*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Prediction*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Prediction*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Prediction*>)
 
 #endif // PREDICTION_H

@@ -24,7 +24,7 @@
  * A clinical is a medical information about a patient.
  * Its identifier is unique along the whole software and in the local database.
  */
-class Clinical : public ezechiel::core::Entity {
+class Clinical : public ezechiel::GuiCore::Entity {
     Q_OBJECT
 
     ADMIN_ENTITY_UTILS(Clinical)
@@ -38,14 +38,14 @@ class Clinical : public ezechiel::core::Entity {
 
 public:
 
-    Q_INVOKABLE Clinical(ezechiel::core::AbstractRepository *repository, QObject* parent = 0, const QString &name = "", const QDateTime &date = QDateTime());
-    Q_INVOKABLE Clinical(ezechiel::core::AbstractRepository *repository, QObject* parent, const QString &name, const QDateTime &date, QString value);
+    Q_INVOKABLE Clinical(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent = 0, const QString &name = "", const QDateTime &date = QDateTime());
+    Q_INVOKABLE Clinical(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent, const QString &name, const QDateTime &date, QString value);
 
     QString description() const {return _description;}
     void setDescription(QString description) {_description = description;}
 
-    ezechiel::core::Descriptor descriptor() const {return _descriptor;}
-    void setDescriptor(ezechiel::core::Descriptor descriptor) {_descriptor = descriptor;}
+    ezechiel::GuiCore::Descriptor descriptor() const {return _descriptor;}
+    void setDescriptor(ezechiel::GuiCore::Descriptor descriptor) {_descriptor = descriptor;}
 
     QString toString() const;
     bool isValid () const;
@@ -57,12 +57,12 @@ public:
     bool operator!= (Clinical* ) const;
 
 signals:
-    void descriptorChanged(ezechiel::core::Descriptor);
+    void descriptorChanged(ezechiel::GuiCore::Descriptor);
     void descriptionChanged(QString);
 
 private:
     QString _description;
-    ezechiel::core::Descriptor _descriptor;
+    ezechiel::GuiCore::Descriptor _descriptor;
     bool _valid;
 };
 
@@ -74,7 +74,7 @@ private:
 class ClinicalSet : public QList<Clinical*>
 {
 public :
-    ClinicalSet(ezechiel::core::AbstractRepository* repository, QObject* parent) {}
+    ClinicalSet(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent) {}
     //! Find if a clinical is in the list, and return its place (or -1 if not found).
     int find (const QString &name) const;
     //! Compare the two lists, item by item.

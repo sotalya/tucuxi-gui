@@ -4,7 +4,7 @@
 #define ABSTRACTREPOSITORY_H
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 // #define AbstractRepository Repository
 class AbstractRepository

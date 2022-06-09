@@ -27,10 +27,10 @@
 
 namespace ezechiel {
 namespace apputils {
-ezechiel::core::SecurityManager *AppCore::securityManager()
+ezechiel::GuiCore::SecurityManager *AppCore::securityManager()
 {
     if (!_securityManager)
-        _securityManager = &ezechiel::core::SecurityManager::instance();
+        _securityManager = &ezechiel::GuiCore::SecurityManager::instance();
     return _securityManager;
 
  // TODO Check why this doesn't work (it creates 2 instances)
@@ -44,7 +44,7 @@ AppCore::AppCore() : _securityManager(0), _drugManager(0)
     drugMutex = new QMutex();
     drugPreloadMutex = new QMutex();
 
-    drugloader = new ezechiel::core::ThreadDrugLoader();
+    drugloader = new ezechiel::GuiCore::ThreadDrugLoader();
 }
 
 //Destructs the pseudo-singletons
@@ -91,7 +91,7 @@ void AppCore::preloadDrugs ()
 } //namespace apputils
 } //namespace ezechiel
 
-void ezechiel::core::ThreadDrugLoader::run() {
+void ezechiel::GuiCore::ThreadDrugLoader::run() {
     core->drugMutex->lock();
     core->createDrugManager();
     core->drugMutex->unlock();

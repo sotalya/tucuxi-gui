@@ -10,7 +10,7 @@
 #include "core/dal/uncastedvalue.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(PatientVariate, QDateTime, date, Date)
 AUTO_PROPERTY_IMPL(PatientVariate, QString, valueAsString, ValueAsString)
@@ -27,7 +27,7 @@ PatientVariate::PatientVariate(AbstractRepository *repository, QObject* parent, 
     _uncastedValues(CoreFactory::createEntity<UncastedValueList>(repository, this))
 {
     setId(-1);
-    _quantity = ezechiel::core::CoreFactory::createEntity<OperableAmount>(repository, this);
+    _quantity = ezechiel::GuiCore::CoreFactory::createEntity<OperableAmount>(repository, this);
     _quantity->setValue(0);
 }
 

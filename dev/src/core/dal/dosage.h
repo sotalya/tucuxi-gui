@@ -12,7 +12,7 @@
 #include "core/utils/ezutils.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class UncastedValueList;
 
@@ -182,9 +182,9 @@ private:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::Dosage*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Dosage*>)
-Q_DECLARE_METATYPE(ezechiel::core::DosageHistory*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Dosage*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Dosage*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::DosageHistory*)
 //Q_DECLARE_METATYPE(QList<QObject*>)
 
 #endif // DOSAGE_H

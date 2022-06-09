@@ -18,7 +18,7 @@ ReplyRequestXmlMessage::~ReplyRequestXmlMessage()
 
 QString ReplyRequestXmlMessage::schemaPath() const
 {
-    return ezechiel::core::XmlValidator::Reply_Request;
+    return ezechiel::GuiCore::XmlValidator::Reply_Request;
 }
 
 QString ReplyRequestXmlMessage::messageType() const

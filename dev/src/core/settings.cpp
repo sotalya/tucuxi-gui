@@ -5,7 +5,7 @@
 #include <QMutexLocker>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 Settings &Settings::getInstance()

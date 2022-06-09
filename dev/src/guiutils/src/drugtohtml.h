@@ -6,7 +6,7 @@
 #include <QString>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class DrugModel;
 class ActiveSubstance;
 }
@@ -17,8 +17,8 @@ class DrugToHtml
 public:
     DrugToHtml();
 
-    QString drugToHtml(const ezechiel::core::DrugModel* drug);
-    QString activeSubstanceToHtml(const ezechiel::core::ActiveSubstance* drug);
+    QString drugToHtml(const ezechiel::GuiCore::DrugModel* drug);
+    QString activeSubstanceToHtml(const ezechiel::GuiCore::ActiveSubstance* drug);
 };
 
 #endif // DRUGTOHTML_H

@@ -15,7 +15,7 @@
 #include "core/utils/version.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 // Static server address to use
 #define SERVER "www.ezechiel.ch"

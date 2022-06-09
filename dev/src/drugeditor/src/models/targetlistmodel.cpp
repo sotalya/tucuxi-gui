@@ -9,7 +9,7 @@
 #include "apputilsrepository.h"
 #include "results.h"
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 TargetListModel::TargetListModel(QObject *parent) :
     AbstractEntityListModel(parent),
@@ -106,7 +106,7 @@ int TargetListModel::rowCount(const QModelIndex &parent) const
     return _targets->count();
 }
 
-void TargetListModel::setModelData(QList<ezechiel::core::Target*> *targets)
+void TargetListModel::setModelData(QList<ezechiel::GuiCore::Target*> *targets)
 {
     beginResetModel();
     _targets = targets;
@@ -115,10 +115,10 @@ void TargetListModel::setModelData(QList<ezechiel::core::Target*> *targets)
 }
 
 void TargetListModel::setDefaultUnit(QString unitname) {
-    _defaultCUnit = ezechiel::core::Unit(unitname);
+    _defaultCUnit = ezechiel::GuiCore::Unit(unitname);
 }
 
-void TargetListModel::setModelData(ezechiel::core::Drug* drug)
+void TargetListModel::setModelData(ezechiel::GuiCore::Drug* drug)
 {
     _drug = drug;
     emit updateStatus();
@@ -137,16 +137,16 @@ void TargetListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
     case TypeRole:
         switch (value.toInt()) {
         case 0:
-            _targets->at(row)->setType(ezechiel::core::ResidualTarget);
+            _targets->at(row)->setType(ezechiel::GuiCore::ResidualTarget);
             break;
         case 1:
-            _targets->at(row)->setType(ezechiel::core::PeakTarget);
+            _targets->at(row)->setType(ezechiel::GuiCore::PeakTarget);
             break;
         case 2:
-            _targets->at(row)->setType(ezechiel::core::MeanTarget);
+            _targets->at(row)->setType(ezechiel::GuiCore::MeanTarget);
             break;
         default:
-            _targets->at(row)->setType(ezechiel::core::UnknownTarget);
+            _targets->at(row)->setType(ezechiel::GuiCore::UnknownTarget);
             break;
         }
         break;
@@ -191,7 +191,7 @@ void TargetListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
     emit updateStatus();
 }
 
-void TargetListModel::insertRowsImpl(int at, int count, const ezechiel::core::SharedEntitySet &entities)
+void TargetListModel::insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
@@ -211,7 +211,7 @@ void TargetListModel::insertRowsImpl(int at, int count, const ezechiel::core::Sh
         //Setup or retrieve the dosage
         if (entities.isEmpty()) {
             target = CoreFactory::createEntity<Target>(ABSTRACTREPO);
-            target->setType(ezechiel::core::ResidualTarget);
+            target->setType(ezechiel::GuiCore::ResidualTarget);
 //            target->setCunit(!_drug->getTargets()->isEmpty() ? _drug->getTargets()->first()->getCunit() :_drug->getResults()->getUnit());
             target->getCmin()->setUnit(_defaultCUnit);
             target->getCmax()->setUnit(_defaultCUnit);
@@ -224,12 +224,12 @@ void TargetListModel::insertRowsImpl(int at, int count, const ezechiel::core::Sh
     emit updateStatus();
 }
 
-ezechiel::core::SharedEntitySet TargetListModel::removeRowsImpl(int at, int count)
+ezechiel::GuiCore::SharedEntitySet TargetListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    ezechiel::core::SharedEntitySet removed;
+    ezechiel::GuiCore::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _targets->takeAt(at);
 

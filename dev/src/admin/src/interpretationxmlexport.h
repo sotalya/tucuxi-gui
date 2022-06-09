@@ -20,7 +20,7 @@ class Patient;
 class Person;
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class ActiveSubstance;
 class Dosage;
 class AdjustmentDosage;
@@ -56,8 +56,8 @@ protected:
 
     bool save(InterpretationAnalysis *analysis);
     bool save(InterpretationRequest *request);
-    bool save(ezechiel::core::DrugResponseAnalysis *drugResponseAnalysis);
-    bool save(ezechiel::core::DrugTreatment *drugResponseAnalysis);
+    bool save(ezechiel::GuiCore::DrugResponseAnalysis *drugResponseAnalysis);
+    bool save(ezechiel::GuiCore::DrugTreatment *drugResponseAnalysis);
     bool save(Practician *practician, QString name);
     bool save(ValidationStatus *validationStatus);
     bool save(Patient *patient);
@@ -67,22 +67,22 @@ protected:
 
 
     QString writeDate(QDateTime date);
-    bool save(ezechiel::core::Dosage *dosage, const QString &tagName = "dosage");
-    bool save(ezechiel::core::AdjustmentDosage *dosage, const QString &tagName = "dosage");
-    bool save(ezechiel::core::DosageHistory *history, const QString &tagName = "dosageHistory");
-    bool save(ezechiel::core::PatientVariateList *list);
-    bool save(ezechiel::core::TargetList *list);
-    bool save(ezechiel::core::CoreMeasureList *list);
-    bool save(ezechiel::core::UncastedValueList *list);
-    bool save(ezechiel::core::ADME *adme);
-    bool save(ezechiel::core::ValidDoses *doses);
-    bool save(ezechiel::core::ValidInfusions *infusions);
-    bool save(ezechiel::core::ValidIntervals *intervals);
-    bool save(ezechiel::core::DrugVariateList *list);
-    bool save(ezechiel::core::ParameterSet *set);
-    bool save(ezechiel::core::OperationList *list);
-    bool saveIdentifiableAmount(const QString &tagName, ezechiel::core::IdentifiableAmount *amount);
-    bool saveOperableAmount(const QString &tagName, ezechiel::core::OperableAmount *amount);
+    bool save(ezechiel::GuiCore::Dosage *dosage, const QString &tagName = "dosage");
+    bool save(ezechiel::GuiCore::AdjustmentDosage *dosage, const QString &tagName = "dosage");
+    bool save(ezechiel::GuiCore::DosageHistory *history, const QString &tagName = "dosageHistory");
+    bool save(ezechiel::GuiCore::PatientVariateList *list);
+    bool save(ezechiel::GuiCore::TargetList *list);
+    bool save(ezechiel::GuiCore::CoreMeasureList *list);
+    bool save(ezechiel::GuiCore::UncastedValueList *list);
+    bool save(ezechiel::GuiCore::ADME *adme);
+    bool save(ezechiel::GuiCore::ValidDoses *doses);
+    bool save(ezechiel::GuiCore::ValidInfusions *infusions);
+    bool save(ezechiel::GuiCore::ValidIntervals *intervals);
+    bool save(ezechiel::GuiCore::DrugVariateList *list);
+    bool save(ezechiel::GuiCore::ParameterSet *set);
+    bool save(ezechiel::GuiCore::OperationList *list);
+    bool saveIdentifiableAmount(const QString &tagName, ezechiel::GuiCore::IdentifiableAmount *amount);
+    bool saveOperableAmount(const QString &tagName, ezechiel::GuiCore::OperableAmount *amount);
 
     QXmlStreamWriter writer;
 

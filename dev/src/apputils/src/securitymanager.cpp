@@ -13,7 +13,7 @@
 #include <QRegExpValidator>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //The unique instance
 SecurityManager *SecurityManager::_instance = 0;
@@ -396,7 +396,7 @@ bool SecurityManager::isEncrypted() const
     Response response = APPUTILSREPO->isEncrypted(status);
 
     if (response.error != NoError)
-        LOG(QtCriticalMsg, ezechiel::core::DATAERROR, tr("Could not retrieve the database encryption status. The database returned the following error:\n%1").arg(response.message));
+        LOG(QtCriticalMsg, ezechiel::GuiCore::DATAERROR, tr("Could not retrieve the database encryption status. The database returned the following error:\n%1").arg(response.message));
 
     //Return the encryption status
     return status;

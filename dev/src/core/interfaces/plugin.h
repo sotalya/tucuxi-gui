@@ -10,7 +10,7 @@
 //#include "core/interfaces/optionable.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 

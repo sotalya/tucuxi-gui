@@ -103,7 +103,7 @@ bool DrugVariateListModel::removeRows(int row, int count, const QModelIndex &par
     return false;
 }
 
-void DrugVariateListModel::setModelData(ezechiel::core::DrugVariateList *drugVariates)
+void DrugVariateListModel::setModelData(ezechiel::GuiCore::DrugVariateList *drugVariates)
 {
     beginResetModel();
     _drugVariates = drugVariates;

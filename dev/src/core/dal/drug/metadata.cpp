@@ -5,7 +5,7 @@
 #include "references.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 AUTO_PROPERTY_IMPL(MetaData,EditorList*,editors,Editors)

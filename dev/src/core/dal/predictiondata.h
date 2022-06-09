@@ -11,7 +11,7 @@
 #include "core/dal/drug/parameters.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class Point {
 public:
@@ -58,14 +58,14 @@ QML_POINTERLIST_CLASS_DECL(FancyPoints, FancyPoint)
 
 }
 }
-Q_DECLARE_METATYPE(ezechiel::core::Point)
-Q_DECLARE_METATYPE(ezechiel::core::Points*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Point)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Points*)
 
-Q_DECLARE_METATYPE(ezechiel::core::FancyPoint*)
-Q_DECLARE_METATYPE(ezechiel::core::FancyPoints*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::FancyPoint*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::FancyPoints*)
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 struct CycleStatistics
 {
@@ -271,6 +271,6 @@ private:
 
 }
 }
-Q_DECLARE_METATYPE(ezechiel::core::PredictionData*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::PredictionData*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::PredictionData*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::PredictionData*>)
 #endif // PREDICTIONDATA_H

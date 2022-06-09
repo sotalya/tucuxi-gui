@@ -9,7 +9,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class PredictionSpec;
 class DrugResponseAnalysis;
 class DrugTreatment;
@@ -47,7 +47,7 @@ class PredictionSpecImporter
 public:
     PredictionSpecImporter();
     // The only method to be public
-    ezechiel::core::PredictionSpec *load(const QByteArray &data);
+    ezechiel::GuiCore::PredictionSpec *load(const QByteArray &data);
 
 protected:
     QXmlStreamReader reader;
@@ -60,39 +60,39 @@ protected:
 
     void checkReaderError();
 
-    ezechiel::core::PredictionSpec *loadPredictionSpec(const QString &tagName, QObject *parent = nullptr);
+    ezechiel::GuiCore::PredictionSpec *loadPredictionSpec(const QString &tagName, QObject *parent = nullptr);
     std::vector<double> loadPercentiles(const QString &tagName, QObject *parent);
-    ezechiel::core::DrugResponseAnalysis *loadDrugResponseAnalysis(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::DrugResponseAnalysis *loadDrugResponseAnalysis(const QString &tagName, QObject *parent);
 
-    ezechiel::core::DrugModel *loadDrugModel(const QString &tagName, QObject *parent);
-    ezechiel::core::DrugTreatment *loadDrugTreatment(const QString &tagName, QObject *parent);
-    ezechiel::core::OperationList *loadOperations(const QString &tagName, QObject *parent);
-    ezechiel::core::IdentifiableAmount *loadIdentifiableAmount(const QString &tagName, QObject *parent);
-    ezechiel::core::OperableAmount *loadOperableAmount(const QString &tagName, QObject *parent);
-    ezechiel::core::StandardTreatment *loadStandardTreatment(const QString &tagName, QObject *parent);
-    ezechiel::core::ValidDoses *loadValidDoses(const QString &tagName, QObject *parent);
-    ezechiel::core::ValidIntervals *loadValidIntervals(const QString &tagName, QObject *parent);
-    ezechiel::core::ValidInfusions *loadValidInfusions(const QString &tagName, QObject *parent);
-    ezechiel::core::PatientVariateList *loadPatientVariates(const QString &tagName, QObject *parent);
-    ezechiel::core::PatientVariate *loadPatientVariate(const QString &tagName, QObject *parent);
-    ezechiel::core::DosageHistory *loadDosageHistory(const QString &tagName, QObject *parent);
-    ezechiel::core::Dosage *loadDosage(const QString &tagName, QObject *parent);
-    ezechiel::core::ADME *loadAdme(const QString &tagName, QObject *parent);
-    ezechiel::core::TargetList *loadTargets(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::DrugModel *loadDrugModel(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::DrugTreatment *loadDrugTreatment(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::OperationList *loadOperations(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::IdentifiableAmount *loadIdentifiableAmount(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::OperableAmount *loadOperableAmount(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::StandardTreatment *loadStandardTreatment(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::ValidDoses *loadValidDoses(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::ValidIntervals *loadValidIntervals(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::ValidInfusions *loadValidInfusions(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::PatientVariateList *loadPatientVariates(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::PatientVariate *loadPatientVariate(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::DosageHistory *loadDosageHistory(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::Dosage *loadDosage(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::ADME *loadAdme(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::TargetList *loadTargets(const QString &tagName, QObject *parent);
 
-    ezechiel::core::Target *loadTarget(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::Target *loadTarget(const QString &tagName, QObject *parent);
 
-    ezechiel::core::DrugVariateList *loadCovariates(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::DrugVariateList *loadCovariates(const QString &tagName, QObject *parent);
 
-    ezechiel::core::DrugVariate *loadCovariate(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::DrugVariate *loadCovariate(const QString &tagName, QObject *parent);
 
-    ezechiel::core::ErrorModel *loadErrorModel(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::ErrorModel *loadErrorModel(const QString &tagName, QObject *parent);
 
-    ezechiel::core::ParameterSet *loadParameters(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::ParameterSet *loadParameters(const QString &tagName, QObject *parent);
 
-    ezechiel::core::Parameter *loadParameter(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::Parameter *loadParameter(const QString &tagName, QObject *parent);
 
-    ezechiel::core::Bsv *loadBsv(const QString &tagName, QObject *parent);
+    ezechiel::GuiCore::Bsv *loadBsv(const QString &tagName, QObject *parent);
 
     QString extractor(QXmlStreamAttributes *attributes = nullptr,bool readText = true);
 

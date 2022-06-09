@@ -4,7 +4,7 @@
 #define FAKEPATIENTSCREATOR_H
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class CorePatientList;
 }
 
@@ -15,7 +15,7 @@ class FakePatientsCreator
 public:
     FakePatientsCreator();
 
-    void createFakePatients(ezechiel::core::CorePatientList* patientsList);
+    void createFakePatients(ezechiel::GuiCore::CorePatientList* patientsList);
 };
 
 #endif // FAKEPATIENTSCREATOR_H

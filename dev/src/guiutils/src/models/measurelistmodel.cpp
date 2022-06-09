@@ -14,7 +14,7 @@ MeasureListModel::MeasureListModel(QObject *parent) :
     AbstractEntityListModel(parent),
     _measures(0),
     _drug(),
-    _defaultUnit(ezechiel::core::Unit("mg/l")),
+    _defaultUnit(ezechiel::GuiCore::Unit("mg/l")),
     _roleNames()
 {
     init();
@@ -24,7 +24,7 @@ MeasureListModel::MeasureListModel(QUndoStack *undoStack, QObject *parent) :
     AbstractEntityListModel(undoStack, parent),
     _measures(0),
     _drug(),
-    _defaultUnit(ezechiel::core::Unit("mg/l")),
+    _defaultUnit(ezechiel::GuiCore::Unit("mg/l")),
     _roleNames()
 {
     init();
@@ -85,25 +85,25 @@ int MeasureListModel::rowCount(const QModelIndex &parent) const
     }
 }
 
-void MeasureListModel::setModelData(QList<ezechiel::core::CoreMeasure *> *measures)
+void MeasureListModel::setModelData(QList<ezechiel::GuiCore::CoreMeasure *> *measures)
 {
     beginResetModel();
     _measures = measures;
-    foreach (ezechiel::core::CoreMeasure* cm, *measures) {
+    foreach (ezechiel::GuiCore::CoreMeasure* cm, *measures) {
         cm->getConcentration()->convert(_defaultUnit);
     }
     endResetModel();
     emit updateStatus();
 }
 
-void MeasureListModel::setModelData(ezechiel::core::DrugModel* drug)
+void MeasureListModel::setModelData(ezechiel::GuiCore::DrugModel* drug)
 {
     _drug = drug;
     emit updateStatus();
 }
 
 void MeasureListModel::setDefaultUnit(QString unitname) {
-    _defaultUnit = ezechiel::core::Unit(unitname);
+    _defaultUnit = ezechiel::GuiCore::Unit(unitname);
 }
 
 void MeasureListModel::setDataImpl(const QModelIndex &index, const QVariant &value, int role)
@@ -120,7 +120,7 @@ void MeasureListModel::setDataImpl(const QModelIndex &index, const QVariant &val
         static_cast<Measure*>(_measures->at(row))->sampleID(value.toString());
         break;
     case UnitRole:
-        _measures->at(row)->getConcentration()->convert(ezechiel::core::Unit(value.toString()));
+        _measures->at(row)->getConcentration()->convert(ezechiel::GuiCore::Unit(value.toString()));
         break;
     case ValueRole:
         _measures->at(row)->getConcentration()->setValue(value.toDouble());
@@ -138,7 +138,7 @@ void MeasureListModel::setDataImpl(const QModelIndex &index, const QVariant &val
     emit updateStatus();
 }
 
-void MeasureListModel::insertRowsImpl(int at, int count, const ezechiel::core::SharedEntitySet &entities)
+void MeasureListModel::insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
@@ -164,12 +164,12 @@ void MeasureListModel::insertRowsImpl(int at, int count, const ezechiel::core::S
     emit updateStatus();
 }
 
-ezechiel::core::SharedEntitySet MeasureListModel::removeRowsImpl(int at, int count)
+ezechiel::GuiCore::SharedEntitySet MeasureListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    ezechiel::core::SharedEntitySet removed;
+    ezechiel::GuiCore::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _measures->takeAt(at);
 

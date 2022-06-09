@@ -34,14 +34,14 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(ezechiel::core::PatientVariate* covariate);
+    void setModelData(ezechiel::GuiCore::PatientVariate* covariate);
 
 private:
     virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
 
     void init();
 
-    ezechiel::core::PatientVariate* _covariate;
+    ezechiel::GuiCore::PatientVariate* _covariate;
     QHash<int, QByteArray> _roleNames;
 };
 

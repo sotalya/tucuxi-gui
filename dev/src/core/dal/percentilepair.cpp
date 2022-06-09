@@ -3,7 +3,7 @@
 #include "percentilepair.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 QML_POINTERLIST_CLASS_IMPL(PercentileDataList, PercentileData)
 

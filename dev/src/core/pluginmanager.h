@@ -55,7 +55,7 @@
 #include "core/utils/ezutils.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 /** Plugin Manager
  * \ingroup manager

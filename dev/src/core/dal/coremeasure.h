@@ -10,7 +10,7 @@
 #include "core/dal/entity.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class UncastedValueList;
 
@@ -43,9 +43,9 @@ QML_POINTERLIST_CLASS_DECL(CoreMeasureList, CoreMeasure)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::CoreMeasure*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::CoreMeasure*>)
-Q_DECLARE_METATYPE(ezechiel::core::CoreMeasureList*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::CoreMeasure*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::CoreMeasure*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::CoreMeasureList*)
 
 
 #endif // MEASURE_H

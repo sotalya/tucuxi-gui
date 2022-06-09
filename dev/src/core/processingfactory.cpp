@@ -16,7 +16,7 @@ ProcessingFactory::ProcessingFactory()
 
 }
 
-ezechiel::core::ProcessingInterface *ProcessingFactory::createProcessing()
+ezechiel::GuiCore::ProcessingInterface *ProcessingFactory::createProcessing()
 {
 #ifdef COMPILE_WITH_TUCUCORE
 #ifdef COMPILE_WITH_COMPARATOR
@@ -30,7 +30,7 @@ ezechiel::core::ProcessingInterface *ProcessingFactory::createProcessing()
 }
 
 
-ezechiel::core::ProcessingInterface *ProcessingFactory::createProcessing(std::string what)
+ezechiel::GuiCore::ProcessingInterface *ProcessingFactory::createProcessing(std::string what)
 {
     if (what == "comparator") {
 #ifdef COMPILE_WITH_TUCUCORE

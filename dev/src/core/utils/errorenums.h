@@ -7,7 +7,7 @@
 #include <QVariant>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 

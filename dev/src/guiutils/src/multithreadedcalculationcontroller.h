@@ -40,30 +40,30 @@ public:
     virtual ~MultiThreadedCalculationController();
 
 public slots:
-    void computePopPred(ezechiel::core::PredictionSpec*);
-    void computePopPerc(ezechiel::core::PredictionSpec*);
-    void computeAprPred(ezechiel::core::PredictionSpec*);
-    void computeAprPerc(ezechiel::core::PredictionSpec*);
-    void computeApoPred(ezechiel::core::PredictionSpec*);
-    void computeApoPerc(ezechiel::core::PredictionSpec*);
-    void computeRevPred(ezechiel::core::PredictionSpec*);
-    void computeAdjPred(ezechiel::core::PredictionSpec*);
-    void computeAdjPerc(ezechiel::core::PredictionSpec*);
+    void computePopPred(ezechiel::GuiCore::PredictionSpec*);
+    void computePopPerc(ezechiel::GuiCore::PredictionSpec*);
+    void computeAprPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeAprPerc(ezechiel::GuiCore::PredictionSpec*);
+    void computeApoPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeApoPerc(ezechiel::GuiCore::PredictionSpec*);
+    void computeRevPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeAdjPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeAdjPerc(ezechiel::GuiCore::PredictionSpec*);
     void abortAll();
 
     void intEngage();
     void intDisengage();
 
 signals:
-    void sig_updatePopPred(ezechiel::core::PredictionSpec*);
-    void sig_updatePopPerc(ezechiel::core::PredictionSpec*);
-    void sig_updateAprPred(ezechiel::core::PredictionSpec*);
-    void sig_updateAprPerc(ezechiel::core::PredictionSpec*);
-    void sig_updateApoPred(ezechiel::core::PredictionSpec*);
-    void sig_updateApoPerc(ezechiel::core::PredictionSpec*);
-    void sig_updateRevPred(ezechiel::core::PredictionSpec*);
-    void sig_updateAdjPred(ezechiel::core::PredictionSpec*);
-    void sig_updateAdjPerc(ezechiel::core::PredictionSpec*);
+    void sig_updatePopPred(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updatePopPerc(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateAprPred(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateAprPerc(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateApoPred(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateApoPerc(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateRevPred(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateAdjPred(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateAdjPerc(ezechiel::GuiCore::PredictionSpec*);
 
 private:
 

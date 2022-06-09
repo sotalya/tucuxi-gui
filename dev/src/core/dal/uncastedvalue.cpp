@@ -3,10 +3,10 @@
 #include "core/dal/uncastedvalue.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
-Q_INVOKABLE UncastedValue::UncastedValue(ezechiel::core::AbstractRepository *repository, QObject *parent)
+Q_INVOKABLE UncastedValue::UncastedValue(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent)
     : Entity(repository, parent), _field(""), _text(""), _comment(""), _status(UncastedStatus::Uncasted), _validated(false)
 {
 

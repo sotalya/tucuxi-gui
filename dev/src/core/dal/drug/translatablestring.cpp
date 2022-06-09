@@ -7,7 +7,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 typedef QMap<QString,QString> QStringTranslation;
 

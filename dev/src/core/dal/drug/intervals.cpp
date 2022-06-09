@@ -3,7 +3,7 @@
 #include "core/dal/drug/intervals.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(ValidInterval, IdentifiableAmount*, quantity, Quantity)
 

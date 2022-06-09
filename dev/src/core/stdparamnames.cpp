@@ -4,7 +4,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 QList<AbstractStdParamNameHandler*> StdParamNames::handlersList;

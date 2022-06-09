@@ -22,84 +22,84 @@
 #define ADMINREPO (dynamic_cast<StdAdminDbInterface*>(ABSTRACTREPO))
 
 
-class StdAdminDbInterface : public ezechiel::core::AbstractRepository
+class StdAdminDbInterface : public ezechiel::GuiCore::AbstractRepository
 {
 public:
 
-    virtual bool tryRequest(const ezechiel::core::Response&, const QString&, QString&) = 0;
+    virtual bool tryRequest(const ezechiel::GuiCore::Response&, const QString&, QString&) = 0;
 
-    virtual ezechiel::core::Response getPatientFromId(const int &id, SharedPatient &patient) = 0;
-//    virtual ezechiel::core::Response getPatient (const QString &externalId, SharedPatient &patient) = 0;
-    virtual ezechiel::core::Response getCorePatient (const int &id, ezechiel::core::CorePatient* corepatient) = 0;
-    virtual ezechiel::core::Response setPatient (SharedPatient &patient) = 0;
-    virtual ezechiel::core::Response deletePatient (SharedPatient &id) = 0;
-    virtual ezechiel::core::Response getPatientsList (QList<SharedPatient> &list) = 0;
+    virtual ezechiel::GuiCore::Response getPatientFromId(const int &id, SharedPatient &patient) = 0;
+//    virtual ezechiel::GuiCore::Response getPatient (const QString &externalId, SharedPatient &patient) = 0;
+    virtual ezechiel::GuiCore::Response getCorePatient (const int &id, ezechiel::GuiCore::CorePatient* corepatient) = 0;
+    virtual ezechiel::GuiCore::Response setPatient (SharedPatient &patient) = 0;
+    virtual ezechiel::GuiCore::Response deletePatient (SharedPatient &id) = 0;
+    virtual ezechiel::GuiCore::Response getPatientsList (QList<SharedPatient> &list) = 0;
 
-    virtual ezechiel::core::Response getLocationFromId(const int &id, Location* location) = 0;
-    virtual ezechiel::core::Response setLocation (Location* location) = 0;
-    virtual ezechiel::core::Response deleteLocation (const int &id) = 0;
-    virtual ezechiel::core::Response getLocationsList(QList<Location*> &locations) = 0;
+    virtual ezechiel::GuiCore::Response getLocationFromId(const int &id, Location* location) = 0;
+    virtual ezechiel::GuiCore::Response setLocation (Location* location) = 0;
+    virtual ezechiel::GuiCore::Response deleteLocation (const int &id) = 0;
+    virtual ezechiel::GuiCore::Response getLocationsList(QList<Location*> &locations) = 0;
 
-    virtual ezechiel::core::Response getPracticianFromId(const int &id, SharedPractician &practician) = 0;
-//    virtual ezechiel::core::Response getPractician (const QString &externalId, SharedPractician &practician) = 0;
-    virtual ezechiel::core::Response setPractician (SharedPractician &practician) = 0;
-    virtual ezechiel::core::Response deletePractician (const int &id) = 0;
-    virtual ezechiel::core::Response getPracticiansList (QList<SharedPractician> &list) = 0;
+    virtual ezechiel::GuiCore::Response getPracticianFromId(const int &id, SharedPractician &practician) = 0;
+//    virtual ezechiel::GuiCore::Response getPractician (const QString &externalId, SharedPractician &practician) = 0;
+    virtual ezechiel::GuiCore::Response setPractician (SharedPractician &practician) = 0;
+    virtual ezechiel::GuiCore::Response deletePractician (const int &id) = 0;
+    virtual ezechiel::GuiCore::Response getPracticiansList (QList<SharedPractician> &list) = 0;
 
-    virtual ezechiel::core::Response getInstituteFromId(const int &id, SharedInstitute &institute) = 0;
-//    virtual ezechiel::core::Response getInstitute (const QString &externalId, SharedInstitute &institute) = 0;
-    virtual ezechiel::core::Response setInstitute (SharedInstitute &institute) = 0;
-    virtual ezechiel::core::Response deleteInstitute (const int &id) = 0;
-    virtual ezechiel::core::Response getInstitutesList (QList<SharedInstitute> &list) = 0;
+    virtual ezechiel::GuiCore::Response getInstituteFromId(const int &id, SharedInstitute &institute) = 0;
+//    virtual ezechiel::GuiCore::Response getInstitute (const QString &externalId, SharedInstitute &institute) = 0;
+    virtual ezechiel::GuiCore::Response setInstitute (SharedInstitute &institute) = 0;
+    virtual ezechiel::GuiCore::Response deleteInstitute (const int &id) = 0;
+    virtual ezechiel::GuiCore::Response getInstitutesList (QList<SharedInstitute> &list) = 0;
 
-//    virtual ezechiel::core::Response getPerson (const int &id, SharedPerson &person) = 0;
-//    virtual ezechiel::core::Response setPerson (SharedPerson &person) = 0;
-//    virtual ezechiel::core::Response deletePerson (const int &id) = 0;
-//    virtual ezechiel::core::Response getPersonsList(QList<SharedPerson> &persons) = 0;
+//    virtual ezechiel::GuiCore::Response getPerson (const int &id, SharedPerson &person) = 0;
+//    virtual ezechiel::GuiCore::Response setPerson (SharedPerson &person) = 0;
+//    virtual ezechiel::GuiCore::Response deletePerson (const int &id) = 0;
+//    virtual ezechiel::GuiCore::Response getPersonsList(QList<SharedPerson> &persons) = 0;
 
-//    virtual ezechiel::core::Response getPredictionFromId(int, SharedPrediction &) = 0;
-//    virtual ezechiel::core::Response setPrediction(SharedPrediction &) = 0;
-//    virtual ezechiel::core::Response getPredictionsList(QList<SharedPrediction>&) = 0;
-//    virtual ezechiel::core::Response getPredictionsList(QList<int>&, QStringList&) = 0;
-//    virtual ezechiel::core::Response getPredictionsList(QList<int>&, const ident&, const QString&) = 0;
-//    virtual ezechiel::core::Response getPredictionsList(QList<SharedPrediction>&, const ident&, const QString&) = 0;
-//    virtual ezechiel::core::Response deletePrediction(SharedPrediction&) = 0;
-//    virtual ezechiel::core::Response deletePrediction(int) = 0;
+//    virtual ezechiel::GuiCore::Response getPredictionFromId(int, SharedPrediction &) = 0;
+//    virtual ezechiel::GuiCore::Response setPrediction(SharedPrediction &) = 0;
+//    virtual ezechiel::GuiCore::Response getPredictionsList(QList<SharedPrediction>&) = 0;
+//    virtual ezechiel::GuiCore::Response getPredictionsList(QList<int>&, QStringList&) = 0;
+//    virtual ezechiel::GuiCore::Response getPredictionsList(QList<int>&, const ident&, const QString&) = 0;
+//    virtual ezechiel::GuiCore::Response getPredictionsList(QList<SharedPrediction>&, const ident&, const QString&) = 0;
+//    virtual ezechiel::GuiCore::Response deletePrediction(SharedPrediction&) = 0;
+//    virtual ezechiel::GuiCore::Response deletePrediction(int) = 0;
 
-    virtual ezechiel::core::Response getMeasureFromId(const int&, Measure * ) = 0;
-    virtual ezechiel::core::Response setMeasure(Measure * ) = 0;
-    virtual ezechiel::core::Response setMeasure(const int&, Measure * ) = 0;
-    virtual ezechiel::core::Response getMeasuresList(QList<Measure *>&) = 0;
-    virtual ezechiel::core::Response deleteMeasure(Measure *) = 0;
-    virtual ezechiel::core::Response deleteMeasure(const int&) = 0;
-    virtual ezechiel::core::Response getMeasuresFromPatientAndDrug(const int&, const QString&, QList<Measure *>&) = 0;
-    virtual ezechiel::core::Response getMeasuresFromPatientAndDrug(const int&, const int&, QList<Measure *>&) = 0;
-    virtual ezechiel::core::Response getMeasuresByDate(const int&, QList<Measure *>&) = 0;
+    virtual ezechiel::GuiCore::Response getMeasureFromId(const int&, Measure * ) = 0;
+    virtual ezechiel::GuiCore::Response setMeasure(Measure * ) = 0;
+    virtual ezechiel::GuiCore::Response setMeasure(const int&, Measure * ) = 0;
+    virtual ezechiel::GuiCore::Response getMeasuresList(QList<Measure *>&) = 0;
+    virtual ezechiel::GuiCore::Response deleteMeasure(Measure *) = 0;
+    virtual ezechiel::GuiCore::Response deleteMeasure(const int&) = 0;
+    virtual ezechiel::GuiCore::Response getMeasuresFromPatientAndDrug(const int&, const QString&, QList<Measure *>&) = 0;
+    virtual ezechiel::GuiCore::Response getMeasuresFromPatientAndDrug(const int&, const int&, QList<Measure *>&) = 0;
+    virtual ezechiel::GuiCore::Response getMeasuresByDate(const int&, QList<Measure *>&) = 0;
 
-    virtual ezechiel::core::Response getPatientVariateFromId(const int&, ezechiel::core::PatientVariate*) = 0;
-    virtual ezechiel::core::Response setPatientVariate(ezechiel::core::PatientVariate*) = 0;
-    virtual ezechiel::core::Response setPatientVariate(const int&, ezechiel::core::PatientVariate*) = 0;
-    virtual ezechiel::core::Response getPatientVariatesofPatient(const int&, QList<ezechiel::core::PatientVariate*>&) = 0;
-    virtual ezechiel::core::Response getPatientVariatesList(QList<ezechiel::core::PatientVariate*>&) = 0;
-    virtual ezechiel::core::Response getPatientVariatesByDate(const int&, QList<ezechiel::core::PatientVariate*>&) = 0;
-    virtual ezechiel::core::Response getPatientVariatesOfNames(const int&, QStringList&, QList<ezechiel::core::PatientVariate*>&) = 0;
-    virtual ezechiel::core::Response deletePatientVariate(ezechiel::core::PatientVariate*) = 0;
-    virtual ezechiel::core::Response deletePatientVariate(const int&) = 0;
+    virtual ezechiel::GuiCore::Response getPatientVariateFromId(const int&, ezechiel::GuiCore::PatientVariate*) = 0;
+    virtual ezechiel::GuiCore::Response setPatientVariate(ezechiel::GuiCore::PatientVariate*) = 0;
+    virtual ezechiel::GuiCore::Response setPatientVariate(const int&, ezechiel::GuiCore::PatientVariate*) = 0;
+    virtual ezechiel::GuiCore::Response getPatientVariatesofPatient(const int&, QList<ezechiel::GuiCore::PatientVariate*>&) = 0;
+    virtual ezechiel::GuiCore::Response getPatientVariatesList(QList<ezechiel::GuiCore::PatientVariate*>&) = 0;
+    virtual ezechiel::GuiCore::Response getPatientVariatesByDate(const int&, QList<ezechiel::GuiCore::PatientVariate*>&) = 0;
+    virtual ezechiel::GuiCore::Response getPatientVariatesOfNames(const int&, QStringList&, QList<ezechiel::GuiCore::PatientVariate*>&) = 0;
+    virtual ezechiel::GuiCore::Response deletePatientVariate(ezechiel::GuiCore::PatientVariate*) = 0;
+    virtual ezechiel::GuiCore::Response deletePatientVariate(const int&) = 0;
 
-    virtual ezechiel::core::Response getClinicalFromId(const int&, Clinical*) = 0;
-    virtual ezechiel::core::Response setClinical(Clinical*) = 0;
-    virtual ezechiel::core::Response getClinicalsList(QList<Clinical*>&) = 0;
-    virtual ezechiel::core::Response getClinicalsByDate(const int&, QList<Clinical*>&) = 0;
-    virtual ezechiel::core::Response deleteClinical(Clinical*) = 0;
-    virtual ezechiel::core::Response deleteClinical(const int&) = 0;
+    virtual ezechiel::GuiCore::Response getClinicalFromId(const int&, Clinical*) = 0;
+    virtual ezechiel::GuiCore::Response setClinical(Clinical*) = 0;
+    virtual ezechiel::GuiCore::Response getClinicalsList(QList<Clinical*>&) = 0;
+    virtual ezechiel::GuiCore::Response getClinicalsByDate(const int&, QList<Clinical*>&) = 0;
+    virtual ezechiel::GuiCore::Response deleteClinical(Clinical*) = 0;
+    virtual ezechiel::GuiCore::Response deleteClinical(const int&) = 0;
 
-    virtual ezechiel::core::Response getPartialRequestFromId(const int&, PartialRequest*) = 0;
-    virtual ezechiel::core::Response getPartialRequestFromRequestId(QString&, PartialRequest*&) = 0;
-    virtual ezechiel::core::Response setPartialRequest(PartialRequest*) = 0;
-    virtual ezechiel::core::Response getPartialRequestsList(QList<PartialRequest*>&) = 0;
-    virtual ezechiel::core::Response getPartialRequestsByDate(const int&, QList<PartialRequest*>&) = 0;
-    virtual ezechiel::core::Response deletePartialRequest(PartialRequest*) = 0;
-    virtual ezechiel::core::Response deletePartialRequest(const int&) = 0;
+    virtual ezechiel::GuiCore::Response getPartialRequestFromId(const int&, PartialRequest*) = 0;
+    virtual ezechiel::GuiCore::Response getPartialRequestFromRequestId(QString&, PartialRequest*&) = 0;
+    virtual ezechiel::GuiCore::Response setPartialRequest(PartialRequest*) = 0;
+    virtual ezechiel::GuiCore::Response getPartialRequestsList(QList<PartialRequest*>&) = 0;
+    virtual ezechiel::GuiCore::Response getPartialRequestsByDate(const int&, QList<PartialRequest*>&) = 0;
+    virtual ezechiel::GuiCore::Response deletePartialRequest(PartialRequest*) = 0;
+    virtual ezechiel::GuiCore::Response deletePartialRequest(const int&) = 0;
 };
 
 Q_DECLARE_INTERFACE(StdAdminDbInterface, "ch.heig-vd.ezechiel.StdAdminDbInterface/0.1")

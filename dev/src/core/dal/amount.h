@@ -6,7 +6,7 @@
 #include "core/utils/units.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 class Amount /*: public QObject*/
@@ -79,6 +79,6 @@ protected:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::Amount)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Amount*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Amount)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Amount*>)
 #endif // AMOUNT_H

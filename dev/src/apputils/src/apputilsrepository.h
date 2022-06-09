@@ -9,7 +9,7 @@ class User;
 #define APPUTILSREPO (dynamic_cast<AppUtilsRepository*>(ABSTRACTREPO))
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
     class DrugModel;
     class DBAccount;
     class ValidDoses;
@@ -20,48 +20,48 @@ namespace core {
     class ActiveSubstance;
 }
 }
-class AppUtilsRepository : public ezechiel::core::AbstractRepository
+class AppUtilsRepository : public ezechiel::GuiCore::AbstractRepository
 {
 public:
 
-    virtual bool connect (ezechiel::core::DBAccount& account) = 0;
+    virtual bool connect (ezechiel::GuiCore::DBAccount& account) = 0;
     virtual bool disconnect () = 0;
     virtual void needs (bool &url, bool &user, bool &password) = 0;
-    virtual bool tryRequest(const ezechiel::core::Response&, const QString&, QString&) = 0;
+    virtual bool tryRequest(const ezechiel::GuiCore::Response&, const QString&, QString&) = 0;
 
-    virtual ezechiel::core::Response getUser(int, User&) = 0;
-    virtual ezechiel::core::Response getUserKey(const QString&, QString&) = 0;
-    virtual ezechiel::core::Response setUserKey(QString, const QString&) = 0;
-    virtual ezechiel::core::Response getUser(const QString&, User&) = 0;
-    virtual ezechiel::core::Response getUsersList(QList<User>&) = 0;
-    virtual ezechiel::core::Response setUser(const User&) = 0;
-    virtual ezechiel::core::Response deleteUser(QString) = 0;
+    virtual ezechiel::GuiCore::Response getUser(int, User&) = 0;
+    virtual ezechiel::GuiCore::Response getUserKey(const QString&, QString&) = 0;
+    virtual ezechiel::GuiCore::Response setUserKey(QString, const QString&) = 0;
+    virtual ezechiel::GuiCore::Response getUser(const QString&, User&) = 0;
+    virtual ezechiel::GuiCore::Response getUsersList(QList<User>&) = 0;
+    virtual ezechiel::GuiCore::Response setUser(const User&) = 0;
+    virtual ezechiel::GuiCore::Response deleteUser(QString) = 0;
 
-    virtual ezechiel::core::Response isEncrypted(const bool&) = 0;
-    virtual ezechiel::core::Response setEncrypted(const bool&) = 0;
-    virtual ezechiel::core::Response encryptDatabase(const bool&) = 0;
+    virtual ezechiel::GuiCore::Response isEncrypted(const bool&) = 0;
+    virtual ezechiel::GuiCore::Response setEncrypted(const bool&) = 0;
+    virtual ezechiel::GuiCore::Response encryptDatabase(const bool&) = 0;
 
-    virtual ezechiel::core::Response getDrugFromId(const int&, ezechiel::core::DrugModel* ) = 0;
-    virtual ezechiel::core::Response setDrug(ezechiel::core::DrugModel*) = 0;
-    virtual ezechiel::core::Response getDrugsList(QList<ezechiel::core::DrugModel*>&) = 0;
-    virtual ezechiel::core::Response deleteDrug(ezechiel::core::DrugModel*) = 0;
-    virtual ezechiel::core::Response getDrugOfName(const QString&, ezechiel::core::DrugModel*&) = 0;
-    virtual ezechiel::core::Response getActiveSubstanceOfId(const QString&, ezechiel::core::ActiveSubstance*&) = 0;
-    virtual ezechiel::core::Response getDrugOfDrugId(const QString&, ezechiel::core::DrugModel*&) = 0;
+    virtual ezechiel::GuiCore::Response getDrugFromId(const int&, ezechiel::GuiCore::DrugModel* ) = 0;
+    virtual ezechiel::GuiCore::Response setDrug(ezechiel::GuiCore::DrugModel*) = 0;
+    virtual ezechiel::GuiCore::Response getDrugsList(QList<ezechiel::GuiCore::DrugModel*>&) = 0;
+    virtual ezechiel::GuiCore::Response deleteDrug(ezechiel::GuiCore::DrugModel*) = 0;
+    virtual ezechiel::GuiCore::Response getDrugOfName(const QString&, ezechiel::GuiCore::DrugModel*&) = 0;
+    virtual ezechiel::GuiCore::Response getActiveSubstanceOfId(const QString&, ezechiel::GuiCore::ActiveSubstance*&) = 0;
+    virtual ezechiel::GuiCore::Response getDrugOfDrugId(const QString&, ezechiel::GuiCore::DrugModel*&) = 0;
 
-    virtual ezechiel::core::Response setValidDoses(const int&, ezechiel::core::ValidDoses*) = 0;
-    virtual ezechiel::core::Response setValidIntervals(const int&, ezechiel::core::ValidIntervals*) = 0;
-    virtual ezechiel::core::Response setValidInfusions(const int&, ezechiel::core::ValidInfusions*) = 0;
+    virtual ezechiel::GuiCore::Response setValidDoses(const int&, ezechiel::GuiCore::ValidDoses*) = 0;
+    virtual ezechiel::GuiCore::Response setValidIntervals(const int&, ezechiel::GuiCore::ValidIntervals*) = 0;
+    virtual ezechiel::GuiCore::Response setValidInfusions(const int&, ezechiel::GuiCore::ValidInfusions*) = 0;
 
-    virtual ezechiel::core::Response getDrugVariateFromId(const int&, ezechiel::core::DrugVariate*) = 0;
-    virtual ezechiel::core::Response setDrugVariate(ezechiel::core::DrugVariate*) = 0;
-    virtual ezechiel::core::Response setDrugVariate(const int&, ezechiel::core::DrugVariate*) = 0;
-    virtual ezechiel::core::Response getDrugVariatesList(QList<ezechiel::core::DrugVariate*>&) = 0;
-    virtual ezechiel::core::Response getDrugVariatesByDate(const int&, QList<ezechiel::core::DrugVariate*>&) = 0;
-    virtual ezechiel::core::Response deleteDrugVariate(ezechiel::core::DrugVariate*) = 0;
-    virtual ezechiel::core::Response deleteDrugVariate(const int&) = 0;
+    virtual ezechiel::GuiCore::Response getDrugVariateFromId(const int&, ezechiel::GuiCore::DrugVariate*) = 0;
+    virtual ezechiel::GuiCore::Response setDrugVariate(ezechiel::GuiCore::DrugVariate*) = 0;
+    virtual ezechiel::GuiCore::Response setDrugVariate(const int&, ezechiel::GuiCore::DrugVariate*) = 0;
+    virtual ezechiel::GuiCore::Response getDrugVariatesList(QList<ezechiel::GuiCore::DrugVariate*>&) = 0;
+    virtual ezechiel::GuiCore::Response getDrugVariatesByDate(const int&, QList<ezechiel::GuiCore::DrugVariate*>&) = 0;
+    virtual ezechiel::GuiCore::Response deleteDrugVariate(ezechiel::GuiCore::DrugVariate*) = 0;
+    virtual ezechiel::GuiCore::Response deleteDrugVariate(const int&) = 0;
 
-    virtual ezechiel::core::Descriptor getDescriptor() = 0;
+    virtual ezechiel::GuiCore::Descriptor getDescriptor() = 0;
     virtual QString errorString() = 0;
 };
 

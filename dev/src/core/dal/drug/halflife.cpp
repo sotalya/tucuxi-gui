@@ -4,7 +4,7 @@
 #include "core/dal/drug/translatablestring.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(Halflife, Unit, unit, Unit)
 AUTO_PROPERTY_IMPL(Halflife, double, value, Value)

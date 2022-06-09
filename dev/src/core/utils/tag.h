@@ -12,7 +12,7 @@
 #endif
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 namespace DrugTag {

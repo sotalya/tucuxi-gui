@@ -3,7 +3,7 @@
 #include "core/dal/drug/doses.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(ValidDose, IdentifiableAmount*, quantity, Quantity)
 AUTO_PROPERTY_IMPL(ValidDose, Admin*, route, Route)

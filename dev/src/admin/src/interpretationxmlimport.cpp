@@ -170,7 +170,7 @@ Interpretation::InterpretationType stringToInterpretationType(const QString &s)
 
 Interpretation *InterpretationXmlImport::loadInterpretation(const QString &tagName, QObject *parent)
 {
-    Interpretation *interpretation = ezechiel::core::CoreFactory::createEntity<Interpretation>(ADMINREPO, parent);
+    Interpretation *interpretation = ezechiel::GuiCore::CoreFactory::createEntity<Interpretation>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -187,7 +187,7 @@ Interpretation *InterpretationXmlImport::loadInterpretation(const QString &tagNa
                 interpretation->setAnalysis(loadAnalysis("analysis", interpretation));
             }
             else if (name == "drugResponseAnalysis") {
-                ezechiel::core::DrugResponseAnalysis *analysis = loadDrugResponseAnalysis("drugResponseAnalysis", interpretation);
+                ezechiel::GuiCore::DrugResponseAnalysis *analysis = loadDrugResponseAnalysis("drugResponseAnalysis", interpretation);
                 if (analysis == nullptr) {
                     // Something went wrong
                     return nullptr;
@@ -242,7 +242,7 @@ void InterpretationXmlImport::loadAdjustment(const QString &tagName, Interpretat
 
 InterpretationAnalysis *InterpretationXmlImport::loadAnalysis(const QString &tagName, QObject *parent)
 {
-    InterpretationAnalysis *analysis = ezechiel::core::CoreFactory::createEntity<InterpretationAnalysis>(ADMINREPO, parent);
+    InterpretationAnalysis *analysis = ezechiel::GuiCore::CoreFactory::createEntity<InterpretationAnalysis>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -288,7 +288,7 @@ InterpretationAnalysis *InterpretationXmlImport::loadAnalysis(const QString &tag
 InterpretationRequest *InterpretationXmlImport::loadRequest(const QString &tagName, QObject *parent)
 {
 
-    InterpretationRequest *request = ezechiel::core::CoreFactory::createEntity<InterpretationRequest>(ADMINREPO, parent);
+    InterpretationRequest *request = ezechiel::GuiCore::CoreFactory::createEntity<InterpretationRequest>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -325,7 +325,7 @@ ClinicalSet *InterpretationXmlImport::loadClinicals(const QString &tagName, QObj
 
 Clinical *InterpretationXmlImport::loadClinical(const QString &tagName, QObject *parent)
 {
-    Clinical *clinical = ezechiel::core::CoreFactory::createEntity<Clinical>(ADMINREPO, parent);
+    Clinical *clinical = ezechiel::GuiCore::CoreFactory::createEntity<Clinical>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -347,7 +347,7 @@ Clinical *InterpretationXmlImport::loadClinical(const QString &tagName, QObject 
 
 Practician *InterpretationXmlImport::loadPractician(const QString &tagName, QObject *parent)
 {
-    Practician *practician = ezechiel::core::CoreFactory::createEntity<Practician>(ADMINREPO, parent);
+    Practician *practician = ezechiel::GuiCore::CoreFactory::createEntity<Practician>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -410,7 +410,7 @@ StepType::Enum validationStepFromString(const QString &step)
 
 ValidationStatus *InterpretationXmlImport::loadValidationStatus(const QString &tagName, QObject *parent)
 {
-    ValidationStatus *validationStatus = ezechiel::core::CoreFactory::createEntity<ValidationStatus>(ADMINREPO,parent);
+    ValidationStatus *validationStatus = ezechiel::GuiCore::CoreFactory::createEntity<ValidationStatus>(ADMINREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -459,14 +459,14 @@ std::vector<double> InterpretationXmlImport::loadPercentiles(const QString &tagN
 #include "apputils/src/apputilsrepository.h"
 #include "core/utils/errorenums.h"
 
-ezechiel::core::DrugModel *findDrugModelFromId(const QString &drugModelId)
+ezechiel::GuiCore::DrugModel *findDrugModelFromId(const QString &drugModelId)
 {
     return APPCORE->drugManager()->drug(drugModelId);
 }
 
-ezechiel::core::DrugResponseAnalysis * InterpretationXmlImport::loadDrugResponseAnalysis(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::DrugResponseAnalysis * InterpretationXmlImport::loadDrugResponseAnalysis(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::DrugResponseAnalysis *analysis = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugResponseAnalysis>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::DrugResponseAnalysis *analysis = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugResponseAnalysis>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -478,7 +478,7 @@ ezechiel::core::DrugResponseAnalysis * InterpretationXmlImport::loadDrugResponse
             }
             else if (name == "drugModelId") {
                 QString drugModelId = extractor();
-                ezechiel::core::DrugModel *drugModel;
+                ezechiel::GuiCore::DrugModel *drugModel;
                 drugModel = findDrugModelFromId(drugModelId);
                 if (drugModel == nullptr) {
                     // TODO : We are facing an issue here
@@ -494,10 +494,10 @@ ezechiel::core::DrugResponseAnalysis * InterpretationXmlImport::loadDrugResponse
 }
 
 
-ezechiel::core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(const QString &tagName, QObject *parent)
 {
 
-    ezechiel::core::DrugTreatment *treatment = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugTreatment>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::DrugTreatment *treatment = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugTreatment>(ABSTRACTREPO, parent);
 
 
     WHILE_NOT_END_ELEM(tagName){
@@ -511,7 +511,7 @@ ezechiel::core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(const
             else if (name == "patient") {
                 treatment->setPatient(loadPatient("patient", treatment));
             } else if (name == "measures") {
-                ezechiel::core::CoreMeasureList *list =  ezechiel::core::CoreFactory::createEntity<ezechiel::core::CoreMeasureList>(ABSTRACTREPO, treatment);
+                ezechiel::GuiCore::CoreMeasureList *list =  ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::CoreMeasureList>(ABSTRACTREPO, treatment);
 
                 WHILE_NOT_END_ELEM("measures"){
 
@@ -519,7 +519,7 @@ ezechiel::core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(const
                         QString name = reader.name().toString();
 
                         if (name == "measure") {
-                            Measure *measure =  ezechiel::core::CoreFactory::createEntity<Measure>(ADMINREPO, list);
+                            Measure *measure =  ezechiel::GuiCore::CoreFactory::createEntity<Measure>(ADMINREPO, list);
 
                             WHILE_NOT_END_ELEM("measure"){
 
@@ -574,7 +574,7 @@ ezechiel::core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(const
 Patient *InterpretationXmlImport::loadPatient(const QString &tagName, QObject *parent)
 {
 
-    Patient *patient = ezechiel::core::CoreFactory::createEntity<Patient>(ADMINREPO, parent);
+    Patient *patient = ezechiel::GuiCore::CoreFactory::createEntity<Patient>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -600,7 +600,7 @@ Patient *InterpretationXmlImport::loadPatient(const QString &tagName, QObject *p
 
 Person *InterpretationXmlImport::loadPerson(const QString &tagName, QObject *parent)
 {
-    Person *person = ezechiel::core::CoreFactory::createEntity<Person>(ADMINREPO, parent);
+    Person *person = ezechiel::GuiCore::CoreFactory::createEntity<Person>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -647,11 +647,11 @@ Person *InterpretationXmlImport::loadPerson(const QString &tagName, QObject *par
 
 PhoneList *InterpretationXmlImport::loadPhoneNumber(const QString &tagName, QObject *parent)
 {
-    PhoneList *phoneListSet = ezechiel::core::CoreFactory::createEntity<PhoneList>(ABSTRACTREPO, parent);
+    PhoneList *phoneListSet = ezechiel::GuiCore::CoreFactory::createEntity<PhoneList>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() && isOk){
-            Phone *phone = ezechiel::core::CoreFactory::createEntity<Phone>(ABSTRACTREPO, phoneListSet);
+            Phone *phone = ezechiel::GuiCore::CoreFactory::createEntity<Phone>(ABSTRACTREPO, phoneListSet);
             phone->setNumber(extractor());
             phoneListSet->append(phone);
         }
@@ -661,9 +661,9 @@ PhoneList *InterpretationXmlImport::loadPhoneNumber(const QString &tagName, QObj
     return phoneListSet;
 }
 
-ezechiel::core::PatientVariateList *InterpretationXmlImport::loadPatientVariates(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::PatientVariateList *InterpretationXmlImport::loadPatientVariates(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::PatientVariateList *patientVariateSet = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariateList>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::PatientVariateList *patientVariateSet = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariateList>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         /******************************************
@@ -678,9 +678,9 @@ ezechiel::core::PatientVariateList *InterpretationXmlImport::loadPatientVariates
     return patientVariateSet;
 }
 
-ezechiel::core::PatientVariate *InterpretationXmlImport::loadPatientVariate(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::PatientVariate *InterpretationXmlImport::loadPatientVariate(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::PatientVariate *patientVariate = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariate>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::PatientVariate *patientVariate = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -713,9 +713,9 @@ ezechiel::core::PatientVariate *InterpretationXmlImport::loadPatientVariate(cons
     return patientVariate;
 }
 
-ezechiel::core::DosageHistory *InterpretationXmlImport::loadDosageHistory(const QString &tagName, QObject *parent, bool isAdjustment)
+ezechiel::GuiCore::DosageHistory *InterpretationXmlImport::loadDosageHistory(const QString &tagName, QObject *parent, bool isAdjustment)
 {
-    ezechiel::core::DosageHistory *history = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DosageHistory>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::DosageHistory *history = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DosageHistory>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         /******************************************
@@ -803,9 +803,9 @@ Tucuxi::Core::AbsorptionModel extractAbsorptionModel(QString s)
 }
 
 
-ezechiel::core::Admin *InterpretationXmlImport::loadAdmin(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::Admin *InterpretationXmlImport::loadAdmin(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::Admin *admin = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO, parent);
 
     // By default, not at steady state
 
@@ -837,9 +837,9 @@ ezechiel::core::Admin *InterpretationXmlImport::loadAdmin(const QString &tagName
     return admin;
 }
 
-ezechiel::core::AdjustmentDosage *InterpretationXmlImport::loadAdjustmentDosage(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::AdjustmentDosage *InterpretationXmlImport::loadAdjustmentDosage(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::AdjustmentDosage *dosage = ezechiel::core::CoreFactory::createEntity<ezechiel::core::AdjustmentDosage>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::AdjustmentDosage *dosage = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::AdjustmentDosage>(ABSTRACTREPO, parent);
 
     // By default, not at steady state
 
@@ -856,7 +856,7 @@ ezechiel::core::AdjustmentDosage *InterpretationXmlImport::loadAdjustmentDosage(
             else if (name == "dbtinf")
                 dosage->setDbtinf(extractDouble());
             else if (name == "route") {
-                ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, dosage);
+                ezechiel::GuiCore::Admin *admin = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO, dosage);
                 admin->setLabel(extractor());
                 dosage->setRoute(admin);
             }
@@ -874,10 +874,10 @@ ezechiel::core::AdjustmentDosage *InterpretationXmlImport::loadAdjustmentDosage(
             else if (name == "isAtSteadyState")
                 dosage->setIsAtSteadyState(extractBool());
             else if (name == "tinf") {
-                dosage->setTinf(ezechiel::core::Duration(0, extractDouble()));
+                dosage->setTinf(ezechiel::GuiCore::Duration(0, extractDouble()));
             }
             else if (name == "interval") {
-                dosage->setInterval(ezechiel::core::Duration(0, extractDouble()));
+                dosage->setInterval(ezechiel::GuiCore::Duration(0, extractDouble()));
             }
             else if (name == "uncastedValues") {
                 // Handle uncasted values
@@ -891,9 +891,9 @@ ezechiel::core::AdjustmentDosage *InterpretationXmlImport::loadAdjustmentDosage(
 
 
 
-ezechiel::core::Dosage *InterpretationXmlImport::loadDosage(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::Dosage *InterpretationXmlImport::loadDosage(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::Dosage *dosage = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Dosage>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::Dosage *dosage = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Dosage>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -905,7 +905,7 @@ ezechiel::core::Dosage *InterpretationXmlImport::loadDosage(const QString &tagNa
             else if (name == "dbtinf")
                 dosage->setDbtinf(extractDouble());
             else if (name == "route") {
-                ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, dosage);
+                ezechiel::GuiCore::Admin *admin = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO, dosage);
                 admin->setLabel(extractor());
                 dosage->setRoute(admin);
             }
@@ -925,10 +925,10 @@ ezechiel::core::Dosage *InterpretationXmlImport::loadDosage(const QString &tagNa
             else if (name == "steadyStateLastDoseTime")
                 dosage->setSteadyStateLastDoseDate(extractDate());
             else if (name == "tinf") {
-                dosage->setTinf(ezechiel::core::Duration(0, extractDouble()));
+                dosage->setTinf(ezechiel::GuiCore::Duration(0, extractDouble()));
             }
             else if (name == "interval") {
-                dosage->setInterval(ezechiel::core::Duration(0, extractDouble()));
+                dosage->setInterval(ezechiel::GuiCore::Duration(0, extractDouble()));
             }
             else if (name == "uncastedValues") {
                 // Handle uncasted values
@@ -942,10 +942,10 @@ ezechiel::core::Dosage *InterpretationXmlImport::loadDosage(const QString &tagNa
 
 
 
-ezechiel::core::DrugModel *InterpretationXmlImport::loadDrugModel(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::DrugModel *InterpretationXmlImport::loadDrugModel(const QString &tagName, QObject *parent)
 {
 
-    ezechiel::core::DrugModel *drugModel = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugModel>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::DrugModel *drugModel = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugModel>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -995,27 +995,27 @@ ezechiel::core::DrugModel *InterpretationXmlImport::loadDrugModel(const QString 
 }
 
 
-ezechiel::core::ADME *InterpretationXmlImport::loadAdme(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::ADME *InterpretationXmlImport::loadAdme(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::ADME* adme = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ADME>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ADME* adme = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ADME>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
             QString name = reader.name().toString();
             if (name == "defaultIntake") {
-                ezechiel::core::Admin* def = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, adme);
+                ezechiel::GuiCore::Admin* def = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO, adme);
                 def->setLabel(extractor());
                 adme->setDefaultIntake(def);
             }
             else if (name == "intakes") {
-                ezechiel::core::AdminList* intakes = ezechiel::core::CoreFactory::createEntity<ezechiel::core::AdminList>(ABSTRACTREPO, adme);
+                ezechiel::GuiCore::AdminList* intakes = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::AdminList>(ABSTRACTREPO, adme);
 
 
                 WHILE_NOT_END_ELEM("intakes"){
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "intake"){
-                            ezechiel::core::Admin* def = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, adme);
+                            ezechiel::GuiCore::Admin* def = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO, adme);
                             def->setLabel(extractor());
                             intakes->append(def);
                         }
@@ -1038,9 +1038,9 @@ ezechiel::core::ADME *InterpretationXmlImport::loadAdme(const QString &tagName, 
 
 
 
-ezechiel::core::ValidDoses *InterpretationXmlImport::loadValidDoses(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::ValidDoses *InterpretationXmlImport::loadValidDoses(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::ValidDoses* doses = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidDoses>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ValidDoses* doses = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidDoses>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1055,12 +1055,12 @@ ezechiel::core::ValidDoses *InterpretationXmlImport::loadValidDoses(const QStrin
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "dose"){
-                            ezechiel::core::ValidDose* dose = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidDose>(ABSTRACTREPO,doses);
+                            ezechiel::GuiCore::ValidDose* dose = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidDose>(ABSTRACTREPO,doses);
                             WHILE_NOT_END_ELEM("dose") {
                                 if(reader.readNextStartElement() ){
                                     name = reader.name().toString();
                                     if (name == "route") {
-                                        ezechiel::core::Admin* admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO,dose);
+                                        ezechiel::GuiCore::Admin* admin = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO,dose);
                                         admin->setLabel(extractor());
                                         dose->setRoute(admin);
                                     }
@@ -1084,9 +1084,9 @@ ezechiel::core::ValidDoses *InterpretationXmlImport::loadValidDoses(const QStrin
 
 }
 
-ezechiel::core::ValidIntervals *InterpretationXmlImport::loadValidIntervals(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::ValidIntervals *InterpretationXmlImport::loadValidIntervals(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::ValidIntervals* intervals = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidIntervals>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ValidIntervals* intervals = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidIntervals>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1101,7 +1101,7 @@ ezechiel::core::ValidIntervals *InterpretationXmlImport::loadValidIntervals(cons
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "interval"){
-                            ezechiel::core::ValidInterval* interval = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInterval>(ABSTRACTREPO,intervals);
+                            ezechiel::GuiCore::ValidInterval* interval = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidInterval>(ABSTRACTREPO,intervals);
                             WHILE_NOT_END_ELEM("interval") {
                                 if(reader.readNextStartElement() ){
                                     name = reader.name().toString();
@@ -1124,9 +1124,9 @@ ezechiel::core::ValidIntervals *InterpretationXmlImport::loadValidIntervals(cons
     return intervals;
 }
 
-ezechiel::core::ValidInfusions *InterpretationXmlImport::loadValidInfusions(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::ValidInfusions *InterpretationXmlImport::loadValidInfusions(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::ValidInfusions* infusions = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusions>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ValidInfusions* infusions = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidInfusions>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1141,7 +1141,7 @@ ezechiel::core::ValidInfusions *InterpretationXmlImport::loadValidInfusions(cons
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "infusion"){
-                            ezechiel::core::ValidInfusion* infusion = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ValidInfusion>(ABSTRACTREPO,infusions);
+                            ezechiel::GuiCore::ValidInfusion* infusion = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidInfusion>(ABSTRACTREPO,infusions);
                             WHILE_NOT_END_ELEM("infusion") {
                                 if(reader.readNextStartElement() ){
                                     name = reader.name().toString();
@@ -1164,9 +1164,9 @@ ezechiel::core::ValidInfusions *InterpretationXmlImport::loadValidInfusions(cons
     return infusions;
 }
 
-ezechiel::core::TargetList *InterpretationXmlImport::loadTargets(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::TargetList *InterpretationXmlImport::loadTargets(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::TargetList* targetSet = ezechiel::core::CoreFactory::createEntity<ezechiel::core::TargetList>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::TargetList* targetSet = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TargetList>(ABSTRACTREPO, parent);
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() && isOk){
             QString name = reader.name().toString();
@@ -1181,9 +1181,9 @@ ezechiel::core::TargetList *InterpretationXmlImport::loadTargets(const QString &
     return targetSet;
 }
 
-ezechiel::core::Target *InterpretationXmlImport::loadTarget(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::Target *InterpretationXmlImport::loadTarget(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::Target* target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Target>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::Target* target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Target>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1193,7 +1193,7 @@ ezechiel::core::Target *InterpretationXmlImport::loadTarget(const QString &tagNa
             } else if(name == "concentrations"){
                 QXmlStreamAttributes attributes ;
                 extractor(&attributes,false);
-                ezechiel::core::Unit unit;
+                ezechiel::GuiCore::Unit unit;
                 WHILE_NOT_END_ELEM("concentrations"){
                     if(reader.readNextStartElement() ){
                         name = reader.name().toString();
@@ -1209,7 +1209,7 @@ ezechiel::core::Target *InterpretationXmlImport::loadTarget(const QString &tagNa
             } else if(name == "times"){
                 QXmlStreamAttributes attributes ;
                 extractor(&attributes,false);
-                ezechiel::core::Unit unit;
+                ezechiel::GuiCore::Unit unit;
                 WHILE_NOT_END_ELEM("times"){
                     if(reader.readNextStartElement() ){
                         name = reader.name().toString();
@@ -1233,9 +1233,9 @@ ezechiel::core::Target *InterpretationXmlImport::loadTarget(const QString &tagNa
     return target;
 }
 
-ezechiel::core::DrugVariateList *InterpretationXmlImport::loadCovariates(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::DrugVariateList *InterpretationXmlImport::loadCovariates(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::DrugVariateList *drugVariateSet = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugVariateList>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::DrugVariateList *drugVariateSet = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugVariateList>(ABSTRACTREPO, parent);
 
     /*******************************
      * TODO: Totally wrong down there
@@ -1253,14 +1253,14 @@ ezechiel::core::DrugVariateList *InterpretationXmlImport::loadCovariates(const Q
     return drugVariateSet;
 }
 
-ezechiel::core::DrugVariate *InterpretationXmlImport::loadCovariate(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::DrugVariate *InterpretationXmlImport::loadCovariate(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::DrugVariate* drugVariate = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DrugVariate>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::DrugVariate* drugVariate = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugVariate>(ABSTRACTREPO, parent);
 
-    ezechiel::core::TranslatableString *nameTranslation, *descriptionTranslation;
+    ezechiel::GuiCore::TranslatableString *nameTranslation, *descriptionTranslation;
 
-    nameTranslation = ezechiel::core::CoreFactory::createEntity<ezechiel::core::TranslatableString>(ABSTRACTREPO,drugVariate);
-    descriptionTranslation = ezechiel::core::CoreFactory::createEntity<ezechiel::core::TranslatableString>(ABSTRACTREPO,drugVariate);
+    nameTranslation = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TranslatableString>(ABSTRACTREPO,drugVariate);
+    descriptionTranslation = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TranslatableString>(ABSTRACTREPO,drugVariate);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1280,9 +1280,9 @@ ezechiel::core::DrugVariate *InterpretationXmlImport::loadCovariate(const QStrin
     return drugVariate;
 }
 
-ezechiel::core::ErrorModel *InterpretationXmlImport::loadErrorModel(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::ErrorModel *InterpretationXmlImport::loadErrorModel(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::ErrorModel* errorModel = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ErrorModel>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ErrorModel* errorModel = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ErrorModel>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1300,10 +1300,10 @@ ezechiel::core::ErrorModel *InterpretationXmlImport::loadErrorModel(const QStrin
     return errorModel;
 }
 
-ezechiel::core::ParameterSet *InterpretationXmlImport::loadParameters(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::ParameterSet *InterpretationXmlImport::loadParameters(const QString &tagName, QObject *parent)
 {
 
-    ezechiel::core::ParameterSet* parameterSet = ezechiel::core::CoreFactory::createEntity<ezechiel::core::ParameterSet>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::ParameterSet* parameterSet = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ParameterSet>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1361,9 +1361,9 @@ ezechiel::core::ParameterSet *InterpretationXmlImport::loadParameters(const QStr
     return parameterSet;
 }
 
-ezechiel::core::Parameter *InterpretationXmlImport::loadParameter(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::Parameter *InterpretationXmlImport::loadParameter(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::Parameter* parameter = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Parameter>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::Parameter* parameter = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Parameter>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1372,7 +1372,7 @@ ezechiel::core::Parameter *InterpretationXmlImport::loadParameter(const QString 
                 parameter->setName(extractor());
             } else if (name == "unit") {//FIXME unkown unit in fileout
                 QString extract = extractor();
-                ezechiel::core::Unit unit(extract);
+                ezechiel::GuiCore::Unit unit(extract);
                 bool isValid = unit.isValid();
                 parameter->getQuantity()->setUnit(extract);
             } else if (name == "value") {
@@ -1397,29 +1397,29 @@ ezechiel::core::Parameter *InterpretationXmlImport::loadParameter(const QString 
     return parameter;
 }
 
-ezechiel::core::OperationList *InterpretationXmlImport::loadOperations(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::OperationList *InterpretationXmlImport::loadOperations(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::OperationList *operations = ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperationList>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::OperationList *operations = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperationList>(ABSTRACTREPO,parent);
 
-    QMap<QString,ezechiel::core::OperationList*> mapOperationLists;
+    QMap<QString,ezechiel::GuiCore::OperationList*> mapOperationLists;
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
             QString name = reader.name().toString();
             if(name == "operation"){
-                ezechiel::core::Operation* operation = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Operation>(ABSTRACTREPO);
+                ezechiel::GuiCore::Operation* operation = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Operation>(ABSTRACTREPO);
                 WHILE_NOT_END_ELEM("operation"){
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "type"){
                             QString t = extractor();
                             if (t == "Hardcoded")
-                                operation->setType(ezechiel::core::OperationType::HARDCODED);
+                                operation->setType(ezechiel::GuiCore::OperationType::HARDCODED);
                             else if (t == "Imported")
-                                operation->setType(ezechiel::core::OperationType::IMPORTED);
+                                operation->setType(ezechiel::GuiCore::OperationType::IMPORTED);
                             else
                                 // TODO: There is an error. It should be reported
-                                operation->setType(ezechiel::core::OperationType::NOOP);
+                                operation->setType(ezechiel::GuiCore::OperationType::NOOP);
                         }
                         else if(name == "formula"){
                             QString formula = extractor();
@@ -1439,9 +1439,9 @@ ezechiel::core::OperationList *InterpretationXmlImport::loadOperations(const QSt
 }
 
 
-ezechiel::core::Bsv *InterpretationXmlImport::loadBsv(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::Bsv *InterpretationXmlImport::loadBsv(const QString &tagName, QObject *parent)
 {
-    ezechiel::core::Bsv* bsv = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Bsv>(ABSTRACTREPO,parent);
+    ezechiel::GuiCore::Bsv* bsv = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Bsv>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(isOk && reader.readNextStartElement() ){
@@ -1513,10 +1513,10 @@ void InterpretationXmlImport::raiseConversionError()
 }
 
 
-ezechiel::core::IdentifiableAmount * InterpretationXmlImport::loadIdentifiableAmount(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::IdentifiableAmount * InterpretationXmlImport::loadIdentifiableAmount(const QString &tagName, QObject *parent)
 {
 
-    ezechiel::core::IdentifiableAmount* amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::IdentifiableAmount* amount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::IdentifiableAmount>(ABSTRACTREPO, parent);
     QString parameter;
     WHILE_NOT_END_ELEM(tagName){
         if(isOk && reader.readNextStartElement() ){
@@ -1526,7 +1526,7 @@ ezechiel::core::IdentifiableAmount * InterpretationXmlImport::loadIdentifiableAm
             }else if(name == "value"){
                 amount->setDbvalue(extractDouble());
             } else if (name == "unit"){
-                ezechiel::core::Unit unit(extractor());
+                ezechiel::GuiCore::Unit unit(extractor());
                 checkValidity(unit.isValid());
                 amount->setUnit(unit);
             }
@@ -1538,10 +1538,10 @@ ezechiel::core::IdentifiableAmount * InterpretationXmlImport::loadIdentifiableAm
     return amount;
 }
 
-ezechiel::core::OperableAmount *InterpretationXmlImport::loadOperableAmount(const QString &tagName, QObject *parent)
+ezechiel::GuiCore::OperableAmount *InterpretationXmlImport::loadOperableAmount(const QString &tagName, QObject *parent)
 {
 
-    ezechiel::core::OperableAmount* amount = ezechiel::core::CoreFactory::createEntity<ezechiel::core::OperableAmount>(ABSTRACTREPO, parent);
+    ezechiel::GuiCore::OperableAmount* amount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperableAmount>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(isOk && reader.readNextStartElement() ){
@@ -1551,7 +1551,7 @@ ezechiel::core::OperableAmount *InterpretationXmlImport::loadOperableAmount(cons
             }else if(name == "value"){
                 amount->setDbvalue(extractDouble());
             } else if (name == "unit"){
-                ezechiel::core::Unit unit(extractor());
+                ezechiel::GuiCore::Unit unit(extractor());
                 checkValidity(unit.isValid());
                 amount->setUnit(unit);
             }

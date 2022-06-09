@@ -11,11 +11,11 @@
 #include "admin/src/dal/interpretation.h"
 #include "interpretationcontroller.h"
 
-STD_PROPERTY_IMPL(MeasureTabController, ezechiel::core::CoreMeasureList*, measures, Measures)
+STD_PROPERTY_IMPL(MeasureTabController, ezechiel::GuiCore::CoreMeasureList*, measures, Measures)
 
 MeasureTabController::MeasureTabController(QObject *parent) : AbstractViewController(parent)
 {
-    _measures = ezechiel::core::CoreFactory::createEntity<ezechiel::core::CoreMeasureList>(ABSTRACTREPO, this);
+    _measures = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::CoreMeasureList>(ABSTRACTREPO, this);
 }
 
 void MeasureTabController::setSampleId(int index, const QString &id)
@@ -72,7 +72,7 @@ void MeasureTabController::setDbValue(int index, double value)
 void MeasureTabController::addMeasure()
 {
     Measure* measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, _measures);
-    measure->getConcentration()->setUnit(ezechiel::core::Unit(masterController->getDefaultUnit()));
+    measure->getConcentration()->setUnit(ezechiel::GuiCore::Unit(masterController->getDefaultUnit()));
     _measures->append(measure);
 }
 

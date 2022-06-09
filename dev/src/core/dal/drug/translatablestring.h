@@ -8,7 +8,7 @@
 #include <string>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class TranslatableString : public Entity, public QMap<QString,QString>
 {
@@ -69,9 +69,9 @@ QML_POINTERLIST_CLASS_DECL(TranslatableStringList, TranslatableString)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::TranslatableString*)
-//Q_DECLARE_METATYPE(ezechiel::core::TranslatableString)
-//Q_DECLARE_METATYPE(QList<ezechiel::core::TranslatableString*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::TranslatableString*)
+//Q_DECLARE_METATYPE(ezechiel::GuiCore::TranslatableString)
+//Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::TranslatableString*>)
 
 
 #endif // COMMENTS_H

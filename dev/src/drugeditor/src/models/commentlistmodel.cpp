@@ -64,7 +64,7 @@ int CommentListModel::rowCount(const QModelIndex &parent) const
     return _comments->size();
 }
 
-void CommentListModel::setModelData(ezechiel::core::TranslatableString *comments)
+void CommentListModel::setModelData(ezechiel::GuiCore::TranslatableString *comments)
 {
     beginResetModel();
     _comments = comments;
@@ -98,7 +98,7 @@ void CommentListModel::setDataImpl(const QModelIndex &index, const QVariant &new
     }
 }
 
-void CommentListModel::insertRowsImpl(int at, int count, const ezechiel::core::SharedEntitySet &entities){
+void CommentListModel::insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities){
 
     Q_ASSERT(at >= 0 && count >= 0);
     Q_ASSERT(at+count <= rowCount()+1);
@@ -110,7 +110,7 @@ void CommentListModel::insertRowsImpl(int at, int count, const ezechiel::core::S
             key = keyGen();
             value = "";
         } else {
-            ezechiel::core::TranslatableString *comment = static_cast<ezechiel::core::TranslatableString*>(entities.at(i));
+            ezechiel::GuiCore::TranslatableString *comment = static_cast<ezechiel::GuiCore::TranslatableString*>(entities.at(i));
             key = comment->keys().at(0);
             value = comment->value(key);
         }
@@ -119,16 +119,16 @@ void CommentListModel::insertRowsImpl(int at, int count, const ezechiel::core::S
 
 }
 
-ezechiel::core::SharedEntitySet CommentListModel::removeRowsImpl(int at, int count){
+ezechiel::GuiCore::SharedEntitySet CommentListModel::removeRowsImpl(int at, int count){
 
     Q_ASSERT(at >= 0 && count >= 0);
     Q_ASSERT(at+count <= rowCount());
 
     QStringList keys =_comments->keys();
 
-    ezechiel::core::SharedEntitySet removed;
+    ezechiel::GuiCore::SharedEntitySet removed;
     for (int i = 0; i < count; ++i) {
-        ezechiel::core::TranslatableString *trans = ezechiel::core::CoreFactory::createEntity<ezechiel::core::TranslatableString>(0);
+        ezechiel::GuiCore::TranslatableString *trans = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TranslatableString>(0);
         QString key = keys.at(i+at);
         trans->insert(key,_comments->take(key));
         removed << trans;

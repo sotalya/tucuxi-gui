@@ -4,7 +4,7 @@
 #include "core/dal/uncastedvalue.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(CoreMeasure, IdentifiableAmount*, concentration, Concentration)
 AUTO_PROPERTY_IMPL(CoreMeasure, QDateTime, moment, Moment)

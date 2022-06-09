@@ -3,7 +3,7 @@
 #include "core/dal/drug/bsv.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //! The parameter's value standard variability
 AUTO_PROPERTY_IMPL(Bsv, double, standard, Standard)

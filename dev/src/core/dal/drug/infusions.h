@@ -9,7 +9,7 @@
 #include "core/dal/drug/operableamount.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 class ValidInfusion : public Entity
@@ -126,8 +126,8 @@ QML_POINTERLIST_CLASS_DECL(InfusionList,ValidInfusion)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::ValidInfusion*)
-Q_DECLARE_METATYPE(ezechiel::core::ValidInfusions*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::ValidInfusion*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ValidInfusion*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ValidInfusions*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ValidInfusion*>)
 
 #endif // INFUSIONS_H

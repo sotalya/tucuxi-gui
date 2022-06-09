@@ -41,14 +41,14 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(ezechiel::core::Target* target);
+    void setModelData(ezechiel::GuiCore::Target* target);
 
 private:
     virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
 
     void init();
 
-    ezechiel::core::Target* _target;
+    ezechiel::GuiCore::Target* _target;
     QHash<int, QByteArray> _roleNames;
 };
 

@@ -4,7 +4,7 @@
 #include "core/dal/corepatient.h"
 #include "person.h"
 
-class Patient : public ezechiel::core::CorePatient
+class Patient : public ezechiel::GuiCore::CorePatient
 {
     Q_OBJECT
 
@@ -24,8 +24,8 @@ class Patient : public ezechiel::core::CorePatient
     }
 
 public:
-    Q_INVOKABLE Patient(ezechiel::core::AbstractRepository *repository = 0, QObject *parent = nullptr);
-    Q_INVOKABLE Patient(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE Patient(ezechiel::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE Patient(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };
 Q_DECLARE_METATYPE(Patient*)
@@ -33,6 +33,6 @@ Q_DECLARE_METATYPE(QList<Patient*>)
 
 //QML_POINTERLIST_CLASS_DECL(PatientList, Patient)
 
-typedef ezechiel::core::CorePatient* SharedPatient;
+typedef ezechiel::GuiCore::CorePatient* SharedPatient;
 
 #endif // PATIENT_H

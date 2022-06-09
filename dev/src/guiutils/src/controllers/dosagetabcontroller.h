@@ -11,7 +11,7 @@
 #include "core/dal/dosage.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class DosageHistory;
 class DrugModel;
@@ -27,8 +27,8 @@ public:
     explicit DosageTabController(QObject *parent = nullptr);
 
     //! This property is used by DosageTab.qml to access the list of dosages
-    STD_PROPERTY_DECL(ezechiel::core::DosageHistory*, dosages, Dosages)
-    //STD_PROPERTY_DECL(ezechiel::core::DrugModel*, drugModel, DrugModel)
+    STD_PROPERTY_DECL(ezechiel::GuiCore::DosageHistory*, dosages, Dosages)
+    //STD_PROPERTY_DECL(ezechiel::GuiCore::DrugModel*, drugModel, DrugModel)
     Q_PROPERTY(bool canHaveMoreDosages READ getCanHaveMoreDosages NOTIFY canHaveMoreDosagesChanged);
 
 public:
@@ -81,7 +81,7 @@ public:
     DosageTabController();
 
 private:
-    static bool compareDosage(const ezechiel::core::Dosage* a, const ezechiel::core::Dosage* b);
+    static bool compareDosage(const ezechiel::GuiCore::Dosage* a, const ezechiel::GuiCore::Dosage* b);
 };
 
 #endif // DOSAGETABCONTROLLER_H

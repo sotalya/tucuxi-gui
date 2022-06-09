@@ -80,13 +80,13 @@ int EditorModel::rowCount(const QModelIndex &parent) const
 }
 
 
-void EditorModel::setModelData(ezechiel::core::Editor *editor)
+void EditorModel::setModelData(ezechiel::GuiCore::Editor *editor)
 {
     beginResetModel();
     _editor = editor;
     endResetModel();
 }
-ezechiel::core::Editor* EditorModel::getModelData()
+ezechiel::GuiCore::Editor* EditorModel::getModelData()
 {
     return _editor;
 }
@@ -113,7 +113,7 @@ void EditorModel::setDataImpl(const QModelIndex &index, const QVariant &value, i
         (_editor)->setDate(value.toDateTime());
         break;
 //    case CommentListRole:
-//        (_editor)->setCommentsTranslationMap(value.value<ezechiel::core::QStringTranslation>());
+//        (_editor)->setCommentsTranslationMap(value.value<ezechiel::GuiCore::QStringTranslation>());
 //        break;
     default:
         Q_ASSERT(false);

@@ -6,7 +6,7 @@
 #include <QStringList>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //Reset the value

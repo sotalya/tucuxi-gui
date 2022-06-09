@@ -15,14 +15,14 @@
 #include "core/dal/drug/standardtreatment.h"
 
 
-STD_PROPERTY_IMPL(DosageTabController, ezechiel::core::DosageHistory*, dosages, Dosages)
+STD_PROPERTY_IMPL(DosageTabController, ezechiel::GuiCore::DosageHistory*, dosages, Dosages)
 
-//STD_PROPERTY_IMPL(DosageTabController, ezechiel::core::DrugModel*, drugModel, DrugModel)
+//STD_PROPERTY_IMPL(DosageTabController, ezechiel::GuiCore::DrugModel*, drugModel, DrugModel)
 
 DosageTabController::DosageTabController(QObject *parent) : AbstractViewController(parent)
 {
 //    _drugModel = nullptr;
-    _dosages = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DosageHistory>(ABSTRACTREPO, this);
+    _dosages = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DosageHistory>(ABSTRACTREPO, this);
 }
 
 bool DosageTabController::isIndexValid(int index)
@@ -34,7 +34,7 @@ void DosageTabController::setAppliedTime(int index, QDateTime time)
 {
     if (!isIndexValid(index)) return;
 
-    ezechiel::core::Dosage *dosage = _dosages->at(index);
+    ezechiel::GuiCore::Dosage *dosage = _dosages->at(index);
     if (dosage->getApplied() == time) return;
 
     if (time > dosage->getEndTime())
@@ -58,7 +58,7 @@ void DosageTabController::setEndTime(int index, QDateTime time)
 {
     if (!isIndexValid(index)) return;
 
-    ezechiel::core::Dosage *dosage = _dosages->at(index);
+    ezechiel::GuiCore::Dosage *dosage = _dosages->at(index);
     if (dosage->getEndTime() == time) return;
 
     if (time < dosage->getApplied())
@@ -94,7 +94,7 @@ void DosageTabController::setDbInterval(int index, double interval)
     if (!isIndexValid(index)) return;
 
     // We set the interval in hours
-    if ( _dosages->at(index)->getInterval() == ezechiel::core::Duration(interval)) return;
+    if ( _dosages->at(index)->getInterval() == ezechiel::GuiCore::Duration(interval)) return;
 
     _dosages->at(index)->setDbinterval(interval);
 }
@@ -103,8 +103,8 @@ int DosageTabController::getRelativeRouteValue(int index)
 {
     if (!isIndexValid(index)) return 0;
 
-    ezechiel::core::AdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
-    ezechiel::core::Admin::Route route = _dosages->at(index)->getRoute()->getRoute();
+    ezechiel::GuiCore::AdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
+    ezechiel::GuiCore::Admin::Route route = _dosages->at(index)->getRoute()->getRoute();
 
     for (int i=0; i<adminList->size(); i++)
     {
@@ -118,8 +118,8 @@ void DosageTabController::setRouteValue(int index, int routeValue)
 {
     if (!isIndexValid(index)) return;
 
-    ezechiel::core::Admin::Route route;
-    ezechiel::core::AdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
+    ezechiel::GuiCore::Admin::Route route;
+    ezechiel::GuiCore::AdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
     if (routeValue > adminList->size()) return;
 
     route = adminList->at(routeValue)->getRoute();
@@ -159,15 +159,15 @@ void DosageTabController::forceRefresh()
 
 void DosageTabController::addDosage()
 { 
-    ezechiel::core::DrugModel *drugModel;
+    ezechiel::GuiCore::DrugModel *drugModel;
     drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
 
-    ezechiel::core::Dosage* dosage = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Dosage>(ABSTRACTREPO, _dosages);
+    ezechiel::GuiCore::Dosage* dosage = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Dosage>(ABSTRACTREPO, _dosages);
     dosage->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
     dosage->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute());
     dosage->getRoute()->setDescription(drugModel->getAdme()->getDefaultIntake()->getDescription());
     dosage->getQuantity()->setDbvalue(drugModel->getDoses()->getQuantity()->value());
-    dosage->getQuantity()->setUnit(ezechiel::core::Unit("mg"));
+    dosage->getQuantity()->setUnit(ezechiel::GuiCore::Unit("mg"));
     dosage->setDbinterval(drugModel->getIntervals()->getQuantity()->value());
 
 
@@ -207,7 +207,7 @@ void DosageTabController::addDosage()
 
 QDateTime DosageTabController::getNewEndTime(QDateTime start)
 {
-    ezechiel::core::DrugModel *drugModel;
+    ezechiel::GuiCore::DrugModel *drugModel;
     drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
 
     if (drugModel->getStandardTreatment()->getIsFixedDuration()) {
@@ -224,7 +224,7 @@ void DosageTabController::removeDosage(int index)
     forceRefresh();
 }
 
-bool DosageTabController::compareDosage(const ezechiel::core::Dosage* a, const ezechiel::core::Dosage* b)
+bool DosageTabController::compareDosage(const ezechiel::GuiCore::Dosage* a, const ezechiel::GuiCore::Dosage* b)
 {
     return (a->getApplied() < b->getApplied());
 }
@@ -237,9 +237,9 @@ int DosageTabController::getNbDosages()
 bool DosageTabController::getCanHaveMoreDosages()
 {
     return true;
-    QList<ezechiel::core::Dosage*>::iterator it = _dosages->getList().begin();
+    QList<ezechiel::GuiCore::Dosage*>::iterator it = _dosages->getList().begin();
     while (it != _dosages->getList().end()) {
-        ezechiel::core::Dosage *dosage = *it;
+        ezechiel::GuiCore::Dosage *dosage = *it;
         if (dosage->getIsAtSteadyState()) {
             return false;
         }
@@ -263,12 +263,12 @@ bool DosageTabController::checkModifiedDates(int index, const QDateTime &applied
     }
 
     // Get the modified dosage
-    ezechiel::core::Dosage *dosage = _dosages->at(index);
+    ezechiel::GuiCore::Dosage *dosage = _dosages->at(index);
 
     // Check if dates overlap exising dosages
-    QList<ezechiel::core::Dosage*>::iterator it = _dosages->getList().begin();
+    QList<ezechiel::GuiCore::Dosage*>::iterator it = _dosages->getList().begin();
     while (it != _dosages->getList().end()) {
-        ezechiel::core::Dosage *d = *it;
+        ezechiel::GuiCore::Dosage *d = *it;
         if (d != dosage &&
             ((appliedDate > d->getApplied() && appliedDate < d->getEndTime()) ||  // new applied date is within the current dosage period
              (endDate > d->getApplied() && endDate < d->getEndTime()) ||          // new end date is within the current dosage period

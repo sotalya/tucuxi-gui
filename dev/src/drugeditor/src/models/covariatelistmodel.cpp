@@ -7,7 +7,7 @@
 #include "logging.h"
 #include "errors_guiutils.h"
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 CovariateListModel::CovariateListModel(QObject *parent) :
     AbstractEntityListModel(parent),
@@ -83,7 +83,7 @@ int CovariateListModel::rowCount(const QModelIndex &parent) const
     return _covariates->getList().count();
 }
 
-void CovariateListModel::setModelData(ezechiel::core::PatientVariateList *covariates)
+void CovariateListModel::setModelData(ezechiel::GuiCore::PatientVariateList *covariates)
 {
     beginResetModel();
     _covariates = covariates;
@@ -132,21 +132,21 @@ void CovariateListModel::setDataImpl(const QModelIndex &index, const QVariant &v
     emit updateStatus();
 }
 
-void CovariateListModel::insertRowsImpl(int at, int count, const ezechiel::core::SharedEntitySet &entities)
+void CovariateListModel::insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
     Q_ASSERT(entities.isEmpty() || entities.count() == count);
     Q_ASSERT(_drugVariate);
 
-    ezechiel::core::PatientVariate* covariate;
+    ezechiel::GuiCore::PatientVariate* covariate;
     for(int i = at, j = 0; i < at + count; i++, j++) {
 
         //Setup or retrieve the dosage
 
         // YTA: We should have a copy constructor
         if (entities.isEmpty()) {
-            covariate = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariate>(ABSTRACTREPO);
+            covariate = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO);
             covariate->setName(_drugVariate->getName());
             covariate->getQuantity()->setUnit(_drugVariate->getQuantity()->unit());
             covariate->setDescription(_drugVariate->getDescription());
@@ -155,7 +155,7 @@ void CovariateListModel::insertRowsImpl(int at, int count, const ezechiel::core:
             covariate->getQuantity()->setValue(_drugVariate->getQuantity()->value());
             covariate->setDate(QDateTime::currentDateTime());
         } else {
-            covariate = static_cast<ezechiel::core::PatientVariate*>(entities.at(j));
+            covariate = static_cast<ezechiel::GuiCore::PatientVariate*>(entities.at(j));
         }
 
         _covariates->getList().insert(i, covariate);
@@ -163,12 +163,12 @@ void CovariateListModel::insertRowsImpl(int at, int count, const ezechiel::core:
     emit updateStatus();
 }
 
-ezechiel::core::SharedEntitySet CovariateListModel::removeRowsImpl(int at, int count)
+ezechiel::GuiCore::SharedEntitySet CovariateListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    ezechiel::core::SharedEntitySet removed;
+    ezechiel::GuiCore::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _covariates->getList().takeAt(at);
 

@@ -10,7 +10,7 @@
 #include "core/dal/entity.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class PredictionResult : public Entity
 {
@@ -28,6 +28,6 @@ class PredictionResult : public Entity
 
 }
 }
-Q_DECLARE_METATYPE(ezechiel::core::PredictionResult*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::PredictionResult*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::PredictionResult*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::PredictionResult*>)
 #endif // PREDICTIONRESULT_H

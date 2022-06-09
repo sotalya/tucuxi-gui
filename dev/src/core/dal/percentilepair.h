@@ -9,7 +9,7 @@
 #include "core/dal/entity.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class PercentileData : public Entity
 {
@@ -24,7 +24,7 @@ public:
 QML_POINTERLIST_CLASS_DECL(PercentileDataList, PercentileData)
 }
 }
-Q_DECLARE_METATYPE(ezechiel::core::PercentileData*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::PercentileData*>)
-Q_DECLARE_METATYPE(ezechiel::core::PercentileDataList*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::PercentileData*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::PercentileData*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::PercentileDataList*)
 #endif // PERCENTILEPAIR_H

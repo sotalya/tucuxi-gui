@@ -7,7 +7,7 @@
 #include "core/utils/ezutils.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class TranslatableString;
 
@@ -39,7 +39,7 @@ protected:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::ErrorModel*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::ErrorModel*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ErrorModel*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ErrorModel*>)
 
 #endif // ERRORMODEL_H

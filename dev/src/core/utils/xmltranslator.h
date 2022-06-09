@@ -8,7 +8,7 @@
 #include <QXmlStreamReader>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 /** \ingroup xmleditor

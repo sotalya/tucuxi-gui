@@ -8,7 +8,7 @@
 #include "core/utils/duration.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 

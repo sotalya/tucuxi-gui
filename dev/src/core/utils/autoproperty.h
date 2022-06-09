@@ -8,13 +8,13 @@
 #include "core/core.h"
 
 #define QML_POINTERLIST_CLASS_DECL(NAME, TYPE) \
-    class NAME : public ezechiel::core::Entity { \
+    class NAME : public ezechiel::GuiCore::Entity { \
         Q_OBJECT \
         ENTITY_UTILS(NAME) \
         typedef bool (*comparator_t)(const TYPE* , const TYPE*); \
         Q_PROPERTY(QList<QObject*> objlist READ getObjList NOTIFY objListChanged) \
     public: \
-        NAME(ezechiel::core::AbstractRepository* repository, QObject* parent = nullptr); \
+        NAME(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent = nullptr); \
         Q_INVOKABLE void append(TYPE* target); \
         Q_INVOKABLE void insert(int index,TYPE* target);\
         Q_INVOKABLE void add(); \
@@ -41,10 +41,10 @@
 
 // Be careful with isValis. It uses isEmpty to return false, but I don't know why it should
 #define QML_POINTERLIST_CLASS_IMPL(NAME, TYPE) \
-    NAME::NAME(ezechiel::core::AbstractRepository* repository, QObject* parent) : ezechiel::core::Entity(repository, parent) {} \
+    NAME::NAME(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent) : ezechiel::GuiCore::Entity(repository, parent) {} \
     void NAME::append(TYPE* target) { _list.append(target); setModified(true); emit TYPE ## Changed(*target); update();} \
     void NAME::insert(int index, TYPE* target) { _list.insert(index,target); setModified(true); update();} \
-    void NAME::add() { _list.append(ezechiel::core::CoreFactory::createEntity<TYPE>(ABSTRACTREPO, this)); setModified(true); update();} \
+    void NAME::add() { _list.append(ezechiel::GuiCore::CoreFactory::createEntity<TYPE>(ABSTRACTREPO, this)); setModified(true); update();} \
     void NAME::update() { emit objListChanged(&getObjList());} \
     void NAME::remove(const int index) { \
         if (_list.at(index)->parent() == this) {\
@@ -83,11 +83,11 @@
     QList<QObject*>& NAME::getObjList() { return *reinterpret_cast<QList<QObject*>*>(&_list); }
 
 #define POINTERLIST_CLASS_DECL(NAME, TYPE) \
-    class NAME : public ezechiel::core::Entity { \
+    class NAME : public ezechiel::GuiCore::Entity { \
         Q_OBJECT \
         ENTITY_UTILS(NAME) \
     public: \
-        NAME(ezechiel::core::AbstractRepository* repository, QObject* parent = nullptr); \
+        NAME(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent = nullptr); \
         Q_INVOKABLE TYPE *at(int i) const; \
         void append(TYPE* target); \
         Q_INVOKABLE int size() const; \
@@ -102,7 +102,7 @@
 
 // Be careful with isValis. It uses isEmpty to return false, but I don't know why it should
 #define POINTERLIST_CLASS_IMPL(NAME, TYPE) \
-    NAME::NAME(ezechiel::core::AbstractRepository* repository, QObject* parent) : ezechiel::core::Entity(repository, parent) {} \
+    NAME::NAME(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent) : ezechiel::GuiCore::Entity(repository, parent) {} \
     TYPE *NAME::at(int i) const { return _list.at(i);} \
     void NAME::append(TYPE* target) { _list.append(target); setModified(true);} \
     int NAME::size() const { return _list.size();} \
@@ -118,12 +118,12 @@
     QList<TYPE*>& NAME::getList() { return _list; }
 
 #define VALUELIST_CLASS_DECL(NAME, TYPE) \
-    class NAME : public ezechiel::core::Entity { \
+    class NAME : public ezechiel::GuiCore::Entity { \
         Q_OBJECT \
         ENTITY_UTILS(NAME) \
     public: \
-        NAME(ezechiel::core::AbstractRepository* repository, QObject* parent = nullptr); \
-        NAME(ezechiel::core::AbstractRepository* repository, QObject* parent, NAME* copyfrom); \
+        NAME(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent = nullptr); \
+        NAME(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent, NAME* copyfrom); \
         Q_INVOKABLE TYPE at(const int i) const; \
         Q_INVOKABLE TYPE& first(); \
         Q_INVOKABLE TYPE& last(); \
@@ -141,8 +141,8 @@
     };
 
 #define VALUELIST_CLASS_IMPL(NAME, TYPE) \
-    NAME::NAME(ezechiel::core::AbstractRepository* repository, QObject* parent) : ezechiel::core::Entity(repository, parent) {} \
-    NAME::NAME(ezechiel::core::AbstractRepository* repository, QObject* parent, NAME* copyfrom) : ezechiel::core::Entity(repository, parent) { _list = copyfrom->getList();} \
+    NAME::NAME(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent) : ezechiel::GuiCore::Entity(repository, parent) {} \
+    NAME::NAME(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent, NAME* copyfrom) : ezechiel::GuiCore::Entity(repository, parent) { _list = copyfrom->getList();} \
     TYPE NAME::at(const int i) const { return _list.at(i);} \
     TYPE& NAME::first() { return _list.first(); } \
     TYPE& NAME::last() { return _list.last(); } \
@@ -166,7 +166,7 @@ public: \
         return _factory; \
     } \
  \
-    static entity *createEntity(ezechiel::core::AbstractRepository *repository = nullptr, QObject* parent = nullptr) \
+    static entity *createEntity(ezechiel::GuiCore::AbstractRepository *repository = nullptr, QObject* parent = nullptr) \
     { \
         return getFactory()->createEntity(repository, parent); \
     }
@@ -186,7 +186,7 @@ public: \
         return _factory; \
     } \
  \
-    static entity *createEntity(ezechiel::core::AbstractRepository *repository = nullptr, QObject* parent = nullptr) \
+    static entity *createEntity(ezechiel::GuiCore::AbstractRepository *repository = nullptr, QObject* parent = nullptr) \
     { \
         return getFactory()->createEntity(repository, parent); \
     }
@@ -197,7 +197,7 @@ public: \
     class entity ## Creator: public Creator<baseclass> \
     { \
     public: \
-        virtual baseclass *createEntity(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr) \
+        virtual baseclass *createEntity(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr) \
         { \
             return new entity(repository, parent); \
         } \
@@ -309,7 +309,7 @@ public: \
 #define TRANSLATABLE_STRING_PROPERTY_IMPL(CLASS, NAME, UPPERNAME) \
     QString CLASS::get ## UPPERNAME(const QString &language) const { return _ ## NAME->value(language) ; } \
     QString CLASS::get ## UPPERNAME() const { return _ ## NAME->value(DEFAULTLANGUAGE) ; } \
-    ezechiel::core::TranslatableString* CLASS::get ## UPPERNAME ## TranslationMap() const { return _ ## NAME ; } \
+    ezechiel::GuiCore::TranslatableString* CLASS::get ## UPPERNAME ## TranslationMap() const { return _ ## NAME ; } \
     void CLASS::set ## UPPERNAME (const QString &language, const QString &value) { \
         if (_ ## NAME->value(language) == value) return; \
         _ ## NAME->insert(language, value); \
@@ -322,7 +322,7 @@ public: \
         _isModified = true; \
         emit NAME ## Changed(); \
     } \
-void CLASS::set ## UPPERNAME ## TranslationMap (ezechiel::core::TranslatableString *map) { \
+void CLASS::set ## UPPERNAME ## TranslationMap (ezechiel::GuiCore::TranslatableString *map) { \
     _ ## NAME = map; \
     _isModified = true; \
 }
@@ -332,13 +332,13 @@ void CLASS::set ## UPPERNAME ## TranslationMap (ezechiel::core::TranslatableStri
     public: \
     QString get ## UPPERNAME(const QString &language) const; \
     QString get ## UPPERNAME() const; \
-    ezechiel::core::TranslatableString* get ## UPPERNAME ## TranslationMap() const; \
+    ezechiel::GuiCore::TranslatableString* get ## UPPERNAME ## TranslationMap() const; \
     void set ## UPPERNAME (const QString &language, const QString &value); \
     void set ## UPPERNAME (const QString &value); \
-    void set ## UPPERNAME ## TranslationMap (ezechiel::core::TranslatableString *map); \
+    void set ## UPPERNAME ## TranslationMap (ezechiel::GuiCore::TranslatableString *map); \
     Q_SIGNAL void NAME ## Changed(); \
     private: \
-        ezechiel::core::TranslatableString *_ ## NAME;
+        ezechiel::GuiCore::TranslatableString *_ ## NAME;
 
 //#define AUTO_QSHAREDPOINTER_PROPERTY(TYPE, NAME) \
 //    Q_PROPERTY(TYPE NAME READ NAME WRITE NAME NOTIFY NAME ## Changed) \

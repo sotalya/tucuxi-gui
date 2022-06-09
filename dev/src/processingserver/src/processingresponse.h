@@ -18,7 +18,7 @@ public:
 
 
     ezechiel::math::cxn_list_t data;
-    ezechiel::core::DataSet dataset;
+    ezechiel::GuiCore::DataSet dataset;
 
 };
 

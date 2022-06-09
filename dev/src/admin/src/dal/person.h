@@ -9,13 +9,13 @@
 #include <QDateTime>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class UncastedValueList;
 }
 
 }
 
-class Person : public ezechiel::core::Entity
+class Person : public ezechiel::GuiCore::Entity
 {
 public:
     enum GenderType { Male = 1, Female = 0 };
@@ -31,7 +31,7 @@ public:
     AUTO_PROPERTY(QString, firstname)
     AUTO_PROPERTY(Location*, location)
     AUTO_PROPERTY(int, location_id)
-    AUTO_PROPERTY_DECL(ezechiel::core::UncastedValueList *, uncastedValues, UncastedValues)
+    AUTO_PROPERTY_DECL(ezechiel::GuiCore::UncastedValueList *, uncastedValues, UncastedValues)
     AUTO_PROPERTY_DECL(PhoneList*, phones, Phones)
 
     Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
@@ -40,8 +40,8 @@ public:
     }
 
 public:
-    Q_INVOKABLE Person(ezechiel::core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
-    Q_INVOKABLE Person(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE Person(ezechiel::GuiCore::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
+    Q_INVOKABLE Person(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
     Q_INVOKABLE void setBirthdate(QDateTime date);
 

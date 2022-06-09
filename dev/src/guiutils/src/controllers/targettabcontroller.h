@@ -11,7 +11,7 @@
 #include "core/dal/drug/target.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class TargetList;
 
@@ -26,7 +26,7 @@ public:
     explicit TargetTabController(QObject *parent = nullptr);
 
     //! This property is used by TargetTab.qml to access the list of targets
-    STD_PROPERTY_DECL(ezechiel::core::TargetList*, targets, Targets)
+    STD_PROPERTY_DECL(ezechiel::GuiCore::TargetList*, targets, Targets)
 
 public:
     Q_INVOKABLE void addTarget();

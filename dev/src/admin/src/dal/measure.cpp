@@ -3,23 +3,23 @@
 #include "core/utils/units.h"
 #include "core/dal/amount.h"
 
-Measure::Measure(ezechiel::core::AbstractRepository *repository, QObject* parent)
-    : ezechiel::core::CoreMeasure(repository, parent),
+Measure::Measure(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent)
+    : ezechiel::GuiCore::CoreMeasure(repository, parent),
     _arrivalDate(QDateTime::currentDateTime())
 {
     this->setId(-1);
-//    this->setConcentration(ezechiel::core::Amount(0, ezechiel::core::Unit("mg/l")));
+//    this->setConcentration(ezechiel::GuiCore::Amount(0, ezechiel::GuiCore::Unit("mg/l")));
 
 }
 
-Measure::Measure(ezechiel::core::AbstractRepository *repository,
+Measure::Measure(ezechiel::GuiCore::AbstractRepository *repository,
                  QDateTime moment,
-                 ezechiel::core::IdentifiableAmount* amount,
+                 ezechiel::GuiCore::IdentifiableAmount* amount,
                  QString drug,
                  int dbid,
                  QString sampleID,
                  QDateTime arrivalDate) :
-    ezechiel::core::CoreMeasure(repository)
+    ezechiel::GuiCore::CoreMeasure(repository)
 {
     this->setMoment(moment);
     this->setConcentration(amount);
@@ -29,9 +29,9 @@ Measure::Measure(ezechiel::core::AbstractRepository *repository,
     this->setId(dbid);
 }
 
-//MeasureList::MeasureList(ezechiel::core::AbstractRepository* repository, QObject* parent) : Entity(repository, parent) {}
+//MeasureList::MeasureList(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent) : Entity(repository, parent) {}
 //void MeasureList::append(Measure* target) { _list.append(target); setModified(true); emit objListChanged(getObjList());}
-//void MeasureList::add() { _list.append(ezechiel::core::CoreFactory::createEntity<Measure>(ABSTRACTREPO, this)); setModified(true); emit objListChanged(getObjList());}
+//void MeasureList::add() { _list.append(ezechiel::GuiCore::CoreFactory::createEntity<Measure>(ABSTRACTREPO, this)); setModified(true); emit objListChanged(getObjList());}
 //Measure *MeasureList::first() { return _list.first(); }
 //Measure *MeasureList::last() { return _list.last(); }
 //Measure *MeasureList::at(const int i) { return _list.at(i); }

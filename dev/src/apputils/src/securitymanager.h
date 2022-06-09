@@ -8,7 +8,7 @@
 
 class QRegExpValidator;
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 /** \ingroup core
  *  \defgroup security Security

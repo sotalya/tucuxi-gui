@@ -9,12 +9,12 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
     class ActiveSubstance;
 }
 }
 
-class PartialRequest : public ezechiel::core::Entity
+class PartialRequest : public ezechiel::GuiCore::Entity
 {
     Q_OBJECT
 
@@ -24,13 +24,13 @@ class PartialRequest : public ezechiel::core::Entity
     AUTO_PROPERTY(Practician*, practician)
     AUTO_PROPERTY(Institute*, institute)
     AUTO_PROPERTY(Measure*, measure)
-    AUTO_PROPERTY(ezechiel::core::ActiveSubstance*, drug)
+    AUTO_PROPERTY(ezechiel::GuiCore::ActiveSubstance*, drug)
     AUTO_PROPERTY(QString, uncastedSourceSubstance)
     AUTO_PROPERTY(Measure*, sample)
 
 public:
-    Q_INVOKABLE PartialRequest(ezechiel::core::AbstractRepository *repository = 0, QObject *parent = nullptr);
-    Q_INVOKABLE PartialRequest(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE PartialRequest(ezechiel::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE PartialRequest(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };
 Q_DECLARE_METATYPE(PartialRequest*)
@@ -39,8 +39,8 @@ Q_DECLARE_METATYPE(QList<PartialRequest*>)
 class PartialRequestSet : public QList<PartialRequest*>
 {
 public :
-    PartialRequestSet(ezechiel::core::AbstractRepository *repository, QObject* parent = 0) {}
-    PartialRequestSet(ezechiel::core::AbstractRepository *repository, QObject* parent, const PartialRequestSet* &other);
+    PartialRequestSet(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent = 0) {}
+    PartialRequestSet(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent, const PartialRequestSet* &other);
 };
 Q_DECLARE_METATYPE(PartialRequestSet*)
 

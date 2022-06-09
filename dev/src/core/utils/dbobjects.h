@@ -10,7 +10,7 @@
 #include <QMetaType>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //! Define a ID as in a database

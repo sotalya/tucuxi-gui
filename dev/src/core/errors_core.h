@@ -8,7 +8,7 @@
 #include "core/utils/logging.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
     EZERROR(CORE, NOEZERROR, "There is no error.")
     EZERROR(CORE, ITWOULDBENICE,"")

@@ -134,12 +134,12 @@ void initRestConfig();
 /*
 class NewBsvCreator;
 
-class NewBsv: public ezechiel::core::Bsv
+class NewBsv: public ezechiel::GuiCore::Bsv
 {
-    SUBENTITY_UTILS(NewBsv, ezechiel::core::Bsv)
+    SUBENTITY_UTILS(NewBsv, ezechiel::GuiCore::Bsv)
 
 protected:
-    NewBsv(AbstractRepository *repo, QObject *parent) : ezechiel::core::Bsv(repo, parent) { std::cout << "********************\nI am a new Bsv\n****************\n";}
+    NewBsv(AbstractRepository *repo, QObject *parent) : ezechiel::GuiCore::Bsv(repo, parent) { std::cout << "********************\nI am a new Bsv\n****************\n";}
 };
 */
 
@@ -184,7 +184,7 @@ int main(int argc, char *argv[])
     qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "23654");
 #endif
     // YTA: Demo of a subclass outside core that uses the factory
-//    ezechiel::core::Bsv::getFactory()->registerCreator(new NewBsv::NewBsvCreator());
+//    ezechiel::GuiCore::Bsv::getFactory()->registerCreator(new NewBsv::NewBsvCreator());
 
     EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, QString("Built from Gui Git revision %1").arg(GIT_REVISION));
 #ifdef COMPILE_WITH_TUCUCORE
@@ -209,98 +209,98 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setApplicationVersion("0.3.0");
 
-    CORE->setRunningMode(ezechiel::core::Core::GUI);
+    CORE->setRunningMode(ezechiel::GuiCore::Core::GUI);
 
-    qRegisterMetaType<ezechiel::core::PredictionResult*>("PredictionResult*");
-    qRegisterMetaType<ezechiel::core::PercentileData*>("PercentilePair*");
-    qRegisterMetaType<ezechiel::core::PercentileDataList*>("PercentileDataList*");
-    qRegisterMetaType<ezechiel::core::Predictive*>("Predictive*");
-    qRegisterMetaType<ezechiel::core::PredictionData*>("PredictionData*");
-    qRegisterMetaType<ezechiel::core::Points*>("Points*");
-    qRegisterMetaType<ezechiel::core::ChartData*>("ChartData*");
+    qRegisterMetaType<ezechiel::GuiCore::PredictionResult*>("PredictionResult*");
+    qRegisterMetaType<ezechiel::GuiCore::PercentileData*>("PercentilePair*");
+    qRegisterMetaType<ezechiel::GuiCore::PercentileDataList*>("PercentileDataList*");
+    qRegisterMetaType<ezechiel::GuiCore::Predictive*>("Predictive*");
+    qRegisterMetaType<ezechiel::GuiCore::PredictionData*>("PredictionData*");
+    qRegisterMetaType<ezechiel::GuiCore::Points*>("Points*");
+    qRegisterMetaType<ezechiel::GuiCore::ChartData*>("ChartData*");
     qRegisterMetaType<QList<QObject*>*>("QList<QObject*>*");
     qRegisterMetaType<InterpretationRequest*>("InterpretationRequest*");
-    qRegisterMetaType<ezechiel::core::Duration>("Duration");
+    qRegisterMetaType<ezechiel::GuiCore::Duration>("Duration");
     qRegisterMetaType<Patient*>("Patient*");
-    qRegisterMetaType<ezechiel::core::Descriptor>("Descriptor");
+    qRegisterMetaType<ezechiel::GuiCore::Descriptor>("Descriptor");
     qRegisterMetaType<QMetaType::Type>("QMetaType::Type");
-//    qRegisterMetaType<ezechiel::core::QStringTranslation>("QStringTranslation");
-    qRegisterMetaType<ezechiel::core::TranslatableString*>("TranslatableString*");
+//    qRegisterMetaType<ezechiel::GuiCore::QStringTranslation>("QStringTranslation");
+    qRegisterMetaType<ezechiel::GuiCore::TranslatableString*>("TranslatableString*");
     qRegisterMetaType<Person*>("Person*");
     qRegisterMetaType<Location*>("Location*");
     qRegisterMetaType<Practician*>("Practician*");
-    qRegisterMetaType<ezechiel::core::DrugModel*>("DrugModel*");
+    qRegisterMetaType<ezechiel::GuiCore::DrugModel*>("DrugModel*");
     qRegisterMetaType<InterpretationAnalysis*>("InterpretationAnalysis*");
-    qRegisterMetaType<ezechiel::core::TargetList*>("TargetList*");
-    qRegisterMetaType<ezechiel::core::Unit>("Unit");
-    qRegisterMetaType<ezechiel::core::DrugModelList*>("DrugList*");
-    qRegisterMetaType<ezechiel::core::ActiveSubstance*>("ActiveSubstance*");
-    qRegisterMetaType<ezechiel::core::ActiveSubstanceList*>("ActiveSubstanceList*");
-    qRegisterMetaType<ezechiel::core::LightActiveSubstance*>("LightActiveSubstance*");
-    qRegisterMetaType<ezechiel::core::LightActiveSubstanceList*>("LightActiveSubstanceList*");
-    qRegisterMetaType<ezechiel::core::CoreMeasure*>("CoreMeasure*");
-    qRegisterMetaType<ezechiel::core::CoreMeasureList*>("CoreMeasureList*");
+    qRegisterMetaType<ezechiel::GuiCore::TargetList*>("TargetList*");
+    qRegisterMetaType<ezechiel::GuiCore::Unit>("Unit");
+    qRegisterMetaType<ezechiel::GuiCore::DrugModelList*>("DrugList*");
+    qRegisterMetaType<ezechiel::GuiCore::ActiveSubstance*>("ActiveSubstance*");
+    qRegisterMetaType<ezechiel::GuiCore::ActiveSubstanceList*>("ActiveSubstanceList*");
+    qRegisterMetaType<ezechiel::GuiCore::LightActiveSubstance*>("LightActiveSubstance*");
+    qRegisterMetaType<ezechiel::GuiCore::LightActiveSubstanceList*>("LightActiveSubstanceList*");
+    qRegisterMetaType<ezechiel::GuiCore::CoreMeasure*>("CoreMeasure*");
+    qRegisterMetaType<ezechiel::GuiCore::CoreMeasureList*>("CoreMeasureList*");
     qRegisterMetaType<PhoneList*>("PhoneList*");
     qRegisterMetaType<Phone*>("Phone*");
-    qRegisterMetaType<ezechiel::core::PatientVariate*>("PatientVariate*");
-    qRegisterMetaType<ezechiel::core::DrugVariate*>("DrugVariate*");
-    qRegisterMetaType<ezechiel::core::DrugTreatment*>("DrugTreatment*");
-    qRegisterMetaType<ezechiel::core::PredictionSpec*>("PredictionSpec*");
-    qRegisterMetaType<ezechiel::core::PatientVariateList*>("PatientVariateList*");
-    qRegisterMetaType<ezechiel::core::Dosage*>("Dosage*");
-    qRegisterMetaType<ezechiel::core::AdjustmentDosage*>("AdjustmentDosage*");
-    qRegisterMetaType<ezechiel::core::DosageHistory*>("DosageHistory*");
-    qRegisterMetaType<ezechiel::core::CorePatient*>("CorePatient*");
-    qRegisterMetaType<ezechiel::core::CorePatientList*>("CorePatientList*");
-    qRegisterMetaType<ezechiel::core::ADME*>("ADME*");
-    qRegisterMetaType<ezechiel::core::Admin*>("Admin*");
-    qRegisterMetaType<ezechiel::core::AdminList*>("AdminList*");
-    qRegisterMetaType<ezechiel::core::Admin::Route>("ADME::Route");
-    qRegisterMetaType<ezechiel::core::Amount>("Amount");
-    qRegisterMetaType<ezechiel::core::Reference*>("Reference*");
-    qRegisterMetaType<ezechiel::core::ReferenceList*>("ReferenceList*");
-    qRegisterMetaType<ezechiel::core::Editor*>("Editor*");
-    qRegisterMetaType<ezechiel::core::EditorList*>("EditorList*");
-    // qRegisterMetaType<ezechiel::core::EditorSet*>("EditorSet*");
-    qRegisterMetaType<ezechiel::core::IdentifiableAmount*>("IdentifiableAmount*");
-    qRegisterMetaType<ezechiel::core::Halflife*>("Halflife*");
-    qRegisterMetaType<ezechiel::core::Concentrations*>("Concentrations*");
-    qRegisterMetaType<ezechiel::core::Results*>("Results*");
-    qRegisterMetaType<ezechiel::core::ValidDoses*>("ValidDoses*");
-    qRegisterMetaType<ezechiel::core::ValidIntervals*>("ValidIntervals*");
-    qRegisterMetaType<ezechiel::core::ValidInfusions*>("ValidInfusions*");
-    qRegisterMetaType<ezechiel::core::DrugVariateList*>("DrugVariateList*");
-    qRegisterMetaType<ezechiel::core::Target*>("Target*");
-    qRegisterMetaType<ezechiel::core::TargetMethod*>("TargetMethod*");
-    qRegisterMetaType<ezechiel::core::TargetMethod::TargetType>("TargetType");
-    qRegisterMetaType<ezechiel::core::Operation*>("Operation*");
-    qRegisterMetaType<QList<ezechiel::core::Operation*> >("QList<Operation*>");
-    qRegisterMetaType<ezechiel::core::Bsv*>("Bsv*");
-    qRegisterMetaType<ezechiel::core::Parameter*>("Parameter*");
-    qRegisterMetaType<ezechiel::core::ParameterSet*>("ParameterSet*");
-    qRegisterMetaType<ezechiel::core::Parameters*>("ParameterList*");
-    qRegisterMetaType<ezechiel::core::DrugTreatment*>("DrugTreatment*");
-    qRegisterMetaType<ezechiel::core::StandardTreatment*>("StandardTreatment*");
+    qRegisterMetaType<ezechiel::GuiCore::PatientVariate*>("PatientVariate*");
+    qRegisterMetaType<ezechiel::GuiCore::DrugVariate*>("DrugVariate*");
+    qRegisterMetaType<ezechiel::GuiCore::DrugTreatment*>("DrugTreatment*");
+    qRegisterMetaType<ezechiel::GuiCore::PredictionSpec*>("PredictionSpec*");
+    qRegisterMetaType<ezechiel::GuiCore::PatientVariateList*>("PatientVariateList*");
+    qRegisterMetaType<ezechiel::GuiCore::Dosage*>("Dosage*");
+    qRegisterMetaType<ezechiel::GuiCore::AdjustmentDosage*>("AdjustmentDosage*");
+    qRegisterMetaType<ezechiel::GuiCore::DosageHistory*>("DosageHistory*");
+    qRegisterMetaType<ezechiel::GuiCore::CorePatient*>("CorePatient*");
+    qRegisterMetaType<ezechiel::GuiCore::CorePatientList*>("CorePatientList*");
+    qRegisterMetaType<ezechiel::GuiCore::ADME*>("ADME*");
+    qRegisterMetaType<ezechiel::GuiCore::Admin*>("Admin*");
+    qRegisterMetaType<ezechiel::GuiCore::AdminList*>("AdminList*");
+    qRegisterMetaType<ezechiel::GuiCore::Admin::Route>("ADME::Route");
+    qRegisterMetaType<ezechiel::GuiCore::Amount>("Amount");
+    qRegisterMetaType<ezechiel::GuiCore::Reference*>("Reference*");
+    qRegisterMetaType<ezechiel::GuiCore::ReferenceList*>("ReferenceList*");
+    qRegisterMetaType<ezechiel::GuiCore::Editor*>("Editor*");
+    qRegisterMetaType<ezechiel::GuiCore::EditorList*>("EditorList*");
+    // qRegisterMetaType<ezechiel::GuiCore::EditorSet*>("EditorSet*");
+    qRegisterMetaType<ezechiel::GuiCore::IdentifiableAmount*>("IdentifiableAmount*");
+    qRegisterMetaType<ezechiel::GuiCore::Halflife*>("Halflife*");
+    qRegisterMetaType<ezechiel::GuiCore::Concentrations*>("Concentrations*");
+    qRegisterMetaType<ezechiel::GuiCore::Results*>("Results*");
+    qRegisterMetaType<ezechiel::GuiCore::ValidDoses*>("ValidDoses*");
+    qRegisterMetaType<ezechiel::GuiCore::ValidIntervals*>("ValidIntervals*");
+    qRegisterMetaType<ezechiel::GuiCore::ValidInfusions*>("ValidInfusions*");
+    qRegisterMetaType<ezechiel::GuiCore::DrugVariateList*>("DrugVariateList*");
+    qRegisterMetaType<ezechiel::GuiCore::Target*>("Target*");
+    qRegisterMetaType<ezechiel::GuiCore::TargetMethod*>("TargetMethod*");
+    qRegisterMetaType<ezechiel::GuiCore::TargetMethod::TargetType>("TargetType");
+    qRegisterMetaType<ezechiel::GuiCore::Operation*>("Operation*");
+    qRegisterMetaType<QList<ezechiel::GuiCore::Operation*> >("QList<Operation*>");
+    qRegisterMetaType<ezechiel::GuiCore::Bsv*>("Bsv*");
+    qRegisterMetaType<ezechiel::GuiCore::Parameter*>("Parameter*");
+    qRegisterMetaType<ezechiel::GuiCore::ParameterSet*>("ParameterSet*");
+    qRegisterMetaType<ezechiel::GuiCore::Parameters*>("ParameterList*");
+    qRegisterMetaType<ezechiel::GuiCore::DrugTreatment*>("DrugTreatment*");
+    qRegisterMetaType<ezechiel::GuiCore::StandardTreatment*>("StandardTreatment*");
     qRegisterMetaType<DrugVariateInfo*>("DrugVariateInfo*");
     qRegisterMetaType<DrugVariateInfoList*>("DrugVariateInfoList*");
-    qRegisterMetaType<ezechiel::core::TargetEvaluationResult*>("TargetEvaluationResult*");
-    qRegisterMetaType<ezechiel::core::TargetEvaluationResults*>("TargetEvaluationResults*");
-    qRegisterMetaType<ezechiel::core::Adjustment*>("Adjustment*");
-    qRegisterMetaType<ezechiel::core::Adjustments*>("Adjustments*");
-    qRegisterMetaType<ezechiel::core::FancyPoint*>("FancyPoint*");
-    qRegisterMetaType<ezechiel::core::FancyPoints*>("FancyPoints*");
-    qRegisterMetaType<ezechiel::core::ErrorModel*>("ErrorModel*");
-    qRegisterMetaType<ezechiel::core::MetaData*>("MetaData*");
-    qRegisterMetaType<ezechiel::core::Prediction*>("Prediction*");
-    qRegisterMetaType<ezechiel::core::DrugResponseAnalysis*>("Analysis*");
-    qRegisterMetaType<ezechiel::core::OperableAmount*>("OperableAmount*");
-    qRegisterMetaType<ezechiel::core::OperationType>("OperationType");
-    qRegisterMetaType<ezechiel::core::OperableValue*>("OperableValue*");
-    qRegisterMetaType<ezechiel::core::OperableValueList*>("OperableValueList*");
-    qRegisterMetaType<ezechiel::core::OperationList*>("OperationList*");
-    qRegisterMetaType<ezechiel::core::UncastedValue*>("UncastedValue*");
-    qRegisterMetaType<ezechiel::core::UncastedValueList*>("UncastedValueList*");
-    qRegisterMetaType<ezechiel::core::Admin::Route>("Route");
+    qRegisterMetaType<ezechiel::GuiCore::TargetEvaluationResult*>("TargetEvaluationResult*");
+    qRegisterMetaType<ezechiel::GuiCore::TargetEvaluationResults*>("TargetEvaluationResults*");
+    qRegisterMetaType<ezechiel::GuiCore::Adjustment*>("Adjustment*");
+    qRegisterMetaType<ezechiel::GuiCore::Adjustments*>("Adjustments*");
+    qRegisterMetaType<ezechiel::GuiCore::FancyPoint*>("FancyPoint*");
+    qRegisterMetaType<ezechiel::GuiCore::FancyPoints*>("FancyPoints*");
+    qRegisterMetaType<ezechiel::GuiCore::ErrorModel*>("ErrorModel*");
+    qRegisterMetaType<ezechiel::GuiCore::MetaData*>("MetaData*");
+    qRegisterMetaType<ezechiel::GuiCore::Prediction*>("Prediction*");
+    qRegisterMetaType<ezechiel::GuiCore::DrugResponseAnalysis*>("Analysis*");
+    qRegisterMetaType<ezechiel::GuiCore::OperableAmount*>("OperableAmount*");
+    qRegisterMetaType<ezechiel::GuiCore::OperationType>("OperationType");
+    qRegisterMetaType<ezechiel::GuiCore::OperableValue*>("OperableValue*");
+    qRegisterMetaType<ezechiel::GuiCore::OperableValueList*>("OperableValueList*");
+    qRegisterMetaType<ezechiel::GuiCore::OperationList*>("OperationList*");
+    qRegisterMetaType<ezechiel::GuiCore::UncastedValue*>("UncastedValue*");
+    qRegisterMetaType<ezechiel::GuiCore::UncastedValueList*>("UncastedValueList*");
+    qRegisterMetaType<ezechiel::GuiCore::Admin::Route>("Route");
     qRegisterMetaType<ValidationStatus::StatusType>("StatusType");
     qRegisterMetaType<ClinicalSet*>("ClinicalSet*");
     qRegisterMetaType<Interpretation*>("Interpretation*");
@@ -322,46 +322,46 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Section>("ezechiel", 1, 0, "Section", QObject::tr("Cannot instantiate type 'Section'"));
     //qmlRegisterUncreatableType<QList<Section*>>("ezechiel", 1, 0, "QList<Section*>", QObject::tr("Cannot instantiate type 'QList<Section*>'"));
 
-    qRegisterMetaType< ezechiel::core::IntList >( "IntList" );
+    qRegisterMetaType< ezechiel::GuiCore::IntList >( "IntList" );
     qmlRegisterUncreatableType<InterpretationRequest>("ezechiel", 1, 0, "InterpretationRequest", QObject::tr("Cannot instantiate type 'InterpretationRequest'"));
     qmlRegisterUncreatableType<Patient>("ezechiel", 1, 0, "Patient", QObject::tr("Cannot instantiate type 'Patient'"));
     qmlRegisterUncreatableType<Phone>("ezechiel", 1, 0, "Phone", QObject::tr("Cannot instantiate type 'Phone'"));
     qmlRegisterUncreatableType<Person>("ezechiel", 1, 0, "Person", QObject::tr("Cannot instantiate type 'Person'"));
     qmlRegisterUncreatableType<Location>("ezechiel", 1, 0, "Location", QObject::tr("Cannot instantiate type 'Location'"));
     qmlRegisterUncreatableType<Practician>("ezechiel", 1, 0, "Practician", QObject::tr("Cannot instantiate type 'Practician'"));
-    qmlRegisterUncreatableType<ezechiel::core::DrugModel>("ezechiel", 1, 0, "DrugModel", QObject::tr("Cannot instantiate type 'DrugModel'"));
-    qmlRegisterUncreatableType<ezechiel::core::ActiveSubstance>("ezechiel", 1, 0, "ActiveSubstance", QObject::tr("Cannot instantiate type 'ActiveSubstance'"));
-    qmlRegisterUncreatableType<ezechiel::core::Target>("ezechiel", 1, 0, "Target", QObject::tr("Cannot instantiate type 'Target'"));
-    qmlRegisterUncreatableType<ezechiel::core::TargetEvaluationResult>("ezechiel", 1, 0, "TargetEvaluationResult", QObject::tr("Cannot instantiate type 'TargetEvaluationResult'"));
-    qmlRegisterUncreatableType<ezechiel::core::TargetEvaluationResults>("ezechiel", 1, 0, "TargetEvaluationResults", QObject::tr("Cannot instantiate type 'TargetEvaluationResults'"));
-    qmlRegisterUncreatableType<ezechiel::core::CoreMeasure>("ezechiel", 1, 0, "CoreMeasure", QObject::tr("Cannot instantiate type 'CoreMeasure'"));
-    qmlRegisterUncreatableType<ezechiel::core::PatientVariate>("ezechiel", 1, 0, "PatientVariate", QObject::tr("Cannot instantiate type 'PatientVariate'"));
-    qmlRegisterUncreatableType<ezechiel::core::DrugVariate>("ezechiel", 1, 0, "DrugVariate", QObject::tr("Cannot instantiate type 'DrugVariate'"));    
+    qmlRegisterUncreatableType<ezechiel::GuiCore::DrugModel>("ezechiel", 1, 0, "DrugModel", QObject::tr("Cannot instantiate type 'DrugModel'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::ActiveSubstance>("ezechiel", 1, 0, "ActiveSubstance", QObject::tr("Cannot instantiate type 'ActiveSubstance'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::Target>("ezechiel", 1, 0, "Target", QObject::tr("Cannot instantiate type 'Target'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::TargetEvaluationResult>("ezechiel", 1, 0, "TargetEvaluationResult", QObject::tr("Cannot instantiate type 'TargetEvaluationResult'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::TargetEvaluationResults>("ezechiel", 1, 0, "TargetEvaluationResults", QObject::tr("Cannot instantiate type 'TargetEvaluationResults'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::CoreMeasure>("ezechiel", 1, 0, "CoreMeasure", QObject::tr("Cannot instantiate type 'CoreMeasure'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::PatientVariate>("ezechiel", 1, 0, "PatientVariate", QObject::tr("Cannot instantiate type 'PatientVariate'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::DrugVariate>("ezechiel", 1, 0, "DrugVariate", QObject::tr("Cannot instantiate type 'DrugVariate'"));    
     qmlRegisterUncreatableType<DrugVariateInfo>("ezechiel", 1, 0, "DrugVariateInfo", QObject::tr("Cannot instantiate type 'DrugVariateInfo'"));
-    qmlRegisterUncreatableType<ezechiel::core::Adjustment>("ezechiel", 1, 0, "Adjustment", QObject::tr("Cannot instantiate type 'Adjustment'"));
-    qmlRegisterUncreatableType<ezechiel::core::DrugTreatment>("ezechiel", 1, 0, "DrugTreatment", QObject::tr("Cannot instantiate type 'Treatment'"));
-    qmlRegisterUncreatableType<ezechiel::core::PredictionSpec>("ezechiel", 1, 0, "PredictionSpec", QObject::tr("Cannot instantiate type 'PredictionSpec'"));
-    qmlRegisterUncreatableType<ezechiel::core::PatientVariateList>("ezechiel", 1, 0, "PatientVariateList", QObject::tr("Cannot instantiate type 'PatientVariateList'"));
-    qmlRegisterUncreatableType<ezechiel::core::Dosage>("ezechiel", 1, 0, "Dosage", QObject::tr("Cannot instantiate type 'Dosage'"));
-    qmlRegisterUncreatableType<ezechiel::core::DosageHistory>("ezechiel", 1, 0, "DosageHistory", QObject::tr("Cannot instantiate type 'DosageHistory'"));
-    qmlRegisterUncreatableType<ezechiel::core::CorePatient>("ezechiel", 1, 0, "CorePatient", QObject::tr("Cannot instantiate type 'CorePatient'"));
-    qmlRegisterUncreatableType<ezechiel::core::ADME>("ezechiel", 1, 0, "ADME", QObject::tr("Cannot instantiate type 'ADME'"));
-    qmlRegisterUncreatableType<ezechiel::core::Halflife>("ezechiel", 1, 0, "Halflife", QObject::tr("Cannot instantiate type 'Halflife'"));
-    qmlRegisterUncreatableType<ezechiel::core::Concentrations>("ezechiel", 1, 0, "Concentrations", QObject::tr("Cannot instantiate type 'Concentrations'"));
-    qmlRegisterUncreatableType<ezechiel::core::Results>("ezechiel", 1, 0, "Results", QObject::tr("Cannot instantiate type 'Results'"));
-    qmlRegisterUncreatableType<ezechiel::core::ValidDoses>("ezechiel", 1, 0, "ValidDoses", QObject::tr("Cannot instantiate type 'ValidDoses'"));
-    qmlRegisterUncreatableType<ezechiel::core::ValidIntervals>("ezechiel", 1, 0, "ValidIntervals", QObject::tr("Cannot instantiate type 'ValidIntervals'"));
-    qmlRegisterUncreatableType<ezechiel::core::ValidInfusions>("ezechiel", 1, 0, "ValidInfusions", QObject::tr("Cannot instantiate type 'ValidInfusions'"));
-    qmlRegisterUncreatableType<ezechiel::core::DrugVariateList>("ezechiel", 1, 0, "DrugVariateList", QObject::tr("Cannot instantiate type 'DrugVariateList'"));
-    qmlRegisterUncreatableType<ezechiel::core::Operation>("ezechiel", 1, 0, "Operation", QObject::tr("Cannot instantiate type 'Operation'"));
-    qmlRegisterUncreatableType<ezechiel::core::ParameterSet>("ezechiel", 1, 0, "ParameterSet", QObject::tr("Cannot instantiate type 'ParameterSet'"));
-    qmlRegisterUncreatableType<ezechiel::core::ErrorModel>("ezechiel", 1, 0, "ErrorModel", QObject::tr("Cannot instantiate type 'ErrorModel'"));
-    qmlRegisterUncreatableType<ezechiel::core::MetaData>("ezechiel", 1, 0, "MetaData", QObject::tr("Cannot instantiate type 'MetaData'"));
-    qmlRegisterUncreatableType<ezechiel::core::Prediction>("ezechiel", 1, 0, "Prediction", QObject::tr("Cannot instantiate type 'Prediction'"));
-    qmlRegisterUncreatableType<ezechiel::core::DrugResponseAnalysis>("ezechiel", 1, 0, "Analysis", QObject::tr("Cannot instantiate type 'Analysis'"));
-    qmlRegisterUncreatableType<ezechiel::core::OperableAmount>("ezechiel", 1, 0, "OperableAmount", QObject::tr("Cannot instantiate type 'OperableAmount'"));
-    qmlRegisterUncreatableType<ezechiel::core::UncastedValue>("ezechiel", 1, 0, "UncastedValue", QObject::tr("Cannot instantiate type 'UncastedValue'"));
-    qmlRegisterUncreatableType<ezechiel::core::UncastedValueList>("ezechiel", 1, 0, "UncastedValueList", QObject::tr("Cannot instantiate type 'UncastedValueList'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::Adjustment>("ezechiel", 1, 0, "Adjustment", QObject::tr("Cannot instantiate type 'Adjustment'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::DrugTreatment>("ezechiel", 1, 0, "DrugTreatment", QObject::tr("Cannot instantiate type 'Treatment'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::PredictionSpec>("ezechiel", 1, 0, "PredictionSpec", QObject::tr("Cannot instantiate type 'PredictionSpec'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::PatientVariateList>("ezechiel", 1, 0, "PatientVariateList", QObject::tr("Cannot instantiate type 'PatientVariateList'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::Dosage>("ezechiel", 1, 0, "Dosage", QObject::tr("Cannot instantiate type 'Dosage'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::DosageHistory>("ezechiel", 1, 0, "DosageHistory", QObject::tr("Cannot instantiate type 'DosageHistory'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::CorePatient>("ezechiel", 1, 0, "CorePatient", QObject::tr("Cannot instantiate type 'CorePatient'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::ADME>("ezechiel", 1, 0, "ADME", QObject::tr("Cannot instantiate type 'ADME'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::Halflife>("ezechiel", 1, 0, "Halflife", QObject::tr("Cannot instantiate type 'Halflife'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::Concentrations>("ezechiel", 1, 0, "Concentrations", QObject::tr("Cannot instantiate type 'Concentrations'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::Results>("ezechiel", 1, 0, "Results", QObject::tr("Cannot instantiate type 'Results'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::ValidDoses>("ezechiel", 1, 0, "ValidDoses", QObject::tr("Cannot instantiate type 'ValidDoses'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::ValidIntervals>("ezechiel", 1, 0, "ValidIntervals", QObject::tr("Cannot instantiate type 'ValidIntervals'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::ValidInfusions>("ezechiel", 1, 0, "ValidInfusions", QObject::tr("Cannot instantiate type 'ValidInfusions'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::DrugVariateList>("ezechiel", 1, 0, "DrugVariateList", QObject::tr("Cannot instantiate type 'DrugVariateList'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::Operation>("ezechiel", 1, 0, "Operation", QObject::tr("Cannot instantiate type 'Operation'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::ParameterSet>("ezechiel", 1, 0, "ParameterSet", QObject::tr("Cannot instantiate type 'ParameterSet'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::ErrorModel>("ezechiel", 1, 0, "ErrorModel", QObject::tr("Cannot instantiate type 'ErrorModel'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::MetaData>("ezechiel", 1, 0, "MetaData", QObject::tr("Cannot instantiate type 'MetaData'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::Prediction>("ezechiel", 1, 0, "Prediction", QObject::tr("Cannot instantiate type 'Prediction'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::DrugResponseAnalysis>("ezechiel", 1, 0, "Analysis", QObject::tr("Cannot instantiate type 'Analysis'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::OperableAmount>("ezechiel", 1, 0, "OperableAmount", QObject::tr("Cannot instantiate type 'OperableAmount'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::UncastedValue>("ezechiel", 1, 0, "UncastedValue", QObject::tr("Cannot instantiate type 'UncastedValue'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::UncastedValueList>("ezechiel", 1, 0, "UncastedValueList", QObject::tr("Cannot instantiate type 'UncastedValueList'"));
     qmlRegisterUncreatableType<Interpretation>("ezechiel", 1, 0, "Interpretation", QObject::tr("Cannot instantiate type 'Interpretation'"));
     qmlRegisterUncreatableType<InterpretationController>("ezechiel", 1, 0, "InterpretationController", QObject::tr("Cannot instantiate type 'InterpretationController'"));
     qmlRegisterUncreatableType<MeasureTabController>("ezechiel", 1, 0, "MeasureTabController", QObject::tr("Cannot instantiate type 'MeasureTabController'"));
@@ -400,14 +400,14 @@ int main(int argc, char *argv[])
 //    qmlRegisterUncreatableType<TargetListModel>("ezechiel", 1, 0, "TargetListModel", QObject::tr("Cannot instantiate type 'TargetListModel'"));
     qmlRegisterUncreatableType<StartupWindow>("ezechiel", 1, 0, "StartupWindow", QObject::tr("Cannot instantiate type 'StartupWindow'"));
 
-    qmlRegisterUncreatableType<ezechiel::core::PredictionResult>("ezechiel", 1, 0, "PredictionResult", QObject::tr("Cannot instantiate type 'PredictionResult'"));
-    qmlRegisterUncreatableType<ezechiel::core::PercentileData>("ezechiel", 1, 0, "PercentilePair", QObject::tr("Cannot instantiate type 'PercentilePair'"));
-    qmlRegisterUncreatableType<ezechiel::core::PercentileDataList>("ezechiel", 1, 0, "PercentileDataList", QObject::tr("Cannot instantiate type 'PecentilePairs'"));
-    qmlRegisterUncreatableType<ezechiel::core::Predictive>("ezechiel", 1, 0, "Predictive", QObject::tr("Cannot instantiate type 'Predictive'"));
-    qmlRegisterUncreatableType<ezechiel::core::PredictionData>("ezechiel", 1, 0, "PredictionData", QObject::tr("Cannot instantiate type 'PredictionData'"));
-    qmlRegisterUncreatableType<ezechiel::core::Points>("ezechiel", 1, 0, "Points", QObject::tr("Cannot instantiate type 'Points'"));
-    qmlRegisterUncreatableType<ezechiel::core::ChartData>("ezechiel", 1, 0, "ChartData", QObject::tr("Cannot instantiate type 'ChartData'"));
-    qmlRegisterUncreatableType<ezechiel::core::CorePatient>("ezechiel", 1, 0, "CorePatient", QObject::tr("Cannot instantiate type 'CorePatient'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::PredictionResult>("ezechiel", 1, 0, "PredictionResult", QObject::tr("Cannot instantiate type 'PredictionResult'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::PercentileData>("ezechiel", 1, 0, "PercentilePair", QObject::tr("Cannot instantiate type 'PercentilePair'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::PercentileDataList>("ezechiel", 1, 0, "PercentileDataList", QObject::tr("Cannot instantiate type 'PecentilePairs'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::Predictive>("ezechiel", 1, 0, "Predictive", QObject::tr("Cannot instantiate type 'Predictive'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::PredictionData>("ezechiel", 1, 0, "PredictionData", QObject::tr("Cannot instantiate type 'PredictionData'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::Points>("ezechiel", 1, 0, "Points", QObject::tr("Cannot instantiate type 'Points'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::ChartData>("ezechiel", 1, 0, "ChartData", QObject::tr("Cannot instantiate type 'ChartData'"));
+    qmlRegisterUncreatableType<ezechiel::GuiCore::CorePatient>("ezechiel", 1, 0, "CorePatient", QObject::tr("Cannot instantiate type 'CorePatient'"));
     qmlRegisterUncreatableType<ValidationStatus>("ezechiel", 1, 0, "Status", QObject::tr("Cannot instantiate type 'Status'"));
 	qmlRegisterUncreatableType<StepType>("ezechiel", 1, 0, "StepType", QObject::tr("Cannot instantiate type 'StepType'"));
 
@@ -460,7 +460,7 @@ int main(int argc, char *argv[])
 //    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Report.");
 
     // Let's create CORE, to modify paths from the options
-    ezechiel::core::Core::setInstance(new ezechiel::apputils::AppCore());
+    ezechiel::GuiCore::Core::setInstance(new ezechiel::apputils::AppCore());
     parseOptions();
     EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Options.");
     initResources();
@@ -589,7 +589,7 @@ void parseOptions()
     const QCommandLineOption drugsPathOption(QStringList() << "d" << "drugspath",
                                              QCoreApplication::translate("main", "Drug files path."),
                                              "drugspath",
-                                             CORE->path(ezechiel::core::Core::Drugs2));
+                                             CORE->path(ezechiel::GuiCore::Core::Drugs2));
 
     parser.addOption(basePathOption);
     const QCommandLineOption helpOption = parser.addHelpOption();
@@ -619,7 +619,7 @@ void parseOptions()
     }
     if (parser.isSet(drugsPathOption)) {
 #ifndef CONFIG_DEMO
-        CORE->setPath(ezechiel::core::Core::Drugs2, parser.value(drugsPathOption));
+        CORE->setPath(ezechiel::GuiCore::Core::Drugs2, parser.value(drugsPathOption));
 #endif // CONFIG_DEMO
     }
 
@@ -655,7 +655,7 @@ void parseOptions()
 void initResources()
 {
 //    We do this in main to be able to access Core in parsing
-//    ezechiel::core::Core::setInstance(new ezechiel::apputils::AppCore());
+//    ezechiel::GuiCore::Core::setInstance(new ezechiel::apputils::AppCore());
 
     CORE->setProcessingInterface(ProcessingFactory::createProcessing());
     APPCORE->drugManager();
@@ -667,10 +667,10 @@ void initResources()
 #ifdef CONFIG_DEMO
     std::string basePath = ":/drugs/";
 #else
-    std::string basePath = CORE->path(ezechiel::core::Core::Drugs2).toStdString() + "/";
+    std::string basePath = CORE->path(ezechiel::GuiCore::Core::Drugs2).toStdString() + "/";
 #endif // CONFIG_DEMO
     manager->buildAllDrugModels(basePath);
-    std::vector<ezechiel::core::DrugModel *> models = manager->getAllEzechielDrugModels();
+    std::vector<ezechiel::GuiCore::DrugModel *> models = manager->getAllEzechielDrugModels();
     for(auto model : models) {
         if (model != nullptr) {
             APPCORE->drugManager()->tryToAddDrugModelToRepo(model);

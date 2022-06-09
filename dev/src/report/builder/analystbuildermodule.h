@@ -4,7 +4,7 @@
 #include "entity.h"
 #include "reportbuildermodule.h"
 
-class AnalystBuilderModule :public ezechiel::core::Entity, public ReportBuilderModule
+class AnalystBuilderModule :public ezechiel::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
     AUTO_PROPERTY_DECL(Practician*, practician, Practician)

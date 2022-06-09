@@ -3,7 +3,7 @@
 #include "identifiers.h"
 #include "bsv.h"
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 ParametersBuilderModule::ParametersBuilderModule(ParameterSet* parameters, QObject *parent) :
     _parameters(parameters)

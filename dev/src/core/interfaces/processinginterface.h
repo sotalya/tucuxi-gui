@@ -16,7 +16,7 @@ namespace math {
     class ProcessingAborter;
 }
 
-namespace core {
+namespace GuiCore {
 
 /**
  * This interface is the entry point for any calculation.
@@ -42,9 +42,9 @@ public:
      * @param traits information about the points to calculate
      * @param pred prediction to hold the state of the curve(s)
      */
-    virtual ProcessingResult points(const ezechiel::core::DrugResponseAnalysis* analysis,
-                       const ezechiel::core::PointsTraits traits,
-                       ezechiel::core::PredictionResult &pred) = 0;
+    virtual ProcessingResult points(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
+                       const ezechiel::GuiCore::PointsTraits traits,
+                       ezechiel::GuiCore::PredictionResult &pred) = 0;
 
     /**
      * Single points are calculated here in contrast to a series of contiguous points @see points
@@ -54,10 +54,10 @@ public:
      * @param amount holds a single point of interest (obsolete)
      * @param pred prediction to hold the state of the point(s)
      */
-    virtual ProcessingResult point(const ezechiel::core::DrugResponseAnalysis* analysis,
-                      const ezechiel::core::PointTraits traits,
-                      ezechiel::core::Amount &amount,
-                       ezechiel::core::PredictionResult &pred) = 0;
+    virtual ProcessingResult point(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
+                      const ezechiel::GuiCore::PointTraits traits,
+                      ezechiel::GuiCore::Amount &amount,
+                       ezechiel::GuiCore::PredictionResult &pred) = 0;
 
     /**
      * Percentiles are calculated here for apriori and population
@@ -66,9 +66,9 @@ public:
      * @param pred prediction to hold the state of the point(s)
      * @param aborter responsible for aborting long running calculations
      */
-    virtual ProcessingResult percentiles(const ezechiel::core::DrugResponseAnalysis* prediction,
-                            const ezechiel::core::PercentilesTraits traits,
-                            ezechiel::core::PredictionResult &pred,
+    virtual ProcessingResult percentiles(const ezechiel::GuiCore::DrugResponseAnalysis* prediction,
+                            const ezechiel::GuiCore::PercentilesTraits traits,
+                            ezechiel::GuiCore::PredictionResult &pred,
                             ezechiel::math::ProcessingAborter *aborter = 0) = 0;
 
     /**
@@ -78,9 +78,9 @@ public:
      * @param pred prediction to hold the state of the point(s)
      * @param aborter responsible for aborting long running calculations
      */
-    virtual ProcessingResult calculateAposterioriPercentiles(const ezechiel::core::DrugResponseAnalysis* prediction,
-                               const ezechiel::core::PercentilesTraits traits,
-                               ezechiel::core::PredictionResult &pred,
+    virtual ProcessingResult calculateAposterioriPercentiles(const ezechiel::GuiCore::DrugResponseAnalysis* prediction,
+                               const ezechiel::GuiCore::PercentilesTraits traits,
+                               ezechiel::GuiCore::PredictionResult &pred,
                                ezechiel::math::ProcessingAborter *aborter = 0) = 0;
 
     /**
@@ -89,9 +89,9 @@ public:
      * @param traits information about the points to calculate
      * @param pred prediction to hold the state of the curve(s)
      */
-    virtual ProcessingResult computeSuggestedAdjustments(const ezechiel::core::DrugResponseAnalysis* analysis,
-                        const ezechiel::core::ReverseTraits traits,
-                        ezechiel::core::PredictionResult &pred) = 0;
+    virtual ProcessingResult computeSuggestedAdjustments(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
+                        const ezechiel::GuiCore::ReverseTraits traits,
+                        ezechiel::GuiCore::PredictionResult &pred) = 0;
 };
 
 } // namespace core

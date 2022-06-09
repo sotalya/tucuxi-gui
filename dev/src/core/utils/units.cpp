@@ -6,7 +6,7 @@
 #include "core/core.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //-------------------------- UNIT OBJECT -----------------------

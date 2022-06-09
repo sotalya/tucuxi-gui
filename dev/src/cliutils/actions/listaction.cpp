@@ -9,7 +9,7 @@
 #include "core/utils/logging.h"
 #include "errors_cliutils.h"
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 namespace ezechiel {
 namespace cliutils {

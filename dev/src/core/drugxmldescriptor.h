@@ -8,7 +8,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 /** \ingroup drugxmlfiles
  *  \brief The partial description of a drug XML file.

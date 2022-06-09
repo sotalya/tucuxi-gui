@@ -3,10 +3,10 @@
 #include "core/dal/uncastedvalue.h"
 
 
-AUTO_PROPERTY_IMPL(Person, ezechiel::core::UncastedValueList *, uncastedValues, UncastedValues)
+AUTO_PROPERTY_IMPL(Person, ezechiel::GuiCore::UncastedValueList *, uncastedValues, UncastedValues)
 AUTO_PROPERTY_IMPL(Person, PhoneList*, phones, Phones)
 
-Person::Person(ezechiel::core::AbstractRepository *repository, QObject *parent) :
+Person::Person(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _location_id(-1),
     _name(),
@@ -16,7 +16,7 @@ Person::Person(ezechiel::core::AbstractRepository *repository, QObject *parent) 
     _emails(),
     _phones(AdminFactory::createEntity<PhoneList>(repository, this)),
     _gender(GenderType::Male),
-    _uncastedValues(AdminFactory::createEntity<ezechiel::core::UncastedValueList>(repository, this))
+    _uncastedValues(AdminFactory::createEntity<ezechiel::GuiCore::UncastedValueList>(repository, this))
 {    
 //    SharedLocation _loc = AdminFactory::createEntity<Location>(repository);
 //    setLocation(_loc.data());
@@ -26,7 +26,7 @@ Person::Person(ezechiel::core::AbstractRepository *repository, QObject *parent) 
     setEmails(QList<Email*>());
 }
 
-Person::Person(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent) :
+Person::Person(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
     Entity(repository,id, parent),
     _location_id(-1),
     _name(),
@@ -56,7 +56,7 @@ void Person::setPrimaryPhone(QString phoneNumber)
         _phones->at(0)->setNumber(phoneNumber);
     }
     else {
-        auto phone = ezechiel::core::CoreFactory::createEntity<Phone>(_repository, _phones);
+        auto phone = ezechiel::GuiCore::CoreFactory::createEntity<Phone>(_repository, _phones);
         phone->setType(PhoneType::Professional);
         phone->setNumber(phoneNumber);
         _phones->append(phone);

@@ -4,7 +4,7 @@
 #include "core/dal/drug/translatablestring.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //! The parameter's value standard variability
 AUTO_PROPERTY_IMPL(ErrorModel, double, additive, Additive)

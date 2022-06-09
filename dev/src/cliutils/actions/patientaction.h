@@ -45,7 +45,7 @@ public:
 private:
 
     //Try to do this DB request, and return false if it didn't work with the given message
-    bool tryRequest(const ezechiel::core::Response &r, const QString &msg);
+    bool tryRequest(const ezechiel::GuiCore::Response &r, const QString &msg);
 
     // Patients
     bool listPatients ();

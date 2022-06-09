@@ -2,7 +2,7 @@
 #include "reportdata.h"
 #include "identifiers.h"
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 DosageBuilderModule::DosageBuilderModule(Dosage *dosage, QObject *parent) :
     _dosage(dosage)

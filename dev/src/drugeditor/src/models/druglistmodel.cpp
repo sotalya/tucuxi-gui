@@ -105,7 +105,7 @@ bool DrugListModel::removeRows(int row, int count, const QModelIndex &parent)
     return false;
 }
 
-void DrugListModel::setModelData(QList<ezechiel::core::DrugModel*> *drugs)
+void DrugListModel::setModelData(QList<ezechiel::GuiCore::DrugModel*> *drugs)
 {
     beginResetModel();
     _drugs = drugs;

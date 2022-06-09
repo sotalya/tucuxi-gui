@@ -50,8 +50,8 @@ void QueryRequestHandler::service(HttpRequest &request, HttpResponse &response)
 
 
 #ifdef ARTIFICIAL_TEST
-    ezechiel::core::XmlValidator validator;
-    if (!validator.validate(&source, ezechiel::core::XmlValidator::Reply_Request)) {
+    ezechiel::GuiCore::XmlValidator validator;
+    if (!validator.validate(&source, ezechiel::GuiCore::XmlValidator::Reply_Request)) {
         internalError(response, QString("Malformed source (%1)").arg(validator.errorMessage()));
         return;
     }
@@ -64,7 +64,7 @@ void QueryRequestHandler::service(HttpRequest &request, HttpResponse &response)
     }
 
     updateReply(reply_request);
-    if (!validator.validate(reply_request.toByteArray(), ezechiel::core::XmlValidator::Reply_Request)) {
+    if (!validator.validate(reply_request.toByteArray(), ezechiel::GuiCore::XmlValidator::Reply_Request)) {
         internalError(response,QString("Malformed response (%1)").arg(validator.errorMessage()));
         return;
     }

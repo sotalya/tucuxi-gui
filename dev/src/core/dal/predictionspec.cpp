@@ -3,7 +3,7 @@
 #include "core/dal/predictionspec.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(PredictionSpec, QDateTime, startDate, StartDate)
 AUTO_PROPERTY_IMPL(PredictionSpec, QDateTime, endDate, EndDate)

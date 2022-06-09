@@ -9,7 +9,7 @@
 #include "core/utils/duration.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class TranslatableString;
 
@@ -62,8 +62,8 @@ signals:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::Halflife*)
-//Q_DECLARE_OPAQUE_POINTER(ezechiel::core::Halflife*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Halflife*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Halflife*)
+//Q_DECLARE_OPAQUE_POINTER(ezechiel::GuiCore::Halflife*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Halflife*>)
 
 #endif // HALFLIFE_H

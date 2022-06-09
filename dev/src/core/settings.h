@@ -8,7 +8,7 @@
 #include <QObject>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 /** \ingroup core

@@ -300,9 +300,9 @@ bool UserAction::encryptDatabase(QStringList &args, bool encrypt)
     }
 
     //Encrypt the whole database
-    ezechiel::core::Response response;
+    ezechiel::GuiCore::Response response;
 
-    if ((response = APPUTILSREPO->encryptDatabase(encrypt)).error != ezechiel::core::NoError) {
+    if ((response = APPUTILSREPO->encryptDatabase(encrypt)).error != ezechiel::GuiCore::NoError) {
         _errors = tr("An error occured while %1 the database.\n\n%2").arg(encrypt ? tr("encrypting") : tr("decrypting"), response.message);
         return false;
     }

@@ -16,7 +16,7 @@
 #include "core/dal/drug/doses.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(DrugTreatment, QString, name, Name)
 AUTO_PROPERTY_IMPL(DrugTreatment, QString, activeSubstanceId, ActiveSubstanceId)
@@ -34,8 +34,8 @@ DrugTreatment::DrugTreatment(AbstractRepository *repository, QObject* parent)
     : Entity(repository),
       _patient(nullptr),
   //    _drug(nullptr),
-      _dosages(ezechiel::core::CoreFactory::createEntity<DosageHistory>(repository, this)),
-      _adjustments(ezechiel::core::CoreFactory::createEntity<DosageHistory>(repository, this)),
+      _dosages(ezechiel::GuiCore::CoreFactory::createEntity<DosageHistory>(repository, this)),
+      _adjustments(ezechiel::GuiCore::CoreFactory::createEntity<DosageHistory>(repository, this)),
 //      _drug(CoreFactory::createEntity<Drug>(repository, this)),
       _covariates(CoreFactory::createEntity<PatientVariateList>(repository, this)),
       _measures(CoreFactory::createEntity<CoreMeasureList>(repository, this)),

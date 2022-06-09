@@ -23,7 +23,7 @@ typedef enum{
 Q_DECLARE_METATYPE(PercentileRangeEnum)
 
 
-class GraphInformationSelection : public ezechiel::core::Entity
+class GraphInformationSelection : public ezechiel::GuiCore::Entity
 {
     Q_OBJECT
 
@@ -68,7 +68,7 @@ class GraphInformationSelection : public ezechiel::core::Entity
         Q_INVOKABLE QString getCurrentTab() const;
 
     protected:
-        Q_INVOKABLE GraphInformationSelection(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);
+        Q_INVOKABLE GraphInformationSelection(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
 
     private:
         void initStep(StepType::Enum stepType, bool curveInfo[CurveType::size]);

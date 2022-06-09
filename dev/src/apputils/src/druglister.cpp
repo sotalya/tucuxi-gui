@@ -14,7 +14,7 @@
 #include "errors_apputils.h"
 
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 namespace ezechiel {
 namespace apputils {

@@ -32,21 +32,21 @@ public:
 
 private:
     QString buildDrug(const QString &rootKey);
-    ezechiel::core::DosageHistory* buildDosages(const QString &rootKey);
+    ezechiel::GuiCore::DosageHistory* buildDosages(const QString &rootKey);
 
-    ezechiel::core::PatientVariateList * buildCovariates(const QString &rootKey, const SharedPatient patient);
+    ezechiel::GuiCore::PatientVariateList * buildCovariates(const QString &rootKey, const SharedPatient patient);
     QList<Clinical*> buildClinical(const QString &rootKey, const SharedPatient patient);
 
     SharedPatient buildPatient(const QString &rootKey);
     SharedPractician buildPractician(const QString &rootKey);
     SharedInstitute buildInstitute(const QString &rootKey);
 
-    ezechiel::core::CoreMeasureList * buildSamples(const QString &rootKey, const SharedPatient patient, const QString &drug);
+    ezechiel::GuiCore::CoreMeasureList * buildSamples(const QString &rootKey, const SharedPatient patient, const QString &drug);
     QList<SharedPhone> buildPhones(const QString &rootKey);
     PhoneList* buildPhoneList(const QString &rootKey);
     QList<Email*> buildEmails(const QString &rootKey);
 
-    ezechiel::core::Admin::Route toDosageRoute(const QString &route);
+    ezechiel::GuiCore::Admin::Route toDosageRoute(const QString &route);
     PhoneType toPhoneType(const QString &type);
     Type toEmailType(const QString &type);
 

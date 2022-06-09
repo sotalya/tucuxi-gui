@@ -3,7 +3,7 @@
 #include "predictive.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 Q_AUTO_PROPERTY_IMPL(Predictive, PredictionData*, predictionData, PredictionData)
 Q_AUTO_PROPERTY_IMPL(Predictive, PercentileDataList*, percentilePairs, PercentileDataList)

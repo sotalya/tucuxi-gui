@@ -3,7 +3,7 @@
 #include "core/corefactory.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 CoreFactory* CoreFactory::_instance = 0;
 

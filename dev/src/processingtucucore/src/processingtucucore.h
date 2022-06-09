@@ -15,7 +15,7 @@ namespace ezechiel {
         class PredictionCalculator;
         class TargetEvaluator;
     }
-    namespace core {
+    namespace GuiCore {
         class ValidDose;
         class ValidDoses;
         class ValidInterval;
@@ -39,41 +39,41 @@ namespace Tucuxi {
  * calculateAposterioriPercentiles is the aposteriori percentiles.
  * @see processinginterface.h
 */
-class ProcessingTucucore : public ezechiel::core::ProcessingInterface
+class ProcessingTucucore : public ezechiel::GuiCore::ProcessingInterface
 {
 public:
     ProcessingTucucore();
     virtual ~ProcessingTucucore();
 
-    virtual ezechiel::ProcessingResult points(const ezechiel::core::DrugResponseAnalysis* analysis,
-                       const ezechiel::core::PointsTraits traits,
-                       ezechiel::core::PredictionResult &prediction);
+    virtual ezechiel::ProcessingResult points(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
+                       const ezechiel::GuiCore::PointsTraits traits,
+                       ezechiel::GuiCore::PredictionResult &prediction);
 
-    virtual ezechiel::ProcessingResult point(const ezechiel::core::DrugResponseAnalysis* analysis,
-                      const ezechiel::core::PointTraits traits,
-                      ezechiel::core::Amount &amount,
-                      ezechiel::core::PredictionResult &prediction);
+    virtual ezechiel::ProcessingResult point(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
+                      const ezechiel::GuiCore::PointTraits traits,
+                      ezechiel::GuiCore::Amount &amount,
+                      ezechiel::GuiCore::PredictionResult &prediction);
 
-    virtual ezechiel::ProcessingResult percentiles(const ezechiel::core::DrugResponseAnalysis* analysis,
-                            const ezechiel::core::PercentilesTraits traits,
-                            ezechiel::core::PredictionResult &prediction,
+    virtual ezechiel::ProcessingResult percentiles(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
+                            const ezechiel::GuiCore::PercentilesTraits traits,
+                            ezechiel::GuiCore::PredictionResult &prediction,
                             ezechiel::math::ProcessingAborter *aborter);
 
-    virtual ezechiel::ProcessingResult calculateAposterioriPercentiles(const ezechiel::core::DrugResponseAnalysis* analysis,
-                               const ezechiel::core::PercentilesTraits traits,
-                               ezechiel::core::PredictionResult &prediction,
+    virtual ezechiel::ProcessingResult calculateAposterioriPercentiles(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
+                               const ezechiel::GuiCore::PercentilesTraits traits,
+                               ezechiel::GuiCore::PredictionResult &prediction,
                                ezechiel::math::ProcessingAborter *aborter);
 
-    virtual ezechiel::ProcessingResult computeSuggestedAdjustments(const ezechiel::core::DrugResponseAnalysis* analysis,
-                                            const ezechiel::core::ReverseTraits spec,
-                                            ezechiel::core::PredictionResult &prediction);
+    virtual ezechiel::ProcessingResult computeSuggestedAdjustments(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
+                                            const ezechiel::GuiCore::ReverseTraits spec,
+                                            ezechiel::GuiCore::PredictionResult &prediction);
 
 protected:
 
 
-    virtual ezechiel::ProcessingResult generalCalculatePercentiles(const ezechiel::core::DrugResponseAnalysis* analysis,
-                               const ezechiel::core::PercentilesTraits traits,
-                               ezechiel::core::PredictionResult &pred,
+    virtual ezechiel::ProcessingResult generalCalculatePercentiles(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
+                               const ezechiel::GuiCore::PercentilesTraits traits,
+                               ezechiel::GuiCore::PredictionResult &pred,
                                ezechiel::math::ProcessingAborter *aborter);
 
     int m_requestID;

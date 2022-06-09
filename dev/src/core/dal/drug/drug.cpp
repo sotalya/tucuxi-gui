@@ -26,7 +26,7 @@
 #include "core/dal/drug/standardtreatment.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 AUTO_PROPERTY_IMPL(Analyte, QString, analyteId, AnalyteId)
@@ -250,7 +250,7 @@ void DrugModel::setDescription(const QString &description)
 //Set the population parameters
 //void Drug::setParameters(ParameterSet* parameters)
 //{
-//    ParameterSet* set = ezechiel::core::CoreFactory::cloneEntity<ParameterSet>(_repository, 0, parameters);
+//    ParameterSet* set = ezechiel::GuiCore::CoreFactory::cloneEntity<ParameterSet>(_repository, 0, parameters);
 //    set->setModel(modelId());
 //    set->setType(POPULATION);
 

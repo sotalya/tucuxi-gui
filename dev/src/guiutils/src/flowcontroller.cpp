@@ -39,8 +39,8 @@ FlowController::~FlowController()
 
 void FlowController::initialize()
 {
-    currentStatus = ezechiel::core::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
-    oldStatus = ezechiel::core::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
+    currentStatus = ezechiel::GuiCore::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
+    oldStatus = ezechiel::GuiCore::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
 }
 
 void FlowController::setFlowView(QObject *flowView)
@@ -134,7 +134,7 @@ void FlowController::drugChanged(int index)
 
 void FlowController::generateEnables()
 {
-    ezechiel::core::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
+    ezechiel::GuiCore::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
 
     // Patient
     if (currentStatus->getDataStatus(StepType::Patient) != DataStatusType::ValidData) {
@@ -192,8 +192,8 @@ void FlowController::generateStatuses()
         return;
     }
 
-    ezechiel::core::DrugModel* drugModel = interpretation->getDrugResponseAnalysis()->getDrugModel();
-    ezechiel::core::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
+    ezechiel::GuiCore::DrugModel* drugModel = interpretation->getDrugResponseAnalysis()->getDrugModel();
+    ezechiel::GuiCore::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
 
     // Patient
     if (drugTreatment->getPatient()) {
@@ -212,10 +212,10 @@ void FlowController::generateStatuses()
     if (drugTreatment->getDosages() != nullptr) {
         bool isValid = drugTreatment->getDosages()->isValid();
         for(int i = 0; i < drugTreatment->getDosages()->size(); i++) {
-            ezechiel::core::Dosage *dosage = drugTreatment->getDosages()->at(i);
+            ezechiel::GuiCore::Dosage *dosage = drugTreatment->getDosages()->at(i);
             for(int j=0; j < dosage->getUncastedValues()->size(); j++) {
-                ezechiel::core::UncastedValue *value = dosage->getUncastedValues()->at(j);
-                if (value->getStatus() != ezechiel::core::UncastedStatus::Casted) {
+                ezechiel::GuiCore::UncastedValue *value = dosage->getUncastedValues()->at(j);
+                if (value->getStatus() != ezechiel::GuiCore::UncastedStatus::Casted) {
                     if (!value->getValidated()) {
                         isValid = false;
                     }
@@ -247,13 +247,13 @@ void FlowController::generateStatuses()
 //        if (isValid) {
 //            // Set validated as soon as we have at least one patient variable for each drug variable
 //            QSet<QString> drugVariateIds;
-//            for (ezechiel::core::DrugVariate *variate: drugModel->getCovariates()->getList()) {
+//            for (ezechiel::GuiCore::DrugVariate *variate: drugModel->getCovariates()->getList()) {
 //                if ((!variate->getAutomatic()) && (variate->getCovariateId() != "birthdate")) {
 //                    drugVariateIds.insert(variate->getCovariateId());
 //                }
 //            }
 //            bool isOk = true;
-//            for (ezechiel::core::PatientVariate *variate: drugTreatment->getCovariates()->getList()) {
+//            for (ezechiel::GuiCore::PatientVariate *variate: drugTreatment->getCovariates()->getList()) {
 //                if (drugVariateIds.contains(variate->getCovariateId())) {
 //                    drugVariateIds.remove(variate->getCovariateId());
 //                }
@@ -286,7 +286,7 @@ void FlowController::generateStatuses()
     }
 
     // Adjustments
-    ezechiel::core::DosageHistory *adjustments = drugTreatment->getAdjustments();
+    ezechiel::GuiCore::DosageHistory *adjustments = drugTreatment->getAdjustments();
     ValidationStatusType adjValidated = ValidationStatus::UnValidated;
     if (adjustments != nullptr) {
         if (adjustments->isValid()) {

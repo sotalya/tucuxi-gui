@@ -9,7 +9,7 @@
 #include "abstractviewcontroller.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class ActiveSubstance;
 class DrugModel;
@@ -28,8 +28,8 @@ public:
 
 public slots:
 
-    void setDrugInfo(ezechiel::core::ActiveSubstance *substance);
-    void setDrugModelInfo(ezechiel::core::DrugModel *drugModel);
+    void setDrugInfo(ezechiel::GuiCore::ActiveSubstance *substance);
+    void setDrugModelInfo(ezechiel::GuiCore::DrugModel *drugModel);
 };
 
 #endif // DRUGTABCONTROLLER_H

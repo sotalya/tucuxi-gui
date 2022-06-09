@@ -25,8 +25,8 @@ public:
     Q_INVOKABLE virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
 
 private:
-    virtual void insertRowsImpl(int at, int count, const ezechiel::core::SharedEntitySet &entities = ezechiel::core::SharedEntitySet());
-    virtual ezechiel::core::SharedEntitySet removeRowsImpl(int at, int count);
+    virtual void insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities = ezechiel::GuiCore::SharedEntitySet());
+    virtual ezechiel::GuiCore::SharedEntitySet removeRowsImpl(int at, int count);
 
 };
 
@@ -58,7 +58,7 @@ public:
 
 private:
     AbstractEntityListModel *_model;
-    ezechiel::core::SharedEntitySet _removed;
+    ezechiel::GuiCore::SharedEntitySet _removed;
     int _at;
     int _count;
 };

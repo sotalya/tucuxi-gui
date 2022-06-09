@@ -9,7 +9,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class DrugModel;
 class MetaData;
 class EditorList;
@@ -28,24 +28,24 @@ class DrugXmlImport
 public:
     DrugXmlImport();
     // The only method to be public
-    ezechiel::core::DrugModel *load(const QString &fileName);
+    ezechiel::GuiCore::DrugModel *load(const QString &fileName);
 
 protected:
     QXmlStreamReader reader;
 
-    bool loadHistory(ezechiel::core::DrugModel *drug);
+    bool loadHistory(ezechiel::GuiCore::DrugModel *drug);
 
-    bool loadRevisions(ezechiel::core::MetaData* metaData);
+    bool loadRevisions(ezechiel::GuiCore::MetaData* metaData);
 
-    bool loadEditor(ezechiel::core::EditorList *editors);
+    bool loadEditor(ezechiel::GuiCore::EditorList *editors);
 
-    bool loadDrug(ezechiel::core::DrugModel* drug);
+    bool loadDrug(ezechiel::GuiCore::DrugModel* drug);
 
-    bool loadHead(ezechiel::core::DrugModel* drug);
+    bool loadHead(ezechiel::GuiCore::DrugModel* drug);
 
-    bool loadAdme(ezechiel::core::DrugModel* drug);
+    bool loadAdme(ezechiel::GuiCore::DrugModel* drug);
 
-    bool loadHalflife(ezechiel::core::DrugModel* drug);
+    bool loadHalflife(ezechiel::GuiCore::DrugModel* drug);
     /**
      * @brief loadConversions
      * @param drug
@@ -54,7 +54,7 @@ protected:
      *
      * @return true if everything went well false otherwise, furthermore `drug` isn't modified in case of problems
      */
-    bool loadConversions(ezechiel::core::DrugModel* drug);
+    bool loadConversions(ezechiel::GuiCore::DrugModel* drug);
     /**
      * @brief loadDosages
      * @param drug
@@ -63,35 +63,35 @@ protected:
      *
      * @return
      */
-    bool loadDosages(ezechiel::core::DrugModel* drug);
+    bool loadDosages(ezechiel::GuiCore::DrugModel* drug);
 
-    bool loadStandardTreatment(ezechiel::core::DrugModel* drug);
+    bool loadStandardTreatment(ezechiel::GuiCore::DrugModel* drug);
 
-    bool loadTargets(ezechiel::core::DrugModel* drug);
+    bool loadTargets(ezechiel::GuiCore::DrugModel* drug);
 
-    bool loadTarget(ezechiel::core::TargetList* targetSet);
+    bool loadTarget(ezechiel::GuiCore::TargetList* targetSet);
 
-    bool loadCovariates(ezechiel::core::DrugModel* drug);
+    bool loadCovariates(ezechiel::GuiCore::DrugModel* drug);
 
-    bool loadCovariate(ezechiel::core::DrugVariateList *drugVariateSet);
+    bool loadCovariate(ezechiel::GuiCore::DrugVariateList *drugVariateSet);
 
-    bool loadErrorModel(ezechiel::core::DrugModel* drug);
+    bool loadErrorModel(ezechiel::GuiCore::DrugModel* drug);
 
-    bool loadParameters(ezechiel::core::DrugModel* drug);
+    bool loadParameters(ezechiel::GuiCore::DrugModel* drug);
 
-    bool loadParameter(ezechiel::core::ParameterSet* parameterSet);
+    bool loadParameter(ezechiel::GuiCore::ParameterSet* parameterSet);
 
-    bool loadBsv(ezechiel::core::Parameter* parameter);
+    bool loadBsv(ezechiel::GuiCore::Parameter* parameter);
 
-    bool loadCorrelations(ezechiel::core::DrugModel *drug);
+    bool loadCorrelations(ezechiel::GuiCore::DrugModel *drug);
 
-    bool loadOperations(ezechiel::core::DrugModel* drug);
+    bool loadOperations(ezechiel::GuiCore::DrugModel* drug);
 
-    bool loadOperation(QMap<QString,ezechiel::core::OperationList*> &mapOperationList);
+    bool loadOperation(QMap<QString,ezechiel::GuiCore::OperationList*> &mapOperationList);
 
-    bool stringLoaderTranslation(QString elemName, ezechiel::core::TranslatableString *QMapStringTranslation);
+    bool stringLoaderTranslation(QString elemName, ezechiel::GuiCore::TranslatableString *QMapStringTranslation);
 
-    ezechiel::core::TranslatableString* commentsLoader(bool &isOk);
+    ezechiel::GuiCore::TranslatableString* commentsLoader(bool &isOk);
 
     QString extractor(QXmlStreamAttributes *attributes = nullptr,bool readText = true);
 

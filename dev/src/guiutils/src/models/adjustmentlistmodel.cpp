@@ -113,7 +113,7 @@ bool AdjustmentListModel::removeRows(int row, int count, const QModelIndex &pare
     return false;
 }
 
-void AdjustmentListModel::setModelData(ezechiel::core::PredictionResult* pred)
+void AdjustmentListModel::setModelData(ezechiel::GuiCore::PredictionResult* pred)
 {
     beginResetModel();
     _pred = pred;

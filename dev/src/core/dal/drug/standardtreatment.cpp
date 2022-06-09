@@ -3,7 +3,7 @@
 #include "standardtreatment.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(StandardTreatment, bool, isFixedDuration, IsFixedDuration)
 AUTO_PROPERTY_IMPL(StandardTreatment, Duration, duration, Duration)

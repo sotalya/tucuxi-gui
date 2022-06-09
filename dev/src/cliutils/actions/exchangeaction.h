@@ -20,7 +20,7 @@
 
 namespace ezechiel {
 namespace cliutils {
-using namespace core;
+using namespace GuiCore;
 
 class ExchangeAction : public Action
 {

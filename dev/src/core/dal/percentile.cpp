@@ -3,7 +3,7 @@
 #include "core/dal/percentile.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //Percentile::Percentile(QObject *parent) : QObject(parent)
 //{

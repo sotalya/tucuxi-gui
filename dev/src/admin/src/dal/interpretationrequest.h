@@ -4,7 +4,7 @@
 
 #include "core/dal/entity.h"
 namespace ezechiel{
-namespace core {
+namespace GuiCore {
     class DrugTreatment;
 }
 }
@@ -13,13 +13,13 @@ class Patient;
 class Practician;
 class ClinicalSet;
 
-class InterpretationRequest : public ezechiel::core::Entity
+class InterpretationRequest : public ezechiel::GuiCore::Entity
 {
     Q_OBJECT
 
     ADMIN_ENTITY_UTILS(InterpretationRequest)
 
-    AUTO_PROPERTY_DECL(ezechiel::core::DrugTreatment*, treatment, Treatment)
+    AUTO_PROPERTY_DECL(ezechiel::GuiCore::DrugTreatment*, treatment, Treatment)
     AUTO_PROPERTY_DECL(Patient*, patient, Patient)
     AUTO_PROPERTY_DECL(Practician*, practician, Practician)
 
@@ -36,8 +36,8 @@ class InterpretationRequest : public ezechiel::core::Entity
 
 protected:
 
-    Q_INVOKABLE InterpretationRequest(ezechiel::core::AbstractRepository *repository = 0, QObject *parent = nullptr);
-    Q_INVOKABLE InterpretationRequest(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE InterpretationRequest(ezechiel::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE InterpretationRequest(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 private:
 

@@ -179,7 +179,7 @@ bool InterpretationXmlExport::save(ClinicalSet *clinicals)
 
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::DrugResponseAnalysis *drugResponseAnalysis)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::DrugResponseAnalysis *drugResponseAnalysis)
 {
     writer.writeStartElement("drugResponseAnalysis");
     bool ok = true;
@@ -264,7 +264,7 @@ QString InterpretationXmlExport::writeDate(QDateTime date)
     return date.toString(Qt::ISODate);
 }
 
-bool InterpretationXmlExport::saveIdentifiableAmount(const QString &tagName, ezechiel::core::IdentifiableAmount *amount)
+bool InterpretationXmlExport::saveIdentifiableAmount(const QString &tagName, ezechiel::GuiCore::IdentifiableAmount *amount)
 {
     writer.writeStartElement(tagName);
     writer.writeTextElement("amountId", amount->getAmountId());
@@ -274,7 +274,7 @@ bool InterpretationXmlExport::saveIdentifiableAmount(const QString &tagName, eze
     return true;
 }
 
-bool InterpretationXmlExport::saveOperableAmount(const QString &tagName, ezechiel::core::OperableAmount *amount)
+bool InterpretationXmlExport::saveOperableAmount(const QString &tagName, ezechiel::GuiCore::OperableAmount *amount)
 {
     writer.writeStartElement(tagName);
     writer.writeTextElement("amountId", amount->getAmountId());
@@ -285,14 +285,14 @@ bool InterpretationXmlExport::saveOperableAmount(const QString &tagName, ezechie
     return true;
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::OperationList *list)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::OperationList *list)
 {
     writer.writeStartElement("operations");
-    foreach(ezechiel::core::Operation *operation, list->getList()) {
+    foreach(ezechiel::GuiCore::Operation *operation, list->getList()) {
         writer.writeStartElement("operation");
         writer.writeTextElement("type",
-                                 (operation->getType() == ezechiel::core::OperationType::HARDCODED) ? "Hardcoded" :
-                                                                                                      (operation->getType() == ezechiel::core::OperationType::IMPORTED) ? "Imported" :
+                                 (operation->getType() == ezechiel::GuiCore::OperationType::HARDCODED) ? "Hardcoded" :
+                                                                                                      (operation->getType() == ezechiel::GuiCore::OperationType::IMPORTED) ? "Imported" :
                                                                                                                                                                           "Noop");
         writer.writeTextElement("formula", operation->getFormula());
         writer.writeEndElement();
@@ -302,7 +302,7 @@ bool InterpretationXmlExport::save(ezechiel::core::OperationList *list)
 }
 
 
-bool InterpretationXmlExport::save(ezechiel::core::DrugTreatment *treatment)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::DrugTreatment *treatment)
 {
     writer.writeStartElement("treatment");
 
@@ -360,10 +360,10 @@ bool InterpretationXmlExport::save(PhoneList *list)
 }
 
 
-bool InterpretationXmlExport::save(ezechiel::core::CoreMeasureList *list)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::CoreMeasureList *list)
 {
     writer.writeStartElement("measures");
-    foreach (ezechiel::core::CoreMeasure *coreMeasure, list->getList()) {
+    foreach (ezechiel::GuiCore::CoreMeasure *coreMeasure, list->getList()) {
         Measure *measure = dynamic_cast<Measure *>(coreMeasure);
         writer.writeStartElement("measure");
         writer.writeTextElement("sampleId", measure->sampleID());
@@ -377,10 +377,10 @@ bool InterpretationXmlExport::save(ezechiel::core::CoreMeasureList *list)
     return true;
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::UncastedValueList *list)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::UncastedValueList *list)
 {
     writer.writeStartElement("uncastedValues");
-    foreach(ezechiel::core::UncastedValue *value, list->getList()) {
+    foreach(ezechiel::GuiCore::UncastedValue *value, list->getList()) {
         writer.writeStartElement("uncastedValue");
         writer.writeTextElement("field", value->getField());
         writer.writeTextElement("value", value->getText());
@@ -433,7 +433,7 @@ QString toString(Tucuxi::Core::AbsorptionModel _model) {
     return QString::fromStdString(m.at(_model));
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::AdjustmentDosage *dosage, const QString &tagName)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::AdjustmentDosage *dosage, const QString &tagName)
 {
     writer.writeStartElement(tagName);
     writer.writeTextElement("type", dosage->getType());
@@ -456,7 +456,7 @@ bool InterpretationXmlExport::save(ezechiel::core::AdjustmentDosage *dosage, con
     return true;
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::Dosage *dosage, const QString &tagName)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::Dosage *dosage, const QString &tagName)
 {
     writer.writeStartElement(tagName);
     writer.writeTextElement("dbinterval", QString("%1").arg(dosage->getDbinterval()));
@@ -480,12 +480,12 @@ bool InterpretationXmlExport::save(ezechiel::core::Dosage *dosage, const QString
     return true;
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::DosageHistory *history, const QString &tagName)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::DosageHistory *history, const QString &tagName)
 {
     writer.writeStartElement(tagName);
-    foreach(ezechiel::core::Dosage *dosage, history->getList()) {
-        if (dynamic_cast<ezechiel::core::AdjustmentDosage*>(dosage))
-            save(dynamic_cast<ezechiel::core::AdjustmentDosage*>(dosage));
+    foreach(ezechiel::GuiCore::Dosage *dosage, history->getList()) {
+        if (dynamic_cast<ezechiel::GuiCore::AdjustmentDosage*>(dosage))
+            save(dynamic_cast<ezechiel::GuiCore::AdjustmentDosage*>(dosage));
         else
             save(dosage);
     }
@@ -493,10 +493,10 @@ bool InterpretationXmlExport::save(ezechiel::core::DosageHistory *history, const
     return true;
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::PatientVariateList *list)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::PatientVariateList *list)
 {
     writer.writeStartElement("patientVariates");
-    foreach(ezechiel::core::PatientVariate *variate, list->getList()) {
+    foreach(ezechiel::GuiCore::PatientVariate *variate, list->getList()) {
         writer.writeStartElement("patientVariate");
         writer.writeTextElement("name", variate->getCovariateId());
         writer.writeTextElement("date", writeDate(variate->getDate()));
@@ -512,10 +512,10 @@ bool InterpretationXmlExport::save(ezechiel::core::PatientVariateList *list)
     return true;
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::TargetList *list)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::TargetList *list)
 {
     writer.writeStartElement("targets");
-    foreach(ezechiel::core::Target *target, list->getList()) {
+    foreach(ezechiel::GuiCore::Target *target, list->getList()) {
         writer.writeStartElement("target");
         writer.writeTextElement("method", target->getType()->getLabel());
         writer.writeStartElement("concentrations");
@@ -535,14 +535,14 @@ bool InterpretationXmlExport::save(ezechiel::core::TargetList *list)
     return true;
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::ADME *adme)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::ADME *adme)
 {
     writer.writeStartElement("adme");
     writer.writeTextElement("defaultIntake", adme->getDefaultIntake()->getLabel());
     writer.writeTextElement("distribution", adme->getDistribution());
     writer.writeTextElement("elimination", adme->getElimination());
     writer.writeStartElement("intakes");
-    foreach(ezechiel::core::Admin *admin, adme->getIntakes()->getList()) {
+    foreach(ezechiel::GuiCore::Admin *admin, adme->getIntakes()->getList()) {
         writer.writeTextElement("intake", admin->getLabel());
     }
     writer.writeEndElement();
@@ -550,7 +550,7 @@ bool InterpretationXmlExport::save(ezechiel::core::ADME *adme)
     return true;
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::ValidDoses *doses)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::ValidDoses *doses)
 {
     writer.writeStartElement("validDoses");
     writer.writeTextElement("anyDose", doses->getAnyDose() ? "true" : "false");
@@ -558,7 +558,7 @@ bool InterpretationXmlExport::save(ezechiel::core::ValidDoses *doses)
     saveIdentifiableAmount("defaultDose", doses->getQuantity());
     writer.writeStartElement("doses");
     for (int i=0; i< doses->size() ; i++) {
-        ezechiel::core::ValidDose *dose = doses->at(i);
+        ezechiel::GuiCore::ValidDose *dose = doses->at(i);
         writer.writeStartElement("dose");
         writer.writeTextElement("route", dose->getRoute()->getLabel());
         saveIdentifiableAmount("quantity", dose->getQuantity());
@@ -570,7 +570,7 @@ bool InterpretationXmlExport::save(ezechiel::core::ValidDoses *doses)
 }
 
 
-bool InterpretationXmlExport::save(ezechiel::core::ValidInfusions *infusions)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::ValidInfusions *infusions)
 {
     writer.writeStartElement("validInfusions");
     writer.writeTextElement("any", infusions->getAny() ? "true" : "false");
@@ -587,7 +587,7 @@ bool InterpretationXmlExport::save(ezechiel::core::ValidInfusions *infusions)
 }
 
 
-bool InterpretationXmlExport::save(ezechiel::core::ValidIntervals *intervals)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::ValidIntervals *intervals)
 {
     writer.writeStartElement("validIntervals");
     writer.writeTextElement("any", intervals->getAny() ? "true" : "false");
@@ -604,10 +604,10 @@ bool InterpretationXmlExport::save(ezechiel::core::ValidIntervals *intervals)
     return true;
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::DrugVariateList *list)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::DrugVariateList *list)
 {
     writer.writeStartElement("drugVariates");
-    foreach(ezechiel::core::DrugVariate *variate, list->getList()) {
+    foreach(ezechiel::GuiCore::DrugVariate *variate, list->getList()) {
         writer.writeStartElement("drugVariate");
         writer.writeTextElement("name", variate->getCovariateId());
         saveOperableAmount("quantity", variate->getQuantity());
@@ -619,12 +619,12 @@ bool InterpretationXmlExport::save(ezechiel::core::DrugVariateList *list)
     return true;
 }
 
-bool InterpretationXmlExport::save(ezechiel::core::ParameterSet *set)
+bool InterpretationXmlExport::save(ezechiel::GuiCore::ParameterSet *set)
 {
     writer.writeStartElement("parameterSet");
     writer.writeTextElement("time", writeDate(set->getTime()));
     writer.writeStartElement("parameters");
-    foreach(ezechiel::core::Parameter *p, set->getParameters()->getList()) {
+    foreach(ezechiel::GuiCore::Parameter *p, set->getParameters()->getList()) {
         writer.writeStartElement("parameter");
         writer.writeTextElement("name", p->getName());
         saveOperableAmount("quantity", p->getQuantity());

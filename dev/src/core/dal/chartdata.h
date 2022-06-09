@@ -10,7 +10,7 @@
 #include "core/dal/entity.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class ChartData : public Entity
 {
@@ -48,7 +48,7 @@ protected:
 }
 }
 
-Q_DECLARE_METATYPE(ezechiel::core::ChartData*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::ChartData*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ChartData*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ChartData*>)
 
 #endif // CHARTDATA_H

@@ -4,7 +4,7 @@
 #include "core/dal/entity.h"
 #include "core/dal/chartdata.h"
 
-class InterpretationAnalysis : public ezechiel::core::Entity
+class InterpretationAnalysis : public ezechiel::GuiCore::Entity
 {
 
     Q_OBJECT
@@ -16,7 +16,7 @@ class InterpretationAnalysis : public ezechiel::core::Entity
     //! the interpretation of the appropriateness of drug exposure by the analyst
     AUTO_PROPERTY_DECL(QString, suitability, Suitability)
 
-    AUTO_PROPERTY_DECL(ezechiel::core::ChartData*, chartData, ChartData)
+    AUTO_PROPERTY_DECL(ezechiel::GuiCore::ChartData*, chartData, ChartData)
 
     //! the recommendation of dosage adjustment by the analyst
     AUTO_PROPERTY_DECL(QString, prediction, Prediction)
@@ -32,7 +32,7 @@ class InterpretationAnalysis : public ezechiel::core::Entity
     AUTO_PROPERTY_DECL(QString, dosageDescription, DosageDescription)
 protected:
 
-    Q_INVOKABLE InterpretationAnalysis(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE InterpretationAnalysis(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
 
 public:
 

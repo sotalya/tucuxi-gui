@@ -7,7 +7,7 @@
 #include "core/interfaces/abstractrepository.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class CoreFactory;
 

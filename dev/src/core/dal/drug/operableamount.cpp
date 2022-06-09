@@ -5,7 +5,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(IdentifiableAmount, QString, amountId, AmountId)
 

@@ -3,7 +3,7 @@
 #include "core/dal/residual.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //Residual::Residual(QObject *parent) : QObject(parent)
 //{

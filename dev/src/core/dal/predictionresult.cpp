@@ -4,7 +4,7 @@
 #include "core/dal/entity.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //AUTO_PROPERTY_IMPL(PredictionResult, ParameterType, paramsType, ParamsType)
 Q_AUTO_PROPERTY_IMPL(PredictionResult, Predictive*, predictive, Predictive)

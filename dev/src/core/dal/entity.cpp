@@ -4,7 +4,7 @@
 //#include "core/corerepository.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 Entity::Entity(AbstractRepository *repository, QObject *parent) :
@@ -34,7 +34,7 @@ bool Entity::save() {
     // YTA : Remove it for now. Could be restored later, but I would prefer not to have an access through setDBObject.
     // I think a visitor pattern would better suite the needs
     /*
-    ezechiel::core::Response r = NEWDB->setDBObject(*this, 0);
+    ezechiel::GuiCore::Response r = NEWDB->setDBObject(*this, 0);
     if (r.error != NoError) {
         return false;
     }

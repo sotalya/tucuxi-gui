@@ -13,7 +13,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 typedef int ident;
 // This class should be a superclass of all the aggregates listed below
@@ -215,6 +215,6 @@ public:
 
 } // namespace core
 } // namespace ezechiel
-Q_DECLARE_INTERFACE(ezechiel::core::CoreRepository, "ch.heig-vd.ezechiel.CoreInterface/0.1")
+Q_DECLARE_INTERFACE(ezechiel::GuiCore::CoreRepository, "ch.heig-vd.ezechiel.CoreInterface/0.1")
 
 #endif // REPOSITORY_H

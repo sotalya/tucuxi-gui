@@ -12,7 +12,7 @@
 #include "core/utils/ezutils.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //! \brief Describes an option having option
 /** \ingroup core

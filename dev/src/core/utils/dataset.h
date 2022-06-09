@@ -10,7 +10,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 /** Reunion of some data with a unit.

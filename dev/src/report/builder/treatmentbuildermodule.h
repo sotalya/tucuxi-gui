@@ -5,21 +5,21 @@
 #include "core/dal/drugtreatment.h"
 #include "reportbuildermodule.h"
 
-class TreatmentBuilderModule : public ezechiel::core::Entity, public ReportBuilderModule
+class TreatmentBuilderModule : public ezechiel::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
 
 public:
-    TreatmentBuilderModule(ezechiel::core::DrugTreatment* treatment = 0, QObject *parent = 0);
+    TreatmentBuilderModule(ezechiel::GuiCore::DrugTreatment* treatment = 0, QObject *parent = 0);
 
     virtual bool setData(ReportData *data);
     virtual void unsetData(ReportData *data);
 
-    const ezechiel::core::DrugTreatment* treatment() const;
-    TreatmentBuilderModule &setTreatment(ezechiel::core::DrugTreatment* treatment);
+    const ezechiel::GuiCore::DrugTreatment* treatment() const;
+    TreatmentBuilderModule &setTreatment(ezechiel::GuiCore::DrugTreatment* treatment);
 
 private:
-    ezechiel::core::DrugTreatment* _treatment;
+    ezechiel::GuiCore::DrugTreatment* _treatment;
 };
 
 #endif // TREATMENTBUILDERMODULE_H

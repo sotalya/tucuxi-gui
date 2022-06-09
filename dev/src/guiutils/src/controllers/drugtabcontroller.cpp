@@ -14,14 +14,14 @@ DrugTabController::DrugTabController(QObject *parent) : AbstractViewController(p
 }
 
 
-void DrugTabController::setDrugInfo(ezechiel::core::ActiveSubstance *substance)
+void DrugTabController::setDrugInfo(ezechiel::GuiCore::ActiveSubstance *substance)
 {
     DrugToHtml translator;
     setDrugHtmlDescription(translator.activeSubstanceToHtml(substance));
 
 }
 
-void DrugTabController::setDrugModelInfo(ezechiel::core::DrugModel *drugModel)
+void DrugTabController::setDrugModelInfo(ezechiel::GuiCore::DrugModel *drugModel)
 {
     DrugToHtml translator;
     setDrugHtmlDescription(translator.drugToHtml(drugModel));

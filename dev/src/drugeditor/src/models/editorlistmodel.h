@@ -31,16 +31,16 @@ public:
     Q_INVOKABLE virtual int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
 
 public slots:
-    void setModelData(QList<ezechiel::core::Editor*> *editor);
+    void setModelData(QList<ezechiel::GuiCore::Editor*> *editor);
 
 private:
     virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
-    virtual void insertRowsImpl(int at, int count, const ezechiel::core::SharedEntitySet &entities = ezechiel::core::SharedEntitySet());
-    virtual ezechiel::core::SharedEntitySet removeRowsImpl(int at, int count);
+    virtual void insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities = ezechiel::GuiCore::SharedEntitySet());
+    virtual ezechiel::GuiCore::SharedEntitySet removeRowsImpl(int at, int count);
 
     void init();
 
-    QList<ezechiel::core::Editor*> *_editors;
+    QList<ezechiel::GuiCore::Editor*> *_editors;
     QHash<int, QByteArray> _roleNames;
 
 

@@ -28,15 +28,15 @@ void ChartDataController::setCalculationController(CalculationController *contro
 {
     calculationController = controller;
 
-    CONNECT(calculationController, SIGNAL(popPredComputed(ezechiel::core::PredictionResult*)), this, SLOT(receiveResultsPopPred(ezechiel::core::PredictionResult*)));
-    CONNECT(calculationController, SIGNAL(popPercComputed(ezechiel::core::PredictionResult*)), this, SLOT(receiveResultsPopPerc(ezechiel::core::PredictionResult*)));
-    CONNECT(calculationController, SIGNAL(aprPredComputed(ezechiel::core::PredictionResult*)), this, SLOT(receiveResultsAprPred(ezechiel::core::PredictionResult*)));
-    CONNECT(calculationController, SIGNAL(aprPercComputed(ezechiel::core::PredictionResult*)), this, SLOT(receiveResultsAprPerc(ezechiel::core::PredictionResult*)));
-    CONNECT(calculationController, SIGNAL(apoPredComputed(ezechiel::core::PredictionResult*)), this, SLOT(receiveResultsApoPred(ezechiel::core::PredictionResult*)));
-    CONNECT(calculationController, SIGNAL(apoPercComputed(ezechiel::core::PredictionResult*)), this, SLOT(receiveResultsApoPerc(ezechiel::core::PredictionResult*)));
-    CONNECT(calculationController, SIGNAL(revPredComputed(ezechiel::core::PredictionResult*)), this, SLOT(receiveResultsRevPred(ezechiel::core::PredictionResult*)));
-    CONNECT(calculationController, SIGNAL(adjPredComputed(ezechiel::core::PredictionResult*)), this, SLOT(receiveResultsAdjPred(ezechiel::core::PredictionResult*)));
-    CONNECT(calculationController, SIGNAL(adjPercComputed(ezechiel::core::PredictionResult*)), this, SLOT(receiveResultsAdjPerc(ezechiel::core::PredictionResult*)));
+    CONNECT(calculationController, SIGNAL(popPredComputed(ezechiel::GuiCore::PredictionResult*)), this, SLOT(receiveResultsPopPred(ezechiel::GuiCore::PredictionResult*)));
+    CONNECT(calculationController, SIGNAL(popPercComputed(ezechiel::GuiCore::PredictionResult*)), this, SLOT(receiveResultsPopPerc(ezechiel::GuiCore::PredictionResult*)));
+    CONNECT(calculationController, SIGNAL(aprPredComputed(ezechiel::GuiCore::PredictionResult*)), this, SLOT(receiveResultsAprPred(ezechiel::GuiCore::PredictionResult*)));
+    CONNECT(calculationController, SIGNAL(aprPercComputed(ezechiel::GuiCore::PredictionResult*)), this, SLOT(receiveResultsAprPerc(ezechiel::GuiCore::PredictionResult*)));
+    CONNECT(calculationController, SIGNAL(apoPredComputed(ezechiel::GuiCore::PredictionResult*)), this, SLOT(receiveResultsApoPred(ezechiel::GuiCore::PredictionResult*)));
+    CONNECT(calculationController, SIGNAL(apoPercComputed(ezechiel::GuiCore::PredictionResult*)), this, SLOT(receiveResultsApoPerc(ezechiel::GuiCore::PredictionResult*)));
+    CONNECT(calculationController, SIGNAL(revPredComputed(ezechiel::GuiCore::PredictionResult*)), this, SLOT(receiveResultsRevPred(ezechiel::GuiCore::PredictionResult*)));
+    CONNECT(calculationController, SIGNAL(adjPredComputed(ezechiel::GuiCore::PredictionResult*)), this, SLOT(receiveResultsAdjPred(ezechiel::GuiCore::PredictionResult*)));
+    CONNECT(calculationController, SIGNAL(adjPercComputed(ezechiel::GuiCore::PredictionResult*)), this, SLOT(receiveResultsAdjPerc(ezechiel::GuiCore::PredictionResult*)));
     CONNECT(calculationController, SIGNAL(popCalcFail()), this, SLOT(popCalcFailed()));
     CONNECT(calculationController, SIGNAL(aprCalcFail()), this, SLOT(aprCalcFailed()));
     CONNECT(calculationController, SIGNAL(apoCalcFail()), this, SLOT(apoCalcFailed()));
@@ -51,13 +51,13 @@ void ChartDataController::setCurrentTab(StepType::Enum step)
 void ChartDataController::initiateUpdatePopPred()
 {
     if (!isPopulationValid()) {
-        chartData->setPopPred(ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionResult>(ABSTRACTREPO, chartData));
+        chartData->setPopPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
     calculationController->computePopPred(predictionspec);
 }
 
-void ChartDataController::receiveResultsPopPred(ezechiel::core::PredictionResult* pred) {
+void ChartDataController::receiveResultsPopPred(ezechiel::GuiCore::PredictionResult* pred) {
     pred->setParent(chartData);
     // Here we set the prediction result, and as a result, it erases the percentiles.
     // It is a side effect that could be handled differently. There is also a memory leak here.
@@ -69,14 +69,14 @@ void ChartDataController::initiateUpdatePopPerc() {
     return;
 #endif
     if (!isPopulationValid()) {
-        chartData->setPopPred(ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionResult>(ABSTRACTREPO, chartData));
+        chartData->setPopPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
 
     calculationController->computePopPerc(predictionspec);
 }
 
-void ChartDataController::receiveResultsPopPerc(ezechiel::core::PredictionResult* pred) {
+void ChartDataController::receiveResultsPopPerc(ezechiel::GuiCore::PredictionResult* pred) {
     chartData->getPopPred()->getPredictive()->setPercentileDataList(pred->getPredictive()->getPercentileDataList());
     chartData->getPopPred()->getPredictive()->getPercentileDataList()->setParent(chartData->getPopPred()->getPredictive());
 }
@@ -84,13 +84,13 @@ void ChartDataController::receiveResultsPopPerc(ezechiel::core::PredictionResult
 void ChartDataController::initiateUpdateApoPred()
 {
     if (!isAPosterioriValid()) {
-        chartData->setApoPred(ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionResult>(ABSTRACTREPO, chartData));
+        chartData->setApoPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
     calculationController->computeApoPred(predictionspec);
 }
 
-void ChartDataController::receiveResultsApoPred(ezechiel::core::PredictionResult* pred) {
+void ChartDataController::receiveResultsApoPred(ezechiel::GuiCore::PredictionResult* pred) {
     pred->setParent(chartData);
     chartData->setApoPred(pred);
 }
@@ -100,13 +100,13 @@ void ChartDataController::initiateUpdateApoPerc() {
     return;
 #endif
     if (!isAPosterioriValid()) {
-        chartData->setApoPred(ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionResult>(ABSTRACTREPO, chartData));
+        chartData->setApoPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
     calculationController->computeApoPerc(predictionspec);
 }
 
-void ChartDataController::receiveResultsApoPerc(ezechiel::core::PredictionResult* pred) {
+void ChartDataController::receiveResultsApoPerc(ezechiel::GuiCore::PredictionResult* pred) {
 //    chartData->getApoPred()->getPredictive()->getPercentileDataList()->deleteLater();
     pred->getPredictive()->getPercentileDataList()->setParent(chartData->getApoPred()->getPredictive());
     chartData->getApoPred()->getPredictive()->setPercentileDataList(pred->getPredictive()->getPercentileDataList());
@@ -115,13 +115,13 @@ void ChartDataController::receiveResultsApoPerc(ezechiel::core::PredictionResult
 void ChartDataController::initiateUpdateAprPred()
 {
     if (!isAPrioriValid()) {
-        chartData->setAprPred(ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionResult>(ABSTRACTREPO, chartData));
+        chartData->setAprPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
     calculationController->computeAprPred(predictionspec);
 }
 
-void ChartDataController::receiveResultsAprPred(ezechiel::core::PredictionResult* pred) {
+void ChartDataController::receiveResultsAprPred(ezechiel::GuiCore::PredictionResult* pred) {
     pred->setParent(chartData);
     chartData->setAprPred(pred);
 }
@@ -131,13 +131,13 @@ void ChartDataController::initiateUpdateAprPerc() {
     return;
 #endif
     if (!isAPrioriValid()) {
-        chartData->setAprPred(ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionResult>(ABSTRACTREPO, chartData));
+        chartData->setAprPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
     calculationController->computeAprPerc(predictionspec);
 }
 
-void ChartDataController::receiveResultsAprPerc(ezechiel::core::PredictionResult* pred) {
+void ChartDataController::receiveResultsAprPerc(ezechiel::GuiCore::PredictionResult* pred) {
     pred->getPredictive()->getPercentileDataList()->setParent(chartData->getAprPred()->getPredictive());
     chartData->getAprPred()->getPredictive()->setPercentileDataList(pred->getPredictive()->getPercentileDataList());
 }
@@ -145,7 +145,7 @@ void ChartDataController::receiveResultsAprPerc(ezechiel::core::PredictionResult
 void ChartDataController::initiateUpdateRevPred()
 {
     if (!isReverseValid()) {
-        chartData->setRevPred(ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionResult>(ABSTRACTREPO, chartData));
+        chartData->setRevPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
     calculationController->computeRevPred(predictionspec);
@@ -154,7 +154,7 @@ void ChartDataController::initiateUpdateRevPred()
 void ChartDataController::initiateUpdateAdjPred()
 {
     if (!isAdjustedValid()) {
-        chartData->setAdjPred(ezechiel::core::CoreFactory::createEntity<ezechiel::core::PredictionResult>(ABSTRACTREPO, chartData));
+        chartData->setAdjPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
     // Here we add 2 months to get the steady state values in ChartDataController::receiveResultsAdjPred()
@@ -173,14 +173,14 @@ void ChartDataController::initiateUpdateAdjPerc()
     calculationController->computeAdjPerc(predictionspec);
 }
 
-void ChartDataController::receiveResultsRevPred(ezechiel::core::PredictionResult* pred) {
+void ChartDataController::receiveResultsRevPred(ezechiel::GuiCore::PredictionResult* pred) {
     pred->setParent(chartData);
     chartData->setRevPred(pred);
 }
 
 #include "core/dal/predictiondata.h"
 
-void ChartDataController::receiveResultsAdjPred(ezechiel::core::PredictionResult* pred) {
+void ChartDataController::receiveResultsAdjPred(ezechiel::GuiCore::PredictionResult* pred) {
     if (!isAdjustedValid()) {
         return;
     }
@@ -189,17 +189,17 @@ void ChartDataController::receiveResultsAdjPred(ezechiel::core::PredictionResult
 
     // Getting the steady state only works if we really reached steady state.
     // It means it is not very right for drugs for neonates where the age in days can have an influence
-    ezechiel::core::PredictionData *data = pred->getPredictive()->getPredictionData();
+    ezechiel::GuiCore::PredictionData *data = pred->getPredictive()->getPredictionData();
     int statIndex = data->getNbCycles() - 2;
     if (statIndex >= 0) {
-        ezechiel::core::CycleStatistics stat = data->getCycleStatistics(statIndex);
+        ezechiel::GuiCore::CycleStatistics stat = data->getCycleStatistics(statIndex);
         chartData->setInfo("steadyStateAUC24", QString::number(stat.auc24));
         chartData->setInfo("steadyStateMin", QString::number(stat.trough));
         chartData->setInfo("steadyStateMax", QString::number(stat.peak));
     }
 }
 
-void ChartDataController::receiveResultsAdjPerc(ezechiel::core::PredictionResult* pred) {
+void ChartDataController::receiveResultsAdjPerc(ezechiel::GuiCore::PredictionResult* pred) {
     if (!isAdjustedValid()) {
         return;
     }
@@ -209,22 +209,22 @@ void ChartDataController::receiveResultsAdjPerc(ezechiel::core::PredictionResult
 
 void ChartDataController::popCalcFailed() {
     EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Calculation timedout for Population Percentiles"))
-    togglePercentiles(ezechiel::core::POPULATION);
+    togglePercentiles(ezechiel::GuiCore::POPULATION);
 }
 
 void ChartDataController::aprCalcFailed() {
     EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Calculation timedout for Apriori Percentiles"))
-    togglePercentiles(ezechiel::core::APRIORI);
+    togglePercentiles(ezechiel::GuiCore::APRIORI);
 }
 
 void ChartDataController::apoCalcFailed() {
     EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Calculation timedout for Aposteriori Percentiles"))
-    togglePercentiles(ezechiel::core::APOSTERIORI);
+    togglePercentiles(ezechiel::GuiCore::APOSTERIORI);
 }
 
 void ChartDataController::adjCalcFailed() {
     EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Calculation timedout for adjustment Percentiles"))
-    //togglePercentiles(ezechiel::core::APOSTERIORI);
+    //togglePercentiles(ezechiel::GuiCore::APOSTERIORI);
 }
 
 void ChartDataController::togglePercentiles(int ptype) {

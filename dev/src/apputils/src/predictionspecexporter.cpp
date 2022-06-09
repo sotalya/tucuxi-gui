@@ -28,7 +28,7 @@ PredictionSpecExporter::PredictionSpecExporter()
 
 #include <QTextStream>
 
-bool PredictionSpecExporter::save(ezechiel::core::PredictionSpec *spec, QByteArray &data)
+bool PredictionSpecExporter::save(ezechiel::GuiCore::PredictionSpec *spec, QByteArray &data)
 {
     writer = new QXmlStreamWriter(&data);
 
@@ -58,7 +58,7 @@ QString PredictionSpecExporter::writeDate(QDateTime date)
     return date.toString("yyyy-MM-dd. hh:mm:ss");
 }
 
-void PredictionSpecExporter::save(ezechiel::core::PredictionSpec *spec)
+void PredictionSpecExporter::save(ezechiel::GuiCore::PredictionSpec *spec)
 {
     writer->writeStartElement("predictionSpec");
     writer->writeTextElement("calculationType", spec->calculationTypeToString(spec->getCalculationType()));
@@ -76,7 +76,7 @@ void PredictionSpecExporter::save(ezechiel::core::PredictionSpec *spec)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::saveIdentifiableAmount(const QString &tagName, ezechiel::core::IdentifiableAmount *amount)
+void PredictionSpecExporter::saveIdentifiableAmount(const QString &tagName, ezechiel::GuiCore::IdentifiableAmount *amount)
 {
     writer->writeStartElement(tagName);
     writer->writeTextElement("amountId", amount->getAmountId());
@@ -85,7 +85,7 @@ void PredictionSpecExporter::saveIdentifiableAmount(const QString &tagName, ezec
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::saveOperableAmount(const QString &tagName, ezechiel::core::OperableAmount *amount)
+void PredictionSpecExporter::saveOperableAmount(const QString &tagName, ezechiel::GuiCore::OperableAmount *amount)
 {
     writer->writeStartElement(tagName);
     writer->writeTextElement("amountId", amount->getAmountId());
@@ -95,15 +95,15 @@ void PredictionSpecExporter::saveOperableAmount(const QString &tagName, ezechiel
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(ezechiel::core::OperationList *list)
+void PredictionSpecExporter::save(ezechiel::GuiCore::OperationList *list)
 {
     writer->writeStartElement("operations");
     if (list != nullptr) {
-        foreach(ezechiel::core::Operation *operation, list->getList()) {
+        foreach(ezechiel::GuiCore::Operation *operation, list->getList()) {
             writer->writeStartElement("operation");
             writer->writeTextElement("type",
-                                     (operation->getType() == ezechiel::core::OperationType::HARDCODED) ? "Hardcoded" :
-                                                                                                          (operation->getType() == ezechiel::core::OperationType::IMPORTED) ? "Imported" :
+                                     (operation->getType() == ezechiel::GuiCore::OperationType::HARDCODED) ? "Hardcoded" :
+                                                                                                          (operation->getType() == ezechiel::GuiCore::OperationType::IMPORTED) ? "Imported" :
                                                                                                                                                                               "Noop");
             writer->writeTextElement("formula", operation->getFormula());
             writer->writeEndElement();
@@ -112,7 +112,7 @@ void PredictionSpecExporter::save(ezechiel::core::OperationList *list)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(ezechiel::core::DrugResponseAnalysis *analysis)
+void PredictionSpecExporter::save(ezechiel::GuiCore::DrugResponseAnalysis *analysis)
 {
     writer->writeStartElement("drugResponseAnalysis");
     save(analysis->getTreatment());
@@ -121,7 +121,7 @@ void PredictionSpecExporter::save(ezechiel::core::DrugResponseAnalysis *analysis
 }
 
 
-void PredictionSpecExporter::save(ezechiel::core::DrugTreatment *treatment)
+void PredictionSpecExporter::save(ezechiel::GuiCore::DrugTreatment *treatment)
 {
     writer->writeStartElement("treatment");
     save(treatment->getDosages());
@@ -131,10 +131,10 @@ void PredictionSpecExporter::save(ezechiel::core::DrugTreatment *treatment)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(ezechiel::core::CoreMeasureList *list)
+void PredictionSpecExporter::save(ezechiel::GuiCore::CoreMeasureList *list)
 {
     writer->writeStartElement("measures");
-    foreach (ezechiel::core::CoreMeasure *measure, list->getList()) {
+    foreach (ezechiel::GuiCore::CoreMeasure *measure, list->getList()) {
         writer->writeStartElement("measure");
         writer->writeTextElement("moment", writeDate(measure->getMoment()));
         saveIdentifiableAmount("concentration", measure->getConcentration());
@@ -144,10 +144,10 @@ void PredictionSpecExporter::save(ezechiel::core::CoreMeasureList *list)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(ezechiel::core::UncastedValueList *list)
+void PredictionSpecExporter::save(ezechiel::GuiCore::UncastedValueList *list)
 {
     writer->writeStartElement("uncastedValues");
-    foreach(ezechiel::core::UncastedValue *value, list->getList()) {
+    foreach(ezechiel::GuiCore::UncastedValue *value, list->getList()) {
         writer->writeStartElement("uncastedValue");
         writer->writeTextElement("field", value->getField());
         writer->writeTextElement("value", value->getText());
@@ -157,10 +157,10 @@ void PredictionSpecExporter::save(ezechiel::core::UncastedValueList *list)
 }
 
 
-void PredictionSpecExporter::save(ezechiel::core::DosageHistory *history)
+void PredictionSpecExporter::save(ezechiel::GuiCore::DosageHistory *history)
 {
     writer->writeStartElement("dosageHistory");
-    foreach(ezechiel::core::Dosage *dose, history->getList()) {
+    foreach(ezechiel::GuiCore::Dosage *dose, history->getList()) {
         writer->writeStartElement("dosage");
         writer->writeTextElement("dbinterval", QString("%1").arg(dose->getDbinterval()));
         writer->writeTextElement("dbtinf", QString("%1").arg(dose->getDbtinf()));
@@ -176,10 +176,10 @@ void PredictionSpecExporter::save(ezechiel::core::DosageHistory *history)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(ezechiel::core::PatientVariateList *list)
+void PredictionSpecExporter::save(ezechiel::GuiCore::PatientVariateList *list)
 {
     writer->writeStartElement("patientVariates");
-    foreach(ezechiel::core::PatientVariate *variate, list->getList()) {
+    foreach(ezechiel::GuiCore::PatientVariate *variate, list->getList()) {
         writer->writeStartElement("patientVariate");
         writer->writeTextElement("name", variate->getCovariateId());
         writer->writeTextElement("date", writeDate(variate->getDate()));
@@ -192,10 +192,10 @@ void PredictionSpecExporter::save(ezechiel::core::PatientVariateList *list)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(ezechiel::core::TargetList *list)
+void PredictionSpecExporter::save(ezechiel::GuiCore::TargetList *list)
 {
     writer->writeStartElement("targets");
-    foreach(ezechiel::core::Target *target, list->getList()) {
+    foreach(ezechiel::GuiCore::Target *target, list->getList()) {
         writer->writeStartElement("target");
         writer->writeTextElement("method", target->getType()->getLabel());
         writer->writeStartElement("concentrations");
@@ -214,7 +214,7 @@ void PredictionSpecExporter::save(ezechiel::core::TargetList *list)
 }
 
 
-void PredictionSpecExporter::save(ezechiel::core::DrugModel *model)
+void PredictionSpecExporter::save(ezechiel::GuiCore::DrugModel *model)
 {
     writer->writeStartElement("drugModel");
     // Activesubstance?
@@ -260,21 +260,21 @@ void PredictionSpecExporter::save(ezechiel::core::DrugModel *model)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(ezechiel::core::ADME *adme)
+void PredictionSpecExporter::save(ezechiel::GuiCore::ADME *adme)
 {
     writer->writeStartElement("adme");
     writer->writeTextElement("defaultIntake", adme->getDefaultIntake()->getLabel());
     writer->writeTextElement("distribution", adme->getDistribution());
     writer->writeTextElement("elimination", adme->getElimination());
     writer->writeStartElement("intakes");
-    foreach(ezechiel::core::Admin *admin, adme->getIntakes()->getList()) {
+    foreach(ezechiel::GuiCore::Admin *admin, adme->getIntakes()->getList()) {
         writer->writeTextElement("intake", admin->getLabel());
     }
     writer->writeEndElement();
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(ezechiel::core::ValidDoses *doses)
+void PredictionSpecExporter::save(ezechiel::GuiCore::ValidDoses *doses)
 {
     writer->writeStartElement("validDoses");
     writer->writeTextElement("anyDose", doses->getAnyDose() ? "true" : "false");
@@ -282,7 +282,7 @@ void PredictionSpecExporter::save(ezechiel::core::ValidDoses *doses)
     saveIdentifiableAmount("defaultDose", doses->getQuantity());
     writer->writeStartElement("doses");
     for (int i=0; i< doses->size() ; i++) {
-        ezechiel::core::ValidDose *dose = doses->at(i);
+        ezechiel::GuiCore::ValidDose *dose = doses->at(i);
         writer->writeStartElement("dose");
         writer->writeTextElement("route", dose->getRoute()->getLabel());
         saveIdentifiableAmount("quantity", dose->getQuantity());
@@ -293,7 +293,7 @@ void PredictionSpecExporter::save(ezechiel::core::ValidDoses *doses)
 }
 
 
-void PredictionSpecExporter::save(ezechiel::core::ValidInfusions *infusions)
+void PredictionSpecExporter::save(ezechiel::GuiCore::ValidInfusions *infusions)
 {
     writer->writeStartElement("validInfusions");
     writer->writeTextElement("any", infusions->getAny() ? "true" : "false");
@@ -309,7 +309,7 @@ void PredictionSpecExporter::save(ezechiel::core::ValidInfusions *infusions)
 }
 
 
-void PredictionSpecExporter::save(ezechiel::core::ValidIntervals *intervals)
+void PredictionSpecExporter::save(ezechiel::GuiCore::ValidIntervals *intervals)
 {
     writer->writeStartElement("validIntervals");
     writer->writeTextElement("any", intervals->getAny() ? "true" : "false");
@@ -325,10 +325,10 @@ void PredictionSpecExporter::save(ezechiel::core::ValidIntervals *intervals)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(ezechiel::core::DrugVariateList *list)
+void PredictionSpecExporter::save(ezechiel::GuiCore::DrugVariateList *list)
 {
     writer->writeStartElement("drugVariates");
-    foreach(ezechiel::core::DrugVariate *variate, list->getList()) {
+    foreach(ezechiel::GuiCore::DrugVariate *variate, list->getList()) {
         writer->writeStartElement("drugVariate");
         writer->writeTextElement("name", variate->getCovariateId());
         saveOperableAmount("quantity", variate->getQuantity());
@@ -339,12 +339,12 @@ void PredictionSpecExporter::save(ezechiel::core::DrugVariateList *list)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(ezechiel::core::ParameterSet *set)
+void PredictionSpecExporter::save(ezechiel::GuiCore::ParameterSet *set)
 {
     writer->writeStartElement("parameterSet");
     writer->writeTextElement("time", writeDate(set->getTime()));
     writer->writeStartElement("parameters");
-    foreach(ezechiel::core::Parameter *p, set->getParameters()->getList()) {
+    foreach(ezechiel::GuiCore::Parameter *p, set->getParameters()->getList()) {
         writer->writeStartElement("parameter");
         writer->writeTextElement("name", p->getName());
         saveOperableAmount("quantity", p->getQuantity());

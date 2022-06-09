@@ -22,7 +22,7 @@
 #endif
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
     class Dosage;
     class PredictionSpec;
     class PredictionResult;
@@ -254,28 +254,28 @@ signals:
     void aprCalcFail();
     void apoCalcFail();
     void adjCalcFail();
-    void popPredComputed(ezechiel::core::PredictionResult*);
-    void aprPredComputed(ezechiel::core::PredictionResult*);
-    void apoPredComputed(ezechiel::core::PredictionResult*);
-    void revPredComputed(ezechiel::core::PredictionResult*);
-    void adjPredComputed(ezechiel::core::PredictionResult*);
-    void popPercComputed(ezechiel::core::PredictionResult*);
-    void aprPercComputed(ezechiel::core::PredictionResult*);
-    void apoPercComputed(ezechiel::core::PredictionResult*);
-    void adjPercComputed(ezechiel::core::PredictionResult*);
-    void adjustmentsComputed(QList<ezechiel::core::Dosage*>);
+    void popPredComputed(ezechiel::GuiCore::PredictionResult*);
+    void aprPredComputed(ezechiel::GuiCore::PredictionResult*);
+    void apoPredComputed(ezechiel::GuiCore::PredictionResult*);
+    void revPredComputed(ezechiel::GuiCore::PredictionResult*);
+    void adjPredComputed(ezechiel::GuiCore::PredictionResult*);
+    void popPercComputed(ezechiel::GuiCore::PredictionResult*);
+    void aprPercComputed(ezechiel::GuiCore::PredictionResult*);
+    void apoPercComputed(ezechiel::GuiCore::PredictionResult*);
+    void adjPercComputed(ezechiel::GuiCore::PredictionResult*);
+    void adjustmentsComputed(QList<ezechiel::GuiCore::Dosage*>);
 
 public slots:
     virtual void abortAll() = 0;
-    virtual void computePopPred(ezechiel::core::PredictionSpec*) = 0;
-    virtual void computePopPerc(ezechiel::core::PredictionSpec*) = 0;
-    virtual void computeAprPred(ezechiel::core::PredictionSpec*) = 0;
-    virtual void computeAprPerc(ezechiel::core::PredictionSpec*) = 0;
-    virtual void computeApoPred(ezechiel::core::PredictionSpec*) = 0;
-    virtual void computeApoPerc(ezechiel::core::PredictionSpec*) = 0;
-    virtual void computeRevPred(ezechiel::core::PredictionSpec*) = 0;
-    virtual void computeAdjPred(ezechiel::core::PredictionSpec*) = 0;
-    virtual void computeAdjPerc(ezechiel::core::PredictionSpec*) = 0;
+    virtual void computePopPred(ezechiel::GuiCore::PredictionSpec*) = 0;
+    virtual void computePopPerc(ezechiel::GuiCore::PredictionSpec*) = 0;
+    virtual void computeAprPred(ezechiel::GuiCore::PredictionSpec*) = 0;
+    virtual void computeAprPerc(ezechiel::GuiCore::PredictionSpec*) = 0;
+    virtual void computeApoPred(ezechiel::GuiCore::PredictionSpec*) = 0;
+    virtual void computeApoPerc(ezechiel::GuiCore::PredictionSpec*) = 0;
+    virtual void computeRevPred(ezechiel::GuiCore::PredictionSpec*) = 0;
+    virtual void computeAdjPred(ezechiel::GuiCore::PredictionSpec*) = 0;
+    virtual void computeAdjPerc(ezechiel::GuiCore::PredictionSpec*) = 0;
 
 protected:
     QTimer _popperctimer;
@@ -297,20 +297,20 @@ public:
 
 
 public slots:
-    void computePopPred(ezechiel::core::PredictionSpec*);
-    void computePopPerc(ezechiel::core::PredictionSpec*);
-    void computeAprPred(ezechiel::core::PredictionSpec*);
-    void computeAprPerc(ezechiel::core::PredictionSpec*);
-    void computeApoPred(ezechiel::core::PredictionSpec*);
-    void computeApoPerc(ezechiel::core::PredictionSpec*);
-    void computeRevPred(ezechiel::core::PredictionSpec*);
-    void computeAdjPred(ezechiel::core::PredictionSpec*);
-    void computeAdjPerc(ezechiel::core::PredictionSpec*);
+    void computePopPred(ezechiel::GuiCore::PredictionSpec*);
+    void computePopPerc(ezechiel::GuiCore::PredictionSpec*);
+    void computeAprPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeAprPerc(ezechiel::GuiCore::PredictionSpec*);
+    void computeApoPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeApoPerc(ezechiel::GuiCore::PredictionSpec*);
+    void computeRevPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeAdjPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeAdjPerc(ezechiel::GuiCore::PredictionSpec*);
     void abortAll();
 //    void updateAdj();
 
 private:
-    void preparePredResults(QVector<int> time, QVector<double> data, ezechiel::core::PredictionResult* pred);
+    void preparePredResults(QVector<int> time, QVector<double> data, ezechiel::GuiCore::PredictionResult* pred);
 
     PopPercAborter *popPercAborter;
     AprPercAborter *aprPercAborter;
@@ -347,27 +347,27 @@ public:
     virtual ~ThreadedCalculationController();
 
 public slots:
-    void computePopPred(ezechiel::core::PredictionSpec*);
-    void computePopPerc(ezechiel::core::PredictionSpec*);
-    void computeAprPred(ezechiel::core::PredictionSpec*);
-    void computeAprPerc(ezechiel::core::PredictionSpec*);
-    void computeApoPred(ezechiel::core::PredictionSpec*);
-    void computeApoPerc(ezechiel::core::PredictionSpec*);
-    void computeRevPred(ezechiel::core::PredictionSpec*);
-    void computeAdjPred(ezechiel::core::PredictionSpec*);
-    void computeAdjPerc(ezechiel::core::PredictionSpec*);
+    void computePopPred(ezechiel::GuiCore::PredictionSpec*);
+    void computePopPerc(ezechiel::GuiCore::PredictionSpec*);
+    void computeAprPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeAprPerc(ezechiel::GuiCore::PredictionSpec*);
+    void computeApoPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeApoPerc(ezechiel::GuiCore::PredictionSpec*);
+    void computeRevPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeAdjPred(ezechiel::GuiCore::PredictionSpec*);
+    void computeAdjPerc(ezechiel::GuiCore::PredictionSpec*);
     void abortAll();
 
 signals:
-    void sig_updatePopPred(ezechiel::core::PredictionSpec*);
-    void sig_updatePopPerc(ezechiel::core::PredictionSpec*);
-    void sig_updateAprPred(ezechiel::core::PredictionSpec*);
-    void sig_updateAprPerc(ezechiel::core::PredictionSpec*);
-    void sig_updateApoPred(ezechiel::core::PredictionSpec*);
-    void sig_updateApoPerc(ezechiel::core::PredictionSpec*);
-    void sig_updateRevPred(ezechiel::core::PredictionSpec*);
-    void sig_updateAdjPred(ezechiel::core::PredictionSpec*);
-    void sig_updateAdjPerc(ezechiel::core::PredictionSpec*);
+    void sig_updatePopPred(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updatePopPerc(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateAprPred(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateAprPerc(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateApoPred(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateApoPerc(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateRevPred(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateAdjPred(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updateAdjPerc(ezechiel::GuiCore::PredictionSpec*);
 
 private:
 
@@ -403,28 +403,28 @@ public:
     explicit CalculationBuffer(QObject *parent = nullptr);
 
 public slots:
-    void pushPopPred(ezechiel::core::PredictionSpec*);
-    void pushPopPerc(ezechiel::core::PredictionSpec*);
-    void pushAprPred(ezechiel::core::PredictionSpec*);
-    void pushAprPerc(ezechiel::core::PredictionSpec*);
-    void pushApoPred(ezechiel::core::PredictionSpec*);
-    void pushApoPerc(ezechiel::core::PredictionSpec*);
-    void pushRevPred(ezechiel::core::PredictionSpec*);
-    void pushAdjPred(ezechiel::core::PredictionSpec*);
-    void pushAdjPerc(ezechiel::core::PredictionSpec*);
+    void pushPopPred(ezechiel::GuiCore::PredictionSpec*);
+    void pushPopPerc(ezechiel::GuiCore::PredictionSpec*);
+    void pushAprPred(ezechiel::GuiCore::PredictionSpec*);
+    void pushAprPerc(ezechiel::GuiCore::PredictionSpec*);
+    void pushApoPred(ezechiel::GuiCore::PredictionSpec*);
+    void pushApoPerc(ezechiel::GuiCore::PredictionSpec*);
+    void pushRevPred(ezechiel::GuiCore::PredictionSpec*);
+    void pushAdjPred(ezechiel::GuiCore::PredictionSpec*);
+    void pushAdjPerc(ezechiel::GuiCore::PredictionSpec*);
 
 public slots:
 
-    void popPredComputed(ezechiel::core::PredictionResult*);
-    void aprPredComputed(ezechiel::core::PredictionResult*);
-    void apoPredComputed(ezechiel::core::PredictionResult*);
-    void revPredComputed(ezechiel::core::PredictionResult*);
-    void popPercComputed(ezechiel::core::PredictionResult*);
-    void aprPercComputed(ezechiel::core::PredictionResult*);
-    void apoPercComputed(ezechiel::core::PredictionResult*);
-    void adjustmentsComputed(QList<ezechiel::core::Dosage*>);
-    void adjPredComputed(ezechiel::core::PredictionResult*);
-    void adjPercComputed(ezechiel::core::PredictionResult*);
+    void popPredComputed(ezechiel::GuiCore::PredictionResult*);
+    void aprPredComputed(ezechiel::GuiCore::PredictionResult*);
+    void apoPredComputed(ezechiel::GuiCore::PredictionResult*);
+    void revPredComputed(ezechiel::GuiCore::PredictionResult*);
+    void popPercComputed(ezechiel::GuiCore::PredictionResult*);
+    void aprPercComputed(ezechiel::GuiCore::PredictionResult*);
+    void apoPercComputed(ezechiel::GuiCore::PredictionResult*);
+    void adjustmentsComputed(QList<ezechiel::GuiCore::Dosage*>);
+    void adjPredComputed(ezechiel::GuiCore::PredictionResult*);
+    void adjPercComputed(ezechiel::GuiCore::PredictionResult*);
 
     bool shouldAbortPopPerc();
     bool shouldAbortAprPerc();
@@ -437,16 +437,16 @@ public slots:
 
 signals:
 
-    void sig_popPredUpdated(ezechiel::core::PredictionResult*);
-    void sig_aprPredUpdated(ezechiel::core::PredictionResult*);
-    void sig_apoPredUpdated(ezechiel::core::PredictionResult*);
-    void sig_revPredUpdated(ezechiel::core::PredictionResult*);
-    void sig_popPercUpdated(ezechiel::core::PredictionResult*);
-    void sig_aprPercUpdated(ezechiel::core::PredictionResult*);
-    void sig_apoPercUpdated(ezechiel::core::PredictionResult*);
-    void sig_adjPercUpdated(ezechiel::core::PredictionResult*);
-    void sig_adjustmentsUpdated(QList<ezechiel::core::Dosage*>);
-    void sig_adjPredUpdated(ezechiel::core::PredictionResult*);
+    void sig_popPredUpdated(ezechiel::GuiCore::PredictionResult*);
+    void sig_aprPredUpdated(ezechiel::GuiCore::PredictionResult*);
+    void sig_apoPredUpdated(ezechiel::GuiCore::PredictionResult*);
+    void sig_revPredUpdated(ezechiel::GuiCore::PredictionResult*);
+    void sig_popPercUpdated(ezechiel::GuiCore::PredictionResult*);
+    void sig_aprPercUpdated(ezechiel::GuiCore::PredictionResult*);
+    void sig_apoPercUpdated(ezechiel::GuiCore::PredictionResult*);
+    void sig_adjPercUpdated(ezechiel::GuiCore::PredictionResult*);
+    void sig_adjustmentsUpdated(QList<ezechiel::GuiCore::Dosage*>);
+    void sig_adjPredUpdated(ezechiel::GuiCore::PredictionResult*);
 
 public:
     enum calculationType {
@@ -469,7 +469,7 @@ public:
      * This method should be called by the worker thread. Then it can do the
      * calculation with the values retrieved.
      */
-    void get(ezechiel::core::PredictionSpec **spec, calculationType *what);
+    void get(ezechiel::GuiCore::PredictionSpec **spec, calculationType *what);
 
     /**
      * @brief abortIfRunningPopPerc : abort Population percentiles calculation
@@ -523,7 +523,7 @@ protected:
     //! Content of the buffer. The specifications linked with the type
     //! of calculation.
     struct itemType {
-        ezechiel::core::PredictionSpec* spec;
+        ezechiel::GuiCore::PredictionSpec* spec;
         calculationType type;
     };
 
@@ -540,7 +540,7 @@ protected:
     void removeFromList(calculationType type);
 
     //! Push a calculation in the buffer (generic method used internally)
-    void push(ezechiel::core::PredictionSpec*spec, calculationType what);
+    void push(ezechiel::GuiCore::PredictionSpec*spec, calculationType what);
 };
 
 

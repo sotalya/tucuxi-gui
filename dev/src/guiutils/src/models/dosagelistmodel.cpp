@@ -94,7 +94,7 @@ int DosageListModel::rowCount(const QModelIndex &parent) const
     }
 }
 
-void DosageListModel::setModelData(ezechiel::core::DosageHistory* dosages)
+void DosageListModel::setModelData(ezechiel::GuiCore::DosageHistory* dosages)
 {
     beginResetModel();
     _dosages = dosages;
@@ -102,7 +102,7 @@ void DosageListModel::setModelData(ezechiel::core::DosageHistory* dosages)
     emit updateStatus();
 }
 
-void DosageListModel::setModelData(ezechiel::core::DrugModel* drug)
+void DosageListModel::setModelData(ezechiel::GuiCore::DrugModel* drug)
 {
     _drug = drug;
     emit updateStatus();
@@ -136,16 +136,16 @@ void DosageListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
     case RouteRole:        
         switch (value.toInt()) {
         case 0:
-            _dosages->at(row)->getRoute()->setRoute(ezechiel::core::Admin::BOLUS);
+            _dosages->at(row)->getRoute()->setRoute(ezechiel::GuiCore::Admin::BOLUS);
             break;
         case 1:
-            _dosages->at(row)->getRoute()->setRoute(ezechiel::core::Admin::INFUSION);
+            _dosages->at(row)->getRoute()->setRoute(ezechiel::GuiCore::Admin::INFUSION);
             break;
         case 2:
-            _dosages->at(row)->getRoute()->setRoute(ezechiel::core::Admin::EXTRA);
+            _dosages->at(row)->getRoute()->setRoute(ezechiel::GuiCore::Admin::EXTRA);
             break;
         default:
-            _dosages->at(row)->getRoute()->setRoute(ezechiel::core::Admin::BOLUS);
+            _dosages->at(row)->getRoute()->setRoute(ezechiel::GuiCore::Admin::BOLUS);
             break;
         }
         break;
@@ -162,7 +162,7 @@ void DosageListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
     emit updateStatus();
 }
 
-void DosageListModel::insertRowsImpl(int at, int count, const ezechiel::core::SharedEntitySet &entities)
+void DosageListModel::insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
@@ -173,23 +173,23 @@ void DosageListModel::insertRowsImpl(int at, int count, const ezechiel::core::Sh
     Q_ASSERT(_drug->getIntervals());
     Q_ASSERT(_drug->getInfusions());
 
-    ezechiel::core::Dosage* dosage;
+    ezechiel::GuiCore::Dosage* dosage;
     for(int i = at, j = 0; i < at + count; i++, j++) {
 
         //Setup or retrieve the dosage
         if (entities.isEmpty()) {
-            dosage = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Dosage>(ABSTRACTREPO);
+            dosage = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Dosage>(ABSTRACTREPO);
 //            dosage->setTaken(true);
             dosage->getQuantity()->setUnit(_drug->getDoses()->getQuantity()->unit().name());
             dosage->getQuantity()->setValue(_drug->getDoses()->getQuantity()->value());
             dosage->setDbinterval(_drug->getIntervals()->getQuantity()->value());
 
             dosage->setRoute(_drug->getAdme()->getDefaultIntake());
-            if (dosage->getRoute()->getRoute() == ezechiel::core::Admin::INFUSION){
+            if (dosage->getRoute()->getRoute() == ezechiel::GuiCore::Admin::INFUSION){
                 dosage->setDbtinf(_drug->getInfusions()->getQuantity()->getDbvalue());
             }
         } else {
-            dosage = static_cast<ezechiel::core::Dosage*>(entities.at(j));
+            dosage = static_cast<ezechiel::GuiCore::Dosage*>(entities.at(j));
         }
 
         _dosages->getList().insert(i, dosage);
@@ -197,12 +197,12 @@ void DosageListModel::insertRowsImpl(int at, int count, const ezechiel::core::Sh
     emit updateStatus();
 }
 
-ezechiel::core::SharedEntitySet DosageListModel::removeRowsImpl(int at, int count)
+ezechiel::GuiCore::SharedEntitySet DosageListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    ezechiel::core::SharedEntitySet removed;
+    ezechiel::GuiCore::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _dosages->getList().takeAt(at);
 

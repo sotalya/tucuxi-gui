@@ -100,7 +100,7 @@ bool PatientAction::run(const QStringList &iargs)
 
     //We need to fetch the patient
     SharedPatient p;
-    ezechiel::core::Response r = ADMINREPO->getPatientFromId(id, p);
+    ezechiel::GuiCore::Response r = ADMINREPO->getPatientFromId(id, p);
     if (r.error != NoError) {
         return false;
     }
@@ -138,7 +138,7 @@ bool PatientAction::listPatients()
     QList<SharedPatient> list;
 //    if (!tryRequest(DB->getPatientsList(list),tr("Error while retrieving the patient list from the database :")))
 //        return false;
-    ezechiel::core::Response r = ADMINREPO->getPatientsList(list);
+    ezechiel::GuiCore::Response r = ADMINREPO->getPatientsList(list);
     if (r.error != NoError && r.error != NotFound) {
         return false;
     }
@@ -173,8 +173,8 @@ bool PatientAction::createPatient(const QStringList &args)
 //    if (!tryRequest(DB->setPatient(patient),QString(tr("Impossible to save patient [id%1] to the database")).arg(patient->id())))
 //        return false;
 
-    ezechiel::core::Response r = ADMINREPO->setPatient(patient);
-    if (r.error != ezechiel::core::NoError) {
+    ezechiel::GuiCore::Response r = ADMINREPO->setPatient(patient);
+    if (r.error != ezechiel::GuiCore::NoError) {
         return false;
     }
 
@@ -228,7 +228,7 @@ bool PatientAction::listMeasures(const SharedPatient &patient)
 //    if (! tryRequest(DB->getMeasuresByDate(patient->id(),list),
 //                     tr("Error while retrieving the patient's measure list from the database :")) )
 //        return false;
-    ezechiel::core::Response r = ADMINREPO->getMeasuresByDate(patient->id(), list);
+    ezechiel::GuiCore::Response r = ADMINREPO->getMeasuresByDate(patient->id(), list);
     if (r.error != NoError && r.error != NotFound) {
         return false;
     }
@@ -325,7 +325,7 @@ bool PatientAction::setMeasure(const SharedPatient &patient, QStringList &args)
 //        if (! tryRequest(DB->getMeasuresByDate(patient->id(),list),
 //                         tr("Error while retrieving the patient's measure list from the database :")) )
 //            return false;
-        ezechiel::core::Response r = ADMINREPO->getMeasuresByDate(patient->id(),list);
+        ezechiel::GuiCore::Response r = ADMINREPO->getMeasuresByDate(patient->id(),list);
         if (r.error != NoError && r.error != NotFound) {
             return false;
         }
@@ -417,7 +417,7 @@ bool PatientAction::listCovariates(const SharedPatient &patient)
     QList<PatientVariate*> list;
 //    if (! tryRequest(DB->getCovariatesByDate(patient->id(),list),
 //                     tr("Error while retrieving the patient's covariate list from the database :")) )
-    ezechiel::core::Response r = ADMINREPO->getPatientVariatesByDate(patient->id(),list);
+    ezechiel::GuiCore::Response r = ADMINREPO->getPatientVariatesByDate(patient->id(),list);
     if (r.error != NoError && r.error != NotFound) {
         return false;
     }
@@ -455,7 +455,7 @@ bool PatientAction::setCovariate(const SharedPatient &patient, QStringList &args
 //        if (! tryRequest(DB->getCovariatesByDate(patient->id(),list),
 //                         tr("Error while retrieving the patient's covariate list from the database :")) )
 //            return false;
-        ezechiel::core::Response r = ADMINREPO->getPatientVariatesByDate(patient->id(),list);
+        ezechiel::GuiCore::Response r = ADMINREPO->getPatientVariatesByDate(patient->id(),list);
         if (r.error != NoError && r.error != NotFound) {
             return false;
         }
@@ -488,7 +488,7 @@ bool PatientAction::setCovariate(const SharedPatient &patient, QStringList &args
                 return false;
             }
             else {
-                    c = ezechiel::core::CoreFactory::createEntity<PatientVariate>( ADMINREPO);
+                    c = ezechiel::GuiCore::CoreFactory::createEntity<PatientVariate>( ADMINREPO);
                     c->setCovariateId(args.at(1));
                     c->setDate(QDateTime::fromString(args.at(0), Action::dateTimeFormat()));
                     c->getQuantity()->setValue(args.at(2).toDouble(&ok));
@@ -540,7 +540,7 @@ bool PatientAction::setCovariate(const SharedPatient &patient, QStringList &args
 //        if (! tryRequest(DB->getCovariatesByDate(patient->id(),list),
 //                         tr("Error while retrieving the patient's covariate list from the database :")) )
 //            return false;
-        ezechiel::core::Response r = ADMINREPO->getPatientVariatesByDate(patient->id(),list);
+        ezechiel::GuiCore::Response r = ADMINREPO->getPatientVariatesByDate(patient->id(),list);
         if (r.error != NoError && r.error != NotFound) {
             return false;
         }

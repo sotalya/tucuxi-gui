@@ -19,7 +19,7 @@
 #include "core/errors_core.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 typedef int Identifier;
 
@@ -75,6 +75,6 @@ typedef QList<SharedEntity> SharedEntitySet;
 } // namespace ezechiel
 
 //Q_DECLARE_METATYPE(int)
-Q_DECLARE_METATYPE(ezechiel::core::Entity*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Entity*)
 
 #endif // ENTITY_H

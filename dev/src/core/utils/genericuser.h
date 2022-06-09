@@ -7,7 +7,7 @@
 //#include "dal/genericdbobjects.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 /** \ingroup security
@@ -113,6 +113,6 @@ private:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::GenericUser*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::GenericUser*)
 
 #endif // GENERICUSER_H

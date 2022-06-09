@@ -59,7 +59,7 @@ namespace ezechiel {
 
 class IDatabase;
 
-namespace core {
+namespace GuiCore {
 
 class DefinitionManager;
 class PluginManager;
@@ -76,17 +76,17 @@ class Settings;
 class ProcessingInterface;
 
 //------------- Shortcuts for objects ----------------
-#define CORE ezechiel::core::Core::instance()
-#define DEFINITIONS ezechiel::core::Core::instance()->definitionManager()
-#define ABSTRACTREPO ezechiel::core::Core::instance()->repository()
-#define REPO dynamic_cast<ezechiel::core::CoreRepository*>(ABSTRACTREPO)
+#define CORE ezechiel::GuiCore::Core::instance()
+#define DEFINITIONS ezechiel::GuiCore::Core::instance()->definitionManager()
+#define ABSTRACTREPO ezechiel::GuiCore::Core::instance()->repository()
+#define REPO dynamic_cast<ezechiel::GuiCore::CoreRepository*>(ABSTRACTREPO)
 //#define DB Core::instance()->db()
 //#define NEWDB Core::instance()->newdb()
-#define FILEPATH(ARG) ezechiel::core::Core::instance()->path(ARG)
-#define DATABASE ezechiel::core::Core::instance()->database()
-#define PLUGINS ezechiel::core::Core::instance()->pluginManager()
-#define XMLVALIDATOR ezechiel::core::Core::instance()->xmlValidator()
-#define SETTINGS ezechiel::core::Core::instance()->settings()
+#define FILEPATH(ARG) ezechiel::GuiCore::Core::instance()->path(ARG)
+#define DATABASE ezechiel::GuiCore::Core::instance()->database()
+#define PLUGINS ezechiel::GuiCore::Core::instance()->pluginManager()
+#define XMLVALIDATOR ezechiel::GuiCore::Core::instance()->xmlValidator()
+#define SETTINGS ezechiel::GuiCore::Core::instance()->settings()
 
 //! Use this macro to send an error
 //#define EZERROR(e,m) CORE->messageHandler()->error(e,__LINE__,__FILE__,typeid(this).name(),QString(m))
@@ -164,7 +164,7 @@ public:
     //! Get the Core's instance
     static Core* instance ();
     //! Set the Core's instance
-    static void setInstance (Core *core);
+    static void setInstance (Core *GuiCore);
 
     //---------------- STATIC OBJECTS --------------------
 

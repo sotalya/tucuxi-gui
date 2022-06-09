@@ -10,7 +10,7 @@
 #include <QHash>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //! Unique identifier for a unit
@@ -145,6 +145,6 @@ private:
 } // namespace ezechiel
 
 
-Q_DECLARE_METATYPE(ezechiel::core::Unit)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Unit)
 
 #endif // UNITS_H

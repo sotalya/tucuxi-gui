@@ -15,11 +15,11 @@
 #include "core/dal/drug/infusions.h"
 #include "core/dal/drug/target.h"
 
-STD_PROPERTY_IMPL(TargetTabController, ezechiel::core::TargetList*, targets, Targets)
+STD_PROPERTY_IMPL(TargetTabController, ezechiel::GuiCore::TargetList*, targets, Targets)
 
 TargetTabController::TargetTabController(QObject *parent) : AbstractViewController(parent)
 {
-    _targets = ezechiel::core::CoreFactory::createEntity<ezechiel::core::TargetList>(ABSTRACTREPO, this);
+    _targets = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TargetList>(ABSTRACTREPO, this);
 }
 
 void TargetTabController::setTargetType(int index, int value)
@@ -125,9 +125,9 @@ void TargetTabController::setMicDbValue(int index, double value)
 
 void TargetTabController::addTarget()
 {
-    ezechiel::core::TargetList* tlist = masterController->getInterpretation()->getDrugResponseAnalysis()->getTreatment()->getTargets();
-    ezechiel::core::Target* target = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Target>(ABSTRACTREPO, tlist);
-    ezechiel::core::Unit defaultUnit = ezechiel::core::Unit(masterController->getDefaultUnit());
+    ezechiel::GuiCore::TargetList* tlist = masterController->getInterpretation()->getDrugResponseAnalysis()->getTreatment()->getTargets();
+    ezechiel::GuiCore::Target* target = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Target>(ABSTRACTREPO, tlist);
+    ezechiel::GuiCore::Unit defaultUnit = ezechiel::GuiCore::Unit(masterController->getDefaultUnit());
     target->getCbest()->setUnit(defaultUnit);
     target->getCmax()->setUnit(defaultUnit);
     target->getCmin()->setUnit(defaultUnit);

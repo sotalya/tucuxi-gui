@@ -9,7 +9,7 @@ enum class Type {
     Professional
 };
 
-class Email : public ezechiel::core::Entity
+class Email : public ezechiel::GuiCore::Entity
 {
     Q_OBJECT
     AUTO_PROPERTY_DECL(QString, email, Email)
@@ -18,8 +18,8 @@ class Email : public ezechiel::core::Entity
 public:
 
 
-    Q_INVOKABLE Email(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);
-    Q_INVOKABLE Email(ezechiel::core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE Email(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE Email(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 };
 
 Q_DECLARE_OPAQUE_POINTER(Email*)

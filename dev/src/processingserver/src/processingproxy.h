@@ -11,9 +11,9 @@
 #include "processingresponse.h"
 #include "processingrequest.h"
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
-class ProcessingProxy : public QObject, public ezechiel::core::ProcessingInterface
+class ProcessingProxy : public QObject, public ezechiel::GuiCore::ProcessingInterface
 {
     Q_OBJECT
 public:

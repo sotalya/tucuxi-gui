@@ -6,7 +6,7 @@
 #include "core/dal/entity.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class Reference : public Entity
 {
@@ -31,8 +31,8 @@ POINTERLIST_CLASS_DECL(ReferenceList, Reference)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::Reference*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Reference*>)
-Q_DECLARE_METATYPE(ezechiel::core::ReferenceList*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Reference*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Reference*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ReferenceList*)
 
 #endif // REFERENCES_H

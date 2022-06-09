@@ -8,7 +8,7 @@
 #include <iostream>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 QML_POINTERLIST_CLASS_IMPL(TargetMethodList, TargetMethod)
 

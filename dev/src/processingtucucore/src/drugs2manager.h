@@ -9,7 +9,7 @@
 #include <QDir>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class DrugModel;
 
@@ -34,7 +34,7 @@ public:
 
     const std::vector<Tucuxi::Core::DrugModel *> & getAllTucucoreDrugModels() const;
 
-    const std::vector<ezechiel::core::DrugModel *> & getAllEzechielDrugModels() const;
+    const std::vector<ezechiel::GuiCore::DrugModel *> & getAllEzechielDrugModels() const;
 
     Tucuxi::Core::DrugModel *getTucucoreById(std::string id) const;
 
@@ -46,7 +46,7 @@ protected:
 
     std::map<std::string, Tucuxi::Core::DrugModel *> m_tucuxiDrugModelsByIds;
 
-    std::vector<ezechiel::core::DrugModel *> m_ezechielDrugModels;
+    std::vector<ezechiel::GuiCore::DrugModel *> m_ezechielDrugModels;
 
     void scanDirectory(const QDir &directory);
 

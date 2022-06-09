@@ -10,7 +10,7 @@
 #include "abstractviewcontroller.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class DosageHistory;
 class Dosage;
@@ -27,7 +27,7 @@ public:
     explicit AdjustmentTabController(QObject *parent = nullptr);
 
     //! This property is used by AdjustmentTab.qml to access the list of dosages
-    STD_PROPERTY_DECL(ezechiel::core::DosageHistory*, adjustments, Adjustments)
+    STD_PROPERTY_DECL(ezechiel::GuiCore::DosageHistory*, adjustments, Adjustments)
 
     //! This property is not implemented using the standard macro, as it
     //! Shall refer to the PredictionSpec object
@@ -67,21 +67,21 @@ public:
     Q_INVOKABLE void setEndTime(int index, QDateTime time);
     Q_INVOKABLE void forceRefresh();
 
-    void setChartData(ezechiel::core::ChartData *chartData);
+    void setChartData(ezechiel::GuiCore::ChartData *chartData);
     void onDosageUpdated();
     void reset();
 
 private:
     bool isIndexValid(int index);
     void removeFromTreatement(const QString &type);
-    static bool compareAdjustment(const ezechiel::core::Dosage* a, const ezechiel::core::Dosage* b);
+    static bool compareAdjustment(const ezechiel::GuiCore::Dosage* a, const ezechiel::GuiCore::Dosage* b);
 
-    ezechiel::core::AdjustmentDosage* getAdjustment(const QString &type);
-    ezechiel::core::AdjustmentDosage* getLastAdjustment(const QString &type);
-    void adaptDates(const ezechiel::core::AdjustmentDosage *manual, ezechiel::core::AdjustmentDosage *suggested);
+    ezechiel::GuiCore::AdjustmentDosage* getAdjustment(const QString &type);
+    ezechiel::GuiCore::AdjustmentDosage* getLastAdjustment(const QString &type);
+    void adaptDates(const ezechiel::GuiCore::AdjustmentDosage *manual, ezechiel::GuiCore::AdjustmentDosage *suggested);
 
 private:
-    ezechiel::core::ChartData *_chartData;
+    ezechiel::GuiCore::ChartData *_chartData;
 };
 
 

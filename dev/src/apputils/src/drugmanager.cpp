@@ -32,7 +32,7 @@
 #include <QtGlobal>
 
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
 namespace ezechiel {
 namespace apputils {
@@ -73,14 +73,14 @@ const DrugXmlDescriptor *DrugManager::scanDrug(const QString &filePath)
     return nullptr;
 }
 
-bool DrugManager::tryToAddDrugModelToRepo(ezechiel::core::DrugModel *drugModel)
+bool DrugManager::tryToAddDrugModelToRepo(ezechiel::GuiCore::DrugModel *drugModel)
 {
     // Added this to correct usage in InterpretationImport
     _drugIdToDrugObj.insert(drugModel->getDrugModelId(), drugModel);
 
     Response r;
     bool canAdd = true;
-    QList<ezechiel::core::DrugModel* > existingList;
+    QList<ezechiel::GuiCore::DrugModel* > existingList;
     r = APPUTILSREPO->getDrugsList(existingList);
     if (r.error == NoError) {
         for(int i=0; i < existingList.size(); i++) {
@@ -101,7 +101,7 @@ bool DrugManager::tryToAddDrugModelToRepo(ezechiel::core::DrugModel *drugModel)
 }
 
 //Builds a drug
-ezechiel::core::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xmlDesc)
+ezechiel::GuiCore::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xmlDesc)
 {
     LOG(QtDebugMsg, NOEZERROR, tr("Loading drug ID '%1' from file '%2'").arg(xmlDesc ? xmlDesc->drugId() : "unknown", xmlDesc ? xmlDesc->file() : "unknown"));
 
@@ -130,7 +130,7 @@ ezechiel::core::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xmlDe
 
     DrugXmlImport importer;
 
-    ezechiel::core::DrugModel *drug = importer.load(xmlDesc->file());
+    ezechiel::GuiCore::DrugModel *drug = importer.load(xmlDesc->file());
 
     Descriptor _desc;
     _desc.id = xmlDesc->drugId();
@@ -376,7 +376,7 @@ void DrugManager::scanDrugs()
         _modelIdToDrugDesc.insert(xmlDesc->pkModelId(), descriptor);
         _atcToDrugDesc.insert(xmlDesc->atc(), descriptor);
 
-        ezechiel::core::DrugModel *drug = buildDrug(xmlDesc);
+        ezechiel::GuiCore::DrugModel *drug = buildDrug(xmlDesc);
         Q_UNUSED(drug);
     }
 
@@ -496,10 +496,10 @@ void DrugManager::resetDrugs()
 void DrugManager::analyzeCovariates()
 {
     QMap<QString, int> covariatesMap;
-    QList<ezechiel::core::DrugModel* > allDrugs;
+    QList<ezechiel::GuiCore::DrugModel* > allDrugs;
     APPUTILSREPO->getDrugsList(allDrugs);
-    foreach (ezechiel::core::DrugModel *drug, allDrugs) {
-        foreach(ezechiel::core::DrugVariate *variate, drug->getCovariates()->getList()) {
+    foreach (ezechiel::GuiCore::DrugModel *drug, allDrugs) {
+        foreach(ezechiel::GuiCore::DrugVariate *variate, drug->getCovariates()->getList()) {
             std::cout << qPrintable(variate->getCovariateId()) << std::endl;
             covariatesMap.insert(variate->getCovariateId(), covariatesMap.value(variate->getCovariateId(),0) + 1);
         }

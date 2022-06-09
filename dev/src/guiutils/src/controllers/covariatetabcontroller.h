@@ -13,7 +13,7 @@
 #include "core/dal/covariate.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class PatientVariateList;
 class DrugVariateList;
@@ -23,7 +23,7 @@ class AbstractRepository;
 }
 }
 
-class DrugVariateInfo : public ezechiel::core::Entity
+class DrugVariateInfo : public ezechiel::GuiCore::Entity
 {
     Q_OBJECT
 
@@ -32,13 +32,13 @@ class DrugVariateInfo : public ezechiel::core::Entity
     AUTO_PROPERTY_DECL(QString, covariateId, CovariateId)
     AUTO_PROPERTY_DECL(QString, name, Name)
     AUTO_PROPERTY_DECL(QDateTime, date, Date)
-    AUTO_PROPERTY_DECL(ezechiel::core::OperableAmount*, actualValue, ActualValue)
-    AUTO_PROPERTY_DECL(ezechiel::core::OperableAmount*, defaultValue, DefaultValue)
+    AUTO_PROPERTY_DECL(ezechiel::GuiCore::OperableAmount*, actualValue, ActualValue)
+    AUTO_PROPERTY_DECL(ezechiel::GuiCore::OperableAmount*, defaultValue, DefaultValue)
     AUTO_PROPERTY_DECL(QMetaType::Type, type, Type)
     AUTO_PROPERTY_DECL(bool, automatic, Automatic)
 
 public:
-    Q_INVOKABLE DrugVariateInfo(ezechiel::core::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE DrugVariateInfo(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
 
     Q_INVOKABLE QString typeToQString()
     {
@@ -78,13 +78,13 @@ public:
 
     //! This property is used by CovariateTab.qml to display the subset of patient
     //! variates corresponding to the currently selected drug variate
-    STD_PROPERTY_DECL(ezechiel::core::PatientVariateList*, fileredVariates, FileredVariates)
+    STD_PROPERTY_DECL(ezechiel::GuiCore::PatientVariateList*, fileredVariates, FileredVariates)
 
     //! This property is used internally and contains the patient history for all drug variates
-    STD_PROPERTY_DECL(ezechiel::core::PatientVariateList*, patientVariates, PatientVariates)
+    STD_PROPERTY_DECL(ezechiel::GuiCore::PatientVariateList*, patientVariates, PatientVariates)
 
 public:
-    void reset(ezechiel::core::DrugVariateList* drugVaraites);
+    void reset(ezechiel::GuiCore::DrugVariateList* drugVaraites);
 
     Q_INVOKABLE void selectDrugVariate(int drugVariateFromIndex);
     Q_INVOKABLE void addPatientVariate(int drugVariateFromIndex);
@@ -106,7 +106,7 @@ protected:
     void updateActualValue(QString variateName);
 
 private:
-    static bool compareVariate(const ezechiel::core::PatientVariate* a, const ezechiel::core::PatientVariate* b);
+    static bool compareVariate(const ezechiel::GuiCore::PatientVariate* a, const ezechiel::GuiCore::PatientVariate* b);
 };
 
 #endif // COVARIATETABCONTROLLER_H

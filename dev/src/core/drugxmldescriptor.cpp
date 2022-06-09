@@ -5,7 +5,7 @@
 #include <QFile>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //Default contructor

@@ -47,8 +47,8 @@ InterpretationRequest* InterpretationRequestBuilder::buildInterpretationRequest(
     //ToDo: set the practician when added to DAL object
     //ToDo: set the clinicals when added to DAL object
 
-    InterpretationRequest* interpretationRequest = ezechiel::core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
-    ezechiel::core::DrugTreatment *treatment = interpretationRequest->getTreatment();
+    InterpretationRequest* interpretationRequest = ezechiel::GuiCore::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
+    ezechiel::GuiCore::DrugTreatment *treatment = interpretationRequest->getTreatment();
     treatment->setParent(interpretationRequest);
     //Prediction patient
     treatment->setPatient(buildPatient("patient"));
@@ -56,7 +56,7 @@ InterpretationRequest* InterpretationRequestBuilder::buildInterpretationRequest(
     //Prediction drug
     QString activeSubstanceId = buildDrug("drug");
     if (activeSubstanceId.isEmpty()) {
-        EXLOG(QtWarningMsg, ezechiel::core::NOEZERROR, QObject::tr("Drug not found, cannot build interpretationRequest for analysis."));
+        EXLOG(QtWarningMsg, ezechiel::GuiCore::NOEZERROR, QObject::tr("Drug not found, cannot build interpretationRequest for analysis."));
         return nullptr;
     }
 
@@ -67,12 +67,12 @@ InterpretationRequest* InterpretationRequestBuilder::buildInterpretationRequest(
     treatment->getDosages()->setParent(treatment);
 
     //Prediction samples
-    ezechiel::core::CoreMeasureList* measures = buildSamples("samples", treatment->getPatient(), activeSubstanceId);
+    ezechiel::GuiCore::CoreMeasureList* measures = buildSamples("samples", treatment->getPatient(), activeSubstanceId);
     treatment->setMeasures(measures);
     treatment->getMeasures()->setParent(treatment);
 
     //Prediction covariates
-    ezechiel::core::PatientVariateList * covariates = buildCovariates("covariates", treatment->getPatient());
+    ezechiel::GuiCore::PatientVariateList * covariates = buildCovariates("covariates", treatment->getPatient());
     treatment->setCovariates(covariates);
 
     interpretationRequest->setClinicals(buildClinical("clinicals"));
@@ -104,58 +104,58 @@ QString InterpretationRequestBuilder::buildDrug(const QString &rootKey)
     delete translator;
     if (drugId.isEmpty())
     {
-        EXLOG(QtWarningMsg, ezechiel::core::NOEZERROR, QObject::tr("The drug corresponding to ID %1 is not available").arg(restDrugId));
+        EXLOG(QtWarningMsg, ezechiel::GuiCore::NOEZERROR, QObject::tr("The drug corresponding to ID %1 is not available").arg(restDrugId));
         return "";
     }
 
-    QList<ezechiel::core::DrugModel *> list;
+    QList<ezechiel::GuiCore::DrugModel *> list;
     APPUTILSREPO->getDrugsList(list);
     bool valid = false;
-    foreach(ezechiel::core::DrugModel *drugModel, list) {
+    foreach(ezechiel::GuiCore::DrugModel *drugModel, list) {
         if (drugModel->getActiveSubstance()->getSubstanceId() == drugId)
             valid = true;
     }
     if (!valid) {
-        EXLOG(QtWarningMsg, ezechiel::core::NOEZERROR, QObject::tr("Drug not found, cannot build drug for analysis."));
+        EXLOG(QtWarningMsg, ezechiel::GuiCore::NOEZERROR, QObject::tr("Drug not found, cannot build drug for analysis."));
         return "";
     }
 
     return drugId;
 }
 
-ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const QString &rootKey)
+ezechiel::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const QString &rootKey)
 {
     //ToDo: check critical info and build, or store incomplete data
     //ToDo: check how to deal with dosage end date
 
-    ezechiel::core::DosageHistory* dosages = ezechiel::core::CoreFactory::createEntity<ezechiel::core::DosageHistory>(ABSTRACTREPO);
+    ezechiel::GuiCore::DosageHistory* dosages = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DosageHistory>(ABSTRACTREPO);
 
     //Get dosages data
     QDomElement dosageNode = datasetNode.firstChildElement("dosages").firstChildElement("dosage");
     while (!dosageNode.isNull()) {
-        ezechiel::core::Dosage* dosage = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Dosage>(ABSTRACTREPO, dosages);
+        ezechiel::GuiCore::Dosage* dosage = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Dosage>(ABSTRACTREPO, dosages);
 
         //Dosage data
-        ezechiel::core::Admin *admin = ezechiel::core::CoreFactory::createEntity<ezechiel::core::Admin>(ABSTRACTREPO, dosage);
+        ezechiel::GuiCore::Admin *admin = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO, dosage);
 
 
         RouteTranslator *translator = new ChuvRouteTranslator();
         QString restRoute = dosageNode.firstChildElement("intake").firstChild().toText().data();
-        ezechiel::core::Admin::Route route = translator->restToInternalRoute(restRoute);
+        ezechiel::GuiCore::Admin::Route route = translator->restToInternalRoute(restRoute);
         delete translator;
-        if (route == ezechiel::core::Admin::UNVALID)
+        if (route == ezechiel::GuiCore::Admin::UNVALID)
         {
-            EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The applied intake: %1 was not parsed into a valid intake").arg(restRoute));
-            ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+            EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The applied intake: %1 was not parsed into a valid intake").arg(restRoute));
+            ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
             uncasted->setField("intake");
             uncasted->setText(restRoute);
             uncasted->setComment("The applied intake was not parsed into a valid intake.");
             dosage->getUncastedValues()->append(uncasted);
         }
-        else if (route == ezechiel::core::Admin::DEFAULT)
+        else if (route == ezechiel::GuiCore::Admin::DEFAULT)
         {
-            EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The applied intake is an empty field. Assuming the default intake of the drug.").arg(restRoute));
-            ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+            EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The applied intake is an empty field. Assuming the default intake of the drug.").arg(restRoute));
+            ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
             uncasted->setField("intake");
             uncasted->setText(restRoute);
             uncasted->setComment("The applied intake is an empty field. Assuming the default intake of the drug.");
@@ -171,8 +171,8 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
             if (appl.isValid()) {
                 dosage->setApplied(appl);
             } else {
-                EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The applied date: %1 was not parsed into a valid QDateTime").arg(dateString));
-                ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The applied date: %1 was not parsed into a valid QDateTime").arg(dateString));
+                ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("startDate");
                 uncasted->setText(dateString);
                 uncasted->setComment("The start time was not parsed into a valid date.");
@@ -185,8 +185,8 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
             if (endt.isValid()) {
                 dosage->setEndTime(endt);
             } else {
-                EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The endtime date: %1 was not parsed into a valid QDateTime").arg(dateString));
-                ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The endtime date: %1 was not parsed into a valid QDateTime").arg(dateString));
+                ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("lastDate");
                 uncasted->setText(dateString);
                 uncasted->setComment("The end time was not parsed into a valid date.");
@@ -197,8 +197,8 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
         if (dosage->getEndTime() < dosage->getApplied())
         {
 
-            EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The endtime date: %1 is earlier than starttime %2").arg(dosage->getEndTime().toString()).arg(dosage->getApplied().toString()));
-            ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+            EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The endtime date: %1 is earlier than starttime %2").arg(dosage->getEndTime().toString()).arg(dosage->getApplied().toString()));
+            ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
             uncasted->setField("End time");
             uncasted->setText(dosage->getEndTime().toString());
             uncasted->setComment(QString("Dosage end time prior to apply time. Using a fake end time 3 days after start"));
@@ -214,8 +214,8 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
             if (ok)
                 dosage->getQuantity()->setValue(value);
             else {
-                EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
-                ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
+                ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("dose value");
                 uncasted->setText(valueString);
                 uncasted->setComment("Please fill yourself the dosage");
@@ -238,30 +238,30 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
             int value = valueString.toInt(&ok);
             if (ok) {
                 if (unit == "h") {
-                    dosage->setInterval(ezechiel::core::Duration(value));
+                    dosage->setInterval(ezechiel::GuiCore::Duration(value));
                 }
                 else if (unit == "d") {
-                    dosage->setInterval(ezechiel::core::Duration(24 * value));
+                    dosage->setInterval(ezechiel::GuiCore::Duration(24 * value));
                 }
                 else if ((unit == "m") || (unit == "min")) {
-                    dosage->setInterval(ezechiel::core::Duration(((double) (value))/60));
+                    dosage->setInterval(ezechiel::GuiCore::Duration(((double) (value))/60));
                 }
                 else if ((value >= 1) && (value <= 4)) {
-                    dosage->setInterval(ezechiel::core::Duration(24 / value));
-                    ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                    dosage->setInterval(ezechiel::GuiCore::Duration(24 / value));
+                    ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                     uncasted->setField("interval value");
                     uncasted->setText(valueString);
-                    uncasted->setStatus(ezechiel::core::UncastedStatus::PartiallyCasted);
+                    uncasted->setStatus(ezechiel::GuiCore::UncastedStatus::PartiallyCasted);
                     uncasted->setComment("Assuming the interval indicates the number of doses per day");
                     dosage->getUncastedValues()->append(uncasted);
 
                 }
                 else {
-                    dosage->setInterval(ezechiel::core::Duration(value));
-                    ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                    dosage->setInterval(ezechiel::GuiCore::Duration(value));
+                    ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                     uncasted->setField("interval value");
                     uncasted->setText(valueString);
-                    uncasted->setStatus(ezechiel::core::UncastedStatus::PartiallyCasted);
+                    uncasted->setStatus(ezechiel::GuiCore::UncastedStatus::PartiallyCasted);
                     uncasted->setComment("Assuming hours as unit");
                     dosage->getUncastedValues()->append(uncasted);
                 }
@@ -275,11 +275,11 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
                 int m = list[1].toInt(&ok2);
                 int s = list[2].toInt(&ok3);
                 if (ok1 && ok2 && ok3) {
-                    dosage->setInterval(ezechiel::core::Duration(h, m, s));
+                    dosage->setInterval(ezechiel::GuiCore::Duration(h, m, s));
                 }
                 else {
-                    EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The interval time: %1 was not parsed into a valid double").arg(valueString));
-                    ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                    EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The interval time: %1 was not parsed into a valid double").arg(valueString));
+                    ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                     uncasted->setField("interval value");
                     uncasted->setText(valueString);
                     uncasted->setComment("Please fill yourself the dosage interval");
@@ -287,8 +287,8 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
                 }
             }
             else {
-                EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The interval time: %1 was not parsed into a valid double").arg(valueString));
-                ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The interval time: %1 was not parsed into a valid double").arg(valueString));
+                ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("interval value");
                 uncasted->setText(valueString);
                 uncasted->setComment("Please fill yourself the dosage interval");
@@ -297,7 +297,7 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
         }
 
         //Dosage infusion time, only do it in case of infusion
-        if (dosage->getRoute()->getRoute() == ezechiel::core::Admin::INFUSION)
+        if (dosage->getRoute()->getRoute() == ezechiel::GuiCore::Admin::INFUSION)
         {
             bool ok;
             QString valueString = dosageNode.firstChildElement("infusion").firstChildElement("value").firstChild().toText().data();
@@ -315,29 +315,29 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
             if (ok) {
 
                 if (unit == "h") {
-                    dosage->setTinf(ezechiel::core::Duration(value));
+                    dosage->setTinf(ezechiel::GuiCore::Duration(value));
                 }
                 else if (unit == "d") {
-                    dosage->setTinf(ezechiel::core::Duration(24 * value));
+                    dosage->setTinf(ezechiel::GuiCore::Duration(24 * value));
                 }
                 else if ((unit == "m") || (unit == "min")) {
-                    dosage->setTinf(ezechiel::core::Duration(0, value));
+                    dosage->setTinf(ezechiel::GuiCore::Duration(0, value));
                 }
                 else {
-                    dosage->setTinf(ezechiel::core::Duration(0,value));
-                    ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                    dosage->setTinf(ezechiel::GuiCore::Duration(0,value));
+                    ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                     uncasted->setField("infusion time value");
                     uncasted->setText(valueString);
-                    uncasted->setStatus(ezechiel::core::UncastedStatus::PartiallyCasted);
+                    uncasted->setStatus(ezechiel::GuiCore::UncastedStatus::PartiallyCasted);
                     uncasted->setComment("Assuming minutes as unit");
                     dosage->getUncastedValues()->append(uncasted);
                 }
             }
             else {
                 // Set 60 minutes by default
-                dosage->setTinf(ezechiel::core::Duration(0,60));
-                EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The infusion time: %1 was not parsed into a valid double").arg(valueString));
-                ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                dosage->setTinf(ezechiel::GuiCore::Duration(0,60));
+                EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The infusion time: %1 was not parsed into a valid double").arg(valueString));
+                ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("infusion value");
                 uncasted->setText(valueString);
                 uncasted->setComment("Assuming 1 hour, but please fill yourself the dosage infusion time");
@@ -356,7 +356,7 @@ ezechiel::core::DosageHistory* InterpretationRequestBuilder::buildDosages(const 
     return dosages;
 }
 
-ezechiel::core::PatientVariateList * InterpretationRequestBuilder::buildCovariates(const QString &rootKey, const SharedPatient patient)
+ezechiel::GuiCore::PatientVariateList * InterpretationRequestBuilder::buildCovariates(const QString &rootKey, const SharedPatient patient)
 {
     //ToDo: check critical info and build, or store incomplete data
     //ToDo: set the covariate type based on the drug data
@@ -366,12 +366,12 @@ ezechiel::core::PatientVariateList * InterpretationRequestBuilder::buildCovariat
     ExternalCovariateIdTranslator covariateIdTranslator;
     covariateIdTranslator.setFileName(QCoreApplication::applicationDirPath() + "/covariateidtranslations.ini");
 
-    ezechiel::core::PatientVariateList * covariates = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariateList>(ABSTRACTREPO, patient);
+    ezechiel::GuiCore::PatientVariateList * covariates = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariateList>(ABSTRACTREPO, patient);
 
     //Get covariates data
     QDomElement covariateNode = datasetNode.firstChildElement("covariates").firstChildElement("covariate");
     while (!covariateNode.isNull()) {
-        ezechiel::core::PatientVariate* covariate = ezechiel::core::CoreFactory::createEntity<ezechiel::core::PatientVariate>(ABSTRACTREPO);
+        ezechiel::GuiCore::PatientVariate* covariate = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO);
 
         //Covariate data
         QString covariateId = covariateIdTranslator.restToInternalId(covariateNode.firstChildElement("name").firstChild().toText().data());
@@ -384,8 +384,8 @@ ezechiel::core::PatientVariateList * InterpretationRequestBuilder::buildCovariat
         if (date.isValid()) {
             covariate->setDate(date);
         } else {
-            EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
-            ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, covariate->getUncastedValues());
+            EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
+            ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, covariate->getUncastedValues());
             uncasted->setField("date");
             uncasted->setText(dateString);
             covariate->getUncastedValues()->append(uncasted);
@@ -404,8 +404,8 @@ ezechiel::core::PatientVariateList * InterpretationRequestBuilder::buildCovariat
             if (ok)
                 covariate->getQuantity()->setValue(value);
             else {
-                EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
-                ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, covariate->getUncastedValues());
+                EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
+                ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, covariate->getUncastedValues());
                 uncasted->setField("covariate value");
                 uncasted->setText(valueString);
                 covariate->getUncastedValues()->append(uncasted);
@@ -498,8 +498,8 @@ SharedPatient InterpretationRequestBuilder::buildPatient(const QString &rootKey)
     if (date.isValid()) {
         patient->person()->birthday(date);
     } else {
-        EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
-        ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, patient->person()->getUncastedValues());
+        EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
+        ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, patient->person()->getUncastedValues());
         uncasted->setField("birthdate");
         uncasted->setText(dateString);
         patient->person()->getUncastedValues()->append(uncasted);
@@ -543,8 +543,8 @@ SharedPractician InterpretationRequestBuilder::buildPractician(const QString &ro
     if (date.isValid()) {
         practician->person()->birthday(date);
     } else {
-        EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDate").arg(dateString));
-        ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, practician->person()->getUncastedValues());
+        EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDate").arg(dateString));
+        ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, practician->person()->getUncastedValues());
         uncasted->setField("birthdate");
         uncasted->setText(dateString);
         practician->person()->getUncastedValues()->append(uncasted);
@@ -600,13 +600,13 @@ SharedInstitute InterpretationRequestBuilder::buildInstitute(const QString &root
     return institute;
 }
 
-ezechiel::core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(const QString &rootKey, const SharedPatient patient, const QString &activeSubstance)
+ezechiel::GuiCore::CoreMeasureList* InterpretationRequestBuilder::buildSamples(const QString &rootKey, const SharedPatient patient, const QString &activeSubstance)
 {
     //ToDo: check critical info and build, or store incomplete data
     //ToDo: add multiple concentrations when DAL object supports it
 
     //Get samples data
-    ezechiel::core::CoreMeasureList* measures = ezechiel::core::CoreFactory::createEntity<ezechiel::core::CoreMeasureList>(ABSTRACTREPO);
+    ezechiel::GuiCore::CoreMeasureList* measures = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::CoreMeasureList>(ABSTRACTREPO);
     QDomElement sampleNode = datasetNode.firstChildElement("samples").firstChildElement("sample");
     while (!sampleNode.isNull()) {
         Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
@@ -629,8 +629,8 @@ ezechiel::core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(cons
             if (date.isValid()) {
                 measure->setMoment(date);
             } else {
-                EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
-                ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+                EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
+                ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
                 uncasted->setField("sampleDate");
                 uncasted->setText(dateString);
                 measure->getUncastedValues()->append(uncasted);
@@ -644,19 +644,19 @@ ezechiel::core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(cons
             if (date.isValid()) {
                 measure->arrivalDate(date);
             } else {
-                EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
-                ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+                EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
+                ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
                 uncasted->setField("arrivalDate");
                 uncasted->setText(dateString);
                 measure->getUncastedValues()->append(uncasted);
             }
         }
 
-        QList<ezechiel::core::IdentifiableAmount*> amts;
+        QList<ezechiel::GuiCore::IdentifiableAmount*> amts;
 
         QDomElement concentrationNode = sampleNode.firstChildElement("concentrations").firstChildElement("concentration");
         while (!concentrationNode.isNull()) {
-            ezechiel::core::IdentifiableAmount * amt = ezechiel::core::CoreFactory::createEntity<ezechiel::core::IdentifiableAmount>(ABSTRACTREPO, measure);
+            ezechiel::GuiCore::IdentifiableAmount * amt = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::IdentifiableAmount>(ABSTRACTREPO, measure);
 
             //Dosage value
             {
@@ -666,8 +666,8 @@ ezechiel::core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(cons
                 if (ok)
                     amt->setValue(value);
                 else {
-                    EXLOG(QtWarningMsg, ezechiel::core::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
-                    ezechiel::core::UncastedValue *uncasted = ezechiel::core::CoreFactory::createEntity<ezechiel::core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+                    EXLOG(QtWarningMsg, ezechiel::GuiCore::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
+                    ezechiel::GuiCore::UncastedValue *uncasted = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
                     uncasted->setField("concentration value");
                     uncasted->setText(valueString);
                     measure->getUncastedValues()->append(uncasted);
@@ -677,7 +677,7 @@ ezechiel::core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(cons
             /*********************************************************************
              * TODO: If the unit is not recognized, should be handled correctly
              *********************************************************************/
-            amt->setUnit(ezechiel::core::Unit(concentrationNode.firstChildElement("unit").firstChild().toText().data()));
+            amt->setUnit(ezechiel::GuiCore::Unit(concentrationNode.firstChildElement("unit").firstChild().toText().data()));
 
             amts.append(amt);
             concentrationNode = concentrationNode.nextSiblingElement("concentration");

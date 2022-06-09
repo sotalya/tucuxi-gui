@@ -8,7 +8,7 @@
 #include "core/dal/amount.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 class Concentrations : public Entity
@@ -30,7 +30,7 @@ protected:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_OPAQUE_POINTER(ezechiel::core::Concentrations*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::Concentrations*>)
+Q_DECLARE_OPAQUE_POINTER(ezechiel::GuiCore::Concentrations*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Concentrations*>)
 
 #endif // CONCENTRATIONS_H

@@ -4,7 +4,7 @@
 #include <QString>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class ChartData;
 class PredictionResult;
 }
@@ -22,9 +22,9 @@ class ChartDataExporter
 public:
     ChartDataExporter();
 
-    QString exportData(const ezechiel::core::ChartData *chartData, int what = EXPORT_ALL);
+    QString exportData(const ezechiel::GuiCore::ChartData *chartData, int what = EXPORT_ALL);
 
-    QString exportPrediction(ezechiel::core::PredictionResult *pred);
+    QString exportPrediction(ezechiel::GuiCore::PredictionResult *pred);
 };
 
 class ChartDataHtmlExporter
@@ -32,9 +32,9 @@ class ChartDataHtmlExporter
 public:
     ChartDataHtmlExporter();
 
-    QString exportData(const ezechiel::core::ChartData *chartData, int what);
+    QString exportData(const ezechiel::GuiCore::ChartData *chartData, int what);
 
-    QString exportPrediction(ezechiel::core::PredictionResult *pred);
+    QString exportPrediction(ezechiel::GuiCore::PredictionResult *pred);
 };
 
 #endif // CHARTDATAEXPORTER_H

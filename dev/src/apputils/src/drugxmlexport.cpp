@@ -4,7 +4,7 @@ DrugXmlExport::DrugXmlExport()
 {
 }
 
-bool DrugXmlExport::save(ezechiel::core::DrugModel *drug, const QString &fileName)
+bool DrugXmlExport::save(ezechiel::GuiCore::DrugModel *drug, const QString &fileName)
 {
 
     QTextStream out(stdout);
@@ -39,11 +39,11 @@ bool DrugXmlExport::save(ezechiel::core::DrugModel *drug, const QString &fileNam
     return isOk;
 }
 
-bool DrugXmlExport::saveHistory(const ezechiel::core::DrugModel *drug)
+bool DrugXmlExport::saveHistory(const ezechiel::GuiCore::DrugModel *drug)
 {
     bool isOk = true;
 
-    ezechiel::core::EditorList *editors = drug->getMetaData()->getEditors();
+    ezechiel::GuiCore::EditorList *editors = drug->getMetaData()->getEditors();
     writer.writeComment(" Drug history ");
     writeNewLine();
     writer.writeStartElement("history");
@@ -52,7 +52,7 @@ bool DrugXmlExport::saveHistory(const ezechiel::core::DrugModel *drug)
     writer.writeEndElement();//creator
     writer.writeStartElement("revisions");
     for (int i = 1; i < editors->size(); i++) {
-        ezechiel::core::Editor *editor = editors->at(i);
+        ezechiel::GuiCore::Editor *editor = editors->at(i);
         saveEditor(editor);
         writer.writeEndElement();//revision
     }
@@ -63,7 +63,7 @@ bool DrugXmlExport::saveHistory(const ezechiel::core::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveEditor(const ezechiel::core::Editor *editor){
+bool DrugXmlExport::saveEditor(const ezechiel::GuiCore::Editor *editor){
     bool isOk = true;
 
     tagInjector("name",editor->getName());
@@ -78,7 +78,7 @@ bool DrugXmlExport::saveEditor(const ezechiel::core::Editor *editor){
     return isOk;
 }
 
-bool DrugXmlExport::saveDrug(const ezechiel::core::DrugModel *drug)
+bool DrugXmlExport::saveDrug(const ezechiel::GuiCore::DrugModel *drug)
 {
     bool isOk = true;
     writer.writeComment(" Drug data ");
@@ -122,7 +122,7 @@ bool DrugXmlExport::saveDrug(const ezechiel::core::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveHead(const ezechiel::core::DrugModel *drug)
+bool DrugXmlExport::saveHead(const ezechiel::GuiCore::DrugModel *drug)
 {
     bool isOk = true;
     writer.writeComment(" Drug description ");
@@ -153,7 +153,7 @@ bool DrugXmlExport::saveHead(const ezechiel::core::DrugModel *drug)
 
     writer.writeStartElement("references");
     //FIXME once references are good
-    for(ezechiel::core::Reference *reference : drug->getMetaData()->getReferences()->getList()) {
+    for(ezechiel::GuiCore::Reference *reference : drug->getMetaData()->getReferences()->getList()) {
         writer.writeStartElement("reference");
         if(!reference->getType().isEmpty()){
             writer.writeAttribute("type",reference->getType());
@@ -181,7 +181,7 @@ bool DrugXmlExport::saveHead(const ezechiel::core::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveAdme(const ezechiel::core::ADME *adme)
+bool DrugXmlExport::saveAdme(const ezechiel::GuiCore::ADME *adme)
 {
     bool isOk = true;
     writer.writeComment(" Drug adme and intake ");
@@ -189,9 +189,9 @@ bool DrugXmlExport::saveAdme(const ezechiel::core::ADME *adme)
 
     writer.writeStartElement("adme");
 
-    if (adme->getDefaultIntake()->getRoute() == ezechiel::core::Admin::BOLUS) {
+    if (adme->getDefaultIntake()->getRoute() == ezechiel::GuiCore::Admin::BOLUS) {
         tagInjector("intake","bolus");
-    } else if (adme->getDefaultIntake()->getRoute() == ezechiel::core::Admin::INFUSION) {
+    } else if (adme->getDefaultIntake()->getRoute() == ezechiel::GuiCore::Admin::INFUSION) {
         tagInjector("intake","infu");
     } else {
         tagInjector("intake","extra");
@@ -207,7 +207,7 @@ bool DrugXmlExport::saveAdme(const ezechiel::core::ADME *adme)
     return isOk;
 }
 
-bool DrugXmlExport::saveHalflife(const ezechiel::core::Halflife *halflife)
+bool DrugXmlExport::saveHalflife(const ezechiel::GuiCore::Halflife *halflife)
 {
     bool isOk = true;
     writer.writeComment(" Drug half-life ");
@@ -227,7 +227,7 @@ bool DrugXmlExport::saveHalflife(const ezechiel::core::Halflife *halflife)
 }
 
 
-bool DrugXmlExport::saveConversions(const ezechiel::core::DrugModel *drug)
+bool DrugXmlExport::saveConversions(const ezechiel::GuiCore::DrugModel *drug)
 {
     bool isOk = true;
     writer.writeComment(" Drug units and conversions ");
@@ -256,9 +256,9 @@ bool DrugXmlExport::saveConversions(const ezechiel::core::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveStandardTreatment(const ezechiel::core::DrugModel *drug)
+bool DrugXmlExport::saveStandardTreatment(const ezechiel::GuiCore::DrugModel *drug)
 {
-    ezechiel::core::StandardTreatment *treatment = drug->getStandardTreatment();
+    ezechiel::GuiCore::StandardTreatment *treatment = drug->getStandardTreatment();
 
     bool isOk = true;
     writer.writeComment(" Standard treatment ");
@@ -274,7 +274,7 @@ bool DrugXmlExport::saveStandardTreatment(const ezechiel::core::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveDosages(const ezechiel::core::DrugModel *drug)
+bool DrugXmlExport::saveDosages(const ezechiel::GuiCore::DrugModel *drug)
 {
     bool isOk = true;
     writer.writeComment(" Drug dosages ");
@@ -283,7 +283,7 @@ bool DrugXmlExport::saveDosages(const ezechiel::core::DrugModel *drug)
 
     writer.writeStartElement("doses");
 
-    ezechiel::core::ValidDoses *doses = drug->getDoses();
+    ezechiel::GuiCore::ValidDoses *doses = drug->getDoses();
     QXmlStreamAttributes dosesAttributes;
 
     dosesAttributes.append("default", QString::number(doses->getQuantity()->value()));
@@ -303,7 +303,7 @@ bool DrugXmlExport::saveDosages(const ezechiel::core::DrugModel *drug)
     writer.writeEndElement();//doses
     writer.writeStartElement("intervals");
 
-    ezechiel::core::ValidIntervals *intervals = drug->getIntervals();
+    ezechiel::GuiCore::ValidIntervals *intervals = drug->getIntervals();
     QXmlStreamAttributes intervalAttributes;
     intervalAttributes.append("default", QString::number(intervals->getQuantity()->value()));
     intervalAttributes.append("unit", intervals->getQuantity()->unit().name());
@@ -317,7 +317,7 @@ bool DrugXmlExport::saveDosages(const ezechiel::core::DrugModel *drug)
     writer.writeEndElement();//intervals
     writer.writeStartElement("infusions");
 
-    ezechiel::core::ValidInfusions *infusions = drug->getInfusions();
+    ezechiel::GuiCore::ValidInfusions *infusions = drug->getInfusions();
     QXmlStreamAttributes infusionAttributes;
     infusionAttributes.append("default", QString::number(infusions->getQuantity()->getDbvalue()));
     infusionAttributes.append("unit", infusions->getQuantity()->getUnitstring());
@@ -339,7 +339,7 @@ bool DrugXmlExport::saveDosages(const ezechiel::core::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveTargets(ezechiel::core::TargetList* targets)
+bool DrugXmlExport::saveTargets(ezechiel::GuiCore::TargetList* targets)
 {
     bool isOk = true;
 
@@ -347,26 +347,26 @@ bool DrugXmlExport::saveTargets(ezechiel::core::TargetList* targets)
     writeNewLine();
 
     writer.writeStartElement("targets");
-    for(ezechiel::core::Target *target : targets->getList()){
+    for(ezechiel::GuiCore::Target *target : targets->getList()){
         writer.writeStartElement("target");
 
         switch(target->getType()->getTargetType()){
-        case ezechiel::core::TargetMethod::TargetType::ResidualTarget :
+        case ezechiel::GuiCore::TargetMethod::TargetType::ResidualTarget :
             tagInjector("type","residual");
             break;
-        case ezechiel::core::TargetMethod::TargetType::PeakTarget :
+        case ezechiel::GuiCore::TargetMethod::TargetType::PeakTarget :
             tagInjector("type","peak");
             break;
-        case  ezechiel::core::TargetMethod::TargetType::MeanTarget :
+        case  ezechiel::GuiCore::TargetMethod::TargetType::MeanTarget :
             tagInjector("type","mean");
             break;
-        case  ezechiel::core::TargetMethod::TargetType::AUCTarget :
+        case  ezechiel::GuiCore::TargetMethod::TargetType::AUCTarget :
             tagInjector("type","auc");
             break;
-        case  ezechiel::core::TargetMethod::TargetType::CumulativeAUCTarget :
+        case  ezechiel::GuiCore::TargetMethod::TargetType::CumulativeAUCTarget :
             tagInjector("type","cumulativeauc");
             break;
-        case ezechiel::core::TargetMethod::TargetType::UnknownTarget :
+        case ezechiel::GuiCore::TargetMethod::TargetType::UnknownTarget :
             tagInjector("type", "unknown");
             break;
         // No default, as we cover every possible state
@@ -431,7 +431,7 @@ bool DrugXmlExport::saveTargets(ezechiel::core::TargetList* targets)
     return isOk;
 }
 
-bool DrugXmlExport::saveCovariates(ezechiel::core::DrugVariateList * covariates)
+bool DrugXmlExport::saveCovariates(ezechiel::GuiCore::DrugVariateList * covariates)
 {
     bool isOk = true;
 
@@ -440,7 +440,7 @@ bool DrugXmlExport::saveCovariates(ezechiel::core::DrugVariateList * covariates)
 
     writer.writeStartElement("covariates");
 
-    for(ezechiel::core::DrugVariate* covariate : covariates->getList()){
+    for(ezechiel::GuiCore::DrugVariate* covariate : covariates->getList()){
         writer.writeStartElement("covariate");
         tagInjector("id",covariate->getCovariateId());
 
@@ -468,7 +468,7 @@ bool DrugXmlExport::saveCovariates(ezechiel::core::DrugVariateList * covariates)
     return isOk;
 }
 
-bool DrugXmlExport::saveErrormodel(const ezechiel::core::ErrorModel* errorModel)
+bool DrugXmlExport::saveErrormodel(const ezechiel::GuiCore::ErrorModel* errorModel)
 {
     bool isOk = true;
 
@@ -488,7 +488,7 @@ bool DrugXmlExport::saveErrormodel(const ezechiel::core::ErrorModel* errorModel)
     return isOk;
 }
 
-bool DrugXmlExport::saveParameters(const ezechiel::core::ParameterSet *parameters)
+bool DrugXmlExport::saveParameters(const ezechiel::GuiCore::ParameterSet *parameters)
 {
     bool isOk = true;
 
@@ -499,14 +499,14 @@ bool DrugXmlExport::saveParameters(const ezechiel::core::ParameterSet *parameter
 
     for(QString paramId : parameters->pids()){
 
-        ezechiel::core::Parameter *parameter = parameters->get(paramId);
+        ezechiel::GuiCore::Parameter *parameter = parameters->get(paramId);
         writer.writeStartElement("parameter");
 
         tagInjector("id",parameter->getName());
         tagInjector("unit",parameter->getQuantity()->unit().name());
         tagInjector("value",QString::number(parameter->getQuantity()->value()));
 
-        ezechiel::core::Bsv *bsv = parameter->getBsv();
+        ezechiel::GuiCore::Bsv *bsv = parameter->getBsv();
         writer.writeStartElement("bsv");
         tagInjector("additive",QString::number(bsv->getStandard()));
         tagInjector("proportional",QString::number(bsv->getProportional()));
@@ -531,7 +531,7 @@ bool DrugXmlExport::saveParameters(const ezechiel::core::ParameterSet *parameter
     return isOk;
 }
 
-bool DrugXmlExport::saveCorrelations(const ezechiel::core::DrugModel *drug)
+bool DrugXmlExport::saveCorrelations(const ezechiel::GuiCore::DrugModel *drug)
 {
     bool isOk = true;
 
@@ -566,7 +566,7 @@ bool DrugXmlExport::saveCorrelations(const ezechiel::core::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveOperations(const ezechiel::core::DrugModel *drug)
+bool DrugXmlExport::saveOperations(const ezechiel::GuiCore::DrugModel *drug)
 {
     bool isOk = true;
     writer.writeComment(" Drug operations ");
@@ -576,11 +576,11 @@ bool DrugXmlExport::saveOperations(const ezechiel::core::DrugModel *drug)
 
     for(QString paramPids : drug->getParameters()->pids()){
 
-        ezechiel::core::Parameter *parameter = drug->getParameters()->get(paramPids);
-        ezechiel::core::OperationList *operations = parameter->getOperations();
+        ezechiel::GuiCore::Parameter *parameter = drug->getParameters()->get(paramPids);
+        ezechiel::GuiCore::OperationList *operations = parameter->getOperations();
 
 
-        for(ezechiel::core::Operation *operation : operations->getList()){
+        for(ezechiel::GuiCore::Operation *operation : operations->getList()){
 
             writer.writeStartElement("operation");
             tagInjector("parameter",parameter->getName());
@@ -626,7 +626,7 @@ bool DrugXmlExport::tagInjector(const QString tagName, QString text, QXmlStreamA
     return true;
 }
 
-bool DrugXmlExport::stringSaverTranslation(ezechiel::core::TranslatableString *QMapStringTranslation,QString elemName)
+bool DrugXmlExport::stringSaverTranslation(ezechiel::GuiCore::TranslatableString *QMapStringTranslation,QString elemName)
 {
     for(QString langKey : QMapStringTranslation->keys()){
         QXmlStreamAttributes attributes;

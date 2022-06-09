@@ -10,7 +10,7 @@
 #include "core/dal/drug/adme.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class TranslatableString;
 
@@ -143,8 +143,8 @@ QML_POINTERLIST_CLASS_DECL(DoseList,ValidDose)
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::ValidDose*)
-Q_DECLARE_METATYPE(QList<ezechiel::core::ValidDose*>)
-Q_DECLARE_METATYPE(ezechiel::core::ValidDoses*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ValidDose*)
+Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ValidDose*>)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ValidDoses*)
 
 #endif // DOSES_H

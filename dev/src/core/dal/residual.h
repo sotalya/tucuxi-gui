@@ -7,7 +7,7 @@
 #include <QVector>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //class Residual : public QObject

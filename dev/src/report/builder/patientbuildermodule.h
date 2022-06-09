@@ -6,7 +6,7 @@
 #include "admin/src/dal/patient.h"
 #include "reportbuildermodule.h"
 
-class PatientBuilderModule : public ezechiel::core::Entity, public ReportBuilderModule
+class PatientBuilderModule : public ezechiel::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
     AUTO_PROPERTY_DECL(Patient*, patient, Patient)

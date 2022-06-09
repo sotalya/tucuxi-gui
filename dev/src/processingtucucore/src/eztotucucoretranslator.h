@@ -22,7 +22,7 @@ class DosageTimeRange;
 }
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class DrugTreatment;
 class DrugModel;
 class ParamTraits;
@@ -40,12 +40,12 @@ public:
 
     Tucuxi::Common::TucuUnit buildUnit(const QString &_strUnit);
 
-    Tucuxi::Core::PredictionParameterType buildParameterType(const ezechiel::core::ParamTraits *traits);
+    Tucuxi::Core::PredictionParameterType buildParameterType(const ezechiel::GuiCore::ParamTraits *traits);
 
-    Tucuxi::Core::DosageTimeRange *buildTimeRange(const ezechiel::core::Dosage *_ezDosage);
+    Tucuxi::Core::DosageTimeRange *buildTimeRange(const ezechiel::GuiCore::Dosage *_ezDosage);
 
-    Tucuxi::Core::DrugTreatment *buildTreatment(const ezechiel::core::DrugTreatment *_ezTreatment, QDateTime adjTime = QDateTime());
-    Tucuxi::Core::DrugModel *buildDrugModel(const ezechiel::core::DrugModel *_drugModel);
+    Tucuxi::Core::DrugTreatment *buildTreatment(const ezechiel::GuiCore::DrugTreatment *_ezTreatment, QDateTime adjTime = QDateTime());
+    Tucuxi::Core::DrugModel *buildDrugModel(const ezechiel::GuiCore::DrugModel *_drugModel);
 
 };
 

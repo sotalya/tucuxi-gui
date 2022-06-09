@@ -14,7 +14,7 @@
 #include <QVariant>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 //! \brief Tucuxi simple XML attribute filter

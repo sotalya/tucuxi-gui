@@ -8,7 +8,7 @@
 #include <QString>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 /** \defgroup message Messaging system
   * The \ref core is independant of the interfaces (GUI, CLI) and so do not know how the message will be handled.

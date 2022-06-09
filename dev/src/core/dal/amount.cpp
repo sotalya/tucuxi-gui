@@ -4,7 +4,7 @@
 
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 //Amount::Amount(QObject *parent) : QObject(parent)
 //{

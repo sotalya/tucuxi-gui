@@ -18,7 +18,7 @@
 #include "core/errors_core.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 const char *const DefinitionManager::_dateTimeFormat    = "dd/MM/yyyy-HH:mm";
 const char *const DefinitionManager::_xmlDateTimeFormat = "yyyy'-'MM'-'dd'T'HH:mm:ss";
@@ -230,7 +230,7 @@ QStringList DefinitionManager::covariateValuesList(const QString &id) const
 ////////////////////////////////////////////////////////////////////
 
 //Returns the list of default intervals
-QList<ezechiel::core::Duration> DefinitionManager::intervals() const
+QList<ezechiel::GuiCore::Duration> DefinitionManager::intervals() const
 {
     return _intervals;
 }

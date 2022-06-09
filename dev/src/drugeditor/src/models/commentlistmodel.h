@@ -31,18 +31,18 @@ public:
 
 
 public slots:
-    void setModelData(ezechiel::core::TranslatableString *comments);
+    void setModelData(ezechiel::GuiCore::TranslatableString *comments);
 
 
 private:
     virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
-    virtual void insertRowsImpl(int at, int count, const ezechiel::core::SharedEntitySet &entities = ezechiel::core::SharedEntitySet());
-    virtual ezechiel::core::SharedEntitySet removeRowsImpl(int at, int count);
+    virtual void insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities = ezechiel::GuiCore::SharedEntitySet());
+    virtual ezechiel::GuiCore::SharedEntitySet removeRowsImpl(int at, int count);
 
     void init();
     QString keyGen();
 
-    ezechiel::core::TranslatableString *_comments;
+    ezechiel::GuiCore::TranslatableString *_comments;
     int keyGenAcc;
     QList<QString*> _keys;
     QHash<int,QByteArray> _roleNames;

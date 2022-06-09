@@ -5,7 +5,7 @@
 #include <QMutex>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 class PredictionSpec;
 }
 
@@ -18,7 +18,7 @@ public:
     static CalculationRequestLogger *getInstance();
 
 
-    void log(ezechiel::core::PredictionSpec *spec);
+    void log(ezechiel::GuiCore::PredictionSpec *spec);
 
     void setPath(const QString &path);
 

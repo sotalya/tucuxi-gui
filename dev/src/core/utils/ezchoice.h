@@ -10,7 +10,7 @@
 #include "core/utils/ezutils.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 /** Represent a multi-element choice.
@@ -133,6 +133,6 @@ private:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::EzChoice)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::EzChoice)
 
 #endif // EZCHOICE_H

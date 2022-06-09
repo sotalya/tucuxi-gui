@@ -8,7 +8,7 @@
 #include "core/utils/ezutils.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class OperationList;
 class TranslatableString;
@@ -62,8 +62,8 @@ protected:
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::Variability*)
-Q_DECLARE_METATYPE(ezechiel::core::VariableValue*)
-Q_DECLARE_METATYPE(ezechiel::core::OperableDouble*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Variability*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::VariableValue*)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::OperableDouble*)
 
 #endif // VARIABILITY_H

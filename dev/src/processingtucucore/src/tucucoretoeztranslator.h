@@ -15,7 +15,7 @@
 #include "tucucore/drugmodel/targetdefinition.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class TargetEvaluationResult;
 class DosageHistory;
@@ -51,25 +51,25 @@ public:
 
     bool buildTargetEvaluation(
             const Tucuxi::Core::TargetEvaluationResult *target,
-            ezechiel::core::TargetEvaluationResult *newTarget);
+            ezechiel::GuiCore::TargetEvaluationResult *newTarget);
 
     bool buildDosageHistory(const Tucuxi::Core::DosageHistory & dosageHistory,
-                                                      ezechiel::core::DosageHistory *newHistory);
+                                                      ezechiel::GuiCore::DosageHistory *newHistory);
 
-    ezechiel::core::Admin::Route translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute);
-    ezechiel::core::Admin::Route translateAbsorptionModel(Tucuxi::Core::AbsorptionModel _absorptionModel);
+    ezechiel::GuiCore::Admin::Route translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute);
+    ezechiel::GuiCore::Admin::Route translateAbsorptionModel(Tucuxi::Core::AbsorptionModel _absorptionModel);
 
     QString description(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute);
 
-    ezechiel::core::DrugModel* buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel);
+    ezechiel::GuiCore::DrugModel* buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel);
 
-    ezechiel::core::OperableAmount *translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::TucuUnit micUnit,
-                                                 Tucuxi::Common::TucuUnit newUnit, ezechiel::core::Target *newTarget);
-    ezechiel::core::OperableAmount *translate(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, ezechiel::core::Target *newTarget);
-    ezechiel::core::OperableAmount *translateTime(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, ezechiel::core::Target *newTarget);
-    ezechiel::core::TargetMethod *translate(Tucuxi::Core::TargetType targetType, ezechiel::core::Target *newTarget);
+    ezechiel::GuiCore::OperableAmount *translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::TucuUnit micUnit,
+                                                 Tucuxi::Common::TucuUnit newUnit, ezechiel::GuiCore::Target *newTarget);
+    ezechiel::GuiCore::OperableAmount *translate(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, ezechiel::GuiCore::Target *newTarget);
+    ezechiel::GuiCore::OperableAmount *translateTime(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, ezechiel::GuiCore::Target *newTarget);
+    ezechiel::GuiCore::TargetMethod *translate(Tucuxi::Core::TargetType targetType, ezechiel::GuiCore::Target *newTarget);
 
-    ezechiel::core::TranslatableString *translate(const Tucuxi::Common::TranslatableString &str, ezechiel::core::Entity *parent);
+    ezechiel::GuiCore::TranslatableString *translate(const Tucuxi::Common::TranslatableString &str, ezechiel::GuiCore::Entity *parent);
 };
 
 #endif // TUCUCORETOEZTRANSLATOR_H

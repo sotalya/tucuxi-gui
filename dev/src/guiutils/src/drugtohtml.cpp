@@ -12,7 +12,7 @@ DrugToHtml::DrugToHtml()
 
 }
 
-QString DrugToHtml::drugToHtml(const ezechiel::core::DrugModel *drug)
+QString DrugToHtml::drugToHtml(const ezechiel::GuiCore::DrugModel *drug)
 {
     if (drug) {
         QString desc;
@@ -21,7 +21,7 @@ QString DrugToHtml::drugToHtml(const ezechiel::core::DrugModel *drug)
         desc += "<tr><td></td><td></td></tr>";
         desc += "<tr><td><b>Drug name :</b></td><td><b>" + drug->getName()->value() + "</b></td></tr>";
         desc += "<tr><td>ATC:  </td><td>";
-        ezechiel::core::ActiveSubstance *substance = drug->getActiveSubstance();
+        ezechiel::GuiCore::ActiveSubstance *substance = drug->getActiveSubstance();
         for(int i=0;i<substance->getAtc().size(); i++) {
             desc += substance->getAtc().at(i);
             if (i != substance->getAtc().size() - 1)
@@ -105,7 +105,7 @@ QString DrugToHtml::drugToHtml(const ezechiel::core::DrugModel *drug)
         // desc += "<h5>Model: " + drug->getPkModelId() + "</h5>";
         desc += "<h5>Model: " + drug->getDrugModelId() + "</h5>";
         desc += "<h5>ATC: ";
-        ezechiel::core::ActiveSubstance *substance = drug->getActiveSubstance();
+        ezechiel::GuiCore::ActiveSubstance *substance = drug->getActiveSubstance();
         for(int i=0;i<substance->getAtc().size(); i++) {
             desc += substance->getAtc().at(i);
             if (i != substance->getAtc().size() - 1)
@@ -161,7 +161,7 @@ QString DrugToHtml::drugToHtml(const ezechiel::core::DrugModel *drug)
 }
 
 
-QString DrugToHtml::activeSubstanceToHtml(const ezechiel::core::ActiveSubstance *drug)
+QString DrugToHtml::activeSubstanceToHtml(const ezechiel::GuiCore::ActiveSubstance *drug)
 {
     if (drug) {
         QString desc;

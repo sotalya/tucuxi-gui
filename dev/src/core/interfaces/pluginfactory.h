@@ -12,7 +12,7 @@
 //#include "postengine.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 

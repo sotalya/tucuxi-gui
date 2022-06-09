@@ -3,7 +3,7 @@
 #include "predictiondata.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 VALUELIST_CLASS_IMPL(Points, Point)
 

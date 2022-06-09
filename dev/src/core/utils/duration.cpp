@@ -15,7 +15,7 @@
 #include "core/core.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 // Initiate the duration with 0
 Duration::Duration()

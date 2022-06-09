@@ -4,7 +4,7 @@
 #include <QXmlStreamWriter>
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class PredictionSpec;
 class DrugResponseAnalysis;
@@ -34,26 +34,26 @@ public:
     PredictionSpecExporter();
 
     QString writeDate(QDateTime date);
-    bool save(ezechiel::core::PredictionSpec *spec, QByteArray &data);
+    bool save(ezechiel::GuiCore::PredictionSpec *spec, QByteArray &data);
 
-    void save(ezechiel::core::PredictionSpec *spec);
-    void save(ezechiel::core::DrugResponseAnalysis *analysis);
-    void save(ezechiel::core::DrugTreatment *treatment);
-    void save(ezechiel::core::DrugModel *model);
-    void save(ezechiel::core::DosageHistory *history);
-    void save(ezechiel::core::PatientVariateList *list);
-    void save(ezechiel::core::TargetList *list);
-    void save(ezechiel::core::CoreMeasureList *list);
-    void save(ezechiel::core::UncastedValueList *list);
-    void save(ezechiel::core::ADME *adme);
-    void save(ezechiel::core::ValidDoses *doses);
-    void save(ezechiel::core::ValidInfusions *infusions);
-    void save(ezechiel::core::ValidIntervals *intervals);
-    void save(ezechiel::core::DrugVariateList *list);
-    void save(ezechiel::core::ParameterSet *set);
-    void save(ezechiel::core::OperationList *list);
-    void saveIdentifiableAmount(const QString &tagName, ezechiel::core::IdentifiableAmount *amount);
-    void saveOperableAmount(const QString &tagName, ezechiel::core::OperableAmount *amount);
+    void save(ezechiel::GuiCore::PredictionSpec *spec);
+    void save(ezechiel::GuiCore::DrugResponseAnalysis *analysis);
+    void save(ezechiel::GuiCore::DrugTreatment *treatment);
+    void save(ezechiel::GuiCore::DrugModel *model);
+    void save(ezechiel::GuiCore::DosageHistory *history);
+    void save(ezechiel::GuiCore::PatientVariateList *list);
+    void save(ezechiel::GuiCore::TargetList *list);
+    void save(ezechiel::GuiCore::CoreMeasureList *list);
+    void save(ezechiel::GuiCore::UncastedValueList *list);
+    void save(ezechiel::GuiCore::ADME *adme);
+    void save(ezechiel::GuiCore::ValidDoses *doses);
+    void save(ezechiel::GuiCore::ValidInfusions *infusions);
+    void save(ezechiel::GuiCore::ValidIntervals *intervals);
+    void save(ezechiel::GuiCore::DrugVariateList *list);
+    void save(ezechiel::GuiCore::ParameterSet *set);
+    void save(ezechiel::GuiCore::OperationList *list);
+    void saveIdentifiableAmount(const QString &tagName, ezechiel::GuiCore::IdentifiableAmount *amount);
+    void saveOperableAmount(const QString &tagName, ezechiel::GuiCore::OperableAmount *amount);
 
 protected:
 

@@ -4,10 +4,10 @@
 #include "stdadminrepository.h"
 #include "adminfactory.h"
 
-using namespace ezechiel::core;
+using namespace ezechiel::GuiCore;
 
-AUTO_PROPERTY_IMPL(CovariatesBuilderModule, ezechiel::core::DrugVariateList*, drugvariates, Drugvariates)
-AUTO_PROPERTY_IMPL(CovariatesBuilderModule, ezechiel::core::PatientVariateList*, patientvariates, Patientvariates)
+AUTO_PROPERTY_IMPL(CovariatesBuilderModule, ezechiel::GuiCore::DrugVariateList*, drugvariates, Drugvariates)
+AUTO_PROPERTY_IMPL(CovariatesBuilderModule, ezechiel::GuiCore::PatientVariateList*, patientvariates, Patientvariates)
 
 CovariatesBuilderModule::CovariatesBuilderModule(DrugVariateList * drugvariates, PatientVariateList *patientvariates, QObject *parent) :
     _patientvariates(patientvariates), _drugvariates(drugvariates)

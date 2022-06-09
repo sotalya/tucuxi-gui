@@ -89,7 +89,7 @@
  */
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class DefinitionManager
 {
@@ -284,7 +284,7 @@ public:
     /** \brief Return the list of the default intervals durations.
      * @return The list of default intervals.
      */
-    QList<ezechiel::core::Duration> intervals() const;
+    QList<ezechiel::GuiCore::Duration> intervals() const;
 
     /** \brief Returns the language of the definitions.
      * @return The current language.
@@ -326,7 +326,7 @@ private:
     QMap<QString, Descriptor> _targets;
 
     //List of default intervals duration
-    QList<ezechiel::core::Duration> _intervals;
+    QList<ezechiel::GuiCore::Duration> _intervals;
 
     // ToDo: remove when refactored //////////////
     //Hash of <Drug ID, QList<Covariate ID> >

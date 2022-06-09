@@ -11,7 +11,7 @@
 #include "dbobjects.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 
 class Unit;
@@ -141,10 +141,10 @@ class DirName : public QString
 } // namespace core
 } // namespace ezechiel
 
-Q_DECLARE_METATYPE(ezechiel::core::DirName);
-Q_DECLARE_METATYPE(ezechiel::core::ModelDescriptor)
-Q_DECLARE_METATYPE(ezechiel::core::FileName);
-Q_DECLARE_METATYPE(ezechiel::core::Descriptor)
-Q_DECLARE_METATYPE(ezechiel::core::Option)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::DirName);
+Q_DECLARE_METATYPE(ezechiel::GuiCore::ModelDescriptor)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::FileName);
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Descriptor)
+Q_DECLARE_METATYPE(ezechiel::GuiCore::Option)
 
 #endif // UTILS_H

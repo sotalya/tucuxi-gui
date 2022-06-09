@@ -2,7 +2,7 @@
 #define MODELVSTREATMENTCOMPATIBILITYCHECKER_H
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 class DrugModel;
 class DrugTreatment;
@@ -34,8 +34,8 @@ public:
      * greater than a certain value, then a model for neonates should not
      * be used.
      */
-    bool check(ezechiel::core::DrugModel *model,
-               ezechiel::core::DrugTreatment *treatment);
+    bool check(ezechiel::GuiCore::DrugModel *model,
+               ezechiel::GuiCore::DrugTreatment *treatment);
 };
 
 #endif // MODELVSTREATMENTCOMPATIBILITYCHECKER_H

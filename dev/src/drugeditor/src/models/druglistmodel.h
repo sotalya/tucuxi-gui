@@ -39,12 +39,12 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(QList<ezechiel::core::DrugModel*> *drugs);
+    void setModelData(QList<ezechiel::GuiCore::DrugModel*> *drugs);
 
 private:
     void init();
 
-    QList<ezechiel::core::DrugModel*> *_drugs;
+    QList<ezechiel::GuiCore::DrugModel*> *_drugs;
     QHash<int, QByteArray> _roleNames;
 };
 

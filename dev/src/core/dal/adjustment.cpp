@@ -4,7 +4,7 @@
 #include "dal/drug/target.h"
 
 namespace ezechiel {
-namespace core {
+namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(TargetEvaluationResult, TargetMethod*, targetType, TargetType)
 AUTO_PROPERTY_IMPL(TargetEvaluationResult, double, value, Value)

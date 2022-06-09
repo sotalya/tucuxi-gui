@@ -164,6 +164,7 @@ DialogBase {
                             }
                             EntityTextField {
                                 id: analystTitle
+                                objectName: "analystTitle"
                                 placeholderText: "title"
                                 Layout.maximumWidth: 40
                                 onTextChanged: interpretation.analyst.title = text
@@ -187,6 +188,7 @@ DialogBase {
 
                             EntityTextField {
                                 id: analystFirstname
+                                objectName: "analystFirstname"
                                 Layout.fillWidth:  true
                                 placeholderText: "first name"
                             }
@@ -196,6 +198,7 @@ DialogBase {
                             }
                             EntityTextField {
                                 id: analystLastname
+                                objectName: "analystLastname"
                                 placeholderText: "last name"
                                 Layout.fillWidth:  true
                             }
@@ -213,6 +216,7 @@ DialogBase {
                             }
                             EntityTextField {
                                 id: analystRole
+                                objectName: "analystRole"
                                 Layout.fillWidth:  true
                                 placeholderText: "role"
                             }
@@ -222,6 +226,7 @@ DialogBase {
                             }
                             EntityTextField {
                                 id: analystPhone
+                                objectName: "analystPhone"
                                 Layout.fillWidth:  true
                                 placeholderText: "phone"
                             }
@@ -239,6 +244,7 @@ DialogBase {
                             }
                             EntityTextField {
                                 id: analystAffiliation
+                                objectName: "analystAffiliation"
                                 Layout.fillWidth:  true
                                 placeholderText: "affiliation"
 
@@ -257,6 +263,7 @@ DialogBase {
                             }
                             EntityTextField {
                                 id: analystAddress
+                                objectName: "analystAddress"
                                 Layout.fillWidth:  true
                                 placeholderText: "address"
 
@@ -274,6 +281,7 @@ DialogBase {
                             }
                             EntityTextField {
                                 id: analystCity
+                                objectName: "analystCity"
                                 Layout.fillWidth:  true
                                 placeholderText: "city"
                             }
@@ -284,6 +292,7 @@ DialogBase {
                             }
                             EntityTextField {
                                 id: analystPostcode
+                                objectName: "analystPostcode"
                                 Layout.fillWidth:  true
                                 placeholderText: "postcode"
                             }
@@ -299,6 +308,7 @@ DialogBase {
                             }
                             EntityTextField {
                                 id: analystState
+                                objectName: "analystState"
                                 Layout.fillWidth:  true
                                 placeholderText: "state"
                             }
@@ -309,6 +319,7 @@ DialogBase {
                             }
                             EntityTextField {
                                 id: analystCountry
+                                objectName: "analystCountry"
                                 Layout.fillWidth:  true
                                 placeholderText: "country"
                             }
@@ -461,6 +472,7 @@ DialogBase {
             Button {
                 id: acceptBtn
                 text: "Ok"
+                objectName: "okSettings"
                 onClicked: {
                     if (pathChanged){
                         if (sentencesPalettes.isPathExisting(xmlPathETF.text)){
@@ -475,6 +487,7 @@ DialogBase {
 
             Button {
                 id: applyBtn
+                objectName: "applySettings"
                 text: "Apply"
                 onClicked: function() {
                     if (pathChanged){

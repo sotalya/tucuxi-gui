@@ -4,6 +4,7 @@
 #define INTERPRETATIONXMLEXPORT_H
 
 
+#include "admin/src/dal/validationstatus.h"
 #include <QString>
 #include <QXmlStreamWriter>
 
@@ -12,6 +13,7 @@ class InterpretationAnalysis;
 class InterpretationRequest;
 class Practician;
 class ValidationStatus;
+class PhoneList;
 
 class ClinicalSet;
 class Patient;
@@ -47,6 +49,8 @@ public:
     InterpretationXmlExport();
 
     QString toXml(Interpretation *interpretation);
+    QString stepToString(int step);
+    QString toStringValidation(ValidationStatus::ValidationStatusType status);
 
 protected:
 
@@ -54,11 +58,12 @@ protected:
     bool save(InterpretationRequest *request);
     bool save(ezechiel::core::DrugResponseAnalysis *drugResponseAnalysis);
     bool save(ezechiel::core::DrugTreatment *drugResponseAnalysis);
-    bool save(Practician *analyst);
+    bool save(Practician *practician, QString name);
     bool save(ValidationStatus *validationStatus);
     bool save(Patient *patient);
-    bool save(Person *person);
+    bool save(Person *person, QString name);
     bool save(ClinicalSet *clinicals);
+    bool save(PhoneList *list);
 
 
     QString writeDate(QDateTime date);

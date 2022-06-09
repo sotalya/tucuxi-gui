@@ -7,7 +7,6 @@
 // Purpose          :
 // ...              :   ...
 
-
 #include <QQuickWindow>
 
 #include <QTest>

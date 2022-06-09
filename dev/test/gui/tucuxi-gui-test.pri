@@ -15,6 +15,7 @@ SOURCES += $$PWD/src/guitest.cpp \
     $$PWD/src/savedtestcomparison.cpp \
     $$PWD/src/stresstest.cpp \
     $$PWD/src/targettest.cpp \
+    $$PWD/src/validationloadfile.cpp \
     $$PWD/src/validationtest.cpp
 
 LIBS += -lgtest

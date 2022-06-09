@@ -97,9 +97,9 @@ TEST(DaylightSavingTest, Test1)
     {
         while (pIndex < 100000 && !(fPoints->at(pIndex)->getValue() <= fPoints->at(pIndex-1)->getValue() and fPoints->at(pIndex)->getValue() < fPoints->at(pIndex+1)->getValue()))
         {   // uncomment to print full point data
-            //            std::cout << "Point index : " << pIndex << "\t value : " << fPoints->at(pIndex)->getValue();
-            //            fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(pIndex)->getTime()*1000));
-            //            std::cout << "\t||\t date : " << fDateMin.toString("yyyy/MM/dd hh:mm.ss").toStdString() << std::endl;
+//                        std::cout << "Point index : " << pIndex << "\t value : " << fPoints->at(pIndex)->getValue();
+//                        fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(pIndex)->getTime()*1000));
+//                        std::cout << "\t||\t date : " << fDateMin.toString("yyyy/MM/dd hh:mm.ss").toStdString() << std::endl;
             pIndex++;
         }
         fValueMin = fPoints->at(pIndex)->getValue();

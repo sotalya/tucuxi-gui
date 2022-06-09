@@ -297,7 +297,7 @@ InterpretationRequest *InterpretationXmlImport::loadRequest(const QString &tagNa
             if (name == "clinicals") {
                 request->setClinicals(loadClinicals("clinicals", request));
             }
-            if(name == "physician"){
+            if (name == "physician"){
                 request->setPractician(loadPractician("physician", request));
             }
         }
@@ -374,7 +374,7 @@ Practician *InterpretationXmlImport::loadPractician(const QString &tagName, QObj
 
 ValidationStatus::ValidationStatusType statusFromString(const QString &status)
 {
-    if (status == "validate")
+    if (status == "validated")
         return ValidationStatus::Validated;
     if (status == "unvalidated")
         return ValidationStatus::UnValidated;
@@ -410,7 +410,6 @@ StepType::Enum validationStepFromString(const QString &step)
 
 ValidationStatus *InterpretationXmlImport::loadValidationStatus(const QString &tagName, QObject *parent)
 {
-
     ValidationStatus *validationStatus = ezechiel::core::CoreFactory::createEntity<ValidationStatus>(ADMINREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
@@ -433,7 +432,6 @@ ValidationStatus *InterpretationXmlImport::loadValidationStatus(const QString &t
             }
         }
     }
-
     return validationStatus;
 }
 

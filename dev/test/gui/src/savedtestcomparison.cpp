@@ -116,20 +116,24 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;            // modelIndex : 0  = only model available
         srv->selectDrugInList(drugIndex, modelIndex);
 
+        dosageData.dosage = 225000;
         srv->addDosage(dosageData);
 
+        covariatesData.scc = 7660;
         for(int covariateType = 0; covariateType <= 3; covariateType++)
         {
             if (!(covariateType == 1 || covariateType == 2))
                 srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
         }
 
+        measureData.value = 290;
         srv->addMeasure(measureData);
 
-        measureData.name = "Sample_test";
-        measureData.value = 3654;
-        measureData.dateTimeMeas = QDateTime(QDate(2022, 05, 10));
-        srv->addMeasure(measureData);
+        targetData.cMinInput  = 30000;
+        targetData.cBestInput = 45000;
+        targetData.cMaxInput  = 60000;
+        srv->removeFromList("target", 0);
+        srv->waitPeriod(waitTimeLong);
 
         srv->addTarget(targetData);
 
@@ -341,16 +345,16 @@ TEST(SavedTestComparison, Test1)
 
     // SAVING interpretation in Xml file
 
-    QString saveName =  "scenario" + QString::number(scenario);       //"/Documents/tucuxi-gui/dev/build-tucuxi-Desktop-DebugGui/dist/
+    QString saveName = "scenario" + QString::number(scenario);       //"/Documents/tucuxi-gui/dev/build-tucuxi-Desktop-DebugGui/dist/
 
     Interpretation *interpretationSave = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
 
     mapSave = srv->fillMapWithInterpretation(interpretationSave);
-    QMapIterator<QString, QString> iSave(mapSave);
-    while (iSave.hasNext()) {
-        iSave.next();
-        qInfo() << "key =" << iSave.key() << "value =" << iSave.value();
-    }
+//    QMapIterator<QString, QString> iSave(mapSave);
+//    while (iSave.hasNext()) {
+//        iSave.next();
+//        qInfo() << "key =" << iSave.key() << "value =" << iSave.value();
+//    }
 
     srv->saveIntepretation(saveName);
     qInfo() << "Saved";
@@ -378,17 +382,14 @@ TEST(SavedTestComparison, Test1)
     srv->loadInterpretation(loadName);
     qInfo() << "loaded";
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/patientButton"));
-    srv->waitPeriod(waitTime1);
-
     Interpretation *interpretationLoad = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
 
     mapLoad = srv->fillMapWithInterpretation(interpretationLoad);
-    QMapIterator<QString, QString> iLoad(mapLoad);
-    while (iLoad.hasNext()) {
-        iLoad.next();
-        qInfo() << "key =" << iLoad.key() << "value =" << iLoad.value();
-    }
+//    QMapIterator<QString, QString> iLoad(mapLoad);
+//    while (iLoad.hasNext()) {
+//        iLoad.next();
+//        qInfo() << "key =" << iLoad.key() << "value =" << iLoad.value();
+//    }
 
     if (mapSave == mapLoad)
         qInfo("Les interprétations sont égales");
@@ -400,12 +401,12 @@ TEST(SavedTestComparison, Test1)
             iSave.next();
             iLoad.next();
             if (iSave.value() != iLoad.value())
-                qInfo() << "La clé qui n'est égale est : " << iSave.key();
+                qInfo() << "La clé qui n'est égale est : " << iSave.key() << "/ Valeur mapSave :" << iSave.value()<< "/ Valeur mapLoad :" << iLoad.value();
         }
     }
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
-    srv->waitPeriod(waitTimeLong*100);
+    srv->waitPeriod(waitTimeLong);
     std::cout << "End of program ..." << std::endl;
 }

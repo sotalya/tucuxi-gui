@@ -36,26 +36,33 @@
 #include "core/corefactory.h"
 #include "core/core.h"
 
-//include test
-#include "admin/src/dal/practician.h"
-#include "admin/src/dal/interpretationrequest.h"
-
 extern SpixGTest* srv;
 
 TEST(ValidationLoadFile, Test1)
 {
     int waitTime1       = 4;
-    int waitTimeLong    = 30;
+    int waitTimeLong    = 120;
 
     // LOADING interpretation from Xml file
 
-    QString loadName = "scenario8"; // "save_1.tui";
+    QString loadName = "scenario2"; // "save_1.tui";
 
     srv->loadInterpretation(loadName);
 
-    srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/patientButton"));
-    srv->waitPeriod(waitTime1);
+    InterpretationXmlExport *interpretationXmlExport;
+    Interpretation *interpretationLoad = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
+
+    QString status = interpretationXmlExport->toStringValidation(interpretationLoad->getValidationStatus()->getValidationStatus(StepType::Validation));
+
+//    if (status == "validated")
+//    {
+//        srv->synchronize();
+//        srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+//        srv->waitPeriod(waitTime1);
+//        srv->synchronize();
+//        srv->waitForSync();
+//        srv->validateInterpretation();
+//    }
 
 //--------------------------------------------------
     srv->waitPeriod(waitTime1);

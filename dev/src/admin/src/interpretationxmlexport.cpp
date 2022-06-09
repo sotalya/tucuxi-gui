@@ -79,8 +79,7 @@ QString InterpretationXmlExport::toXml(Interpretation *interpretation)
     writer.writeTextElement("interpretationType", interpretationTypeToString(interpretation->getInterpretationType()));
 
     ok &= save(interpretation->getAnalysis());
-//    if (interpretation->getInterpretationType() == Interpretation::InterpretationType::FromRequest)
-        ok &= save(interpretation->getRequest());
+    ok &= save(interpretation->getRequest());
     ok &= save(interpretation->getDrugResponseAnalysis());
     ok &= save(interpretation->getAnalyst(), "analyst");
     ok &= save(interpretation->getValidationStatus());
@@ -201,7 +200,7 @@ bool InterpretationXmlExport::save(Practician *practician, QString name)
     writer.writeTextElement("personId", QString::number(practician->person_id()));
     writer.writeTextElement("externalId", practician->externalId());
     writer.writeTextElement("title", practician->title());
-    if(name == "analyst")
+    if (name == "analyst")
         writer.writeTextElement("role", practician->role());
     writer.writeTextElement("address", practician->institute()->location()->address());
     writer.writeTextElement("affilition", practician->institute()->name());
@@ -336,7 +335,7 @@ bool InterpretationXmlExport::save(Person *person, QString name)
     writer.writeStartElement("person");
     writer.writeTextElement("name", person->name());
     writer.writeTextElement("firstname", person->firstname());
-    if(name == "patient"){
+    if (name == "patient"){
         writer.writeTextElement("birthday", person->birthday().toString(Qt::ISODate));
         writer.writeTextElement("gender", (person->gender() == Person::Male) ? "male" : "female");
         writer.writeTextElement("address", person->location()->address());
@@ -345,7 +344,7 @@ bool InterpretationXmlExport::save(Person *person, QString name)
     writer.writeTextElement("postcode", person->location()->postcode());
     writer.writeTextElement("state", person->location()->state());
     writer.writeTextElement("country", person->location()->country());
-    if(name == "analyst")
+    if (name == "analyst")
         save(person->getPhones());
     writer.writeEndElement(); // patient
     return true;
@@ -502,7 +501,7 @@ bool InterpretationXmlExport::save(ezechiel::core::PatientVariateList *list)
         writer.writeTextElement("name", variate->getCovariateId());
         writer.writeTextElement("date", writeDate(variate->getDate()));
         writer.writeTextElement("valueAsString", variate->getValueAsString());
-        if(variate->getCovariateId() != "birthdate")
+        if (variate->getCovariateId() != "birthdate")
             saveOperableAmount("quantity", variate->getQuantity());
         writer.writeTextElement("type", QMetaType::typeName(variate->getType()));
         writer.writeTextElement("forced", variate->getForced() ? "true" : "false");

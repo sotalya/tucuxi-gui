@@ -11,7 +11,7 @@ class QQuickWindow;
 struct PatientData {
     QString firstName       = "Joan";
     QString lastName        = "Of Arc";
-    QDate birthDate         = QDate(1934, 11, 10);
+    QDate birthDate         = QDate(1960, 11, 10);
     int gender              = 0;                    // gender : 1 = male, 0 = female
     QString identifier      = "Patient_0";
     QString stayNumber      = "Private Drive 4";
@@ -161,7 +161,6 @@ public:
     void editCovariates(struct CovariatesData, int covariateType, int editIndex);
     void fillInCovariatesData(struct CovariatesData, int covariateType);
 
-    //MCI
     void addCovariatesByDrug(CovariatesData covariatesData1, int covariateType, int drugIndex);
     void fillInCovariatesDataByDrug(struct CovariatesData, int covariateType, int drugIndex);
 

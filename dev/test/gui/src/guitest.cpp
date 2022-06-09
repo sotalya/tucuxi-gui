@@ -16,7 +16,6 @@
 #include "guiutils/src/controllers/adjustmenttabcontroller.h"
 #include "admin/src/dal/interpretation.h"
 
-//MCI include test
 #include "admin/src/dal/interpretationanalysis.h"
 #include "core/dal/drugresponseanalysis.h"
 #include "core/dal/drugtreatment.h"

@@ -6,7 +6,7 @@
 #include "core/utils/logging.h"
 
 namespace ezechiel {
-namespace admin {
+namespace GuiAdmin {
     EZERROR(ADMIN, NOEZERROR,"There is no error.")
 }//namespace cli
 }//namespace ezechiel

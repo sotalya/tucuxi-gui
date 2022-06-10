@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 
 void initResources()
 {
-    ezechiel::GuiCore::Core::setInstance(new ezechiel::apputils::AppCore());
+    ezechiel::GuiCore::Core::setInstance(new ezechiel::GuiAppUtils::AppCore());
 
     CORE->setProcessingInterface(ProcessingFactory::createProcessing());
     APPCORE->drugManager();

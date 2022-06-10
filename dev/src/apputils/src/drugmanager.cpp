@@ -35,7 +35,7 @@
 using namespace ezechiel::GuiCore;
 
 namespace ezechiel {
-namespace apputils {
+namespace GuiAppUtils {
 
 //Constructor
 DrugManager::DrugManager()
@@ -519,5 +519,5 @@ void DrugManager::clearErrorMessage()
     _error = "";
 }
 
-} //namespace apputils
+} //namespace GuiAppUtils
 } //namespace ezechiel

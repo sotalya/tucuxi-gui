@@ -302,7 +302,7 @@ private:
     User _user;
 
     //The en/decryption utility class
-    ezechiel::apputils::DataCrypter _crypter;
+    ezechiel::GuiAppUtils::DataCrypter _crypter;
 };
 
 }//namespace core

@@ -95,7 +95,7 @@ TEST(TargetTest, Test1)
     EXPECT_EQ(targets->size(), 2);
 
     auto target2 = targets->at(1);
-    EXPECT_EQ(target2->getType()->getTargetType(), ezechiel::core::TargetMethod::MeanTarget);
+    EXPECT_EQ(target2->getType()->getTargetType(), ezechiel::GuiCore::TargetMethod::MeanTarget);
 
     EXPECT_EQ(target2->getType()->getValue(), 2);
 

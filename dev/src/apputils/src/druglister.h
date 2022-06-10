@@ -45,7 +45,7 @@ namespace ezechiel {
 
 
 namespace ezechiel {
-namespace apputils {
+namespace GuiAppUtils {
 
 class DrugLister
 {
@@ -163,6 +163,6 @@ private:
     QMap<QString, const ezechiel::GuiCore::DrugXmlDescriptor *> _drugs;
 };
 
-} //namespace apputils
+} //namespace GuiAppUtils
 } //namespace ezechiel
 #endif // DRUGLISTER_H

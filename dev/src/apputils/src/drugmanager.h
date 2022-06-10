@@ -51,7 +51,7 @@ namespace GuiCore {
     class DrugModel;
 }
 
-namespace apputils {
+namespace GuiAppUtils {
 class DrugManager
 {
     Q_DECLARE_TR_FUNCTIONS(DrugManager)
@@ -259,7 +259,7 @@ private:
     QString _error;
 
     //The drug lister
-    ezechiel::apputils::DrugLister _lister;
+    ezechiel::GuiAppUtils::DrugLister _lister;
 
     //The map of <Drug ID, Drug domain>
     QMap<QString, QString> _drugIdToDrugDomain;
@@ -293,6 +293,6 @@ private:
 
 };
 
-} //namespace apputils
+} //namespace GuiAppUtils
 } //namespace ezechiel
 #endif // DRUGMANAGER_H

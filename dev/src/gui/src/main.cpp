@@ -460,7 +460,7 @@ int main(int argc, char *argv[])
 //    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Report.");
 
     // Let's create CORE, to modify paths from the options
-    ezechiel::GuiCore::Core::setInstance(new ezechiel::apputils::AppCore());
+    ezechiel::GuiCore::Core::setInstance(new ezechiel::GuiAppUtils::AppCore());
     parseOptions();
     EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Options.");
     initResources();
@@ -655,7 +655,7 @@ void parseOptions()
 void initResources()
 {
 //    We do this in main to be able to access Core in parsing
-//    ezechiel::GuiCore::Core::setInstance(new ezechiel::apputils::AppCore());
+//    ezechiel::GuiCore::Core::setInstance(new ezechiel::GuiAppUtils::AppCore());
 
     CORE->setProcessingInterface(ProcessingFactory::createProcessing());
     APPCORE->drugManager();

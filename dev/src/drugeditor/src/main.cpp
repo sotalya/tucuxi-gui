@@ -225,7 +225,7 @@ void parseOptions()
 
 void initResources()
 {
-    ezechiel::GuiCore::Core::setInstance(new ezechiel::apputils::AppCore());
+    ezechiel::GuiCore::Core::setInstance(new ezechiel::GuiAppUtils::AppCore());
 
 //    CORE->setProcessingInterface(new ProcessingMath());
     APPCORE->drugManager();

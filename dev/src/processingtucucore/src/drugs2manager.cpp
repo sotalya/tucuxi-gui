@@ -92,7 +92,7 @@ Tucuxi::Core::DrugModel* Drugs2Manager::scanDrug(const QString & fileName)
 //Scans a directory recursively
 void Drugs2Manager::scanDirectory(const QDir &directory)
 {
-//    LOG(QtDebugMsg, ezechiel::apputils::NOEZERROR, tr("Scanning directory '%1'").arg(directory.absolutePath()));
+//    LOG(QtDebugMsg, ezechiel::GuiAppUtils::NOEZERROR, tr("Scanning directory '%1'").arg(directory.absolutePath()));
 
     //For each files in the directory
     foreach (QFileInfo entry, directory.entryInfoList(QDir::Files)) {

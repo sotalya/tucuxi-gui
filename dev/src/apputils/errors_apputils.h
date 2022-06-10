@@ -4,7 +4,7 @@
 #include "core/utils/logging.h"
 
 namespace ezechiel {
-namespace apputils {
+namespace GuiAppUtils {
     EZERROR(APPUTILS, NOEZERROR,"There is no error.")
     EZERROR(APPUTILS, NORIGHTS,"Lack of permission.")
     EZERROR(APPUTILS, ENCRYPTIONFAILED,"Could not encrypt.")
@@ -28,7 +28,7 @@ namespace apputils {
     EZERROR(APPUTILS, DATAERRMODEL,"The model doesn't match any known model")
     EZERROR(APPUTILS, DATAERRPARAM,"The parameter ID '%1' is required by the model but not defined in the drug")
     EZERROR(APPUTILS, SCRIPTERR,"A parameter script can not be evaluated")
-}//namespace apputils
+}//namespace GuiAppUtils
 }//namespace ezechiel
 
 #endif // APPUTILSERRORS

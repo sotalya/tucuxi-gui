@@ -16,7 +16,7 @@
 using namespace Botan;
 
 namespace ezechiel {
-namespace apputils {
+namespace GuiAppUtils {
 class DataCrypter : public QObject
 {
     Q_OBJECT
@@ -97,6 +97,6 @@ private:
     Botan::SymmetricKey masterKey;
 };
 
-}//namespace apputils
+}//namespace GuiAppUtils
 }//namespace ezechiel
 #endif // DATACRYPTER_H

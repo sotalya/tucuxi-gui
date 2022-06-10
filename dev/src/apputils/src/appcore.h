@@ -55,12 +55,12 @@ namespace GuiCore {
 
 
 //------------- Shortcuts for objects ----------------
-#define APPCORE (static_cast<ezechiel::apputils::AppCore *>(ezechiel::GuiCore::Core::instance()))
-#define SECURITY (static_cast<ezechiel::apputils::AppCore *>(ezechiel::GuiCore::Core::instance())->securityManager())
+#define APPCORE (static_cast<ezechiel::GuiAppUtils::AppCore *>(ezechiel::GuiCore::Core::instance()))
+#define SECURITY (static_cast<ezechiel::GuiAppUtils::AppCore *>(ezechiel::GuiCore::Core::instance())->securityManager())
 
 
 namespace ezechiel {
-namespace apputils {
+namespace GuiAppUtils {
 class DrugManager;
 
 //! \brief Core main object
@@ -102,7 +102,7 @@ private:
     ezechiel::GuiCore::SecurityManager *_securityManager;
 
 };
-} //namespace apputils
+} //namespace GuiAppUtils
 } //namespace ezechiel
 
 class ezechiel::GuiCore::ThreadDrugLoader : public QThread
@@ -110,7 +110,7 @@ class ezechiel::GuiCore::ThreadDrugLoader : public QThread
     Q_OBJECT
 public:
 
-    ezechiel::apputils::AppCore *core;
+    ezechiel::GuiAppUtils::AppCore *core;
 
     void run();
 };

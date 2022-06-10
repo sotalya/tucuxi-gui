@@ -26,7 +26,7 @@
 #endif
 
 namespace ezechiel {
-namespace apputils {
+namespace GuiAppUtils {
 ezechiel::GuiCore::SecurityManager *AppCore::securityManager()
 {
     if (!_securityManager)
@@ -88,7 +88,7 @@ void AppCore::preloadDrugs ()
     drugPreloadMutex->unlock();
 }
 
-} //namespace apputils
+} //namespace GuiAppUtils
 } //namespace ezechiel
 
 void ezechiel::GuiCore::ThreadDrugLoader::run() {

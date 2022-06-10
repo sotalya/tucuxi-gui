@@ -17,7 +17,7 @@
 using namespace ezechiel::GuiCore;
 
 namespace ezechiel {
-namespace apputils {
+namespace GuiAppUtils {
 
 //The error messages
 const char *const DrugLister::_DIRECTORY_UNREADABLE = QT_TR_NOOP_UTF8("The directory '%1' is unreadable");
@@ -341,5 +341,5 @@ void DrugLister::resetDrugs()
     _drugs.clear();
 }
 
-} //namespace apputils
+} //namespace GuiAppUtils
 } //namespace ezechiel

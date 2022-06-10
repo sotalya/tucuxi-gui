@@ -12,7 +12,9 @@
 #include "core/utils/ezutils.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class UncastedValueList;
 
@@ -179,12 +181,13 @@ private:
     QDateTime _firsttake;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Dosage*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Dosage*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::DosageHistory*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Dosage*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Dosage*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::DosageHistory*)
 //Q_DECLARE_METATYPE(QList<QObject*>)
 
 #endif // DOSAGE_H

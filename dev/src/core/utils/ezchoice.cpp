@@ -8,7 +8,9 @@
 #include "core/errors_core.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 EzChoice::EzChoice(QObject *parent) :
@@ -124,6 +126,7 @@ void EzChoice::clear()
    emit changed();
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

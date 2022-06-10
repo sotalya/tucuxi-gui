@@ -12,7 +12,9 @@
 #include "core/dal/drug/target.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 /**
  * @brief The TargetEvaluationResult class
@@ -71,11 +73,12 @@ public:
 QML_POINTERLIST_CLASS_DECL(Adjustments, Adjustment)
 }
 }
+}
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::TargetEvaluationResult*)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::TargetEvaluationResults*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::TargetEvaluationResult*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::TargetEvaluationResults*)
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Adjustment*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Adjustment*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Adjustments*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Adjustment*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Adjustment*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Adjustments*)
 #endif // ADJUSTMENT_H

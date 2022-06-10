@@ -300,9 +300,9 @@ bool UserAction::encryptDatabase(QStringList &args, bool encrypt)
     }
 
     //Encrypt the whole database
-    Tucuxi::GuiCore::Response response;
+    Tucuxi::Gui::Core::Response response;
 
-    if ((response = APPUTILSREPO->encryptDatabase(encrypt)).error != Tucuxi::GuiCore::NoError) {
+    if ((response = APPUTILSREPO->encryptDatabase(encrypt)).error != Tucuxi::Gui::Core::NoError) {
         _errors = tr("An error occured while %1 the database.\n\n%2").arg(encrypt ? tr("encrypting") : tr("decrypting"), response.message);
         return false;
     }

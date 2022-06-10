@@ -4,11 +4,14 @@
 #define DATABASE_H
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
     enum DATABASEENGINE {
         SQLITE3,
         MYSQL
     };
+}
 }
 }
 

@@ -3,10 +3,12 @@
 #include "core/dal/uncastedvalue.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
-Q_INVOKABLE UncastedValue::UncastedValue(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent)
+
+Q_INVOKABLE UncastedValue::UncastedValue(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent)
     : Entity(repository, parent), _field(""), _text(""), _comment(""), _status(UncastedStatus::Uncasted), _validated(false)
 {
 
@@ -27,5 +29,6 @@ AUTO_PROPERTY_IMPL(UncastedValue, bool, validated, Validated)
 QML_POINTERLIST_CLASS_IMPL(UncastedValueList, UncastedValue)
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

@@ -7,7 +7,8 @@
 //#include "dal/genericdbobjects.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
 /** \ingroup security
@@ -110,9 +111,10 @@ private:
 //    Level _authorization;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::GenericUser*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::GenericUser*)
 
 #endif // GENERICUSER_H

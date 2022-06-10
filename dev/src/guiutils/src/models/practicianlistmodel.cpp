@@ -155,7 +155,7 @@ void PracticianListModel::setDataImpl(const QModelIndex &index, const QVariant &
     emit updateStatus();
 }
 
-void PracticianListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities)
+void PracticianListModel::insertRowsImpl(int at, int count, const Tucuxi::Gui::Core::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
@@ -171,12 +171,12 @@ void PracticianListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCor
     emit updateStatus();
 }
 
-Tucuxi::GuiCore::SharedEntitySet PracticianListModel::removeRowsImpl(int at, int count)
+Tucuxi::Gui::Core::SharedEntitySet PracticianListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    Tucuxi::GuiCore::SharedEntitySet removed;
+    Tucuxi::Gui::Core::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _practicians->takeAt(at);
 

@@ -45,8 +45,11 @@
 #include "core/core.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
     class SecurityManager;
+}
 }
 }
 
@@ -55,8 +58,8 @@ namespace GuiCore {
 
 
 //------------- Shortcuts for objects ----------------
-#define APPCORE (static_cast<Tucuxi::GuiAppUtils::AppCore *>(Tucuxi::GuiCore::Core::instance()))
-#define SECURITY (static_cast<Tucuxi::GuiAppUtils::AppCore *>(Tucuxi::GuiCore::Core::instance())->securityManager())
+#define APPCORE (static_cast<Tucuxi::GuiAppUtils::AppCore *>(Tucuxi::Gui::Core::Core::instance()))
+#define SECURITY (static_cast<Tucuxi::GuiAppUtils::AppCore *>(Tucuxi::Gui::Core::Core::instance())->securityManager())
 
 
 namespace Tucuxi {
@@ -70,17 +73,17 @@ class DrugManager;
    The difference between a normal singleton is that an instance of core can be given, thus enabling a library to load the main core and then use it
   */
 
-class AppCore : public Tucuxi::GuiCore::Core
+class AppCore : public Tucuxi::Gui::Core::Core
 {
 public:
 
     //! Get the security manager.
-    Tucuxi::GuiCore::SecurityManager *securityManager();
+    Tucuxi::Gui::Core::SecurityManager *securityManager();
 
     //Constructor
     AppCore();
 
-    Tucuxi::GuiCore::ThreadDrugLoader *drugloader;
+    Tucuxi::Gui::Core::ThreadDrugLoader *drugloader;
 
     void preloadDrugs ();
     void createDrugManager ();
@@ -99,13 +102,13 @@ private:
     ~AppCore();
 
     //The pseudo-singletons
-    Tucuxi::GuiCore::SecurityManager *_securityManager;
+    Tucuxi::Gui::Core::SecurityManager *_securityManager;
 
 };
 } //namespace GuiAppUtils
 } //namespace Tucuxi
 
-class Tucuxi::GuiCore::ThreadDrugLoader : public QThread
+class Tucuxi::Gui::Core::ThreadDrugLoader : public QThread
 {
     Q_OBJECT
 public:

@@ -15,11 +15,14 @@ namespace Tucuxi {
         class PredictionCalculator;
         class TargetEvaluator;
     }
-    namespace GuiCore {
+    namespace Gui {
+    namespace Core {
+
         class ValidDose;
         class ValidDoses;
         class ValidInterval;
         class ValidInfusion;
+    }
     }
 }
 
@@ -39,41 +42,41 @@ namespace Tucuxi {
  * calculateAposterioriPercentiles is the aposteriori percentiles.
  * @see processinginterface.h
 */
-class ProcessingTucucore : public Tucuxi::GuiCore::ProcessingInterface
+class ProcessingTucucore : public Tucuxi::Gui::Core::ProcessingInterface
 {
 public:
     ProcessingTucucore();
     virtual ~ProcessingTucucore();
 
-    virtual Tucuxi::ProcessingResult points(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-                       const Tucuxi::GuiCore::PointsTraits traits,
-                       Tucuxi::GuiCore::PredictionResult &prediction);
+    virtual Tucuxi::ProcessingResult points(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+                       const Tucuxi::Gui::Core::PointsTraits traits,
+                       Tucuxi::Gui::Core::PredictionResult &prediction);
 
-    virtual Tucuxi::ProcessingResult point(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-                      const Tucuxi::GuiCore::PointTraits traits,
-                      Tucuxi::GuiCore::Amount &amount,
-                      Tucuxi::GuiCore::PredictionResult &prediction);
+    virtual Tucuxi::ProcessingResult point(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+                      const Tucuxi::Gui::Core::PointTraits traits,
+                      Tucuxi::Gui::Core::Amount &amount,
+                      Tucuxi::Gui::Core::PredictionResult &prediction);
 
-    virtual Tucuxi::ProcessingResult percentiles(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-                            const Tucuxi::GuiCore::PercentilesTraits traits,
-                            Tucuxi::GuiCore::PredictionResult &prediction,
+    virtual Tucuxi::ProcessingResult percentiles(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+                            const Tucuxi::Gui::Core::PercentilesTraits traits,
+                            Tucuxi::Gui::Core::PredictionResult &prediction,
                             Tucuxi::math::ProcessingAborter *aborter);
 
-    virtual Tucuxi::ProcessingResult calculateAposterioriPercentiles(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-                               const Tucuxi::GuiCore::PercentilesTraits traits,
-                               Tucuxi::GuiCore::PredictionResult &prediction,
+    virtual Tucuxi::ProcessingResult calculateAposterioriPercentiles(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+                               const Tucuxi::Gui::Core::PercentilesTraits traits,
+                               Tucuxi::Gui::Core::PredictionResult &prediction,
                                Tucuxi::math::ProcessingAborter *aborter);
 
-    virtual Tucuxi::ProcessingResult computeSuggestedAdjustments(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-                                            const Tucuxi::GuiCore::ReverseTraits spec,
-                                            Tucuxi::GuiCore::PredictionResult &prediction);
+    virtual Tucuxi::ProcessingResult computeSuggestedAdjustments(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+                                            const Tucuxi::Gui::Core::ReverseTraits spec,
+                                            Tucuxi::Gui::Core::PredictionResult &prediction);
 
 protected:
 
 
-    virtual Tucuxi::ProcessingResult generalCalculatePercentiles(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-                               const Tucuxi::GuiCore::PercentilesTraits traits,
-                               Tucuxi::GuiCore::PredictionResult &pred,
+    virtual Tucuxi::ProcessingResult generalCalculatePercentiles(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+                               const Tucuxi::Gui::Core::PercentilesTraits traits,
+                               Tucuxi::Gui::Core::PredictionResult &pred,
                                Tucuxi::math::ProcessingAborter *aborter);
 
     int m_requestID;

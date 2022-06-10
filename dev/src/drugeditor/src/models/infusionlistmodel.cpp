@@ -72,7 +72,7 @@ int InfusionListModel::rowCount(const QModelIndex &parent) const
         return 0;
 }
 
-void InfusionListModel::setModelData( Tucuxi::GuiCore::ValidInfusions *infusions)
+void InfusionListModel::setModelData( Tucuxi::Gui::Core::ValidInfusions *infusions)
 {
     beginResetModel();
     _infusions = infusions;
@@ -80,7 +80,7 @@ void InfusionListModel::setModelData( Tucuxi::GuiCore::ValidInfusions *infusions
 
 }
 
-void InfusionListModel::setModelData(Tucuxi::GuiCore::DrugModel *drug)
+void InfusionListModel::setModelData(Tucuxi::Gui::Core::DrugModel *drug)
 {
     Q_ASSERT(drug);
 
@@ -91,9 +91,9 @@ void InfusionListModel::setModelData(Tucuxi::GuiCore::DrugModel *drug)
 
 //void DoseListModel::setDataImpl(const QModelIndex &index, const QVariant &value, int role){    Q_ASSERT(index.isValid());    Q_ASSERT(value.isValid());    Q_ASSERT(_roleNames.contains(role));    int row = index.row();    Q_ASSERT(row < rowCount());}
 
-//void DoseListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities){}
+//void DoseListModel::insertRowsImpl(int at, int count, const Tucuxi::Gui::Core::SharedEntitySet &entities){}
 
-//Tucuxi::GuiCore::SharedEntitySet DoseListModel::removeRowsImpl(int at, int count){Q_ASSERT(at >= 0 && at + count <= rowCount());Q_ASSERT(count > 0);}
+//Tucuxi::Gui::Core::SharedEntitySet DoseListModel::removeRowsImpl(int at, int count){Q_ASSERT(at >= 0 && at + count <= rowCount());Q_ASSERT(count > 0);}
 
 void InfusionListModel::init()
 {

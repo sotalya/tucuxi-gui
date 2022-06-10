@@ -9,7 +9,9 @@
 #include "core/dal/drug/translatablestring.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class Editor : public Entity
 {
@@ -49,12 +51,13 @@ class EditorSet : public QList<Editor*>
 };
 */
 QML_POINTERLIST_CLASS_DECL(EditorList,Editor)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Editor*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Editor*>)
-// Q_DECLARE_METATYPE(Tucuxi::GuiCore::EditorSet*)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::EditorList*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Editor*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Editor*>)
+// Q_DECLARE_METATYPE(Tucuxi::Gui::Core::EditorSet*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::EditorList*)
 
 #endif // EDITOR_H

@@ -10,7 +10,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class Predictive : public Entity
 {
@@ -36,6 +38,7 @@ public slots:
 
 }
 }
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Predictive*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Predictive*>)
+}
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Predictive*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Predictive*>)
 #endif // PREDICTIVE_H

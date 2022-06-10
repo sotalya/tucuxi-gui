@@ -1,6 +1,6 @@
 #include "phone.h"
 
-Phone::Phone(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
+Phone::Phone(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _number(),
     _type(PhoneType::Professional)
@@ -8,7 +8,7 @@ Phone::Phone(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
     setId(-1);
 }
 
-Phone::Phone(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
+Phone::Phone(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent) :
     Entity(repository,id, parent),
     _number(),
     _type(PhoneType::Professional)

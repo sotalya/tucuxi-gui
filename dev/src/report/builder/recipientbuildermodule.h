@@ -7,7 +7,7 @@
 #include "institute.h"
 #include "reportbuildermodule.h"
 
-class RecipientBuilderModule : public Tucuxi::GuiCore::Entity, public ReportBuilderModule
+class RecipientBuilderModule : public Tucuxi::Gui::Core::Entity, public ReportBuilderModule
 {
     Q_OBJECT
     AUTO_PROPERTY_DECL(Practician*, practician, Practician)

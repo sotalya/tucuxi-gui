@@ -10,7 +10,9 @@
 #include <QMetaType>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //! Define a ID as in a database
@@ -397,7 +399,8 @@ struct DBCurve {
     QDateTime firsttake;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

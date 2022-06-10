@@ -3,7 +3,9 @@
 #include "core/dal/predictionspec.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(PredictionSpec, QDateTime, startDate, StartDate)
 AUTO_PROPERTY_IMPL(PredictionSpec, QDateTime, endDate, EndDate)
@@ -52,7 +54,8 @@ PredictionSpec::CalculationType PredictionSpec::stringToCalculationType(const QS
     return typeStringMap.key(string, CalculationType::Undefined);
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

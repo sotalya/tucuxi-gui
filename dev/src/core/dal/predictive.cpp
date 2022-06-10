@@ -3,7 +3,9 @@
 #include "predictive.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 Q_AUTO_PROPERTY_IMPL(Predictive, PredictionData*, predictionData, PredictionData)
 Q_AUTO_PROPERTY_IMPL(Predictive, PercentileDataList*, percentilePairs, PercentileDataList)
@@ -19,5 +21,6 @@ Predictive::Predictive(AbstractRepository *repository, QObject *parent)
 
 }
 
+}
 }
 }

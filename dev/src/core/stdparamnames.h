@@ -7,8 +7,8 @@
 
 
 namespace Tucuxi {
-namespace GuiCore {
-
+namespace Gui {
+namespace Core {
 
 
 
@@ -121,7 +121,8 @@ public:
     static QString getDescR();
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // STDPARAMNAMES_H

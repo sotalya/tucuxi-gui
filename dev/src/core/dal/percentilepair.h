@@ -9,7 +9,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class PercentileData : public Entity
 {
@@ -24,7 +26,8 @@ public:
 QML_POINTERLIST_CLASS_DECL(PercentileDataList, PercentileData)
 }
 }
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::PercentileData*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::PercentileData*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::PercentileDataList*)
+}
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PercentileData*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::PercentileData*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PercentileDataList*)
 #endif // PERCENTILEPAIR_H

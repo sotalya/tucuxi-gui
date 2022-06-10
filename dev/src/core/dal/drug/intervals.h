@@ -9,7 +9,8 @@
 #include "core/utils/duration.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
 class ValidInterval : public Entity
@@ -64,7 +65,7 @@ public:
         _quantity->setValue(defaultinterval);
         _quantity->setUnit(unit);
         foreach( double _i, intervals) {
-            ValidInterval* _vi = Tucuxi::GuiCore::CoreFactory::createEntity<ValidInterval>(repository);
+            ValidInterval* _vi = Tucuxi::Gui::Core::CoreFactory::createEntity<ValidInterval>(repository);
             _vi->getQuantity()->setUnit(Unit(unit.toString()));
             this->append(_vi);
         }
@@ -92,11 +93,12 @@ private:
 
 };
 QML_POINTERLIST_CLASS_DECL(IntervalList,ValidInterval)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ValidInterval*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ValidInterval*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ValidIntervals*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ValidInterval*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::ValidInterval*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ValidIntervals*)
 
 #endif // INTERVALS_H

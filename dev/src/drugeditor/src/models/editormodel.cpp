@@ -80,13 +80,13 @@ int EditorModel::rowCount(const QModelIndex &parent) const
 }
 
 
-void EditorModel::setModelData(Tucuxi::GuiCore::Editor *editor)
+void EditorModel::setModelData(Tucuxi::Gui::Core::Editor *editor)
 {
     beginResetModel();
     _editor = editor;
     endResetModel();
 }
-Tucuxi::GuiCore::Editor* EditorModel::getModelData()
+Tucuxi::Gui::Core::Editor* EditorModel::getModelData()
 {
     return _editor;
 }
@@ -113,7 +113,7 @@ void EditorModel::setDataImpl(const QModelIndex &index, const QVariant &value, i
         (_editor)->setDate(value.toDateTime());
         break;
 //    case CommentListRole:
-//        (_editor)->setCommentsTranslationMap(value.value<Tucuxi::GuiCore::QStringTranslation>());
+//        (_editor)->setCommentsTranslationMap(value.value<Tucuxi::Gui::Core::QStringTranslation>());
 //        break;
     default:
         Q_ASSERT(false);

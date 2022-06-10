@@ -18,7 +18,7 @@ public:
 
 
     Tucuxi::math::cxn_list_t data;
-    Tucuxi::GuiCore::DataSet dataset;
+    Tucuxi::Gui::Core::DataSet dataset;
 
 };
 

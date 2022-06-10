@@ -14,14 +14,14 @@ DrugTabController::DrugTabController(QObject *parent) : AbstractViewController(p
 }
 
 
-void DrugTabController::setDrugInfo(Tucuxi::GuiCore::ActiveSubstance *substance)
+void DrugTabController::setDrugInfo(Tucuxi::Gui::Core::ActiveSubstance *substance)
 {
     DrugToHtml translator;
     setDrugHtmlDescription(translator.activeSubstanceToHtml(substance));
 
 }
 
-void DrugTabController::setDrugModelInfo(Tucuxi::GuiCore::DrugModel *drugModel)
+void DrugTabController::setDrugModelInfo(Tucuxi::Gui::Core::DrugModel *drugModel)
 {
     DrugToHtml translator;
     setDrugHtmlDescription(translator.drugToHtml(drugModel));

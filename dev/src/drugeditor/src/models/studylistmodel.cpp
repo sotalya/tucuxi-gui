@@ -84,7 +84,7 @@ bool StudyListModel::removeRows(int row, int count, const QModelIndex &parent)
     return false;
 }
 
-void StudyListModel::setModelData(const QList<Tucuxi::GuiCore::Descriptor> &studies)
+void StudyListModel::setModelData(const QList<Tucuxi::Gui::Core::Descriptor> &studies)
 {
     beginResetModel();
     _studies = studies;

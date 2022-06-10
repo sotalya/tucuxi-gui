@@ -2,7 +2,7 @@
 #include "reportdata.h"
 #include "identifiers.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
 DosageBuilderModule::DosageBuilderModule(Dosage *dosage, QObject *parent) :
     _dosage(dosage)

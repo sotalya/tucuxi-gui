@@ -12,7 +12,7 @@
 #include "admin/src/adminfactory.h"
 #include "admin/src/stdadminrepository.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
 TargetModel::TargetModel(QObject *parent) :
     AbstractEntityModel(parent),
@@ -107,7 +107,7 @@ int TargetModel::rowCount(const QModelIndex &parent) const
     return !_target ? 0 : 1;
 }
 
-void TargetModel::setModelData(Tucuxi::GuiCore::Target* target)
+void TargetModel::setModelData(Tucuxi::Gui::Core::Target* target)
 {
     beginResetModel();
     _target = target;
@@ -126,16 +126,16 @@ void TargetModel::setDataImpl(const QModelIndex &index, const QVariant &value, i
     case TypeRole:
         switch (value.toInt()) {
         case 0:
-            _target->setType(Tucuxi::GuiCore::ResidualTarget);
+            _target->setType(Tucuxi::Gui::Core::ResidualTarget);
             break;
         case 1:
-            _target->setType(Tucuxi::GuiCore::PeakTarget);
+            _target->setType(Tucuxi::Gui::Core::PeakTarget);
             break;
         case 2:
-            _target->setType(Tucuxi::GuiCore::MeanTarget);
+            _target->setType(Tucuxi::Gui::Core::MeanTarget);
             break;
         default:
-            _target->setType(Tucuxi::GuiCore::UnknownTarget);
+            _target->setType(Tucuxi::Gui::Core::UnknownTarget);
             break;
         }
         break;

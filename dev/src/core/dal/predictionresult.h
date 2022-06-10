@@ -10,7 +10,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class PredictionResult : public Entity
 {
@@ -28,6 +30,7 @@ class PredictionResult : public Entity
 
 }
 }
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::PredictionResult*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::PredictionResult*>)
+}
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PredictionResult*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::PredictionResult*>)
 #endif // PREDICTIONRESULT_H

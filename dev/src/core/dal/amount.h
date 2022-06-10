@@ -6,7 +6,8 @@
 #include "core/utils/units.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
 class Amount /*: public QObject*/
@@ -76,9 +77,10 @@ protected:
     Unit _unit;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Amount)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Amount*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Amount)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Amount*>)
 #endif // AMOUNT_H

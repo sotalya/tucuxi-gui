@@ -6,7 +6,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class EditorList;
 class ReferenceList;
@@ -32,10 +34,11 @@ class MetaData : public Entity
 };
 
 
-} //namespace core
+} //namespace Core
+} // namespace Gui
 } //namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::MetaData*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::MetaData*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::MetaData*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::MetaData*>)
 
 #endif // METADATA_H

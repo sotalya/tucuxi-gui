@@ -8,7 +8,9 @@
 
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 /** \ingroup drugxmlfiles
  *  \brief The partial description of a drug XML file.
@@ -153,7 +155,8 @@ private:
     QString _description;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // DRUGXMLDESCRIPTOR_H

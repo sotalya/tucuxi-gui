@@ -9,7 +9,9 @@
 #define LEVELS 3
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 /** Handle the Tucuxi's version numbering.
@@ -98,7 +100,8 @@ private:
    int _versions[LEVELS];
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // VERSION_H

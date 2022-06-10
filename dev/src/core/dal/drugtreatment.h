@@ -9,7 +9,9 @@
 #include "core/utils/units.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class CorePatient;
 class ActiveSubstance;
@@ -81,9 +83,10 @@ private:
 
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::DrugTreatment*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::DrugTreatment*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::DrugTreatment*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::DrugTreatment*>)
 #endif // DRUGTREATMENT_H

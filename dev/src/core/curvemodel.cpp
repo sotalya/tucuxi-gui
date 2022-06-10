@@ -22,7 +22,8 @@
 #include <cmath>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
 #define PNA_MAX 100
@@ -3765,6 +3766,7 @@ void CurveModel::setSaved()
     _modified = false;
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

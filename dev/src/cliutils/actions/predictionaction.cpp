@@ -162,7 +162,7 @@ bool PredictionAction::run(const QStringList &iargs)
         return remove(id);
 
     //We need to fetch the curve
-    DrugResponseAnalysis* _resp = Tucuxi::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
+    DrugResponseAnalysis* _resp = Tucuxi::Gui::Core::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
     Response r = REPO->getDrugResponseAnalysisFromId(id, _resp);
     if (r.error != NoError) {
         LOG(QtFatalMsg, OBJECTNOTFOUND, tr("Drug response analysis not found from id %1").arg(id));
@@ -231,7 +231,7 @@ bool PredictionAction::create(const QStringList &args)
         return false;
     }
 
-    Prediction* _pred = Tucuxi::GuiCore::CoreFactory::createEntity<Prediction>(REPO);
+    Prediction* _pred = Tucuxi::Gui::Core::CoreFactory::createEntity<Prediction>(REPO);
 
     //Travel through the optional parameters
     QString pe,po,re;
@@ -256,7 +256,7 @@ bool PredictionAction::create(const QStringList &args)
     }
 
     SharedPatient _patient = AdminFactory::createEntity<Patient>(ADMINREPO);
-    Tucuxi::GuiCore::Response r = ADMINREPO->getPatientFromId(args.at(2).toInt(), _patient);
+    Tucuxi::Gui::Core::Response r = ADMINREPO->getPatientFromId(args.at(2).toInt(), _patient);
     if (r.error != NoError) {
         return false;
     }
@@ -300,7 +300,7 @@ bool PredictionAction::list()
 
     //Fetch the list
 //    if (!DATABASE->tryRequest(DB->getCurvesList(curves), tr("Error while loading the curve list"), _errors))
-    Tucuxi::GuiCore::Response r = REPO->getPredictionsList(curves);
+    Tucuxi::Gui::Core::Response r = REPO->getPredictionsList(curves);
     if (r.error != NoError && r.error != NotFound)
         return false;
 
@@ -573,10 +573,10 @@ bool PredictionAction::dosage(Prediction* curve, QStringList &args)
 bool PredictionAction::dosageList(Prediction* curve)
 {
     //Fetch it
-    DosageHistory* list = Tucuxi::GuiCore::CoreFactory::createEntity<DosageHistory>(REPO);
+    DosageHistory* list = Tucuxi::Gui::Core::CoreFactory::createEntity<DosageHistory>(REPO);
 //    if (! DATABASE->tryRequest(DB->getDosagesByDate(curve->id(),list),
 //                               tr("Error while retrieving the curve's dosage list from the database"), _errors) )
-    Tucuxi::GuiCore::Response r = REPO->getDosagesByDate(curve->id(),list);
+    Tucuxi::Gui::Core::Response r = REPO->getDosagesByDate(curve->id(),list);
     if (r.error != NoError && r.error != NotFound) {
         return false;
     }
@@ -604,7 +604,7 @@ bool PredictionAction::dosageAdd(Prediction* curve, QStringList &args)
     }
 
     //Create the dosage
-    Dosage* d = Tucuxi::GuiCore::CoreFactory::createEntity<Dosage>(REPO);
+    Dosage* d = Tucuxi::Gui::Core::CoreFactory::createEntity<Dosage>(REPO);
     // YTA commented this
     // d->prediction(curve);
 
@@ -666,7 +666,7 @@ bool PredictionAction::dosageSet(Prediction* curve, ident id, QStringList &args)
 //    if (! DATABASE->tryRequest(DB->getDosagesByDate(curve->id(),list),
 //                               tr("Error while retrieving the curve's dosage list from the database"), _errors) )
 //        return false;
-    Tucuxi::GuiCore::Response r = REPO->getDosagesByDate(curve->id(),list);
+    Tucuxi::Gui::Core::Response r = REPO->getDosagesByDate(curve->id(),list);
     if (r.error != NoError && r.error != NotFound) {
         return false;
     }
@@ -894,8 +894,8 @@ bool PredictionAction::points(Prediction* pred, QStringList &args)
 
     //The output string
 
-//    DosageHistory* _dosages = Tucuxi::GuiCore::CoreFactory::createEntity<DosageHistory>(REPO);
-//    Tucuxi::GuiCore::Response r = REPO->getDosagesByDate(pred->getTreatment()->getPatient()->id(), _dosages);
+//    DosageHistory* _dosages = Tucuxi::Gui::Core::CoreFactory::createEntity<DosageHistory>(REPO);
+//    Tucuxi::Gui::Core::Response r = REPO->getDosagesByDate(pred->getTreatment()->getPatient()->id(), _dosages);
 //    if (r.error != NoError && r.error != NotFound) {
 //        return false;
 //    }
@@ -1064,8 +1064,8 @@ bool PredictionAction::point(Prediction* pred, const QStringList &args)
 //        if ((type = parameterType(args.at(1))) == LAST_PT)
 //            return false;
 
-//    SharedDrugVariateSet _covs = Tucuxi::GuiCore::CoreFactory::createEntity<DrugVariateSet>(REPO);
-//    Tucuxi::GuiCore::Response r = REPO->getDrugVariatesByDate(pred->getTreatment()->drug()->id(), *_covs.data());
+//    SharedDrugVariateSet _covs = Tucuxi::Gui::Core::CoreFactory::createEntity<DrugVariateSet>(REPO);
+//    Tucuxi::Gui::Core::Response r = REPO->getDrugVariatesByDate(pred->getTreatment()->drug()->id(), *_covs.data());
 //    if (r.error != NoError && r.error != NotFound) {
 //        return false;
 //    }
@@ -1073,7 +1073,7 @@ bool PredictionAction::point(Prediction* pred, const QStringList &args)
 
     QString result;
 
-//    DosageHistory* _dosages = Tucuxi::GuiCore::CoreFactory::createEntity<DosageHistory>(REPO);
+//    DosageHistory* _dosages = Tucuxi::Gui::Core::CoreFactory::createEntity<DosageHistory>(REPO);
 //    Response r = REPO->getDosagesByDate(pred->getTreatment()->getPatient()->id(), _dosages);
 //    if (r.error != NoError && r.error != NotFound) {
 //        LOG(QtCriticalMsg, Tucuxi::cliutils::OBJECTNOTFOUND, "Error retreiving dosages.");

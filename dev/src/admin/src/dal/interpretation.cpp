@@ -8,15 +8,15 @@
 #include "admin/src/dal/validationstatus.h"
 #include "admin/src/dal/practician.h"
 
-Interpretation::Interpretation(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
+Interpretation::Interpretation(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent), _intepretationType(InterpretationType::Undefined)
 {
     setId(-1);
-    _request = Tucuxi::GuiCore::CoreFactory::createEntity<InterpretationRequest>(repository, this);
-    _analysis = Tucuxi::GuiCore::CoreFactory::createEntity<InterpretationAnalysis>(repository, this);
-    _drugResponseAnalysis = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugResponseAnalysis>(repository, this);
-    _analyst = Tucuxi::GuiCore::CoreFactory::createEntity<Practician>(repository, this);
-    _validationStatus = Tucuxi::GuiCore::CoreFactory::createEntity<ValidationStatus>(repository, this);
+    _request = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(repository, this);
+    _analysis = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationAnalysis>(repository, this);
+    _drugResponseAnalysis = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugResponseAnalysis>(repository, this);
+    _analyst = Tucuxi::Gui::Core::CoreFactory::createEntity<Practician>(repository, this);
+    _validationStatus = Tucuxi::Gui::Core::CoreFactory::createEntity<ValidationStatus>(repository, this);
     _selectedAdjustment = nullptr;
     _adjustmentDateIsSet = false;
     _adjustmentWithRestPeriod = false;
@@ -26,7 +26,7 @@ Interpretation::Interpretation(Tucuxi::GuiCore::AbstractRepository *repository, 
 AUTO_PROPERTY_IMPL(Interpretation, Interpretation::InterpretationType, intepretationType, InterpretationType)
 AUTO_PROPERTY_IMPL(Interpretation, InterpretationAnalysis*, analysis, Analysis)
 AUTO_PROPERTY_IMPL(Interpretation, InterpretationRequest*, request, Request)
-AUTO_PROPERTY_IMPL(Interpretation, Tucuxi::GuiCore::DrugResponseAnalysis*, drugResponseAnalysis, DrugResponseAnalysis)
+AUTO_PROPERTY_IMPL(Interpretation, Tucuxi::Gui::Core::DrugResponseAnalysis*, drugResponseAnalysis, DrugResponseAnalysis)
 
 AUTO_PROPERTY_IMPL(Interpretation, Practician*, analyst, Analyst)
 AUTO_PROPERTY_IMPL(Interpretation, ValidationStatus*, validationStatus, ValidationStatus)
@@ -36,7 +36,7 @@ AUTO_PROPERTY_IMPL(Interpretation, bool, adjustmentDateIsSet, AdjustmentDateIsSe
 AUTO_PROPERTY_IMPL(Interpretation, bool, adjustmentWithLoadingDose, AdjustmentWithLoadingDose)
 AUTO_PROPERTY_IMPL(Interpretation, bool, adjustmentWithRestPeriod, AdjustmentWithRestPeriod)
 AUTO_PROPERTY_IMPL(Interpretation, QDateTime, adjustmentDate, AdjustmentDate)
-AUTO_PROPERTY_IMPL(Interpretation, Tucuxi::GuiCore::AdjustmentDosage*, selectedAdjustment, SelectedAdjustment)
+AUTO_PROPERTY_IMPL(Interpretation, Tucuxi::Gui::Core::AdjustmentDosage*, selectedAdjustment, SelectedAdjustment)
 AUTO_PROPERTY_IMPL(Interpretation, QDateTime, startInterpretationTime, StartInterpretationTime)
 AUTO_PROPERTY_IMPL(Interpretation, QDateTime, validateInterpretationTime, ValidateInterpretationTime)
 

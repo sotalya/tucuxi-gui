@@ -11,7 +11,9 @@
 #include "dbobjects.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 class Unit;
@@ -138,13 +140,14 @@ class DirName : public QString
 
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::DirName);
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ModelDescriptor)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::FileName);
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Descriptor)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Option)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::DirName);
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ModelDescriptor)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::FileName);
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Descriptor)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Option)
 
 #endif // UTILS_H

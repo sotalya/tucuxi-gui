@@ -20,7 +20,9 @@ class Patient;
 class Person;
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 class ActiveSubstance;
 class Dosage;
 class AdjustmentDosage;
@@ -42,6 +44,7 @@ class IdentifiableAmount;
 class OperableAmount;
 }
 }
+}
 
 class InterpretationXmlExport
 {
@@ -56,8 +59,8 @@ protected:
 
     bool save(InterpretationAnalysis *analysis);
     bool save(InterpretationRequest *request);
-    bool save(Tucuxi::GuiCore::DrugResponseAnalysis *drugResponseAnalysis);
-    bool save(Tucuxi::GuiCore::DrugTreatment *drugResponseAnalysis);
+    bool save(Tucuxi::Gui::Core::DrugResponseAnalysis *drugResponseAnalysis);
+    bool save(Tucuxi::Gui::Core::DrugTreatment *drugResponseAnalysis);
     bool save(Practician *practician, QString name);
     bool save(ValidationStatus *validationStatus);
     bool save(Patient *patient);
@@ -67,22 +70,22 @@ protected:
 
 
     QString writeDate(QDateTime date);
-    bool save(Tucuxi::GuiCore::Dosage *dosage, const QString &tagName = "dosage");
-    bool save(Tucuxi::GuiCore::AdjustmentDosage *dosage, const QString &tagName = "dosage");
-    bool save(Tucuxi::GuiCore::DosageHistory *history, const QString &tagName = "dosageHistory");
-    bool save(Tucuxi::GuiCore::PatientVariateList *list);
-    bool save(Tucuxi::GuiCore::TargetList *list);
-    bool save(Tucuxi::GuiCore::CoreMeasureList *list);
-    bool save(Tucuxi::GuiCore::UncastedValueList *list);
-    bool save(Tucuxi::GuiCore::ADME *adme);
-    bool save(Tucuxi::GuiCore::ValidDoses *doses);
-    bool save(Tucuxi::GuiCore::ValidInfusions *infusions);
-    bool save(Tucuxi::GuiCore::ValidIntervals *intervals);
-    bool save(Tucuxi::GuiCore::DrugVariateList *list);
-    bool save(Tucuxi::GuiCore::ParameterSet *set);
-    bool save(Tucuxi::GuiCore::OperationList *list);
-    bool saveIdentifiableAmount(const QString &tagName, Tucuxi::GuiCore::IdentifiableAmount *amount);
-    bool saveOperableAmount(const QString &tagName, Tucuxi::GuiCore::OperableAmount *amount);
+    bool save(Tucuxi::Gui::Core::Dosage *dosage, const QString &tagName = "dosage");
+    bool save(Tucuxi::Gui::Core::AdjustmentDosage *dosage, const QString &tagName = "dosage");
+    bool save(Tucuxi::Gui::Core::DosageHistory *history, const QString &tagName = "dosageHistory");
+    bool save(Tucuxi::Gui::Core::PatientVariateList *list);
+    bool save(Tucuxi::Gui::Core::TargetList *list);
+    bool save(Tucuxi::Gui::Core::CoreMeasureList *list);
+    bool save(Tucuxi::Gui::Core::UncastedValueList *list);
+    bool save(Tucuxi::Gui::Core::ADME *adme);
+    bool save(Tucuxi::Gui::Core::ValidDoses *doses);
+    bool save(Tucuxi::Gui::Core::ValidInfusions *infusions);
+    bool save(Tucuxi::Gui::Core::ValidIntervals *intervals);
+    bool save(Tucuxi::Gui::Core::DrugVariateList *list);
+    bool save(Tucuxi::Gui::Core::ParameterSet *set);
+    bool save(Tucuxi::Gui::Core::OperationList *list);
+    bool saveIdentifiableAmount(const QString &tagName, Tucuxi::Gui::Core::IdentifiableAmount *amount);
+    bool saveOperableAmount(const QString &tagName, Tucuxi::Gui::Core::OperableAmount *amount);
 
     QXmlStreamWriter writer;
 

@@ -16,7 +16,9 @@
 #include "core/utils/duration.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //#define MODELUTILITIES(CLASSNAME) \
@@ -90,9 +92,10 @@ private:
 
 typedef DrugModelEngine* SharedModel;
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::DrugModelEngine*);
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::DrugModelEngine*);
 
 #endif // MODEL_H

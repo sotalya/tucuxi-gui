@@ -7,21 +7,21 @@
 #include "core/dal/dosage.h"
 #include "reportbuildermodule.h"
 
-class DosageBuilderModule : public Tucuxi::GuiCore::Entity, public ReportBuilderModule
+class DosageBuilderModule : public Tucuxi::Gui::Core::Entity, public ReportBuilderModule
 {
     Q_OBJECT
 
 public:
-    DosageBuilderModule(Tucuxi::GuiCore::Dosage *dosage, QObject *parent = 0);
+    DosageBuilderModule(Tucuxi::Gui::Core::Dosage *dosage, QObject *parent = 0);
 
     virtual bool setData(ReportData *data);
     virtual void unsetData(ReportData *data);
 
-    Tucuxi::GuiCore::Dosage* dosage() const;
-    DosageBuilderModule &setDosage(Tucuxi::GuiCore::Dosage *&dosage);
+    Tucuxi::Gui::Core::Dosage* dosage() const;
+    DosageBuilderModule &setDosage(Tucuxi::Gui::Core::Dosage *&dosage);
 
 private:
-    Tucuxi::GuiCore::Dosage* _dosage;
+    Tucuxi::Gui::Core::Dosage* _dosage;
 };
 
 #endif // DOSAGEBUILDERMODULE_H

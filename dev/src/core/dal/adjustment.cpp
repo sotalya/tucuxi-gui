@@ -4,7 +4,8 @@
 #include "dal/drug/target.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 AUTO_PROPERTY_IMPL(TargetEvaluationResult, TargetMethod*, targetType, TargetType)
 AUTO_PROPERTY_IMPL(TargetEvaluationResult, double, value, Value)
@@ -52,6 +53,7 @@ Adjustment::Adjustment(AbstractRepository *repository, QObject *parent)
 
 }
 
+}
 }
 }
 

@@ -7,7 +7,8 @@
 #include "core/interfaces/abstractrepository.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 class CoreFactory;
 
@@ -123,7 +124,8 @@ public:
 };
 */
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // COREFACTORY_H

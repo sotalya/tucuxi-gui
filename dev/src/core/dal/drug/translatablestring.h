@@ -8,7 +8,9 @@
 #include <string>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class TranslatableString : public Entity, public QMap<QString,QString>
 {
@@ -66,12 +68,13 @@ private:
 };
 
 QML_POINTERLIST_CLASS_DECL(TranslatableStringList, TranslatableString)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::TranslatableString*)
-//Q_DECLARE_METATYPE(Tucuxi::GuiCore::TranslatableString)
-//Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::TranslatableString*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::TranslatableString*)
+//Q_DECLARE_METATYPE(Tucuxi::Gui::Core::TranslatableString)
+//Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::TranslatableString*>)
 
 
 #endif // COMMENTS_H

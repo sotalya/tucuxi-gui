@@ -41,14 +41,14 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(Tucuxi::GuiCore::Target* target);
+    void setModelData(Tucuxi::Gui::Core::Target* target);
 
 private:
     virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
 
     void init();
 
-    Tucuxi::GuiCore::Target* _target;
+    Tucuxi::Gui::Core::Target* _target;
     QHash<int, QByteArray> _roleNames;
 };
 

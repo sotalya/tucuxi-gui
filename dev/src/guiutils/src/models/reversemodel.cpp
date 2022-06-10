@@ -71,7 +71,7 @@ bool ReverseModel::setData(const QModelIndex &index, const QVariant &value, int 
     return false;
 }
 
-void ReverseModel::setModelData(Tucuxi::GuiCore::PredictionResult* pred)
+void ReverseModel::setModelData(Tucuxi::Gui::Core::PredictionResult* pred)
 {
 //    Q_ASSERT(data.contains("timeList"));
 //    Q_ASSERT(data.contains("dataList"));

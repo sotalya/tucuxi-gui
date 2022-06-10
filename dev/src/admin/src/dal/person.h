@@ -9,13 +9,14 @@
 #include <QDateTime>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 class UncastedValueList;
 }
-
+}
 }
 
-class Person : public Tucuxi::GuiCore::Entity
+class Person : public Tucuxi::Gui::Core::Entity
 {
 public:
     enum GenderType { Male = 1, Female = 0 };
@@ -31,7 +32,7 @@ public:
     AUTO_PROPERTY(QString, firstname)
     AUTO_PROPERTY(Location*, location)
     AUTO_PROPERTY(int, location_id)
-    AUTO_PROPERTY_DECL(Tucuxi::GuiCore::UncastedValueList *, uncastedValues, UncastedValues)
+    AUTO_PROPERTY_DECL(Tucuxi::Gui::Core::UncastedValueList *, uncastedValues, UncastedValues)
     AUTO_PROPERTY_DECL(PhoneList*, phones, Phones)
 
     Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
@@ -40,8 +41,8 @@ public:
     }
 
 public:
-    Q_INVOKABLE Person(Tucuxi::GuiCore::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
-    Q_INVOKABLE Person(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE Person(Tucuxi::Gui::Core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
+    Q_INVOKABLE Person(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
     Q_INVOKABLE void setBirthdate(QDateTime date);
 

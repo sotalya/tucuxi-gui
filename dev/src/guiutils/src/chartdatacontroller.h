@@ -11,10 +11,13 @@
 class CalculationController;
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 class ChartData;
 class PredictionSpec;
 class PredictionResult;
+}
 }
 }
 
@@ -50,23 +53,23 @@ public slots:
 
 
     void initiateUpdatePopPred();
-    void receiveResultsPopPred(Tucuxi::GuiCore::PredictionResult*);
+    void receiveResultsPopPred(Tucuxi::Gui::Core::PredictionResult*);
     void initiateUpdatePopPerc();
-    void receiveResultsPopPerc(Tucuxi::GuiCore::PredictionResult*);
+    void receiveResultsPopPerc(Tucuxi::Gui::Core::PredictionResult*);
     void initiateUpdateAprPred();
-    void receiveResultsAprPred(Tucuxi::GuiCore::PredictionResult*);
+    void receiveResultsAprPred(Tucuxi::Gui::Core::PredictionResult*);
     void initiateUpdateAprPerc();
-    void receiveResultsAprPerc(Tucuxi::GuiCore::PredictionResult*);
+    void receiveResultsAprPerc(Tucuxi::Gui::Core::PredictionResult*);
     void initiateUpdateApoPred();
-    void receiveResultsApoPred(Tucuxi::GuiCore::PredictionResult*);
+    void receiveResultsApoPred(Tucuxi::Gui::Core::PredictionResult*);
     void initiateUpdateApoPerc();
-    void receiveResultsApoPerc(Tucuxi::GuiCore::PredictionResult*);
+    void receiveResultsApoPerc(Tucuxi::Gui::Core::PredictionResult*);
     void initiateUpdateRevPred();
-    void receiveResultsRevPred(Tucuxi::GuiCore::PredictionResult*);
+    void receiveResultsRevPred(Tucuxi::Gui::Core::PredictionResult*);
     void initiateUpdateAdjPred();
-    void receiveResultsAdjPred(Tucuxi::GuiCore::PredictionResult*);
+    void receiveResultsAdjPred(Tucuxi::Gui::Core::PredictionResult*);
     void initiateUpdateAdjPerc();
-    void receiveResultsAdjPerc(Tucuxi::GuiCore::PredictionResult*);
+    void receiveResultsAdjPerc(Tucuxi::Gui::Core::PredictionResult*);
 
 
 protected:
@@ -84,9 +87,9 @@ protected:
 
 public:
 
-    Tucuxi::GuiCore::ChartData* chartData;
+    Tucuxi::Gui::Core::ChartData* chartData;
 
-    Tucuxi::GuiCore::PredictionSpec* predictionspec;
+    Tucuxi::Gui::Core::PredictionSpec* predictionspec;
 };
 
 #endif // CHARTDATACONTROLLER_H

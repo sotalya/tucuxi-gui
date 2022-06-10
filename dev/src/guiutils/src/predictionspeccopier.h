@@ -7,7 +7,9 @@
 #include <QObject>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 class PredictionSpec;
 class DrugResponseAnalysis;
 class DrugTreatment;
@@ -48,50 +50,51 @@ class ActiveSubstance;
 class StandardTreatment;
 }
 }
+}
 
 class PredictionSpecCopier
 {
 public:
     PredictionSpecCopier();
 
-    Tucuxi::GuiCore::PredictionSpec* copy(Tucuxi::GuiCore::PredictionSpec *spec, QObject *parent=0);
-    Tucuxi::GuiCore::DrugResponseAnalysis* copy(Tucuxi::GuiCore::DrugResponseAnalysis *analysis, QObject *parent=0);
-    Tucuxi::GuiCore::DrugTreatment* copy(Tucuxi::GuiCore::DrugTreatment *treatment, QObject *parent=0);
-    Tucuxi::GuiCore::PatientVariateList* copy(Tucuxi::GuiCore::PatientVariateList* list, QObject *parent=0);
-    Tucuxi::GuiCore::DosageHistory* copy(Tucuxi::GuiCore::DosageHistory* history, QObject *parent=0);
-    Tucuxi::GuiCore::Dosage* copy(Tucuxi::GuiCore::Dosage* dosage, QObject *parent=0);
-    Tucuxi::GuiCore::PatientVariate* copy(Tucuxi::GuiCore::PatientVariate* variate, QObject *parent=0);
-    Tucuxi::GuiCore::OperableAmount *copy(Tucuxi::GuiCore::OperableAmount *amount, QObject *parent=0);
-    Tucuxi::GuiCore::IdentifiableAmount *copy(Tucuxi::GuiCore::IdentifiableAmount *amount, QObject *parent=0);
-    Tucuxi::GuiCore::OperationList *copy(Tucuxi::GuiCore::OperationList *source, QObject *parent=0);
-    Tucuxi::GuiCore::Operation *copy(Tucuxi::GuiCore::Operation *source, QObject *parent=0);
-    Tucuxi::GuiCore::Admin* copy(Tucuxi::GuiCore::Admin* admin, QObject *parent=0);
-    Tucuxi::GuiCore::DrugModel* copy(Tucuxi::GuiCore::DrugModel *drug, QObject *parent=0);
-    Tucuxi::GuiCore::ADME* copy(Tucuxi::GuiCore::ADME* adme, QObject *parent=0);
-    Tucuxi::GuiCore::AdminList* copy(Tucuxi::GuiCore::AdminList* history, QObject *parent=0);
-    Tucuxi::GuiCore::DrugVariateList* copy(Tucuxi::GuiCore::DrugVariateList* list, QObject *parent=0);
-    Tucuxi::GuiCore::DrugVariate* copy(Tucuxi::GuiCore::DrugVariate* variate, QObject *parent=0);
-    Tucuxi::GuiCore::Concentrations* copy(Tucuxi::GuiCore::Concentrations* concentrations, QObject *parent=0);
-    Tucuxi::GuiCore::StandardTreatment* copy(Tucuxi::GuiCore::StandardTreatment* treatment, QObject *parent=0);
-    Tucuxi::GuiCore::ValidDoses* copy(Tucuxi::GuiCore::ValidDoses* list, QObject *parent=0);
-    Tucuxi::GuiCore::ValidDose* copy(Tucuxi::GuiCore::ValidDose* source, QObject *parent=0);
-    Tucuxi::GuiCore::ErrorModel* copy(Tucuxi::GuiCore::ErrorModel *model, QObject *parent=0);
-    Tucuxi::GuiCore::Halflife* copy(Tucuxi::GuiCore::Halflife *halflife, QObject *parent=0);
-    Tucuxi::GuiCore::ValidInfusion* copy(Tucuxi::GuiCore::ValidInfusion *source, QObject *parent=0);
-    Tucuxi::GuiCore::ValidInfusions* copy(Tucuxi::GuiCore::ValidInfusions *source, QObject *parent=0);
-    Tucuxi::GuiCore::ValidInterval* copy(Tucuxi::GuiCore::ValidInterval *source, QObject *parent=0);
-    Tucuxi::GuiCore::ValidIntervals* copy(Tucuxi::GuiCore::ValidIntervals *source, QObject *parent=0);
-    Tucuxi::GuiCore::TargetList* copy(Tucuxi::GuiCore::TargetList* source, QObject *parent=0);
-    Tucuxi::GuiCore::Target* copy(Tucuxi::GuiCore::Target* source, QObject *parent=0);
-    Tucuxi::GuiCore::CorePatient* copy(Tucuxi::GuiCore::CorePatient* source, QObject *parent=0);
-    Tucuxi::GuiCore::CoreMeasureList* copy(Tucuxi::GuiCore::CoreMeasureList* source, QObject *parent=0);
-    Tucuxi::GuiCore::CoreMeasure* copy(Tucuxi::GuiCore::CoreMeasure* source, QObject *parent=0);
-    Tucuxi::GuiCore::TargetMethod* copy(Tucuxi::GuiCore::TargetMethod* source, QObject *parent=0);
-    Tucuxi::GuiCore::ParameterSet* copy(Tucuxi::GuiCore::ParameterSet* source, QObject *parent=0);
-    Tucuxi::GuiCore::Parameters* copy(Tucuxi::GuiCore::Parameters* source, QObject *parent=0);
-    Tucuxi::GuiCore::Parameter* copy(Tucuxi::GuiCore::Parameter* source, QObject *parent=0);
-    Tucuxi::GuiCore::Bsv* copy(Tucuxi::GuiCore::Bsv* source, QObject *parent=0);
-    Tucuxi::GuiCore::ActiveSubstance* copy(Tucuxi::GuiCore::ActiveSubstance* source, QObject *parent=0);
+    Tucuxi::Gui::Core::PredictionSpec* copy(Tucuxi::Gui::Core::PredictionSpec *spec, QObject *parent=0);
+    Tucuxi::Gui::Core::DrugResponseAnalysis* copy(Tucuxi::Gui::Core::DrugResponseAnalysis *analysis, QObject *parent=0);
+    Tucuxi::Gui::Core::DrugTreatment* copy(Tucuxi::Gui::Core::DrugTreatment *treatment, QObject *parent=0);
+    Tucuxi::Gui::Core::PatientVariateList* copy(Tucuxi::Gui::Core::PatientVariateList* list, QObject *parent=0);
+    Tucuxi::Gui::Core::DosageHistory* copy(Tucuxi::Gui::Core::DosageHistory* history, QObject *parent=0);
+    Tucuxi::Gui::Core::Dosage* copy(Tucuxi::Gui::Core::Dosage* dosage, QObject *parent=0);
+    Tucuxi::Gui::Core::PatientVariate* copy(Tucuxi::Gui::Core::PatientVariate* variate, QObject *parent=0);
+    Tucuxi::Gui::Core::OperableAmount *copy(Tucuxi::Gui::Core::OperableAmount *amount, QObject *parent=0);
+    Tucuxi::Gui::Core::IdentifiableAmount *copy(Tucuxi::Gui::Core::IdentifiableAmount *amount, QObject *parent=0);
+    Tucuxi::Gui::Core::OperationList *copy(Tucuxi::Gui::Core::OperationList *source, QObject *parent=0);
+    Tucuxi::Gui::Core::Operation *copy(Tucuxi::Gui::Core::Operation *source, QObject *parent=0);
+    Tucuxi::Gui::Core::Admin* copy(Tucuxi::Gui::Core::Admin* admin, QObject *parent=0);
+    Tucuxi::Gui::Core::DrugModel* copy(Tucuxi::Gui::Core::DrugModel *drug, QObject *parent=0);
+    Tucuxi::Gui::Core::ADME* copy(Tucuxi::Gui::Core::ADME* adme, QObject *parent=0);
+    Tucuxi::Gui::Core::AdminList* copy(Tucuxi::Gui::Core::AdminList* history, QObject *parent=0);
+    Tucuxi::Gui::Core::DrugVariateList* copy(Tucuxi::Gui::Core::DrugVariateList* list, QObject *parent=0);
+    Tucuxi::Gui::Core::DrugVariate* copy(Tucuxi::Gui::Core::DrugVariate* variate, QObject *parent=0);
+    Tucuxi::Gui::Core::Concentrations* copy(Tucuxi::Gui::Core::Concentrations* concentrations, QObject *parent=0);
+    Tucuxi::Gui::Core::StandardTreatment* copy(Tucuxi::Gui::Core::StandardTreatment* treatment, QObject *parent=0);
+    Tucuxi::Gui::Core::ValidDoses* copy(Tucuxi::Gui::Core::ValidDoses* list, QObject *parent=0);
+    Tucuxi::Gui::Core::ValidDose* copy(Tucuxi::Gui::Core::ValidDose* source, QObject *parent=0);
+    Tucuxi::Gui::Core::ErrorModel* copy(Tucuxi::Gui::Core::ErrorModel *model, QObject *parent=0);
+    Tucuxi::Gui::Core::Halflife* copy(Tucuxi::Gui::Core::Halflife *halflife, QObject *parent=0);
+    Tucuxi::Gui::Core::ValidInfusion* copy(Tucuxi::Gui::Core::ValidInfusion *source, QObject *parent=0);
+    Tucuxi::Gui::Core::ValidInfusions* copy(Tucuxi::Gui::Core::ValidInfusions *source, QObject *parent=0);
+    Tucuxi::Gui::Core::ValidInterval* copy(Tucuxi::Gui::Core::ValidInterval *source, QObject *parent=0);
+    Tucuxi::Gui::Core::ValidIntervals* copy(Tucuxi::Gui::Core::ValidIntervals *source, QObject *parent=0);
+    Tucuxi::Gui::Core::TargetList* copy(Tucuxi::Gui::Core::TargetList* source, QObject *parent=0);
+    Tucuxi::Gui::Core::Target* copy(Tucuxi::Gui::Core::Target* source, QObject *parent=0);
+    Tucuxi::Gui::Core::CorePatient* copy(Tucuxi::Gui::Core::CorePatient* source, QObject *parent=0);
+    Tucuxi::Gui::Core::CoreMeasureList* copy(Tucuxi::Gui::Core::CoreMeasureList* source, QObject *parent=0);
+    Tucuxi::Gui::Core::CoreMeasure* copy(Tucuxi::Gui::Core::CoreMeasure* source, QObject *parent=0);
+    Tucuxi::Gui::Core::TargetMethod* copy(Tucuxi::Gui::Core::TargetMethod* source, QObject *parent=0);
+    Tucuxi::Gui::Core::ParameterSet* copy(Tucuxi::Gui::Core::ParameterSet* source, QObject *parent=0);
+    Tucuxi::Gui::Core::Parameters* copy(Tucuxi::Gui::Core::Parameters* source, QObject *parent=0);
+    Tucuxi::Gui::Core::Parameter* copy(Tucuxi::Gui::Core::Parameter* source, QObject *parent=0);
+    Tucuxi::Gui::Core::Bsv* copy(Tucuxi::Gui::Core::Bsv* source, QObject *parent=0);
+    Tucuxi::Gui::Core::ActiveSubstance* copy(Tucuxi::Gui::Core::ActiveSubstance* source, QObject *parent=0);
 
 
 

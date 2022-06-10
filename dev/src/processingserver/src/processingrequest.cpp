@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
 ProcessingRequest::ProcessingRequest()
 {

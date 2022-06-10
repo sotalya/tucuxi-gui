@@ -18,7 +18,7 @@ NotificationXmlMessage::~NotificationXmlMessage()
 
 QString NotificationXmlMessage::schemaPath() const
 {
-    return Tucuxi::GuiCore::XmlValidator::Notification;
+    return Tucuxi::Gui::Core::XmlValidator::Notification;
 }
 
 QString NotificationXmlMessage::messageType() const

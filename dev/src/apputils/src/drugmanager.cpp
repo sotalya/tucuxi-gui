@@ -32,7 +32,7 @@
 #include <QtGlobal>
 
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core;
 
 namespace Tucuxi {
 namespace GuiAppUtils {
@@ -73,14 +73,14 @@ const DrugXmlDescriptor *DrugManager::scanDrug(const QString &filePath)
     return nullptr;
 }
 
-bool DrugManager::tryToAddDrugModelToRepo(Tucuxi::GuiCore::DrugModel *drugModel)
+bool DrugManager::tryToAddDrugModelToRepo(Tucuxi::Gui::Core::DrugModel *drugModel)
 {
     // Added this to correct usage in InterpretationImport
     _drugIdToDrugObj.insert(drugModel->getDrugModelId(), drugModel);
 
     Response r;
     bool canAdd = true;
-    QList<Tucuxi::GuiCore::DrugModel* > existingList;
+    QList<Tucuxi::Gui::Core::DrugModel* > existingList;
     r = APPUTILSREPO->getDrugsList(existingList);
     if (r.error == NoError) {
         for(int i=0; i < existingList.size(); i++) {
@@ -101,7 +101,7 @@ bool DrugManager::tryToAddDrugModelToRepo(Tucuxi::GuiCore::DrugModel *drugModel)
 }
 
 //Builds a drug
-Tucuxi::GuiCore::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xmlDesc)
+Tucuxi::Gui::Core::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xmlDesc)
 {
     LOG(QtDebugMsg, NOEZERROR, tr("Loading drug ID '%1' from file '%2'").arg(xmlDesc ? xmlDesc->drugId() : "unknown", xmlDesc ? xmlDesc->file() : "unknown"));
 
@@ -130,7 +130,7 @@ Tucuxi::GuiCore::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xmlD
 
     DrugXmlImport importer;
 
-    Tucuxi::GuiCore::DrugModel *drug = importer.load(xmlDesc->file());
+    Tucuxi::Gui::Core::DrugModel *drug = importer.load(xmlDesc->file());
 
     Descriptor _desc;
     _desc.id = xmlDesc->drugId();
@@ -376,7 +376,7 @@ void DrugManager::scanDrugs()
         _modelIdToDrugDesc.insert(xmlDesc->pkModelId(), descriptor);
         _atcToDrugDesc.insert(xmlDesc->atc(), descriptor);
 
-        Tucuxi::GuiCore::DrugModel *drug = buildDrug(xmlDesc);
+        Tucuxi::Gui::Core::DrugModel *drug = buildDrug(xmlDesc);
         Q_UNUSED(drug);
     }
 
@@ -496,10 +496,10 @@ void DrugManager::resetDrugs()
 void DrugManager::analyzeCovariates()
 {
     QMap<QString, int> covariatesMap;
-    QList<Tucuxi::GuiCore::DrugModel* > allDrugs;
+    QList<Tucuxi::Gui::Core::DrugModel* > allDrugs;
     APPUTILSREPO->getDrugsList(allDrugs);
-    foreach (Tucuxi::GuiCore::DrugModel *drug, allDrugs) {
-        foreach(Tucuxi::GuiCore::DrugVariate *variate, drug->getCovariates()->getList()) {
+    foreach (Tucuxi::Gui::Core::DrugModel *drug, allDrugs) {
+        foreach(Tucuxi::Gui::Core::DrugVariate *variate, drug->getCovariates()->getList()) {
             std::cout << qPrintable(variate->getCovariateId()) << std::endl;
             covariatesMap.insert(variate->getCovariateId(), covariatesMap.value(variate->getCovariateId(),0) + 1);
         }

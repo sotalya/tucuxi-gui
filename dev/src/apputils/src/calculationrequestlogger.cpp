@@ -35,7 +35,7 @@ void CalculationRequestLogger::setEnable(bool enable)
 }
 
 
-void CalculationRequestLogger::log(Tucuxi::GuiCore::PredictionSpec *spec)
+void CalculationRequestLogger::log(Tucuxi::Gui::Core::PredictionSpec *spec)
 {
     QMutexLocker locker(&mutex);
     if (!enabled)
@@ -51,7 +51,7 @@ void CalculationRequestLogger::log(Tucuxi::GuiCore::PredictionSpec *spec)
 
     QFile f(fileName);
     if (!f.open(QFile::WriteOnly)) {
-        EXLOG(QtWarningMsg, Tucuxi::GuiCore::ACCESSDENIED, QObject::tr("Can not log processing requests."));
+        EXLOG(QtWarningMsg, Tucuxi::Gui::Core::ACCESSDENIED, QObject::tr("Can not log processing requests."));
         return;
     }
 
@@ -65,14 +65,14 @@ void CalculationRequestLogger::log(Tucuxi::GuiCore::PredictionSpec *spec)
     // generate a second file identical to the first one.
     if (false)
     {
-        Tucuxi::GuiCore::PredictionSpec *newSpec;
+        Tucuxi::Gui::Core::PredictionSpec *newSpec;
         PredictionSpecImporter importer;
         newSpec = importer.load(data);
 
         fileName += ".2.xml";
         QFile f(fileName);
         if (!f.open(QFile::WriteOnly)) {
-            EXLOG(QtWarningMsg, Tucuxi::GuiCore::ACCESSDENIED, QObject::tr("Can not log processing requests."));
+            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::ACCESSDENIED, QObject::tr("Can not log processing requests."));
             return;
         }
 

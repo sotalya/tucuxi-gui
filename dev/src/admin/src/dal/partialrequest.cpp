@@ -3,7 +3,7 @@
 #include "core/corefactory.h"
 #include "core/dal/drug/drug.h"
 
-PartialRequest::PartialRequest(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
+PartialRequest::PartialRequest(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository, parent)
 {
     setId(-1);
@@ -13,13 +13,13 @@ PartialRequest::PartialRequest(Tucuxi::GuiCore::AbstractRepository *repository, 
     _sample = AdminFactory::createEntity<Measure>(repository);
 }
 
-PartialRequest::PartialRequest(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
+PartialRequest::PartialRequest(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent) :
     Entity(repository, id, parent)
 {
     setId(id);
 }
 
-PartialRequestSet::PartialRequestSet(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent, const PartialRequestSet* &other)
+PartialRequestSet::PartialRequestSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent, const PartialRequestSet* &other)
 {
     foreach (SharedPartialRequest _pr, *other) {
         SharedPartialRequest _npr = SharedPartialRequest(new PartialRequest(repository, parent));

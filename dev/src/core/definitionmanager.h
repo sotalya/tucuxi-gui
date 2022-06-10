@@ -89,7 +89,9 @@
  */
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class DefinitionManager
 {
@@ -284,7 +286,7 @@ public:
     /** \brief Return the list of the default intervals durations.
      * @return The list of default intervals.
      */
-    QList<Tucuxi::GuiCore::Duration> intervals() const;
+    QList<Tucuxi::Gui::Core::Duration> intervals() const;
 
     /** \brief Returns the language of the definitions.
      * @return The current language.
@@ -326,7 +328,7 @@ private:
     QMap<QString, Descriptor> _targets;
 
     //List of default intervals duration
-    QList<Tucuxi::GuiCore::Duration> _intervals;
+    QList<Tucuxi::Gui::Core::Duration> _intervals;
 
     // ToDo: remove when refactored //////////////
     //Hash of <Drug ID, QList<Covariate ID> >
@@ -348,7 +350,8 @@ private:
     //////////////////////////////////////////////
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // DEFINITIONS_H

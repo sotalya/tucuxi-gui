@@ -47,8 +47,8 @@ InterpretationRequest* InterpretationRequestBuilder::buildInterpretationRequest(
     //ToDo: set the practician when added to DAL object
     //ToDo: set the clinicals when added to DAL object
 
-    InterpretationRequest* interpretationRequest = Tucuxi::GuiCore::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
-    Tucuxi::GuiCore::DrugTreatment *treatment = interpretationRequest->getTreatment();
+    InterpretationRequest* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
+    Tucuxi::Gui::Core::DrugTreatment *treatment = interpretationRequest->getTreatment();
     treatment->setParent(interpretationRequest);
     //Prediction patient
     treatment->setPatient(buildPatient("patient"));
@@ -56,7 +56,7 @@ InterpretationRequest* InterpretationRequestBuilder::buildInterpretationRequest(
     //Prediction drug
     QString activeSubstanceId = buildDrug("drug");
     if (activeSubstanceId.isEmpty()) {
-        EXLOG(QtWarningMsg, Tucuxi::GuiCore::NOEZERROR, QObject::tr("Drug not found, cannot build interpretationRequest for analysis."));
+        EXLOG(QtWarningMsg, Tucuxi::Gui::Core::NOEZERROR, QObject::tr("Drug not found, cannot build interpretationRequest for analysis."));
         return nullptr;
     }
 
@@ -67,12 +67,12 @@ InterpretationRequest* InterpretationRequestBuilder::buildInterpretationRequest(
     treatment->getDosages()->setParent(treatment);
 
     //Prediction samples
-    Tucuxi::GuiCore::CoreMeasureList* measures = buildSamples("samples", treatment->getPatient(), activeSubstanceId);
+    Tucuxi::Gui::Core::CoreMeasureList* measures = buildSamples("samples", treatment->getPatient(), activeSubstanceId);
     treatment->setMeasures(measures);
     treatment->getMeasures()->setParent(treatment);
 
     //Prediction covariates
-    Tucuxi::GuiCore::PatientVariateList * covariates = buildCovariates("covariates", treatment->getPatient());
+    Tucuxi::Gui::Core::PatientVariateList * covariates = buildCovariates("covariates", treatment->getPatient());
     treatment->setCovariates(covariates);
 
     interpretationRequest->setClinicals(buildClinical("clinicals"));
@@ -104,58 +104,58 @@ QString InterpretationRequestBuilder::buildDrug(const QString &rootKey)
     delete translator;
     if (drugId.isEmpty())
     {
-        EXLOG(QtWarningMsg, Tucuxi::GuiCore::NOEZERROR, QObject::tr("The drug corresponding to ID %1 is not available").arg(restDrugId));
+        EXLOG(QtWarningMsg, Tucuxi::Gui::Core::NOEZERROR, QObject::tr("The drug corresponding to ID %1 is not available").arg(restDrugId));
         return "";
     }
 
-    QList<Tucuxi::GuiCore::DrugModel *> list;
+    QList<Tucuxi::Gui::Core::DrugModel *> list;
     APPUTILSREPO->getDrugsList(list);
     bool valid = false;
-    foreach(Tucuxi::GuiCore::DrugModel *drugModel, list) {
+    foreach(Tucuxi::Gui::Core::DrugModel *drugModel, list) {
         if (drugModel->getActiveSubstance()->getSubstanceId() == drugId)
             valid = true;
     }
     if (!valid) {
-        EXLOG(QtWarningMsg, Tucuxi::GuiCore::NOEZERROR, QObject::tr("Drug not found, cannot build drug for analysis."));
+        EXLOG(QtWarningMsg, Tucuxi::Gui::Core::NOEZERROR, QObject::tr("Drug not found, cannot build drug for analysis."));
         return "";
     }
 
     return drugId;
 }
 
-Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const QString &rootKey)
+Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(const QString &rootKey)
 {
     //ToDo: check critical info and build, or store incomplete data
     //ToDo: check how to deal with dosage end date
 
-    Tucuxi::GuiCore::DosageHistory* dosages = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DosageHistory>(ABSTRACTREPO);
+    Tucuxi::Gui::Core::DosageHistory* dosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO);
 
     //Get dosages data
     QDomElement dosageNode = datasetNode.firstChildElement("dosages").firstChildElement("dosage");
     while (!dosageNode.isNull()) {
-        Tucuxi::GuiCore::Dosage* dosage = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Dosage>(ABSTRACTREPO, dosages);
+        Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
         //Dosage data
-        Tucuxi::GuiCore::Admin *admin = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Admin>(ABSTRACTREPO, dosage);
+        Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
 
 
         RouteTranslator *translator = new ChuvRouteTranslator();
         QString restRoute = dosageNode.firstChildElement("intake").firstChild().toText().data();
-        Tucuxi::GuiCore::Admin::Route route = translator->restToInternalRoute(restRoute);
+        Tucuxi::Gui::Core::Admin::Route route = translator->restToInternalRoute(restRoute);
         delete translator;
-        if (route == Tucuxi::GuiCore::Admin::UNVALID)
+        if (route == Tucuxi::Gui::Core::Admin::UNVALID)
         {
-            EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The applied intake: %1 was not parsed into a valid intake").arg(restRoute));
-            Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The applied intake: %1 was not parsed into a valid intake").arg(restRoute));
+            Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
             uncasted->setField("intake");
             uncasted->setText(restRoute);
             uncasted->setComment("The applied intake was not parsed into a valid intake.");
             dosage->getUncastedValues()->append(uncasted);
         }
-        else if (route == Tucuxi::GuiCore::Admin::DEFAULT)
+        else if (route == Tucuxi::Gui::Core::Admin::DEFAULT)
         {
-            EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The applied intake is an empty field. Assuming the default intake of the drug.").arg(restRoute));
-            Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The applied intake is an empty field. Assuming the default intake of the drug.").arg(restRoute));
+            Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
             uncasted->setField("intake");
             uncasted->setText(restRoute);
             uncasted->setComment("The applied intake is an empty field. Assuming the default intake of the drug.");
@@ -171,8 +171,8 @@ Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const
             if (appl.isValid()) {
                 dosage->setApplied(appl);
             } else {
-                EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The applied date: %1 was not parsed into a valid QDateTime").arg(dateString));
-                Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The applied date: %1 was not parsed into a valid QDateTime").arg(dateString));
+                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("startDate");
                 uncasted->setText(dateString);
                 uncasted->setComment("The start time was not parsed into a valid date.");
@@ -185,8 +185,8 @@ Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const
             if (endt.isValid()) {
                 dosage->setEndTime(endt);
             } else {
-                EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The endtime date: %1 was not parsed into a valid QDateTime").arg(dateString));
-                Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The endtime date: %1 was not parsed into a valid QDateTime").arg(dateString));
+                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("lastDate");
                 uncasted->setText(dateString);
                 uncasted->setComment("The end time was not parsed into a valid date.");
@@ -197,8 +197,8 @@ Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const
         if (dosage->getEndTime() < dosage->getApplied())
         {
 
-            EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The endtime date: %1 is earlier than starttime %2").arg(dosage->getEndTime().toString()).arg(dosage->getApplied().toString()));
-            Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The endtime date: %1 is earlier than starttime %2").arg(dosage->getEndTime().toString()).arg(dosage->getApplied().toString()));
+            Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
             uncasted->setField("End time");
             uncasted->setText(dosage->getEndTime().toString());
             uncasted->setComment(QString("Dosage end time prior to apply time. Using a fake end time 3 days after start"));
@@ -214,8 +214,8 @@ Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const
             if (ok)
                 dosage->getQuantity()->setValue(value);
             else {
-                EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
-                Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
+                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("dose value");
                 uncasted->setText(valueString);
                 uncasted->setComment("Please fill yourself the dosage");
@@ -238,30 +238,30 @@ Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const
             int value = valueString.toInt(&ok);
             if (ok) {
                 if (unit == "h") {
-                    dosage->setInterval(Tucuxi::GuiCore::Duration(value));
+                    dosage->setInterval(Tucuxi::Gui::Core::Duration(value));
                 }
                 else if (unit == "d") {
-                    dosage->setInterval(Tucuxi::GuiCore::Duration(24 * value));
+                    dosage->setInterval(Tucuxi::Gui::Core::Duration(24 * value));
                 }
                 else if ((unit == "m") || (unit == "min")) {
-                    dosage->setInterval(Tucuxi::GuiCore::Duration(((double) (value))/60));
+                    dosage->setInterval(Tucuxi::Gui::Core::Duration(((double) (value))/60));
                 }
                 else if ((value >= 1) && (value <= 4)) {
-                    dosage->setInterval(Tucuxi::GuiCore::Duration(24 / value));
-                    Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                    dosage->setInterval(Tucuxi::Gui::Core::Duration(24 / value));
+                    Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                     uncasted->setField("interval value");
                     uncasted->setText(valueString);
-                    uncasted->setStatus(Tucuxi::GuiCore::UncastedStatus::PartiallyCasted);
+                    uncasted->setStatus(Tucuxi::Gui::Core::UncastedStatus::PartiallyCasted);
                     uncasted->setComment("Assuming the interval indicates the number of doses per day");
                     dosage->getUncastedValues()->append(uncasted);
 
                 }
                 else {
-                    dosage->setInterval(Tucuxi::GuiCore::Duration(value));
-                    Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                    dosage->setInterval(Tucuxi::Gui::Core::Duration(value));
+                    Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                     uncasted->setField("interval value");
                     uncasted->setText(valueString);
-                    uncasted->setStatus(Tucuxi::GuiCore::UncastedStatus::PartiallyCasted);
+                    uncasted->setStatus(Tucuxi::Gui::Core::UncastedStatus::PartiallyCasted);
                     uncasted->setComment("Assuming hours as unit");
                     dosage->getUncastedValues()->append(uncasted);
                 }
@@ -275,11 +275,11 @@ Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const
                 int m = list[1].toInt(&ok2);
                 int s = list[2].toInt(&ok3);
                 if (ok1 && ok2 && ok3) {
-                    dosage->setInterval(Tucuxi::GuiCore::Duration(h, m, s));
+                    dosage->setInterval(Tucuxi::Gui::Core::Duration(h, m, s));
                 }
                 else {
-                    EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The interval time: %1 was not parsed into a valid double").arg(valueString));
-                    Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                    EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The interval time: %1 was not parsed into a valid double").arg(valueString));
+                    Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                     uncasted->setField("interval value");
                     uncasted->setText(valueString);
                     uncasted->setComment("Please fill yourself the dosage interval");
@@ -287,8 +287,8 @@ Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const
                 }
             }
             else {
-                EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The interval time: %1 was not parsed into a valid double").arg(valueString));
-                Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The interval time: %1 was not parsed into a valid double").arg(valueString));
+                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("interval value");
                 uncasted->setText(valueString);
                 uncasted->setComment("Please fill yourself the dosage interval");
@@ -297,7 +297,7 @@ Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const
         }
 
         //Dosage infusion time, only do it in case of infusion
-        if (dosage->getRoute()->getRoute() == Tucuxi::GuiCore::Admin::INFUSION)
+        if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::Admin::INFUSION)
         {
             bool ok;
             QString valueString = dosageNode.firstChildElement("infusion").firstChildElement("value").firstChild().toText().data();
@@ -315,29 +315,29 @@ Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const
             if (ok) {
 
                 if (unit == "h") {
-                    dosage->setTinf(Tucuxi::GuiCore::Duration(value));
+                    dosage->setTinf(Tucuxi::Gui::Core::Duration(value));
                 }
                 else if (unit == "d") {
-                    dosage->setTinf(Tucuxi::GuiCore::Duration(24 * value));
+                    dosage->setTinf(Tucuxi::Gui::Core::Duration(24 * value));
                 }
                 else if ((unit == "m") || (unit == "min")) {
-                    dosage->setTinf(Tucuxi::GuiCore::Duration(0, value));
+                    dosage->setTinf(Tucuxi::Gui::Core::Duration(0, value));
                 }
                 else {
-                    dosage->setTinf(Tucuxi::GuiCore::Duration(0,value));
-                    Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                    dosage->setTinf(Tucuxi::Gui::Core::Duration(0,value));
+                    Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                     uncasted->setField("infusion time value");
                     uncasted->setText(valueString);
-                    uncasted->setStatus(Tucuxi::GuiCore::UncastedStatus::PartiallyCasted);
+                    uncasted->setStatus(Tucuxi::Gui::Core::UncastedStatus::PartiallyCasted);
                     uncasted->setComment("Assuming minutes as unit");
                     dosage->getUncastedValues()->append(uncasted);
                 }
             }
             else {
                 // Set 60 minutes by default
-                dosage->setTinf(Tucuxi::GuiCore::Duration(0,60));
-                EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The infusion time: %1 was not parsed into a valid double").arg(valueString));
-                Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+                dosage->setTinf(Tucuxi::Gui::Core::Duration(0,60));
+                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The infusion time: %1 was not parsed into a valid double").arg(valueString));
+                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("infusion value");
                 uncasted->setText(valueString);
                 uncasted->setComment("Assuming 1 hour, but please fill yourself the dosage infusion time");
@@ -356,7 +356,7 @@ Tucuxi::GuiCore::DosageHistory* InterpretationRequestBuilder::buildDosages(const
     return dosages;
 }
 
-Tucuxi::GuiCore::PatientVariateList * InterpretationRequestBuilder::buildCovariates(const QString &rootKey, const SharedPatient patient)
+Tucuxi::Gui::Core::PatientVariateList * InterpretationRequestBuilder::buildCovariates(const QString &rootKey, const SharedPatient patient)
 {
     //ToDo: check critical info and build, or store incomplete data
     //ToDo: set the covariate type based on the drug data
@@ -366,12 +366,12 @@ Tucuxi::GuiCore::PatientVariateList * InterpretationRequestBuilder::buildCovaria
     ExternalCovariateIdTranslator covariateIdTranslator;
     covariateIdTranslator.setFileName(QCoreApplication::applicationDirPath() + "/covariateidtranslations.ini");
 
-    Tucuxi::GuiCore::PatientVariateList * covariates = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariateList>(ABSTRACTREPO, patient);
+    Tucuxi::Gui::Core::PatientVariateList * covariates = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, patient);
 
     //Get covariates data
     QDomElement covariateNode = datasetNode.firstChildElement("covariates").firstChildElement("covariate");
     while (!covariateNode.isNull()) {
-        Tucuxi::GuiCore::PatientVariate* covariate = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariate>(ABSTRACTREPO);
+        Tucuxi::Gui::Core::PatientVariate* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
 
         //Covariate data
         QString covariateId = covariateIdTranslator.restToInternalId(covariateNode.firstChildElement("name").firstChild().toText().data());
@@ -384,8 +384,8 @@ Tucuxi::GuiCore::PatientVariateList * InterpretationRequestBuilder::buildCovaria
         if (date.isValid()) {
             covariate->setDate(date);
         } else {
-            EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
-            Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, covariate->getUncastedValues());
+            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
+            Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, covariate->getUncastedValues());
             uncasted->setField("date");
             uncasted->setText(dateString);
             covariate->getUncastedValues()->append(uncasted);
@@ -404,8 +404,8 @@ Tucuxi::GuiCore::PatientVariateList * InterpretationRequestBuilder::buildCovaria
             if (ok)
                 covariate->getQuantity()->setValue(value);
             else {
-                EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
-                Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, covariate->getUncastedValues());
+                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
+                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, covariate->getUncastedValues());
                 uncasted->setField("covariate value");
                 uncasted->setText(valueString);
                 covariate->getUncastedValues()->append(uncasted);
@@ -498,8 +498,8 @@ SharedPatient InterpretationRequestBuilder::buildPatient(const QString &rootKey)
     if (date.isValid()) {
         patient->person()->birthday(date);
     } else {
-        EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
-        Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, patient->person()->getUncastedValues());
+        EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
+        Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, patient->person()->getUncastedValues());
         uncasted->setField("birthdate");
         uncasted->setText(dateString);
         patient->person()->getUncastedValues()->append(uncasted);
@@ -543,8 +543,8 @@ SharedPractician InterpretationRequestBuilder::buildPractician(const QString &ro
     if (date.isValid()) {
         practician->person()->birthday(date);
     } else {
-        EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDate").arg(dateString));
-        Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, practician->person()->getUncastedValues());
+        EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDate").arg(dateString));
+        Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, practician->person()->getUncastedValues());
         uncasted->setField("birthdate");
         uncasted->setText(dateString);
         practician->person()->getUncastedValues()->append(uncasted);
@@ -600,13 +600,13 @@ SharedInstitute InterpretationRequestBuilder::buildInstitute(const QString &root
     return institute;
 }
 
-Tucuxi::GuiCore::CoreMeasureList* InterpretationRequestBuilder::buildSamples(const QString &rootKey, const SharedPatient patient, const QString &activeSubstance)
+Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(const QString &rootKey, const SharedPatient patient, const QString &activeSubstance)
 {
     //ToDo: check critical info and build, or store incomplete data
     //ToDo: add multiple concentrations when DAL object supports it
 
     //Get samples data
-    Tucuxi::GuiCore::CoreMeasureList* measures = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::CoreMeasureList>(ABSTRACTREPO);
+    Tucuxi::Gui::Core::CoreMeasureList* measures = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO);
     QDomElement sampleNode = datasetNode.firstChildElement("samples").firstChildElement("sample");
     while (!sampleNode.isNull()) {
         Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
@@ -629,8 +629,8 @@ Tucuxi::GuiCore::CoreMeasureList* InterpretationRequestBuilder::buildSamples(con
             if (date.isValid()) {
                 measure->setMoment(date);
             } else {
-                EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
-                Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
+                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
                 uncasted->setField("sampleDate");
                 uncasted->setText(dateString);
                 measure->getUncastedValues()->append(uncasted);
@@ -644,19 +644,19 @@ Tucuxi::GuiCore::CoreMeasureList* InterpretationRequestBuilder::buildSamples(con
             if (date.isValid()) {
                 measure->arrivalDate(date);
             } else {
-                EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
-                Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
+                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
                 uncasted->setField("arrivalDate");
                 uncasted->setText(dateString);
                 measure->getUncastedValues()->append(uncasted);
             }
         }
 
-        QList<Tucuxi::GuiCore::IdentifiableAmount*> amts;
+        QList<Tucuxi::Gui::Core::IdentifiableAmount*> amts;
 
         QDomElement concentrationNode = sampleNode.firstChildElement("concentrations").firstChildElement("concentration");
         while (!concentrationNode.isNull()) {
-            Tucuxi::GuiCore::IdentifiableAmount * amt = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::IdentifiableAmount>(ABSTRACTREPO, measure);
+            Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
 
             //Dosage value
             {
@@ -666,8 +666,8 @@ Tucuxi::GuiCore::CoreMeasureList* InterpretationRequestBuilder::buildSamples(con
                 if (ok)
                     amt->setValue(value);
                 else {
-                    EXLOG(QtWarningMsg, Tucuxi::GuiCore::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
-                    Tucuxi::GuiCore::UncastedValue *uncasted = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+                    EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
+                    Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
                     uncasted->setField("concentration value");
                     uncasted->setText(valueString);
                     measure->getUncastedValues()->append(uncasted);
@@ -677,7 +677,7 @@ Tucuxi::GuiCore::CoreMeasureList* InterpretationRequestBuilder::buildSamples(con
             /*********************************************************************
              * TODO: If the unit is not recognized, should be handled correctly
              *********************************************************************/
-            amt->setUnit(Tucuxi::GuiCore::Unit(concentrationNode.firstChildElement("unit").firstChild().toText().data()));
+            amt->setUnit(Tucuxi::Gui::Core::Unit(concentrationNode.firstChildElement("unit").firstChild().toText().data()));
 
             amts.append(amt);
             concentrationNode = concentrationNode.nextSiblingElement("concentration");

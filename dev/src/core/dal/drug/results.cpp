@@ -3,12 +3,15 @@
 #include "core/dal/drug/results.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(Results, Unit, unit, Unit)
 AUTO_PROPERTY_IMPL(Results, double, factor, Factor)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

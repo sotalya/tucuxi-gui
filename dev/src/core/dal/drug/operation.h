@@ -7,7 +7,9 @@
 #include "core/utils/ezutils.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class TranslatableString;
 
@@ -45,13 +47,14 @@ public:
 QML_POINTERLIST_CLASS_DECL(OperationList, Operation)
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::OperationType)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::OperationType*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Operation*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Operation*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::OperationList*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::OperationType)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::OperationType*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Operation*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Operation*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::OperationList*)
 
 #endif // OPERATION_H

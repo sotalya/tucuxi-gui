@@ -4,7 +4,7 @@
 #include "core/dal/corepatient.h"
 #include "person.h"
 
-class Patient : public Tucuxi::GuiCore::CorePatient
+class Patient : public Tucuxi::Gui::Core::CorePatient
 {
     Q_OBJECT
 
@@ -24,8 +24,8 @@ class Patient : public Tucuxi::GuiCore::CorePatient
     }
 
 public:
-    Q_INVOKABLE Patient(Tucuxi::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
-    Q_INVOKABLE Patient(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE Patient(Tucuxi::Gui::Core::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE Patient(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };
 Q_DECLARE_METATYPE(Patient*)
@@ -33,6 +33,6 @@ Q_DECLARE_METATYPE(QList<Patient*>)
 
 //QML_POINTERLIST_CLASS_DECL(PatientList, Patient)
 
-typedef Tucuxi::GuiCore::CorePatient* SharedPatient;
+typedef Tucuxi::Gui::Core::CorePatient* SharedPatient;
 
 #endif // PATIENT_H

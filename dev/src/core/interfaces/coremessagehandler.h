@@ -8,7 +8,9 @@
 #include <QString>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 /** \defgroup message Messaging system
   * The \ref core is independant of the interfaces (GUI, CLI) and so do not know how the message will be handled.
@@ -66,7 +68,8 @@ public:
    virtual void debug (int line, const char* file, const char* object, QString msg) = 0;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // COREMESSAGEHANDLER_H

@@ -12,13 +12,15 @@ class Practician;
 class ValidationStatus;
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
     class DrugResponseAnalysis;
     class AdjustmentDosage;
 }
 }
+}
 
-class Interpretation : public Tucuxi::GuiCore::Entity
+class Interpretation : public Tucuxi::Gui::Core::Entity
 {
 public:
 
@@ -36,7 +38,7 @@ public:
     AUTO_PROPERTY_DECL(InterpretationType, intepretationType, InterpretationType)
     AUTO_PROPERTY_DECL(InterpretationAnalysis*, analysis, Analysis)
     AUTO_PROPERTY_DECL(InterpretationRequest*, request, Request)
-    AUTO_PROPERTY_DECL(Tucuxi::GuiCore::DrugResponseAnalysis*, drugResponseAnalysis, DrugResponseAnalysis)
+    AUTO_PROPERTY_DECL(Tucuxi::Gui::Core::DrugResponseAnalysis*, drugResponseAnalysis, DrugResponseAnalysis)
 
     AUTO_PROPERTY_DECL(Practician*, analyst, Analyst)
     AUTO_PROPERTY_DECL(ValidationStatus*, validationStatus, ValidationStatus)
@@ -45,7 +47,7 @@ public:
     AUTO_PROPERTY_DECL(bool, adjustmentWithLoadingDose, AdjustmentWithLoadingDose)
     AUTO_PROPERTY_DECL(bool, adjustmentWithRestPeriod, AdjustmentWithRestPeriod)
     AUTO_PROPERTY_DECL(QDateTime, adjustmentDate, AdjustmentDate)
-    AUTO_PROPERTY_DECL(Tucuxi::GuiCore::AdjustmentDosage*, selectedAdjustment, SelectedAdjustment)
+    AUTO_PROPERTY_DECL(Tucuxi::Gui::Core::AdjustmentDosage*, selectedAdjustment, SelectedAdjustment)
 
     /// This property stores the exact time the user started the interpretation
     AUTO_PROPERTY_DECL(QDateTime, startInterpretationTime, StartInterpretationTime)
@@ -58,7 +60,7 @@ public:
 
 protected:
 
-    Q_INVOKABLE Interpretation(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE Interpretation(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr);
 
 public:
 

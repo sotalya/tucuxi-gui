@@ -22,10 +22,13 @@
 #endif
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
     class Dosage;
     class PredictionSpec;
     class PredictionResult;
+}
 }
 }
 
@@ -39,7 +42,8 @@ namespace Core {
     class DrugModel;
     class DrugTreatment;
     enum class PredictionParameterType;
-}}
+}
+}
 
 
 #ifdef COMPILE_WITH_TUCUCORE
@@ -254,28 +258,28 @@ signals:
     void aprCalcFail();
     void apoCalcFail();
     void adjCalcFail();
-    void popPredComputed(Tucuxi::GuiCore::PredictionResult*);
-    void aprPredComputed(Tucuxi::GuiCore::PredictionResult*);
-    void apoPredComputed(Tucuxi::GuiCore::PredictionResult*);
-    void revPredComputed(Tucuxi::GuiCore::PredictionResult*);
-    void adjPredComputed(Tucuxi::GuiCore::PredictionResult*);
-    void popPercComputed(Tucuxi::GuiCore::PredictionResult*);
-    void aprPercComputed(Tucuxi::GuiCore::PredictionResult*);
-    void apoPercComputed(Tucuxi::GuiCore::PredictionResult*);
-    void adjPercComputed(Tucuxi::GuiCore::PredictionResult*);
-    void adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*>);
+    void popPredComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void aprPredComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void apoPredComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void revPredComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void adjPredComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void popPercComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void aprPercComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void apoPercComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void adjPercComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void adjustmentsComputed(QList<Tucuxi::Gui::Core::Dosage*>);
 
 public slots:
     virtual void abortAll() = 0;
-    virtual void computePopPred(Tucuxi::GuiCore::PredictionSpec*) = 0;
-    virtual void computePopPerc(Tucuxi::GuiCore::PredictionSpec*) = 0;
-    virtual void computeAprPred(Tucuxi::GuiCore::PredictionSpec*) = 0;
-    virtual void computeAprPerc(Tucuxi::GuiCore::PredictionSpec*) = 0;
-    virtual void computeApoPred(Tucuxi::GuiCore::PredictionSpec*) = 0;
-    virtual void computeApoPerc(Tucuxi::GuiCore::PredictionSpec*) = 0;
-    virtual void computeRevPred(Tucuxi::GuiCore::PredictionSpec*) = 0;
-    virtual void computeAdjPred(Tucuxi::GuiCore::PredictionSpec*) = 0;
-    virtual void computeAdjPerc(Tucuxi::GuiCore::PredictionSpec*) = 0;
+    virtual void computePopPred(Tucuxi::Gui::Core::PredictionSpec*) = 0;
+    virtual void computePopPerc(Tucuxi::Gui::Core::PredictionSpec*) = 0;
+    virtual void computeAprPred(Tucuxi::Gui::Core::PredictionSpec*) = 0;
+    virtual void computeAprPerc(Tucuxi::Gui::Core::PredictionSpec*) = 0;
+    virtual void computeApoPred(Tucuxi::Gui::Core::PredictionSpec*) = 0;
+    virtual void computeApoPerc(Tucuxi::Gui::Core::PredictionSpec*) = 0;
+    virtual void computeRevPred(Tucuxi::Gui::Core::PredictionSpec*) = 0;
+    virtual void computeAdjPred(Tucuxi::Gui::Core::PredictionSpec*) = 0;
+    virtual void computeAdjPerc(Tucuxi::Gui::Core::PredictionSpec*) = 0;
 
 protected:
     QTimer _popperctimer;
@@ -297,20 +301,20 @@ public:
 
 
 public slots:
-    void computePopPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computePopPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAprPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAprPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void computeApoPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeApoPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void computeRevPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAdjPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAdjPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void computePopPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computePopPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAprPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAprPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeApoPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeApoPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeRevPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAdjPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAdjPerc(Tucuxi::Gui::Core::PredictionSpec*);
     void abortAll();
 //    void updateAdj();
 
 private:
-    void preparePredResults(QVector<int> time, QVector<double> data, Tucuxi::GuiCore::PredictionResult* pred);
+    void preparePredResults(QVector<int> time, QVector<double> data, Tucuxi::Gui::Core::PredictionResult* pred);
 
     PopPercAborter *popPercAborter;
     AprPercAborter *aprPercAborter;
@@ -347,27 +351,27 @@ public:
     virtual ~ThreadedCalculationController();
 
 public slots:
-    void computePopPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computePopPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAprPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAprPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void computeApoPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeApoPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void computeRevPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAdjPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAdjPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void computePopPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computePopPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAprPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAprPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeApoPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeApoPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeRevPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAdjPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAdjPerc(Tucuxi::Gui::Core::PredictionSpec*);
     void abortAll();
 
 signals:
-    void sig_updatePopPred(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updatePopPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateAprPred(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateAprPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateApoPred(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateApoPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateRevPred(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateAdjPred(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateAdjPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void sig_updatePopPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updatePopPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateAprPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateAprPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateApoPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateApoPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateRevPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateAdjPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateAdjPerc(Tucuxi::Gui::Core::PredictionSpec*);
 
 private:
 
@@ -403,28 +407,28 @@ public:
     explicit CalculationBuffer(QObject *parent = nullptr);
 
 public slots:
-    void pushPopPred(Tucuxi::GuiCore::PredictionSpec*);
-    void pushPopPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void pushAprPred(Tucuxi::GuiCore::PredictionSpec*);
-    void pushAprPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void pushApoPred(Tucuxi::GuiCore::PredictionSpec*);
-    void pushApoPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void pushRevPred(Tucuxi::GuiCore::PredictionSpec*);
-    void pushAdjPred(Tucuxi::GuiCore::PredictionSpec*);
-    void pushAdjPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void pushPopPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void pushPopPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void pushAprPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void pushAprPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void pushApoPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void pushApoPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void pushRevPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void pushAdjPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void pushAdjPerc(Tucuxi::Gui::Core::PredictionSpec*);
 
 public slots:
 
-    void popPredComputed(Tucuxi::GuiCore::PredictionResult*);
-    void aprPredComputed(Tucuxi::GuiCore::PredictionResult*);
-    void apoPredComputed(Tucuxi::GuiCore::PredictionResult*);
-    void revPredComputed(Tucuxi::GuiCore::PredictionResult*);
-    void popPercComputed(Tucuxi::GuiCore::PredictionResult*);
-    void aprPercComputed(Tucuxi::GuiCore::PredictionResult*);
-    void apoPercComputed(Tucuxi::GuiCore::PredictionResult*);
-    void adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*>);
-    void adjPredComputed(Tucuxi::GuiCore::PredictionResult*);
-    void adjPercComputed(Tucuxi::GuiCore::PredictionResult*);
+    void popPredComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void aprPredComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void apoPredComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void revPredComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void popPercComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void aprPercComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void apoPercComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void adjustmentsComputed(QList<Tucuxi::Gui::Core::Dosage*>);
+    void adjPredComputed(Tucuxi::Gui::Core::PredictionResult*);
+    void adjPercComputed(Tucuxi::Gui::Core::PredictionResult*);
 
     bool shouldAbortPopPerc();
     bool shouldAbortAprPerc();
@@ -437,16 +441,16 @@ public slots:
 
 signals:
 
-    void sig_popPredUpdated(Tucuxi::GuiCore::PredictionResult*);
-    void sig_aprPredUpdated(Tucuxi::GuiCore::PredictionResult*);
-    void sig_apoPredUpdated(Tucuxi::GuiCore::PredictionResult*);
-    void sig_revPredUpdated(Tucuxi::GuiCore::PredictionResult*);
-    void sig_popPercUpdated(Tucuxi::GuiCore::PredictionResult*);
-    void sig_aprPercUpdated(Tucuxi::GuiCore::PredictionResult*);
-    void sig_apoPercUpdated(Tucuxi::GuiCore::PredictionResult*);
-    void sig_adjPercUpdated(Tucuxi::GuiCore::PredictionResult*);
-    void sig_adjustmentsUpdated(QList<Tucuxi::GuiCore::Dosage*>);
-    void sig_adjPredUpdated(Tucuxi::GuiCore::PredictionResult*);
+    void sig_popPredUpdated(Tucuxi::Gui::Core::PredictionResult*);
+    void sig_aprPredUpdated(Tucuxi::Gui::Core::PredictionResult*);
+    void sig_apoPredUpdated(Tucuxi::Gui::Core::PredictionResult*);
+    void sig_revPredUpdated(Tucuxi::Gui::Core::PredictionResult*);
+    void sig_popPercUpdated(Tucuxi::Gui::Core::PredictionResult*);
+    void sig_aprPercUpdated(Tucuxi::Gui::Core::PredictionResult*);
+    void sig_apoPercUpdated(Tucuxi::Gui::Core::PredictionResult*);
+    void sig_adjPercUpdated(Tucuxi::Gui::Core::PredictionResult*);
+    void sig_adjustmentsUpdated(QList<Tucuxi::Gui::Core::Dosage*>);
+    void sig_adjPredUpdated(Tucuxi::Gui::Core::PredictionResult*);
 
 public:
     enum calculationType {
@@ -469,7 +473,7 @@ public:
      * This method should be called by the worker thread. Then it can do the
      * calculation with the values retrieved.
      */
-    void get(Tucuxi::GuiCore::PredictionSpec **spec, calculationType *what);
+    void get(Tucuxi::Gui::Core::PredictionSpec **spec, calculationType *what);
 
     /**
      * @brief abortIfRunningPopPerc : abort Population percentiles calculation
@@ -523,7 +527,7 @@ protected:
     //! Content of the buffer. The specifications linked with the type
     //! of calculation.
     struct itemType {
-        Tucuxi::GuiCore::PredictionSpec* spec;
+        Tucuxi::Gui::Core::PredictionSpec* spec;
         calculationType type;
     };
 
@@ -540,7 +544,7 @@ protected:
     void removeFromList(calculationType type);
 
     //! Push a calculation in the buffer (generic method used internally)
-    void push(Tucuxi::GuiCore::PredictionSpec*spec, calculationType what);
+    void push(Tucuxi::Gui::Core::PredictionSpec*spec, calculationType what);
 };
 
 

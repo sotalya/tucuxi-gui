@@ -5,21 +5,21 @@
 #include "core/dal/drugtreatment.h"
 #include "reportbuildermodule.h"
 
-class TreatmentBuilderModule : public Tucuxi::GuiCore::Entity, public ReportBuilderModule
+class TreatmentBuilderModule : public Tucuxi::Gui::Core::Entity, public ReportBuilderModule
 {
     Q_OBJECT
 
 public:
-    TreatmentBuilderModule(Tucuxi::GuiCore::DrugTreatment* treatment = 0, QObject *parent = 0);
+    TreatmentBuilderModule(Tucuxi::Gui::Core::DrugTreatment* treatment = 0, QObject *parent = 0);
 
     virtual bool setData(ReportData *data);
     virtual void unsetData(ReportData *data);
 
-    const Tucuxi::GuiCore::DrugTreatment* treatment() const;
-    TreatmentBuilderModule &setTreatment(Tucuxi::GuiCore::DrugTreatment* treatment);
+    const Tucuxi::Gui::Core::DrugTreatment* treatment() const;
+    TreatmentBuilderModule &setTreatment(Tucuxi::Gui::Core::DrugTreatment* treatment);
 
 private:
-    Tucuxi::GuiCore::DrugTreatment* _treatment;
+    Tucuxi::Gui::Core::DrugTreatment* _treatment;
 };
 
 #endif // TREATMENTBUILDERMODULE_H

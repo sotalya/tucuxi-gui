@@ -11,11 +11,13 @@ class ClinicalSet;
 class Patient;
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 class ActiveSubstance;
 class DosageHistory;
 class CoreMeasureList;
 class PatientVariateList;
+}
 }
 }
 
@@ -28,10 +30,10 @@ public:
 
 protected:
 
-    bool saveActiveSubstance(Tucuxi::GuiCore::ActiveSubstance *activeSubstance);
-    bool saveDosages(Tucuxi::GuiCore::DosageHistory *dosageHistory);
-    bool saveSamples(Tucuxi::GuiCore::CoreMeasureList *samples);
-    bool saveCovariates(Tucuxi::GuiCore::PatientVariateList *covariates);
+    bool saveActiveSubstance(Tucuxi::Gui::Core::ActiveSubstance *activeSubstance);
+    bool saveDosages(Tucuxi::Gui::Core::DosageHistory *dosageHistory);
+    bool saveSamples(Tucuxi::Gui::Core::CoreMeasureList *samples);
+    bool saveCovariates(Tucuxi::Gui::Core::PatientVariateList *covariates);
     bool saveClinicals(ClinicalSet *clinicals);
     bool savePatient(Patient *patient);
 

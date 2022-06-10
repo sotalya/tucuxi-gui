@@ -10,7 +10,9 @@
 #include "core/dal/dosage.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(Prediction, QString, name, Name)
 AUTO_PROPERTY_IMPL(Prediction, QString, comment, Comment)
@@ -23,7 +25,7 @@ Prediction::Prediction(AbstractRepository *repository, QObject* parent, DrugResp
     : Entity(repository, parent), _name(""), _comment(""), _curveType(CurveType::Continous),
       _paramsType(ParameterType::POPULATION),
     _analysis(analysis),
-    _spec(Tucuxi::GuiCore::CoreFactory::createEntity<PredictionSpec>(repository))
+    _spec(Tucuxi::Gui::Core::CoreFactory::createEntity<PredictionSpec>(repository))
 {
 }
 
@@ -31,12 +33,12 @@ Prediction::Prediction(AbstractRepository *repository, QObject* parent, DrugResp
 Prediction::Prediction(AbstractRepository *repository, QObject* parent)
     : Entity(repository, parent), _name(""), _comment(""), _curveType(CurveType::Continous),
       _paramsType(ParameterType::POPULATION) //,
-      //_spec(Tucuxi::GuiCore::CoreFactory::createEntity<PredictionSpec>(repository)),
-      //_analysis(Tucuxi::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(repository))
+      //_spec(Tucuxi::Gui::Core::CoreFactory::createEntity<PredictionSpec>(repository)),
+      //_analysis(Tucuxi::Gui::Core::CoreFactory::createEntity<DrugResponseAnalysis>(repository))
 {
 
-          _spec=(Tucuxi::GuiCore::CoreFactory::createEntity<PredictionSpec>(repository));
-          _analysis=(Tucuxi::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(repository));
+          _spec=(Tucuxi::Gui::Core::CoreFactory::createEntity<PredictionSpec>(repository));
+          _analysis=(Tucuxi::Gui::Core::CoreFactory::createEntity<DrugResponseAnalysis>(repository));
 //    LOG(QtDebugMsg, NOEZERROR, "Prediction Constructor");
 }
 
@@ -55,5 +57,6 @@ void Prediction::setFirsttake(const QDateTime &firsttake)
     getAnalysis()->getTreatment()->getDosages()->setFirsttake(firsttake);
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

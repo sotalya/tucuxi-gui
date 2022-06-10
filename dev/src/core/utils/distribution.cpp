@@ -7,7 +7,9 @@
 #include "core/utils/ezutils.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //Array of possible distributions
@@ -55,6 +57,7 @@ QString distribution::toString (DistributionType type)
    return descs.at(type).id;
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

@@ -2,11 +2,14 @@
 #define MODELVSTREATMENTCOMPATIBILITYCHECKER_H
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class DrugModel;
 class DrugTreatment;
 
+}
 }
 }
 
@@ -34,8 +37,8 @@ public:
      * greater than a certain value, then a model for neonates should not
      * be used.
      */
-    bool check(Tucuxi::GuiCore::DrugModel *model,
-               Tucuxi::GuiCore::DrugTreatment *treatment);
+    bool check(Tucuxi::Gui::Core::DrugModel *model,
+               Tucuxi::Gui::Core::DrugTreatment *treatment);
 };
 
 #endif // MODELVSTREATMENTCOMPATIBILITYCHECKER_H

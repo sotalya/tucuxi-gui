@@ -13,7 +13,9 @@
 
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 typedef int ident;
 // This class should be a superclass of all the aggregates listed below
@@ -213,8 +215,9 @@ public:
 
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
-Q_DECLARE_INTERFACE(Tucuxi::GuiCore::CoreRepository, "ch.heig-vd.ezechiel.CoreInterface/0.1")
+Q_DECLARE_INTERFACE(Tucuxi::Gui::Core::CoreRepository, "ch.heig-vd.ezechiel.CoreInterface/0.1")
 
 #endif // REPOSITORY_H

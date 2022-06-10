@@ -105,7 +105,7 @@ bool DrugListModel::removeRows(int row, int count, const QModelIndex &parent)
     return false;
 }
 
-void DrugListModel::setModelData(QList<Tucuxi::GuiCore::DrugModel*> *drugs)
+void DrugListModel::setModelData(QList<Tucuxi::Gui::Core::DrugModel*> *drugs)
 {
     beginResetModel();
     _drugs = drugs;

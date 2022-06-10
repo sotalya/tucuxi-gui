@@ -103,7 +103,7 @@ bool DrugVariateListModel::removeRows(int row, int count, const QModelIndex &par
     return false;
 }
 
-void DrugVariateListModel::setModelData(Tucuxi::GuiCore::DrugVariateList *drugVariates)
+void DrugVariateListModel::setModelData(Tucuxi::Gui::Core::DrugVariateList *drugVariates)
 {
     beginResetModel();
     _drugVariates = drugVariates;

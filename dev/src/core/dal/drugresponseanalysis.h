@@ -6,7 +6,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class DrugTreatment;
 class DrugModel;
@@ -30,10 +32,11 @@ protected:
 };
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::DrugResponseAnalysis*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::DrugResponseAnalysis*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::DrugResponseAnalysis*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::DrugResponseAnalysis*>)
 
 #endif // DRUGRESPONSEANALYSIS_H

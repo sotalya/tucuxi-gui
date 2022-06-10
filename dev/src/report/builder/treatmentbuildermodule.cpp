@@ -8,7 +8,7 @@
 #include "drug.h"
 #include "translatablestring.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
 TreatmentBuilderModule::TreatmentBuilderModule(DrugTreatment* treatment, QObject *parent) :
     _treatment(treatment)

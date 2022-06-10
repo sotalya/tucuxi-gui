@@ -17,7 +17,7 @@
 #include <QFlags>
 #include <QFile>
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
 //! Use this macro to send an error and quit (both CLI and Core errors)
 //! doesnt work in static methods
@@ -61,7 +61,7 @@ using namespace Tucuxi::GuiCore;
 
 namespace Tucuxi {
 namespace cliutils {
-class CliMessageHandler : public Tucuxi::GuiCore::CoreMessageHandler
+class CliMessageHandler : public Tucuxi::Gui::Core::CoreMessageHandler
 {
     Q_OBJECT
 public:

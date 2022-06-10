@@ -10,7 +10,9 @@
 
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 /** Reunion of some data with a unit.
@@ -115,7 +117,8 @@ private:
     Unit _unit;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // DATASET_H

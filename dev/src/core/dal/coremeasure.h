@@ -10,7 +10,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class UncastedValueList;
 
@@ -40,12 +42,13 @@ public:
 
 
 QML_POINTERLIST_CLASS_DECL(CoreMeasureList, CoreMeasure)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::CoreMeasure*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::CoreMeasure*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::CoreMeasureList*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::CoreMeasure*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::CoreMeasure*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::CoreMeasureList*)
 
 
 #endif // MEASURE_H

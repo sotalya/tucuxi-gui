@@ -3,7 +3,9 @@
 #include "percentilepair.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 QML_POINTERLIST_CLASS_IMPL(PercentileDataList, PercentileData)
 
@@ -18,5 +20,6 @@ PercentileData::PercentileData(AbstractRepository *repository, QObject *parent)
 
 }
 
+}
 }
 }

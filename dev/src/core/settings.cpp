@@ -5,7 +5,9 @@
 #include <QMutexLocker>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 Settings &Settings::getInstance()
@@ -226,6 +228,7 @@ Settings::~Settings()
 //GraphDisplaySettings::GraphDisplaySettings()
 //{}
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

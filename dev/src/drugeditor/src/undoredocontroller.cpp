@@ -37,31 +37,31 @@
 
 UndoRedoController::UndoRedoController(QWindow *parent) :
     QQuickView(parent),
-    _currentDrug(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugModel>(ABSTRACTREPO, this)),
-    _editors(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::EditorList>(ABSTRACTREPO,this)),
-    _editorComments(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO,this)),
+    _currentDrug(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugModel>(ABSTRACTREPO, this)),
+    _editors(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::EditorList>(ABSTRACTREPO,this)),
+    _editorComments(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,this)),
     editorModel(new EditorModel(this)),
     editorListModel(new EditorListModel(this)),
     editorCommentsModel(new CommentListModel(this)),
-    _doses(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DoseList>(ABSTRACTREPO,this)),
-    //    _doseList(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DoseList>(ABSTRACTREPO,this)),
-    _dosesComments(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO,this)),
-    _intervals(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::IntervalList>(ABSTRACTREPO,this)),
-    _infusions(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::InfusionList>(ABSTRACTREPO,this)),
+    _doses(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DoseList>(ABSTRACTREPO,this)),
+    //    _doseList(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DoseList>(ABSTRACTREPO,this)),
+    _dosesComments(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,this)),
+    _intervals(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IntervalList>(ABSTRACTREPO,this)),
+    _infusions(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::InfusionList>(ABSTRACTREPO,this)),
     drugListModel(new DrugListModel(this)),
     drugCommentsModel(new CommentListModel(this)),
-    _drugGeneralComments(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO, this)),
-    _drugs(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugModelList>(ABSTRACTREPO, this)),
-    _targetComments(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO, this)),
-    _targets(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TargetList>(ABSTRACTREPO, this)),
-    _admeComments(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO, this)),
-    _adme(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ADME>(ABSTRACTREPO,this)),
-    _halflifeComments(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO, this)),
-    _halflife(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Halflife>(ABSTRACTREPO,this)),
-    _errorModelComments(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO, this)),
-    _errorModel(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ErrorModel>(ABSTRACTREPO,this)),
-    _parameters(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Parameters>(ABSTRACTREPO,this)),
-    _covariates(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugVariateList>(ABSTRACTREPO,this)),
+    _drugGeneralComments(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO, this)),
+    _drugs(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugModelList>(ABSTRACTREPO, this)),
+    _targetComments(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO, this)),
+    _targets(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetList>(ABSTRACTREPO, this)),
+    _admeComments(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO, this)),
+    _adme(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ADME>(ABSTRACTREPO,this)),
+    _halflifeComments(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO, this)),
+    _halflife(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Halflife>(ABSTRACTREPO,this)),
+    _errorModelComments(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO, this)),
+    _errorModel(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ErrorModel>(ABSTRACTREPO,this)),
+    _parameters(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameters>(ABSTRACTREPO,this)),
+    _covariates(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariateList>(ABSTRACTREPO,this)),
     domainListModel(new DomainListModel(this)),
     studyListModel(new StudyListModel(this)),
     doseListModel(new DoseListModel(this)),
@@ -87,7 +87,7 @@ UndoRedoController::UndoRedoController(QWindow *parent) :
 
 
 void UndoRedoController::resetStaticModels(){
-    if (APPUTILSREPO->getDrugsList(_drugs->getList()).error != Tucuxi::GuiCore::NoError)
+    if (APPUTILSREPO->getDrugsList(_drugs->getList()).error != Tucuxi::Gui::Core::NoError)
         EXLOG(QtFatalMsg, Tucuxi::drugeditor::MODELIOERROR, "Drugs list not retreived.");
 
     for(int i = 0; i < _drugs->size();++i) {
@@ -322,7 +322,7 @@ void UndoRedoController::drugIndexChanged(int index)
 
 void UndoRedoController::editorIndexChanged(int index)
 {
-    Tucuxi::GuiCore::Editor *editor;
+    Tucuxi::Gui::Core::Editor *editor;
 
     if(index < 0 || index >= _currentDrug->getMetaData()->getEditors()->size()) {
         return;
@@ -343,7 +343,7 @@ void UndoRedoController::dosageIndexChanged(int index)
 void UndoRedoController::targetIndexChanged(int index)
 {
     if(index == -1) return;
-    Tucuxi::GuiCore::Target *target = _targets->at(index);
+    Tucuxi::Gui::Core::Target *target = _targets->at(index);
 
     _targetComments = target->getComments();
 
@@ -378,7 +378,7 @@ void UndoRedoController::drugDataChanged(QString propertyName, QVariant newText)
         return;
 
     if ( propertyName.contains("comment-") ) {
-        Tucuxi::GuiCore::TranslatableString *comments = _drugGeneralComments;//_currentDrug->getGeneralCommentsTranslationMap();
+        Tucuxi::Gui::Core::TranslatableString *comments = _drugGeneralComments;//_currentDrug->getGeneralCommentsTranslationMap();
 
         QString reference = propertyName.split('-').at(2);
         bool isLangChanging = (propertyName.split('-').at(1) == "lang");
@@ -402,13 +402,13 @@ void UndoRedoController::editorDataChanged(QString propertyName, QVariant newVal
     if(propertyName.isEmpty())
         return;
 
-    Tucuxi::GuiCore::Editor *editor = editorModel->getModelData();
+    Tucuxi::Gui::Core::Editor *editor = editorModel->getModelData();
     Q_ASSERT(editor);
 
 
     if(propertyName.contains("comment-")){
 
-        Tucuxi::GuiCore::TranslatableString *comments = editor->getComments();
+        Tucuxi::Gui::Core::TranslatableString *comments = editor->getComments();
         QString reference = propertyName.split('-').at(2);
         bool  isLangChanging = (propertyName.split('-').at(1) == "lang");
 
@@ -447,13 +447,13 @@ void UndoRedoController::dosageDataChanged(QString propertyName, QVariant newTex
 
         int index = propertyName.split('-').at(1).toInt();
 
-        Tucuxi::GuiCore::ValidDose * dose = _doses->at(index);
+        Tucuxi::Gui::Core::ValidDose * dose = _doses->at(index);
 
-        Tucuxi::GuiCore::IdentifiableAmount* amount = dose->getQuantity();
+        Tucuxi::Gui::Core::IdentifiableAmount* amount = dose->getQuantity();
         undoPushator(new EditObjCommand(amount,"dbvalue",newText));//TODO send signal through command
 
     } else if (propertyName.contains("Intervals-")) {
-        Tucuxi::GuiCore::IdentifiableAmount* amount = _intervals->at(propertyName.split('-').at(1).toInt())->getQuantity();
+        Tucuxi::Gui::Core::IdentifiableAmount* amount = _intervals->at(propertyName.split('-').at(1).toInt())->getQuantity();
         undoPushator(new EditObjCommand(amount,"dbvalue",newText));
     } else if (propertyName.contains("Infusions-")) {
 
@@ -472,12 +472,12 @@ void UndoRedoController::targetDataChanged(QString propertyName, QVariant newTex
 
         undoPushator(new EditCommentCommand(_targetComments,newText.toString(),type,&UndoRedoController::targetCommentsChanged,this,propList.at(1) == "lang"));
     } else {
-        Tucuxi::GuiCore::Target *t = _targets->at(index);
+        Tucuxi::Gui::Core::Target *t = _targets->at(index);
         //    if(!_currentDrug->getTargets()->getList().contains(t)) {
         //        t->setType(type);
         //        _currentDrug->getTargets()->append(t);
         //    }
-        Tucuxi::GuiCore::OperableAmount *amount;
+        Tucuxi::Gui::Core::OperableAmount *amount;
         if(role == "cmin") {
             amount = t->getCmin();
         } else if(role == "cmax") {
@@ -503,8 +503,8 @@ void UndoRedoController::conversionDataChanged(QString propertyName, QVariant ne
     QString type = propList.at(0);
     QString role = propList.at(1);
     if(type == "comment") {
-        Tucuxi::GuiCore::TranslatableString *comment;
-        void (UndoRedoController::*signal)(Tucuxi::GuiCore::TranslatableString*);
+        Tucuxi::Gui::Core::TranslatableString *comment;
+        void (UndoRedoController::*signal)(Tucuxi::Gui::Core::TranslatableString*);
         type = conversionView->property("conversionSelected").toString();
 
         if(type == "ADME") {
@@ -545,7 +545,7 @@ void UndoRedoController::covariateDataChanged(QString propertyName, QVariant new
     QStringList propList = propertyName.split('-');
     QString name = propList.at(0);
 
-    Tucuxi::GuiCore::DrugVariate *covariate;
+    Tucuxi::Gui::Core::DrugVariate *covariate;
 
 
     //TODO check if data is the same and do nothing
@@ -560,7 +560,7 @@ void UndoRedoController::covariateDataChanged(QString propertyName, QVariant new
 
         covariate = _covariates->at(index);
 
-        Tucuxi::GuiCore::TranslatableString *trans;
+        Tucuxi::Gui::Core::TranslatableString *trans;
         void (UndoRedoController::*signal)();
 
 
@@ -704,7 +704,7 @@ void UndoRedoController::targetEntityChanged(QString listViewName, int index)
                 undoPushator(new RemoveObjCommand(_targets,index));
             if ( index == -1 ) {
                 undoPushator(new EditObjCommand(_targets->at(_targets->size() - 1),
-                                                "type",Tucuxi::GuiCore::Target::_typeMap.value(type)));
+                                                "type",Tucuxi::Gui::Core::Target::_typeMap.value(type)));
             }
             undoPushator(new ChangeViewIndexCommand(mainView->findChild<QObject *>("targetDisplayPanel"),(index== -1 ? _targets->size() - 1 : index - 1)));
             undoRedoStack->endMacro();
@@ -717,8 +717,8 @@ void UndoRedoController::conversionEntityChanged(QString listViewName, int index
     QStringList propList = listViewName.split('-');
     QString role = propList.at(0);
     if (role == "comment") {
-        Tucuxi::GuiCore::TranslatableString *comment;
-        void (UndoRedoController::*signal)(Tucuxi::GuiCore::TranslatableString*);
+        Tucuxi::Gui::Core::TranslatableString *comment;
+        void (UndoRedoController::*signal)(Tucuxi::Gui::Core::TranslatableString*);
         QString type = conversionView->property("conversionSelected").toString();
 
         if(type == "ADME") {
@@ -768,11 +768,11 @@ void UndoRedoController::covariateEntityChanged(QString listViewName, int index)
 
     if(role == "trans") {
 
-        Tucuxi::GuiCore::TranslatableString *trans;
-        void (UndoRedoController::*signal)(Tucuxi::GuiCore::TranslatableString*);
+        Tucuxi::Gui::Core::TranslatableString *trans;
+        void (UndoRedoController::*signal)(Tucuxi::Gui::Core::TranslatableString*);
         QString type = propList.at(1);
         int covariateIndex = covariateView->property("index").toInt();
-        Tucuxi::GuiCore::DrugVariate *covariate = _covariates->at(covariateIndex);
+        Tucuxi::Gui::Core::DrugVariate *covariate = _covariates->at(covariateIndex);
         if(type == "name") {
             trans = covariate->getVisualNameTranslation();
         } else if (type == "desc") {

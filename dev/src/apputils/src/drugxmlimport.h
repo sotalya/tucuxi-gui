@@ -9,7 +9,9 @@
 
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 class DrugModel;
 class MetaData;
 class EditorList;
@@ -22,30 +24,31 @@ class OperationList;
 class TranslatableString;
 }
 }
+}
 
 class DrugXmlImport
 {
 public:
     DrugXmlImport();
     // The only method to be public
-    Tucuxi::GuiCore::DrugModel *load(const QString &fileName);
+    Tucuxi::Gui::Core::DrugModel *load(const QString &fileName);
 
 protected:
     QXmlStreamReader reader;
 
-    bool loadHistory(Tucuxi::GuiCore::DrugModel *drug);
+    bool loadHistory(Tucuxi::Gui::Core::DrugModel *drug);
 
-    bool loadRevisions(Tucuxi::GuiCore::MetaData* metaData);
+    bool loadRevisions(Tucuxi::Gui::Core::MetaData* metaData);
 
-    bool loadEditor(Tucuxi::GuiCore::EditorList *editors);
+    bool loadEditor(Tucuxi::Gui::Core::EditorList *editors);
 
-    bool loadDrug(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadDrug(Tucuxi::Gui::Core::DrugModel* drug);
 
-    bool loadHead(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadHead(Tucuxi::Gui::Core::DrugModel* drug);
 
-    bool loadAdme(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadAdme(Tucuxi::Gui::Core::DrugModel* drug);
 
-    bool loadHalflife(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadHalflife(Tucuxi::Gui::Core::DrugModel* drug);
     /**
      * @brief loadConversions
      * @param drug
@@ -54,7 +57,7 @@ protected:
      *
      * @return true if everything went well false otherwise, furthermore `drug` isn't modified in case of problems
      */
-    bool loadConversions(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadConversions(Tucuxi::Gui::Core::DrugModel* drug);
     /**
      * @brief loadDosages
      * @param drug
@@ -63,35 +66,35 @@ protected:
      *
      * @return
      */
-    bool loadDosages(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadDosages(Tucuxi::Gui::Core::DrugModel* drug);
 
-    bool loadStandardTreatment(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadStandardTreatment(Tucuxi::Gui::Core::DrugModel* drug);
 
-    bool loadTargets(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadTargets(Tucuxi::Gui::Core::DrugModel* drug);
 
-    bool loadTarget(Tucuxi::GuiCore::TargetList* targetSet);
+    bool loadTarget(Tucuxi::Gui::Core::TargetList* targetSet);
 
-    bool loadCovariates(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadCovariates(Tucuxi::Gui::Core::DrugModel* drug);
 
-    bool loadCovariate(Tucuxi::GuiCore::DrugVariateList *drugVariateSet);
+    bool loadCovariate(Tucuxi::Gui::Core::DrugVariateList *drugVariateSet);
 
-    bool loadErrorModel(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadErrorModel(Tucuxi::Gui::Core::DrugModel* drug);
 
-    bool loadParameters(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadParameters(Tucuxi::Gui::Core::DrugModel* drug);
 
-    bool loadParameter(Tucuxi::GuiCore::ParameterSet* parameterSet);
+    bool loadParameter(Tucuxi::Gui::Core::ParameterSet* parameterSet);
 
-    bool loadBsv(Tucuxi::GuiCore::Parameter* parameter);
+    bool loadBsv(Tucuxi::Gui::Core::Parameter* parameter);
 
-    bool loadCorrelations(Tucuxi::GuiCore::DrugModel *drug);
+    bool loadCorrelations(Tucuxi::Gui::Core::DrugModel *drug);
 
-    bool loadOperations(Tucuxi::GuiCore::DrugModel* drug);
+    bool loadOperations(Tucuxi::Gui::Core::DrugModel* drug);
 
-    bool loadOperation(QMap<QString,Tucuxi::GuiCore::OperationList*> &mapOperationList);
+    bool loadOperation(QMap<QString,Tucuxi::Gui::Core::OperationList*> &mapOperationList);
 
-    bool stringLoaderTranslation(QString elemName, Tucuxi::GuiCore::TranslatableString *QMapStringTranslation);
+    bool stringLoaderTranslation(QString elemName, Tucuxi::Gui::Core::TranslatableString *QMapStringTranslation);
 
-    Tucuxi::GuiCore::TranslatableString* commentsLoader(bool &isOk);
+    Tucuxi::Gui::Core::TranslatableString* commentsLoader(bool &isOk);
 
     QString extractor(QXmlStreamAttributes *attributes = nullptr,bool readText = true);
 

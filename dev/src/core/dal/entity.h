@@ -19,7 +19,9 @@
 #include "core/errors_core.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 typedef int Identifier;
 
@@ -71,10 +73,11 @@ protected:
 typedef Entity* SharedEntity;
 typedef QList<SharedEntity> SharedEntitySet;
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 //Q_DECLARE_METATYPE(int)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Entity*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Entity*)
 
 #endif // ENTITY_H

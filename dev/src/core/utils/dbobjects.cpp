@@ -5,7 +5,9 @@
 #include "core/dal/drugtreatment.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //Set the Location default values
@@ -69,6 +71,7 @@ DBCurve::DBCurve() : id(invalid_ident), patient(invalid_ident), cType(0), pType(
 
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

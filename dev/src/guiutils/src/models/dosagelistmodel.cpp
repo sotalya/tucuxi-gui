@@ -94,7 +94,7 @@ int DosageListModel::rowCount(const QModelIndex &parent) const
     }
 }
 
-void DosageListModel::setModelData(Tucuxi::GuiCore::DosageHistory* dosages)
+void DosageListModel::setModelData(Tucuxi::Gui::Core::DosageHistory* dosages)
 {
     beginResetModel();
     _dosages = dosages;
@@ -102,7 +102,7 @@ void DosageListModel::setModelData(Tucuxi::GuiCore::DosageHistory* dosages)
     emit updateStatus();
 }
 
-void DosageListModel::setModelData(Tucuxi::GuiCore::DrugModel* drug)
+void DosageListModel::setModelData(Tucuxi::Gui::Core::DrugModel* drug)
 {
     _drug = drug;
     emit updateStatus();
@@ -136,16 +136,16 @@ void DosageListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
     case RouteRole:        
         switch (value.toInt()) {
         case 0:
-            _dosages->at(row)->getRoute()->setRoute(Tucuxi::GuiCore::Admin::BOLUS);
+            _dosages->at(row)->getRoute()->setRoute(Tucuxi::Gui::Core::Admin::BOLUS);
             break;
         case 1:
-            _dosages->at(row)->getRoute()->setRoute(Tucuxi::GuiCore::Admin::INFUSION);
+            _dosages->at(row)->getRoute()->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
             break;
         case 2:
-            _dosages->at(row)->getRoute()->setRoute(Tucuxi::GuiCore::Admin::EXTRA);
+            _dosages->at(row)->getRoute()->setRoute(Tucuxi::Gui::Core::Admin::EXTRA);
             break;
         default:
-            _dosages->at(row)->getRoute()->setRoute(Tucuxi::GuiCore::Admin::BOLUS);
+            _dosages->at(row)->getRoute()->setRoute(Tucuxi::Gui::Core::Admin::BOLUS);
             break;
         }
         break;
@@ -162,7 +162,7 @@ void DosageListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
     emit updateStatus();
 }
 
-void DosageListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities)
+void DosageListModel::insertRowsImpl(int at, int count, const Tucuxi::Gui::Core::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
@@ -173,23 +173,23 @@ void DosageListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::S
     Q_ASSERT(_drug->getIntervals());
     Q_ASSERT(_drug->getInfusions());
 
-    Tucuxi::GuiCore::Dosage* dosage;
+    Tucuxi::Gui::Core::Dosage* dosage;
     for(int i = at, j = 0; i < at + count; i++, j++) {
 
         //Setup or retrieve the dosage
         if (entities.isEmpty()) {
-            dosage = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Dosage>(ABSTRACTREPO);
+            dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO);
 //            dosage->setTaken(true);
             dosage->getQuantity()->setUnit(_drug->getDoses()->getQuantity()->unit().name());
             dosage->getQuantity()->setValue(_drug->getDoses()->getQuantity()->value());
             dosage->setDbinterval(_drug->getIntervals()->getQuantity()->value());
 
             dosage->setRoute(_drug->getAdme()->getDefaultIntake());
-            if (dosage->getRoute()->getRoute() == Tucuxi::GuiCore::Admin::INFUSION){
+            if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::Admin::INFUSION){
                 dosage->setDbtinf(_drug->getInfusions()->getQuantity()->getDbvalue());
             }
         } else {
-            dosage = static_cast<Tucuxi::GuiCore::Dosage*>(entities.at(j));
+            dosage = static_cast<Tucuxi::Gui::Core::Dosage*>(entities.at(j));
         }
 
         _dosages->getList().insert(i, dosage);
@@ -197,12 +197,12 @@ void DosageListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::S
     emit updateStatus();
 }
 
-Tucuxi::GuiCore::SharedEntitySet DosageListModel::removeRowsImpl(int at, int count)
+Tucuxi::Gui::Core::SharedEntitySet DosageListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    Tucuxi::GuiCore::SharedEntitySet removed;
+    Tucuxi::Gui::Core::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _dosages->getList().takeAt(at);
 

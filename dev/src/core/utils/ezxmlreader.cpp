@@ -16,7 +16,9 @@
 #include <QMetaType>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //Create the reader
@@ -435,6 +437,7 @@ bool EzXMLReader::fatalError (const QXmlParseException & exception)
 }
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

@@ -10,7 +10,9 @@
 #include "core/utils/ezutils.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 /** Represent a multi-element choice.
@@ -130,9 +132,10 @@ private:
    
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::EzChoice)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::EzChoice)
 
 #endif // EZCHOICE_H

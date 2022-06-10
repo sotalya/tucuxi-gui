@@ -4,10 +4,10 @@
 #include "stdadminrepository.h"
 #include "adminfactory.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
-AUTO_PROPERTY_IMPL(CovariatesBuilderModule, Tucuxi::GuiCore::DrugVariateList*, drugvariates, Drugvariates)
-AUTO_PROPERTY_IMPL(CovariatesBuilderModule, Tucuxi::GuiCore::PatientVariateList*, patientvariates, Patientvariates)
+AUTO_PROPERTY_IMPL(CovariatesBuilderModule, Tucuxi::Gui::Core::DrugVariateList*, drugvariates, Drugvariates)
+AUTO_PROPERTY_IMPL(CovariatesBuilderModule, Tucuxi::Gui::Core::PatientVariateList*, patientvariates, Patientvariates)
 
 CovariatesBuilderModule::CovariatesBuilderModule(DrugVariateList * drugvariates, PatientVariateList *patientvariates, QObject *parent) :
     _patientvariates(patientvariates), _drugvariates(drugvariates)

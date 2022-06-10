@@ -7,7 +7,9 @@
 #include "core/dal/drug/parameters.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //class Percentile : public QObject
@@ -63,7 +65,8 @@ private:
 };
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // PERCENTILE_H

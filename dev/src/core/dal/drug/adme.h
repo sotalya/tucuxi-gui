@@ -10,7 +10,9 @@
 #include "tucucore/drugmodel/formulationandroute.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class CommentSet;
 class TranslatableString;
@@ -136,15 +138,18 @@ private:
 
 QML_POINTERLIST_CLASS_DECL(AdminList, Admin)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Admin*)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Admin::Route)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Admin*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Admin*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Admin::Route)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Admin*>)
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class ADME : public Entity
 {
@@ -178,9 +183,10 @@ public:
 
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ADME*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ADME*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ADME*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::ADME*>)
 #endif // ADME_H

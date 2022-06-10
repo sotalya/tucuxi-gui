@@ -6,7 +6,7 @@ class Chart;
 #include "entity.h"
 #include "reportbuildermodule.h"
 
-class ChartBuilderModule : public Tucuxi::GuiCore::Entity, public ReportBuilderModule
+class ChartBuilderModule : public Tucuxi::Gui::Core::Entity, public ReportBuilderModule
 {
     Q_OBJECT
 

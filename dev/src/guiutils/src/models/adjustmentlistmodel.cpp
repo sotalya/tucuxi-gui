@@ -113,7 +113,7 @@ bool AdjustmentListModel::removeRows(int row, int count, const QModelIndex &pare
     return false;
 }
 
-void AdjustmentListModel::setModelData(Tucuxi::GuiCore::PredictionResult* pred)
+void AdjustmentListModel::setModelData(Tucuxi::Gui::Core::PredictionResult* pred)
 {
     beginResetModel();
     _pred = pred;

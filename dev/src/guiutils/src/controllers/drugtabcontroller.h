@@ -9,11 +9,14 @@
 #include "abstractviewcontroller.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class ActiveSubstance;
 class DrugModel;
 
+}
 }
 }
 
@@ -28,8 +31,8 @@ public:
 
 public slots:
 
-    void setDrugInfo(Tucuxi::GuiCore::ActiveSubstance *substance);
-    void setDrugModelInfo(Tucuxi::GuiCore::DrugModel *drugModel);
+    void setDrugInfo(Tucuxi::Gui::Core::ActiveSubstance *substance);
+    void setDrugModelInfo(Tucuxi::Gui::Core::DrugModel *drugModel);
 };
 
 #endif // DRUGTABCONTROLLER_H

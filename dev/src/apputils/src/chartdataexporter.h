@@ -4,9 +4,12 @@
 #include <QString>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 class ChartData;
 class PredictionResult;
+}
 }
 }
 
@@ -22,9 +25,9 @@ class ChartDataExporter
 public:
     ChartDataExporter();
 
-    QString exportData(const Tucuxi::GuiCore::ChartData *chartData, int what = EXPORT_ALL);
+    QString exportData(const Tucuxi::Gui::Core::ChartData *chartData, int what = EXPORT_ALL);
 
-    QString exportPrediction(Tucuxi::GuiCore::PredictionResult *pred);
+    QString exportPrediction(Tucuxi::Gui::Core::PredictionResult *pred);
 };
 
 class ChartDataHtmlExporter
@@ -32,9 +35,9 @@ class ChartDataHtmlExporter
 public:
     ChartDataHtmlExporter();
 
-    QString exportData(const Tucuxi::GuiCore::ChartData *chartData, int what);
+    QString exportData(const Tucuxi::Gui::Core::ChartData *chartData, int what);
 
-    QString exportPrediction(Tucuxi::GuiCore::PredictionResult *pred);
+    QString exportPrediction(Tucuxi::Gui::Core::PredictionResult *pred);
 };
 
 #endif // CHARTDATAEXPORTER_H

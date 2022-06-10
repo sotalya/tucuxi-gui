@@ -10,7 +10,8 @@
 #include "core/dal/drug/adme.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 class TranslatableString;
 
@@ -140,11 +141,12 @@ public:
 
 };
 QML_POINTERLIST_CLASS_DECL(DoseList,ValidDose)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ValidDose*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ValidDose*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ValidDoses*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ValidDose*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::ValidDose*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ValidDoses*)
 
 #endif // DOSES_H

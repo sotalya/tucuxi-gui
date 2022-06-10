@@ -7,7 +7,7 @@
 #include "core/utils/logging.h"
 #include "errors_guiutils.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core;
 
 CovariateListModel::CovariateListModel(QObject *parent) :
     AbstractEntityListModel(parent),
@@ -87,7 +87,7 @@ int CovariateListModel::rowCount(const QModelIndex &parent) const
     }
 }
 
-void CovariateListModel::setModelData(Tucuxi::GuiCore::PatientVariateList *covariates)
+void CovariateListModel::setModelData(Tucuxi::Gui::Core::PatientVariateList *covariates)
 {
     beginResetModel();
     _covariates = covariates;
@@ -136,21 +136,21 @@ void CovariateListModel::setDataImpl(const QModelIndex &index, const QVariant &v
     emit updateStatus();
 }
 
-void CovariateListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities)
+void CovariateListModel::insertRowsImpl(int at, int count, const Tucuxi::Gui::Core::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
     Q_ASSERT(entities.isEmpty() || entities.count() == count);
     Q_ASSERT(_drugVariate);
 
-    Tucuxi::GuiCore::PatientVariate* covariate;
+    Tucuxi::Gui::Core::PatientVariate* covariate;
     for(int i = at, j = 0; i < at + count; i++, j++) {
 
         //Setup or retrieve the dosage
 
         // YTA: We should have a copy constructor
         if (entities.isEmpty()) {
-            covariate = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariate>(ABSTRACTREPO);
+            covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
             covariate->setCovariateId(_drugVariate->getCovariateId());
             covariate->getQuantity()->setUnit(_drugVariate->getQuantity()->unit());
             covariate->setDescription(_drugVariate->getDescription());
@@ -159,7 +159,7 @@ void CovariateListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore
             covariate->getQuantity()->setValue(_drugVariate->getQuantity()->value());
             covariate->setDate(QDateTime::currentDateTime());
         } else {
-            covariate = static_cast<Tucuxi::GuiCore::PatientVariate*>(entities.at(j));
+            covariate = static_cast<Tucuxi::Gui::Core::PatientVariate*>(entities.at(j));
         }
 
         _covariates->getList().insert(i, covariate);
@@ -167,12 +167,12 @@ void CovariateListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore
     emit updateStatus();
 }
 
-Tucuxi::GuiCore::SharedEntitySet CovariateListModel::removeRowsImpl(int at, int count)
+Tucuxi::Gui::Core::SharedEntitySet CovariateListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    Tucuxi::GuiCore::SharedEntitySet removed;
+    Tucuxi::Gui::Core::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _covariates->getList().takeAt(at);
 

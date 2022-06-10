@@ -9,7 +9,7 @@
 #include "core/utils/logging.h"
 #include "errors_cliutils.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core;
 
 namespace Tucuxi {
 namespace cliutils {

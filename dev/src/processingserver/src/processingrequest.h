@@ -13,7 +13,7 @@ class ProcessingRequest
 public:
     ProcessingRequest();
 
-    Tucuxi::GuiCore::SharedDrugResponseAnalysis analysis;
+    Tucuxi::Gui::Core::SharedDrugResponseAnalysis analysis;
 };
 
 QDataStream &operator>>(QDataStream &, ProcessingRequest &);

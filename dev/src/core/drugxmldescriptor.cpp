@@ -5,7 +5,9 @@
 #include <QFile>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //Default contructor
@@ -129,6 +131,7 @@ void DrugXmlDescriptor::setDescription(const QString &description)
     _description = description;
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

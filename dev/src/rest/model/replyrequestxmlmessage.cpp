@@ -18,7 +18,7 @@ ReplyRequestXmlMessage::~ReplyRequestXmlMessage()
 
 QString ReplyRequestXmlMessage::schemaPath() const
 {
-    return Tucuxi::GuiCore::XmlValidator::Reply_Request;
+    return Tucuxi::Gui::Core::XmlValidator::Reply_Request;
 }
 
 QString ReplyRequestXmlMessage::messageType() const

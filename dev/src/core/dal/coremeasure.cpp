@@ -4,7 +4,9 @@
 #include "core/dal/uncastedvalue.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(CoreMeasure, IdentifiableAmount*, concentration, Concentration)
 AUTO_PROPERTY_IMPL(CoreMeasure, QDateTime, moment, Moment)
@@ -67,5 +69,6 @@ bool CoreMeasure::operator !=(CoreMeasure* other)
 //}
 
 QML_POINTERLIST_CLASS_IMPL(CoreMeasureList, CoreMeasure)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

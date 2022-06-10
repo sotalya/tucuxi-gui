@@ -568,7 +568,7 @@ bool ExportAction::buildDataset(const QDateTime &date, const ident &patientId, c
 
 bool ExportAction::buildInterpretation(ExportAction::Dataset &dataset, const QDateTime &date, const ident &patientId)
 {
-    Tucuxi::GuiCore::Response response;
+    Tucuxi::Gui::Core::Response response;
 
     //The database objects
     QList<Clinical*> clinicals;
@@ -624,7 +624,7 @@ bool ExportAction::buildInterpretation(ExportAction::Dataset &dataset, const QDa
 
 //bool ExportAction::buildCurve(ExportAction::Dataset &dataset, const QDateTime &date, const ident &curveId, const PercentileList &percentiles, const uint nbPoints)
 //{
-//    SharedDrugResponseAnalysis _resp = Tucuxi::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
+//    SharedDrugResponseAnalysis _resp = Tucuxi::Gui::Core::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
 
 //    //Ignore if not requested
 //    if (curveId == invalid_ident)
@@ -815,7 +815,7 @@ bool ExportAction::buildInterpretation(ExportAction::Dataset &dataset, const QDa
 
 bool ExportAction::buildPatient(PatientData &patientData, const ident &patientId)
 {
-    Tucuxi::GuiCore::Response response;
+    Tucuxi::Gui::Core::Response response;
 
     //The database objects
     SharedPatient patient;
@@ -862,7 +862,7 @@ bool ExportAction::buildPatient(PatientData &patientData, const ident &patientId
 
 bool ExportAction::buildPractician(ExchangeAction::PracticianData &practicianData, const ident &practicianId)
 {
-    Tucuxi::GuiCore::Response response;
+    Tucuxi::Gui::Core::Response response;
 
     //Check if valid
     if (practicianId == invalid_ident)
@@ -918,7 +918,7 @@ bool ExportAction::buildPractician(ExchangeAction::PracticianData &practicianDat
 
 bool ExportAction::buildInstitute(ExchangeAction::InstituteData &instituteData, const ident &instituteId)
 {
-    Tucuxi::GuiCore::Response response;
+    Tucuxi::Gui::Core::Response response;
 
     //Check if valid
     if (instituteId == invalid_ident)

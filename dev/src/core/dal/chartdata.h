@@ -10,7 +10,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class ChartData : public Entity
 {
@@ -47,8 +49,9 @@ protected:
 
 }
 }
+}
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ChartData*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ChartData*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ChartData*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::ChartData*>)
 
 #endif // CHARTDATA_H

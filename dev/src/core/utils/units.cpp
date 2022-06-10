@@ -6,7 +6,9 @@
 #include "core/core.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //-------------------------- UNIT OBJECT -----------------------
@@ -161,6 +163,7 @@ bool UnitsRegister::unitForName (QString name, unit_id &base, double &multiplier
     return true;
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

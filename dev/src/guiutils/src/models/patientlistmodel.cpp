@@ -161,7 +161,7 @@ void PatientListModel::setDataImpl(const QModelIndex &index, const QVariant &val
     emit updateStatus();
 }
 
-void PatientListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities)
+void PatientListModel::insertRowsImpl(int at, int count, const Tucuxi::Gui::Core::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
@@ -184,12 +184,12 @@ void PatientListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::
     emit updateStatus();
 }
 
-Tucuxi::GuiCore::SharedEntitySet PatientListModel::removeRowsImpl(int at, int count)
+Tucuxi::Gui::Core::SharedEntitySet PatientListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    Tucuxi::GuiCore::SharedEntitySet removed;
+    Tucuxi::Gui::Core::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _patients->takeAt(at);
 

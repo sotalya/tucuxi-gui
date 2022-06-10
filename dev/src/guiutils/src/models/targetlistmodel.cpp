@@ -9,7 +9,7 @@
 #include "apputils/src/apputilsrepository.h"
 #include "core/dal/drug/results.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core;
 
 TargetListModel::TargetListModel(QObject *parent) :
     AbstractEntityListModel(parent),
@@ -110,11 +110,11 @@ int TargetListModel::rowCount(const QModelIndex &parent) const
     }
 }
 
-void TargetListModel::setModelData(QList<Tucuxi::GuiCore::Target*> *targets)
+void TargetListModel::setModelData(QList<Tucuxi::Gui::Core::Target*> *targets)
 {
     beginResetModel();
     _targets = targets;
-    foreach (Tucuxi::GuiCore::Target* tar, *targets) {
+    foreach (Tucuxi::Gui::Core::Target* tar, *targets) {
         tar->getCbest()->convert(_defaultCUnit);
         tar->getCmax()->convert(_defaultCUnit);
         tar->getCmin()->convert(_defaultCUnit);
@@ -128,10 +128,10 @@ void TargetListModel::setModelData(QList<Tucuxi::GuiCore::Target*> *targets)
 }
 
 void TargetListModel::setDefaultUnit(QString unitname) {
-    _defaultCUnit = Tucuxi::GuiCore::Unit(unitname);
+    _defaultCUnit = Tucuxi::Gui::Core::Unit(unitname);
 }
 
-void TargetListModel::setModelData(Tucuxi::GuiCore::DrugModel* drug)
+void TargetListModel::setModelData(Tucuxi::Gui::Core::DrugModel* drug)
 {
     _drug = drug;
     emit updateStatus();
@@ -150,16 +150,16 @@ void TargetListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
     case TypeRole:
         switch (value.toInt()) {
         case 0:
-            _targets->at(row)->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::ResidualTarget);
+            _targets->at(row)->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::ResidualTarget);
             break;
         case 1:
-            _targets->at(row)->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::PeakTarget);
+            _targets->at(row)->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::PeakTarget);
             break;
         case 2:
-            _targets->at(row)->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::MeanTarget);
+            _targets->at(row)->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::MeanTarget);
             break;
         default:
-            _targets->at(row)->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::UnknownTarget);
+            _targets->at(row)->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::UnknownTarget);
             break;
         }
         break;
@@ -204,7 +204,7 @@ void TargetListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
     emit updateStatus();
 }
 
-void TargetListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities)
+void TargetListModel::insertRowsImpl(int at, int count, const Tucuxi::Gui::Core::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
@@ -224,7 +224,7 @@ void TargetListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::S
         //Setup or retrieve the dosage
         if (entities.isEmpty()) {
             target = CoreFactory::createEntity<Target>(ABSTRACTREPO);
-            target->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::ResidualTarget);
+            target->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::ResidualTarget);
 //            target->setCunit(!_drug->getTargets()->isEmpty() ? _drug->getTargets()->first()->getCunit() :_drug->getResults()->getUnit());
             target->getCmin()->setUnit(_defaultCUnit);
             target->getCmax()->setUnit(_defaultCUnit);
@@ -237,12 +237,12 @@ void TargetListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::S
     emit updateStatus();
 }
 
-Tucuxi::GuiCore::SharedEntitySet TargetListModel::removeRowsImpl(int at, int count)
+Tucuxi::Gui::Core::SharedEntitySet TargetListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    Tucuxi::GuiCore::SharedEntitySet removed;
+    Tucuxi::Gui::Core::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _targets->takeAt(at);
 

@@ -9,7 +9,9 @@
 #include "core/utils/ezutils.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 //class OperableAmount;
 class TranslatableString;
@@ -88,14 +90,17 @@ private:
 
 QML_POINTERLIST_CLASS_DECL(TargetMethodList, TargetMethod)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::TargetMethod*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::TargetMethod*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::TargetMethod*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::TargetMethod*>)
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class Target : public Entity
 {
@@ -194,11 +199,12 @@ static QMap<QString, TargetMethod::TargetType> createMap() {
 
 QML_POINTERLIST_CLASS_DECL(TargetList, Target)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Target*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Target*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::TargetList*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Target*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Target*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::TargetList*)
 
 #endif // TARGET_H

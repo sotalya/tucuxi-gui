@@ -8,7 +8,9 @@
 #include "core/utils/ezutils.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class OperationList;
 class TranslatableString;
@@ -59,11 +61,12 @@ protected:
 };
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Variability*)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::VariableValue*)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::OperableDouble*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Variability*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::VariableValue*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::OperableDouble*)
 
 #endif // VARIABILITY_H

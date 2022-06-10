@@ -6,7 +6,9 @@
 #include "stdparamnames.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //----------------------- DESCRIPTOR --------------------------
@@ -121,6 +123,7 @@ DirName::DirName(const QString &name):QString(name)
 {
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

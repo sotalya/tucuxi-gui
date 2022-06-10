@@ -7,7 +7,7 @@
 
 #include <QColor>
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 class ChartColorManager
 {
 public:

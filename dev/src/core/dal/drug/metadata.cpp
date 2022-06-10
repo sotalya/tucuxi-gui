@@ -5,7 +5,9 @@
 #include "references.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 AUTO_PROPERTY_IMPL(MetaData,EditorList*,editors,Editors)
@@ -13,7 +15,8 @@ AUTO_PROPERTY_IMPL(MetaData,ReferenceList*,references,References)
 
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

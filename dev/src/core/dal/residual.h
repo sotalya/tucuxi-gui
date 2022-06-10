@@ -7,7 +7,9 @@
 #include <QVector>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //class Residual : public QObject
@@ -55,7 +57,8 @@ private:
     QVector<Residual> residuals;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

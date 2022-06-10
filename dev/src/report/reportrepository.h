@@ -10,14 +10,14 @@
 
 #define REPORTREPO (dynamic_cast<ReportRepository*>(ABSTRACTREPO))
 
-class ReportRepository : public Tucuxi::GuiCore::AbstractRepository
+class ReportRepository : public Tucuxi::Gui::Core::AbstractRepository
 {
 public:
-    virtual Tucuxi::GuiCore::Response getReport(const Tucuxi::GuiCore::ident &id, ReportData &data) = 0;
-    virtual Tucuxi::GuiCore::Response getReport(const QString &field, const QVariant &value, ReportData &data) = 0;
-    virtual Tucuxi::GuiCore::Response setReport(ReportData &data) = 0;
-    virtual Tucuxi::GuiCore::Response deleteReport(ReportData &data) = 0;
-    virtual Tucuxi::GuiCore::Response getReportsList(QList<ReportData *> &dataList, const QString &where = QString()) = 0;
+    virtual Tucuxi::Gui::Core::Response getReport(const Tucuxi::Gui::Core::ident &id, ReportData &data) = 0;
+    virtual Tucuxi::Gui::Core::Response getReport(const QString &field, const QVariant &value, ReportData &data) = 0;
+    virtual Tucuxi::Gui::Core::Response setReport(ReportData &data) = 0;
+    virtual Tucuxi::Gui::Core::Response deleteReport(ReportData &data) = 0;
+    virtual Tucuxi::Gui::Core::Response getReportsList(QList<ReportData *> &dataList, const QString &where = QString()) = 0;
 
 };
 

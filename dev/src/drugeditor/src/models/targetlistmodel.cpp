@@ -9,7 +9,7 @@
 #include "apputilsrepository.h"
 #include "results.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
 TargetListModel::TargetListModel(QObject *parent) :
     AbstractEntityListModel(parent),
@@ -106,7 +106,7 @@ int TargetListModel::rowCount(const QModelIndex &parent) const
     return _targets->count();
 }
 
-void TargetListModel::setModelData(QList<Tucuxi::GuiCore::Target*> *targets)
+void TargetListModel::setModelData(QList<Tucuxi::Gui::Core::Target*> *targets)
 {
     beginResetModel();
     _targets = targets;
@@ -115,10 +115,10 @@ void TargetListModel::setModelData(QList<Tucuxi::GuiCore::Target*> *targets)
 }
 
 void TargetListModel::setDefaultUnit(QString unitname) {
-    _defaultCUnit = Tucuxi::GuiCore::Unit(unitname);
+    _defaultCUnit = Tucuxi::Gui::Core::Unit(unitname);
 }
 
-void TargetListModel::setModelData(Tucuxi::GuiCore::Drug* drug)
+void TargetListModel::setModelData(Tucuxi::Gui::Core::Drug* drug)
 {
     _drug = drug;
     emit updateStatus();
@@ -137,16 +137,16 @@ void TargetListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
     case TypeRole:
         switch (value.toInt()) {
         case 0:
-            _targets->at(row)->setType(Tucuxi::GuiCore::ResidualTarget);
+            _targets->at(row)->setType(Tucuxi::Gui::Core::ResidualTarget);
             break;
         case 1:
-            _targets->at(row)->setType(Tucuxi::GuiCore::PeakTarget);
+            _targets->at(row)->setType(Tucuxi::Gui::Core::PeakTarget);
             break;
         case 2:
-            _targets->at(row)->setType(Tucuxi::GuiCore::MeanTarget);
+            _targets->at(row)->setType(Tucuxi::Gui::Core::MeanTarget);
             break;
         default:
-            _targets->at(row)->setType(Tucuxi::GuiCore::UnknownTarget);
+            _targets->at(row)->setType(Tucuxi::Gui::Core::UnknownTarget);
             break;
         }
         break;
@@ -191,7 +191,7 @@ void TargetListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
     emit updateStatus();
 }
 
-void TargetListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities)
+void TargetListModel::insertRowsImpl(int at, int count, const Tucuxi::Gui::Core::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
@@ -211,7 +211,7 @@ void TargetListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::S
         //Setup or retrieve the dosage
         if (entities.isEmpty()) {
             target = CoreFactory::createEntity<Target>(ABSTRACTREPO);
-            target->setType(Tucuxi::GuiCore::ResidualTarget);
+            target->setType(Tucuxi::Gui::Core::ResidualTarget);
 //            target->setCunit(!_drug->getTargets()->isEmpty() ? _drug->getTargets()->first()->getCunit() :_drug->getResults()->getUnit());
             target->getCmin()->setUnit(_defaultCUnit);
             target->getCmax()->setUnit(_defaultCUnit);
@@ -224,12 +224,12 @@ void TargetListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::S
     emit updateStatus();
 }
 
-Tucuxi::GuiCore::SharedEntitySet TargetListModel::removeRowsImpl(int at, int count)
+Tucuxi::Gui::Core::SharedEntitySet TargetListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
-    Tucuxi::GuiCore::SharedEntitySet removed;
+    Tucuxi::Gui::Core::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
         removed << _targets->takeAt(at);
 

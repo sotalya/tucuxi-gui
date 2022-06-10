@@ -4,10 +4,12 @@
 #define FAKEPATIENTSCREATOR_H
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 class CorePatientList;
 }
-
+}
 }
 
 class FakePatientsCreator
@@ -15,7 +17,7 @@ class FakePatientsCreator
 public:
     FakePatientsCreator();
 
-    void createFakePatients(Tucuxi::GuiCore::CorePatientList* patientsList);
+    void createFakePatients(Tucuxi::Gui::Core::CorePatientList* patientsList);
 };
 
 #endif // FAKEPATIENTSCREATOR_H

@@ -10,7 +10,9 @@
 #include <QHash>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //! Unique identifier for a unit
@@ -141,10 +143,11 @@ private:
     QHash<QChar, double> _multipliers;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Unit)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Unit)
 
 #endif // UNITS_H

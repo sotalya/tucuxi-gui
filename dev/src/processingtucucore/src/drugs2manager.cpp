@@ -28,7 +28,7 @@ const std::vector<Tucuxi::Core::DrugModel *> & Drugs2Manager::getAllTucucoreDrug
     return m_tucuxiDrugModels;
 }
 
-const std::vector<Tucuxi::GuiCore::DrugModel *> & Drugs2Manager::getAllEzechielDrugModels() const
+const std::vector<Tucuxi::Gui::Core::DrugModel *> & Drugs2Manager::getAllEzechielDrugModels() const
 {
     return m_ezechielDrugModels;
 }
@@ -122,7 +122,7 @@ void Drugs2Manager::scanDirectory(const QDir &directory)
 
 
         TucucoreToEzTranslator translator;
-        Tucuxi::GuiCore::DrugModel *newModel = translator.buildLightDrugModel(drug);
+        Tucuxi::Gui::Core::DrugModel *newModel = translator.buildLightDrugModel(drug);
         if (newModel != nullptr) {
             // Store the Tucuxi and ezechiel drug models
             m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug;
@@ -141,7 +141,7 @@ void Drugs2Manager::scanDirectory(const QDir &directory)
 
 void Drugs2Manager::buildAllDrugModels(std::string dirName)
 {
-    std::vector<Tucuxi::GuiCore::DrugModel *> list;
+    std::vector<Tucuxi::Gui::Core::DrugModel *> list;
 
     QList<QDir> _directories;
     _directories << QDir(QString::fromStdString(dirName));
@@ -196,7 +196,7 @@ void Drugs2Manager::addDrugModelTests()
         drug->m_activeMoieties[0]->addTarget(std::unique_ptr<TargetDefinition>(target));
 
         TucucoreToEzTranslator translator;
-        Tucuxi::GuiCore::DrugModel *newModel = translator.buildLightDrugModel(drug.get());
+        Tucuxi::Gui::Core::DrugModel *newModel = translator.buildLightDrugModel(drug.get());
         if (newModel != nullptr) {
             // Store the Tucuxi and ezechiel drug models
             m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug.get();
@@ -226,7 +226,7 @@ void Drugs2Manager::addDrugModelTests()
         drug->m_activeMoieties[0]->addTarget(std::unique_ptr<TargetDefinition>(target));
 
         TucucoreToEzTranslator translator;
-        Tucuxi::GuiCore::DrugModel *newModel = translator.buildLightDrugModel(drug.get());
+        Tucuxi::Gui::Core::DrugModel *newModel = translator.buildLightDrugModel(drug.get());
         if (newModel != nullptr) {
             // Store the Tucuxi and ezechiel drug models
             m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug.get();
@@ -250,7 +250,7 @@ void Drugs2Manager::addDrugModelTests()
                                                                0.0);
 
         TucucoreToEzTranslator translator;
-        Tucuxi::GuiCore::DrugModel *newModel = translator.buildLightDrugModel(drug.get());
+        Tucuxi::Gui::Core::DrugModel *newModel = translator.buildLightDrugModel(drug.get());
         if (newModel != nullptr) {
             // Store the Tucuxi and ezechiel drug models
             m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug.get();

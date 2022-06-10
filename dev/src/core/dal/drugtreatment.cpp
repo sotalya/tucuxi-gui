@@ -16,7 +16,9 @@
 #include "core/dal/drug/doses.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(DrugTreatment, QString, name, Name)
 AUTO_PROPERTY_IMPL(DrugTreatment, QString, activeSubstanceId, ActiveSubstanceId)
@@ -34,8 +36,8 @@ DrugTreatment::DrugTreatment(AbstractRepository *repository, QObject* parent)
     : Entity(repository),
       _patient(nullptr),
   //    _drug(nullptr),
-      _dosages(Tucuxi::GuiCore::CoreFactory::createEntity<DosageHistory>(repository, this)),
-      _adjustments(Tucuxi::GuiCore::CoreFactory::createEntity<DosageHistory>(repository, this)),
+      _dosages(Tucuxi::Gui::Core::CoreFactory::createEntity<DosageHistory>(repository, this)),
+      _adjustments(Tucuxi::Gui::Core::CoreFactory::createEntity<DosageHistory>(repository, this)),
 //      _drug(CoreFactory::createEntity<Drug>(repository, this)),
       _covariates(CoreFactory::createEntity<PatientVariateList>(repository, this)),
       _measures(CoreFactory::createEntity<CoreMeasureList>(repository, this)),
@@ -52,5 +54,6 @@ Unit DrugTreatment::concentrationUnit() const {
 }
 */
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

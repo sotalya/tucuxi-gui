@@ -8,7 +8,9 @@
 #include <QXmlStreamReader>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 /** \ingroup xmleditor
@@ -67,7 +69,8 @@ private:
     QString _language;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // DOMTRANSLATOR_H

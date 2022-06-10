@@ -16,7 +16,7 @@ ProcessingFactory::ProcessingFactory()
 
 }
 
-Tucuxi::GuiCore::ProcessingInterface *ProcessingFactory::createProcessing()
+Tucuxi::Gui::Core::ProcessingInterface *ProcessingFactory::createProcessing()
 {
 #ifdef COMPILE_WITH_TUCUCORE
 #ifdef COMPILE_WITH_COMPARATOR
@@ -30,7 +30,7 @@ Tucuxi::GuiCore::ProcessingInterface *ProcessingFactory::createProcessing()
 }
 
 
-Tucuxi::GuiCore::ProcessingInterface *ProcessingFactory::createProcessing(std::string what)
+Tucuxi::Gui::Core::ProcessingInterface *ProcessingFactory::createProcessing(std::string what)
 {
     if (what == "comparator") {
 #ifdef COMPILE_WITH_TUCUCORE

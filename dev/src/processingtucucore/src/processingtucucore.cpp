@@ -42,7 +42,7 @@
 #include "tucucore/operation.h"
 #include "tucucore/cachecomputing.h"
 
-void checkCovariate(const Tucuxi::Common::DateTime _startDate, const Tucuxi::Core::DrugTreatment &drugTreatment, const Tucuxi::Core::DrugModel &drugModel, Tucuxi::GuiCore::PredictionResult& prediction, const Tucuxi::Common::DateTime _endDate)
+void checkCovariate(const Tucuxi::Common::DateTime _startDate, const Tucuxi::Core::DrugTreatment &drugTreatment, const Tucuxi::Core::DrugModel &drugModel, Tucuxi::Gui::Core::PredictionResult& prediction, const Tucuxi::Common::DateTime _endDate)
 {
     // This check should be done when building processing data. We keep it here to be safe.
     if (_startDate > _endDate) {
@@ -98,9 +98,9 @@ ProcessingTucucore::ProcessingTucucore() : m_requestID(1)
 ProcessingTucucore::~ProcessingTucucore() {
 }
 Tucuxi::ProcessingResult ProcessingTucucore::points(
-        const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-        const Tucuxi::GuiCore::PointsTraits traits,
-        Tucuxi::GuiCore::PredictionResult& prediction
+        const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+        const Tucuxi::Gui::Core::PointsTraits traits,
+        Tucuxi::Gui::Core::PredictionResult& prediction
         )
 {
 
@@ -197,16 +197,16 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
 
             TucucoreToEzTranslator tuToEzTranslator;
 
-            Tucuxi::GuiCore::FancyPoints* fpts = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoints>(ABSTRACTREPO, prediction.getPredictive()->getPredictionData());
+            Tucuxi::Gui::Core::FancyPoints* fpts = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoints>(ABSTRACTREPO, prediction.getPredictive()->getPredictionData());
 
             const Tucuxi::Core::SinglePointsData* pPredictionAtSampleTime = dynamic_cast<const Tucuxi::Core::SinglePointsData*>(response1->getData());
             if (pPredictionAtSampleTime != nullptr) {
 
-                Tucuxi::GuiCore::FancyPoints *pointsAtMeasures = prediction.getPredictive()->getPointsAtMeasures();
+                Tucuxi::Gui::Core::FancyPoints *pointsAtMeasures = prediction.getPredictive()->getPointsAtMeasures();
 
                 for( size_t i = 0; i < pPredictionAtSampleTime->m_times.size(); i++) {
 
-                    Tucuxi::GuiCore::FancyPoint* fpt = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoint>(ABSTRACTREPO, pointsAtMeasures);
+                    Tucuxi::Gui::Core::FancyPoint* fpt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoint>(ABSTRACTREPO, pointsAtMeasures);
 
                     fpt->setTime(tuToEzTranslator.buildDateTime(pPredictionAtSampleTime->m_times[i]).toMSecsSinceEpoch() / 1000.0);
                     fpt->setValue(pPredictionAtSampleTime->m_concentrations[0][i]);
@@ -221,14 +221,14 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
                     for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {
 
                         // Create the FancyPoint
-                        Tucuxi::GuiCore::FancyPoint* fpt = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoint>(ABSTRACTREPO, fpts);
+                        Tucuxi::Gui::Core::FancyPoint* fpt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoint>(ABSTRACTREPO, fpts);
 
                         // Get its parameters
-                        Tucuxi::GuiCore::ParameterSet* parameterSet = fpt->getPset();
+                        Tucuxi::Gui::Core::ParameterSet* parameterSet = fpt->getPset();
 
                         // Populate the parameters list from the one of cycleData
                         for(size_t param = 0; param < cycleData.m_parameters.size(); param++) {
-                            Tucuxi::GuiCore::Parameter* p = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Parameter>(ABSTRACTREPO, parameterSet);
+                            Tucuxi::Gui::Core::Parameter* p = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameter>(ABSTRACTREPO, parameterSet);
                             p->getQuantity()->setValue(cycleData.m_parameters[param].m_value);
                             p->setName(QString::fromStdString(cycleData.m_parameters[param].m_parameterId));
                             parameterSet->getParameters()->append(p);
@@ -269,7 +269,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
 
                     prediction.getPredictive()->getPredictionData()->addStats(
                                 tuToEzTranslator.buildDateTime(cycleData.m_start).toMSecsSinceEpoch() / 1000,
-                                Tucuxi::GuiCore::Duration(0,0,0,
+                                Tucuxi::Gui::Core::Duration(0,0,0,
                                                          (cycleData.m_end - cycleData.m_start).toMilliseconds()).toHours(),
                                 mean, auc, cumulativeAuc, residual, peak
                                 );
@@ -287,19 +287,19 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
 }
 
 Tucuxi::ProcessingResult ProcessingTucucore::point(
-        const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-        const Tucuxi::GuiCore::PointTraits traits,
-        Tucuxi::GuiCore::Amount &amount,
-        Tucuxi::GuiCore::PredictionResult& prediction)
+        const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+        const Tucuxi::Gui::Core::PointTraits traits,
+        Tucuxi::Gui::Core::Amount &amount,
+        Tucuxi::Gui::Core::PredictionResult& prediction)
 {
     // TODO : To be implemented
     return Tucuxi::ProcessingResult::Success;
 }
 
 Tucuxi::ProcessingResult ProcessingTucucore::percentiles(
-        const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-        const Tucuxi::GuiCore::PercentilesTraits traits,
-        Tucuxi::GuiCore::PredictionResult& prediction,
+        const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+        const Tucuxi::Gui::Core::PercentilesTraits traits,
+        Tucuxi::Gui::Core::PredictionResult& prediction,
         Tucuxi::math::ProcessingAborter *aborter)
 {
     return generalCalculatePercentiles(analysis, traits, prediction, aborter);
@@ -307,9 +307,9 @@ Tucuxi::ProcessingResult ProcessingTucucore::percentiles(
 
 
 Tucuxi::ProcessingResult ProcessingTucucore::calculateAposterioriPercentiles(
-        const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-        const Tucuxi::GuiCore::PercentilesTraits traits,
-        Tucuxi::GuiCore::PredictionResult& prediction,
+        const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+        const Tucuxi::Gui::Core::PercentilesTraits traits,
+        Tucuxi::Gui::Core::PredictionResult& prediction,
         Tucuxi::math::ProcessingAborter *aborter)
 {
     return generalCalculatePercentiles(analysis, traits, prediction, aborter);
@@ -318,9 +318,9 @@ Tucuxi::ProcessingResult ProcessingTucucore::calculateAposterioriPercentiles(
 
 
 Tucuxi::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
-        const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-        const Tucuxi::GuiCore::PercentilesTraits traits,
-        Tucuxi::GuiCore::PredictionResult &prediction,
+        const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+        const Tucuxi::Gui::Core::PercentilesTraits traits,
+        Tucuxi::Gui::Core::PredictionResult &prediction,
         Tucuxi::math::ProcessingAborter *aborter)
 {
 
@@ -410,17 +410,17 @@ Tucuxi::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
 
             TucucoreToEzTranslator tuToEzTranslator;
 
-            Tucuxi::GuiCore::PercentileDataList* percpairs = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PercentileDataList>(ABSTRACTREPO, prediction.getPredictive());
+            Tucuxi::Gui::Core::PercentileDataList* percpairs = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PercentileDataList>(ABSTRACTREPO, prediction.getPredictive());
             prediction.getPredictive()->setPercentileDataList(percpairs);
 
             const Tucuxi::Core::PercentilesData* pPercentiles = dynamic_cast<const Tucuxi::Core::PercentilesData*>(response->getData());
 
             if (pPercentiles != nullptr) {
                 for (size_t percIndex = 0; percIndex < pPercentiles->getNbRanks(); ++percIndex) {
-                    Tucuxi::GuiCore::PercentileData* percpair = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PercentileData>(ABSTRACTREPO, prediction.getPredictive());
+                    Tucuxi::Gui::Core::PercentileData* percpair = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PercentileData>(ABSTRACTREPO, prediction.getPredictive());
                     percpairs->append(percpair);
-                    Tucuxi::GuiCore::PredictionData* pdata = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionData>(ABSTRACTREPO, percpair);
-                    Tucuxi::GuiCore::FancyPoints* fpts = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoints>(ABSTRACTREPO);
+                    Tucuxi::Gui::Core::PredictionData* pdata = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionData>(ABSTRACTREPO, percpair);
+                    Tucuxi::Gui::Core::FancyPoints* fpts = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoints>(ABSTRACTREPO);
                     fpts->setParent(pdata);
                     pdata->setPoints(fpts);
                     percpair->setPredictionData(pdata);
@@ -429,7 +429,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
                     for (size_t cycleIndex=0; cycleIndex < cycleDatas.size(); cycleIndex++) {
                         const Tucuxi::Core::CycleData& cycleData = cycleDatas.at(cycleIndex);
                         for (size_t pointIndex=0; pointIndex<cycleData.m_concentrations[0].size(); pointIndex++) {
-                            Tucuxi::GuiCore::FancyPoint* fpt = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoint>(ABSTRACTREPO, fpts);
+                            Tucuxi::Gui::Core::FancyPoint* fpt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoint>(ABSTRACTREPO, fpts);
                             fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
                                                                             std::chrono::milliseconds(static_cast<int64>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
                             // The following requires at least Qt 5.8
@@ -462,9 +462,9 @@ using namespace date;
 
 
 Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
-        const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-        const Tucuxi::GuiCore::ReverseTraits traits,
-        Tucuxi::GuiCore::PredictionResult& prediction)
+        const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+        const Tucuxi::Gui::Core::ReverseTraits traits,
+        Tucuxi::Gui::Core::PredictionResult& prediction)
 {
 
     EzToTucucoreTranslator translator;
@@ -578,9 +578,9 @@ Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
 
         TucucoreToEzTranslator translator;
 
-        Tucuxi::GuiCore::Adjustment *adjustment = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Adjustment>(ABSTRACTREPO, prediction.getAdjustments());
+        Tucuxi::Gui::Core::Adjustment *adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Adjustment>(ABSTRACTREPO, prediction.getAdjustments());
 
-        Tucuxi::GuiCore::DosageHistory *dosageHistory = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DosageHistory>(ABSTRACTREPO, adjustment);
+        Tucuxi::Gui::Core::DosageHistory *dosageHistory = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO, adjustment);
 
         if (!translator.buildDosageHistory(fullDosage.m_history, dosageHistory)) {
             std::cout << "Could not build a dosage history from the computed one" << std::endl;
@@ -590,7 +590,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
         adjustment->setScore(fullDosage.getGlobalScore());
         for (const auto & targetEvaluations : fullDosage.m_targetsEvaluation) {
             //targetEvaluations
-            Tucuxi::GuiCore::TargetEvaluationResult *targetResult = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TargetEvaluationResult>(ABSTRACTREPO, adjustment);
+            Tucuxi::Gui::Core::TargetEvaluationResult *targetResult = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetEvaluationResult>(ABSTRACTREPO, adjustment);
 
             translator.buildTargetEvaluation(&targetEvaluations, targetResult);
             adjustment->getTargetEvaluationResults()->append(targetResult);
@@ -598,11 +598,11 @@ Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
         }
 
         // data:
-        Tucuxi::GuiCore::FancyPoints* fpts = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoints>(ABSTRACTREPO, adjustment->getPredictionData());
+        Tucuxi::Gui::Core::FancyPoints* fpts = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoints>(ABSTRACTREPO, adjustment->getPredictionData());
 
         for (Tucuxi::Core::CycleData cycleData: fullDosage.getData()) {
             for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {
-                Tucuxi::GuiCore::FancyPoint* fpt = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoint>(ABSTRACTREPO, fpts);
+                Tucuxi::Gui::Core::FancyPoint* fpt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoint>(ABSTRACTREPO, fpts);
                 //fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][i]*3600.0);// This complex next translation is required because of the epoch being different for QDateTime and DateTime, one being local and the other no
                 // fpt time is in seconds since epoch
                 fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(

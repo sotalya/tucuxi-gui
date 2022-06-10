@@ -12,7 +12,9 @@
 #include "core/utils/ezutils.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 //! \brief Describes an option having option
 /** \ingroup core
@@ -90,7 +92,8 @@ private:
    QMap<QString, Option> _options;   
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // OPTIONABLE_H

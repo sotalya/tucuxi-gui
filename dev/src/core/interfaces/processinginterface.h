@@ -16,7 +16,9 @@ namespace math {
     class ProcessingAborter;
 }
 
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 /**
  * This interface is the entry point for any calculation.
@@ -42,9 +44,9 @@ public:
      * @param traits information about the points to calculate
      * @param pred prediction to hold the state of the curve(s)
      */
-    virtual ProcessingResult points(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-                       const Tucuxi::GuiCore::PointsTraits traits,
-                       Tucuxi::GuiCore::PredictionResult &pred) = 0;
+    virtual ProcessingResult points(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+                       const Tucuxi::Gui::Core::PointsTraits traits,
+                       Tucuxi::Gui::Core::PredictionResult &pred) = 0;
 
     /**
      * Single points are calculated here in contrast to a series of contiguous points @see points
@@ -54,10 +56,10 @@ public:
      * @param amount holds a single point of interest (obsolete)
      * @param pred prediction to hold the state of the point(s)
      */
-    virtual ProcessingResult point(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-                      const Tucuxi::GuiCore::PointTraits traits,
-                      Tucuxi::GuiCore::Amount &amount,
-                       Tucuxi::GuiCore::PredictionResult &pred) = 0;
+    virtual ProcessingResult point(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+                      const Tucuxi::Gui::Core::PointTraits traits,
+                      Tucuxi::Gui::Core::Amount &amount,
+                       Tucuxi::Gui::Core::PredictionResult &pred) = 0;
 
     /**
      * Percentiles are calculated here for apriori and population
@@ -66,9 +68,9 @@ public:
      * @param pred prediction to hold the state of the point(s)
      * @param aborter responsible for aborting long running calculations
      */
-    virtual ProcessingResult percentiles(const Tucuxi::GuiCore::DrugResponseAnalysis* prediction,
-                            const Tucuxi::GuiCore::PercentilesTraits traits,
-                            Tucuxi::GuiCore::PredictionResult &pred,
+    virtual ProcessingResult percentiles(const Tucuxi::Gui::Core::DrugResponseAnalysis* prediction,
+                            const Tucuxi::Gui::Core::PercentilesTraits traits,
+                            Tucuxi::Gui::Core::PredictionResult &pred,
                             Tucuxi::math::ProcessingAborter *aborter = 0) = 0;
 
     /**
@@ -78,9 +80,9 @@ public:
      * @param pred prediction to hold the state of the point(s)
      * @param aborter responsible for aborting long running calculations
      */
-    virtual ProcessingResult calculateAposterioriPercentiles(const Tucuxi::GuiCore::DrugResponseAnalysis* prediction,
-                               const Tucuxi::GuiCore::PercentilesTraits traits,
-                               Tucuxi::GuiCore::PredictionResult &pred,
+    virtual ProcessingResult calculateAposterioriPercentiles(const Tucuxi::Gui::Core::DrugResponseAnalysis* prediction,
+                               const Tucuxi::Gui::Core::PercentilesTraits traits,
+                               Tucuxi::Gui::Core::PredictionResult &pred,
                                Tucuxi::math::ProcessingAborter *aborter = 0) = 0;
 
     /**
@@ -89,12 +91,13 @@ public:
      * @param traits information about the points to calculate
      * @param pred prediction to hold the state of the curve(s)
      */
-    virtual ProcessingResult computeSuggestedAdjustments(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
-                        const Tucuxi::GuiCore::ReverseTraits traits,
-                        Tucuxi::GuiCore::PredictionResult &pred) = 0;
+    virtual ProcessingResult computeSuggestedAdjustments(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
+                        const Tucuxi::Gui::Core::ReverseTraits traits,
+                        Tucuxi::Gui::Core::PredictionResult &pred) = 0;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // PROCESSINGINTERFACE_H

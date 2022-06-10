@@ -27,7 +27,9 @@
 #include "core/utils/errorenums.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class PatientVariate;
 
@@ -236,12 +238,13 @@ public:
 };
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 //enabling WhereClauseMap as QVariant value means we can have nesting with parentheses (e.g. 'AND (X OR Y)')
 //To nest, use '-1' as key value
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::WhereClauseMap)
-Q_DECLARE_INTERFACE(Tucuxi::GuiCore::IDatabase, "ch.heig-vd.ezechiel.IDatabase/0.1")
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::WhereClauseMap)
+Q_DECLARE_INTERFACE(Tucuxi::Gui::Core::IDatabase, "ch.heig-vd.ezechiel.IDatabase/0.1")
 #endif // GDATABASE
 

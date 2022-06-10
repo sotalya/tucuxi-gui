@@ -39,19 +39,19 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(QList<Tucuxi::GuiCore::CoreMeasure *> *measures);
-    void setModelData(Tucuxi::GuiCore::DrugModel* drug);
+    void setModelData(QList<Tucuxi::Gui::Core::CoreMeasure *> *measures);
+    void setModelData(Tucuxi::Gui::Core::DrugModel* drug);
 
 private:
     virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
-    virtual void insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities = Tucuxi::GuiCore::SharedEntitySet());
-    virtual Tucuxi::GuiCore::SharedEntitySet removeRowsImpl(int at, int count);
+    virtual void insertRowsImpl(int at, int count, const Tucuxi::Gui::Core::SharedEntitySet &entities = Tucuxi::Gui::Core::SharedEntitySet());
+    virtual Tucuxi::Gui::Core::SharedEntitySet removeRowsImpl(int at, int count);
 
     void init();
 
-    QList<Tucuxi::GuiCore::CoreMeasure *> *_measures;
-    Tucuxi::GuiCore::Unit _defaultUnit;
-    Tucuxi::GuiCore::DrugModel* _drug;
+    QList<Tucuxi::Gui::Core::CoreMeasure *> *_measures;
+    Tucuxi::Gui::Core::Unit _defaultUnit;
+    Tucuxi::Gui::Core::DrugModel* _drug;
     QHash<int, QByteArray> _roleNames;
 };
 

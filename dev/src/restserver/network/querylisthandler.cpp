@@ -41,8 +41,8 @@ void QueryListHandler::service(HttpRequest &request, HttpResponse &response)
 
 
 #ifdef ARTIFICIAL_TEST
-    Tucuxi::GuiCore::XmlValidator validator;
-    if (!validator.validate(&source, Tucuxi::GuiCore::XmlValidator::Reply_Request)) {
+    Tucuxi::Gui::Core::XmlValidator validator;
+    if (!validator.validate(&source, Tucuxi::Gui::Core::XmlValidator::Reply_Request)) {
         internalError(response, QString("Malformed source (%1)").arg(validator.errorMessage()));
         return;
     }
@@ -55,7 +55,7 @@ void QueryListHandler::service(HttpRequest &request, HttpResponse &response)
     }
 
     QDomDocument reply_list = buildReply(reply_request);
-    if (!validator.validate(reply_list.toByteArray(), Tucuxi::GuiCore::XmlValidator::Reply_List)) {
+    if (!validator.validate(reply_list.toByteArray(), Tucuxi::Gui::Core::XmlValidator::Reply_List)) {
         internalError(response,QString("Malformed response (%1)").arg(validator.errorMessage()));
         return;
     }

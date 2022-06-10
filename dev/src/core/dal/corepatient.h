@@ -6,7 +6,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class CorePatient : public Entity
 {
@@ -27,13 +29,14 @@ public :
 };
 
 QML_POINTERLIST_CLASS_DECL(CorePatientList, CorePatient)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::CorePatient*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::CorePatient*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::CorePatientList*)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::CorePatientSet*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::CorePatient*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::CorePatient*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::CorePatientList*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::CorePatientSet*)
 
 
 #endif // COREPATIENT_H

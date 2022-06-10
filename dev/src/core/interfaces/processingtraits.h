@@ -10,7 +10,9 @@
 #include "core/dal/drug/parameters.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class ParamTraits {
 public:
@@ -160,6 +162,7 @@ public:
     const std::vector<double> initialResiduals;
     const QDateTime endOfTreatment;
 };
+}
 }
 }
 

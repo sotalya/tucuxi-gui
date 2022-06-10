@@ -18,7 +18,7 @@ AckRequestXmlMessage::~AckRequestXmlMessage()
 
 QString AckRequestXmlMessage::schemaPath() const
 {
-    return Tucuxi::GuiCore::XmlValidator::Acks;
+    return Tucuxi::Gui::Core::XmlValidator::Acks;
 }
 
 QString AckRequestXmlMessage::messageType() const

@@ -3,7 +3,8 @@
 #include "core/corefactory.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 CoreFactory* CoreFactory::_instance = 0;
 
@@ -26,5 +27,6 @@ CoreFactory::CoreFactory()
 //    return SharedPrediction(new Prediction(repository));
 //}
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

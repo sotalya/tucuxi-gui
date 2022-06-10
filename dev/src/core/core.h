@@ -59,7 +59,8 @@ namespace Tucuxi {
 
 class IDatabase;
 
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 class DefinitionManager;
 class PluginManager;
@@ -76,17 +77,17 @@ class Settings;
 class ProcessingInterface;
 
 //------------- Shortcuts for objects ----------------
-#define CORE Tucuxi::GuiCore::Core::instance()
-#define DEFINITIONS Tucuxi::GuiCore::Core::instance()->definitionManager()
-#define ABSTRACTREPO Tucuxi::GuiCore::Core::instance()->repository()
-#define REPO dynamic_cast<Tucuxi::GuiCore::CoreRepository*>(ABSTRACTREPO)
+#define CORE Tucuxi::Gui::Core::Core::instance()
+#define DEFINITIONS Tucuxi::Gui::Core::instance()->definitionManager()
+#define ABSTRACTREPO Tucuxi::Gui::Core::Core::instance()->repository()
+#define REPO dynamic_cast<Tucuxi::Gui::Core::CoreRepository*>(ABSTRACTREPO)
 //#define DB Core::instance()->db()
 //#define NEWDB Core::instance()->newdb()
-#define FILEPATH(ARG) Tucuxi::GuiCore::Core::instance()->path(ARG)
-#define DATABASE Tucuxi::GuiCore::Core::instance()->database()
-#define PLUGINS Tucuxi::GuiCore::Core::instance()->pluginManager()
-#define XMLVALIDATOR Tucuxi::GuiCore::Core::instance()->xmlValidator()
-#define SETTINGS Tucuxi::GuiCore::Core::instance()->settings()
+#define FILEPATH(ARG) Tucuxi::Gui::Core::Core::instance()->path(ARG)
+#define DATABASE Tucuxi::Gui::Core::instance()->database()
+#define PLUGINS Tucuxi::Gui::Core::instance()->pluginManager()
+#define XMLVALIDATOR Tucuxi::Gui::Core::Core::instance()->xmlValidator()
+#define SETTINGS Tucuxi::Gui::Core::Core::instance()->settings()
 
 //! Use this macro to send an error
 //#define EZERROR(e,m) CORE->messageHandler()->error(e,__LINE__,__FILE__,typeid(this).name(),QString(m))
@@ -325,7 +326,8 @@ public:
     void run();
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

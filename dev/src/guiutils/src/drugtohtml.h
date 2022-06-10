@@ -6,9 +6,12 @@
 #include <QString>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 class DrugModel;
 class ActiveSubstance;
+}
 }
 }
 
@@ -17,8 +20,8 @@ class DrugToHtml
 public:
     DrugToHtml();
 
-    QString drugToHtml(const Tucuxi::GuiCore::DrugModel* drug);
-    QString activeSubstanceToHtml(const Tucuxi::GuiCore::ActiveSubstance* drug);
+    QString drugToHtml(const Tucuxi::Gui::Core::DrugModel* drug);
+    QString activeSubstanceToHtml(const Tucuxi::Gui::Core::ActiveSubstance* drug);
 };
 
 #endif // DRUGTOHTML_H

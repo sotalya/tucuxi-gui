@@ -10,12 +10,15 @@
 #include "abstractviewcontroller.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class DosageHistory;
 class Dosage;
 class ChartData;
 class AdjustmentDosage;
+}
 }
 }
 
@@ -27,7 +30,7 @@ public:
     explicit AdjustmentTabController(QObject *parent = nullptr);
 
     //! This property is used by AdjustmentTab.qml to access the list of dosages
-    STD_PROPERTY_DECL(Tucuxi::GuiCore::DosageHistory*, adjustments, Adjustments)
+    STD_PROPERTY_DECL(Tucuxi::Gui::Core::DosageHistory*, adjustments, Adjustments)
 
     //! This property is not implemented using the standard macro, as it
     //! Shall refer to the PredictionSpec object
@@ -67,21 +70,21 @@ public:
     Q_INVOKABLE void setEndTime(int index, QDateTime time);
     Q_INVOKABLE void forceRefresh();
 
-    void setChartData(Tucuxi::GuiCore::ChartData *chartData);
+    void setChartData(Tucuxi::Gui::Core::ChartData *chartData);
     void onDosageUpdated();
     void reset();
 
 private:
     bool isIndexValid(int index);
     void removeFromTreatement(const QString &type);
-    static bool compareAdjustment(const Tucuxi::GuiCore::Dosage* a, const Tucuxi::GuiCore::Dosage* b);
+    static bool compareAdjustment(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b);
 
-    Tucuxi::GuiCore::AdjustmentDosage* getAdjustment(const QString &type);
-    Tucuxi::GuiCore::AdjustmentDosage* getLastAdjustment(const QString &type);
-    void adaptDates(const Tucuxi::GuiCore::AdjustmentDosage *manual, Tucuxi::GuiCore::AdjustmentDosage *suggested);
+    Tucuxi::Gui::Core::AdjustmentDosage* getAdjustment(const QString &type);
+    Tucuxi::Gui::Core::AdjustmentDosage* getLastAdjustment(const QString &type);
+    void adaptDates(const Tucuxi::Gui::Core::AdjustmentDosage *manual, Tucuxi::Gui::Core::AdjustmentDosage *suggested);
 
 private:
-    Tucuxi::GuiCore::ChartData *_chartData;
+    Tucuxi::Gui::Core::ChartData *_chartData;
 };
 
 

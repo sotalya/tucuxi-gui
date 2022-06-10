@@ -14,7 +14,7 @@ AppGlobals::AppGlobals() :
     m_analyst(nullptr)
 {
 
-    m_showProcessingTime = SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "showProcessingTime" ,true).toBool();
+    m_showProcessingTime = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "showProcessingTime" ,true).toBool();
 
 }
 
@@ -27,7 +27,7 @@ void AppGlobals::setShowProcessingTime(bool show)
 {
     if (show != m_showProcessingTime) {
         m_showProcessingTime = show;
-        SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "showProcessingTime" ,show);
+        SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "showProcessingTime" ,show);
     }
 }
 
@@ -58,43 +58,43 @@ Practician* AppGlobals::getAnalyst()
 
 void AppGlobals::loadAnalystSettings()
 {
-    m_analyst->title(SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "analyst/title" ,"").toString());
-    m_analyst->role(SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "analyst/role" ,"").toString());
-    m_analyst->person()->name(SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "analyst/name" ,"").toString());
-    m_analyst->person()->firstname(SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "analyst/firstname" ,"").toString());
+    m_analyst->title(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/title" ,"").toString());
+    m_analyst->role(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/role" ,"").toString());
+    m_analyst->person()->name(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/name" ,"").toString());
+    m_analyst->person()->firstname(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/firstname" ,"").toString());
 
-    m_analyst->person()->location()->city(SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "analyst/address/city" ,"").toString());
-    m_analyst->person()->location()->postcode(SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "analyst/address/postcode" ,"").toString());
-    m_analyst->person()->location()->state(SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "analyst/address/state" ,"").toString());
-    m_analyst->person()->location()->country(SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "analyst/address/country" ,"").toString());
+    m_analyst->person()->location()->city(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/address/city" ,"").toString());
+    m_analyst->person()->location()->postcode(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/address/postcode" ,"").toString());
+    m_analyst->person()->location()->state(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/address/state" ,"").toString());
+    m_analyst->person()->location()->country(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/address/country" ,"").toString());
 
-    auto phoneNumber = SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "analyst/phones/default" ,"").toString();
+    auto phoneNumber = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/phones/default" ,"").toString();
     if (!phoneNumber.isEmpty()) {
-        auto phone = Tucuxi::GuiCore::CoreFactory::createEntity<Phone>(ABSTRACTREPO);
+        auto phone = Tucuxi::Gui::Core::CoreFactory::createEntity<Phone>(ABSTRACTREPO);
         phone->setNumber(phoneNumber);
         m_analyst->person()->getPhones()->append(phone);
     }
 
-    m_analyst->institute()->name(SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "analyst/institute/name" ,"").toString());
+    m_analyst->institute()->name(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/institute/name" ,"").toString());
 }
 
 void AppGlobals::saveAnalystSettings()
 {
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "analyst/title" ,m_analyst->title());
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "analyst/role" ,m_analyst->role());
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "analyst/name" ,m_analyst->person()->name());
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "analyst/firstname" ,m_analyst->person()->firstname());
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/title" ,m_analyst->title());
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/role" ,m_analyst->role());
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/name" ,m_analyst->person()->name());
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/firstname" ,m_analyst->person()->firstname());
 
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "analyst/address/city" ,m_analyst->person()->location()->city());
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "analyst/address/postcode" ,m_analyst->person()->location()->postcode());
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "analyst/address/state" ,m_analyst->person()->location()->state());
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "analyst/address/country" ,m_analyst->person()->location()->country());
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/address/city" ,m_analyst->person()->location()->city());
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/address/postcode" ,m_analyst->person()->location()->postcode());
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/address/state" ,m_analyst->person()->location()->state());
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/address/country" ,m_analyst->person()->location()->country());
 
 
     if (m_analyst->person()->getPhones()->size() > 0) {
-        SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "analyst/phones/default" ,m_analyst->person()->getPhones()->at(0)->getNumber());
+        SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/phones/default" ,m_analyst->person()->getPhones()->at(0)->getNumber());
     }
 
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "analyst/institute/name" ,m_analyst->institute()->name());
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/institute/name" ,m_analyst->institute()->name());
 }
 

@@ -39,8 +39,8 @@ FlowController::~FlowController()
 
 void FlowController::initialize()
 {
-    currentStatus = Tucuxi::GuiCore::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
-    oldStatus = Tucuxi::GuiCore::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
+    currentStatus = Tucuxi::Gui::Core::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
+    oldStatus = Tucuxi::Gui::Core::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
 }
 
 void FlowController::setFlowView(QObject *flowView)
@@ -134,7 +134,7 @@ void FlowController::drugChanged(int index)
 
 void FlowController::generateEnables()
 {
-    Tucuxi::GuiCore::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
+    Tucuxi::Gui::Core::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
 
     // Patient
     if (currentStatus->getDataStatus(StepType::Patient) != DataStatusType::ValidData) {
@@ -192,8 +192,8 @@ void FlowController::generateStatuses()
         return;
     }
 
-    Tucuxi::GuiCore::DrugModel* drugModel = interpretation->getDrugResponseAnalysis()->getDrugModel();
-    Tucuxi::GuiCore::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
+    Tucuxi::Gui::Core::DrugModel* drugModel = interpretation->getDrugResponseAnalysis()->getDrugModel();
+    Tucuxi::Gui::Core::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
 
     // Patient
     if (drugTreatment->getPatient()) {
@@ -212,10 +212,10 @@ void FlowController::generateStatuses()
     if (drugTreatment->getDosages() != nullptr) {
         bool isValid = drugTreatment->getDosages()->isValid();
         for(int i = 0; i < drugTreatment->getDosages()->size(); i++) {
-            Tucuxi::GuiCore::Dosage *dosage = drugTreatment->getDosages()->at(i);
+            Tucuxi::Gui::Core::Dosage *dosage = drugTreatment->getDosages()->at(i);
             for(int j=0; j < dosage->getUncastedValues()->size(); j++) {
-                Tucuxi::GuiCore::UncastedValue *value = dosage->getUncastedValues()->at(j);
-                if (value->getStatus() != Tucuxi::GuiCore::UncastedStatus::Casted) {
+                Tucuxi::Gui::Core::UncastedValue *value = dosage->getUncastedValues()->at(j);
+                if (value->getStatus() != Tucuxi::Gui::Core::UncastedStatus::Casted) {
                     if (!value->getValidated()) {
                         isValid = false;
                     }
@@ -247,13 +247,13 @@ void FlowController::generateStatuses()
 //        if (isValid) {
 //            // Set validated as soon as we have at least one patient variable for each drug variable
 //            QSet<QString> drugVariateIds;
-//            for (Tucuxi::GuiCore::DrugVariate *variate: drugModel->getCovariates()->getList()) {
+//            for (Tucuxi::Gui::Core::DrugVariate *variate: drugModel->getCovariates()->getList()) {
 //                if ((!variate->getAutomatic()) && (variate->getCovariateId() != "birthdate")) {
 //                    drugVariateIds.insert(variate->getCovariateId());
 //                }
 //            }
 //            bool isOk = true;
-//            for (Tucuxi::GuiCore::PatientVariate *variate: drugTreatment->getCovariates()->getList()) {
+//            for (Tucuxi::Gui::Core::PatientVariate *variate: drugTreatment->getCovariates()->getList()) {
 //                if (drugVariateIds.contains(variate->getCovariateId())) {
 //                    drugVariateIds.remove(variate->getCovariateId());
 //                }
@@ -286,7 +286,7 @@ void FlowController::generateStatuses()
     }
 
     // Adjustments
-    Tucuxi::GuiCore::DosageHistory *adjustments = drugTreatment->getAdjustments();
+    Tucuxi::Gui::Core::DosageHistory *adjustments = drugTreatment->getAdjustments();
     ValidationStatusType adjValidated = ValidationStatus::UnValidated;
     if (adjustments != nullptr) {
         if (adjustments->isValid()) {

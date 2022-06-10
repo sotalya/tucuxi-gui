@@ -44,18 +44,18 @@ Unit buildUnit(const QString &_strUnit)
 }
 
 
-void buildTreatment(DrugTreatment &_treatment, const Tucuxi::GuiCore::DrugTreatment *_ezTreatment)
+void buildTreatment(DrugTreatment &_treatment, const Tucuxi::Gui::Core::DrugTreatment *_ezTreatment)
 {
-    QList<Tucuxi::GuiCore::Dosage*> dosageList = _ezTreatment->getDosages()->getList();
-    QList<Tucuxi::GuiCore::Dosage*>::iterator itDosages = dosageList.begin();
+    QList<Tucuxi::Gui::Core::Dosage*> dosageList = _ezTreatment->getDosages()->getList();
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator itDosages = dosageList.begin();
     while (itDosages != dosageList.end()) {
-        Tucuxi::GuiCore::Dosage *dosage = *itDosages++;
+        Tucuxi::Gui::Core::Dosage *dosage = *itDosages++;
 
         AbsorptionModel route;
         switch (dosage->getRoute()->getRoute()) {
-            case Tucuxi::GuiCore::Admin::Route::BOLUS: route = AbsorptionModel::EXTRAVASCULAR; break;
-            case Tucuxi::GuiCore::Admin::Route::INFUSION: route = AbsorptionModel::INTRAVASCULAR; break;
-            case Tucuxi::GuiCore::Admin::Route::EXTRA: route = AbsorptionModel::EXTRAVASCULAR; break;
+            case Tucuxi::Gui::Core::Admin::Route::BOLUS: route = AbsorptionModel::EXTRAVASCULAR; break;
+            case Tucuxi::Gui::Core::Admin::Route::INFUSION: route = AbsorptionModel::INTRAVASCULAR; break;
+            case Tucuxi::Gui::Core::Admin::Route::EXTRA: route = AbsorptionModel::EXTRAVASCULAR; break;
             default: route = AbsorptionModel::EXTRAVASCULAR; break;
         }
         LastingDose lastingDose(dosage->getQuantity()->getDbvalue(),
@@ -71,10 +71,10 @@ void buildTreatment(DrugTreatment &_treatment, const Tucuxi::GuiCore::DrugTreatm
 
     const std::string analyteId = "imatinib";
 
-    QList<Tucuxi::GuiCore::PatientVariate*> covariateList = _ezTreatment->getCovariates()->getList();
-    QList<Tucuxi::GuiCore::PatientVariate*>::iterator itCovariates = covariateList.begin();
+    QList<Tucuxi::Gui::Core::PatientVariate*> covariateList = _ezTreatment->getCovariates()->getList();
+    QList<Tucuxi::Gui::Core::PatientVariate*>::iterator itCovariates = covariateList.begin();
     while (itCovariates != covariateList.end()) {
-        Tucuxi::GuiCore::PatientVariate *covariate = *itCovariates++;
+        Tucuxi::Gui::Core::PatientVariate *covariate = *itCovariates++;
         _treatment.addCovariate(std::make_unique<PatientCovariate>(
             covariate->getName().toLatin1().data(),                    // _id,
             std::to_string(covariate->getQuantity()->getDbvalue()),    // _value,
@@ -83,10 +83,10 @@ void buildTreatment(DrugTreatment &_treatment, const Tucuxi::GuiCore::DrugTreatm
             buildDateTime(covariate->getDate())));                     // _date
     }
 
-    QList<Tucuxi::GuiCore::CoreMeasure*> sampleList = _ezTreatment->getMeasures()->getList();
-    QList<Tucuxi::GuiCore::CoreMeasure*>::iterator itSamples = sampleList.begin();
+    QList<Tucuxi::Gui::Core::CoreMeasure*> sampleList = _ezTreatment->getMeasures()->getList();
+    QList<Tucuxi::Gui::Core::CoreMeasure*>::iterator itSamples = sampleList.begin();
     while (itSamples != sampleList.end()) {
-        Tucuxi::GuiCore::CoreMeasure *sample = *itSamples++;
+        Tucuxi::Gui::Core::CoreMeasure *sample = *itSamples++;
         _treatment.addSample(std::make_unique<Sample>(
             buildDateTime(sample->getMoment()),                     // date,
             analyteId,                                                   // analyteId,
@@ -95,16 +95,16 @@ void buildTreatment(DrugTreatment &_treatment, const Tucuxi::GuiCore::DrugTreatm
         ));
     }
 
-    QList<Tucuxi::GuiCore::Target*> targetList = _ezTreatment->getTargets()->getList();
-    QList<Tucuxi::GuiCore::Target*>::iterator itTargets = targetList.begin();
+    QList<Tucuxi::Gui::Core::Target*> targetList = _ezTreatment->getTargets()->getList();
+    QList<Tucuxi::Gui::Core::Target*>::iterator itTargets = targetList.begin();
     while (itTargets != targetList.end()) {
-        Tucuxi::GuiCore::Target *target = *itTargets++;
+        Tucuxi::Gui::Core::Target *target = *itTargets++;
         TargetType targetType;
         switch (target->getType()->getTargetType()) {
-            case Tucuxi::GuiCore::TargetMethod::TargetType::ResidualTarget: targetType = TargetType::Residual; break;
-            case Tucuxi::GuiCore::TargetMethod::TargetType::PeakTarget:     targetType = TargetType::Peak;     break;
-            case Tucuxi::GuiCore::TargetMethod::TargetType::MeanTarget:     targetType = TargetType::Mean;     break;
-            case Tucuxi::GuiCore::TargetMethod::TargetType::AUCTarget:      targetType = TargetType::Auc;      break;
+            case Tucuxi::Gui::Core::TargetMethod::TargetType::ResidualTarget: targetType = TargetType::Residual; break;
+            case Tucuxi::Gui::Core::TargetMethod::TargetType::PeakTarget:     targetType = TargetType::Peak;     break;
+            case Tucuxi::Gui::Core::TargetMethod::TargetType::MeanTarget:     targetType = TargetType::Mean;     break;
+            case Tucuxi::Gui::Core::TargetMethod::TargetType::AUCTarget:      targetType = TargetType::Auc;      break;
             default:                                                       targetType = TargetType::Residual; break;
         }
         _treatment.addTarget(std::make_unique<Target>(
@@ -137,7 +137,7 @@ TucuxiCalculationController::TucuxiCalculationController(QObject *parent)
 }
 
 
-Tucuxi::GuiCore::PredictionResult* TucuxiCalculationController::computePrediction(
+Tucuxi::Gui::Core::PredictionResult* TucuxiCalculationController::computePrediction(
     const DrugModel& _model,
     const DrugTreatment &_treatment,
     PredictionParameterType _type,
@@ -165,12 +165,12 @@ Tucuxi::GuiCore::PredictionResult* TucuxiCalculationController::computePredictio
 
         ComputingResult res = iCore->compute(request, response);
         if (res == ComputingResult::Success) {
-            Tucuxi::GuiCore::PredictionResult* pred = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO);
-            Tucuxi::GuiCore::Predictive* predictive = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Predictive>(ABSTRACTREPO, pred);
+            Tucuxi::Gui::Core::PredictionResult* pred = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO);
+            Tucuxi::Gui::Core::Predictive* predictive = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Predictive>(ABSTRACTREPO, pred);
             pred->setPredictive(predictive);
-            Tucuxi::GuiCore::PredictionData* pdata = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionData>(ABSTRACTREPO, predictive);
+            Tucuxi::Gui::Core::PredictionData* pdata = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionData>(ABSTRACTREPO, predictive);
             predictive->setPredictionData(pdata);
-            Tucuxi::GuiCore::FancyPoints* fpts = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoints>(ABSTRACTREPO, pdata);
+            Tucuxi::Gui::Core::FancyPoints* fpts = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoints>(ABSTRACTREPO, pdata);
             pdata->setPoints(fpts);
 
             for (const std::unique_ptr<SingleComputingResponse>& resp: response->getResponses()) {
@@ -178,7 +178,7 @@ Tucuxi::GuiCore::PredictionResult* TucuxiCalculationController::computePredictio
                 if (pSinglePred != nullptr) {
                     for (CycleData cycleData: pSinglePred->getData()) {
                         for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {
-                            Tucuxi::GuiCore::FancyPoint* fpt = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoint>(ABSTRACTREPO, fpts);
+                            Tucuxi::Gui::Core::FancyPoint* fpt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoint>(ABSTRACTREPO, fpts);
                             fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][i]*3600.0);
                             fpt->setValue(cycleData.m_concentrations[0][i]);
                             fpts->append(fpt);
@@ -194,7 +194,7 @@ Tucuxi::GuiCore::PredictionResult* TucuxiCalculationController::computePredictio
 }
 
 
-Tucuxi::GuiCore::PredictionResult* TucuxiCalculationController::computePercentiles(
+Tucuxi::Gui::Core::PredictionResult* TucuxiCalculationController::computePercentiles(
     const DrugModel& _model,
     const DrugTreatment &_treatment,
     PredictionParameterType _type,
@@ -225,10 +225,10 @@ Tucuxi::GuiCore::PredictionResult* TucuxiCalculationController::computePercentil
 
         ComputingResult res = iCore->compute(request, response);
         if (res == ComputingResult::Success) {
-            Tucuxi::GuiCore::PredictionResult* pred = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO);
-            Tucuxi::GuiCore::Predictive* predictive = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Predictive>(ABSTRACTREPO, pred);
+            Tucuxi::Gui::Core::PredictionResult* pred = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO);
+            Tucuxi::Gui::Core::Predictive* predictive = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Predictive>(ABSTRACTREPO, pred);
             pred->setPredictive(predictive);
-            Tucuxi::GuiCore::PercentileDataList* percpairs = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PercentileDataList>(ABSTRACTREPO, predictive);
+            Tucuxi::Gui::Core::PercentileDataList* percpairs = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PercentileDataList>(ABSTRACTREPO, predictive);
             predictive->setPercentileDataList(percpairs);
 
 
@@ -236,17 +236,17 @@ Tucuxi::GuiCore::PredictionResult* TucuxiCalculationController::computePercentil
                 PercentilesResponse* pPercentiles = dynamic_cast<PercentilesResponse*>(resp.get());
                 if (pPercentiles != nullptr) {
                     for (size_t i = 0; i < pPercentiles->getNbRanks(); ++i) {
-                        Tucuxi::GuiCore::PercentileData* percpair = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PercentileData>(ABSTRACTREPO, predictive);
+                        Tucuxi::Gui::Core::PercentileData* percpair = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PercentileData>(ABSTRACTREPO, predictive);
                         percpairs->append(percpair);
-                        Tucuxi::GuiCore::PredictionData* pdata = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionData>(ABSTRACTREPO, percpair);
-                        Tucuxi::GuiCore::FancyPoints* fpts = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoints>(ABSTRACTREPO);
+                        Tucuxi::Gui::Core::PredictionData* pdata = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionData>(ABSTRACTREPO, percpair);
+                        Tucuxi::Gui::Core::FancyPoints* fpts = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoints>(ABSTRACTREPO);
                         fpts->setParent(pdata);
                         pdata->setPoints(fpts);
                         percpair->setPredictionData(pdata);
                         percpair->setPercentile(pPercentiles->getRank(i));
                         const CycleData& cycleData = pPercentiles->getData(i);
                         for (size_t j=0; i<cycleData.m_concentrations[0].size(); j++) {
-                            Tucuxi::GuiCore::FancyPoint* fpt = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoint>(ABSTRACTREPO, fpts);
+                            Tucuxi::Gui::Core::FancyPoint* fpt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoint>(ABSTRACTREPO, fpts);
                             fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][i]*3600.0);
                             fpt->setValue(cycleData.m_concentrations[0][i]);
                             fpts->append(fpt);
@@ -263,7 +263,7 @@ Tucuxi::GuiCore::PredictionResult* TucuxiCalculationController::computePercentil
 }
 
 
-void TucuxiCalculationController::computePopPred(Tucuxi::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computePopPred(Tucuxi::Gui::Core::PredictionSpec *_prediction)
 {
     emit disengage();
     EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running population prediction.");
@@ -274,7 +274,7 @@ void TucuxiCalculationController::computePopPred(Tucuxi::GuiCore::PredictionSpec
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    Tucuxi::GuiCore::PredictionResult *pPred = computePrediction(*pDrugModel,
+    Tucuxi::Gui::Core::PredictionResult *pPred = computePrediction(*pDrugModel,
                                                                 drugTreatment,
                                                                 PredictionParameterType::Population,
                                                                 buildDateTime(_prediction->getStartDate()),
@@ -289,7 +289,7 @@ void TucuxiCalculationController::computePopPred(Tucuxi::GuiCore::PredictionSpec
 }
 
 
-void TucuxiCalculationController::computePopPerc(Tucuxi::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computePopPerc(Tucuxi::Gui::Core::PredictionSpec *_prediction)
 {
     emit disengage();
     EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running population percentiles.");
@@ -300,7 +300,7 @@ void TucuxiCalculationController::computePopPerc(Tucuxi::GuiCore::PredictionSpec
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    Tucuxi::GuiCore::PredictionResult *pPred = computePercentiles(*pDrugModel,
+    Tucuxi::Gui::Core::PredictionResult *pPred = computePercentiles(*pDrugModel,
                                                                  drugTreatment,
                                                                  PredictionParameterType::Population,
                                                                  buildDateTime(_prediction->getStartDate()),
@@ -315,7 +315,7 @@ void TucuxiCalculationController::computePopPerc(Tucuxi::GuiCore::PredictionSpec
 }
 
 
-void TucuxiCalculationController::computeAprPred(Tucuxi::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeAprPred(Tucuxi::Gui::Core::PredictionSpec *_prediction)
 {
     emit disengage();
     EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running apriori prediction.");
@@ -326,7 +326,7 @@ void TucuxiCalculationController::computeAprPred(Tucuxi::GuiCore::PredictionSpec
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    Tucuxi::GuiCore::PredictionResult *pPred = computePrediction(*pDrugModel,
+    Tucuxi::Gui::Core::PredictionResult *pPred = computePrediction(*pDrugModel,
                                                                 drugTreatment,
                                                                 PredictionParameterType::Apriori,
                                                                 buildDateTime(_prediction->getStartDate()),
@@ -340,7 +340,7 @@ void TucuxiCalculationController::computeAprPred(Tucuxi::GuiCore::PredictionSpec
     emit engage();
 }
 
-void TucuxiCalculationController::computeAprPerc(Tucuxi::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeAprPerc(Tucuxi::Gui::Core::PredictionSpec *_prediction)
 {
     emit disengage();
     EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running population percentiles.");
@@ -351,7 +351,7 @@ void TucuxiCalculationController::computeAprPerc(Tucuxi::GuiCore::PredictionSpec
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    Tucuxi::GuiCore::PredictionResult *pPred = computePercentiles(*pDrugModel,
+    Tucuxi::Gui::Core::PredictionResult *pPred = computePercentiles(*pDrugModel,
                                                                  drugTreatment,
                                                                  PredictionParameterType::Apriori,
                                                                  buildDateTime(_prediction->getStartDate()),
@@ -365,7 +365,7 @@ void TucuxiCalculationController::computeAprPerc(Tucuxi::GuiCore::PredictionSpec
     emit engage();
 }
 
-void TucuxiCalculationController::computeApoPred(Tucuxi::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeApoPred(Tucuxi::Gui::Core::PredictionSpec *_prediction)
 {
     emit disengage();
     EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running aposteriori prediction.");
@@ -376,7 +376,7 @@ void TucuxiCalculationController::computeApoPred(Tucuxi::GuiCore::PredictionSpec
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    Tucuxi::GuiCore::PredictionResult *pPred = computePrediction(*pDrugModel,
+    Tucuxi::Gui::Core::PredictionResult *pPred = computePrediction(*pDrugModel,
                                                                 drugTreatment,
                                                                 PredictionParameterType::Aposteriori,
                                                                 buildDateTime(_prediction->getStartDate()),
@@ -390,7 +390,7 @@ void TucuxiCalculationController::computeApoPred(Tucuxi::GuiCore::PredictionSpec
     emit engage();
 }
 
-void TucuxiCalculationController::computeApoPerc(Tucuxi::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeApoPerc(Tucuxi::Gui::Core::PredictionSpec *_prediction)
 {
     emit disengage();
     EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running aposterior percentiles.");
@@ -401,7 +401,7 @@ void TucuxiCalculationController::computeApoPerc(Tucuxi::GuiCore::PredictionSpec
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    Tucuxi::GuiCore::PredictionResult *pPred = computePercentiles(*pDrugModel,
+    Tucuxi::Gui::Core::PredictionResult *pPred = computePercentiles(*pDrugModel,
                                                                  drugTreatment,
                                                                  PredictionParameterType::Aposteriori,
                                                                  buildDateTime(_prediction->getStartDate()),
@@ -415,11 +415,11 @@ void TucuxiCalculationController::computeApoPerc(Tucuxi::GuiCore::PredictionSpec
     emit engage();
 }
 
-void TucuxiCalculationController::computeRevPred(Tucuxi::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeRevPred(Tucuxi::Gui::Core::PredictionSpec *_prediction)
 {
 }
 
-void TucuxiCalculationController::computeAdjPred(Tucuxi::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeAdjPred(Tucuxi::Gui::Core::PredictionSpec *_prediction)
 {
 }
 

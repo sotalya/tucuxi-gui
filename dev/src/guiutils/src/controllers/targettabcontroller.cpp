@@ -15,11 +15,11 @@
 #include "core/dal/drug/infusions.h"
 #include "core/dal/drug/target.h"
 
-STD_PROPERTY_IMPL(TargetTabController, Tucuxi::GuiCore::TargetList*, targets, Targets)
+STD_PROPERTY_IMPL(TargetTabController, Tucuxi::Gui::Core::TargetList*, targets, Targets)
 
 TargetTabController::TargetTabController(QObject *parent) : AbstractViewController(parent)
 {
-    _targets = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TargetList>(ABSTRACTREPO, this);
+    _targets = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetList>(ABSTRACTREPO, this);
 }
 
 void TargetTabController::setTargetType(int index, int value)
@@ -125,9 +125,9 @@ void TargetTabController::setMicDbValue(int index, double value)
 
 void TargetTabController::addTarget()
 {
-    Tucuxi::GuiCore::TargetList* tlist = masterController->getInterpretation()->getDrugResponseAnalysis()->getTreatment()->getTargets();
-    Tucuxi::GuiCore::Target* target = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Target>(ABSTRACTREPO, tlist);
-    Tucuxi::GuiCore::Unit defaultUnit = Tucuxi::GuiCore::Unit(masterController->getDefaultUnit());
+    Tucuxi::Gui::Core::TargetList* tlist = masterController->getInterpretation()->getDrugResponseAnalysis()->getTreatment()->getTargets();
+    Tucuxi::Gui::Core::Target* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO, tlist);
+    Tucuxi::Gui::Core::Unit defaultUnit = Tucuxi::Gui::Core::Unit(masterController->getDefaultUnit());
     target->getCbest()->setUnit(defaultUnit);
     target->getCmax()->setUnit(defaultUnit);
     target->getCmin()->setUnit(defaultUnit);

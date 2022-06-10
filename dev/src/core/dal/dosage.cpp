@@ -9,7 +9,8 @@
 
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 //AUTO_PROPERTY_IMPL(Dosage, ADME::Route, route, Route)
 AUTO_PROPERTY_IMPL(Dosage, IdentifiableAmount*, quantity, Quantity)
@@ -326,5 +327,6 @@ bool DosageHistory::getNextIntake(const QDateTime& fromTime, QDateTime &nextTime
     return true;
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

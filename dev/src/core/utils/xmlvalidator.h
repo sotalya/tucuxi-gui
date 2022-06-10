@@ -9,7 +9,9 @@
 #include <QSourceLocation>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 class XmlValidator
@@ -73,7 +75,8 @@ private:
     ValidatorMessageHandler *_msgHandler;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

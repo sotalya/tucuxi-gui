@@ -18,7 +18,9 @@
 #include "core/errors_core.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 const char *const DefinitionManager::_dateTimeFormat    = "dd/MM/yyyy-HH:mm";
 const char *const DefinitionManager::_xmlDateTimeFormat = "yyyy'-'MM'-'dd'T'HH:mm:ss";
@@ -230,7 +232,7 @@ QStringList DefinitionManager::covariateValuesList(const QString &id) const
 ////////////////////////////////////////////////////////////////////
 
 //Returns the list of default intervals
-QList<Tucuxi::GuiCore::Duration> DefinitionManager::intervals() const
+QList<Tucuxi::Gui::Core::Duration> DefinitionManager::intervals() const
 {
     return _intervals;
 }
@@ -601,6 +603,7 @@ bool DefinitionManager::registerIntervals(const EzTag *root)
     return true;
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

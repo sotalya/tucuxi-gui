@@ -7,7 +7,8 @@
 #include "core/dal/drug/translatablestring.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
 AUTO_PROPERTY_IMPL(DrugVariate, QString, covariateId, CovariateId)
@@ -91,5 +92,6 @@ bool DrugVariate::operator !=(const DrugVariate &other) const
 
 QML_POINTERLIST_CLASS_IMPL(DrugVariateList, DrugVariate)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

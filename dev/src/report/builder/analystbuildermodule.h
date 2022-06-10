@@ -4,7 +4,7 @@
 #include "entity.h"
 #include "reportbuildermodule.h"
 
-class AnalystBuilderModule :public Tucuxi::GuiCore::Entity, public ReportBuilderModule
+class AnalystBuilderModule :public Tucuxi::Gui::Core::Entity, public ReportBuilderModule
 {
     Q_OBJECT
     AUTO_PROPERTY_DECL(Practician*, practician, Practician)

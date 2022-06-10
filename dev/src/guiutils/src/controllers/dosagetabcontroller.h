@@ -11,11 +11,14 @@
 #include "core/dal/dosage.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class DosageHistory;
 class DrugModel;
 
+}
 }
 }
 
@@ -27,8 +30,8 @@ public:
     explicit DosageTabController(QObject *parent = nullptr);
 
     //! This property is used by DosageTab.qml to access the list of dosages
-    STD_PROPERTY_DECL(Tucuxi::GuiCore::DosageHistory*, dosages, Dosages)
-    //STD_PROPERTY_DECL(Tucuxi::GuiCore::DrugModel*, drugModel, DrugModel)
+    STD_PROPERTY_DECL(Tucuxi::Gui::Core::DosageHistory*, dosages, Dosages)
+    //STD_PROPERTY_DECL(Tucuxi::Gui::Core::DrugModel*, drugModel, DrugModel)
     Q_PROPERTY(bool canHaveMoreDosages READ getCanHaveMoreDosages NOTIFY canHaveMoreDosagesChanged);
 
 public:
@@ -81,7 +84,7 @@ public:
     DosageTabController();
 
 private:
-    static bool compareDosage(const Tucuxi::GuiCore::Dosage* a, const Tucuxi::GuiCore::Dosage* b);
+    static bool compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b);
 };
 
 #endif // DOSAGETABCONTROLLER_H

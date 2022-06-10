@@ -3,9 +3,11 @@
 #include "core/dal/corepatient.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
-Tucuxi::GuiCore::CorePatientSet::CorePatientSet(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent, const Tucuxi::GuiCore::CorePatientSet* &other)
+
+Tucuxi::Gui::Core::CorePatientSet::CorePatientSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent, const Tucuxi::Gui::Core::CorePatientSet* &other)
 {
     foreach (CorePatient* _p, *other) {
         CorePatient* _np = CoreFactory::createEntity<CorePatient>(repository, parent);
@@ -15,5 +17,6 @@ Tucuxi::GuiCore::CorePatientSet::CorePatientSet(Tucuxi::GuiCore::AbstractReposit
 }
 
 QML_POINTERLIST_CLASS_IMPL(CorePatientList, CorePatient)
+}
 }
 }

@@ -4,7 +4,7 @@ DrugXmlExport::DrugXmlExport()
 {
 }
 
-bool DrugXmlExport::save(Tucuxi::GuiCore::DrugModel *drug, const QString &fileName)
+bool DrugXmlExport::save(Tucuxi::Gui::Core::DrugModel *drug, const QString &fileName)
 {
 
     QTextStream out(stdout);
@@ -39,11 +39,11 @@ bool DrugXmlExport::save(Tucuxi::GuiCore::DrugModel *drug, const QString &fileNa
     return isOk;
 }
 
-bool DrugXmlExport::saveHistory(const Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlExport::saveHistory(const Tucuxi::Gui::Core::DrugModel *drug)
 {
     bool isOk = true;
 
-    Tucuxi::GuiCore::EditorList *editors = drug->getMetaData()->getEditors();
+    Tucuxi::Gui::Core::EditorList *editors = drug->getMetaData()->getEditors();
     writer.writeComment(" Drug history ");
     writeNewLine();
     writer.writeStartElement("history");
@@ -52,7 +52,7 @@ bool DrugXmlExport::saveHistory(const Tucuxi::GuiCore::DrugModel *drug)
     writer.writeEndElement();//creator
     writer.writeStartElement("revisions");
     for (int i = 1; i < editors->size(); i++) {
-        Tucuxi::GuiCore::Editor *editor = editors->at(i);
+        Tucuxi::Gui::Core::Editor *editor = editors->at(i);
         saveEditor(editor);
         writer.writeEndElement();//revision
     }
@@ -63,7 +63,7 @@ bool DrugXmlExport::saveHistory(const Tucuxi::GuiCore::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveEditor(const Tucuxi::GuiCore::Editor *editor){
+bool DrugXmlExport::saveEditor(const Tucuxi::Gui::Core::Editor *editor){
     bool isOk = true;
 
     tagInjector("name",editor->getName());
@@ -78,7 +78,7 @@ bool DrugXmlExport::saveEditor(const Tucuxi::GuiCore::Editor *editor){
     return isOk;
 }
 
-bool DrugXmlExport::saveDrug(const Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlExport::saveDrug(const Tucuxi::Gui::Core::DrugModel *drug)
 {
     bool isOk = true;
     writer.writeComment(" Drug data ");
@@ -122,7 +122,7 @@ bool DrugXmlExport::saveDrug(const Tucuxi::GuiCore::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveHead(const Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlExport::saveHead(const Tucuxi::Gui::Core::DrugModel *drug)
 {
     bool isOk = true;
     writer.writeComment(" Drug description ");
@@ -153,7 +153,7 @@ bool DrugXmlExport::saveHead(const Tucuxi::GuiCore::DrugModel *drug)
 
     writer.writeStartElement("references");
     //FIXME once references are good
-    for(Tucuxi::GuiCore::Reference *reference : drug->getMetaData()->getReferences()->getList()) {
+    for(Tucuxi::Gui::Core::Reference *reference : drug->getMetaData()->getReferences()->getList()) {
         writer.writeStartElement("reference");
         if(!reference->getType().isEmpty()){
             writer.writeAttribute("type",reference->getType());
@@ -181,7 +181,7 @@ bool DrugXmlExport::saveHead(const Tucuxi::GuiCore::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveAdme(const Tucuxi::GuiCore::ADME *adme)
+bool DrugXmlExport::saveAdme(const Tucuxi::Gui::Core::ADME *adme)
 {
     bool isOk = true;
     writer.writeComment(" Drug adme and intake ");
@@ -189,9 +189,9 @@ bool DrugXmlExport::saveAdme(const Tucuxi::GuiCore::ADME *adme)
 
     writer.writeStartElement("adme");
 
-    if (adme->getDefaultIntake()->getRoute() == Tucuxi::GuiCore::Admin::BOLUS) {
+    if (adme->getDefaultIntake()->getRoute() == Tucuxi::Gui::Core::Admin::BOLUS) {
         tagInjector("intake","bolus");
-    } else if (adme->getDefaultIntake()->getRoute() == Tucuxi::GuiCore::Admin::INFUSION) {
+    } else if (adme->getDefaultIntake()->getRoute() == Tucuxi::Gui::Core::Admin::INFUSION) {
         tagInjector("intake","infu");
     } else {
         tagInjector("intake","extra");
@@ -207,7 +207,7 @@ bool DrugXmlExport::saveAdme(const Tucuxi::GuiCore::ADME *adme)
     return isOk;
 }
 
-bool DrugXmlExport::saveHalflife(const Tucuxi::GuiCore::Halflife *halflife)
+bool DrugXmlExport::saveHalflife(const Tucuxi::Gui::Core::Halflife *halflife)
 {
     bool isOk = true;
     writer.writeComment(" Drug half-life ");
@@ -227,7 +227,7 @@ bool DrugXmlExport::saveHalflife(const Tucuxi::GuiCore::Halflife *halflife)
 }
 
 
-bool DrugXmlExport::saveConversions(const Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlExport::saveConversions(const Tucuxi::Gui::Core::DrugModel *drug)
 {
     bool isOk = true;
     writer.writeComment(" Drug units and conversions ");
@@ -256,9 +256,9 @@ bool DrugXmlExport::saveConversions(const Tucuxi::GuiCore::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveStandardTreatment(const Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlExport::saveStandardTreatment(const Tucuxi::Gui::Core::DrugModel *drug)
 {
-    Tucuxi::GuiCore::StandardTreatment *treatment = drug->getStandardTreatment();
+    Tucuxi::Gui::Core::StandardTreatment *treatment = drug->getStandardTreatment();
 
     bool isOk = true;
     writer.writeComment(" Standard treatment ");
@@ -274,7 +274,7 @@ bool DrugXmlExport::saveStandardTreatment(const Tucuxi::GuiCore::DrugModel *drug
     return isOk;
 }
 
-bool DrugXmlExport::saveDosages(const Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlExport::saveDosages(const Tucuxi::Gui::Core::DrugModel *drug)
 {
     bool isOk = true;
     writer.writeComment(" Drug dosages ");
@@ -283,7 +283,7 @@ bool DrugXmlExport::saveDosages(const Tucuxi::GuiCore::DrugModel *drug)
 
     writer.writeStartElement("doses");
 
-    Tucuxi::GuiCore::ValidDoses *doses = drug->getDoses();
+    Tucuxi::Gui::Core::ValidDoses *doses = drug->getDoses();
     QXmlStreamAttributes dosesAttributes;
 
     dosesAttributes.append("default", QString::number(doses->getQuantity()->value()));
@@ -303,7 +303,7 @@ bool DrugXmlExport::saveDosages(const Tucuxi::GuiCore::DrugModel *drug)
     writer.writeEndElement();//doses
     writer.writeStartElement("intervals");
 
-    Tucuxi::GuiCore::ValidIntervals *intervals = drug->getIntervals();
+    Tucuxi::Gui::Core::ValidIntervals *intervals = drug->getIntervals();
     QXmlStreamAttributes intervalAttributes;
     intervalAttributes.append("default", QString::number(intervals->getQuantity()->value()));
     intervalAttributes.append("unit", intervals->getQuantity()->unit().name());
@@ -317,7 +317,7 @@ bool DrugXmlExport::saveDosages(const Tucuxi::GuiCore::DrugModel *drug)
     writer.writeEndElement();//intervals
     writer.writeStartElement("infusions");
 
-    Tucuxi::GuiCore::ValidInfusions *infusions = drug->getInfusions();
+    Tucuxi::Gui::Core::ValidInfusions *infusions = drug->getInfusions();
     QXmlStreamAttributes infusionAttributes;
     infusionAttributes.append("default", QString::number(infusions->getQuantity()->getDbvalue()));
     infusionAttributes.append("unit", infusions->getQuantity()->getUnitstring());
@@ -339,7 +339,7 @@ bool DrugXmlExport::saveDosages(const Tucuxi::GuiCore::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveTargets(Tucuxi::GuiCore::TargetList* targets)
+bool DrugXmlExport::saveTargets(Tucuxi::Gui::Core::TargetList* targets)
 {
     bool isOk = true;
 
@@ -347,26 +347,26 @@ bool DrugXmlExport::saveTargets(Tucuxi::GuiCore::TargetList* targets)
     writeNewLine();
 
     writer.writeStartElement("targets");
-    for(Tucuxi::GuiCore::Target *target : targets->getList()){
+    for(Tucuxi::Gui::Core::Target *target : targets->getList()){
         writer.writeStartElement("target");
 
         switch(target->getType()->getTargetType()){
-        case Tucuxi::GuiCore::TargetMethod::TargetType::ResidualTarget :
+        case Tucuxi::Gui::Core::TargetMethod::TargetType::ResidualTarget :
             tagInjector("type","residual");
             break;
-        case Tucuxi::GuiCore::TargetMethod::TargetType::PeakTarget :
+        case Tucuxi::Gui::Core::TargetMethod::TargetType::PeakTarget :
             tagInjector("type","peak");
             break;
-        case  Tucuxi::GuiCore::TargetMethod::TargetType::MeanTarget :
+        case  Tucuxi::Gui::Core::TargetMethod::TargetType::MeanTarget :
             tagInjector("type","mean");
             break;
-        case  Tucuxi::GuiCore::TargetMethod::TargetType::AUCTarget :
+        case  Tucuxi::Gui::Core::TargetMethod::TargetType::AUCTarget :
             tagInjector("type","auc");
             break;
-        case  Tucuxi::GuiCore::TargetMethod::TargetType::CumulativeAUCTarget :
+        case  Tucuxi::Gui::Core::TargetMethod::TargetType::CumulativeAUCTarget :
             tagInjector("type","cumulativeauc");
             break;
-        case Tucuxi::GuiCore::TargetMethod::TargetType::UnknownTarget :
+        case Tucuxi::Gui::Core::TargetMethod::TargetType::UnknownTarget :
             tagInjector("type", "unknown");
             break;
         // No default, as we cover every possible state
@@ -431,7 +431,7 @@ bool DrugXmlExport::saveTargets(Tucuxi::GuiCore::TargetList* targets)
     return isOk;
 }
 
-bool DrugXmlExport::saveCovariates(Tucuxi::GuiCore::DrugVariateList * covariates)
+bool DrugXmlExport::saveCovariates(Tucuxi::Gui::Core::DrugVariateList * covariates)
 {
     bool isOk = true;
 
@@ -440,7 +440,7 @@ bool DrugXmlExport::saveCovariates(Tucuxi::GuiCore::DrugVariateList * covariates
 
     writer.writeStartElement("covariates");
 
-    for(Tucuxi::GuiCore::DrugVariate* covariate : covariates->getList()){
+    for(Tucuxi::Gui::Core::DrugVariate* covariate : covariates->getList()){
         writer.writeStartElement("covariate");
         tagInjector("id",covariate->getCovariateId());
 
@@ -468,7 +468,7 @@ bool DrugXmlExport::saveCovariates(Tucuxi::GuiCore::DrugVariateList * covariates
     return isOk;
 }
 
-bool DrugXmlExport::saveErrormodel(const Tucuxi::GuiCore::ErrorModel* errorModel)
+bool DrugXmlExport::saveErrormodel(const Tucuxi::Gui::Core::ErrorModel* errorModel)
 {
     bool isOk = true;
 
@@ -488,7 +488,7 @@ bool DrugXmlExport::saveErrormodel(const Tucuxi::GuiCore::ErrorModel* errorModel
     return isOk;
 }
 
-bool DrugXmlExport::saveParameters(const Tucuxi::GuiCore::ParameterSet *parameters)
+bool DrugXmlExport::saveParameters(const Tucuxi::Gui::Core::ParameterSet *parameters)
 {
     bool isOk = true;
 
@@ -499,14 +499,14 @@ bool DrugXmlExport::saveParameters(const Tucuxi::GuiCore::ParameterSet *paramete
 
     for(QString paramId : parameters->pids()){
 
-        Tucuxi::GuiCore::Parameter *parameter = parameters->get(paramId);
+        Tucuxi::Gui::Core::Parameter *parameter = parameters->get(paramId);
         writer.writeStartElement("parameter");
 
         tagInjector("id",parameter->getName());
         tagInjector("unit",parameter->getQuantity()->unit().name());
         tagInjector("value",QString::number(parameter->getQuantity()->value()));
 
-        Tucuxi::GuiCore::Bsv *bsv = parameter->getBsv();
+        Tucuxi::Gui::Core::Bsv *bsv = parameter->getBsv();
         writer.writeStartElement("bsv");
         tagInjector("additive",QString::number(bsv->getStandard()));
         tagInjector("proportional",QString::number(bsv->getProportional()));
@@ -531,7 +531,7 @@ bool DrugXmlExport::saveParameters(const Tucuxi::GuiCore::ParameterSet *paramete
     return isOk;
 }
 
-bool DrugXmlExport::saveCorrelations(const Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlExport::saveCorrelations(const Tucuxi::Gui::Core::DrugModel *drug)
 {
     bool isOk = true;
 
@@ -566,7 +566,7 @@ bool DrugXmlExport::saveCorrelations(const Tucuxi::GuiCore::DrugModel *drug)
     return isOk;
 }
 
-bool DrugXmlExport::saveOperations(const Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlExport::saveOperations(const Tucuxi::Gui::Core::DrugModel *drug)
 {
     bool isOk = true;
     writer.writeComment(" Drug operations ");
@@ -576,11 +576,11 @@ bool DrugXmlExport::saveOperations(const Tucuxi::GuiCore::DrugModel *drug)
 
     for(QString paramPids : drug->getParameters()->pids()){
 
-        Tucuxi::GuiCore::Parameter *parameter = drug->getParameters()->get(paramPids);
-        Tucuxi::GuiCore::OperationList *operations = parameter->getOperations();
+        Tucuxi::Gui::Core::Parameter *parameter = drug->getParameters()->get(paramPids);
+        Tucuxi::Gui::Core::OperationList *operations = parameter->getOperations();
 
 
-        for(Tucuxi::GuiCore::Operation *operation : operations->getList()){
+        for(Tucuxi::Gui::Core::Operation *operation : operations->getList()){
 
             writer.writeStartElement("operation");
             tagInjector("parameter",parameter->getName());
@@ -626,7 +626,7 @@ bool DrugXmlExport::tagInjector(const QString tagName, QString text, QXmlStreamA
     return true;
 }
 
-bool DrugXmlExport::stringSaverTranslation(Tucuxi::GuiCore::TranslatableString *QMapStringTranslation,QString elemName)
+bool DrugXmlExport::stringSaverTranslation(Tucuxi::Gui::Core::TranslatableString *QMapStringTranslation,QString elemName)
 {
     for(QString langKey : QMapStringTranslation->keys()){
         QXmlStreamAttributes attributes;

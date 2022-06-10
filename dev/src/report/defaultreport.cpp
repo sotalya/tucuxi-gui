@@ -9,7 +9,7 @@
 #include <QTranslator>
 #include <QApplication>
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
 DefaultReport::DefaultReport(ReportData *data, QObject *parent) :
     Report(data, parent)

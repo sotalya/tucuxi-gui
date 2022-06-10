@@ -20,7 +20,7 @@
 
 namespace Tucuxi {
 namespace cliutils {
-using namespace GuiCore;
+using namespace Gui::Core;
 
 class ExchangeAction : public Action
 {

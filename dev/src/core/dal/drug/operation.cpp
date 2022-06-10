@@ -3,7 +3,9 @@
 #include "core/dal/drug/operation.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(Operation, OperationType, type, Type)
 AUTO_PROPERTY_IMPL(Operation, QString, formula, Formula)
@@ -23,7 +25,8 @@ Operation::Operation(AbstractRepository *repository, QObject *parent) :
 QML_POINTERLIST_CLASS_IMPL(OperationList, Operation)
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

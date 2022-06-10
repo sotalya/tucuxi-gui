@@ -56,18 +56,18 @@ bool AbstractEntityListModel::removeRows(int row, int count, const QModelIndex &
     return true;
 }
 
-void AbstractEntityListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities)
+void AbstractEntityListModel::insertRowsImpl(int at, int count, const Tucuxi::Gui::Core::SharedEntitySet &entities)
 {
     Q_UNUSED(at);
     Q_UNUSED(count);
     Q_UNUSED(entities);
 }
 
-Tucuxi::GuiCore::SharedEntitySet AbstractEntityListModel::removeRowsImpl(int at, int count)
+Tucuxi::Gui::Core::SharedEntitySet AbstractEntityListModel::removeRowsImpl(int at, int count)
 {
     Q_UNUSED(at);
     Q_UNUSED(count);
-    return Tucuxi::GuiCore::SharedEntitySet();
+    return Tucuxi::Gui::Core::SharedEntitySet();
 }
 
 InsertRowsCommand::InsertRowsCommand(int row, int count, AbstractEntityListModel *model) :
@@ -95,7 +95,7 @@ void InsertRowsCommand::redo()
 
 void InsertRowsCommand::undo()
 {
-    Tucuxi::GuiCore::SharedEntitySet removed;
+    Tucuxi::Gui::Core::SharedEntitySet removed;
 
     _model->beginRemoveRows(QModelIndex(), _at, _at + _count - 1);
     removed << _model->removeRowsImpl(_at, _count);

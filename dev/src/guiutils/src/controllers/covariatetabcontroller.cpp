@@ -9,10 +9,10 @@
 
 
 
-DrugVariateInfo::DrugVariateInfo(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
+DrugVariateInfo::DrugVariateInfo(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
-    _actualValue(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperableAmount>(repository, this)),
-    _defaultValue(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperableAmount>(repository, this)),
+    _actualValue(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(repository, this)),
+    _defaultValue(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(repository, this)),
     _type(QMetaType::Int),
     _automatic(false)
 {
@@ -21,26 +21,26 @@ DrugVariateInfo::DrugVariateInfo(Tucuxi::GuiCore::AbstractRepository *repository
 AUTO_PROPERTY_IMPL(DrugVariateInfo, QString, covariateId, CovariateId)
 AUTO_PROPERTY_IMPL(DrugVariateInfo, QString, name, Name)
 AUTO_PROPERTY_IMPL(DrugVariateInfo, QDateTime, date, Date)
-AUTO_PROPERTY_IMPL(DrugVariateInfo, Tucuxi::GuiCore::OperableAmount*, actualValue, ActualValue)
-AUTO_PROPERTY_IMPL(DrugVariateInfo, Tucuxi::GuiCore::OperableAmount*, defaultValue, DefaultValue)
+AUTO_PROPERTY_IMPL(DrugVariateInfo, Tucuxi::Gui::Core::OperableAmount*, actualValue, ActualValue)
+AUTO_PROPERTY_IMPL(DrugVariateInfo, Tucuxi::Gui::Core::OperableAmount*, defaultValue, DefaultValue)
 AUTO_PROPERTY_IMPL(DrugVariateInfo, QMetaType::Type, type, Type)
 AUTO_PROPERTY_IMPL(DrugVariateInfo, bool, automatic, Automatic)
 QML_POINTERLIST_CLASS_IMPL(DrugVariateInfoList, DrugVariateInfo)
 
 STD_PROPERTY_IMPL(CovariateTabController, DrugVariateInfoList*, drugVariateInfos, DrugVariateInfos)
-STD_PROPERTY_IMPL(CovariateTabController, Tucuxi::GuiCore::PatientVariateList*, fileredVariates, FileredVariates)
-STD_PROPERTY_IMPL(CovariateTabController, Tucuxi::GuiCore::PatientVariateList*, patientVariates, PatientVariates)
+STD_PROPERTY_IMPL(CovariateTabController, Tucuxi::Gui::Core::PatientVariateList*, fileredVariates, FileredVariates)
+STD_PROPERTY_IMPL(CovariateTabController, Tucuxi::Gui::Core::PatientVariateList*, patientVariates, PatientVariates)
 
 
 
 CovariateTabController::CovariateTabController(QObject *parent) : AbstractViewController(parent)
 {
-    _drugVariateInfos = Tucuxi::GuiCore::CoreFactory::createEntity<DrugVariateInfoList>(ABSTRACTREPO, this);
-    _fileredVariates = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariateList>(ABSTRACTREPO, this);
-    _patientVariates = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariateList>(ABSTRACTREPO, this);
+    _drugVariateInfos = Tucuxi::Gui::Core::CoreFactory::createEntity<DrugVariateInfoList>(ABSTRACTREPO, this);
+    _fileredVariates = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, this);
+    _patientVariates = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, this);
 }
 
-void CovariateTabController::reset(Tucuxi::GuiCore::DrugVariateList* drugVariates)
+void CovariateTabController::reset(Tucuxi::Gui::Core::DrugVariateList* drugVariates)
 {
     _drugVariateInfos->clear();
     _fileredVariates->clearWithoutDeletion();
@@ -49,9 +49,9 @@ void CovariateTabController::reset(Tucuxi::GuiCore::DrugVariateList* drugVariate
         return;
 
     // Create a copy of all drug variates
-    foreach (Tucuxi::GuiCore::DrugVariate* dv, drugVariates->getList())
+    foreach (Tucuxi::Gui::Core::DrugVariate* dv, drugVariates->getList())
     {
-        DrugVariateInfo *copy = Tucuxi::GuiCore::CoreFactory::createEntity<DrugVariateInfo>(ABSTRACTREPO, _drugVariateInfos);
+        DrugVariateInfo *copy = Tucuxi::Gui::Core::CoreFactory::createEntity<DrugVariateInfo>(ABSTRACTREPO, _drugVariateInfos);
         // copy->setName(dv->getCovariateId());
         copy->setCovariateId(dv->getCovariateId());
         copy->setName(dv->getVisualNameTranslation()->value());
@@ -74,7 +74,7 @@ void CovariateTabController::selectDrugVariate(int drugVariateFromIndex)
 
     // Refresh our list containing the history for the currently selected drug variate
     _fileredVariates->clear();
-    foreach (Tucuxi::GuiCore::PatientVariate* patientVariate, _patientVariates->getList())
+    foreach (Tucuxi::Gui::Core::PatientVariate* patientVariate, _patientVariates->getList())
     {
         if (patientVariate->getCovariateId() == drugVariate->getCovariateId())
         {
@@ -91,7 +91,7 @@ void CovariateTabController::addPatientVariate(const int drugVariateFromIndex)
     DrugVariateInfo *drugVariate = _drugVariateInfos->at(drugVariateFromIndex);
     QString variateName = drugVariate->getCovariateId();
 
-    Tucuxi::GuiCore::PatientVariate* pv = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
+    Tucuxi::Gui::Core::PatientVariate* pv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, _patientVariates);
     pv->setDate(QDateTime::currentDateTime());
     pv->setCovariateId(variateName);
     pv->setName(drugVariate->getName());
@@ -119,14 +119,14 @@ void CovariateTabController::setBirthdate(QDateTime date)
         }
     }
 
-    Tucuxi::GuiCore::PatientVariate* pv = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
+    Tucuxi::Gui::Core::PatientVariate* pv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, _patientVariates);
     pv->setDate(QDateTime::currentDateTime());
     pv->setValueAsString(date.toString(Qt::ISODate));
     pv->setCovariateId("birthdate");
     pv->setName("birthdate");
     pv->setType(QMetaType::Type::Int);
     pv->getQuantity()->setDbvalue(date.toMSecsSinceEpoch() / (qint64)1000);
-    pv->getQuantity()->setUnit(Tucuxi::GuiCore::Unit("s"));
+    pv->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("s"));
     _patientVariates->append(pv);
 
 
@@ -158,7 +158,7 @@ void CovariateTabController::setBirthdate(QDateTime date)
     foreach (DrugVariateInfo* drugVariate, _drugVariateInfos->getList())
     {
         if (drugVariate->getCovariateId() == variateName) {
-            Tucuxi::GuiCore::PatientVariate* pv = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
+            Tucuxi::Gui::Core::PatientVariate* pv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, _patientVariates);
             pv->setDate(QDateTime::currentDateTime());
             pv->setCovariateId(variateName);
             pv->setName(drugVariate->getName());
@@ -180,7 +180,7 @@ void CovariateTabController::setBirthdate(QDateTime date)
     foreach (DrugVariateInfo* drugVariate, _drugVariateInfos->getList())
     {
         if (drugVariate->getCovariateId() == variateName) {
-            Tucuxi::GuiCore::PatientVariate* pv = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
+            Tucuxi::Gui::Core::PatientVariate* pv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, _patientVariates);
             pv->setDate(QDateTime::currentDateTime());
             pv->setCovariateId(variateName);
             pv->setName(drugVariate->getName());
@@ -245,7 +245,7 @@ void CovariateTabController::setSinglePatientVariate(QString id, double value)
     foreach (DrugVariateInfo* drugVariate, _drugVariateInfos->getList())
     {
         if (drugVariate->getCovariateId() == id) {
-            Tucuxi::GuiCore::PatientVariate* pv = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
+            Tucuxi::Gui::Core::PatientVariate* pv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, _patientVariates);
             pv->setDate(QDateTime::currentDateTime());
             pv->setCovariateId(variateName);
             pv->setName(drugVariate->getName());
@@ -270,7 +270,7 @@ void CovariateTabController::setSinglePatientVariate(QString id, double value)
     }
 /*
     if (id == "birthdate") {
-        Tucuxi::GuiCore::PatientVariate* pv = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariate>(ABSTRACTREPO, _patientVariates);
+        Tucuxi::Gui::Core::PatientVariate* pv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, _patientVariates);
         pv->setDate(QDateTime::currentDateTime());
         pv->setCovariateId("birthdate");
         pv->setName("birthdate");
@@ -288,7 +288,7 @@ void CovariateTabController::removePatientVariate(int index)
     if (!isPatientIndexValid(index)) return;
 
     // Remove the variate from the list of displayed variates
-    Tucuxi::GuiCore::PatientVariate* pv = _fileredVariates->at(index);
+    Tucuxi::Gui::Core::PatientVariate* pv = _fileredVariates->at(index);
     _fileredVariates->remove(index);
 
     QString variateName = pv->getCovariateId();
@@ -313,7 +313,7 @@ void CovariateTabController::setDbValue(int index, double value)
 {
     if (!isPatientIndexValid(index)) return;
 
-    Tucuxi::GuiCore::PatientVariate *pv = _fileredVariates->at(index);
+    Tucuxi::Gui::Core::PatientVariate *pv = _fileredVariates->at(index);
     if (pv->getQuantity()->getDbvalue() != value)
     {
         pv->getQuantity()->setDbvalue(value);
@@ -325,7 +325,7 @@ void CovariateTabController::setDate(int index, QDateTime time)
 {
     if (!isPatientIndexValid(index)) return;
 
-    Tucuxi::GuiCore::PatientVariate *pv = _fileredVariates->at(index);
+    Tucuxi::Gui::Core::PatientVariate *pv = _fileredVariates->at(index);
     if (pv->getDate() != time)
     {
         pv->setDate(time);
@@ -339,7 +339,7 @@ void CovariateTabController::updateAllActualValues()
     {
          // Update the "latest value" field with the value of the latest variate
         qint64 latestDate = std::numeric_limits < qint64 >::min();
-        foreach (Tucuxi::GuiCore::PatientVariate *pv, _patientVariates->getList())
+        foreach (Tucuxi::Gui::Core::PatientVariate *pv, _patientVariates->getList())
         {
             if (pv->getCovariateId() == dv->getCovariateId())
             {
@@ -373,7 +373,7 @@ void CovariateTabController::updateActualValue(QString variateName)
         {
             // Update the "latest value" field with the value of the latest variate
             qint64 latestDate = 0;
-            foreach (Tucuxi::GuiCore::PatientVariate *pv, _patientVariates->getList())
+            foreach (Tucuxi::Gui::Core::PatientVariate *pv, _patientVariates->getList())
             {
                 if (pv->getCovariateId() == variateName)
                 {
@@ -414,7 +414,7 @@ bool CovariateTabController::isDrugIndexValid(int index)
     return (index >= 0) && (index < _drugVariateInfos->size());
 }
 
-bool CovariateTabController::compareVariate(const Tucuxi::GuiCore::PatientVariate* a, const Tucuxi::GuiCore::PatientVariate* b)
+bool CovariateTabController::compareVariate(const Tucuxi::Gui::Core::PatientVariate* a, const Tucuxi::Gui::Core::PatientVariate* b)
 {
     return (a->getDate() < b->getDate());
 }

@@ -4,7 +4,9 @@
 #include "core/dal/drug/translatablestring.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(Halflife, Unit, unit, Unit)
 AUTO_PROPERTY_IMPL(Halflife, double, value, Value)
@@ -13,7 +15,8 @@ AUTO_PROPERTY_IMPL(Halflife, int, multiplier, Multiplier)
 
 AUTO_PROPERTY_IMPL(Halflife, TranslatableString*, comments, Comments)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

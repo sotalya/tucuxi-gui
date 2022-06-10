@@ -2,7 +2,7 @@
 #include "reportdata.h"
 #include "identifiers.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
 ConcentrationsBuilderModule::ConcentrationsBuilderModule(const QList<QPair<Amount, QDateTime> > &concentrations, QObject *parent) :
     _concentrations(concentrations)

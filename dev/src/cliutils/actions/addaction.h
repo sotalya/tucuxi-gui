@@ -19,8 +19,11 @@ class CurveModel;
 
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 class Dosage;
+}
 }
 namespace cliutils {
 
@@ -40,15 +43,15 @@ public:
     bool addMeasure(const QString &firstname, const QString &name, const QString &drugName, const QString &dateStr, const QString &concentrationStr);
     bool addDosage(const QString &firstname, const QString &name, const QString &drugName, const QString &dateStr, const QString &doseStr, const QString &intervalStr);
 
-    bool lastMeasure(Measure * measure, Tucuxi::GuiCore::ident &patientId);
-    bool lastDosage(Tucuxi::GuiCore::Dosage* &dosage, Tucuxi::GuiCore::ident &curveId);
+    bool lastMeasure(Measure * measure, Tucuxi::Gui::Core::ident &patientId);
+    bool lastDosage(Tucuxi::Gui::Core::Dosage* &dosage, Tucuxi::Gui::Core::ident &curveId);
 
 private:
     static const char *const _separator;
 
     bool loadPatients();
     bool patientExists(const QString &name, const QString &firstname) const;
-    Tucuxi::GuiCore::ident patientId(const QString &name, const QString &firstname) const;
+    Tucuxi::Gui::Core::ident patientId(const QString &name, const QString &firstname) const;
 
     bool getPatient(const QString &firstname, const QString &name, SharedPatient &patient);
     bool getDrugId(const QString &drugName, QString &drugId);
@@ -56,19 +59,21 @@ private:
     bool getValue(const QString &valueStr, double &value);
     bool getValue(const QString &valueStr, int &value);
 
-    bool setDosage(const Tucuxi::GuiCore::ident curveId, Tucuxi::GuiCore::Dosage* &dosage);
-    bool setCurve(const QString drugId, const QString &curveName, const SharedPatient &patient, Tucuxi::GuiCore::Dosage* &dosage);
+    bool setDosage(const Tucuxi::Gui::Core::ident curveId, Tucuxi::Gui::Core::Dosage* &dosage);
+    bool setCurve(const QString drugId, const QString &curveName, const SharedPatient &patient, Tucuxi::Gui::Core::Dosage* &dosage);
 
-    bool tryRequest(const Tucuxi::GuiCore::Response &r, const QString &msg);
+    bool tryRequest(const Tucuxi::Gui::Core::Response &r, const QString &msg);
 
-    QHash<QString, Tucuxi::GuiCore::ident> _patients;
+    QHash<QString, Tucuxi::Gui::Core::ident> _patients;
 
     Measure * _lastMeasure;
-    Tucuxi::GuiCore::Dosage* _lastDosage;
-    Tucuxi::GuiCore::ident _lastPatientId;
-    Tucuxi::GuiCore::ident _lastCurveId;
+    Tucuxi::Gui::Core::Dosage* _lastDosage;
+    Tucuxi::Gui::Core::ident _lastPatientId;
+    Tucuxi::Gui::Core::ident _lastCurveId;
 
 };
-} //namespace cliutils
+
+} //namespace Core
+ //namespace Gui
 } //namespace Tucuxi
 #endif // ISYPEMACTION_H

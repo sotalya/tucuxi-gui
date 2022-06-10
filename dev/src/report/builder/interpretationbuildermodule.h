@@ -13,20 +13,20 @@ class CurveModel;
 #include "core/dal/entity.h"
 #include "reportbuildermodule.h"
 
-class InterpretationBuilderModule : public Tucuxi::GuiCore::Entity, public ReportBuilderModule
+class InterpretationBuilderModule : public Tucuxi::Gui::Core::Entity, public ReportBuilderModule
 {
     Q_OBJECT
     AUTO_PROPERTY_DECL(Interpretation*, interpretation, Interpretation)
-    AUTO_PROPERTY_DECL(Tucuxi::GuiCore::PredictionSpec*, prediction, Prediction)
+    AUTO_PROPERTY_DECL(Tucuxi::Gui::Core::PredictionSpec*, prediction, Prediction)
     AUTO_PROPERTY_DECL(Measure*, sample, Sample)
 
 public:
-    InterpretationBuilderModule(Interpretation* interpretation, Tucuxi::GuiCore::PredictionSpec* prediction, Measure * sample, QObject *parent = 0);
+    InterpretationBuilderModule(Interpretation* interpretation, Tucuxi::Gui::Core::PredictionSpec* prediction, Measure * sample, QObject *parent = 0);
 
     virtual bool setData(ReportData *data);
     virtual void unsetData(ReportData *data);
 
-    InterpretationBuilderModule &setTreatment(Tucuxi::GuiCore::PredictionSpec* prediction);
+    InterpretationBuilderModule &setTreatment(Tucuxi::Gui::Core::PredictionSpec* prediction);
 };
 
 #endif // INTERPRETATIONBUILDERMODULE_H

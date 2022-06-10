@@ -33,7 +33,7 @@ bool XmlMessage::isValid()
         return false;
     }
 
-    Tucuxi::GuiCore::XmlValidator validator;
+    Tucuxi::Gui::Core::XmlValidator validator;
     if (!validator.validate(d, schemaPath())) {
         setErrorString(tr("The message type '%1' is invalid (%2)").arg(messageType(), validator.errorMessage()));
         return false;

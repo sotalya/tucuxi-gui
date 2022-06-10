@@ -14,7 +14,9 @@
 #include "core/dal/drug/operableamount.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class Bsv;
 class Operation;
@@ -254,14 +256,15 @@ private:
     QString _model;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ParameterType)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ParameterType*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Parameter*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Parameter*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Parameters*);
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ParameterSet*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ParameterType)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::ParameterType*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Parameter*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Parameter*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Parameters*);
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ParameterSet*)
 
 #endif // PARAMETERS_H

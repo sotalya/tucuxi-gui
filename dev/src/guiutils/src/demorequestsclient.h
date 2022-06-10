@@ -32,21 +32,21 @@ public:
 
 private:
     QString buildDrug(const QString &rootKey);
-    Tucuxi::GuiCore::DosageHistory* buildDosages(const QString &rootKey);
+    Tucuxi::Gui::Core::DosageHistory* buildDosages(const QString &rootKey);
 
-    Tucuxi::GuiCore::PatientVariateList * buildCovariates(const QString &rootKey, const SharedPatient patient);
+    Tucuxi::Gui::Core::PatientVariateList * buildCovariates(const QString &rootKey, const SharedPatient patient);
     QList<Clinical*> buildClinical(const QString &rootKey, const SharedPatient patient);
 
     SharedPatient buildPatient(const QString &rootKey);
     SharedPractician buildPractician(const QString &rootKey);
     SharedInstitute buildInstitute(const QString &rootKey);
 
-    Tucuxi::GuiCore::CoreMeasureList * buildSamples(const QString &rootKey, const SharedPatient patient, const QString &drug);
+    Tucuxi::Gui::Core::CoreMeasureList * buildSamples(const QString &rootKey, const SharedPatient patient, const QString &drug);
     QList<SharedPhone> buildPhones(const QString &rootKey);
     PhoneList* buildPhoneList(const QString &rootKey);
     QList<Email*> buildEmails(const QString &rootKey);
 
-    Tucuxi::GuiCore::Admin::Route toDosageRoute(const QString &route);
+    Tucuxi::Gui::Core::Admin::Route toDosageRoute(const QString &route);
     PhoneType toPhoneType(const QString &type);
     Type toEmailType(const QString &type);
 

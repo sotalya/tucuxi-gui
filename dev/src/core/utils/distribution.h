@@ -8,7 +8,8 @@
 #include <QObject>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
 class Descriptor;
@@ -59,9 +60,10 @@ namespace distribution
 
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::distribution::DistributionType)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::distribution::DistributionType)
 
 #endif // DISTRIBUTION_H

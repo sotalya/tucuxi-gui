@@ -27,7 +27,8 @@
 
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 class DrugModelEngine;
 class PercentileEngine;
@@ -1367,7 +1368,8 @@ private:
     bool _lastAnsweredWithPna;
 };
 
-} // namespace core
+} // namespace Core
+{ // namespace Gui
 } // namespace Tucuxi
 
 #endif // CURVEMODEL_H

@@ -32,12 +32,12 @@ public:
     Q_INVOKABLE virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
 
 public slots:
-    void setModelData(const QList<Tucuxi::GuiCore::Descriptor> &studies);
+    void setModelData(const QList<Tucuxi::Gui::Core::Descriptor> &studies);
 
 private:
     void init();
 
-    QList<Tucuxi::GuiCore::Descriptor> _studies;
+    QList<Tucuxi::Gui::Core::Descriptor> _studies;
     QHash<int, QByteArray> _roleNames;
 };
 

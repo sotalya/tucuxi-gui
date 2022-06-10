@@ -10,7 +10,9 @@
 #include "core/dal/uncastedvalue.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(PatientVariate, QDateTime, date, Date)
 AUTO_PROPERTY_IMPL(PatientVariate, QString, valueAsString, ValueAsString)
@@ -27,7 +29,7 @@ PatientVariate::PatientVariate(AbstractRepository *repository, QObject* parent, 
     _uncastedValues(CoreFactory::createEntity<UncastedValueList>(repository, this))
 {
     setId(-1);
-    _quantity = Tucuxi::GuiCore::CoreFactory::createEntity<OperableAmount>(repository, this);
+    _quantity = Tucuxi::Gui::Core::CoreFactory::createEntity<OperableAmount>(repository, this);
     _quantity->setValue(0);
 }
 
@@ -108,6 +110,7 @@ bool PatientVariate::operator !=(const PatientVariate &other) const
 
 QML_POINTERLIST_CLASS_IMPL(PatientVariateList, PatientVariate)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

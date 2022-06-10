@@ -34,14 +34,14 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(Tucuxi::GuiCore::PatientVariate* covariate);
+    void setModelData(Tucuxi::Gui::Core::PatientVariate* covariate);
 
 private:
     virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
 
     void init();
 
-    Tucuxi::GuiCore::PatientVariate* _covariate;
+    Tucuxi::Gui::Core::PatientVariate* _covariate;
     QHash<int, QByteArray> _roleNames;
 };
 

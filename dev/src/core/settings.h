@@ -8,7 +8,9 @@
 #include <QObject>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 /** \ingroup core
@@ -266,7 +268,8 @@ private:
 
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // SETTINGS_H

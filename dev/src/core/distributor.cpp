@@ -15,7 +15,9 @@
 #include <stdlib.h>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //The settings names
@@ -365,6 +367,7 @@ void Distributor::downloadProgressed(qint64 received, qint64 total)
       emit progress((received*100)/total);
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

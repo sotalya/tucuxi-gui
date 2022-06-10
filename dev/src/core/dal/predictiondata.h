@@ -11,7 +11,9 @@
 #include "core/dal/drug/parameters.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class Point {
 public:
@@ -58,14 +60,17 @@ QML_POINTERLIST_CLASS_DECL(FancyPoints, FancyPoint)
 
 }
 }
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Point)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Points*)
+}
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Point)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Points*)
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::FancyPoint*)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::FancyPoints*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::FancyPoint*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::FancyPoints*)
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 struct CycleStatistics
 {
@@ -271,6 +276,7 @@ private:
 
 }
 }
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::PredictionData*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::PredictionData*>)
+}
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PredictionData*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::PredictionData*>)
 #endif // PREDICTIONDATA_H

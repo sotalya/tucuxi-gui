@@ -15,14 +15,14 @@
 #include "core/dal/drug/standardtreatment.h"
 
 
-STD_PROPERTY_IMPL(DosageTabController, Tucuxi::GuiCore::DosageHistory*, dosages, Dosages)
+STD_PROPERTY_IMPL(DosageTabController, Tucuxi::Gui::Core::DosageHistory*, dosages, Dosages)
 
-//STD_PROPERTY_IMPL(DosageTabController, Tucuxi::GuiCore::DrugModel*, drugModel, DrugModel)
+//STD_PROPERTY_IMPL(DosageTabController, Tucuxi::Gui::Core::DrugModel*, drugModel, DrugModel)
 
 DosageTabController::DosageTabController(QObject *parent) : AbstractViewController(parent)
 {
 //    _drugModel = nullptr;
-    _dosages = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DosageHistory>(ABSTRACTREPO, this);
+    _dosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO, this);
 }
 
 bool DosageTabController::isIndexValid(int index)
@@ -34,7 +34,7 @@ void DosageTabController::setAppliedTime(int index, QDateTime time)
 {
     if (!isIndexValid(index)) return;
 
-    Tucuxi::GuiCore::Dosage *dosage = _dosages->at(index);
+    Tucuxi::Gui::Core::Dosage *dosage = _dosages->at(index);
     if (dosage->getApplied() == time) return;
 
     if (time > dosage->getEndTime())
@@ -58,7 +58,7 @@ void DosageTabController::setEndTime(int index, QDateTime time)
 {
     if (!isIndexValid(index)) return;
 
-    Tucuxi::GuiCore::Dosage *dosage = _dosages->at(index);
+    Tucuxi::Gui::Core::Dosage *dosage = _dosages->at(index);
     if (dosage->getEndTime() == time) return;
 
     if (time < dosage->getApplied())
@@ -94,7 +94,7 @@ void DosageTabController::setDbInterval(int index, double interval)
     if (!isIndexValid(index)) return;
 
     // We set the interval in hours
-    if ( _dosages->at(index)->getInterval() == Tucuxi::GuiCore::Duration(interval)) return;
+    if ( _dosages->at(index)->getInterval() == Tucuxi::Gui::Core::Duration(interval)) return;
 
     _dosages->at(index)->setDbinterval(interval);
 }
@@ -103,8 +103,8 @@ int DosageTabController::getRelativeRouteValue(int index)
 {
     if (!isIndexValid(index)) return 0;
 
-    Tucuxi::GuiCore::AdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
-    Tucuxi::GuiCore::Admin::Route route = _dosages->at(index)->getRoute()->getRoute();
+    Tucuxi::Gui::Core::AdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
+    Tucuxi::Gui::Core::Admin::Route route = _dosages->at(index)->getRoute()->getRoute();
 
     for (int i=0; i<adminList->size(); i++)
     {
@@ -118,8 +118,8 @@ void DosageTabController::setRouteValue(int index, int routeValue)
 {
     if (!isIndexValid(index)) return;
 
-    Tucuxi::GuiCore::Admin::Route route;
-    Tucuxi::GuiCore::AdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
+    Tucuxi::Gui::Core::Admin::Route route;
+    Tucuxi::Gui::Core::AdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
     if (routeValue > adminList->size()) return;
 
     route = adminList->at(routeValue)->getRoute();
@@ -159,15 +159,15 @@ void DosageTabController::forceRefresh()
 
 void DosageTabController::addDosage()
 { 
-    Tucuxi::GuiCore::DrugModel *drugModel;
+    Tucuxi::Gui::Core::DrugModel *drugModel;
     drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
 
-    Tucuxi::GuiCore::Dosage* dosage = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Dosage>(ABSTRACTREPO, _dosages);
+    Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, _dosages);
     dosage->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
     dosage->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute());
     dosage->getRoute()->setDescription(drugModel->getAdme()->getDefaultIntake()->getDescription());
     dosage->getQuantity()->setDbvalue(drugModel->getDoses()->getQuantity()->value());
-    dosage->getQuantity()->setUnit(Tucuxi::GuiCore::Unit("mg"));
+    dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("mg"));
     dosage->setDbinterval(drugModel->getIntervals()->getQuantity()->value());
 
 
@@ -207,7 +207,7 @@ void DosageTabController::addDosage()
 
 QDateTime DosageTabController::getNewEndTime(QDateTime start)
 {
-    Tucuxi::GuiCore::DrugModel *drugModel;
+    Tucuxi::Gui::Core::DrugModel *drugModel;
     drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
 
     if (drugModel->getStandardTreatment()->getIsFixedDuration()) {
@@ -224,7 +224,7 @@ void DosageTabController::removeDosage(int index)
     forceRefresh();
 }
 
-bool DosageTabController::compareDosage(const Tucuxi::GuiCore::Dosage* a, const Tucuxi::GuiCore::Dosage* b)
+bool DosageTabController::compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
 {
     return (a->getApplied() < b->getApplied());
 }
@@ -237,9 +237,9 @@ int DosageTabController::getNbDosages()
 bool DosageTabController::getCanHaveMoreDosages()
 {
     return true;
-    QList<Tucuxi::GuiCore::Dosage*>::iterator it = _dosages->getList().begin();
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator it = _dosages->getList().begin();
     while (it != _dosages->getList().end()) {
-        Tucuxi::GuiCore::Dosage *dosage = *it;
+        Tucuxi::Gui::Core::Dosage *dosage = *it;
         if (dosage->getIsAtSteadyState()) {
             return false;
         }
@@ -263,12 +263,12 @@ bool DosageTabController::checkModifiedDates(int index, const QDateTime &applied
     }
 
     // Get the modified dosage
-    Tucuxi::GuiCore::Dosage *dosage = _dosages->at(index);
+    Tucuxi::Gui::Core::Dosage *dosage = _dosages->at(index);
 
     // Check if dates overlap exising dosages
-    QList<Tucuxi::GuiCore::Dosage*>::iterator it = _dosages->getList().begin();
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator it = _dosages->getList().begin();
     while (it != _dosages->getList().end()) {
-        Tucuxi::GuiCore::Dosage *d = *it;
+        Tucuxi::Gui::Core::Dosage *d = *it;
         if (d != dosage &&
             ((appliedDate > d->getApplied() && appliedDate < d->getEndTime()) ||  // new applied date is within the current dosage period
              (endDate > d->getApplied() && endDate < d->getEndTime()) ||          // new end date is within the current dosage period

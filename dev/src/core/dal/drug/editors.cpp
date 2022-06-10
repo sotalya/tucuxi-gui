@@ -3,7 +3,9 @@
 #include "core/dal/drug/editors.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(Editor,QString,name,Name)
 AUTO_PROPERTY_IMPL(Editor,QString, institution,Institution)
@@ -27,7 +29,8 @@ EditorSet::~EditorSet()
 }
 */
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

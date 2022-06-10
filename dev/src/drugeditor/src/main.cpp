@@ -73,7 +73,7 @@ void test()
 
     DrugXmlImport importer;
 
-    Tucuxi::GuiCore::DrugModel *drug = importer.load(inputFileName);
+    Tucuxi::Gui::Core::DrugModel *drug = importer.load(inputFileName);
     if (!drug) {
         std::cout << "Can not import" << std::endl;
         return;
@@ -125,31 +125,31 @@ int main(int argc, char *argv[])
 //    CHECK_REGISTER(qmlRegisterUncreatableType<DoseModel>("ezechiel", 1, 0, "DosageModel", QObject::tr("Cannot instantiate type 'DosageModel'")));
     CHECK_REGISTER(qmlRegisterUncreatableType<DrugListModel>("ezechiel", 1, 0, "DrugListModel", QObject::tr("Cannot instantiate type 'DrugListModel'")));
     CHECK_REGISTER(qmlRegisterUncreatableType<DrugVariateListModel>("ezechiel", 1, 0, "DrugVariateListModel", QObject::tr("Cannot instantiate type 'DrugVariateListModel'")));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::DrugModelList*>("DrugList*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::DrugModel*>("Drug*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::MetaData*>("MetaData*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::EditorList*>("EditorList*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::TranslatableString*>("TranslatableString*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::ValidDoses*>("ValidDoses*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::DoseList*>("DoseList*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::IdentifiableAmount*>("IdentifiableAmount*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::IntervalList*>("IntervalList*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::ValidIntervals*>("ValidIntervals*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::InfusionList*>("InfusionList*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::ValidInfusions*>("ValidInfusions*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::TargetList*>("TargetList*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::ADME*>("ADME*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::Halflife*>("Halflife*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::ErrorModel*>("ErrorModel*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::Parameters*>("Parameters*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::Bsv*>("Bsv*"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::DrugVariateList*>("DrugVariateList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::DrugModelList*>("DrugList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::DrugModel*>("Drug*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::MetaData*>("MetaData*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::EditorList*>("EditorList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::TranslatableString*>("TranslatableString*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::ValidDoses*>("ValidDoses*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::DoseList*>("DoseList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::IdentifiableAmount*>("IdentifiableAmount*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::IntervalList*>("IntervalList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::ValidIntervals*>("ValidIntervals*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::InfusionList*>("InfusionList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::ValidInfusions*>("ValidInfusions*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::TargetList*>("TargetList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::ADME*>("ADME*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::Halflife*>("Halflife*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::ErrorModel*>("ErrorModel*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::Parameters*>("Parameters*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::Bsv*>("Bsv*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::DrugVariateList*>("DrugVariateList*"));
     CHECK_REGISTER(qRegisterMetaType<QMetaType::Type>("Type"));
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::DrugVariate*>("DrugVariate*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::DrugVariate*>("DrugVariate*"));
 
-    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::Unit>("Unit"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::Gui::Core::Unit>("Unit"));
 
-    //    qRegisterMetaType<Tucuxi::GuiCore::TranslatableStringList*>("TranslatableString*");
+    //    qRegisterMetaType<Tucuxi::Gui::Core::TranslatableStringList*>("TranslatableString*");
     //    qmlRegisterUncreatableType<InstituteListModel>("ezechiel", 1, 0, "InstituteListModel", QObject::tr("Cannot instantiate type 'InstituteListModel'"));
 //    qmlRegisterUncreatableType<CommentListModel>("ezechiel",1 ,0 ,"editor");
 
@@ -225,7 +225,7 @@ void parseOptions()
 
 void initResources()
 {
-    Tucuxi::GuiCore::Core::setInstance(new Tucuxi::GuiAppUtils::AppCore());
+    Tucuxi::Gui::Core::setInstance(new Tucuxi::GuiAppUtils::AppCore());
 
 //    CORE->setProcessingInterface(new ProcessingMath());
     APPCORE->drugManager();
@@ -235,10 +235,10 @@ void initResources()
 
 void resetStaticModel(){
 
-    QScopedPointer<QList<Tucuxi::GuiCore::DrugModel*>> drugs(new QList<Tucuxi::GuiCore::DrugModel*>());
+    QScopedPointer<QList<Tucuxi::Gui::Core::DrugModel*>> drugs(new QList<Tucuxi::Gui::Core::DrugModel*>());
 
 
-    if (APPUTILSREPO->getDrugsList(*drugs.data()).error != Tucuxi::GuiCore::NoError)
+    if (APPUTILSREPO->getDrugsList(*drugs.data()).error != Tucuxi::Gui::Core::NoError)
         EXLOG(QtFatalMsg, Tucuxi::gui::NOEZERROR, "Drugs list not retreived."); //FIXME wrong error
 
 //    patientListModel->setModelData(patients.data());

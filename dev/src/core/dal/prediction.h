@@ -11,7 +11,9 @@
 #include "core/dal/drug/parameters.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class DrugResponseAnalysis;
 class DrugTreatment;
@@ -58,10 +60,11 @@ private:
 
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Prediction*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Prediction*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Prediction*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Prediction*>)
 
 #endif // PREDICTION_H

@@ -11,7 +11,7 @@ enum class PhoneType {
     UnknownPhoneType
 };
 
-class Phone : public Tucuxi::GuiCore::Entity
+class Phone : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
 
@@ -22,8 +22,8 @@ class Phone : public Tucuxi::GuiCore::Entity
 
 public:
 
-    Q_INVOKABLE Phone(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
-    Q_INVOKABLE Phone(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE Phone(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE Phone(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
     void setTypeFromString(const QString &type);
     QString typeToString() const;

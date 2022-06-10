@@ -10,10 +10,13 @@
 #include "abstractviewcontroller.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class CoreMeasureList;
 
+}
 }
 }
 
@@ -24,7 +27,7 @@ public:
     explicit MeasureTabController(QObject *parent = nullptr);
 
     //! This property is used by MeasureTab.qml to access the list of measures
-    STD_PROPERTY_DECL(Tucuxi::GuiCore::CoreMeasureList*, measures, Measures)
+    STD_PROPERTY_DECL(Tucuxi::Gui::Core::CoreMeasureList*, measures, Measures)
 
 public:
     Q_INVOKABLE void addMeasure();

@@ -15,7 +15,9 @@
 #include "core/core.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 // Initiate the duration with 0
 Duration::Duration()
@@ -323,5 +325,6 @@ void Duration::clear()
    duration = 0;
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

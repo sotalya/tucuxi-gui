@@ -4,7 +4,9 @@
 #include "core/dal/drug/translatablestring.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 //! The parameter's value standard variability
 AUTO_PROPERTY_IMPL(ErrorModel, double, additive, Additive)
@@ -13,7 +15,8 @@ AUTO_PROPERTY_IMPL(ErrorModel, double, proportional, Proportional)
 
 AUTO_PROPERTY_IMPL(ErrorModel, TranslatableString*, comments, Comments)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

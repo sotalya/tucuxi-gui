@@ -17,7 +17,7 @@ AckNotificationXmlMessage::~AckNotificationXmlMessage()
 
 QString AckNotificationXmlMessage::schemaPath() const
 {
-    return Tucuxi::GuiCore::XmlValidator::Acks;
+    return Tucuxi::Gui::Core::XmlValidator::Acks;
 }
 
 QString AckNotificationXmlMessage::messageType() const

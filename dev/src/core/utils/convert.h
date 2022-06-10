@@ -17,7 +17,9 @@
 #define DATE_FORMAT "dd/mm/yyyy"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //! \brief Safe conversion between QString and QVariant
@@ -63,7 +65,8 @@ private:
    int durationType;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // CONVERT_H

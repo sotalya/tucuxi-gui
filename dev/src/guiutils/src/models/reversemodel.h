@@ -33,12 +33,12 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(Tucuxi::GuiCore::PredictionResult*);
+    void setModelData(Tucuxi::Gui::Core::PredictionResult*);
 
 private:
     void init();
 
-    Tucuxi::GuiCore::PredictionResult* _pred;
+    Tucuxi::Gui::Core::PredictionResult* _pred;
     QHash<int, QByteArray> _roleNames;
 };
 

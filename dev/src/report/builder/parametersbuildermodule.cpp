@@ -3,7 +3,7 @@
 #include "identifiers.h"
 #include "bsv.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
 ParametersBuilderModule::ParametersBuilderModule(ParameterSet* parameters, QObject *parent) :
     _parameters(parameters)

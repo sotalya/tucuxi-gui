@@ -8,7 +8,8 @@
 #include "core/dal/amount.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
 class Concentrations : public Entity
@@ -27,10 +28,11 @@ protected:
 };
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_OPAQUE_POINTER(Tucuxi::GuiCore::Concentrations*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Concentrations*>)
+Q_DECLARE_OPAQUE_POINTER(Tucuxi::Gui::Core::Concentrations*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Concentrations*>)
 
 #endif // CONCENTRATIONS_H

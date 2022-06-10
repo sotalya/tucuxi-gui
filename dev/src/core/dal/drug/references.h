@@ -6,7 +6,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class Reference : public Entity
 {
@@ -28,11 +30,12 @@ class Reference : public Entity
 
 POINTERLIST_CLASS_DECL(ReferenceList, Reference)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Reference*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Reference*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ReferenceList*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Reference*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Reference*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ReferenceList*)
 
 #endif // REFERENCES_H

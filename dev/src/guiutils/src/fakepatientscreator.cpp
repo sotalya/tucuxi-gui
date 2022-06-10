@@ -12,7 +12,7 @@ FakePatientsCreator::FakePatientsCreator()
 }
 
 
-void FakePatientsCreator::createFakePatients(Tucuxi::GuiCore::CorePatientList* patientsList)
+void FakePatientsCreator::createFakePatients(Tucuxi::Gui::Core::CorePatientList* patientsList)
 {
     patientsList->clear();
     // Constants //////////////////////////////////////////////////////////////

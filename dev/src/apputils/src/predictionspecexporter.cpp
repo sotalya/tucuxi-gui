@@ -28,7 +28,7 @@ PredictionSpecExporter::PredictionSpecExporter()
 
 #include <QTextStream>
 
-bool PredictionSpecExporter::save(Tucuxi::GuiCore::PredictionSpec *spec, QByteArray &data)
+bool PredictionSpecExporter::save(Tucuxi::Gui::Core::PredictionSpec *spec, QByteArray &data)
 {
     writer = new QXmlStreamWriter(&data);
 
@@ -58,7 +58,7 @@ QString PredictionSpecExporter::writeDate(QDateTime date)
     return date.toString("yyyy-MM-dd. hh:mm:ss");
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::PredictionSpec *spec)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::PredictionSpec *spec)
 {
     writer->writeStartElement("predictionSpec");
     writer->writeTextElement("calculationType", spec->calculationTypeToString(spec->getCalculationType()));
@@ -76,7 +76,7 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::PredictionSpec *spec)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::saveIdentifiableAmount(const QString &tagName, Tucuxi::GuiCore::IdentifiableAmount *amount)
+void PredictionSpecExporter::saveIdentifiableAmount(const QString &tagName, Tucuxi::Gui::Core::IdentifiableAmount *amount)
 {
     writer->writeStartElement(tagName);
     writer->writeTextElement("amountId", amount->getAmountId());
@@ -85,7 +85,7 @@ void PredictionSpecExporter::saveIdentifiableAmount(const QString &tagName, Tucu
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::saveOperableAmount(const QString &tagName, Tucuxi::GuiCore::OperableAmount *amount)
+void PredictionSpecExporter::saveOperableAmount(const QString &tagName, Tucuxi::Gui::Core::OperableAmount *amount)
 {
     writer->writeStartElement(tagName);
     writer->writeTextElement("amountId", amount->getAmountId());
@@ -95,15 +95,15 @@ void PredictionSpecExporter::saveOperableAmount(const QString &tagName, Tucuxi::
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::OperationList *list)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::OperationList *list)
 {
     writer->writeStartElement("operations");
     if (list != nullptr) {
-        foreach(Tucuxi::GuiCore::Operation *operation, list->getList()) {
+        foreach(Tucuxi::Gui::Core::Operation *operation, list->getList()) {
             writer->writeStartElement("operation");
             writer->writeTextElement("type",
-                                     (operation->getType() == Tucuxi::GuiCore::OperationType::HARDCODED) ? "Hardcoded" :
-                                                                                                          (operation->getType() == Tucuxi::GuiCore::OperationType::IMPORTED) ? "Imported" :
+                                     (operation->getType() == Tucuxi::Gui::Core::OperationType::HARDCODED) ? "Hardcoded" :
+                                                                                                          (operation->getType() == Tucuxi::Gui::Core::OperationType::IMPORTED) ? "Imported" :
                                                                                                                                                                               "Noop");
             writer->writeTextElement("formula", operation->getFormula());
             writer->writeEndElement();
@@ -112,7 +112,7 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::OperationList *list)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::DrugResponseAnalysis *analysis)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::DrugResponseAnalysis *analysis)
 {
     writer->writeStartElement("drugResponseAnalysis");
     save(analysis->getTreatment());
@@ -121,7 +121,7 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::DrugResponseAnalysis *analysi
 }
 
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::DrugTreatment *treatment)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::DrugTreatment *treatment)
 {
     writer->writeStartElement("treatment");
     save(treatment->getDosages());
@@ -131,10 +131,10 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::DrugTreatment *treatment)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::CoreMeasureList *list)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::CoreMeasureList *list)
 {
     writer->writeStartElement("measures");
-    foreach (Tucuxi::GuiCore::CoreMeasure *measure, list->getList()) {
+    foreach (Tucuxi::Gui::Core::CoreMeasure *measure, list->getList()) {
         writer->writeStartElement("measure");
         writer->writeTextElement("moment", writeDate(measure->getMoment()));
         saveIdentifiableAmount("concentration", measure->getConcentration());
@@ -144,10 +144,10 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::CoreMeasureList *list)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::UncastedValueList *list)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::UncastedValueList *list)
 {
     writer->writeStartElement("uncastedValues");
-    foreach(Tucuxi::GuiCore::UncastedValue *value, list->getList()) {
+    foreach(Tucuxi::Gui::Core::UncastedValue *value, list->getList()) {
         writer->writeStartElement("uncastedValue");
         writer->writeTextElement("field", value->getField());
         writer->writeTextElement("value", value->getText());
@@ -157,10 +157,10 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::UncastedValueList *list)
 }
 
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::DosageHistory *history)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::DosageHistory *history)
 {
     writer->writeStartElement("dosageHistory");
-    foreach(Tucuxi::GuiCore::Dosage *dose, history->getList()) {
+    foreach(Tucuxi::Gui::Core::Dosage *dose, history->getList()) {
         writer->writeStartElement("dosage");
         writer->writeTextElement("dbinterval", QString("%1").arg(dose->getDbinterval()));
         writer->writeTextElement("dbtinf", QString("%1").arg(dose->getDbtinf()));
@@ -176,10 +176,10 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::DosageHistory *history)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::PatientVariateList *list)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::PatientVariateList *list)
 {
     writer->writeStartElement("patientVariates");
-    foreach(Tucuxi::GuiCore::PatientVariate *variate, list->getList()) {
+    foreach(Tucuxi::Gui::Core::PatientVariate *variate, list->getList()) {
         writer->writeStartElement("patientVariate");
         writer->writeTextElement("name", variate->getCovariateId());
         writer->writeTextElement("date", writeDate(variate->getDate()));
@@ -192,10 +192,10 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::PatientVariateList *list)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::TargetList *list)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::TargetList *list)
 {
     writer->writeStartElement("targets");
-    foreach(Tucuxi::GuiCore::Target *target, list->getList()) {
+    foreach(Tucuxi::Gui::Core::Target *target, list->getList()) {
         writer->writeStartElement("target");
         writer->writeTextElement("method", target->getType()->getLabel());
         writer->writeStartElement("concentrations");
@@ -214,7 +214,7 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::TargetList *list)
 }
 
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::DrugModel *model)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::DrugModel *model)
 {
     writer->writeStartElement("drugModel");
     // Activesubstance?
@@ -260,21 +260,21 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::DrugModel *model)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::ADME *adme)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::ADME *adme)
 {
     writer->writeStartElement("adme");
     writer->writeTextElement("defaultIntake", adme->getDefaultIntake()->getLabel());
     writer->writeTextElement("distribution", adme->getDistribution());
     writer->writeTextElement("elimination", adme->getElimination());
     writer->writeStartElement("intakes");
-    foreach(Tucuxi::GuiCore::Admin *admin, adme->getIntakes()->getList()) {
+    foreach(Tucuxi::Gui::Core::Admin *admin, adme->getIntakes()->getList()) {
         writer->writeTextElement("intake", admin->getLabel());
     }
     writer->writeEndElement();
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::ValidDoses *doses)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::ValidDoses *doses)
 {
     writer->writeStartElement("validDoses");
     writer->writeTextElement("anyDose", doses->getAnyDose() ? "true" : "false");
@@ -282,7 +282,7 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::ValidDoses *doses)
     saveIdentifiableAmount("defaultDose", doses->getQuantity());
     writer->writeStartElement("doses");
     for (int i=0; i< doses->size() ; i++) {
-        Tucuxi::GuiCore::ValidDose *dose = doses->at(i);
+        Tucuxi::Gui::Core::ValidDose *dose = doses->at(i);
         writer->writeStartElement("dose");
         writer->writeTextElement("route", dose->getRoute()->getLabel());
         saveIdentifiableAmount("quantity", dose->getQuantity());
@@ -293,7 +293,7 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::ValidDoses *doses)
 }
 
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::ValidInfusions *infusions)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::ValidInfusions *infusions)
 {
     writer->writeStartElement("validInfusions");
     writer->writeTextElement("any", infusions->getAny() ? "true" : "false");
@@ -309,7 +309,7 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::ValidInfusions *infusions)
 }
 
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::ValidIntervals *intervals)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::ValidIntervals *intervals)
 {
     writer->writeStartElement("validIntervals");
     writer->writeTextElement("any", intervals->getAny() ? "true" : "false");
@@ -325,10 +325,10 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::ValidIntervals *intervals)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::DrugVariateList *list)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::DrugVariateList *list)
 {
     writer->writeStartElement("drugVariates");
-    foreach(Tucuxi::GuiCore::DrugVariate *variate, list->getList()) {
+    foreach(Tucuxi::Gui::Core::DrugVariate *variate, list->getList()) {
         writer->writeStartElement("drugVariate");
         writer->writeTextElement("name", variate->getCovariateId());
         saveOperableAmount("quantity", variate->getQuantity());
@@ -339,12 +339,12 @@ void PredictionSpecExporter::save(Tucuxi::GuiCore::DrugVariateList *list)
     writer->writeEndElement();
 }
 
-void PredictionSpecExporter::save(Tucuxi::GuiCore::ParameterSet *set)
+void PredictionSpecExporter::save(Tucuxi::Gui::Core::ParameterSet *set)
 {
     writer->writeStartElement("parameterSet");
     writer->writeTextElement("time", writeDate(set->getTime()));
     writer->writeStartElement("parameters");
-    foreach(Tucuxi::GuiCore::Parameter *p, set->getParameters()->getList()) {
+    foreach(Tucuxi::Gui::Core::Parameter *p, set->getParameters()->getList()) {
         writer->writeStartElement("parameter");
         writer->writeTextElement("name", p->getName());
         saveOperableAmount("quantity", p->getQuantity());

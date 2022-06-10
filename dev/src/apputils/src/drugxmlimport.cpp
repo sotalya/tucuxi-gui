@@ -30,7 +30,7 @@
 
 DrugXmlImport::DrugXmlImport(){}
 
-Tucuxi::GuiCore::DrugModel *DrugXmlImport::load(const QString &fileName)
+Tucuxi::Gui::Core::DrugModel *DrugXmlImport::load(const QString &fileName)
 {
     QTextStream out(stdout);
 
@@ -40,7 +40,7 @@ Tucuxi::GuiCore::DrugModel *DrugXmlImport::load(const QString &fileName)
         return nullptr;
     }
     
-    Tucuxi::GuiCore::DrugModel *drug = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugModel>(ABSTRACTREPO);
+    Tucuxi::Gui::Core::DrugModel *drug = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugModel>(ABSTRACTREPO);
     
     reader.setDevice(&file);
     reader.readNext();
@@ -76,10 +76,10 @@ Tucuxi::GuiCore::DrugModel *DrugXmlImport::load(const QString &fileName)
 
     return drug;
 }
-bool DrugXmlImport::loadHistory(Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlImport::loadHistory(Tucuxi::Gui::Core::DrugModel *drug)
 {
-    Tucuxi::GuiCore::MetaData* metaData = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::MetaData>(ABSTRACTREPO,drug);
-    Tucuxi::GuiCore::EditorList* editors = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::EditorList>(ABSTRACTREPO,metaData);
+    Tucuxi::Gui::Core::MetaData* metaData = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::MetaData>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::EditorList* editors = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::EditorList>(ABSTRACTREPO,metaData);
     bool isConvertible = true;
     WHILE_NOT_END_ELEM(history){
         if (isConvertible && reader.readNextStartElement()) {
@@ -102,9 +102,9 @@ bool DrugXmlImport::loadHistory(Tucuxi::GuiCore::DrugModel *drug)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadRevisions(Tucuxi::GuiCore::MetaData* metaData)
+bool DrugXmlImport::loadRevisions(Tucuxi::Gui::Core::MetaData* metaData)
 {
-    Tucuxi::GuiCore::EditorList *editors = metaData->getEditors();
+    Tucuxi::Gui::Core::EditorList *editors = metaData->getEditors();
     bool isConvertible = true;
 
     WHILE_NOT_END_ELEM(revisions){
@@ -122,9 +122,9 @@ bool DrugXmlImport::loadRevisions(Tucuxi::GuiCore::MetaData* metaData)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadEditor(Tucuxi::GuiCore::EditorList* editors)
+bool DrugXmlImport::loadEditor(Tucuxi::Gui::Core::EditorList* editors)
 {
-    Tucuxi::GuiCore::Editor *editor = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Editor>(ABSTRACTREPO, editors);
+    Tucuxi::Gui::Core::Editor *editor = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Editor>(ABSTRACTREPO, editors);
     bool isConvertible = true;
 
     QString container = reader.name().toString();
@@ -141,7 +141,7 @@ bool DrugXmlImport::loadEditor(Tucuxi::GuiCore::EditorList* editors)
             } else if (name == "date"){
                 editor->setDate(QDateTime::fromString(extractor()));
             } else if (name == "comments"){
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isConvertible);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isConvertible);
                 editor->setComments(comments);
                 comments->setParent(editor);
             }
@@ -157,7 +157,7 @@ bool DrugXmlImport::loadEditor(Tucuxi::GuiCore::EditorList* editors)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadDrug(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadDrug(Tucuxi::Gui::Core::DrugModel* drug)
 {
     bool isOk=true;
 
@@ -191,7 +191,7 @@ bool DrugXmlImport::loadDrug(Tucuxi::GuiCore::DrugModel* drug)
             }else if(name == "operations"){
                 isOk = loadOperations(drug);
             } else if (name == "comments"){
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isOk);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isOk);
                 drug->setGeneralCommentsTranslationMap(commentsLoader(isOk));
                 comments->setParent(drug);
             }
@@ -203,22 +203,22 @@ bool DrugXmlImport::loadDrug(Tucuxi::GuiCore::DrugModel* drug)
 
 #include <iostream>
 
-bool DrugXmlImport::loadHead(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadHead(Tucuxi::Gui::Core::DrugModel* drug)
 {
     bool isConvertible = true;
     QString drugId, pkModelId, drugModelId, domainName, studyName,description;
     QStringList atcs;
     QStringList brands;
-    Tucuxi::GuiCore::ReferenceList *references = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ReferenceList>(ABSTRACTREPO,drug->getMetaData());
+    Tucuxi::Gui::Core::ReferenceList *references = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ReferenceList>(ABSTRACTREPO,drug->getMetaData());
     QXmlStreamAttributes referencesAttributes;
     QString name;
 //    QMap<QString,QString> drugNameTranslation,domainNameTranslation,studyNameTranslation,descriptionTranslation,headComments;
-    Tucuxi::GuiCore::TranslatableString *drugNameTranslation, *domainNameTranslation,*studyNameTranslation,*descriptionTranslation,*headComments;
+    Tucuxi::Gui::Core::TranslatableString *drugNameTranslation, *domainNameTranslation,*studyNameTranslation,*descriptionTranslation,*headComments;
 
-    drugNameTranslation = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO,drug);
-    domainNameTranslation = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO,drug);
-    studyNameTranslation = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO,drug);
-    descriptionTranslation = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO,drug);
+    drugNameTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drug);
+    domainNameTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drug);
+    studyNameTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drug);
+    descriptionTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drug);
 
 
     WHILE_NOT_END_ELEM(head) {
@@ -242,7 +242,7 @@ bool DrugXmlImport::loadHead(Tucuxi::GuiCore::DrugModel* drug)
                 WHILE_NOT_END_ELEM(references) {
                     if (isConvertible && reader.readNextStartElement()) {
                         if (reader.name() == "reference") {
-                            Tucuxi::GuiCore::Reference *reference = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Reference>(ABSTRACTREPO,drug);
+                            Tucuxi::Gui::Core::Reference *reference = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Reference>(ABSTRACTREPO,drug);
                             reference->setText(extractor(&referencesAttributes));
                             reference->setType(referencesAttributes.value("type").toString());
                             references->append(reference);
@@ -294,44 +294,44 @@ bool DrugXmlImport::loadHead(Tucuxi::GuiCore::DrugModel* drug)
 }
 
 
-bool DrugXmlImport::loadAdme(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadAdme(Tucuxi::Gui::Core::DrugModel* drug)
 {
-    Tucuxi::GuiCore::ADME* adme = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ADME>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::ADME* adme = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ADME>(ABSTRACTREPO,drug);
 
     bool isConvertible=true;
     WHILE_NOT_END_ELEM(adme){
         if( isConvertible && reader.readNextStartElement() ){
             QString name = reader.name().toString();
             if(name == "intake"){
-//                QList<Tucuxi::GuiCore::Admin*> intakes;
-                Tucuxi::GuiCore::AdminList* intakes = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::AdminList>(ABSTRACTREPO, adme);
+//                QList<Tucuxi::Gui::Core::Admin*> intakes;
+                Tucuxi::Gui::Core::AdminList* intakes = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdminList>(ABSTRACTREPO, adme);
                 QString intake = extractor();
                 if (intake == "bolus") {
                     intakes->add();
-                    intakes->last()->setRoute(Tucuxi::GuiCore::Admin::BOLUS);
+                    intakes->last()->setRoute(Tucuxi::Gui::Core::Admin::BOLUS);
                     // If bolus model, should also be compatible with infusion
                     intakes->add();
-                    intakes->last()->setRoute(Tucuxi::GuiCore::Admin::INFUSION);
+                    intakes->last()->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
                 } else if (intake == "infu") {
                     intakes->add();
-                    intakes->last()->setRoute(Tucuxi::GuiCore::Admin::INFUSION);
+                    intakes->last()->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
                     // If infusion model, should also be compatible with bolus
                     intakes->add();
-                    intakes->last()->setRoute(Tucuxi::GuiCore::Admin::BOLUS);
+                    intakes->last()->setRoute(Tucuxi::Gui::Core::Admin::BOLUS);
                 } else {
                     intakes->add();
-                    intakes->last()->setRoute(Tucuxi::GuiCore::Admin::EXTRA);
+                    intakes->last()->setRoute(Tucuxi::Gui::Core::Admin::EXTRA);
                 }
                 adme->setIntakes(intakes);
 
 //                adme->setIntakes(intakes);
-                Tucuxi::GuiCore::Admin* def = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Admin>(ABSTRACTREPO, adme);
+                Tucuxi::Gui::Core::Admin* def = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adme);
                 if (intake == "bolus") {
-                    def->setRoute(Tucuxi::GuiCore::Admin::BOLUS);
+                    def->setRoute(Tucuxi::Gui::Core::Admin::BOLUS);
                 } else if (intake == "infu") {
-                    def->setRoute(Tucuxi::GuiCore::Admin::INFUSION);
+                    def->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
                 } else {
-                    def->setRoute(Tucuxi::GuiCore::Admin::EXTRA);
+                    def->setRoute(Tucuxi::Gui::Core::Admin::EXTRA);
                 }
                 adme->setDefaultIntake(def);
             } else if(name == "distribution"){
@@ -339,7 +339,7 @@ bool DrugXmlImport::loadAdme(Tucuxi::GuiCore::DrugModel* drug)
             } else if(name == "elimination"){
                 adme->setElimination(extractor());
             } else if(name == "comments"){
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isConvertible);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isConvertible);
                 adme->setComments(comments);
                 comments->setParent(adme);
             }
@@ -353,22 +353,22 @@ bool DrugXmlImport::loadAdme(Tucuxi::GuiCore::DrugModel* drug)
 
     return isConvertible;
 }
-bool DrugXmlImport::loadHalflife(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadHalflife(Tucuxi::Gui::Core::DrugModel* drug)
 {
-    Tucuxi::GuiCore::Halflife* halflife = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Halflife>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::Halflife* halflife = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Halflife>(ABSTRACTREPO,drug);
 
     bool isConvertible=true;
     WHILE_NOT_END_ELEM(halflife){
         if(isConvertible && reader.readNextStartElement() ){
             QString name = reader.name().toString();
             if(name == "unit"){
-                halflife->setUnit(Tucuxi::GuiCore::Unit(extractor()));
+                halflife->setUnit(Tucuxi::Gui::Core::Unit(extractor()));
             } else if (name == "value"){
                 halflife->setValue(extractor().toDouble(&isConvertible));
             } else if (name == "multiplier"){
                 halflife->setMultiplier(extractor().toInt(&isConvertible));
             } else if (name == "comments"){
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isConvertible);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isConvertible);
                 halflife->setComments(comments);
                 comments->setParent(halflife);
             }
@@ -385,11 +385,11 @@ bool DrugXmlImport::loadHalflife(Tucuxi::GuiCore::DrugModel* drug)
 }
 
 
-bool DrugXmlImport::loadConversions(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadConversions(Tucuxi::Gui::Core::DrugModel* drug)
 {
-    Tucuxi::GuiCore::Concentrations* concentrations = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Concentrations>(ABSTRACTREPO,drug);
-    Tucuxi::GuiCore::Results* results = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Results>(ABSTRACTREPO,drug);
-    Tucuxi::GuiCore::Amount molarMass(0, Tucuxi::GuiCore::Unit(""));
+    Tucuxi::Gui::Core::Concentrations* concentrations = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Concentrations>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::Results* results = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Results>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::Amount molarMass(0, Tucuxi::Gui::Core::Unit(""));
 
     bool isConvertible=true;
     WHILE_NOT_END_ELEM(conversions){
@@ -400,9 +400,9 @@ bool DrugXmlImport::loadConversions(Tucuxi::GuiCore::DrugModel* drug)
                     if(reader.readNextStartElement()){
                         name = reader.name().toString();
                         if(name == "concentration"){
-                            concentrations->getQuantity().setUnit(Tucuxi::GuiCore::Unit(extractor()));
+                            concentrations->getQuantity().setUnit(Tucuxi::Gui::Core::Unit(extractor()));
                         } else if (name == "result"){
-                            results->setUnit(Tucuxi::GuiCore::Unit(extractor()));
+                            results->setUnit(Tucuxi::Gui::Core::Unit(extractor()));
                         }
                     }
 
@@ -423,7 +423,7 @@ bool DrugXmlImport::loadConversions(Tucuxi::GuiCore::DrugModel* drug)
             } else if(name == "molarmass"){
                 molarMass.setValue(extractor().toDouble(&isConvertible));
             } else if(name == "comments"){
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isConvertible);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isConvertible);
                 drug->setConversionsCommentsTranslationMap(comments);
                 comments->setParent(drug);
             }
@@ -442,11 +442,11 @@ bool DrugXmlImport::loadConversions(Tucuxi::GuiCore::DrugModel* drug)
 }
 
 
-bool DrugXmlImport::loadStandardTreatment(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadStandardTreatment(Tucuxi::Gui::Core::DrugModel* drug)
 {
 
     bool isConvertible = true;
-    Tucuxi::GuiCore::StandardTreatment* treatment = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::StandardTreatment>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::StandardTreatment* treatment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::StandardTreatment>(ABSTRACTREPO,drug);
 
     WHILE_NOT_END_ELEM(standardTreatment){
         if(isConvertible && reader.readNextStartElement() ){
@@ -470,13 +470,13 @@ bool DrugXmlImport::loadStandardTreatment(Tucuxi::GuiCore::DrugModel* drug)
                     }
                 }
                 if (unit == "h") {
-                    treatment->setDuration(Tucuxi::GuiCore::Duration(value));
+                    treatment->setDuration(Tucuxi::Gui::Core::Duration(value));
                 }
                 else if (unit == "d") {
-                    treatment->setDuration(Tucuxi::GuiCore::Duration(24 * value));
+                    treatment->setDuration(Tucuxi::Gui::Core::Duration(24 * value));
                 }
                 else if (unit == "m") {
-                    treatment->setDuration(Tucuxi::GuiCore::Duration(((double) (value))/60));
+                    treatment->setDuration(Tucuxi::Gui::Core::Duration(((double) (value))/60));
                 }
                 else {
                     raiseConversionError();
@@ -494,11 +494,11 @@ bool DrugXmlImport::loadStandardTreatment(Tucuxi::GuiCore::DrugModel* drug)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadDosages(Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlImport::loadDosages(Tucuxi::Gui::Core::DrugModel *drug)
 {
-    Tucuxi::GuiCore::ValidDoses* doses = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidDoses>(ABSTRACTREPO,drug);
-    Tucuxi::GuiCore::ValidIntervals* intervals = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidIntervals>(ABSTRACTREPO,drug);
-    Tucuxi::GuiCore::ValidInfusions* infusions = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidInfusions>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::ValidDoses* doses = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDoses>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::ValidIntervals* intervals = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidIntervals>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::ValidInfusions* infusions = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusions>(ABSTRACTREPO,drug);
 
 
     bool isConvertible=true;
@@ -532,7 +532,7 @@ bool DrugXmlImport::loadDosages(Tucuxi::GuiCore::DrugModel *drug)
                 WHILE_NOT_END_ELEM(doses){
                     if(isConvertible && reader.readNextStartElement() ){
                         if(reader.name() == "dose"){
-                            Tucuxi::GuiCore::ValidDose* dose = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidDose>(ABSTRACTREPO,doses);
+                            Tucuxi::Gui::Core::ValidDose* dose = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDose>(ABSTRACTREPO,doses);
                             dose->getQuantity()->setUnit(doses->getQuantity()->unit());
                             dose->getQuantity()->setValue(extractor().toDouble(&isConvertible));
                             dose->getRoute()->setRoute(drug->getAdme()->getDefaultIntake()->getRoute());
@@ -551,7 +551,7 @@ bool DrugXmlImport::loadDosages(Tucuxi::GuiCore::DrugModel *drug)
                         if(name == "default"){
                             intervals->getQuantity()->setValue(attribute.value().toDouble(&isConvertible));
                         } else if (name == "unit"){
-                            intervals->getQuantity()->setUnit(Tucuxi::GuiCore::Unit(attribute.value().toString()));
+                            intervals->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(attribute.value().toString()));
                         } else if (name == "any"){
                             intervals->setAny(attribute.value().toString().toLower() == "true" ? true : false);
                         }
@@ -563,7 +563,7 @@ bool DrugXmlImport::loadDosages(Tucuxi::GuiCore::DrugModel *drug)
                 WHILE_NOT_END_ELEM(intervals){
                     if(isConvertible && reader.readNextStartElement() ){
                         if(reader.name() == "interval"){
-                            Tucuxi::GuiCore::ValidInterval* interval = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidInterval>(ABSTRACTREPO,intervals);
+                            Tucuxi::Gui::Core::ValidInterval* interval = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInterval>(ABSTRACTREPO,intervals);
                             interval->getQuantity()->setUnit(intervals->getQuantity()->unit().toString());
                             interval->getQuantity()->setValue(extractor().toDouble(&isConvertible));
                             intervals->append(interval);
@@ -592,7 +592,7 @@ bool DrugXmlImport::loadDosages(Tucuxi::GuiCore::DrugModel *drug)
                 WHILE_NOT_END_ELEM(infusions){
                     if(isConvertible && reader.readNextStartElement() ){
                         if(reader.name() == "infusion"){
-                            Tucuxi::GuiCore::ValidInfusion* infusion = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidInfusion>(ABSTRACTREPO,infusions);
+                            Tucuxi::Gui::Core::ValidInfusion* infusion = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusion>(ABSTRACTREPO,infusions);
                             infusion->getQuantity()->setUnit(infusions->getQuantity()->getUnitstring());
                             infusion->getQuantity()->setValue(extractor().toDouble(&isConvertible));
                             infusions->append(infusion);
@@ -602,7 +602,7 @@ bool DrugXmlImport::loadDosages(Tucuxi::GuiCore::DrugModel *drug)
                     }
                 }
             } else if (name == "comments"){
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isConvertible);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isConvertible);
                 doses->setComments(comments);
                 comments->setParent(doses);
             }
@@ -621,10 +621,10 @@ bool DrugXmlImport::loadDosages(Tucuxi::GuiCore::DrugModel *drug)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadTargets(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadTargets(Tucuxi::Gui::Core::DrugModel* drug)
 {
     bool isOk = true;
-    Tucuxi::GuiCore::TargetList* targetSet = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TargetList>(ABSTRACTREPO, drug);
+    Tucuxi::Gui::Core::TargetList* targetSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetList>(ABSTRACTREPO, drug);
     WHILE_NOT_END_ELEM(targets){
         if(reader.readNextStartElement() && isOk){
             QString name = reader.name().toString();
@@ -642,10 +642,10 @@ bool DrugXmlImport::loadTargets(Tucuxi::GuiCore::DrugModel* drug)
     return isOk;
 }
 
-bool DrugXmlImport::loadTarget(Tucuxi::GuiCore::TargetList* targetSet)
+bool DrugXmlImport::loadTarget(Tucuxi::Gui::Core::TargetList* targetSet)
 {
     bool isConvertible = true;
-    Tucuxi::GuiCore::Target* target = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Target>(ABSTRACTREPO, targetSet);
+    Tucuxi::Gui::Core::Target* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO, targetSet);
 
     WHILE_NOT_END_ELEM(target){
         if(isConvertible && reader.readNextStartElement() ){
@@ -653,24 +653,24 @@ bool DrugXmlImport::loadTarget(Tucuxi::GuiCore::TargetList* targetSet)
             if(name == "type"){
                 QString type = extractor();
                 if (type == "residual"){
-                    target->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::ResidualTarget);
+                    target->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::TargetType::ResidualTarget);
                 }else  if(type == "peak"){
-                    target->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::PeakTarget);
+                    target->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::TargetType::PeakTarget);
                 } else if(type == "mean"){
-                    target->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::MeanTarget);
+                    target->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::TargetType::MeanTarget);
                 } else if(type == "auc"){
-                    target->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::AUCTarget);
+                    target->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::TargetType::AUCTarget);
                 } else if(type == "cumulativeauc"){
-                    target->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::CumulativeAUCTarget);
+                    target->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::TargetType::CumulativeAUCTarget);
                 } else if(type == "unknown"){
-                    target->getType()->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::UnknownTarget);
+                    target->getType()->setTargetType(Tucuxi::Gui::Core::TargetMethod::TargetType::UnknownTarget);
                 }
             } else if(name == "concentrations"){
                 QXmlStreamAttributes attributes ;
                 extractor(&attributes,false);
-                Tucuxi::GuiCore::Unit unit;
+                Tucuxi::Gui::Core::Unit unit;
                 if(attributes.front().name() == "unit"){
-                    unit = Tucuxi::GuiCore::Unit(attributes.front().value().toString());
+                    unit = Tucuxi::Gui::Core::Unit(attributes.front().value().toString());
                 } else {
                     isConvertible = false;
                 }
@@ -703,9 +703,9 @@ bool DrugXmlImport::loadTarget(Tucuxi::GuiCore::TargetList* targetSet)
             } else if(name == "times"){
                 QXmlStreamAttributes attributes ;
                 extractor(&attributes,false);
-                Tucuxi::GuiCore::Unit unit;
+                Tucuxi::Gui::Core::Unit unit;
                 if(attributes.front().name() == "unit"){
-                    unit = Tucuxi::GuiCore::Unit(attributes.front().value().toString());
+                    unit = Tucuxi::Gui::Core::Unit(attributes.front().value().toString());
                 } else {
                     isConvertible = false;
                 }
@@ -730,7 +730,7 @@ bool DrugXmlImport::loadTarget(Tucuxi::GuiCore::TargetList* targetSet)
                     }
                 }
             } else if(name == "comments"){
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isConvertible);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isConvertible);
                 target->setComments(comments);
                 comments->setParent(target);
             }
@@ -746,10 +746,10 @@ bool DrugXmlImport::loadTarget(Tucuxi::GuiCore::TargetList* targetSet)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadCovariates(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadCovariates(Tucuxi::Gui::Core::DrugModel* drug)
 {
     bool isOk = true;
-    Tucuxi::GuiCore::DrugVariateList *drugVariateSet = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugVariateList>(ABSTRACTREPO, drug);
+    Tucuxi::Gui::Core::DrugVariateList *drugVariateSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariateList>(ABSTRACTREPO, drug);
 
     WHILE_NOT_END_ELEM(covariates){
         if(reader.readNextStartElement() && isOk){
@@ -765,15 +765,15 @@ bool DrugXmlImport::loadCovariates(Tucuxi::GuiCore::DrugModel* drug)
 
 #include <iostream>
 
-bool DrugXmlImport::loadCovariate(Tucuxi::GuiCore::DrugVariateList *drugVariateSet)
+bool DrugXmlImport::loadCovariate(Tucuxi::Gui::Core::DrugVariateList *drugVariateSet)
 {
     bool isConvertible = true;
-    Tucuxi::GuiCore::DrugVariate* drugVariate = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugVariate>(ABSTRACTREPO,drugVariateSet);
+    Tucuxi::Gui::Core::DrugVariate* drugVariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariate>(ABSTRACTREPO,drugVariateSet);
 
-    Tucuxi::GuiCore::TranslatableString *nameTranslation, *descriptionTranslation;
+    Tucuxi::Gui::Core::TranslatableString *nameTranslation, *descriptionTranslation;
 
-    nameTranslation = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO,drugVariate);
-    descriptionTranslation = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO,drugVariate);
+    nameTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drugVariate);
+    descriptionTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drugVariate);
 
     WHILE_NOT_END_ELEM(covariate){
         if(isConvertible && reader.readNextStartElement() ){
@@ -795,7 +795,7 @@ bool DrugXmlImport::loadCovariate(Tucuxi::GuiCore::DrugVariateList *drugVariateS
             }else if (name == "defaultvalue"){
                 drugVariate->getQuantity()->setValue(extractor().toDouble());
             } else if (name == "comments"){
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isConvertible);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isConvertible);
                 drugVariate->setComments(comments);
                 comments->setParent(drugVariate);
             }
@@ -817,10 +817,10 @@ bool DrugXmlImport::loadCovariate(Tucuxi::GuiCore::DrugVariateList *drugVariateS
     return isConvertible;
 }
 
-bool DrugXmlImport::loadErrorModel(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadErrorModel(Tucuxi::Gui::Core::DrugModel* drug)
 {
     bool isConvertible = true;
-    Tucuxi::GuiCore::ErrorModel* errorModel = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ErrorModel>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::ErrorModel* errorModel = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ErrorModel>(ABSTRACTREPO,drug);
 
     WHILE_NOT_END_ELEM(errormodel){
         if(isConvertible && reader.readNextStartElement() ){
@@ -830,7 +830,7 @@ bool DrugXmlImport::loadErrorModel(Tucuxi::GuiCore::DrugModel* drug)
             } else if (name == "proportional"){
                 errorModel->setProportional(extractor().toDouble(&isConvertible));
             } else if (name == "comments"){
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isConvertible);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isConvertible);
                 errorModel->setComments(comments);
                 comments->setParent(errorModel);
             }
@@ -846,11 +846,11 @@ bool DrugXmlImport::loadErrorModel(Tucuxi::GuiCore::DrugModel* drug)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadParameters(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadParameters(Tucuxi::Gui::Core::DrugModel* drug)
 {
     bool isConvertible = true;
 
-    Tucuxi::GuiCore::ParameterSet* parameterSet = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ParameterSet>(ABSTRACTREPO,drug);
+    Tucuxi::Gui::Core::ParameterSet* parameterSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ParameterSet>(ABSTRACTREPO,drug);
 
     WHILE_NOT_END_ELEM(parameters){
         if(isConvertible && reader.readNextStartElement() ){
@@ -868,10 +868,10 @@ bool DrugXmlImport::loadParameters(Tucuxi::GuiCore::DrugModel* drug)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadParameter(Tucuxi::GuiCore::ParameterSet* parameterSet)
+bool DrugXmlImport::loadParameter(Tucuxi::Gui::Core::ParameterSet* parameterSet)
 {//FIXME few bugs appeared
     bool isConvertible = true;
-    Tucuxi::GuiCore::Parameter* parameter = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Parameter>(ABSTRACTREPO,parameterSet);
+    Tucuxi::Gui::Core::Parameter* parameter = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameter>(ABSTRACTREPO,parameterSet);
 
     WHILE_NOT_END_ELEM(parameter){
         if(isConvertible && reader.readNextStartElement() ){
@@ -880,7 +880,7 @@ bool DrugXmlImport::loadParameter(Tucuxi::GuiCore::ParameterSet* parameterSet)
                 parameter->setName(extractor());
             } else if (name == "unit") {//FIXME unkown unit in fileout
                 QString extract = extractor();
-                Tucuxi::GuiCore::Unit unit(extract);
+                Tucuxi::Gui::Core::Unit unit(extract);
                 bool isValid = unit.isValid();
                 parameter->getQuantity()->setUnit(extract);
             } else if (name == "value") {
@@ -896,7 +896,7 @@ bool DrugXmlImport::loadParameter(Tucuxi::GuiCore::ParameterSet* parameterSet)
                 double dou = extract.toDouble(&isConvertible);
                 parameter->setStep(dou);
             } else if (name == "comments") {
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isConvertible);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isConvertible);
                 parameter->setComments(comments);
                 comments->setParent(parameter);
             }
@@ -913,10 +913,10 @@ bool DrugXmlImport::loadParameter(Tucuxi::GuiCore::ParameterSet* parameterSet)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadBsv(Tucuxi::GuiCore::Parameter* parameter)
+bool DrugXmlImport::loadBsv(Tucuxi::Gui::Core::Parameter* parameter)
 {
     bool isConvertible = true;
-    Tucuxi::GuiCore::Bsv* bsv = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Bsv>(ABSTRACTREPO,parameter);
+    Tucuxi::Gui::Core::Bsv* bsv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Bsv>(ABSTRACTREPO,parameter);
 
     WHILE_NOT_END_ELEM(bsv){
         if(isConvertible && reader.readNextStartElement() ){
@@ -939,13 +939,13 @@ bool DrugXmlImport::loadBsv(Tucuxi::GuiCore::Parameter* parameter)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadCorrelations(Tucuxi::GuiCore::DrugModel *drug)
+bool DrugXmlImport::loadCorrelations(Tucuxi::Gui::Core::DrugModel *drug)
 {
     bool isConvertible= true;
-    Tucuxi::GuiCore::ParameterSet* parameterSet = drug->getParameters();
+    Tucuxi::Gui::Core::ParameterSet* parameterSet = drug->getParameters();
     QString param1, param2;
     double value = 0;
-    Tucuxi::GuiCore::TranslatableString *comments;
+    Tucuxi::Gui::Core::TranslatableString *comments;
     WHILE_NOT_END_ELEM(correlations){
         if(isConvertible && reader.readNextStartElement()  && reader.name() == "correlation"){
             WHILE_NOT_END_ELEM(correlation){
@@ -977,10 +977,10 @@ bool DrugXmlImport::loadCorrelations(Tucuxi::GuiCore::DrugModel *drug)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadOperations(Tucuxi::GuiCore::DrugModel* drug)
+bool DrugXmlImport::loadOperations(Tucuxi::Gui::Core::DrugModel* drug)
 {
     bool isConvertible = true;
-    QMap<QString,Tucuxi::GuiCore::OperationList*> mapOperationLists;
+    QMap<QString,Tucuxi::Gui::Core::OperationList*> mapOperationLists;
 
     WHILE_NOT_END_ELEM(operations){
         if(isConvertible && reader.readNextStartElement() ){
@@ -998,7 +998,7 @@ bool DrugXmlImport::loadOperations(Tucuxi::GuiCore::DrugModel* drug)
                 drug->getParameters()->get(pid)->setOperations(mapOperationLists.value(pid));
                 mapOperationLists.value(pid)->setParent(drug->getParameters()->get(pid));
             } else {
-                drug->getParameters()->get(pid)->setOperations(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperationList>(ABSTRACTREPO,drug->getParameters()->get(pid)));
+                drug->getParameters()->get(pid)->setOperations(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperationList>(ABSTRACTREPO,drug->getParameters()->get(pid)));
             }
         }
     }
@@ -1007,10 +1007,10 @@ bool DrugXmlImport::loadOperations(Tucuxi::GuiCore::DrugModel* drug)
     return isConvertible;
 }
 
-bool DrugXmlImport::loadOperation(QMap<QString,Tucuxi::GuiCore::OperationList*> &mapOperationList) /// no parents set
+bool DrugXmlImport::loadOperation(QMap<QString,Tucuxi::Gui::Core::OperationList*> &mapOperationList) /// no parents set
 {
 
-    Tucuxi::GuiCore::Operation* operation = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Operation>(ABSTRACTREPO);
+    Tucuxi::Gui::Core::Operation* operation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Operation>(ABSTRACTREPO);
     bool isConvertible = true;
     QString parameter;
     WHILE_NOT_END_ELEM(operation){
@@ -1022,7 +1022,7 @@ bool DrugXmlImport::loadOperation(QMap<QString,Tucuxi::GuiCore::OperationList*> 
                 QString formula = extractor();
                 operation->setFormula(formula);
             } else if (name == "comments"){
-                Tucuxi::GuiCore::TranslatableString *comments = commentsLoader(isConvertible);
+                Tucuxi::Gui::Core::TranslatableString *comments = commentsLoader(isConvertible);
                 operation->setComments(comments);
                 comments->setParent(operation);
             }
@@ -1031,12 +1031,12 @@ bool DrugXmlImport::loadOperation(QMap<QString,Tucuxi::GuiCore::OperationList*> 
 
     isConvertible = reader.hasError() ? false : isConvertible;
     if(isConvertible){
-        Tucuxi::GuiCore::OperationList* operationList;
-        operation->setType(Tucuxi::GuiCore::OperationType::IMPORTED);
+        Tucuxi::Gui::Core::OperationList* operationList;
+        operation->setType(Tucuxi::Gui::Core::OperationType::IMPORTED);
         if(mapOperationList.contains(parameter)){
             operationList = mapOperationList.take(parameter);
         }else{
-            operationList = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperationList>(ABSTRACTREPO);
+            operationList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperationList>(ABSTRACTREPO);
         }
         operationList->append(operation);
         mapOperationList.insert(parameter,operationList);
@@ -1045,7 +1045,7 @@ bool DrugXmlImport::loadOperation(QMap<QString,Tucuxi::GuiCore::OperationList*> 
 }
 
 
-bool DrugXmlImport::stringLoaderTranslation(QString elemName,Tucuxi::GuiCore::TranslatableString *QMapStringTranslation)
+bool DrugXmlImport::stringLoaderTranslation(QString elemName,Tucuxi::Gui::Core::TranslatableString *QMapStringTranslation)
 {
     bool isOk= true;
     QString container = reader.name().toString();
@@ -1061,9 +1061,9 @@ bool DrugXmlImport::stringLoaderTranslation(QString elemName,Tucuxi::GuiCore::Tr
     return isOk;
 }
 
-Tucuxi::GuiCore::TranslatableString* DrugXmlImport::commentsLoader(bool &isOk){
+Tucuxi::Gui::Core::TranslatableString* DrugXmlImport::commentsLoader(bool &isOk){
 
-    Tucuxi::GuiCore::TranslatableString *comments = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO); //no parents
+    Tucuxi::Gui::Core::TranslatableString *comments = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO); //no parents
     isOk = stringLoaderTranslation("comment",comments);
 
 

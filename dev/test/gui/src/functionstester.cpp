@@ -69,7 +69,7 @@ TEST(FunctionsTester, Test1)
     srv->addDosage(dosageData1);
     srv->waitForSync();
 
-    Tucuxi::GuiCore::FancyPoints* fPoints = srv->m_mainWindowController->getInterpretationController()->chartData->getPopPred()->getPredictive()->getPredictionData()->getPoints();
+    Tucuxi::Gui::Core::FancyPoints* fPoints = srv->m_mainWindowController->getInterpretationController()->chartData->getPopPred()->getPredictive()->getPredictionData()->getPoints();
     //    ezechiel::core::FancyPoint* fPoint1 = fPoints->at(3);
     //    std::cout << "fPoint1 value : " << fPoint1->getValue() << std::endl;
     //    std::cout << "fPoint1 time : " << fPoint1->getTime() << std::endl;

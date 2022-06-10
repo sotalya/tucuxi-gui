@@ -15,7 +15,9 @@
 #include <iostream>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 DataSet::DataSet () :
@@ -404,6 +406,7 @@ void CycleData::setUnit(const Unit &unit)
 
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

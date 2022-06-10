@@ -14,7 +14,7 @@
 #include "errors_apputils.h"
 
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core;
 
 namespace Tucuxi {
 namespace GuiAppUtils {

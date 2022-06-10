@@ -35,7 +35,7 @@
 #define ADJTIMEOUT 35000
 
 using namespace Tucuxi;
-using namespace GuiCore;
+using namespace Gui::Core;
 
 CalculationController::CalculationController(QObject *parent)
     : QObject(parent)
@@ -527,7 +527,7 @@ void CalculationThread::run()
     setPriority(QThread::LowPriority); // So the GUI can be more responsive
 
     while (1) {
-        Tucuxi::GuiCore::PredictionSpec *spec;
+        Tucuxi::Gui::Core::PredictionSpec *spec;
 
         CalculationBuffer::calculationType what;
         buffer->get(&spec, &what);
@@ -570,31 +570,31 @@ ThreadedCalculationController::ThreadedCalculationController(QObject *parent) : 
 
     CONNECT(controller, SIGNAL(disengage()), this, SIGNAL(disengage()));
     CONNECT(controller, SIGNAL(engage()), this, SIGNAL(engage()));
-    CONNECT(controller, SIGNAL(popPredComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(popPredComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(aprPredComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(aprPredComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(apoPredComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(apoPredComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(revPredComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(revPredComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(popPercComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(popPercComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(aprPercComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(aprPercComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(apoPercComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(apoPercComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(adjPercComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(adjPercComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*>)), buffer, SLOT(adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*>)));
-    CONNECT(controller, SIGNAL(adjPredComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(adjPredComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(controller, SIGNAL(popPredComputed(Tucuxi::Gui::Core::PredictionResult*)), buffer, SLOT(popPredComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(controller, SIGNAL(aprPredComputed(Tucuxi::Gui::Core::PredictionResult*)), buffer, SLOT(aprPredComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(controller, SIGNAL(apoPredComputed(Tucuxi::Gui::Core::PredictionResult*)), buffer, SLOT(apoPredComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(controller, SIGNAL(revPredComputed(Tucuxi::Gui::Core::PredictionResult*)), buffer, SLOT(revPredComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(controller, SIGNAL(popPercComputed(Tucuxi::Gui::Core::PredictionResult*)), buffer, SLOT(popPercComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(controller, SIGNAL(aprPercComputed(Tucuxi::Gui::Core::PredictionResult*)), buffer, SLOT(aprPercComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(controller, SIGNAL(apoPercComputed(Tucuxi::Gui::Core::PredictionResult*)), buffer, SLOT(apoPercComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(controller, SIGNAL(adjPercComputed(Tucuxi::Gui::Core::PredictionResult*)), buffer, SLOT(adjPercComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(controller, SIGNAL(adjustmentsComputed(QList<Tucuxi::Gui::Core::Dosage*>)), buffer, SLOT(adjustmentsComputed(QList<Tucuxi::Gui::Core::Dosage*>)));
+    CONNECT(controller, SIGNAL(adjPredComputed(Tucuxi::Gui::Core::PredictionResult*)), buffer, SLOT(adjPredComputed(Tucuxi::Gui::Core::PredictionResult*)));
     CONNECT(controller, SIGNAL(popCalcFail()), this, SIGNAL(popCalcFail()));
     CONNECT(controller, SIGNAL(aprCalcFail()), this, SIGNAL(aprCalcFail()));
     CONNECT(controller, SIGNAL(apoCalcFail()), this, SIGNAL(apoCalcFail()));
     CONNECT(controller, SIGNAL(adjCalcFail()), this, SIGNAL(adjCalcFail()));
 
-    CONNECT(buffer, SIGNAL(sig_popPredUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(popPredComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_aprPredUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(aprPredComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_apoPredUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(apoPredComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_revPredUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(revPredComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_popPercUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(popPercComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_aprPercUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(aprPercComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_apoPercUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(apoPercComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_adjPercUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(adjPercComputed(Tucuxi::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_adjustmentsUpdated(QList<Tucuxi::GuiCore::Dosage*>)), this, SIGNAL(adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*>)));
-    CONNECT(buffer, SIGNAL(sig_adjPredUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(adjPredComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_popPredUpdated(Tucuxi::Gui::Core::PredictionResult*)), this, SIGNAL(popPredComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_aprPredUpdated(Tucuxi::Gui::Core::PredictionResult*)), this, SIGNAL(aprPredComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_apoPredUpdated(Tucuxi::Gui::Core::PredictionResult*)), this, SIGNAL(apoPredComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_revPredUpdated(Tucuxi::Gui::Core::PredictionResult*)), this, SIGNAL(revPredComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_popPercUpdated(Tucuxi::Gui::Core::PredictionResult*)), this, SIGNAL(popPercComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_aprPercUpdated(Tucuxi::Gui::Core::PredictionResult*)), this, SIGNAL(aprPercComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_apoPercUpdated(Tucuxi::Gui::Core::PredictionResult*)), this, SIGNAL(apoPercComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_adjPercUpdated(Tucuxi::Gui::Core::PredictionResult*)), this, SIGNAL(adjPercComputed(Tucuxi::Gui::Core::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_adjustmentsUpdated(QList<Tucuxi::Gui::Core::Dosage*>)), this, SIGNAL(adjustmentsComputed(QList<Tucuxi::Gui::Core::Dosage*>)));
+    CONNECT(buffer, SIGNAL(sig_adjPredUpdated(Tucuxi::Gui::Core::PredictionResult*)), this, SIGNAL(adjPredComputed(Tucuxi::Gui::Core::PredictionResult*)));
 
 //#ifndef COMPILE_WITH_TUCUCORE
 #if 0
@@ -623,46 +623,46 @@ ThreadedCalculationController::~ThreadedCalculationController()
     workerThread->wait();
 }
 
-void ThreadedCalculationController::computePopPred(Tucuxi::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computePopPred(Tucuxi::Gui::Core::PredictionSpec* prediction)
 {
     buffer->pushPopPred(prediction);
 }
 
-void ThreadedCalculationController::computePopPerc(Tucuxi::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computePopPerc(Tucuxi::Gui::Core::PredictionSpec* prediction)
 {
     buffer->pushPopPerc(prediction);
     _popperctimer.start(POPTIMEOUT);
 }
 
-void ThreadedCalculationController::computeAprPred(Tucuxi::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeAprPred(Tucuxi::Gui::Core::PredictionSpec* prediction)
 {
     buffer->pushAprPred(prediction);
 }
 
-void ThreadedCalculationController::computeAprPerc(Tucuxi::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeAprPerc(Tucuxi::Gui::Core::PredictionSpec* prediction)
 {
     buffer->pushAprPerc(prediction);
     _aprperctimer.start(APRTIMEOUT);
 }
 
-void ThreadedCalculationController::computeApoPred(Tucuxi::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeApoPred(Tucuxi::Gui::Core::PredictionSpec* prediction)
 {
     buffer->pushApoPred(prediction);
 }
 
-void ThreadedCalculationController::computeApoPerc(Tucuxi::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeApoPerc(Tucuxi::Gui::Core::PredictionSpec* prediction)
 {
     buffer->pushApoPerc(prediction);
     _apoperctimer.start(APOTIMEOUT);
 }
 
-void ThreadedCalculationController::computeAdjPerc(Tucuxi::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeAdjPerc(Tucuxi::Gui::Core::PredictionSpec* prediction)
 {
     buffer->pushAdjPerc(prediction);
     _adjperctimer.start(ADJTIMEOUT);
 }
 
-void ThreadedCalculationController::computeRevPred(Tucuxi::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeRevPred(Tucuxi::Gui::Core::PredictionSpec* prediction)
 {
     buffer->pushRevPred(prediction);
 }
@@ -771,66 +771,66 @@ void CalculationBuffer::quit()
     dataReady.wakeOne();
 }
 
-void CalculationBuffer::pushPopPred(Tucuxi::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushPopPred(Tucuxi::Gui::Core::PredictionSpec* predSpec)
 {
     MESS("Push Pop Pred");
-    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::PopPred);
+    predSpec->setCalculationType(Tucuxi::Gui::Core::PredictionSpec::CalculationType::PopPred);
     push(predSpec, PopPred);
 }
 
-void CalculationBuffer::pushPopPerc(Tucuxi::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushPopPerc(Tucuxi::Gui::Core::PredictionSpec* predSpec)
 {
     MESS("Push Pop Perc");
-    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::PopPerc);
+    predSpec->setCalculationType(Tucuxi::Gui::Core::PredictionSpec::CalculationType::PopPerc);
     push(predSpec, PopPerc);
 }
 
-void CalculationBuffer::pushAprPred(Tucuxi::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushAprPred(Tucuxi::Gui::Core::PredictionSpec* predSpec)
 {
     MESS("Push Apr Pred");
-    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::AprPred);
+    predSpec->setCalculationType(Tucuxi::Gui::Core::PredictionSpec::CalculationType::AprPred);
     push(predSpec, AprPred);
 }
 
-void CalculationBuffer::pushAprPerc(Tucuxi::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushAprPerc(Tucuxi::Gui::Core::PredictionSpec* predSpec)
 {
     MESS("Push Apr Perc");
-    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::AprPerc);
+    predSpec->setCalculationType(Tucuxi::Gui::Core::PredictionSpec::CalculationType::AprPerc);
     push(predSpec, AprPerc);
 }
 
-void CalculationBuffer::pushApoPred(Tucuxi::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushApoPred(Tucuxi::Gui::Core::PredictionSpec* predSpec)
 {
     MESS("Push Apo Pred");
-    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::ApoPred);
+    predSpec->setCalculationType(Tucuxi::Gui::Core::PredictionSpec::CalculationType::ApoPred);
     push(predSpec, ApoPred);
 }
 
-void CalculationBuffer::pushApoPerc(Tucuxi::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushApoPerc(Tucuxi::Gui::Core::PredictionSpec* predSpec)
 {
     MESS("Push Apo Perc");
-    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::ApoPerc);
+    predSpec->setCalculationType(Tucuxi::Gui::Core::PredictionSpec::CalculationType::ApoPerc);
     push(predSpec, ApoPerc);
 }
 
-void CalculationBuffer::pushAdjPerc(Tucuxi::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushAdjPerc(Tucuxi::Gui::Core::PredictionSpec* predSpec)
 {
     MESS("Push Adj Perc");
-    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::AdjPerc);
+    predSpec->setCalculationType(Tucuxi::Gui::Core::PredictionSpec::CalculationType::AdjPerc);
     push(predSpec, AdjPerc);
 }
 
-void CalculationBuffer::pushRevPred(Tucuxi::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushRevPred(Tucuxi::Gui::Core::PredictionSpec* predSpec)
 {
     MESS("Push Adjustment");
-    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::RevPred);
+    predSpec->setCalculationType(Tucuxi::Gui::Core::PredictionSpec::CalculationType::RevPred);
     push(predSpec, RevPred);
 }
 
-void CalculationBuffer::pushAdjPred(Tucuxi::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushAdjPred(Tucuxi::Gui::Core::PredictionSpec* predSpec)
 {
     MESS("Push Adjustment");
-    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::AdjPred);
+    predSpec->setCalculationType(Tucuxi::Gui::Core::PredictionSpec::CalculationType::AdjPred);
     push(predSpec, AdjPred);
 }
 
@@ -919,7 +919,7 @@ void CalculationBuffer::push(PredictionSpec *spec, calculationType what)
 }
 
 
-void CalculationBuffer::get(Tucuxi::GuiCore::PredictionSpec **spec, calculationType *what)
+void CalculationBuffer::get(Tucuxi::Gui::Core::PredictionSpec **spec, calculationType *what)
 {
     QMutexLocker locker(&mutex);
     while (list.isEmpty())
@@ -984,7 +984,7 @@ bool CalculationBuffer::shouldAbortAdjPerc()
     return shouldAbort;
 }
 
-void CalculationBuffer::popPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
+void CalculationBuffer::popPredComputed(Tucuxi::Gui::Core::PredictionResult* pred)
 {
     MESS("End Pop Pred");
     QMutexLocker locker(&mutex);
@@ -992,7 +992,7 @@ void CalculationBuffer::popPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
     emit sig_popPredUpdated(pred);
 }
 
-void CalculationBuffer::aprPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
+void CalculationBuffer::aprPredComputed(Tucuxi::Gui::Core::PredictionResult* pred)
 {
     MESS("End Apr Pred");
     QMutexLocker locker(&mutex);
@@ -1000,7 +1000,7 @@ void CalculationBuffer::aprPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
     emit sig_aprPredUpdated(pred);
 }
 
-void CalculationBuffer::apoPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
+void CalculationBuffer::apoPredComputed(Tucuxi::Gui::Core::PredictionResult* pred)
 {
     MESS("End Apo Pred");
     QMutexLocker locker(&mutex);
@@ -1008,7 +1008,7 @@ void CalculationBuffer::apoPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
     emit sig_apoPredUpdated(pred);
 }
 
-void CalculationBuffer::revPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
+void CalculationBuffer::revPredComputed(Tucuxi::Gui::Core::PredictionResult* pred)
 {
     MESS("End Rev Pred");
     QMutexLocker locker(&mutex);
@@ -1016,7 +1016,7 @@ void CalculationBuffer::revPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
     emit sig_revPredUpdated(pred);
 }
 
-void CalculationBuffer::popPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
+void CalculationBuffer::popPercComputed(Tucuxi::Gui::Core::PredictionResult* pred)
 {
     MESS("End Pop Perc");
     QMutexLocker locker(&mutex);
@@ -1027,7 +1027,7 @@ void CalculationBuffer::popPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
     emit sig_popPercUpdated(pred);
 }
 
-void CalculationBuffer::aprPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
+void CalculationBuffer::aprPercComputed(Tucuxi::Gui::Core::PredictionResult* pred)
 {
     MESS("End Apr Perc");
     QMutexLocker locker(&mutex);
@@ -1038,7 +1038,7 @@ void CalculationBuffer::aprPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
     emit sig_aprPercUpdated(pred);
 }
 
-void CalculationBuffer::apoPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
+void CalculationBuffer::apoPercComputed(Tucuxi::Gui::Core::PredictionResult* pred)
 {
     MESS("End Apo Perc");
     QMutexLocker locker(&mutex);
@@ -1049,7 +1049,7 @@ void CalculationBuffer::apoPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
     emit sig_apoPercUpdated(pred);
 }
 
-void CalculationBuffer::adjPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
+void CalculationBuffer::adjPercComputed(Tucuxi::Gui::Core::PredictionResult* pred)
 {
     MESS("End Adj Perc");
     QMutexLocker locker(&mutex);
@@ -1060,7 +1060,7 @@ void CalculationBuffer::adjPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
     emit sig_adjPercUpdated(pred);
 }
 
-void CalculationBuffer::adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*> pred)
+void CalculationBuffer::adjustmentsComputed(QList<Tucuxi::Gui::Core::Dosage*> pred)
 {
     MESS("End Adjustment");
     QMutexLocker locker(&mutex);
@@ -1068,7 +1068,7 @@ void CalculationBuffer::adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*> pred
     emit sig_adjustmentsUpdated(pred);
 }
 
-void CalculationBuffer::adjPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
+void CalculationBuffer::adjPredComputed(Tucuxi::Gui::Core::PredictionResult* pred)
 {
     MESS("End Pop Perc");
     QMutexLocker locker(&mutex);

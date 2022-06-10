@@ -19,7 +19,7 @@
 #include "core/dal/drug/drug.h"
 #include "admin/src/stdadminrepository.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core;
 
 namespace Tucuxi {
 namespace cliutils {

@@ -4,7 +4,9 @@
 
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 QList<AbstractStdParamNameHandler*> StdParamNames::handlersList;
@@ -181,6 +183,7 @@ QString StdParamNames::getDescA(){return tr("Gamma model parameter A [-]");}
 QString StdParamNames::getNameR(){return tr("Gamma model parameter R [-]");}
 QString StdParamNames::getDescR(){return tr("Gamma model parameter R [-]");}
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

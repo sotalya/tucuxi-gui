@@ -4,7 +4,7 @@
 #include "core/dal/entity.h"
 #include "core/utils/autoproperty.h"
 
-class Location : public Tucuxi::GuiCore::Entity
+class Location : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
     ADMIN_ENTITY_UTILS(Location)
@@ -15,8 +15,8 @@ class Location : public Tucuxi::GuiCore::Entity
     AUTO_PROPERTY(QString, country)
 
 public:
-    Q_INVOKABLE Location(Tucuxi::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
-    Q_INVOKABLE Location(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE Location(Tucuxi::Gui::Core::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE Location(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
     Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
     {

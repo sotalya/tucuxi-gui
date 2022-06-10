@@ -6,7 +6,9 @@
 #include <QStringList>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //Reset the value
@@ -150,6 +152,7 @@ bool Version::isValid() const
    return (_versions[0] != -1);
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

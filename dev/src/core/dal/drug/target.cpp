@@ -8,7 +8,9 @@
 #include <iostream>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 QML_POINTERLIST_CLASS_IMPL(TargetMethodList, TargetMethod)
 
@@ -161,5 +163,6 @@ void Target::copyFrom(Target *other)
 const QMap<QString, TargetMethod::TargetType> Target::_typeMap = Target::createMap();
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

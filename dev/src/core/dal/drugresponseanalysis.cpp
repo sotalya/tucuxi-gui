@@ -6,7 +6,9 @@
 #include "core/dal/drug/drug.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 //AUTO_PROPERTY_IMPL(DrugResponseAnalysis, PostEngine*, postEngine, PostEngine)
 //AUTO_PROPERTY_IMPL(DrugResponseAnalysis, PercentileEngine*, percentileEngine, PercentileEngine)
@@ -19,10 +21,11 @@ DrugResponseAnalysis::DrugResponseAnalysis(AbstractRepository *repository, QObje
 //      _postEngine(0),
 //      _percentileEngine(0),
 //      _reverseEngine(0),
-      _treatment(Tucuxi::GuiCore::CoreFactory::createEntity<DrugTreatment>(repository, this)),
+      _treatment(Tucuxi::Gui::Core::CoreFactory::createEntity<DrugTreatment>(repository, this)),
       _drugModel(nullptr)
 {
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

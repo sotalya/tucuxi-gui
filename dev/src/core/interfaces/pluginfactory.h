@@ -12,8 +12,8 @@
 //#include "postengine.h"
 
 namespace Tucuxi {
-namespace GuiCore {
-
+namespace Gui {
+namespace Core {
 
 
 //class Factory : public QObject
@@ -58,7 +58,8 @@ namespace GuiCore {
 //    Descriptor desc;
 //};
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // PLUGINFACTORY_H

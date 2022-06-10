@@ -44,7 +44,9 @@ class DrugTabController;
 class ValidationTabController;
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 class PredictionResult;
 class ChartData;
 class PredictionSpec;
@@ -60,6 +62,7 @@ class LightActiveSubstance;
 class ActiveSubstance;
 class AdminList;
 class DosageHistory;
+}
 }
 }
 
@@ -92,17 +95,17 @@ class InterpretationController : public QObject
 
     //! This property is used by PatientTab.qml
     //! TODO It should deal with patients, not core patients
-    Q_PROPERTY(Tucuxi::GuiCore::CorePatientList* patients READ getPatients NOTIFY patientsChanged)
+    Q_PROPERTY(Tucuxi::Gui::Core::CorePatientList* patients READ getPatients NOTIFY patientsChanged)
 
     //! This property is used by DrugTab.qml
-    Q_PROPERTY(Tucuxi::GuiCore::DrugModelList* drugs READ getDrugs NOTIFY drugsChanged)
+    Q_PROPERTY(Tucuxi::Gui::Core::DrugModelList* drugs READ getDrugs NOTIFY drugsChanged)
 
     //! This property is used by DrugTab.qml
-    Q_PROPERTY(Tucuxi::GuiCore::LightActiveSubstanceList* activeSubstances READ getActiveSubstances NOTIFY activeSubstancesChanged)
+    Q_PROPERTY(Tucuxi::Gui::Core::LightActiveSubstanceList* activeSubstances READ getActiveSubstances NOTIFY activeSubstancesChanged)
 
 
     //! This property is used by DrugTab.qml
-    Q_PROPERTY(Tucuxi::GuiCore::DrugModelList* drugModels READ getDrugModels NOTIFY drugModelsChanged)
+    Q_PROPERTY(Tucuxi::Gui::Core::DrugModelList* drugModels READ getDrugModels NOTIFY drugModelsChanged)
 
     //! This property exposes the current patient.
     //! It is used by the FlowInformationPanel to display information about the current patient
@@ -111,12 +114,12 @@ class InterpretationController : public QObject
 
 
     //! This property exposes the current drugModel.
-    STD_PROPERTY_DECL(Tucuxi::GuiCore::DrugModel*, currentDrugModel, CurrentDrugModel)
+    STD_PROPERTY_DECL(Tucuxi::Gui::Core::DrugModel*, currentDrugModel, CurrentDrugModel)
 
     //! This property exposes the current active substance.
     //! It is used by the FlowInformationPanel to display information about the current active substance
     //! Compared to the previous properties, it is modified by the DrugTab
-    STD_PROPERTY_DECL(Tucuxi::GuiCore::LightActiveSubstance*, currentActiveSubstance, CurrentActiveSubstance)
+    STD_PROPERTY_DECL(Tucuxi::Gui::Core::LightActiveSubstance*, currentActiveSubstance, CurrentActiveSubstance)
 
     //! This property exposes the current interpretation.
     //! It is used by various tabs
@@ -177,10 +180,10 @@ public:
     void setCurrentPatient(Patient *patient);
     Patient * getCurrentPatient() const;
 
-    Tucuxi::GuiCore::DrugModelList* getDrugs() { return _drugs; }
-    Tucuxi::GuiCore::DrugModelList* getDrugModels() { return _drugModelsForCurrentSubstance; }
-    Tucuxi::GuiCore::LightActiveSubstanceList* getActiveSubstances() { return _activeSubstances; }
-    Tucuxi::GuiCore::CorePatientList* getPatients() { return _patients; }
+    Tucuxi::Gui::Core::DrugModelList* getDrugs() { return _drugs; }
+    Tucuxi::Gui::Core::DrugModelList* getDrugModels() { return _drugModelsForCurrentSubstance; }
+    Tucuxi::Gui::Core::LightActiveSubstanceList* getActiveSubstances() { return _activeSubstances; }
+    Tucuxi::Gui::Core::CorePatientList* getPatients() { return _patients; }
 
 //    std::vector<double> getAprpv() { return _aprpv; }
 //    std::vector<double> setAprpv(std::vector<double> vec) { _aprpv = vec; emit aprpvChanged(_aprpv); }
@@ -235,7 +238,7 @@ public:
     /// Show statistics in a dialog
     void showStatistics(int what);
 
-    bool associateFormulationToRoute(Tucuxi::GuiCore::DosageHistory *dosageHistory, Tucuxi::GuiCore::AdminList *adminList);
+    bool associateFormulationToRoute(Tucuxi::Gui::Core::DosageHistory *dosageHistory, Tucuxi::Gui::Core::AdminList *adminList);
 
     Q_INVOKABLE QByteArray interpretationToJson();
 
@@ -247,10 +250,10 @@ public:
 
 signals:
     void webchannelChanged(QQmlWebChannel&);
-    void drugsChanged(Tucuxi::GuiCore::DrugModelList*);
-    void drugModelsChanged(Tucuxi::GuiCore::DrugModelList*);
-    void activeSubstancesChanged(Tucuxi::GuiCore::LightActiveSubstanceList*);
-    void patientsChanged(Tucuxi::GuiCore::CorePatientList*);
+    void drugsChanged(Tucuxi::Gui::Core::DrugModelList*);
+    void drugModelsChanged(Tucuxi::Gui::Core::DrugModelList*);
+    void activeSubstancesChanged(Tucuxi::Gui::Core::LightActiveSubstanceList*);
+    void patientsChanged(Tucuxi::Gui::Core::CorePatientList*);
     void defaultUnitChanged(QString);
     void chartscaleChanged(double);
 
@@ -314,7 +317,7 @@ public:
      */
     void loadInterpretation(Interpretation *interpretation);
 
-    Tucuxi::GuiCore::PredictionSpec *getPredictionSpec() const;
+    Tucuxi::Gui::Core::PredictionSpec *getPredictionSpec() const;
 
 
     void validateInterpretation(bool isValid);
@@ -346,7 +349,7 @@ private:
     void initViewConnexions();
     void clearAdjustments();
 
-    Tucuxi::GuiCore::ActiveSubstance *findRealActiveSubstance(const Tucuxi::GuiCore::LightActiveSubstance *activeSubstance);
+    Tucuxi::Gui::Core::ActiveSubstance *findRealActiveSubstance(const Tucuxi::Gui::Core::LightActiveSubstance *activeSubstance);
 
 #ifdef CONFIG_GUITEST
     QObject *root;
@@ -387,14 +390,14 @@ private:
     double _chartscale;
     QString _defaultUnit;
 
-//    Tucuxi::GuiCore::ChartData* chartData;     // JRT
+//    Tucuxi::Gui::Core::ChartData* chartData;     // JRT
 
-    Tucuxi::GuiCore::PredictionSpec* predictionspec;
-    Tucuxi::GuiCore::DrugModelList* _drugs;
-    Tucuxi::GuiCore::DrugModelList* _drugModelsForCurrentSubstance;
-    Tucuxi::GuiCore::LightActiveSubstanceList* _activeSubstances;
-    Tucuxi::GuiCore::LightActiveSubstanceList* _privateActiveSubstances;
-    Tucuxi::GuiCore::CorePatientList* _patients;
+    Tucuxi::Gui::Core::PredictionSpec* predictionspec;
+    Tucuxi::Gui::Core::DrugModelList* _drugs;
+    Tucuxi::Gui::Core::DrugModelList* _drugModelsForCurrentSubstance;
+    Tucuxi::Gui::Core::LightActiveSubstanceList* _activeSubstances;
+    Tucuxi::Gui::Core::LightActiveSubstanceList* _privateActiveSubstances;
+    Tucuxi::Gui::Core::CorePatientList* _patients;
 
     GraphInformationSelection *_graphInformationSelection;
 
@@ -413,7 +416,7 @@ private:
     public:
 
     ChartDataController *_chartDataController;        // JRT
-    Tucuxi::GuiCore::ChartData* chartData;             // JRT
+    Tucuxi::Gui::Core::ChartData* chartData;             // JRT
 
     QObject *patientsView;
     QObject *drugsView;

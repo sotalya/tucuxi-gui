@@ -9,7 +9,7 @@
 #include "core/dal/drug/infusions.h"
 #include "core/utils/connect.h"
 
-EditTextCommand::EditTextCommand(Tucuxi::GuiCore::Entity *entity,QString propertyName,QVariant newValue, QUndoCommand *parent):
+EditTextCommand::EditTextCommand(Tucuxi::Gui::Core::Entity *entity,QString propertyName,QVariant newValue, QUndoCommand *parent):
     QUndoCommand(parent),
     _newValue(newValue),
     _propertyName(propertyName),
@@ -149,7 +149,7 @@ bool ChangeViewIndexCommand::mergeWith(const QUndoCommand *command)
     return true;
 }
 
-EditCommentCommand::EditCommentCommand(Tucuxi::GuiCore::TranslatableString *comments, QString newValue,QString reference,void (UndoRedoController::*signal)(Tucuxi::GuiCore::TranslatableString*),UndoRedoController *signalClass,bool isLangChanging,QUndoCommand *parent) :
+EditCommentCommand::EditCommentCommand(Tucuxi::Gui::Core::TranslatableString *comments, QString newValue,QString reference,void (UndoRedoController::*signal)(Tucuxi::Gui::Core::TranslatableString*),UndoRedoController *signalClass,bool isLangChanging,QUndoCommand *parent) :
     QUndoCommand(parent),
     _comments(comments),
     _newValue(newValue),
@@ -165,7 +165,7 @@ EditCommentCommand::EditCommentCommand(Tucuxi::GuiCore::TranslatableString *comm
         _oldValue = comments->value(reference);
     }
 }
-EditCommentCommand::EditCommentCommand(Tucuxi::GuiCore::TranslatableString *comments, QString newValue,QString reference,void (UndoRedoController::*signal)(),UndoRedoController *signalClass,bool isLangChanging,QUndoCommand *parent) :
+EditCommentCommand::EditCommentCommand(Tucuxi::Gui::Core::TranslatableString *comments, QString newValue,QString reference,void (UndoRedoController::*signal)(),UndoRedoController *signalClass,bool isLangChanging,QUndoCommand *parent) :
     QUndoCommand(parent),
     _comments(comments),
     _newValue(newValue),
@@ -213,7 +213,7 @@ void EditCommentCommand::redo()
 }
 
 
-AddCommentCommand::AddCommentCommand(Tucuxi::GuiCore::TranslatableString *comments, int index, void (UndoRedoController::*signal)(Tucuxi::GuiCore::TranslatableString*),UndoRedoController *signalClass,QUndoCommand *parent) :
+AddCommentCommand::AddCommentCommand(Tucuxi::Gui::Core::TranslatableString *comments, int index, void (UndoRedoController::*signal)(Tucuxi::Gui::Core::TranslatableString*),UndoRedoController *signalClass,QUndoCommand *parent) :
     QUndoCommand(parent),
     _comments(comments),
     _index(index),
@@ -322,13 +322,13 @@ void AddObjCommand<T>::redo()
     if(_obj) {
         _objList->removeAt(_index);
     } else {
-        _objList->append(Tucuxi::GuiCore::CoreFactory::createEntity<T>(ABSTRACTREPO,0));
+        _objList->append(Tucuxi::Gui::Core::CoreFactory::createEntity<T>(ABSTRACTREPO,0));
     }
 }
 
-template class AddObjCommand<Tucuxi::GuiCore::ValidDose>;
-template class AddObjCommand<Tucuxi::GuiCore::ValidInterval>;
-template class AddObjCommand<Tucuxi::GuiCore::ValidInfusion>;
+template class AddObjCommand<Tucuxi::Gui::Core::ValidDose>;
+template class AddObjCommand<Tucuxi::Gui::Core::ValidInterval>;
+template class AddObjCommand<Tucuxi::Gui::Core::ValidInfusion>;
 
 RemoveObjCommand::RemoveObjCommand(QObject *objList, int index, QUndoCommand *parent) :
     QUndoCommand(parent),
@@ -387,6 +387,6 @@ void RemoveObjCommand::redo()
         CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(_objList,"objappend",Qt::DirectConnection,
                                            Q_ARG(QObject*, _obj)));
 //        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(_objList,"add",Qt::DirectConnection));
-//        _objList->append(Tucuxi::GuiCore::CoreFactory::createEntity<QObject>(ABSTRACTREPO,0));
+//        _objList->append(Tucuxi::Gui::Core::CoreFactory::createEntity<QObject>(ABSTRACTREPO,0));
     }
 }

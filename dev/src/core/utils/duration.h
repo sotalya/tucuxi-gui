@@ -7,7 +7,9 @@
 #include <QMetaType>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 /** Simple class that handle duration.
  * \ingroup utils
@@ -235,10 +237,11 @@ private:
    qint64 duration;
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 //Declare this type to Qt
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Duration)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Duration)
 
 #endif // DURATION_H

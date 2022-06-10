@@ -40,11 +40,11 @@ PredictionSpecImporter::PredictionSpecImporter()
 
 }
 
-Tucuxi::GuiCore::PredictionSpec *PredictionSpecImporter::load(const QByteArray &data)
+Tucuxi::Gui::Core::PredictionSpec *PredictionSpecImporter::load(const QByteArray &data)
 {
     isOk = true;
 
-    Tucuxi::GuiCore::PredictionSpec *predictionSpec = nullptr;
+    Tucuxi::Gui::Core::PredictionSpec *predictionSpec = nullptr;
 
     reader.addData(data);
     reader.readNext();
@@ -129,10 +129,10 @@ bool PredictionSpecImporter::extractBool()
     return false;
 }
 
-Tucuxi::GuiCore::PredictionSpec *PredictionSpecImporter::loadPredictionSpec(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::PredictionSpec *PredictionSpecImporter::loadPredictionSpec(const QString &tagName, QObject *parent)
 {
 
-    Tucuxi::GuiCore::PredictionSpec *predictionSpec = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionSpec>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::PredictionSpec *predictionSpec = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionSpec>(ABSTRACTREPO, parent);
 
     bool typeSet = false;
     WHILE_NOT_END_ELEM(tagName){
@@ -157,7 +157,7 @@ Tucuxi::GuiCore::PredictionSpec *PredictionSpecImporter::loadPredictionSpec(cons
                 predictionSpec->setNbPoints(extractor().toInt());
             }
             else if (name == "paramsType") {
-                predictionSpec->setParamsType(Tucuxi::GuiCore::fromString(extractor()));
+                predictionSpec->setParamsType(Tucuxi::Gui::Core::fromString(extractor()));
             }
             else if (name == "adjustmentDate") {
                 bool required;
@@ -199,9 +199,9 @@ std::vector<double> PredictionSpecImporter::loadPercentiles(const QString &tagNa
     return percentiles;
 }
 
-Tucuxi::GuiCore::DrugResponseAnalysis * PredictionSpecImporter::loadDrugResponseAnalysis(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::DrugResponseAnalysis * PredictionSpecImporter::loadDrugResponseAnalysis(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::DrugResponseAnalysis *analysis = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugResponseAnalysis>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::DrugResponseAnalysis *analysis = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugResponseAnalysis>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -221,10 +221,10 @@ Tucuxi::GuiCore::DrugResponseAnalysis * PredictionSpecImporter::loadDrugResponse
 }
 
 
-Tucuxi::GuiCore::DrugTreatment * PredictionSpecImporter::loadDrugTreatment(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::DrugTreatment * PredictionSpecImporter::loadDrugTreatment(const QString &tagName, QObject *parent)
 {
 
-    Tucuxi::GuiCore::DrugTreatment *treatment = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugTreatment>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::DrugTreatment *treatment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugTreatment>(ABSTRACTREPO, parent);
 
 
     WHILE_NOT_END_ELEM(tagName){
@@ -233,7 +233,7 @@ Tucuxi::GuiCore::DrugTreatment * PredictionSpecImporter::loadDrugTreatment(const
             QString name = reader.name().toString();
 
             if (name == "measures") {
-                Tucuxi::GuiCore::CoreMeasureList *list =  Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::CoreMeasureList>(ABSTRACTREPO, treatment);
+                Tucuxi::Gui::Core::CoreMeasureList *list =  Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO, treatment);
 
                 WHILE_NOT_END_ELEM("measures"){
 
@@ -241,7 +241,7 @@ Tucuxi::GuiCore::DrugTreatment * PredictionSpecImporter::loadDrugTreatment(const
                         QString name = reader.name().toString();
 
                         if (name == "measure") {
-                            Tucuxi::GuiCore::CoreMeasure *measure =  Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::CoreMeasure>(ABSTRACTREPO, list);
+                            Tucuxi::Gui::Core::CoreMeasure *measure =  Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasure>(ABSTRACTREPO, list);
 
                             WHILE_NOT_END_ELEM("measure"){
 
@@ -281,9 +281,9 @@ Tucuxi::GuiCore::DrugTreatment * PredictionSpecImporter::loadDrugTreatment(const
     return treatment;
 }
 
-Tucuxi::GuiCore::PatientVariateList *PredictionSpecImporter::loadPatientVariates(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::PatientVariateList *PredictionSpecImporter::loadPatientVariates(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::PatientVariateList *patientVariateSet = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariateList>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::PatientVariateList *patientVariateSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         /******************************************
@@ -298,9 +298,9 @@ Tucuxi::GuiCore::PatientVariateList *PredictionSpecImporter::loadPatientVariates
     return patientVariateSet;
 }
 
-Tucuxi::GuiCore::PatientVariate *PredictionSpecImporter::loadPatientVariate(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::PatientVariate *PredictionSpecImporter::loadPatientVariate(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::PatientVariate *patientVariate = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariate>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::PatientVariate *patientVariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -330,9 +330,9 @@ Tucuxi::GuiCore::PatientVariate *PredictionSpecImporter::loadPatientVariate(cons
     return patientVariate;
 }
 
-Tucuxi::GuiCore::DosageHistory *PredictionSpecImporter::loadDosageHistory(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::DosageHistory *PredictionSpecImporter::loadDosageHistory(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::DosageHistory *history = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DosageHistory>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::DosageHistory *history = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         /******************************************
@@ -348,9 +348,9 @@ Tucuxi::GuiCore::DosageHistory *PredictionSpecImporter::loadDosageHistory(const 
     return history;
 }
 
-Tucuxi::GuiCore::Dosage *PredictionSpecImporter::loadDosage(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::Dosage *PredictionSpecImporter::loadDosage(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::Dosage *dosage = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Dosage>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::Dosage *dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -362,7 +362,7 @@ Tucuxi::GuiCore::Dosage *PredictionSpecImporter::loadDosage(const QString &tagNa
             else if (name == "dbtinf")
                 dosage->setDbtinf(extractDouble());
             else if (name == "route") {
-                Tucuxi::GuiCore::Admin *admin = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Admin>(ABSTRACTREPO, dosage);
+                Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
                 admin->setLabel(extractor());
                 dosage->setRoute(admin);
             }
@@ -374,10 +374,10 @@ Tucuxi::GuiCore::Dosage *PredictionSpecImporter::loadDosage(const QString &tagNa
             else if (name == "endTime")
                 dosage->setEndTime(extractDate());
             else if (name == "tinf") {
-                dosage->setTinf(Tucuxi::GuiCore::Duration(0, extractDouble()));
+                dosage->setTinf(Tucuxi::Gui::Core::Duration(0, extractDouble()));
             }
             else if (name == "interval") {
-                dosage->setInterval(Tucuxi::GuiCore::Duration(0, extractDouble()));
+                dosage->setInterval(Tucuxi::Gui::Core::Duration(0, extractDouble()));
             }
             else if (name == "uncastedValues") {
                 // Handle uncasted values
@@ -391,10 +391,10 @@ Tucuxi::GuiCore::Dosage *PredictionSpecImporter::loadDosage(const QString &tagNa
 
 
 
-Tucuxi::GuiCore::DrugModel *PredictionSpecImporter::loadDrugModel(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::DrugModel *PredictionSpecImporter::loadDrugModel(const QString &tagName, QObject *parent)
 {
 
-    Tucuxi::GuiCore::DrugModel *drugModel = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugModel>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::DrugModel *drugModel = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugModel>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -446,11 +446,11 @@ Tucuxi::GuiCore::DrugModel *PredictionSpecImporter::loadDrugModel(const QString 
 }
 
 
-Tucuxi::GuiCore::StandardTreatment* PredictionSpecImporter::loadStandardTreatment(const QString &tagName, QObject* parent)
+Tucuxi::Gui::Core::StandardTreatment* PredictionSpecImporter::loadStandardTreatment(const QString &tagName, QObject* parent)
 {
 
     bool isConvertible = true;
-    Tucuxi::GuiCore::StandardTreatment* treatment = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::StandardTreatment>(ABSTRACTREPO,parent);
+    Tucuxi::Gui::Core::StandardTreatment* treatment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::StandardTreatment>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(isConvertible && reader.readNextStartElement() ){
@@ -474,13 +474,13 @@ Tucuxi::GuiCore::StandardTreatment* PredictionSpecImporter::loadStandardTreatmen
                     }
                 }
                 if (unit == "h") {
-                    treatment->setDuration(Tucuxi::GuiCore::Duration(value));
+                    treatment->setDuration(Tucuxi::Gui::Core::Duration(value));
                 }
                 else if (unit == "d") {
-                    treatment->setDuration(Tucuxi::GuiCore::Duration(24 * value));
+                    treatment->setDuration(Tucuxi::Gui::Core::Duration(24 * value));
                 }
                 else if (unit == "m") {
-                    treatment->setDuration(Tucuxi::GuiCore::Duration(((double) (value))/60));
+                    treatment->setDuration(Tucuxi::Gui::Core::Duration(((double) (value))/60));
                 }
                 else {
                     raiseConversionError();
@@ -496,27 +496,27 @@ Tucuxi::GuiCore::StandardTreatment* PredictionSpecImporter::loadStandardTreatmen
     return treatment;
 }
 
-Tucuxi::GuiCore::ADME *PredictionSpecImporter::loadAdme(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::ADME *PredictionSpecImporter::loadAdme(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::ADME* adme = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ADME>(ABSTRACTREPO,parent);
+    Tucuxi::Gui::Core::ADME* adme = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ADME>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
             QString name = reader.name().toString();
             if (name == "defaultIntake") {
-                Tucuxi::GuiCore::Admin* def = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Admin>(ABSTRACTREPO, adme);
+                Tucuxi::Gui::Core::Admin* def = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adme);
                 def->setLabel(extractor());
                 adme->setDefaultIntake(def);
             }
             else if (name == "intakes") {
-                Tucuxi::GuiCore::AdminList* intakes = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::AdminList>(ABSTRACTREPO, adme);
+                Tucuxi::Gui::Core::AdminList* intakes = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdminList>(ABSTRACTREPO, adme);
 
 
                 WHILE_NOT_END_ELEM("intakes"){
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "intake"){
-                            Tucuxi::GuiCore::Admin* def = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Admin>(ABSTRACTREPO, adme);
+                            Tucuxi::Gui::Core::Admin* def = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adme);
                             def->setLabel(extractor());
                             intakes->append(def);
                         }
@@ -539,9 +539,9 @@ Tucuxi::GuiCore::ADME *PredictionSpecImporter::loadAdme(const QString &tagName, 
 
 
 
-Tucuxi::GuiCore::ValidDoses *PredictionSpecImporter::loadValidDoses(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::ValidDoses *PredictionSpecImporter::loadValidDoses(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::ValidDoses* doses = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidDoses>(ABSTRACTREPO,parent);
+    Tucuxi::Gui::Core::ValidDoses* doses = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDoses>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -556,12 +556,12 @@ Tucuxi::GuiCore::ValidDoses *PredictionSpecImporter::loadValidDoses(const QStrin
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "dose"){
-                            Tucuxi::GuiCore::ValidDose* dose = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidDose>(ABSTRACTREPO,doses);
+                            Tucuxi::Gui::Core::ValidDose* dose = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDose>(ABSTRACTREPO,doses);
                             WHILE_NOT_END_ELEM("dose") {
                                 if(reader.readNextStartElement() ){
                                     name = reader.name().toString();
                                     if (name == "route") {
-                                        Tucuxi::GuiCore::Admin* admin = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Admin>(ABSTRACTREPO,dose);
+                                        Tucuxi::Gui::Core::Admin* admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO,dose);
                                         admin->setLabel(extractor());
                                         dose->setRoute(admin);
                                     }
@@ -585,9 +585,9 @@ Tucuxi::GuiCore::ValidDoses *PredictionSpecImporter::loadValidDoses(const QStrin
 
 }
 
-Tucuxi::GuiCore::ValidIntervals *PredictionSpecImporter::loadValidIntervals(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::ValidIntervals *PredictionSpecImporter::loadValidIntervals(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::ValidIntervals* intervals = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidIntervals>(ABSTRACTREPO,parent);
+    Tucuxi::Gui::Core::ValidIntervals* intervals = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidIntervals>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -602,7 +602,7 @@ Tucuxi::GuiCore::ValidIntervals *PredictionSpecImporter::loadValidIntervals(cons
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "interval"){
-                            Tucuxi::GuiCore::ValidInterval* interval = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidInterval>(ABSTRACTREPO,intervals);
+                            Tucuxi::Gui::Core::ValidInterval* interval = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInterval>(ABSTRACTREPO,intervals);
                             WHILE_NOT_END_ELEM("interval") {
                                 if(reader.readNextStartElement() ){
                                     name = reader.name().toString();
@@ -625,9 +625,9 @@ Tucuxi::GuiCore::ValidIntervals *PredictionSpecImporter::loadValidIntervals(cons
     return intervals;
 }
 
-Tucuxi::GuiCore::ValidInfusions *PredictionSpecImporter::loadValidInfusions(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::ValidInfusions *PredictionSpecImporter::loadValidInfusions(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::ValidInfusions* infusions = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidInfusions>(ABSTRACTREPO,parent);
+    Tucuxi::Gui::Core::ValidInfusions* infusions = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusions>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -642,7 +642,7 @@ Tucuxi::GuiCore::ValidInfusions *PredictionSpecImporter::loadValidInfusions(cons
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "infusion"){
-                            Tucuxi::GuiCore::ValidInfusion* infusion = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidInfusion>(ABSTRACTREPO,infusions);
+                            Tucuxi::Gui::Core::ValidInfusion* infusion = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusion>(ABSTRACTREPO,infusions);
                             WHILE_NOT_END_ELEM("infusion") {
                                 if(reader.readNextStartElement() ){
                                     name = reader.name().toString();
@@ -665,9 +665,9 @@ Tucuxi::GuiCore::ValidInfusions *PredictionSpecImporter::loadValidInfusions(cons
     return infusions;
 }
 
-Tucuxi::GuiCore::TargetList *PredictionSpecImporter::loadTargets(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::TargetList *PredictionSpecImporter::loadTargets(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::TargetList* targetSet = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TargetList>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::TargetList* targetSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetList>(ABSTRACTREPO, parent);
     WHILE_NOT_END_ELEM("targets"){
         if(reader.readNextStartElement() && isOk){
             QString name = reader.name().toString();
@@ -682,9 +682,9 @@ Tucuxi::GuiCore::TargetList *PredictionSpecImporter::loadTargets(const QString &
     return targetSet;
 }
 
-Tucuxi::GuiCore::Target *PredictionSpecImporter::loadTarget(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::Target *PredictionSpecImporter::loadTarget(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::Target* target = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Target>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::Target* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -694,7 +694,7 @@ Tucuxi::GuiCore::Target *PredictionSpecImporter::loadTarget(const QString &tagNa
             } else if(name == "concentrations"){
                 QXmlStreamAttributes attributes ;
                 extractor(&attributes,false);
-                Tucuxi::GuiCore::Unit unit;
+                Tucuxi::Gui::Core::Unit unit;
                 WHILE_NOT_END_ELEM("concentrations"){
                     if(reader.readNextStartElement() ){
                         name = reader.name().toString();
@@ -710,7 +710,7 @@ Tucuxi::GuiCore::Target *PredictionSpecImporter::loadTarget(const QString &tagNa
             } else if(name == "times"){
                 QXmlStreamAttributes attributes ;
                 extractor(&attributes,false);
-                Tucuxi::GuiCore::Unit unit;
+                Tucuxi::Gui::Core::Unit unit;
                 WHILE_NOT_END_ELEM("times"){
                     if(reader.readNextStartElement() ){
                         name = reader.name().toString();
@@ -732,9 +732,9 @@ Tucuxi::GuiCore::Target *PredictionSpecImporter::loadTarget(const QString &tagNa
     return target;
 }
 
-Tucuxi::GuiCore::DrugVariateList *PredictionSpecImporter::loadCovariates(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::DrugVariateList *PredictionSpecImporter::loadCovariates(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::DrugVariateList *drugVariateSet = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugVariateList>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::DrugVariateList *drugVariateSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariateList>(ABSTRACTREPO, parent);
 
     /*******************************
      * TODO: Totally wrong down there
@@ -752,14 +752,14 @@ Tucuxi::GuiCore::DrugVariateList *PredictionSpecImporter::loadCovariates(const Q
     return drugVariateSet;
 }
 
-Tucuxi::GuiCore::DrugVariate *PredictionSpecImporter::loadCovariate(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::DrugVariate *PredictionSpecImporter::loadCovariate(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::DrugVariate* drugVariate = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugVariate>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::DrugVariate* drugVariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariate>(ABSTRACTREPO, parent);
 
-    Tucuxi::GuiCore::TranslatableString *nameTranslation, *descriptionTranslation;
+    Tucuxi::Gui::Core::TranslatableString *nameTranslation, *descriptionTranslation;
 
-    nameTranslation = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO,drugVariate);
-    descriptionTranslation = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO,drugVariate);
+    nameTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drugVariate);
+    descriptionTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drugVariate);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -779,9 +779,9 @@ Tucuxi::GuiCore::DrugVariate *PredictionSpecImporter::loadCovariate(const QStrin
     return drugVariate;
 }
 
-Tucuxi::GuiCore::ErrorModel *PredictionSpecImporter::loadErrorModel(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::ErrorModel *PredictionSpecImporter::loadErrorModel(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::ErrorModel* errorModel = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ErrorModel>(ABSTRACTREPO,parent);
+    Tucuxi::Gui::Core::ErrorModel* errorModel = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ErrorModel>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -799,10 +799,10 @@ Tucuxi::GuiCore::ErrorModel *PredictionSpecImporter::loadErrorModel(const QStrin
     return errorModel;
 }
 
-Tucuxi::GuiCore::ParameterSet *PredictionSpecImporter::loadParameters(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::ParameterSet *PredictionSpecImporter::loadParameters(const QString &tagName, QObject *parent)
 {
 
-    Tucuxi::GuiCore::ParameterSet* parameterSet = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ParameterSet>(ABSTRACTREPO,parent);
+    Tucuxi::Gui::Core::ParameterSet* parameterSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ParameterSet>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -860,9 +860,9 @@ Tucuxi::GuiCore::ParameterSet *PredictionSpecImporter::loadParameters(const QStr
     return parameterSet;
 }
 
-Tucuxi::GuiCore::Parameter *PredictionSpecImporter::loadParameter(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::Parameter *PredictionSpecImporter::loadParameter(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::Parameter* parameter = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Parameter>(ABSTRACTREPO,parent);
+    Tucuxi::Gui::Core::Parameter* parameter = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameter>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -871,7 +871,7 @@ Tucuxi::GuiCore::Parameter *PredictionSpecImporter::loadParameter(const QString 
                 parameter->setName(extractor());
             } else if (name == "unit") {//FIXME unkown unit in fileout
                 QString extract = extractor();
-                Tucuxi::GuiCore::Unit unit(extract);
+                Tucuxi::Gui::Core::Unit unit(extract);
                 bool isValid = unit.isValid();
                 parameter->getQuantity()->setUnit(extract);
             } else if (name == "value") {
@@ -896,29 +896,29 @@ Tucuxi::GuiCore::Parameter *PredictionSpecImporter::loadParameter(const QString 
     return parameter;
 }
 
-Tucuxi::GuiCore::OperationList *PredictionSpecImporter::loadOperations(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::OperationList *PredictionSpecImporter::loadOperations(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::OperationList *operations = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperationList>(ABSTRACTREPO,0);
+    Tucuxi::Gui::Core::OperationList *operations = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperationList>(ABSTRACTREPO,0);
 
-    QMap<QString,Tucuxi::GuiCore::OperationList*> mapOperationLists;
+    QMap<QString,Tucuxi::Gui::Core::OperationList*> mapOperationLists;
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
             QString name = reader.name().toString();
             if(name == "operation"){
-                Tucuxi::GuiCore::Operation* operation = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Operation>(ABSTRACTREPO);
+                Tucuxi::Gui::Core::Operation* operation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Operation>(ABSTRACTREPO);
                 WHILE_NOT_END_ELEM("operation"){
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "type"){
                             QString t = extractor();
                             if (t == "Hardcoded")
-                                operation->setType(Tucuxi::GuiCore::OperationType::HARDCODED);
+                                operation->setType(Tucuxi::Gui::Core::OperationType::HARDCODED);
                             else if (t == "Imported")
-                                operation->setType(Tucuxi::GuiCore::OperationType::IMPORTED);
+                                operation->setType(Tucuxi::Gui::Core::OperationType::IMPORTED);
                             else
                                 // TODO: There is an error. It should be reported
-                                operation->setType(Tucuxi::GuiCore::OperationType::NOOP);
+                                operation->setType(Tucuxi::Gui::Core::OperationType::NOOP);
                         }
                         else if(name == "formula"){
                             QString formula = extractor();
@@ -938,9 +938,9 @@ Tucuxi::GuiCore::OperationList *PredictionSpecImporter::loadOperations(const QSt
 }
 
 
-Tucuxi::GuiCore::Bsv *PredictionSpecImporter::loadBsv(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::Bsv *PredictionSpecImporter::loadBsv(const QString &tagName, QObject *parent)
 {
-    Tucuxi::GuiCore::Bsv* bsv = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Bsv>(ABSTRACTREPO,parent);
+    Tucuxi::Gui::Core::Bsv* bsv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Bsv>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM("bsv"){
         if(isOk && reader.readNextStartElement() ){
@@ -1012,10 +1012,10 @@ void PredictionSpecImporter::raiseConversionError()
 }
 
 
-Tucuxi::GuiCore::IdentifiableAmount * PredictionSpecImporter::loadIdentifiableAmount(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::IdentifiableAmount * PredictionSpecImporter::loadIdentifiableAmount(const QString &tagName, QObject *parent)
 {
 
-    Tucuxi::GuiCore::IdentifiableAmount* amount = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::IdentifiableAmount>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::IdentifiableAmount* amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, parent);
     QString parameter;
     WHILE_NOT_END_ELEM(tagName){
         if(isOk && reader.readNextStartElement() ){
@@ -1025,7 +1025,7 @@ Tucuxi::GuiCore::IdentifiableAmount * PredictionSpecImporter::loadIdentifiableAm
             }else if(name == "value"){
                 amount->setDbvalue(extractDouble());
             } else if (name == "unit"){
-                Tucuxi::GuiCore::Unit unit(extractor());
+                Tucuxi::Gui::Core::Unit unit(extractor());
                 checkValidity(unit.isValid());
                 amount->setUnit(unit);
             }
@@ -1037,10 +1037,10 @@ Tucuxi::GuiCore::IdentifiableAmount * PredictionSpecImporter::loadIdentifiableAm
     return amount;
 }
 
-Tucuxi::GuiCore::OperableAmount *PredictionSpecImporter::loadOperableAmount(const QString &tagName, QObject *parent)
+Tucuxi::Gui::Core::OperableAmount *PredictionSpecImporter::loadOperableAmount(const QString &tagName, QObject *parent)
 {
 
-    Tucuxi::GuiCore::OperableAmount* amount = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperableAmount>(ABSTRACTREPO, parent);
+    Tucuxi::Gui::Core::OperableAmount* amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(isOk && reader.readNextStartElement() ){
@@ -1050,7 +1050,7 @@ Tucuxi::GuiCore::OperableAmount *PredictionSpecImporter::loadOperableAmount(cons
             }else if(name == "value"){
                 amount->setDbvalue(extractDouble());
             } else if (name == "unit"){
-                Tucuxi::GuiCore::Unit unit(extractor());
+                Tucuxi::Gui::Core::Unit unit(extractor());
                 checkValidity(unit.isValid());
                 amount->setUnit(unit);
             }

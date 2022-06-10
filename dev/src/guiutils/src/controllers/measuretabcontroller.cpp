@@ -11,11 +11,11 @@
 #include "admin/src/dal/interpretation.h"
 #include "interpretationcontroller.h"
 
-STD_PROPERTY_IMPL(MeasureTabController, Tucuxi::GuiCore::CoreMeasureList*, measures, Measures)
+STD_PROPERTY_IMPL(MeasureTabController, Tucuxi::Gui::Core::CoreMeasureList*, measures, Measures)
 
 MeasureTabController::MeasureTabController(QObject *parent) : AbstractViewController(parent)
 {
-    _measures = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::CoreMeasureList>(ABSTRACTREPO, this);
+    _measures = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO, this);
 }
 
 void MeasureTabController::setSampleId(int index, const QString &id)
@@ -72,7 +72,7 @@ void MeasureTabController::setDbValue(int index, double value)
 void MeasureTabController::addMeasure()
 {
     Measure* measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, _measures);
-    measure->getConcentration()->setUnit(Tucuxi::GuiCore::Unit(masterController->getDefaultUnit()));
+    measure->getConcentration()->setUnit(Tucuxi::Gui::Core::Unit(masterController->getDefaultUnit()));
     _measures->append(measure);
 }
 

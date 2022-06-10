@@ -179,7 +179,7 @@ bool InterpretationXmlExport::save(ClinicalSet *clinicals)
 
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::DrugResponseAnalysis *drugResponseAnalysis)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::DrugResponseAnalysis *drugResponseAnalysis)
 {
     writer.writeStartElement("drugResponseAnalysis");
     bool ok = true;
@@ -264,7 +264,7 @@ QString InterpretationXmlExport::writeDate(QDateTime date)
     return date.toString(Qt::ISODate);
 }
 
-bool InterpretationXmlExport::saveIdentifiableAmount(const QString &tagName, Tucuxi::GuiCore::IdentifiableAmount *amount)
+bool InterpretationXmlExport::saveIdentifiableAmount(const QString &tagName, Tucuxi::Gui::Core::IdentifiableAmount *amount)
 {
     writer.writeStartElement(tagName);
     writer.writeTextElement("amountId", amount->getAmountId());
@@ -274,7 +274,7 @@ bool InterpretationXmlExport::saveIdentifiableAmount(const QString &tagName, Tuc
     return true;
 }
 
-bool InterpretationXmlExport::saveOperableAmount(const QString &tagName, Tucuxi::GuiCore::OperableAmount *amount)
+bool InterpretationXmlExport::saveOperableAmount(const QString &tagName, Tucuxi::Gui::Core::OperableAmount *amount)
 {
     writer.writeStartElement(tagName);
     writer.writeTextElement("amountId", amount->getAmountId());
@@ -285,14 +285,14 @@ bool InterpretationXmlExport::saveOperableAmount(const QString &tagName, Tucuxi:
     return true;
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::OperationList *list)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::OperationList *list)
 {
     writer.writeStartElement("operations");
-    foreach(Tucuxi::GuiCore::Operation *operation, list->getList()) {
+    foreach(Tucuxi::Gui::Core::Operation *operation, list->getList()) {
         writer.writeStartElement("operation");
         writer.writeTextElement("type",
-                                 (operation->getType() == Tucuxi::GuiCore::OperationType::HARDCODED) ? "Hardcoded" :
-                                                                                                      (operation->getType() == Tucuxi::GuiCore::OperationType::IMPORTED) ? "Imported" :
+                                 (operation->getType() == Tucuxi::Gui::Core::OperationType::HARDCODED) ? "Hardcoded" :
+                                                                                                      (operation->getType() == Tucuxi::Gui::Core::OperationType::IMPORTED) ? "Imported" :
                                                                                                                                                                           "Noop");
         writer.writeTextElement("formula", operation->getFormula());
         writer.writeEndElement();
@@ -302,7 +302,7 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::OperationList *list)
 }
 
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::DrugTreatment *treatment)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::DrugTreatment *treatment)
 {
     writer.writeStartElement("treatment");
 
@@ -360,10 +360,10 @@ bool InterpretationXmlExport::save(PhoneList *list)
 }
 
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::CoreMeasureList *list)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::CoreMeasureList *list)
 {
     writer.writeStartElement("measures");
-    foreach (Tucuxi::GuiCore::CoreMeasure *coreMeasure, list->getList()) {
+    foreach (Tucuxi::Gui::Core::CoreMeasure *coreMeasure, list->getList()) {
         Measure *measure = dynamic_cast<Measure *>(coreMeasure);
         writer.writeStartElement("measure");
         writer.writeTextElement("sampleId", measure->sampleID());
@@ -377,10 +377,10 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::CoreMeasureList *list)
     return true;
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::UncastedValueList *list)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::UncastedValueList *list)
 {
     writer.writeStartElement("uncastedValues");
-    foreach(Tucuxi::GuiCore::UncastedValue *value, list->getList()) {
+    foreach(Tucuxi::Gui::Core::UncastedValue *value, list->getList()) {
         writer.writeStartElement("uncastedValue");
         writer.writeTextElement("field", value->getField());
         writer.writeTextElement("value", value->getText());
@@ -433,7 +433,7 @@ QString toString(Tucuxi::Core::AbsorptionModel _model) {
     return QString::fromStdString(m.at(_model));
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::AdjustmentDosage *dosage, const QString &tagName)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::AdjustmentDosage *dosage, const QString &tagName)
 {
     writer.writeStartElement(tagName);
     writer.writeTextElement("type", dosage->getType());
@@ -456,7 +456,7 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::AdjustmentDosage *dosage, co
     return true;
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::Dosage *dosage, const QString &tagName)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::Dosage *dosage, const QString &tagName)
 {
     writer.writeStartElement(tagName);
     writer.writeTextElement("dbinterval", QString("%1").arg(dosage->getDbinterval()));
@@ -480,12 +480,12 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::Dosage *dosage, const QStrin
     return true;
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::DosageHistory *history, const QString &tagName)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::DosageHistory *history, const QString &tagName)
 {
     writer.writeStartElement(tagName);
-    foreach(Tucuxi::GuiCore::Dosage *dosage, history->getList()) {
-        if (dynamic_cast<Tucuxi::GuiCore::AdjustmentDosage*>(dosage))
-            save(dynamic_cast<Tucuxi::GuiCore::AdjustmentDosage*>(dosage));
+    foreach(Tucuxi::Gui::Core::Dosage *dosage, history->getList()) {
+        if (dynamic_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(dosage))
+            save(dynamic_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(dosage));
         else
             save(dosage);
     }
@@ -493,10 +493,10 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::DosageHistory *history, cons
     return true;
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::PatientVariateList *list)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::PatientVariateList *list)
 {
     writer.writeStartElement("patientVariates");
-    foreach(Tucuxi::GuiCore::PatientVariate *variate, list->getList()) {
+    foreach(Tucuxi::Gui::Core::PatientVariate *variate, list->getList()) {
         writer.writeStartElement("patientVariate");
         writer.writeTextElement("name", variate->getCovariateId());
         writer.writeTextElement("date", writeDate(variate->getDate()));
@@ -512,10 +512,10 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::PatientVariateList *list)
     return true;
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::TargetList *list)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::TargetList *list)
 {
     writer.writeStartElement("targets");
-    foreach(Tucuxi::GuiCore::Target *target, list->getList()) {
+    foreach(Tucuxi::Gui::Core::Target *target, list->getList()) {
         writer.writeStartElement("target");
         writer.writeTextElement("method", target->getType()->getLabel());
         writer.writeStartElement("concentrations");
@@ -535,14 +535,14 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::TargetList *list)
     return true;
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::ADME *adme)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ADME *adme)
 {
     writer.writeStartElement("adme");
     writer.writeTextElement("defaultIntake", adme->getDefaultIntake()->getLabel());
     writer.writeTextElement("distribution", adme->getDistribution());
     writer.writeTextElement("elimination", adme->getElimination());
     writer.writeStartElement("intakes");
-    foreach(Tucuxi::GuiCore::Admin *admin, adme->getIntakes()->getList()) {
+    foreach(Tucuxi::Gui::Core::Admin *admin, adme->getIntakes()->getList()) {
         writer.writeTextElement("intake", admin->getLabel());
     }
     writer.writeEndElement();
@@ -550,7 +550,7 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::ADME *adme)
     return true;
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::ValidDoses *doses)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ValidDoses *doses)
 {
     writer.writeStartElement("validDoses");
     writer.writeTextElement("anyDose", doses->getAnyDose() ? "true" : "false");
@@ -558,7 +558,7 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::ValidDoses *doses)
     saveIdentifiableAmount("defaultDose", doses->getQuantity());
     writer.writeStartElement("doses");
     for (int i=0; i< doses->size() ; i++) {
-        Tucuxi::GuiCore::ValidDose *dose = doses->at(i);
+        Tucuxi::Gui::Core::ValidDose *dose = doses->at(i);
         writer.writeStartElement("dose");
         writer.writeTextElement("route", dose->getRoute()->getLabel());
         saveIdentifiableAmount("quantity", dose->getQuantity());
@@ -570,7 +570,7 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::ValidDoses *doses)
 }
 
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::ValidInfusions *infusions)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ValidInfusions *infusions)
 {
     writer.writeStartElement("validInfusions");
     writer.writeTextElement("any", infusions->getAny() ? "true" : "false");
@@ -587,7 +587,7 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::ValidInfusions *infusions)
 }
 
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::ValidIntervals *intervals)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ValidIntervals *intervals)
 {
     writer.writeStartElement("validIntervals");
     writer.writeTextElement("any", intervals->getAny() ? "true" : "false");
@@ -604,10 +604,10 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::ValidIntervals *intervals)
     return true;
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::DrugVariateList *list)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::DrugVariateList *list)
 {
     writer.writeStartElement("drugVariates");
-    foreach(Tucuxi::GuiCore::DrugVariate *variate, list->getList()) {
+    foreach(Tucuxi::Gui::Core::DrugVariate *variate, list->getList()) {
         writer.writeStartElement("drugVariate");
         writer.writeTextElement("name", variate->getCovariateId());
         saveOperableAmount("quantity", variate->getQuantity());
@@ -619,12 +619,12 @@ bool InterpretationXmlExport::save(Tucuxi::GuiCore::DrugVariateList *list)
     return true;
 }
 
-bool InterpretationXmlExport::save(Tucuxi::GuiCore::ParameterSet *set)
+bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ParameterSet *set)
 {
     writer.writeStartElement("parameterSet");
     writer.writeTextElement("time", writeDate(set->getTime()));
     writer.writeStartElement("parameters");
-    foreach(Tucuxi::GuiCore::Parameter *p, set->getParameters()->getList()) {
+    foreach(Tucuxi::Gui::Core::Parameter *p, set->getParameters()->getList()) {
         writer.writeStartElement("parameter");
         writer.writeTextElement("name", p->getName());
         saveOperableAmount("quantity", p->getQuantity());

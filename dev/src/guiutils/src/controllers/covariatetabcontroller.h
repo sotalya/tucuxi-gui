@@ -13,7 +13,9 @@
 #include "core/dal/covariate.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class PatientVariateList;
 class DrugVariateList;
@@ -22,8 +24,9 @@ class AbstractRepository;
 
 }
 }
+}
 
-class DrugVariateInfo : public Tucuxi::GuiCore::Entity
+class DrugVariateInfo : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
 
@@ -32,13 +35,13 @@ class DrugVariateInfo : public Tucuxi::GuiCore::Entity
     AUTO_PROPERTY_DECL(QString, covariateId, CovariateId)
     AUTO_PROPERTY_DECL(QString, name, Name)
     AUTO_PROPERTY_DECL(QDateTime, date, Date)
-    AUTO_PROPERTY_DECL(Tucuxi::GuiCore::OperableAmount*, actualValue, ActualValue)
-    AUTO_PROPERTY_DECL(Tucuxi::GuiCore::OperableAmount*, defaultValue, DefaultValue)
+    AUTO_PROPERTY_DECL(Tucuxi::Gui::Core::OperableAmount*, actualValue, ActualValue)
+    AUTO_PROPERTY_DECL(Tucuxi::Gui::Core::OperableAmount*, defaultValue, DefaultValue)
     AUTO_PROPERTY_DECL(QMetaType::Type, type, Type)
     AUTO_PROPERTY_DECL(bool, automatic, Automatic)
 
 public:
-    Q_INVOKABLE DrugVariateInfo(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE DrugVariateInfo(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr);
 
     Q_INVOKABLE QString typeToQString()
     {
@@ -78,13 +81,13 @@ public:
 
     //! This property is used by CovariateTab.qml to display the subset of patient
     //! variates corresponding to the currently selected drug variate
-    STD_PROPERTY_DECL(Tucuxi::GuiCore::PatientVariateList*, fileredVariates, FileredVariates)
+    STD_PROPERTY_DECL(Tucuxi::Gui::Core::PatientVariateList*, fileredVariates, FileredVariates)
 
     //! This property is used internally and contains the patient history for all drug variates
-    STD_PROPERTY_DECL(Tucuxi::GuiCore::PatientVariateList*, patientVariates, PatientVariates)
+    STD_PROPERTY_DECL(Tucuxi::Gui::Core::PatientVariateList*, patientVariates, PatientVariates)
 
 public:
-    void reset(Tucuxi::GuiCore::DrugVariateList* drugVaraites);
+    void reset(Tucuxi::Gui::Core::DrugVariateList* drugVaraites);
 
     Q_INVOKABLE void selectDrugVariate(int drugVariateFromIndex);
     Q_INVOKABLE void addPatientVariate(int drugVariateFromIndex);
@@ -106,7 +109,7 @@ protected:
     void updateActualValue(QString variateName);
 
 private:
-    static bool compareVariate(const Tucuxi::GuiCore::PatientVariate* a, const Tucuxi::GuiCore::PatientVariate* b);
+    static bool compareVariate(const Tucuxi::Gui::Core::PatientVariate* a, const Tucuxi::Gui::Core::PatientVariate* b);
 };
 
 #endif // COVARIATETABCONTROLLER_H

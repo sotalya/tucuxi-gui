@@ -26,8 +26,8 @@
 #include "core/dal/drug/standardtreatment.h"
 
 namespace Tucuxi {
-namespace GuiCore {
-
+namespace Gui {
+namespace Core {
 
 AUTO_PROPERTY_IMPL(Analyte, QString, analyteId, AnalyteId)
 AUTO_PROPERTY_IMPL(Analyte, TranslatableString*, name, Name)
@@ -250,7 +250,7 @@ void DrugModel::setDescription(const QString &description)
 //Set the population parameters
 //void Drug::setParameters(ParameterSet* parameters)
 //{
-//    ParameterSet* set = Tucuxi::GuiCore::CoreFactory::cloneEntity<ParameterSet>(_repository, 0, parameters);
+//    ParameterSet* set = Tucuxi::Gui::Core::CoreFactory::cloneEntity<ParameterSet>(_repository, 0, parameters);
 //    set->setModel(modelId());
 //    set->setType(POPULATION);
 
@@ -258,5 +258,6 @@ void DrugModel::setDescription(const QString &description)
 //}
 
 QML_POINTERLIST_CLASS_IMPL(DrugModelList, DrugModel)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

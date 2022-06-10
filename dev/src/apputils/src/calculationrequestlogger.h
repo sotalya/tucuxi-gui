@@ -5,10 +5,12 @@
 #include <QMutex>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 class PredictionSpec;
 }
-
+}
 }
 
 class CalculationRequestLogger
@@ -18,7 +20,7 @@ public:
     static CalculationRequestLogger *getInstance();
 
 
-    void log(Tucuxi::GuiCore::PredictionSpec *spec);
+    void log(Tucuxi::Gui::Core::PredictionSpec *spec);
 
     void setPath(const QString &path);
 

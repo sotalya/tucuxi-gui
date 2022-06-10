@@ -10,7 +10,9 @@
 
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(ADME, Admin*, defaultIntake, DefaultIntake)
 AUTO_PROPERTY_IMPL(ADME, QString, distribution, Distribution)
@@ -83,5 +85,6 @@ void Admin::setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute formulation
 
 QML_POINTERLIST_CLASS_IMPL(AdminList, Admin)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

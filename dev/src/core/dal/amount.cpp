@@ -4,7 +4,9 @@
 
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 //Amount::Amount(QObject *parent) : QObject(parent)
 //{
@@ -194,5 +196,6 @@ bool Amount::operator <=(const Amount &other) const
     return value() <= other.valueIn(unit());
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

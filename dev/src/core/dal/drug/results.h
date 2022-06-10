@@ -7,7 +7,8 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
 class Results : public Entity
@@ -28,7 +29,8 @@ protected:
 
 typedef Results* SharedResults;
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // RESULTS_H

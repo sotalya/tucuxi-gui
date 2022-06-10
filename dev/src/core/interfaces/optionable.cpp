@@ -6,7 +6,9 @@
 #include "core/core.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //Destructor
@@ -79,6 +81,7 @@ void Optionable::removeOption(const QString &oid)
    _options.remove(oid);
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

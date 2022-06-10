@@ -16,7 +16,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class UncastedValueList;
 
@@ -91,11 +93,12 @@ private:
 
 QML_POINTERLIST_CLASS_DECL(PatientVariateList, PatientVariate)
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::PatientVariate*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::PatientVariate*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::PatientVariateList*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PatientVariate*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::PatientVariate*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PatientVariateList*)
 
 #endif // COVARIATE_H

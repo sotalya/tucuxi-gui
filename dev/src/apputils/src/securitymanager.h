@@ -8,7 +8,9 @@
 
 class QRegExpValidator;
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 /** \ingroup core
  *  \defgroup security Security
@@ -305,7 +307,8 @@ private:
     Tucuxi::GuiAppUtils::DataCrypter _crypter;
 };
 
-}//namespace core
+}//namespace Core
+}//namespace Gui
 }//namespace Tucuxi
 Q_DECLARE_METATYPE(std::string)
 

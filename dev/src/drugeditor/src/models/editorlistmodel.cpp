@@ -77,7 +77,7 @@ int EditorListModel::rowCount(const QModelIndex &parent) const
 }
 
 
-void EditorListModel::setModelData(QList<Tucuxi::GuiCore::Editor*> *editors)
+void EditorListModel::setModelData(QList<Tucuxi::Gui::Core::Editor*> *editors)
 {
     beginResetModel();
     _editors = editors;
@@ -106,7 +106,7 @@ void EditorListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
         _editors->at(index.row())->setDate(value.toDateTime());
         break;
     case CommentListRole:
-        _editors->at(index.row())->setComments(value.value<Tucuxi::GuiCore::TranslatableString*>());
+        _editors->at(index.row())->setComments(value.value<Tucuxi::Gui::Core::TranslatableString*>());
         break;
     default:
         Q_ASSERT(false);
@@ -115,23 +115,23 @@ void EditorListModel::setDataImpl(const QModelIndex &index, const QVariant &valu
 
 }
 
-void EditorListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities)
+void EditorListModel::insertRowsImpl(int at, int count, const Tucuxi::Gui::Core::SharedEntitySet &entities)
 {
     Q_ASSERT(at >= 0 && at <= rowCount());
     Q_ASSERT(count > 0);
     Q_ASSERT(entities.isEmpty() || entities.count() == count);
 
-    Tucuxi::GuiCore::Editor *editor;
+    Tucuxi::Gui::Core::Editor *editor;
     for (size_t i = 0; i<count; i++) {
 
         if(entities.isEmpty()){
-            editor = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Editor>(0);
+            editor = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Editor>(0);
             editor->setName("");
             editor->setEmail("");
             editor->setInstitution("");
-            editor->setComments(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(0));
+            editor->setComments(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(0));
         } else {
-            editor = static_cast<Tucuxi::GuiCore::Editor*>(entities.at(i));
+            editor = static_cast<Tucuxi::Gui::Core::Editor*>(entities.at(i));
         }
 
         _editors->insert(i+at,editor);
@@ -140,13 +140,13 @@ void EditorListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::S
 
 }
 
-Tucuxi::GuiCore::SharedEntitySet EditorListModel::removeRowsImpl(int at, int count)
+Tucuxi::Gui::Core::SharedEntitySet EditorListModel::removeRowsImpl(int at, int count)
 {
     Q_ASSERT(at >= 0 && at + count <= rowCount());
     Q_ASSERT(count > 0);
 
 
-    Tucuxi::GuiCore::SharedEntitySet removed;
+    Tucuxi::Gui::Core::SharedEntitySet removed;
     for (int i = 0; i < count; ++i)
             removed << _editors->takeAt(at);
 

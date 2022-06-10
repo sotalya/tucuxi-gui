@@ -3,7 +3,9 @@
 #include "predictiondata.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 VALUELIST_CLASS_IMPL(Points, Point)
 
@@ -76,5 +78,6 @@ void PredictionData::findLociAtPoint(FancyPoint& pt) {
     }
 }
 
+}
 }
 }

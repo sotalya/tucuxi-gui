@@ -8,7 +8,9 @@
 #include "core/utils/logging.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
     EZERROR(CORE, NOEZERROR, "There is no error.")
     EZERROR(CORE, ITWOULDBENICE,"")
@@ -66,7 +68,8 @@ namespace GuiCore {
     EZERROR(CORE, CHINESEDOTHEWORK,"The program worked, but I don't know how.")
     EZERROR(CORE, ICANHAZCHEESEBURGER,"Your spelling is really bad, please open a dictionary.")
     EZERROR(CORE, XENATTAC,"Really, only the Dr. Freeman can resolve this")
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 #endif // ERRORS
 

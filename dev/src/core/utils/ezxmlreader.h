@@ -14,7 +14,9 @@
 #include <QVariant>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //! \brief Tucuxi simple XML attribute filter
@@ -217,7 +219,8 @@ private:
 
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // EZXMLREADER_H

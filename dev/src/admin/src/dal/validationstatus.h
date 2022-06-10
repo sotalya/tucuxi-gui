@@ -7,7 +7,7 @@
 #include "steptypes.h"
 
 
-class ValidationStatus : public Tucuxi::GuiCore::Entity
+class ValidationStatus : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
 
@@ -17,7 +17,7 @@ class ValidationStatus : public Tucuxi::GuiCore::Entity
 //    Q_PROPERTY(ValidationStatusType validationStatus READ getValidationStatus WRITE setValidationStatus NOTIFY validationStatusChanged)
 
 public:
-    Q_INVOKABLE ValidationStatus(Tucuxi::GuiCore::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
+    Q_INVOKABLE ValidationStatus(Tucuxi::Gui::Core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
 
     enum StatusType { Invalid = 0,
                       Valid,

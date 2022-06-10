@@ -50,8 +50,8 @@ void QueryRequestHandler::service(HttpRequest &request, HttpResponse &response)
 
 
 #ifdef ARTIFICIAL_TEST
-    Tucuxi::GuiCore::XmlValidator validator;
-    if (!validator.validate(&source, Tucuxi::GuiCore::XmlValidator::Reply_Request)) {
+    Tucuxi::Gui::Core::XmlValidator validator;
+    if (!validator.validate(&source, Tucuxi::Gui::Core::XmlValidator::Reply_Request)) {
         internalError(response, QString("Malformed source (%1)").arg(validator.errorMessage()));
         return;
     }
@@ -64,7 +64,7 @@ void QueryRequestHandler::service(HttpRequest &request, HttpResponse &response)
     }
 
     updateReply(reply_request);
-    if (!validator.validate(reply_request.toByteArray(), Tucuxi::GuiCore::XmlValidator::Reply_Request)) {
+    if (!validator.validate(reply_request.toByteArray(), Tucuxi::Gui::Core::XmlValidator::Reply_Request)) {
         internalError(response,QString("Malformed response (%1)").arg(validator.errorMessage()));
         return;
     }

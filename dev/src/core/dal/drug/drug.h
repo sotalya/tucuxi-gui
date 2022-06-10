@@ -8,7 +8,9 @@
 #include "core/dal/amount.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class DrugXmlDescriptor;
 class ValidDoses;
@@ -178,12 +180,13 @@ private:
 };
 
 QML_POINTERLIST_CLASS_DECL(DrugModelList, DrugModel)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ActiveSubstance*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ActiveSubstance*)
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::DrugModel*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::DrugModel*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::DrugModel*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::DrugModel*>)
 
 #endif // DRUG_H

@@ -12,7 +12,9 @@
 #endif
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 namespace DrugTag {
@@ -109,7 +111,8 @@ private:
     Tag() {}
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // TAG_H

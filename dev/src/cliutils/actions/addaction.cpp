@@ -19,7 +19,7 @@
 #include "core/utils/logging.h"
 #include "errors_cliutils.h"
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core;
 
 namespace Tucuxi {
 namespace cliutils {
@@ -132,14 +132,14 @@ bool AddAction::addMeasure(const QString &firstname, const QString &name, const 
     //Contruct the measure
     Measure * measure = AdminFactory::createEntity<Measure>(REPO);
     measure->setMoment(date);
-    measure->setConcentration(Tucuxi::GuiCore::CoreFactory::createEntity<IdentifiableAmount>(REPO, measure));
+    measure->setConcentration(Tucuxi::Gui::Core::CoreFactory::createEntity<IdentifiableAmount>(REPO, measure));
     measure->getConcentration()->setValue(concentration);
     measure->getConcentration()->setUnit(Unit("ug/l"));
 
     //Get the patient measures for this drug
 //    if (!tryRequest(DB->getMeasuresByDrug(patient->id(), drugId, measures), tr("Impossible to retrieve the measures of patient ID '%1' for the drug '%2' from the database").arg(QString::number(patient->id()), drugId)))
 //        return false;
-    Tucuxi::GuiCore::Response r = ADMINREPO->getMeasuresFromPatientAndDrug(patient->id(), drugId, measures);
+    Tucuxi::Gui::Core::Response r = ADMINREPO->getMeasuresFromPatientAndDrug(patient->id(), drugId, measures);
     if (r.error != NoError && r.error != NotFound) {
         return false;
     }
@@ -174,7 +174,7 @@ bool AddAction::addMeasure(const QString &firstname, const QString &name, const 
 bool AddAction::addDosage(const QString &firstname, const QString &name, const QString &drugName, const QString &dateStr, const QString &doseStr, const QString &intervalStr)
 {
     //Reset the previous data
-    _lastDosage = Tucuxi::GuiCore::CoreFactory::createEntity<Dosage>(REPO);
+    _lastDosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Dosage>(REPO);
     _lastCurveId = invalid_ident;
 
     //Prepare the data
@@ -225,7 +225,7 @@ bool AddAction::addDosage(const QString &firstname, const QString &name, const Q
     QList<Prediction*> curves;
 //    if (!tryRequest(DB->getCurvesList(curves), tr("Impossible to retrieve the list of curves from the database")))
 //        return false;
-    Tucuxi::GuiCore::Response r = REPO->getPredictionsList(curves);
+    Tucuxi::Gui::Core::Response r = REPO->getPredictionsList(curves);
     if (r.error != NoError && r.error != NotFound) {
         return false;
     }
@@ -267,7 +267,7 @@ bool AddAction::loadPatients()
 
 //    if (!tryRequest(DB->getPatientsList(patients), tr("Impossible to retrieve the list of patients from the database")))
 //        return false;
-    Tucuxi::GuiCore::Response r = ADMINREPO->getPatientsList(patients);
+    Tucuxi::Gui::Core::Response r = ADMINREPO->getPatientsList(patients);
     if (r.error != NoError && r.error != NotFound) {
 //        EZERROR(CoreError::CliError, tr("Impossible to retrieve the list of patients from the database"));
         return false;
@@ -332,8 +332,8 @@ bool AddAction::getPatient(const QString &firstname, const QString &name, Shared
 //    if (!tryRequest(DB->setPatient(patient), tr("Impossible to save patient '%1 %2' in the database").arg(firstname, name)))
 //        return false;
 
-    Tucuxi::GuiCore::Response r = ADMINREPO->setPatient(patient);
-    if (r.error != Tucuxi::GuiCore::NoError && r.error != NotFound) {
+    Tucuxi::Gui::Core::Response r = ADMINREPO->setPatient(patient);
+    if (r.error != Tucuxi::Gui::Core::NoError && r.error != NotFound) {
         return false;
     }
 
@@ -401,7 +401,7 @@ bool AddAction::getValue(const QString &valueStr, int &value)
 
 bool AddAction::setDosage(const ident curveId, Dosage* &dosage)
 {
-    DrugResponseAnalysis* _resp = Tucuxi::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
+    DrugResponseAnalysis* _resp = Tucuxi::Gui::Core::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
 
     //Load the curve
     Response r = REPO->getDrugResponseAnalysisFromId(curveId, _resp);
@@ -441,7 +441,7 @@ bool AddAction::setDosage(const ident curveId, Dosage* &dosage)
 
 bool AddAction::setCurve(const QString drugId, const QString &curveName, const SharedPatient &patient, Dosage* &dosage)
 {
-    DrugResponseAnalysis* curve = Tucuxi::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
+    DrugResponseAnalysis* curve = Tucuxi::Gui::Core::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
 
     //Find a compatible model for the drug
     QList<QString> drugModels(APPCORE->drugManager()->models(drugId));
@@ -462,7 +462,7 @@ bool AddAction::setCurve(const QString drugId, const QString &curveName, const S
 //    curve->setDrugModel(_mdl);
 
     //Set the drug
-    Tucuxi::GuiCore::DrugModel* _drg = APPCORE->drugManager()->drug(drugId);
+    Tucuxi::Gui::Core::DrugModel* _drg = APPCORE->drugManager()->drug(drugId);
     if (!_drg) {
         return false;
     }

@@ -12,14 +12,14 @@ AUTO_PROPERTY_IMPL(Clinical, QString, comment, Comment)
 AUTO_PROPERTY_IMPL(Clinical, Patient*, patient, Patient)
 AUTO_PROPERTY_IMPL(Clinical, int, patient_id, Patient_id)
 
-Clinical::Clinical(Tucuxi::GuiCore::AbstractRepository *repository, QObject* parent, const QString &name, const QDateTime &date) :
+Clinical::Clinical(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent, const QString &name, const QDateTime &date) :
     Entity(repository, parent), _date(date), _name(name), _valid(false)
 {
     setId(-1);
 }
 
 //Constructor
-Clinical::Clinical(Tucuxi::GuiCore::AbstractRepository *repository, QObject* parent, const QString& name, const QDateTime &date, QString value) :
+Clinical::Clinical(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent, const QString& name, const QDateTime &date, QString value) :
     Entity(repository, parent), _value(value), _name(name), _date(date)
 {
     //Check if the type is in the definitions

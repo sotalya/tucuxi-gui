@@ -40,30 +40,30 @@ public:
     virtual ~MultiThreadedCalculationController();
 
 public slots:
-    void computePopPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computePopPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAprPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAprPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void computeApoPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeApoPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void computeRevPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAdjPred(Tucuxi::GuiCore::PredictionSpec*);
-    void computeAdjPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void computePopPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computePopPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAprPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAprPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeApoPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeApoPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeRevPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAdjPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void computeAdjPerc(Tucuxi::Gui::Core::PredictionSpec*);
     void abortAll();
 
     void intEngage();
     void intDisengage();
 
 signals:
-    void sig_updatePopPred(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updatePopPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateAprPred(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateAprPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateApoPred(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateApoPerc(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateRevPred(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateAdjPred(Tucuxi::GuiCore::PredictionSpec*);
-    void sig_updateAdjPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void sig_updatePopPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updatePopPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateAprPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateAprPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateApoPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateApoPerc(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateRevPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateAdjPred(Tucuxi::Gui::Core::PredictionSpec*);
+    void sig_updateAdjPerc(Tucuxi::Gui::Core::PredictionSpec*);
 
 private:
 

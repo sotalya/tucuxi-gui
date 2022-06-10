@@ -3,7 +3,9 @@
 #include "core/dal/drug/infusions.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 AUTO_PROPERTY_IMPL(ValidInfusion, IdentifiableAmount*, quantity, Quantity)
 
@@ -15,7 +17,8 @@ AUTO_PROPERTY_IMPL(ValidInfusions, QList<double>, infusionsList, InfusionsList)
 
 POINTERLIST_CLASS_IMPL(InfusionsList, ValidInfusion)
 QML_POINTERLIST_CLASS_IMPL(InfusionList, ValidInfusion)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 

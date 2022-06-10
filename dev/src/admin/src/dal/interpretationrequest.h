@@ -4,8 +4,10 @@
 
 #include "core/dal/entity.h"
 namespace Tucuxi{
-namespace GuiCore {
+namespace Gui {
+namespace Core {
     class DrugTreatment;
+}
 }
 }
 
@@ -13,13 +15,13 @@ class Patient;
 class Practician;
 class ClinicalSet;
 
-class InterpretationRequest : public Tucuxi::GuiCore::Entity
+class InterpretationRequest : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
 
     ADMIN_ENTITY_UTILS(InterpretationRequest)
 
-    AUTO_PROPERTY_DECL(Tucuxi::GuiCore::DrugTreatment*, treatment, Treatment)
+    AUTO_PROPERTY_DECL(Tucuxi::Gui::Core::DrugTreatment*, treatment, Treatment)
     AUTO_PROPERTY_DECL(Patient*, patient, Patient)
     AUTO_PROPERTY_DECL(Practician*, practician, Practician)
 
@@ -36,8 +38,8 @@ class InterpretationRequest : public Tucuxi::GuiCore::Entity
 
 protected:
 
-    Q_INVOKABLE InterpretationRequest(Tucuxi::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
-    Q_INVOKABLE InterpretationRequest(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE InterpretationRequest(Tucuxi::Gui::Core::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE InterpretationRequest(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 private:
 

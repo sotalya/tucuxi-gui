@@ -4,7 +4,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 //AUTO_PROPERTY_IMPL(PredictionResult, ParameterType, paramsType, ParamsType)
 Q_AUTO_PROPERTY_IMPL(PredictionResult, Predictive*, predictive, Predictive)
@@ -23,5 +25,6 @@ PredictionResult::PredictionResult(AbstractRepository *repository,QObject *paren
 
 }
 
+}
 }
 }

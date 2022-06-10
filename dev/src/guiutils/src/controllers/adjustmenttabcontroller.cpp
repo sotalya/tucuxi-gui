@@ -14,7 +14,7 @@
 #include "core/dal/drugtreatment.h"
 #include "core/dal/drug/standardtreatment.h"
 
-STD_PROPERTY_IMPL(AdjustmentTabController, Tucuxi::GuiCore::DosageHistory*, adjustments, Adjustments)
+STD_PROPERTY_IMPL(AdjustmentTabController, Tucuxi::Gui::Core::DosageHistory*, adjustments, Adjustments)
 STD_PROPERTY_IMPL(AdjustmentTabController, bool, isManualAdjustmentDefined, IsManualAdjustmentDefined)
 
 static const QString MANUAL = "Manual";
@@ -23,7 +23,7 @@ static const QString SUGGESTED = "Suggested";
 AdjustmentTabController::AdjustmentTabController(QObject *parent) : AbstractViewController(parent),
     _isManualAdjustmentDefined(false)
 {
-    _adjustments = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DosageHistory>(ABSTRACTREPO, this);
+    _adjustments = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO, this);
 }
 
 QDateTime AdjustmentTabController::getAdjustmentDate() const
@@ -107,7 +107,7 @@ void AdjustmentTabController::setAppliedTime(int index, QDateTime time)
         return;
     }
 
-    Tucuxi::GuiCore::Dosage* adjustment = _adjustments->at(index);
+    Tucuxi::Gui::Core::Dosage* adjustment = _adjustments->at(index);
     if (adjustment->getApplied() == time) {
         return;
     }
@@ -121,7 +121,7 @@ void AdjustmentTabController::setEndTime(int index, QDateTime time)
         return;
     }
 
-    Tucuxi::GuiCore::Dosage* adjustment = _adjustments->at(index);
+    Tucuxi::Gui::Core::Dosage* adjustment = _adjustments->at(index);
     if (adjustment->getEndTime() == time) {
         return;
     }
@@ -135,7 +135,7 @@ void AdjustmentTabController::setDbValue(int index, double value)
         return;
     }
 
-    Tucuxi::GuiCore::Dosage* adjustment = _adjustments->at(index);
+    Tucuxi::Gui::Core::Dosage* adjustment = _adjustments->at(index);
     if (adjustment->getQuantity()->getDbvalue() == value) {
         return;
     }
@@ -150,7 +150,7 @@ void AdjustmentTabController::setDbTinf(int index, double value)
     }
 
     // We set the infusion time in minutes
-    Tucuxi::GuiCore::Dosage* adjustment = _adjustments->at(index);
+    Tucuxi::Gui::Core::Dosage* adjustment = _adjustments->at(index);
     if (adjustment->getDbtinf() == value) {
         return;
     }
@@ -163,8 +163,8 @@ void AdjustmentTabController::setDbInterval(int index, double interval)
     if (!isIndexValid(index)) return;
 
     // We set the interval in hours
-    Tucuxi::GuiCore::Dosage* adjustment = _adjustments->at(index);
-    if (adjustment->getInterval() == Tucuxi::GuiCore::Duration(interval)) {
+    Tucuxi::Gui::Core::Dosage* adjustment = _adjustments->at(index);
+    if (adjustment->getInterval() == Tucuxi::Gui::Core::Duration(interval)) {
         return;
     }
 
@@ -176,10 +176,10 @@ void AdjustmentTabController::setRouteValue(int index, int routeValue)
     if (!isIndexValid(index)) {
         return;
     }
-    Tucuxi::GuiCore::ADME* adme = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme();
-    Tucuxi::GuiCore::Admin::Route route = adme->getIntakes()->at(routeValue)->getRoute();
+    Tucuxi::Gui::Core::ADME* adme = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme();
+    Tucuxi::Gui::Core::Admin::Route route = adme->getIntakes()->at(routeValue)->getRoute();
 
-    Tucuxi::GuiCore::Dosage* adjustment = _adjustments->at(index);
+    Tucuxi::Gui::Core::Dosage* adjustment = _adjustments->at(index);
     if (adjustment->getRoute()->getRoute() == route) {
         return;
     }
@@ -190,17 +190,17 @@ void AdjustmentTabController::setRouteValue(int index, int routeValue)
 
 void AdjustmentTabController::addAdjustment()
 {    
-    Tucuxi::GuiCore::DrugModel *drugModel;
+    Tucuxi::Gui::Core::DrugModel *drugModel;
     drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
 
-    Tucuxi::GuiCore::AdjustmentDosage* adjustment = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
+    Tucuxi::Gui::Core::AdjustmentDosage* adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
     adjustment->setApplied(getAdjustmentDate());
     adjustment->setEndTime(getAdjustmentDate().addDays(1));
     adjustment->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
     adjustment->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute());
     adjustment->getRoute()->setDescription(drugModel->getAdme()->getDefaultIntake()->getDescription());
     adjustment->getQuantity()->setDbvalue(drugModel->getDoses()->getQuantity()->value());
-    adjustment->getQuantity()->setUnit(Tucuxi::GuiCore::Unit("mg"));
+    adjustment->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("mg"));
     adjustment->setDbinterval(drugModel->getIntervals()->getQuantity()->value());
 
     if (drugModel->getInfusions()->getQuantity()->value() > 0.0)
@@ -226,7 +226,7 @@ void AdjustmentTabController::removeAdjustment(int index)
     }
 
     if (getIsManualAdjustmentDefined()) {
-        if (static_cast<Tucuxi::GuiCore::AdjustmentDosage*>(_adjustments->at(index))->getType() == MANUAL) {
+        if (static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(index))->getType() == MANUAL) {
             setIsManualAdjustmentDefined(false);
         }
     }
@@ -237,7 +237,7 @@ void AdjustmentTabController::removeAdjustment(int index)
 
 void AdjustmentTabController::selectAdjustment(int index)
 {
-    Tucuxi::GuiCore::Adjustments *adjustments = _chartData->getRevPred()->getAdjustments();
+    Tucuxi::Gui::Core::Adjustments *adjustments = _chartData->getRevPred()->getAdjustments();
     Q_ASSERT(adjustments->size() > index);
     if (adjustments->size() <= index) {
         return;
@@ -247,9 +247,9 @@ void AdjustmentTabController::selectAdjustment(int index)
     removeFromTreatement(SUGGESTED);
 
     for (int i = 0; i < adjustments->at(index)->getDosageHistory()->size(); i++) {
-        Tucuxi::GuiCore::Dosage* suggestedAdjustment = adjustments->at(index)->getDosageHistory()->at(i);
+        Tucuxi::Gui::Core::Dosage* suggestedAdjustment = adjustments->at(index)->getDosageHistory()->at(i);
 
-        Tucuxi::GuiCore::AdjustmentDosage* adjustment = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
+        Tucuxi::Gui::Core::AdjustmentDosage* adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
         adjustment->setApplied(suggestedAdjustment->getApplied());
         adjustment->setEndTime(suggestedAdjustment->getEndTime());
         adjustment->getRoute()->setRoute(suggestedAdjustment->getRoute()->getRoute());
@@ -276,7 +276,7 @@ void AdjustmentTabController::forceRefresh()
     masterController->adjustmentUpdated();
 }
 
-void AdjustmentTabController::setChartData(Tucuxi::GuiCore::ChartData *chartData)
+void AdjustmentTabController::setChartData(Tucuxi::Gui::Core::ChartData *chartData)
 {
     _chartData = chartData;
 }
@@ -285,7 +285,7 @@ void AdjustmentTabController::onDosageUpdated()
 {
     // Check if we need to update the adjustment date
     QDateTime newAdjustmentDate;
-    Tucuxi::GuiCore::DosageHistory* dosageHistory = masterController->getInterpretation()->getDrugResponseAnalysis()->getTreatment()->getDosages();
+    Tucuxi::Gui::Core::DosageHistory* dosageHistory = masterController->getInterpretation()->getDrugResponseAnalysis()->getTreatment()->getDosages();
     if (dosageHistory->getNextIntake(QDateTime::currentDateTime(), newAdjustmentDate)) {
         setAdjustmentDate(newAdjustmentDate);
     }
@@ -306,7 +306,7 @@ bool AdjustmentTabController::isIndexValid(int index)
 void AdjustmentTabController::removeFromTreatement(const QString &type)
 {
     for (int i=0; i<_adjustments->size(); i++){
-        if (static_cast<Tucuxi::GuiCore::AdjustmentDosage*>(_adjustments->at(i))->getType() == type) {
+        if (static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(i))->getType() == type) {
             _adjustments->remove(i);
             if (i >= 0) {
                 i --;
@@ -315,15 +315,15 @@ void AdjustmentTabController::removeFromTreatement(const QString &type)
     }
 }
 
-bool AdjustmentTabController::compareAdjustment(const Tucuxi::GuiCore::Dosage* a, const Tucuxi::GuiCore::Dosage* b)
+bool AdjustmentTabController::compareAdjustment(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
 {
     return (a->getApplied() < b->getApplied());
 }
 
-Tucuxi::GuiCore::AdjustmentDosage* AdjustmentTabController::getAdjustment(const QString &type)
+Tucuxi::Gui::Core::AdjustmentDosage* AdjustmentTabController::getAdjustment(const QString &type)
 {
     for (int i=0; i<_adjustments->size(); i++) {
-        Tucuxi::GuiCore::AdjustmentDosage* adj = static_cast<Tucuxi::GuiCore::AdjustmentDosage*>(_adjustments->at(i));
+        Tucuxi::Gui::Core::AdjustmentDosage* adj = static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(i));
         if (adj->getType() == type) {
             return adj;
         }
@@ -332,10 +332,10 @@ Tucuxi::GuiCore::AdjustmentDosage* AdjustmentTabController::getAdjustment(const 
 }
 
 
-Tucuxi::GuiCore::AdjustmentDosage* AdjustmentTabController::getLastAdjustment(const QString &type)
+Tucuxi::Gui::Core::AdjustmentDosage* AdjustmentTabController::getLastAdjustment(const QString &type)
 {
     for (int i=_adjustments->size() - 1; i >= 0; i--) {
-        Tucuxi::GuiCore::AdjustmentDosage* adj = static_cast<Tucuxi::GuiCore::AdjustmentDosage*>(_adjustments->at(i));
+        Tucuxi::Gui::Core::AdjustmentDosage* adj = static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(i));
         if (adj->getType() == type) {
             return adj;
         }
@@ -344,7 +344,7 @@ Tucuxi::GuiCore::AdjustmentDosage* AdjustmentTabController::getLastAdjustment(co
 }
 
 
-void AdjustmentTabController::adaptDates(const Tucuxi::GuiCore::AdjustmentDosage *manual, Tucuxi::GuiCore::AdjustmentDosage *suggested)
+void AdjustmentTabController::adaptDates(const Tucuxi::Gui::Core::AdjustmentDosage *manual, Tucuxi::Gui::Core::AdjustmentDosage *suggested)
 {
     if (suggested != nullptr) {
         QDateTime appliedDate = suggested->getApplied();

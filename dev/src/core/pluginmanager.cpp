@@ -18,7 +18,8 @@
 #include "core/corerepository.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
 //Constructor
@@ -233,11 +234,11 @@ AbstractRepository * PluginManager::loadDatabase(const DATABASEENGINE &engine) {
             LOG(QtWarningMsg, NOEZERROR, tr("Unable to load the db %1 with error %2").arg(file.filePath()).arg(loader->errorString()));
         } else {
             if ((repo = qobject_cast<CoreRepository*>(loader->instance()))) {
-                LOG(QtDebugMsg, Tucuxi::GuiCore::NOEZERROR, QObject::tr("casted db, loaded plugin"));
+                LOG(QtDebugMsg, Tucuxi::Gui::Core::NOEZERROR, QObject::tr("casted db, loaded plugin"));
                 return repo;
             }
             else {
-                LOG(QtFatalMsg, Tucuxi::GuiCore::NOEZERROR, QObject::tr("Could not cast db"));
+                LOG(QtFatalMsg, Tucuxi::Gui::Core::NOEZERROR, QObject::tr("Could not cast db"));
             }
         }
     }
@@ -308,6 +309,7 @@ void PluginManager::scanDirectory(const QDir &directory)
     }
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

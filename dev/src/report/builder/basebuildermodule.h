@@ -6,7 +6,7 @@
 
 #include <QDateTime>
 
-class BaseBuilderModule :public Tucuxi::GuiCore::Entity, public ReportBuilderModule
+class BaseBuilderModule :public Tucuxi::Gui::Core::Entity, public ReportBuilderModule
 {
     Q_OBJECT
 

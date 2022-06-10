@@ -11,7 +11,9 @@
 #include "core/dal/drug/translatablestring.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 AUTO_PROPERTY_IMPL(Parameter, QString, name, Name)
@@ -167,9 +169,9 @@ ParameterSet::ParameterSet(AbstractRepository *repository, QObject* parent, Para
 //    _errorModel->setAdditive(other->globalAdditive());
     foreach (SharedParameter _p, other->_parametersmap) {
         // YTA : We should use a copy constructor here
-        SharedParameter _np = Tucuxi::GuiCore::CoreFactory::createEntity<Parameter>(repository);
+        SharedParameter _np = Tucuxi::Gui::Core::CoreFactory::createEntity<Parameter>(repository);
         _np->setName(_p->getName());
-        _np->setQuantity(Tucuxi::GuiCore::CoreFactory::createEntity<OperableAmount>(repository, _np));
+        _np->setQuantity(Tucuxi::Gui::Core::CoreFactory::createEntity<OperableAmount>(repository, _np));
         _np->getQuantity()->setValue(_p->getQuantity()->value());
         _np->setId(_p->id());
         _np->setMax(_p->getMax());
@@ -225,7 +227,7 @@ void ParameterSet::copy(const ParameterSet* other)
 {
     _parametersmap.clear();
     foreach (SharedParameter _p, other->_parametersmap) {
-        SharedParameter _np = Tucuxi::GuiCore::CoreFactory::createEntity<Parameter>(ABSTRACTREPO);
+        SharedParameter _np = Tucuxi::Gui::Core::CoreFactory::createEntity<Parameter>(ABSTRACTREPO);
         _np->setName(_p->getName());
         _np->getQuantity()->setValue(_p->getQuantity()->value());
         _np->setId(_p->id());
@@ -341,5 +343,6 @@ const SharedParameter ParameterSet::operator [](const QString &pid) const
     return _parametersmap[pid];
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

@@ -15,7 +15,9 @@
 #include "core/utils/version.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 // Static server address to use
 #define SERVER "www.ezechiel.ch"
@@ -256,7 +258,8 @@ private:
 
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // DISTRIBUTOR_H

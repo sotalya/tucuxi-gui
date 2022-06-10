@@ -7,7 +7,9 @@
 #include "core/utils/ezutils.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class TranslatableString;
 
@@ -36,10 +38,11 @@ protected:
         : Entity(repository, parent), _additive(additive), _proportional(proportional) {}
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ErrorModel*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ErrorModel*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ErrorModel*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::ErrorModel*>)
 
 #endif // ERRORMODEL_H

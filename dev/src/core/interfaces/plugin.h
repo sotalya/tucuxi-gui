@@ -10,8 +10,8 @@
 //#include "core/interfaces/optionable.h"
 
 namespace Tucuxi {
-namespace GuiCore {
-
+namespace Gui {
+namespace Core {
 
 
 //class DescriptorBase {
@@ -228,7 +228,8 @@ public:
 
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // PLUGIN_H

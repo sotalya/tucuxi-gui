@@ -55,7 +55,9 @@
 #include "core/utils/ezutils.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 /** Plugin Manager
  * \ingroup manager
@@ -195,7 +197,8 @@ private:
 
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // MANAGER_H

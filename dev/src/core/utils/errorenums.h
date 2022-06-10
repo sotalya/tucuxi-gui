@@ -7,8 +7,8 @@
 #include <QVariant>
 
 namespace Tucuxi {
-namespace GuiCore {
-
+namespace Gui {
+namespace Core {
 
 
 enum ErrorCode {
@@ -64,7 +64,8 @@ struct Response {
 //Q_SCRIPT_DECLARE_QMETAOBJECT(ScriptResponse, QObject*)
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // ERROR_H

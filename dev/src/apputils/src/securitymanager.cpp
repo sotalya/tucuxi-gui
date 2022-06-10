@@ -13,7 +13,9 @@
 #include <QRegExpValidator>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 //The unique instance
 SecurityManager *SecurityManager::_instance = 0;
@@ -396,7 +398,7 @@ bool SecurityManager::isEncrypted() const
     Response response = APPUTILSREPO->isEncrypted(status);
 
     if (response.error != NoError)
-        LOG(QtCriticalMsg, Tucuxi::GuiCore::DATAERROR, tr("Could not retrieve the database encryption status. The database returned the following error:\n%1").arg(response.message));
+        LOG(QtCriticalMsg, Tucuxi::Gui::Core::DATAERROR, tr("Could not retrieve the database encryption status. The database returned the following error:\n%1").arg(response.message));
 
     //Return the encryption status
     return status;
@@ -492,4 +494,5 @@ bool SecurityManager::createUserKey(const User &user, const QString &password)
 }
 
 }//namespace core
+}//namespace Gui
 }//namespace Tucuxi

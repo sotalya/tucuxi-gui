@@ -27,10 +27,10 @@
 
 namespace Tucuxi {
 namespace GuiAppUtils {
-Tucuxi::GuiCore::SecurityManager *AppCore::securityManager()
+Tucuxi::Gui::Core::SecurityManager *AppCore::securityManager()
 {
     if (!_securityManager)
-        _securityManager = &Tucuxi::GuiCore::SecurityManager::instance();
+        _securityManager = &Tucuxi::Gui::Core::SecurityManager::instance();
     return _securityManager;
 
  // TODO Check why this doesn't work (it creates 2 instances)
@@ -44,7 +44,7 @@ AppCore::AppCore() : _securityManager(0), _drugManager(0)
     drugMutex = new QMutex();
     drugPreloadMutex = new QMutex();
 
-    drugloader = new Tucuxi::GuiCore::ThreadDrugLoader();
+    drugloader = new Tucuxi::Gui::Core::ThreadDrugLoader();
 }
 
 //Destructs the pseudo-singletons
@@ -91,7 +91,7 @@ void AppCore::preloadDrugs ()
 } //namespace GuiAppUtils
 } //namespace Tucuxi
 
-void Tucuxi::GuiCore::ThreadDrugLoader::run() {
+void Tucuxi::Gui::Core::ThreadDrugLoader::run() {
     core->drugMutex->lock();
     core->createDrugManager();
     core->drugMutex->unlock();

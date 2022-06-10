@@ -9,7 +9,9 @@
 #include "core/dal/drug/operation.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class IdentifiableAmount : public Entity, public Amount
 {
@@ -94,14 +96,15 @@ class OperableValue : public Entity
 POINTERLIST_CLASS_DECL(OperableValueList, OperableValue)
 
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::IdentifiableAmount*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::IdentifiableAmount*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::OperableAmount*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::OperableAmount*>)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::OperableValue*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::OperableValue*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::IdentifiableAmount*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::IdentifiableAmount*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::OperableAmount*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::OperableAmount*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::OperableValue*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::OperableValue*>)
 
 #endif // OPERABLEAMOUNT_H

@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-using namespace Tucuxi::GuiCore;
+using namespace Tucuxi::Gui::Core::Core;
 
 int main(int argc, char *argv[])
 {

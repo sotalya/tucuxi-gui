@@ -139,7 +139,7 @@ MainWindowController::MainWindowController(QObject *parent) :
 //    AppGlobals* appGlobals = AppGlobals::getInstance();
 //    QString requestFile = appGlobals->getRequestFile();
 
-//    QString requestFile = SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "requestFile").toString();
+//    QString requestFile = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "requestFile").toString();
 //    loadRequestFile(requestFile);
 }
 
@@ -399,7 +399,7 @@ void MainWindowController::goToLoadInterpretation()
     QString dirPath;
 
     // Settings to keep track of the previous path
-    dirPath = SETTINGS.get(Tucuxi::GuiCore::Module::GUI,"interpretationDirPath", "").toString();
+    dirPath = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI,"interpretationDirPath", "").toString();
 
     QString fileName = QFileDialog::getOpenFileName(QApplication::activeWindow(), tr("Open Interpretation File"),
                                                     dirPath,
@@ -408,7 +408,7 @@ void MainWindowController::goToLoadInterpretation()
         return;
 
     dirPath = QFileInfo(fileName).absoluteDir().absolutePath();
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI,"interpretationDirPath", dirPath);
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI,"interpretationDirPath", dirPath);
 
     loadInterpretationFile(fileName);
 #else
@@ -447,7 +447,7 @@ void MainWindowController::goToLoadRequest()
     QString dirPath;
 
     // Settings to keep track of the previous path
-    dirPath = SETTINGS.get(Tucuxi::GuiCore::Module::GUI,"requestDirPath", "").toString();
+    dirPath = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI,"requestDirPath", "").toString();
 
     QString fileName = QFileDialog::getOpenFileName(QApplication::activeWindow(), tr("Open Request File"),
                                                     dirPath,
@@ -456,7 +456,7 @@ void MainWindowController::goToLoadRequest()
         return;
 
     dirPath = QFileInfo(fileName).absoluteDir().absolutePath();
-    SETTINGS.set(Tucuxi::GuiCore::Module::GUI,"requestDirPath", dirPath);
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI,"requestDirPath", dirPath);
 
     loadRequestFile(fileName);
 

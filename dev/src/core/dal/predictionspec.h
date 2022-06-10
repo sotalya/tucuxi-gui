@@ -10,7 +10,9 @@
 #include "core/dal/drug/parameters.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 class PredictionSpec : public Entity
@@ -69,15 +71,16 @@ protected:
         _adjustmentWithRestPeriod(false),
         _clearCache(true)
     {
-        //  _analysis = Tucuxi::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(repository);
+        //  _analysis = Tucuxi::Gui::Core::CoreFactory::createEntity<DrugResponseAnalysis>(repository);
     }
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::PredictionSpec*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::PredictionSpec*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PredictionSpec*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::PredictionSpec*>)
 
 #endif // PREDICTIONSPEC_H

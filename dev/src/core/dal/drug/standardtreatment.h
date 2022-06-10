@@ -8,8 +8,8 @@
 #include "core/utils/duration.h"
 
 namespace Tucuxi {
-namespace GuiCore {
-
+namespace Gui {
+namespace Core {
 
 
 class StandardTreatment : public Entity
@@ -27,7 +27,8 @@ protected:
 
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
 #endif // STANDARDTREATMENT_H

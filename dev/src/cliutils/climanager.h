@@ -59,7 +59,7 @@ signals:
     void start();
 private:
     QCoreApplication *m_app;
-//    void connect(Tucuxi::GuiCore::DBAccount &account);
+//    void connect(Tucuxi::Gui::Core::DBAccount &account);
     void setLanguage(CliCommand*);
 };
 }

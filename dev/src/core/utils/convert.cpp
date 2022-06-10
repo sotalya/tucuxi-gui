@@ -22,7 +22,9 @@
 #include "core/dal/drug/bsv.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 Convert::Convert()
@@ -180,7 +182,7 @@ QVariant Convert::fromString(int type, QString str)
       }
       //Manual, each value is separated with a ':'
       QStringList values = data.at(1).split(":");
-      SharedParameter p = (Tucuxi::GuiCore::CoreFactory::createEntity<Parameter>(ABSTRACTREPO, nullptr));
+      SharedParameter p = (Tucuxi::Gui::Core::CoreFactory::createEntity<Parameter>(ABSTRACTREPO, nullptr));
       p->setName(data.at(0));
       p->getQuantity()->setValue(values.at(0).toDouble());
       //The rest is optional
@@ -225,6 +227,7 @@ QVariant Convert::fromString(int type, QString str)
    return result;
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

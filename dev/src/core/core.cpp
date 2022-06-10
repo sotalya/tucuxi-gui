@@ -43,7 +43,9 @@
 
 namespace Tucuxi {
 //    class EphemeralDB;
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 //The settings names
 const char *const Core::_stgLanguage       = "language";
@@ -59,7 +61,7 @@ void Core::init()
     if (!data.exists()) {
         //Use a path relative to the executable if it's relative
         QString global = QFileInfo(APPDATA).isAbsolute() ? APPDATA : path(Executable) + "/" + APPDATA;
-        LOG(QtDebugMsg, Tucuxi::GuiCore::NOEZERROR, QObject::tr("Copying the global directory to the local one (%1 -> %2)").arg(global,data.path()));
+        LOG(QtDebugMsg, Tucuxi::Gui::Core::NOEZERROR, QObject::tr("Copying the global directory to the local one (%1 -> %2)").arg(global,data.path()));
         Core::cpDir(global,data.absolutePath());
     }
 }
@@ -239,10 +241,10 @@ void Core::setPath(Core::PathType type, const QString &p)
         SETTINGS.set(Module::Core, _stgCustomDrugPath, path);
 }
 
-Tucuxi::GuiCore::AbstractRepository *Core::repository()
+Tucuxi::Gui::Core::AbstractRepository *Core::repository()
 {
     if (_repository == nullptr) {
-        LOG(QtDebugMsg, Tucuxi::GuiCore::NOEZERROR, QObject::tr("loading db"));
+        LOG(QtDebugMsg, Tucuxi::Gui::Core::NOEZERROR, QObject::tr("loading db"));
         _repository = pluginManager()->loadDatabase(SQLITE3);
     }
     return _repository;
@@ -454,5 +456,6 @@ void Core::initLanguage()
 }
 
 } // namespace core
+} // namespace Gui
 } // namespace Tucuxi
 

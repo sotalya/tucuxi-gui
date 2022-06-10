@@ -45,7 +45,7 @@ public:
 private:
 
     //Try to do this DB request, and return false if it didn't work with the given message
-    bool tryRequest(const Tucuxi::GuiCore::Response &r, const QString &msg);
+    bool tryRequest(const Tucuxi::Gui::Core::Response &r, const QString &msg);
 
     // Patients
     bool listPatients ();

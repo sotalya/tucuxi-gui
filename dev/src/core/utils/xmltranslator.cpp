@@ -5,7 +5,9 @@
 #include "core/core.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 //Default constructor
@@ -77,6 +79,7 @@ QString XmlTranslator::translate(QXmlStreamReader &parser, const QString &langAt
     return translation;
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 

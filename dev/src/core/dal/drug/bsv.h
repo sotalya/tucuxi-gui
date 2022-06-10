@@ -6,7 +6,9 @@
 #include "core/dal/entity.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 
 class Bsv : public Entity
@@ -28,10 +30,11 @@ protected:
         : Entity(repository, parent), _standard(standard), _proportional(proportional) {}
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Bsv*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Bsv*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Bsv*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Bsv*>)
 
 #endif // BSV_H

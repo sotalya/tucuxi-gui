@@ -25,7 +25,7 @@ QString EphemeralDB::databaseName() const
     return "";
 }
 
-bool EphemeralDB::init(GuiCore::Core *core)
+bool EphemeralDB::init(Gui::Core::Core *core)
 {
 //    Core::setInstance(core);
 

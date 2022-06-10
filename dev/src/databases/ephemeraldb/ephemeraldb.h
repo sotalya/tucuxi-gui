@@ -46,7 +46,7 @@
 class User;
 namespace Tucuxi {
 
-using namespace GuiCore;
+using namespace Gui::Core;
 
 template<class T>
 class EntityList: public QList<T>
@@ -277,7 +277,7 @@ class EphemeralDB : public QObject, public CoreRepository, public AppUtilsReposi
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "ch.heig-vd.ezechiel.ephemeralDBInterface/0.1")
     Q_INTERFACES(AppUtilsRepository StdAdminDbInterface)
-    Q_INTERFACES(Tucuxi::GuiCore::CoreRepository)
+    Q_INTERFACES(Tucuxi::Gui::Core::CoreRepository)
 public:
 
 EphemeralDB() : _encryption(Unknown)
@@ -299,7 +299,7 @@ Descriptor getDescriptor() {return descriptor();}
 Descriptor descriptor();
 QString databaseName() const;
 
-bool init(GuiCore::Core *core);
+bool init(Gui::Core::Core *core);
 
 bool tryRequest(const Response&, const QString&, QString&) {return false;}
 

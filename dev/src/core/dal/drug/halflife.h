@@ -9,7 +9,9 @@
 #include "core/utils/duration.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 class TranslatableString;
 
@@ -59,11 +61,12 @@ signals:
 
 };
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::Halflife*)
-//Q_DECLARE_OPAQUE_POINTER(Tucuxi::GuiCore::Halflife*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Halflife*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Halflife*)
+//Q_DECLARE_OPAQUE_POINTER(Tucuxi::Gui::Core::Halflife*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Halflife*>)
 
 #endif // HALFLIFE_H

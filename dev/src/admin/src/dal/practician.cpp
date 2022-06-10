@@ -3,7 +3,7 @@
 #include "../adminfactory.h"
 #include "core/settings.h"
 
-Practician::Practician(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
+Practician::Practician(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _externalId(),
     _title(),
@@ -15,7 +15,7 @@ Practician::Practician(Tucuxi::GuiCore::AbstractRepository *repository, QObject 
     _person = AdminFactory::createEntity<Person>(repository);
 }
 
-Practician::Practician(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
+Practician::Practician(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent) :
     Entity(repository,parent),
     _externalId(),
     _title(),
@@ -41,7 +41,7 @@ void Practician::copyTo(Practician *other)
 }
 */
 
-PracticianSet::PracticianSet(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent, const PracticianSet* &other)
+PracticianSet::PracticianSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent, const PracticianSet* &other)
 {
     foreach (SharedPractician _p, *other) {
         SharedPractician _np = SharedPractician(new Practician(repository, parent));

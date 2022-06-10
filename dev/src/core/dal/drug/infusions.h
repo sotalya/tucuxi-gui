@@ -9,7 +9,8 @@
 #include "core/dal/drug/operableamount.h"
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
 
 
 class ValidInfusion : public Entity
@@ -123,11 +124,12 @@ private:
 
 };
 QML_POINTERLIST_CLASS_DECL(InfusionList,ValidInfusion)
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ValidInfusion*)
-Q_DECLARE_METATYPE(Tucuxi::GuiCore::ValidInfusions*)
-Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ValidInfusion*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ValidInfusion*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::ValidInfusions*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::ValidInfusion*>)
 
 #endif // INFUSIONS_H

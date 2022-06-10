@@ -89,7 +89,7 @@ TEST(DaylightSavingTest, Test1)
     srv->waitPeriod(8);     // wait plenty to make sure new view has been set
 
     // Fancy points are only visible points on screen !
-    Tucuxi::GuiCore::FancyPoints* fPoints = srv->m_mainWindowController->getInterpretationController()->chartData->getPopPred()->getPredictive()->getPredictionData()->getPoints();
+    Tucuxi::Gui::Core::FancyPoints* fPoints = srv->m_mainWindowController->getInterpretationController()->chartData->getPopPred()->getPredictive()->getPredictionData()->getPoints();
 
     //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 

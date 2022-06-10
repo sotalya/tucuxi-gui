@@ -12,7 +12,9 @@
 #include <QFile>
 
 namespace Tucuxi {
-namespace GuiCore {
+namespace Gui {
+namespace Core {
+
 
 //Drug XML schemas
 const char *const XmlValidator::Drug = ":/schemas/drug.xsd";
@@ -144,5 +146,6 @@ void XmlValidator::ValidatorMessageHandler::handleMessage(QtMsgType type, const 
     _location = sourceLocation;
 }
 
-} // namespace core
+} // namespace Core
+} // namespace Gui
 } // namespace Tucuxi

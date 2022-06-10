@@ -32,9 +32,9 @@
 #include <QtGlobal>
 
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiAppUtils {
 
 //Constructor
@@ -73,14 +73,14 @@ const DrugXmlDescriptor *DrugManager::scanDrug(const QString &filePath)
     return nullptr;
 }
 
-bool DrugManager::tryToAddDrugModelToRepo(ezechiel::GuiCore::DrugModel *drugModel)
+bool DrugManager::tryToAddDrugModelToRepo(Tucuxi::GuiCore::DrugModel *drugModel)
 {
     // Added this to correct usage in InterpretationImport
     _drugIdToDrugObj.insert(drugModel->getDrugModelId(), drugModel);
 
     Response r;
     bool canAdd = true;
-    QList<ezechiel::GuiCore::DrugModel* > existingList;
+    QList<Tucuxi::GuiCore::DrugModel* > existingList;
     r = APPUTILSREPO->getDrugsList(existingList);
     if (r.error == NoError) {
         for(int i=0; i < existingList.size(); i++) {
@@ -101,7 +101,7 @@ bool DrugManager::tryToAddDrugModelToRepo(ezechiel::GuiCore::DrugModel *drugMode
 }
 
 //Builds a drug
-ezechiel::GuiCore::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xmlDesc)
+Tucuxi::GuiCore::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xmlDesc)
 {
     LOG(QtDebugMsg, NOEZERROR, tr("Loading drug ID '%1' from file '%2'").arg(xmlDesc ? xmlDesc->drugId() : "unknown", xmlDesc ? xmlDesc->file() : "unknown"));
 
@@ -130,7 +130,7 @@ ezechiel::GuiCore::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xm
 
     DrugXmlImport importer;
 
-    ezechiel::GuiCore::DrugModel *drug = importer.load(xmlDesc->file());
+    Tucuxi::GuiCore::DrugModel *drug = importer.load(xmlDesc->file());
 
     Descriptor _desc;
     _desc.id = xmlDesc->drugId();
@@ -376,7 +376,7 @@ void DrugManager::scanDrugs()
         _modelIdToDrugDesc.insert(xmlDesc->pkModelId(), descriptor);
         _atcToDrugDesc.insert(xmlDesc->atc(), descriptor);
 
-        ezechiel::GuiCore::DrugModel *drug = buildDrug(xmlDesc);
+        Tucuxi::GuiCore::DrugModel *drug = buildDrug(xmlDesc);
         Q_UNUSED(drug);
     }
 
@@ -496,10 +496,10 @@ void DrugManager::resetDrugs()
 void DrugManager::analyzeCovariates()
 {
     QMap<QString, int> covariatesMap;
-    QList<ezechiel::GuiCore::DrugModel* > allDrugs;
+    QList<Tucuxi::GuiCore::DrugModel* > allDrugs;
     APPUTILSREPO->getDrugsList(allDrugs);
-    foreach (ezechiel::GuiCore::DrugModel *drug, allDrugs) {
-        foreach(ezechiel::GuiCore::DrugVariate *variate, drug->getCovariates()->getList()) {
+    foreach (Tucuxi::GuiCore::DrugModel *drug, allDrugs) {
+        foreach(Tucuxi::GuiCore::DrugVariate *variate, drug->getCovariates()->getList()) {
             std::cout << qPrintable(variate->getCovariateId()) << std::endl;
             covariatesMap.insert(variate->getCovariateId(), covariatesMap.value(variate->getCovariateId(),0) + 1);
         }
@@ -520,4 +520,4 @@ void DrugManager::clearErrorMessage()
 }
 
 } //namespace GuiAppUtils
-} //namespace ezechiel
+} //namespace Tucuxi

@@ -11,7 +11,7 @@
 #include <QObject>
 #endif
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -110,6 +110,6 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // TAG_H

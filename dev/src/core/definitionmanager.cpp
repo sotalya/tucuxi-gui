@@ -17,7 +17,7 @@
 #include "core/utils/logging.h"
 #include "core/errors_core.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 const char *const DefinitionManager::_dateTimeFormat    = "dd/MM/yyyy-HH:mm";
@@ -230,7 +230,7 @@ QStringList DefinitionManager::covariateValuesList(const QString &id) const
 ////////////////////////////////////////////////////////////////////
 
 //Returns the list of default intervals
-QList<ezechiel::GuiCore::Duration> DefinitionManager::intervals() const
+QList<Tucuxi::GuiCore::Duration> DefinitionManager::intervals() const
 {
     return _intervals;
 }
@@ -602,5 +602,5 @@ bool DefinitionManager::registerIntervals(const EzTag *root)
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

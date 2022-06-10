@@ -10,7 +10,7 @@
 #include "core/utils/units.h"
 #include "core/dal/drug/operableamount.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class OperationList;
@@ -88,10 +88,10 @@ private:
 QML_POINTERLIST_CLASS_DECL(DrugVariateList, DrugVariate)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugVariate*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::DrugVariate*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugVariateList*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::DrugVariate*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::DrugVariate*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::DrugVariateList*)
 
 #endif // DRUGVARIATE_H

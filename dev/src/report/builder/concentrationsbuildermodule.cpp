@@ -2,7 +2,7 @@
 #include "reportdata.h"
 #include "identifiers.h"
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 ConcentrationsBuilderModule::ConcentrationsBuilderModule(const QList<QPair<Amount, QDateTime> > &concentrations, QObject *parent) :
     _concentrations(concentrations)

@@ -14,7 +14,7 @@
 
 #include <stdlib.h>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -366,5 +366,5 @@ void Distributor::downloadProgressed(qint64 received, qint64 total)
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

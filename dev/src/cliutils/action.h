@@ -21,7 +21,7 @@
   As input, the command line parameters following the action are given.
   As output, an error code is asked (if everything went fine, the Error::NOEZERRORS code has to be returned) and possibly an error message, if something went wrong.
   */
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 
 class Action : public QObject
@@ -99,5 +99,5 @@ protected:
 
 };
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi
 #endif // ACTION_H

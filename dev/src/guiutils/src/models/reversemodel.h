@@ -33,12 +33,12 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(ezechiel::GuiCore::PredictionResult*);
+    void setModelData(Tucuxi::GuiCore::PredictionResult*);
 
 private:
     void init();
 
-    ezechiel::GuiCore::PredictionResult* _pred;
+    Tucuxi::GuiCore::PredictionResult* _pred;
     QHash<int, QByteArray> _roleNames;
 };
 

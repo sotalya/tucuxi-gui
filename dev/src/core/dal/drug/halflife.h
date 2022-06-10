@@ -8,7 +8,7 @@
 #include "core/dal/entity.h"
 #include "core/utils/duration.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class TranslatableString;
@@ -60,10 +60,10 @@ signals:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Halflife*)
-//Q_DECLARE_OPAQUE_POINTER(ezechiel::GuiCore::Halflife*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Halflife*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Halflife*)
+//Q_DECLARE_OPAQUE_POINTER(Tucuxi::GuiCore::Halflife*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Halflife*>)
 
 #endif // HALFLIFE_H

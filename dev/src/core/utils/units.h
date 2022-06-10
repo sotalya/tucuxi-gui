@@ -9,7 +9,7 @@
 #include <QStringList>
 #include <QHash>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -142,9 +142,9 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Unit)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Unit)
 
 #endif // UNITS_H

@@ -5,10 +5,10 @@
 
 
 // Instanciation of static data members
-QFile ezechiel::logging::Logger::logFile;
+QFile Tucuxi::logging::Logger::logFile;
 
 
-void ezechiel::logging::Logger::initLogFile(QString appDirectory)
+void Tucuxi::logging::Logger::initLogFile(QString appDirectory)
 {
     logFile.setFileName(appDirectory + "/log.txt");
     logFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Unbuffered);

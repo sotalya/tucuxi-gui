@@ -7,7 +7,7 @@
 #include "autoproperty.h"
 #include "reportbuildermodule.h"
 
-class TeamBuilderModule : public ezechiel::GuiCore::Entity, public ReportBuilderModule
+class TeamBuilderModule : public Tucuxi::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
     AUTO_PROPERTY_DECL(Practician*, practician, Practician)

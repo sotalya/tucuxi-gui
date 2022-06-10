@@ -3,13 +3,13 @@
 #ifndef CLIMANAGER_H
 #define CLIMANAGER_H
 
-//namespace ezechiel { namespace core {class DBAccount;}}
+//namespace Tucuxi { namespace core {class DBAccount;}}
 #include "core/core.h"
 
 #include <QApplication>
 #include <QCommandLineParser>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 
 enum CommandLineParseResult {
@@ -59,7 +59,7 @@ signals:
     void start();
 private:
     QCoreApplication *m_app;
-//    void connect(ezechiel::GuiCore::DBAccount &account);
+//    void connect(Tucuxi::GuiCore::DBAccount &account);
     void setLanguage(CliCommand*);
 };
 }

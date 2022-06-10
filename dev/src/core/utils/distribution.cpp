@@ -6,7 +6,7 @@
 
 #include "core/utils/ezutils.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -56,5 +56,5 @@ QString distribution::toString (DistributionType type)
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

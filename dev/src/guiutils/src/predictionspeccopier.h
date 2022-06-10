@@ -6,7 +6,7 @@
 
 #include <QObject>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 class PredictionSpec;
 class DrugResponseAnalysis;
@@ -54,44 +54,44 @@ class PredictionSpecCopier
 public:
     PredictionSpecCopier();
 
-    ezechiel::GuiCore::PredictionSpec* copy(ezechiel::GuiCore::PredictionSpec *spec, QObject *parent=0);
-    ezechiel::GuiCore::DrugResponseAnalysis* copy(ezechiel::GuiCore::DrugResponseAnalysis *analysis, QObject *parent=0);
-    ezechiel::GuiCore::DrugTreatment* copy(ezechiel::GuiCore::DrugTreatment *treatment, QObject *parent=0);
-    ezechiel::GuiCore::PatientVariateList* copy(ezechiel::GuiCore::PatientVariateList* list, QObject *parent=0);
-    ezechiel::GuiCore::DosageHistory* copy(ezechiel::GuiCore::DosageHistory* history, QObject *parent=0);
-    ezechiel::GuiCore::Dosage* copy(ezechiel::GuiCore::Dosage* dosage, QObject *parent=0);
-    ezechiel::GuiCore::PatientVariate* copy(ezechiel::GuiCore::PatientVariate* variate, QObject *parent=0);
-    ezechiel::GuiCore::OperableAmount *copy(ezechiel::GuiCore::OperableAmount *amount, QObject *parent=0);
-    ezechiel::GuiCore::IdentifiableAmount *copy(ezechiel::GuiCore::IdentifiableAmount *amount, QObject *parent=0);
-    ezechiel::GuiCore::OperationList *copy(ezechiel::GuiCore::OperationList *source, QObject *parent=0);
-    ezechiel::GuiCore::Operation *copy(ezechiel::GuiCore::Operation *source, QObject *parent=0);
-    ezechiel::GuiCore::Admin* copy(ezechiel::GuiCore::Admin* admin, QObject *parent=0);
-    ezechiel::GuiCore::DrugModel* copy(ezechiel::GuiCore::DrugModel *drug, QObject *parent=0);
-    ezechiel::GuiCore::ADME* copy(ezechiel::GuiCore::ADME* adme, QObject *parent=0);
-    ezechiel::GuiCore::AdminList* copy(ezechiel::GuiCore::AdminList* history, QObject *parent=0);
-    ezechiel::GuiCore::DrugVariateList* copy(ezechiel::GuiCore::DrugVariateList* list, QObject *parent=0);
-    ezechiel::GuiCore::DrugVariate* copy(ezechiel::GuiCore::DrugVariate* variate, QObject *parent=0);
-    ezechiel::GuiCore::Concentrations* copy(ezechiel::GuiCore::Concentrations* concentrations, QObject *parent=0);
-    ezechiel::GuiCore::StandardTreatment* copy(ezechiel::GuiCore::StandardTreatment* treatment, QObject *parent=0);
-    ezechiel::GuiCore::ValidDoses* copy(ezechiel::GuiCore::ValidDoses* list, QObject *parent=0);
-    ezechiel::GuiCore::ValidDose* copy(ezechiel::GuiCore::ValidDose* source, QObject *parent=0);
-    ezechiel::GuiCore::ErrorModel* copy(ezechiel::GuiCore::ErrorModel *model, QObject *parent=0);
-    ezechiel::GuiCore::Halflife* copy(ezechiel::GuiCore::Halflife *halflife, QObject *parent=0);
-    ezechiel::GuiCore::ValidInfusion* copy(ezechiel::GuiCore::ValidInfusion *source, QObject *parent=0);
-    ezechiel::GuiCore::ValidInfusions* copy(ezechiel::GuiCore::ValidInfusions *source, QObject *parent=0);
-    ezechiel::GuiCore::ValidInterval* copy(ezechiel::GuiCore::ValidInterval *source, QObject *parent=0);
-    ezechiel::GuiCore::ValidIntervals* copy(ezechiel::GuiCore::ValidIntervals *source, QObject *parent=0);
-    ezechiel::GuiCore::TargetList* copy(ezechiel::GuiCore::TargetList* source, QObject *parent=0);
-    ezechiel::GuiCore::Target* copy(ezechiel::GuiCore::Target* source, QObject *parent=0);
-    ezechiel::GuiCore::CorePatient* copy(ezechiel::GuiCore::CorePatient* source, QObject *parent=0);
-    ezechiel::GuiCore::CoreMeasureList* copy(ezechiel::GuiCore::CoreMeasureList* source, QObject *parent=0);
-    ezechiel::GuiCore::CoreMeasure* copy(ezechiel::GuiCore::CoreMeasure* source, QObject *parent=0);
-    ezechiel::GuiCore::TargetMethod* copy(ezechiel::GuiCore::TargetMethod* source, QObject *parent=0);
-    ezechiel::GuiCore::ParameterSet* copy(ezechiel::GuiCore::ParameterSet* source, QObject *parent=0);
-    ezechiel::GuiCore::Parameters* copy(ezechiel::GuiCore::Parameters* source, QObject *parent=0);
-    ezechiel::GuiCore::Parameter* copy(ezechiel::GuiCore::Parameter* source, QObject *parent=0);
-    ezechiel::GuiCore::Bsv* copy(ezechiel::GuiCore::Bsv* source, QObject *parent=0);
-    ezechiel::GuiCore::ActiveSubstance* copy(ezechiel::GuiCore::ActiveSubstance* source, QObject *parent=0);
+    Tucuxi::GuiCore::PredictionSpec* copy(Tucuxi::GuiCore::PredictionSpec *spec, QObject *parent=0);
+    Tucuxi::GuiCore::DrugResponseAnalysis* copy(Tucuxi::GuiCore::DrugResponseAnalysis *analysis, QObject *parent=0);
+    Tucuxi::GuiCore::DrugTreatment* copy(Tucuxi::GuiCore::DrugTreatment *treatment, QObject *parent=0);
+    Tucuxi::GuiCore::PatientVariateList* copy(Tucuxi::GuiCore::PatientVariateList* list, QObject *parent=0);
+    Tucuxi::GuiCore::DosageHistory* copy(Tucuxi::GuiCore::DosageHistory* history, QObject *parent=0);
+    Tucuxi::GuiCore::Dosage* copy(Tucuxi::GuiCore::Dosage* dosage, QObject *parent=0);
+    Tucuxi::GuiCore::PatientVariate* copy(Tucuxi::GuiCore::PatientVariate* variate, QObject *parent=0);
+    Tucuxi::GuiCore::OperableAmount *copy(Tucuxi::GuiCore::OperableAmount *amount, QObject *parent=0);
+    Tucuxi::GuiCore::IdentifiableAmount *copy(Tucuxi::GuiCore::IdentifiableAmount *amount, QObject *parent=0);
+    Tucuxi::GuiCore::OperationList *copy(Tucuxi::GuiCore::OperationList *source, QObject *parent=0);
+    Tucuxi::GuiCore::Operation *copy(Tucuxi::GuiCore::Operation *source, QObject *parent=0);
+    Tucuxi::GuiCore::Admin* copy(Tucuxi::GuiCore::Admin* admin, QObject *parent=0);
+    Tucuxi::GuiCore::DrugModel* copy(Tucuxi::GuiCore::DrugModel *drug, QObject *parent=0);
+    Tucuxi::GuiCore::ADME* copy(Tucuxi::GuiCore::ADME* adme, QObject *parent=0);
+    Tucuxi::GuiCore::AdminList* copy(Tucuxi::GuiCore::AdminList* history, QObject *parent=0);
+    Tucuxi::GuiCore::DrugVariateList* copy(Tucuxi::GuiCore::DrugVariateList* list, QObject *parent=0);
+    Tucuxi::GuiCore::DrugVariate* copy(Tucuxi::GuiCore::DrugVariate* variate, QObject *parent=0);
+    Tucuxi::GuiCore::Concentrations* copy(Tucuxi::GuiCore::Concentrations* concentrations, QObject *parent=0);
+    Tucuxi::GuiCore::StandardTreatment* copy(Tucuxi::GuiCore::StandardTreatment* treatment, QObject *parent=0);
+    Tucuxi::GuiCore::ValidDoses* copy(Tucuxi::GuiCore::ValidDoses* list, QObject *parent=0);
+    Tucuxi::GuiCore::ValidDose* copy(Tucuxi::GuiCore::ValidDose* source, QObject *parent=0);
+    Tucuxi::GuiCore::ErrorModel* copy(Tucuxi::GuiCore::ErrorModel *model, QObject *parent=0);
+    Tucuxi::GuiCore::Halflife* copy(Tucuxi::GuiCore::Halflife *halflife, QObject *parent=0);
+    Tucuxi::GuiCore::ValidInfusion* copy(Tucuxi::GuiCore::ValidInfusion *source, QObject *parent=0);
+    Tucuxi::GuiCore::ValidInfusions* copy(Tucuxi::GuiCore::ValidInfusions *source, QObject *parent=0);
+    Tucuxi::GuiCore::ValidInterval* copy(Tucuxi::GuiCore::ValidInterval *source, QObject *parent=0);
+    Tucuxi::GuiCore::ValidIntervals* copy(Tucuxi::GuiCore::ValidIntervals *source, QObject *parent=0);
+    Tucuxi::GuiCore::TargetList* copy(Tucuxi::GuiCore::TargetList* source, QObject *parent=0);
+    Tucuxi::GuiCore::Target* copy(Tucuxi::GuiCore::Target* source, QObject *parent=0);
+    Tucuxi::GuiCore::CorePatient* copy(Tucuxi::GuiCore::CorePatient* source, QObject *parent=0);
+    Tucuxi::GuiCore::CoreMeasureList* copy(Tucuxi::GuiCore::CoreMeasureList* source, QObject *parent=0);
+    Tucuxi::GuiCore::CoreMeasure* copy(Tucuxi::GuiCore::CoreMeasure* source, QObject *parent=0);
+    Tucuxi::GuiCore::TargetMethod* copy(Tucuxi::GuiCore::TargetMethod* source, QObject *parent=0);
+    Tucuxi::GuiCore::ParameterSet* copy(Tucuxi::GuiCore::ParameterSet* source, QObject *parent=0);
+    Tucuxi::GuiCore::Parameters* copy(Tucuxi::GuiCore::Parameters* source, QObject *parent=0);
+    Tucuxi::GuiCore::Parameter* copy(Tucuxi::GuiCore::Parameter* source, QObject *parent=0);
+    Tucuxi::GuiCore::Bsv* copy(Tucuxi::GuiCore::Bsv* source, QObject *parent=0);
+    Tucuxi::GuiCore::ActiveSubstance* copy(Tucuxi::GuiCore::ActiveSubstance* source, QObject *parent=0);
 
 
 

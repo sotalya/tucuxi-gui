@@ -8,7 +8,7 @@
 #include <QAbstractMessageHandler>
 #include <QSourceLocation>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -74,7 +74,7 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
 #endif // XMLVALIDATOR_H

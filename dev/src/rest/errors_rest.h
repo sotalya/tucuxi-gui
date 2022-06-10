@@ -5,7 +5,7 @@
 
 #include "core/utils/logging.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace rest {
 
 EZERROR(REST, NOEZERROR,"")

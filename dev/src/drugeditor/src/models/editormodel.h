@@ -32,14 +32,14 @@ public:
     Q_INVOKABLE virtual int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
 
 public slots:
-    void setModelData(ezechiel::GuiCore::Editor *editor);
-    ezechiel::GuiCore::Editor* getModelData();
+    void setModelData(Tucuxi::GuiCore::Editor *editor);
+    Tucuxi::GuiCore::Editor* getModelData();
 private:
     virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
 
     void init();
 
-    ezechiel::GuiCore::Editor *_editor;
+    Tucuxi::GuiCore::Editor *_editor;
     QHash<int, QByteArray> _roleNames;
 
 

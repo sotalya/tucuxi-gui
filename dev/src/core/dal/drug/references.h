@@ -5,7 +5,7 @@
 
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class Reference : public Entity
@@ -29,10 +29,10 @@ class Reference : public Entity
 POINTERLIST_CLASS_DECL(ReferenceList, Reference)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Reference*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Reference*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ReferenceList*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Reference*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Reference*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ReferenceList*)
 
 #endif // REFERENCES_H

@@ -11,7 +11,7 @@
 
 #include "core/utils/ezutils.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //! \brief Describes an option having option
@@ -91,6 +91,6 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // OPTIONABLE_H

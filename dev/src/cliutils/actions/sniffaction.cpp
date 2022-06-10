@@ -19,9 +19,9 @@
 #include "core/dal/drug/drug.h"
 #include "admin/src/stdadminrepository.h"
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 
 QString SniffAction::name()
@@ -141,4 +141,4 @@ void SniffAction::listOptions(const QString &arg)
 }
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi

@@ -6,7 +6,7 @@
 #include <QObject>
 #include "core/interfaces/abstractrepository.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class CoreFactory;
@@ -124,6 +124,6 @@ public:
 */
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // COREFACTORY_H

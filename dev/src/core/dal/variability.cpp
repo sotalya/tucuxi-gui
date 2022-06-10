@@ -4,7 +4,7 @@
 
 #include "core/dal/drug/translatablestring.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(Variability, QString, distributionId, DistributionId)
@@ -15,4 +15,4 @@ AUTO_PROPERTY_IMPL(VariableValue, QVariant, value, Value)
 AUTO_PROPERTY_IMPL(VariableValue, Variability*, variability, Variability)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

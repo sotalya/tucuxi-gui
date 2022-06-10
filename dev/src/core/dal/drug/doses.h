@@ -9,7 +9,7 @@
 #include "core/dal/entity.h"
 #include "core/dal/drug/adme.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class TranslatableString;
@@ -141,10 +141,10 @@ public:
 };
 QML_POINTERLIST_CLASS_DECL(DoseList,ValidDose)
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ValidDose*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ValidDose*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ValidDoses*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ValidDose*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ValidDose*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ValidDoses*)
 
 #endif // DOSES_H

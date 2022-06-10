@@ -10,7 +10,7 @@
 
 class Patient;
 
-namespace ezechiel {
+namespace Tucuxi {
 
 
 //void EphemeralDB::visit(CurveManager &cm) {}
@@ -25,7 +25,7 @@ QString EphemeralDB::databaseName() const
     return "";
 }
 
-bool EphemeralDB::init(Core *core)
+bool EphemeralDB::init(GuiCore::Core *core)
 {
 //    Core::setInstance(core);
 

@@ -51,7 +51,7 @@
 //#include "drugmodel.h"
 //#include "drugtreatment.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 
 //void GenericLocalDBFactory::init (Core* core) {
 
@@ -267,11 +267,11 @@ void GenericLocalDB::needs(bool &url, bool &parent, bool &password)
     password = false;
 }
 
-ezechiel::Response GenericLocalDB::insertDBObject(QObject& newobj, QObject* parent, QString& trans_id, bool is_new = true, int modif_id = 0) {
+Tucuxi::Response GenericLocalDB::insertDBObject(QObject& newobj, QObject* parent, QString& trans_id, bool is_new = true, int modif_id = 0) {
 
     QSqlQuery query;
     const QMetaObject* metaobj = newobj.metaObject();
-    ezechiel::Response r(metaobj->className());
+    Tucuxi::Response r(metaobj->className());
     QString qry = "";
     QString into = "";
     QString values = "";
@@ -296,7 +296,7 @@ ezechiel::Response GenericLocalDB::insertDBObject(QObject& newobj, QObject* pare
         }
     }
     QString cname = metaobj->className();
-    if (cname == "ezechiel::parent") {
+    if (cname == "Tucuxi::parent") {
         if (is_new) {
             qry = QString("INSERT INTO %1 (%2) VALUES (%3)")
                     .arg(metaobj->className()).arg(into).arg(values);
@@ -339,10 +339,10 @@ ezechiel::Response GenericLocalDB::insertDBObject(QObject& newobj, QObject* pare
     return r;
 }
 
-ezechiel::Response GenericLocalDB::updateDBObject(QObject& dbobj, QObject* parent, QString& trans_id, bool is_deleted = false) {
+Tucuxi::Response GenericLocalDB::updateDBObject(QObject& dbobj, QObject* parent, QString& trans_id, bool is_deleted = false) {
 
     const QMetaObject* metaobj = dbobj.metaObject();
-    ezechiel::Response r(metaobj->className());
+    Tucuxi::Response r(metaobj->className());
     QSqlQuery query;
 
     QString set = "";
@@ -383,9 +383,9 @@ ezechiel::Response GenericLocalDB::updateDBObject(QObject& dbobj, QObject* paren
     return r;
 }
 
-ezechiel::Response GenericLocalDB::setDBObjects (QList<QObject*>& dbobjs, QObject* parent) {
+Tucuxi::Response GenericLocalDB::setDBObjects (QList<QObject*>& dbobjs, QObject* parent) {
 
-    ezechiel::Response r;
+    Tucuxi::Response r;
     QSqlQuery query;
     QString trans_id = "__setDBObjects";
     if ((r = startTransaction(trans_id)).error != NoError)
@@ -404,9 +404,9 @@ ezechiel::Response GenericLocalDB::setDBObjects (QList<QObject*>& dbobjs, QObjec
     return r;
 }
 
-ezechiel::Response GenericLocalDB::setDBObject (QObject& dbobj, QObject* parent) {
+Tucuxi::Response GenericLocalDB::setDBObject (QObject& dbobj, QObject* parent) {
 
-    ezechiel::Response r;
+    Tucuxi::Response r;
     QSqlQuery query;
     QString trans_id = "__setDBObject";
     if ((r = startTransaction(trans_id)).error != NoError)
@@ -422,9 +422,9 @@ ezechiel::Response GenericLocalDB::setDBObject (QObject& dbobj, QObject* parent)
     return r;
 }
 
-ezechiel::Response GenericLocalDB::setDBObject (QObject& dbobj, QObject* parent, QString& trans_id) {
+Tucuxi::Response GenericLocalDB::setDBObject (QObject& dbobj, QObject* parent, QString& trans_id) {
 
-    ezechiel::Response r;
+    Tucuxi::Response r;
     const QMetaObject* metaobj = dbobj.metaObject();
     r.responder = metaobj->className();
     WhereClauseMap where;
@@ -514,8 +514,8 @@ ezechiel::Response GenericLocalDB::setDBObject (QObject& dbobj, QObject* parent,
     }
 }
 
-ezechiel::Response GenericLocalDB::deleteDBObject (QObject& dbobj, QObject* parent) {
-    ezechiel::Response r;
+Tucuxi::Response GenericLocalDB::deleteDBObject (QObject& dbobj, QObject* parent) {
+    Tucuxi::Response r;
     QSqlQuery query;
     QString trans_id = "__deleteDBObjects";
     if ((r = startTransaction(trans_id)).error != NoError)
@@ -550,8 +550,8 @@ ezechiel::Response GenericLocalDB::deleteDBObject (QObject& dbobj, QObject* pare
     return r;
 }
 
-ezechiel::Response GenericLocalDB::deleteDBObjects (QList<QObject*>& dbobjs, QObject* parent) {
-    ezechiel::Response r;
+Tucuxi::Response GenericLocalDB::deleteDBObjects (QList<QObject*>& dbobjs, QObject* parent) {
+    Tucuxi::Response r;
     QSqlQuery query;
     QString trans_id = "__deleteDBObjects";
     if ((r = startTransaction(trans_id)).error != NoError)
@@ -590,23 +590,23 @@ ezechiel::Response GenericLocalDB::deleteDBObjects (QList<QObject*>& dbobjs, QOb
     return r;
 }
 
-ezechiel::Response GenericLocalDB::getDBObjects(const QMetaObject& dbobj, QObject* parent)  {
+Tucuxi::Response GenericLocalDB::getDBObjects(const QMetaObject& dbobj, QObject* parent)  {
     return getDBObjects(dbobj, parent, SelectClauseMap(), WhereClauseMap(), OrderByClauseMap());
 }
 
-ezechiel::Response GenericLocalDB::getDBObjects(const QMetaObject& dbobj, QObject* parent, const SelectClauseMap& slctconds) {
+Tucuxi::Response GenericLocalDB::getDBObjects(const QMetaObject& dbobj, QObject* parent, const SelectClauseMap& slctconds) {
     return getDBObjects(dbobj, parent, slctconds, WhereClauseMap(), OrderByClauseMap());
 }
 
-ezechiel::Response GenericLocalDB::getDBObjects(const QMetaObject& dbobj, QObject* parent, const WhereClauseMap& whereconds) {
+Tucuxi::Response GenericLocalDB::getDBObjects(const QMetaObject& dbobj, QObject* parent, const WhereClauseMap& whereconds) {
     return getDBObjects(dbobj, parent, SelectClauseMap(), whereconds, OrderByClauseMap());
 }
 
-ezechiel::Response GenericLocalDB::getDBObjects(const QMetaObject& dbobj, QObject* parent, const WhereClauseMap& whereconds, const OrderByClauseMap& orderconds) {
+Tucuxi::Response GenericLocalDB::getDBObjects(const QMetaObject& dbobj, QObject* parent, const WhereClauseMap& whereconds, const OrderByClauseMap& orderconds) {
     return getDBObjects(dbobj, parent, SelectClauseMap(), whereconds, orderconds);
 }
 
-ezechiel::Response GenericLocalDB::getDBObjects(const QMetaObject& dbobj, QObject* parent, const SelectClauseMap& slctconds, const WhereClauseMap& whereconds) {
+Tucuxi::Response GenericLocalDB::getDBObjects(const QMetaObject& dbobj, QObject* parent, const SelectClauseMap& slctconds, const WhereClauseMap& whereconds) {
     return getDBObjects(dbobj, parent, slctconds, whereconds, OrderByClauseMap());
 }
 
@@ -692,9 +692,9 @@ QString GenericLocalDB::whereBuilder(const QMetaObject& metaobj, const WhereClau
     return ret;
 }
 
-ezechiel::Response GenericLocalDB::getDBObjects(const QMetaObject& metaobj, QObject* parent, const SelectClauseMap& slctconds, const WhereClauseMap& whereconds, const OrderByClauseMap& orderconds) {
+Tucuxi::Response GenericLocalDB::getDBObjects(const QMetaObject& metaobj, QObject* parent, const SelectClauseMap& slctconds, const WhereClauseMap& whereconds, const OrderByClauseMap& orderconds) {
 
-    ezechiel::Response r(metaobj.className());
+    Tucuxi::Response r(metaobj.className());
     QList<QObject*> results;
     QSqlQuery query;
 
@@ -799,7 +799,7 @@ ezechiel::Response GenericLocalDB::getDBObjects(const QMetaObject& metaobj, QObj
                         const QMetaObject *refmetaobj = QMetaType::metaObjectForType(QMetaType::type(metaobj.property(i).name()));
                         WhereClauseMap where;
                         where.insert(refmetaobj->indexOfProperty("id"), Comparison(AND_Equals, propval));
-                        ezechiel::Response resp = getDBObjects(*refmetaobj, parent, SelectClauseMap(), where, OrderByClauseMap());
+                        Tucuxi::Response resp = getDBObjects(*refmetaobj, parent, SelectClauseMap(), where, OrderByClauseMap());
                         QObject *newrefobj = resp.results.first();
                         newdbobj->setProperty(propname.toStdString().c_str(), QVariant::fromValue(QObject*(newrefobj)));
                     }
@@ -823,24 +823,24 @@ ezechiel::Response GenericLocalDB::getDBObjects(const QMetaObject& metaobj, QObj
     return r;
 }
 
-ezechiel::Response GenericLocalDB::getDBObjectsOfDBObject(const QMetaObject &primarymetaobj, const QMetaObject &secondarymetaobj, QObject* parent, const WhereClauseMap &primarywhere) {
+Tucuxi::Response GenericLocalDB::getDBObjectsOfDBObject(const QMetaObject &primarymetaobj, const QMetaObject &secondarymetaobj, QObject* parent, const WhereClauseMap &primarywhere) {
     return getDBObjectsOfDBObject(primarymetaobj, secondarymetaobj, parent, primarywhere, WhereClauseMap(), OrderByClauseMap());
 }
 
-ezechiel::Response GenericLocalDB::getDBObjectsOfDBObject(const QMetaObject &primarymetaobj, const QMetaObject &secondarymetaobj, QObject* parent, const WhereClauseMap &primarywhere, const OrderByClauseMap& orderconds) {
+Tucuxi::Response GenericLocalDB::getDBObjectsOfDBObject(const QMetaObject &primarymetaobj, const QMetaObject &secondarymetaobj, QObject* parent, const WhereClauseMap &primarywhere, const OrderByClauseMap& orderconds) {
     return getDBObjectsOfDBObject(primarymetaobj, secondarymetaobj, parent, primarywhere, WhereClauseMap(), orderconds);
 }
 
-ezechiel::Response GenericLocalDB::getDBObjectsOfDBObject(const QMetaObject &primarymetaobj, const QMetaObject &secondarymetaobj, QObject* parent, const WhereClauseMap &primarywhere, const WhereClauseMap &secondarywhere) {
+Tucuxi::Response GenericLocalDB::getDBObjectsOfDBObject(const QMetaObject &primarymetaobj, const QMetaObject &secondarymetaobj, QObject* parent, const WhereClauseMap &primarywhere, const WhereClauseMap &secondarywhere) {
     return getDBObjectsOfDBObject(primarymetaobj, secondarymetaobj, parent, primarywhere, secondarywhere, OrderByClauseMap());
 }
 
-ezechiel::Response GenericLocalDB::getDBObjectsOfDBObject(const QMetaObject& primarymetaobj, const QMetaObject& secondarymetaobj, QObject* parent, const WhereClauseMap& primarywhere, const WhereClauseMap& secondarywhere, const OrderByClauseMap& secordconds) {
+Tucuxi::Response GenericLocalDB::getDBObjectsOfDBObject(const QMetaObject& primarymetaobj, const QMetaObject& secondarymetaobj, QObject* parent, const WhereClauseMap& primarywhere, const WhereClauseMap& secondarywhere, const OrderByClauseMap& secordconds) {
     return getDBObjectsOfDBObject(primarymetaobj, secondarymetaobj, parent, primarywhere, secondarywhere, OrderByClauseMap(), secordconds);
 }
 
-ezechiel::Response GenericLocalDB::getDBObjectsOfDBObject(const QMetaObject& primarymetaobj, const QMetaObject& secondarymetaobj, QObject* parent, const WhereClauseMap& primarywhere, const WhereClauseMap& secondarywhere, const OrderByClauseMap& primordconds, const OrderByClauseMap& secordconds) {
-    ezechiel::Response r(QString(primarymetaobj.className()) + ".join." + QString(secondarymetaobj.className()));
+Tucuxi::Response GenericLocalDB::getDBObjectsOfDBObject(const QMetaObject& primarymetaobj, const QMetaObject& secondarymetaobj, QObject* parent, const WhereClauseMap& primarywhere, const WhereClauseMap& secondarywhere, const OrderByClauseMap& primordconds, const OrderByClauseMap& secordconds) {
+    Tucuxi::Response r(QString(primarymetaobj.className()) + ".join." + QString(secondarymetaobj.className()));
     QList<QObject*> ret;
     QSqlQuery query;
 
@@ -1016,7 +1016,7 @@ QList<QVariant> GenericLocalDB::getDBData(const QMetaObject& metaobj, QObject* p
 QList<QVariant> GenericLocalDB::getDBData(const QMetaObject& metaobj, QObject* parent, const SelectClauseMap& slctconds, const WhereClauseMap& whereconds, const OrderByClauseMap& orderconds) {
 
     QList<QVariant> ret;
-    ezechiel::Response r(metaobj.className());
+    Tucuxi::Response r(metaobj.className());
     QSqlQuery query;
 
     QString slct = "*";
@@ -2059,9 +2059,9 @@ Response GenericLocalDB::deleteLocation(SharedLocation & _p) {
 }
 // Encryption /////////////////////////////////////////////////////////////////////////////////////
 
-ezechiel::Response GenericLocalDB::isEncrypted(bool &encrypted)
+Tucuxi::Response GenericLocalDB::isEncrypted(bool &encrypted)
 {
-    ezechiel::Response r(_id);
+    Tucuxi::Response r(_id);
 
     //Check if available
     if (_encryption != Unknown) {
@@ -2094,9 +2094,9 @@ ezechiel::Response GenericLocalDB::isEncrypted(bool &encrypted)
     return r;
 }
 
-ezechiel::Response GenericLocalDB::setEncrypted(bool encrypted)
+Tucuxi::Response GenericLocalDB::setEncrypted(bool encrypted)
 {
-    ezechiel::Response r(_id);
+    Tucuxi::Response r(_id);
 
     //Get the current status
     bool current;
@@ -2129,12 +2129,12 @@ ezechiel::Response GenericLocalDB::setEncrypted(bool encrypted)
     return r;
 }
 
-ezechiel::Response GenericLocalDB::encryptDatabase(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptDatabase(bool encrypt)
 {
     bool status;
 
     //Get the encryption status
-    ezechiel::Response response = isEncrypted(status);
+    Tucuxi::Response response = isEncrypted(status);
     if (response.error != NoError)
         return response;
 
@@ -2276,9 +2276,9 @@ int GenericLocalDB::findOrCreate (const QString &id, const QString &table)
 }
 
 //Return an error message on a query failure
-ezechiel::Response GenericLocalDB::queryError(const QSqlQuery &query) const
+Tucuxi::Response GenericLocalDB::queryError(const QSqlQuery &query) const
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
     response.message = QString("[Code %1] %2;\n%3.").arg(QString::number(query.lastError().number()), query.lastError().databaseText(), query.lastError().driverText());
     response.error   = QueryError;
 
@@ -2286,9 +2286,9 @@ ezechiel::Response GenericLocalDB::queryError(const QSqlQuery &query) const
 }
 
 //Return an error message on a database failure
-ezechiel::Response GenericLocalDB::databaseError(const QSqlDatabase &database, const QString &message) const
+Tucuxi::Response GenericLocalDB::databaseError(const QSqlDatabase &database, const QString &message) const
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     response.message = QString("%1 The database returned the following error:\n\n[Code %2] %3;\n%4.").arg(message, QString::number(database.lastError().number()), database.lastError().databaseText(), database.lastError().driverText());
     response.error   = QueryError;
@@ -2297,9 +2297,9 @@ ezechiel::Response GenericLocalDB::databaseError(const QSqlDatabase &database, c
 }
 
 //Starts a transaction
-ezechiel::Response GenericLocalDB::startTransaction(const QString &id)
+Tucuxi::Response GenericLocalDB::startTransaction(const QString &id)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Check if already active
     if (!_transactionId.isEmpty())
@@ -2316,9 +2316,9 @@ ezechiel::Response GenericLocalDB::startTransaction(const QString &id)
 }
 
 //Rollback a transaction
-ezechiel::Response GenericLocalDB::rollbackTransaction(const QString &id)
+Tucuxi::Response GenericLocalDB::rollbackTransaction(const QString &id)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Check if the ID matches
     if (_transactionId != id)
@@ -2335,9 +2335,9 @@ ezechiel::Response GenericLocalDB::rollbackTransaction(const QString &id)
 }
 
 //Commits a transaction
-ezechiel::Response GenericLocalDB::commitTransaction(const QString &id)
+Tucuxi::Response GenericLocalDB::commitTransaction(const QString &id)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Check if the ID matches
     if (_transactionId != id)
@@ -2391,9 +2391,9 @@ bool GenericLocalDB::exists(const QString &table, const QString &pk, int value)
     return true;
 }
 
-ezechiel::Response GenericLocalDB::encryptPersons(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptPersons(bool encrypt)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Get the list of persons
 //    QList<Person> persons;
@@ -2415,9 +2415,9 @@ ezechiel::Response GenericLocalDB::encryptPersons(bool encrypt)
     return response;
 }
 
-ezechiel::Response GenericLocalDB::encryptPatients(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptPatients(bool encrypt)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Get the list of patients
 //    QList<Patient> patients;
@@ -2439,9 +2439,9 @@ ezechiel::Response GenericLocalDB::encryptPatients(bool encrypt)
     return response;
 }
 
-ezechiel::Response GenericLocalDB::encryptPracticians(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptPracticians(bool encrypt)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Get the list of practicians
 //    QList<Practician> practicians;
@@ -2463,9 +2463,9 @@ ezechiel::Response GenericLocalDB::encryptPracticians(bool encrypt)
     return response;
 }
 
-ezechiel::Response GenericLocalDB::encryptLocations(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptLocations(bool encrypt)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
 //    //Get the list of locations
 //    QList<Location> locations;
@@ -2487,9 +2487,9 @@ ezechiel::Response GenericLocalDB::encryptLocations(bool encrypt)
     return response;
 }
 
-ezechiel::Response GenericLocalDB::encryptInstitutes(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptInstitutes(bool encrypt)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Get the list of institutes
 //    QList<Institute> institutes;
@@ -2511,19 +2511,19 @@ ezechiel::Response GenericLocalDB::encryptInstitutes(bool encrypt)
     return response;
 }
 
-ezechiel::Response GenericLocalDB::encryptReports(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptReports(bool encrypt)
 {
     // ToDo ///////////////////////////////////////////////////////////////////////////////////////
     // Implement me when the reports database function are implemented
     // ////////////////////////////////////////////////////////////////////////////////////////////
 
     Q_UNUSED(encrypt);
-    return ezechiel::Response(_id);
+    return Tucuxi::Response(_id);
 }
 
-ezechiel::Response GenericLocalDB::encryptCovariates(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptCovariates(bool encrypt)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Get the list of patients
 //    QList<Patient> patients;
@@ -2554,9 +2554,9 @@ ezechiel::Response GenericLocalDB::encryptCovariates(bool encrypt)
     return response;
 }
 
-ezechiel::Response GenericLocalDB::encryptClinicals(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptClinicals(bool encrypt)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Get the list of patients
 //    QList<Patient> patients;
@@ -2587,9 +2587,9 @@ ezechiel::Response GenericLocalDB::encryptClinicals(bool encrypt)
     return response;
 }
 
-ezechiel::Response GenericLocalDB::encryptMeasures(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptMeasures(bool encrypt)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Get the list of patients
 //    QList<Patient> patients;
@@ -2620,9 +2620,9 @@ ezechiel::Response GenericLocalDB::encryptMeasures(bool encrypt)
     return response;
 }
 
-ezechiel::Response GenericLocalDB::encryptCurves(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptCurves(bool encrypt)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Get the list of curves
 //    QList<Curve> curves;
@@ -2644,9 +2644,9 @@ ezechiel::Response GenericLocalDB::encryptCurves(bool encrypt)
     return response;
 }
 
-ezechiel::Response GenericLocalDB::encryptDosages(bool encrypt)
+Tucuxi::Response GenericLocalDB::encryptDosages(bool encrypt)
 {
-    ezechiel::Response response(_id);
+    Tucuxi::Response response(_id);
 
     //Get the list of curves
 //    QList<Curve> curves;

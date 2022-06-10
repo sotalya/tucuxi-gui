@@ -8,13 +8,13 @@
 #include "institute.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
     class ActiveSubstance;
 }
 }
 
-class PartialRequest : public ezechiel::GuiCore::Entity
+class PartialRequest : public Tucuxi::GuiCore::Entity
 {
     Q_OBJECT
 
@@ -24,13 +24,13 @@ class PartialRequest : public ezechiel::GuiCore::Entity
     AUTO_PROPERTY(Practician*, practician)
     AUTO_PROPERTY(Institute*, institute)
     AUTO_PROPERTY(Measure*, measure)
-    AUTO_PROPERTY(ezechiel::GuiCore::ActiveSubstance*, drug)
+    AUTO_PROPERTY(Tucuxi::GuiCore::ActiveSubstance*, drug)
     AUTO_PROPERTY(QString, uncastedSourceSubstance)
     AUTO_PROPERTY(Measure*, sample)
 
 public:
-    Q_INVOKABLE PartialRequest(ezechiel::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
-    Q_INVOKABLE PartialRequest(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE PartialRequest(Tucuxi::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE PartialRequest(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };
 Q_DECLARE_METATYPE(PartialRequest*)
@@ -39,8 +39,8 @@ Q_DECLARE_METATYPE(QList<PartialRequest*>)
 class PartialRequestSet : public QList<PartialRequest*>
 {
 public :
-    PartialRequestSet(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent = 0) {}
-    PartialRequestSet(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent, const PartialRequestSet* &other);
+    PartialRequestSet(Tucuxi::GuiCore::AbstractRepository *repository, QObject* parent = 0) {}
+    PartialRequestSet(Tucuxi::GuiCore::AbstractRepository *repository, QObject* parent, const PartialRequestSet* &other);
 };
 Q_DECLARE_METATYPE(PartialRequestSet*)
 

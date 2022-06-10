@@ -3,7 +3,7 @@
 #include "core/dal/drug/halflife.h"
 #include "core/dal/drug/translatablestring.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(Halflife, Unit, unit, Unit)
@@ -14,7 +14,7 @@ AUTO_PROPERTY_IMPL(Halflife, int, multiplier, Multiplier)
 AUTO_PROPERTY_IMPL(Halflife, TranslatableString*, comments, Comments)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
 

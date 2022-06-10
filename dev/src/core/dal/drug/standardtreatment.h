@@ -7,7 +7,7 @@
 #include "core/dal/entity.h"
 #include "core/utils/duration.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -28,6 +28,6 @@ protected:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // STANDARDTREATMENT_H

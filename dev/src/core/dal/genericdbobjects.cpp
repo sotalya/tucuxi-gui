@@ -3,7 +3,7 @@
 #include "genericdbobjects.h"
 //#include "curvemanager.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 ////Set the Location default values
 //Location::Location()
 //{

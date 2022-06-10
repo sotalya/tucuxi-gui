@@ -14,7 +14,7 @@
 //#include "coremessagehandler.h"
 #include "core/core.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 // Initiate the duration with 0
@@ -324,4 +324,4 @@ void Duration::clear()
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

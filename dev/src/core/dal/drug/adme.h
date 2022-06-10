@@ -9,7 +9,7 @@
 
 #include "tucucore/drugmodel/formulationandroute.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class CommentSet;
@@ -137,13 +137,13 @@ private:
 QML_POINTERLIST_CLASS_DECL(AdminList, Admin)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Admin*)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Admin::Route)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Admin*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Admin*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Admin::Route)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Admin*>)
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class ADME : public Entity
@@ -179,8 +179,8 @@ public:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ADME*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ADME*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ADME*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ADME*>)
 #endif // ADME_H

@@ -6,7 +6,7 @@
 #include <QObject>
 #include "core/dal/drug/parameters.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -64,6 +64,6 @@ private:
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // PERCENTILE_H

@@ -15,7 +15,7 @@
 #include <QDebug>
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 /* Initiate the standard and error streams
   */
@@ -290,4 +290,4 @@ QString CliMessageHandler::color(OutputFlag msg_type)
 }
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi

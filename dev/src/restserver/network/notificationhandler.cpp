@@ -35,9 +35,9 @@ void NotificationHandler::service(HttpRequest &request, HttpResponse &response)
         return;
     }
 
-    ezechiel::GuiCore::XmlValidator validator;
+    Tucuxi::GuiCore::XmlValidator validator;
     QDomDocument ack_notifiation = buildAck(notification);
-    if (!validator.validate(ack_notifiation.toByteArray(), ezechiel::GuiCore::XmlValidator::Acks)) {
+    if (!validator.validate(ack_notifiation.toByteArray(), Tucuxi::GuiCore::XmlValidator::Acks)) {
         internalError(response,QString("Malformed response (%1)").arg(validator.errorMessage()));
         return;
     }

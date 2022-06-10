@@ -6,7 +6,7 @@
 #include <QDebug>
 #include "core/utils/logging.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace guiutils {
 
 EZERROR(GUIUTILS, NOEZERROR,"There is no error.")
@@ -16,6 +16,6 @@ EZERROR(GUIUTILS, NOPATIENT, "Patient not set.")
 EZERROR(GUIUTILS, NODRUGS, "No Drugs in database.")
 
 }//namespace cli
-}//namespace ezechiel
+}//namespace Tucuxi
 #endif // GUIERRORS
 

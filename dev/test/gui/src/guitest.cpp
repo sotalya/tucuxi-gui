@@ -1132,7 +1132,7 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
     //----------------------------------------
     auto patientVariateList = interpretation->getDrugResponseAnalysis()->getTreatment()->getCovariates();
 
-    foreach(ezechiel::GuiCore::PatientVariate *variate, patientVariateList->getList()) {
+    foreach(Tucuxi::GuiCore::PatientVariate *variate, patientVariateList->getList()) {
         map["covariateCovariateId_"     + QString::number(i)]    = variate->getCovariateId();
         map["covariateDateCovariate_"   + QString::number(i)]  = variate->getDate().toString(Qt::ISODate);
         if(map["covariateCovariateId_"  + QString::number(i)] == "birthdate")
@@ -1148,7 +1148,7 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
 //    //----------------------------------------
     auto coreMeasureList = interpretation->getDrugResponseAnalysis()->getTreatment()->getMeasures();
 
-    foreach(ezechiel::GuiCore::CoreMeasure *coreMeasure, coreMeasureList->getList()) {
+    foreach(Tucuxi::GuiCore::CoreMeasure *coreMeasure, coreMeasureList->getList()) {
         Measure *measure = dynamic_cast<Measure*>(coreMeasure);
         map["measureSampleId_"     + QString::number(j)]   = measure->sampleID();
         map["measureArrivalDate_"  + QString::number(j)]   = measure->arrivalDate().toString(Qt::ISODate);
@@ -1163,7 +1163,7 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
     //----------------------------------------
     auto targetList = interpretation->getDrugResponseAnalysis()->getTreatment()->getTargets();
 
-    foreach(ezechiel::GuiCore::Target *target, targetList->getList()) {
+    foreach(Tucuxi::GuiCore::Target *target, targetList->getList()) {
         map["targetMethod_"             + QString::number(k)]   = target->getType()->getLabel();
         map["targetConcentrationsCmin_" + QString::number(k)]   = QString::number(target->getCmin()->getDbvalue());
         map["targetConcentrationsCmax_" + QString::number(k)]   = QString::number(target->getCmax()->getDbvalue());

@@ -5,7 +5,7 @@
 //#include "coremessagehandler.h"
 #include "core/core.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -80,5 +80,5 @@ void Optionable::removeOption(const QString &oid)
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

@@ -41,7 +41,7 @@
 /* Load the translator and launch the CLI
   */
 
-using namespace ezechiel;
+using namespace Tucuxi;
 void initResources();
 
 int main(int argc, char *argv[])
@@ -54,66 +54,66 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("REDS");
     QCoreApplication::setOrganizationDomain("http://www.ezechiel.ch/");
 
-    EXLOG(QtDebugMsg, ezechiel::cli::NOEZERROR, "Registering DAL objects.");
+    EXLOG(QtDebugMsg, Tucuxi::cli::NOEZERROR, "Registering DAL objects.");
 //    qRegisterMetaType<InterpretationRequest*>("InterpretationRequest*");
-    qRegisterMetaType<ezechiel::GuiCore::Duration>("Duration");
+    qRegisterMetaType<Tucuxi::GuiCore::Duration>("Duration");
 //    qRegisterMetaType<Patient*>("Patient*");
-//    qRegisterMetaType<ezechiel::GuiCore::Descriptor>("Descriptor");
+//    qRegisterMetaType<Tucuxi::GuiCore::Descriptor>("Descriptor");
 //    qRegisterMetaType<QMetaType::Type>("QMetaType::Type");
-////    qRegisterMetaType<ezechiel::GuiCore::QStringTranslation>("QStringTranslation");
+////    qRegisterMetaType<Tucuxi::GuiCore::QStringTranslation>("QStringTranslation");
 //    qRegisterMetaType<Person*>("Person*");
 //    qRegisterMetaType<GenderType>("GenderType");
 //    qRegisterMetaType<Location*>("Location*");
 //    qRegisterMetaType<Practician*>("Practician*");
-//    qRegisterMetaType<ezechiel::GuiCore::Drug*>("Drug*");
+//    qRegisterMetaType<Tucuxi::GuiCore::Drug*>("Drug*");
 //    qRegisterMetaType<InterpretationAnalysis*>("InterpretationAnalysis*");
-//    qRegisterMetaType<ezechiel::GuiCore::TargetList*>("TargetList*");
-//    qRegisterMetaType<ezechiel::GuiCore::Unit>("Unit");
-//    qRegisterMetaType<ezechiel::GuiCore::DrugList*>("DrugList*");
-//    qRegisterMetaType<ezechiel::GuiCore::CoreMeasure*>("CoreMeasure*");
-//    qRegisterMetaType<ezechiel::GuiCore::CoreMeasureList*>("CoreMeasureList*");
-//    qRegisterMetaType<ezechiel::GuiCore::PatientVariate*>("PatientVariate*");
-//    qRegisterMetaType<ezechiel::GuiCore::DrugVariate*>("DrugVariate*");
-//    qRegisterMetaType<ezechiel::GuiCore::DrugTreatment*>("DrugTreatment*");
-//    qRegisterMetaType<ezechiel::GuiCore::PredictionSpec*>("PredictionSpec*");
-//    qRegisterMetaType<ezechiel::GuiCore::PatientVariateList*>("PatientVariateList*");
-//    qRegisterMetaType<ezechiel::GuiCore::DosageHistory*>("DosageHistory*");
-//    qRegisterMetaType<ezechiel::GuiCore::CorePatient*>("CorePatient*");
-//    qRegisterMetaType<ezechiel::GuiCore::CorePatientList*>("CorePatientList*");
-//    qRegisterMetaType<ezechiel::GuiCore::ADME*>("ADME*");
-//    qRegisterMetaType<ezechiel::GuiCore::Admin::Route>("ADME::Route");
-//    qRegisterMetaType<ezechiel::GuiCore::Dosage*>("Dosage*");
-//    qRegisterMetaType<ezechiel::GuiCore::IdentifiableAmount*>("IdentifiableAmount*");
-//    qRegisterMetaType<ezechiel::GuiCore::Halflife*>("Halflife*");
-//    qRegisterMetaType<ezechiel::GuiCore::Concentrations*>("Concentrations*");
-//    qRegisterMetaType<ezechiel::GuiCore::ValidDoses*>("ValidDoses*");
-//    qRegisterMetaType<ezechiel::GuiCore::ValidIntervals*>("ValidIntervals*");
-//    qRegisterMetaType<ezechiel::GuiCore::ValidInfusions*>("ValidInfusions*");
-//    qRegisterMetaType<ezechiel::GuiCore::DrugVariateList*>("DrugVariateList*");
-//    qRegisterMetaType<ezechiel::GuiCore::Target*>("Target*");
-//    qRegisterMetaType<ezechiel::GuiCore::TargetMethod::TargetType>("TargetMethod::TargetType");
-//    qRegisterMetaType<ezechiel::GuiCore::Operation*>("Operation*");
-//    qRegisterMetaType<ezechiel::GuiCore::Bsv*>("Bsv*");
-//    qRegisterMetaType<ezechiel::GuiCore::Parameter*>("Parameter*");
-//    qRegisterMetaType<ezechiel::GuiCore::ParameterSet*>("ParameterSet*");
-//    qRegisterMetaType<ezechiel::GuiCore::Parameters*>("ParameterList*");
-//    qRegisterMetaType<ezechiel::GuiCore::FancyPoint*>("FancyPoint*");
-//    qRegisterMetaType<ezechiel::GuiCore::FancyPoints*>("FancyPoints*");
-//    qRegisterMetaType<ezechiel::GuiCore::ErrorModel*>("ErrorModel*");
-//    qRegisterMetaType<ezechiel::GuiCore::MetaData*>("MetaData*");
-////    qRegisterMetaType<ezechiel::GuiCore::Prediction*>("Prediction*");
-//    qRegisterMetaType<ezechiel::GuiCore::DrugResponseAnalysis*>("Analysis*");
-//    qRegisterMetaType<ezechiel::GuiCore::OperableAmount*>("OperableAmount*");
-//    qRegisterMetaType<ezechiel::GuiCore::OperationType>("OperationType");
-//    qRegisterMetaType<ezechiel::GuiCore::OperableValue*>("OperableValue*");
-//    qRegisterMetaType<ezechiel::GuiCore::OperableValueList*>("OperableValueList*");
-//    qRegisterMetaType<ezechiel::GuiCore::OperationList*>("OperationList*");
-//    qRegisterMetaType<ezechiel::GuiCore::UncastedValue*>("UncastedValue*");
-//    qRegisterMetaType<ezechiel::GuiCore::UncastedValueList*>("UncastedValueList*");
+//    qRegisterMetaType<Tucuxi::GuiCore::TargetList*>("TargetList*");
+//    qRegisterMetaType<Tucuxi::GuiCore::Unit>("Unit");
+//    qRegisterMetaType<Tucuxi::GuiCore::DrugList*>("DrugList*");
+//    qRegisterMetaType<Tucuxi::GuiCore::CoreMeasure*>("CoreMeasure*");
+//    qRegisterMetaType<Tucuxi::GuiCore::CoreMeasureList*>("CoreMeasureList*");
+//    qRegisterMetaType<Tucuxi::GuiCore::PatientVariate*>("PatientVariate*");
+//    qRegisterMetaType<Tucuxi::GuiCore::DrugVariate*>("DrugVariate*");
+//    qRegisterMetaType<Tucuxi::GuiCore::DrugTreatment*>("DrugTreatment*");
+//    qRegisterMetaType<Tucuxi::GuiCore::PredictionSpec*>("PredictionSpec*");
+//    qRegisterMetaType<Tucuxi::GuiCore::PatientVariateList*>("PatientVariateList*");
+//    qRegisterMetaType<Tucuxi::GuiCore::DosageHistory*>("DosageHistory*");
+//    qRegisterMetaType<Tucuxi::GuiCore::CorePatient*>("CorePatient*");
+//    qRegisterMetaType<Tucuxi::GuiCore::CorePatientList*>("CorePatientList*");
+//    qRegisterMetaType<Tucuxi::GuiCore::ADME*>("ADME*");
+//    qRegisterMetaType<Tucuxi::GuiCore::Admin::Route>("ADME::Route");
+//    qRegisterMetaType<Tucuxi::GuiCore::Dosage*>("Dosage*");
+//    qRegisterMetaType<Tucuxi::GuiCore::IdentifiableAmount*>("IdentifiableAmount*");
+//    qRegisterMetaType<Tucuxi::GuiCore::Halflife*>("Halflife*");
+//    qRegisterMetaType<Tucuxi::GuiCore::Concentrations*>("Concentrations*");
+//    qRegisterMetaType<Tucuxi::GuiCore::ValidDoses*>("ValidDoses*");
+//    qRegisterMetaType<Tucuxi::GuiCore::ValidIntervals*>("ValidIntervals*");
+//    qRegisterMetaType<Tucuxi::GuiCore::ValidInfusions*>("ValidInfusions*");
+//    qRegisterMetaType<Tucuxi::GuiCore::DrugVariateList*>("DrugVariateList*");
+//    qRegisterMetaType<Tucuxi::GuiCore::Target*>("Target*");
+//    qRegisterMetaType<Tucuxi::GuiCore::TargetMethod::TargetType>("TargetMethod::TargetType");
+//    qRegisterMetaType<Tucuxi::GuiCore::Operation*>("Operation*");
+//    qRegisterMetaType<Tucuxi::GuiCore::Bsv*>("Bsv*");
+//    qRegisterMetaType<Tucuxi::GuiCore::Parameter*>("Parameter*");
+//    qRegisterMetaType<Tucuxi::GuiCore::ParameterSet*>("ParameterSet*");
+//    qRegisterMetaType<Tucuxi::GuiCore::Parameters*>("ParameterList*");
+//    qRegisterMetaType<Tucuxi::GuiCore::FancyPoint*>("FancyPoint*");
+//    qRegisterMetaType<Tucuxi::GuiCore::FancyPoints*>("FancyPoints*");
+//    qRegisterMetaType<Tucuxi::GuiCore::ErrorModel*>("ErrorModel*");
+//    qRegisterMetaType<Tucuxi::GuiCore::MetaData*>("MetaData*");
+////    qRegisterMetaType<Tucuxi::GuiCore::Prediction*>("Prediction*");
+//    qRegisterMetaType<Tucuxi::GuiCore::DrugResponseAnalysis*>("Analysis*");
+//    qRegisterMetaType<Tucuxi::GuiCore::OperableAmount*>("OperableAmount*");
+//    qRegisterMetaType<Tucuxi::GuiCore::OperationType>("OperationType");
+//    qRegisterMetaType<Tucuxi::GuiCore::OperableValue*>("OperableValue*");
+//    qRegisterMetaType<Tucuxi::GuiCore::OperableValueList*>("OperableValueList*");
+//    qRegisterMetaType<Tucuxi::GuiCore::OperationList*>("OperationList*");
+//    qRegisterMetaType<Tucuxi::GuiCore::UncastedValue*>("UncastedValue*");
+//    qRegisterMetaType<Tucuxi::GuiCore::UncastedValueList*>("UncastedValueList*");
 //    qRegisterMetaType<Interpretation*>("Interpretation*");
 
 
-    CORE->setRunningMode(ezechiel::GuiCore::Core::CLI);
+    CORE->setRunningMode(Tucuxi::GuiCore::Core::CLI);
 
     //Initialize the Core
     Q_INIT_RESOURCE(core);
@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 
 void initResources()
 {
-    ezechiel::GuiCore::Core::setInstance(new ezechiel::GuiAppUtils::AppCore());
+    Tucuxi::GuiCore::Core::setInstance(new Tucuxi::GuiAppUtils::AppCore());
 
     CORE->setProcessingInterface(ProcessingFactory::createProcessing());
     APPCORE->drugManager();

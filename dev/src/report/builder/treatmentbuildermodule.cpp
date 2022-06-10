@@ -8,7 +8,7 @@
 #include "drug.h"
 #include "translatablestring.h"
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 TreatmentBuilderModule::TreatmentBuilderModule(DrugTreatment* treatment, QObject *parent) :
     _treatment(treatment)

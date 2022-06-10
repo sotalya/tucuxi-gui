@@ -18,7 +18,7 @@
 #include "core/utils/logging.h"
 #include "core/errors_core.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 typedef int Identifier;
@@ -72,9 +72,9 @@ typedef Entity* SharedEntity;
 typedef QList<SharedEntity> SharedEntitySet;
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 //Q_DECLARE_METATYPE(int)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Entity*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Entity*)
 
 #endif // ENTITY_H

@@ -40,30 +40,30 @@ public:
     virtual ~MultiThreadedCalculationController();
 
 public slots:
-    void computePopPred(ezechiel::GuiCore::PredictionSpec*);
-    void computePopPerc(ezechiel::GuiCore::PredictionSpec*);
-    void computeAprPred(ezechiel::GuiCore::PredictionSpec*);
-    void computeAprPerc(ezechiel::GuiCore::PredictionSpec*);
-    void computeApoPred(ezechiel::GuiCore::PredictionSpec*);
-    void computeApoPerc(ezechiel::GuiCore::PredictionSpec*);
-    void computeRevPred(ezechiel::GuiCore::PredictionSpec*);
-    void computeAdjPred(ezechiel::GuiCore::PredictionSpec*);
-    void computeAdjPerc(ezechiel::GuiCore::PredictionSpec*);
+    void computePopPred(Tucuxi::GuiCore::PredictionSpec*);
+    void computePopPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void computeAprPred(Tucuxi::GuiCore::PredictionSpec*);
+    void computeAprPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void computeApoPred(Tucuxi::GuiCore::PredictionSpec*);
+    void computeApoPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void computeRevPred(Tucuxi::GuiCore::PredictionSpec*);
+    void computeAdjPred(Tucuxi::GuiCore::PredictionSpec*);
+    void computeAdjPerc(Tucuxi::GuiCore::PredictionSpec*);
     void abortAll();
 
     void intEngage();
     void intDisengage();
 
 signals:
-    void sig_updatePopPred(ezechiel::GuiCore::PredictionSpec*);
-    void sig_updatePopPerc(ezechiel::GuiCore::PredictionSpec*);
-    void sig_updateAprPred(ezechiel::GuiCore::PredictionSpec*);
-    void sig_updateAprPerc(ezechiel::GuiCore::PredictionSpec*);
-    void sig_updateApoPred(ezechiel::GuiCore::PredictionSpec*);
-    void sig_updateApoPerc(ezechiel::GuiCore::PredictionSpec*);
-    void sig_updateRevPred(ezechiel::GuiCore::PredictionSpec*);
-    void sig_updateAdjPred(ezechiel::GuiCore::PredictionSpec*);
-    void sig_updateAdjPerc(ezechiel::GuiCore::PredictionSpec*);
+    void sig_updatePopPred(Tucuxi::GuiCore::PredictionSpec*);
+    void sig_updatePopPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void sig_updateAprPred(Tucuxi::GuiCore::PredictionSpec*);
+    void sig_updateAprPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void sig_updateApoPred(Tucuxi::GuiCore::PredictionSpec*);
+    void sig_updateApoPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void sig_updateRevPred(Tucuxi::GuiCore::PredictionSpec*);
+    void sig_updateAdjPred(Tucuxi::GuiCore::PredictionSpec*);
+    void sig_updateAdjPerc(Tucuxi::GuiCore::PredictionSpec*);
 
 private:
 

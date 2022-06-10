@@ -9,7 +9,7 @@
 #include <QTranslator>
 #include <QApplication>
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 DefaultReport::DefaultReport(ReportData *data, QObject *parent) :
     Report(data, parent)

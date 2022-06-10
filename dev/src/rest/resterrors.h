@@ -3,7 +3,7 @@
 #ifndef RESTERRORS
 #define RESTERRORS
 
-namespace ezechiel {
+namespace Tucuxi {
     enum class RestErrors {
         //! The user's password is needed but not given, see the -P global option.
     };

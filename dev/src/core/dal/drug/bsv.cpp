@@ -2,7 +2,7 @@
 
 #include "core/dal/drug/bsv.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //! The parameter's value standard variability
@@ -12,5 +12,5 @@ AUTO_PROPERTY_IMPL(Bsv, double, proportional, Proportional)
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

@@ -7,7 +7,7 @@
 #include <QString>
 #include <QObject>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -60,8 +60,8 @@ namespace distribution
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::distribution::DistributionType)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::distribution::DistributionType)
 
 #endif // DISTRIBUTION_H

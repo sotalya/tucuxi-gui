@@ -5,7 +5,7 @@
 
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class DrugTreatment;
@@ -31,9 +31,9 @@ protected:
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugResponseAnalysis*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::DrugResponseAnalysis*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::DrugResponseAnalysis*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::DrugResponseAnalysis*>)
 
 #endif // DRUGRESPONSEANALYSIS_H

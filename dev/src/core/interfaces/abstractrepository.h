@@ -3,7 +3,7 @@
 #ifndef ABSTRACTREPOSITORY_H
 #define ABSTRACTREPOSITORY_H
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 // #define AbstractRepository Repository
@@ -17,6 +17,6 @@ public:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // ABSTRACTREPOSITORY_H

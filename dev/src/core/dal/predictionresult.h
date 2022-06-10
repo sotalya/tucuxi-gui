@@ -9,7 +9,7 @@
 #include "adjustment.h"
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class PredictionResult : public Entity
@@ -28,6 +28,6 @@ class PredictionResult : public Entity
 
 }
 }
-Q_DECLARE_METATYPE(ezechiel::GuiCore::PredictionResult*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::PredictionResult*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::PredictionResult*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::PredictionResult*>)
 #endif // PREDICTIONRESULT_H

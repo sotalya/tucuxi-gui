@@ -6,7 +6,7 @@
 #include <QCoreApplication>
 //#include "dal/genericdbobjects.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -111,8 +111,8 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::GenericUser*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::GenericUser*)
 
 #endif // GENERICUSER_H

@@ -6,7 +6,7 @@
 #include "core/dal/drug/operation.h"
 #include "core/dal/drug/translatablestring.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -92,4 +92,4 @@ bool DrugVariate::operator !=(const DrugVariate &other) const
 QML_POINTERLIST_CLASS_IMPL(DrugVariateList, DrugVariate)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

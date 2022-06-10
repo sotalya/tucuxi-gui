@@ -8,7 +8,7 @@
 #include "core/dal/uncastedvalue.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //AUTO_PROPERTY_IMPL(Dosage, ADME::Route, route, Route)
@@ -327,4 +327,4 @@ bool DosageHistory::getNextIntake(const QDateTime& fromTime, QDateTime &nextTime
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

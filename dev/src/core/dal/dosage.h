@@ -11,7 +11,7 @@
 #include "core/utils/duration.h"
 #include "core/utils/ezutils.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class UncastedValueList;
@@ -180,11 +180,11 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Dosage*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Dosage*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::DosageHistory*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Dosage*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Dosage*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::DosageHistory*)
 //Q_DECLARE_METATYPE(QList<QObject*>)
 
 #endif // DOSAGE_H

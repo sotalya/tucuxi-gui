@@ -6,7 +6,7 @@
 
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 typedef QMap<QString,QString> QStringTranslation;
@@ -77,5 +77,5 @@ bool TranslatableString::operator==(const QString &notTransString){
 
 QML_POINTERLIST_CLASS_IMPL(TranslatableStringList,TranslatableString)
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

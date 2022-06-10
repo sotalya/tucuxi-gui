@@ -15,7 +15,7 @@
 
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class UncastedValueList;
@@ -92,10 +92,10 @@ private:
 QML_POINTERLIST_CLASS_DECL(PatientVariateList, PatientVariate)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::PatientVariate*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::PatientVariate*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::PatientVariateList*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::PatientVariate*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::PatientVariate*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::PatientVariateList*)
 
 #endif // COVARIATE_H

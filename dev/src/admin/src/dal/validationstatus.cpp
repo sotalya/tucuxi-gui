@@ -1,7 +1,7 @@
 #include "admin/src/dal/validationstatus.h"
 
-ValidationStatus::ValidationStatus(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent) :
-    ezechiel::GuiCore::Entity(repository, parent)
+ValidationStatus::ValidationStatus(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
+    Tucuxi::GuiCore::Entity(repository, parent)
 {
     _dataStatus.fill(DataStatusType::InvalidData, StepType::size);
     _validationStatus.fill(ValidationStatusType::UnValidated, StepType::size);

@@ -5,7 +5,7 @@
 #include <QRegExp>
 #include <QStringList>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -151,5 +151,5 @@ bool Version::isValid() const
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

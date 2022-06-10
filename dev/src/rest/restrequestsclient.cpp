@@ -50,7 +50,7 @@
 #include "cli/rlutil.h"
 #include "restlogger.h"
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 RestRequestsClient::RestRequestsClient(QObject *parent) :
     RequestsClientProcessing(parent),
@@ -262,7 +262,7 @@ void RestRequestsClient::processQueryRequest(QNetworkReply *reply)
          * TODO: This is required by the CLI application
          * Not well designed
          *******************************************/
-        if (CORE->runningMode() == ezechiel::GuiCore::Core::CLI)
+        if (CORE->runningMode() == Tucuxi::GuiCore::Core::CLI)
             emit ackRequestFinished();
 
         return;

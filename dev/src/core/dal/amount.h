@@ -5,7 +5,7 @@
 
 #include "core/utils/units.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -77,8 +77,8 @@ protected:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Amount)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Amount*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Amount)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Amount*>)
 #endif // AMOUNT_H

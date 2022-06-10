@@ -5,7 +5,7 @@
 
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -29,9 +29,9 @@ protected:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Bsv*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Bsv*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Bsv*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Bsv*>)
 
 #endif // BSV_H

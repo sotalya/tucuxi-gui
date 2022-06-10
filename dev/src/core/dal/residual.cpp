@@ -2,7 +2,7 @@
 
 #include "core/dal/residual.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //Residual::Residual(QObject *parent) : QObject(parent)
@@ -56,4 +56,4 @@ void Residuals::clear()
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

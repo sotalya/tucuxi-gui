@@ -72,7 +72,7 @@ QString InterpretationToRequestXmlExport::toXml(Interpretation *interpretation)
 
 }
 
-bool InterpretationToRequestXmlExport::saveActiveSubstance(ezechiel::GuiCore::ActiveSubstance *activeSubstance)
+bool InterpretationToRequestXmlExport::saveActiveSubstance(Tucuxi::GuiCore::ActiveSubstance *activeSubstance)
 {
     writer.writeStartElement("drug");
     writer.writeTextElement("drugId", activeSubstance->getSubstanceId());
@@ -98,11 +98,11 @@ bool InterpretationToRequestXmlExport::saveActiveSubstance(ezechiel::GuiCore::Ac
     return true;
 }
 
-bool InterpretationToRequestXmlExport::saveDosages(ezechiel::GuiCore::DosageHistory *dosageHistory)
+bool InterpretationToRequestXmlExport::saveDosages(Tucuxi::GuiCore::DosageHistory *dosageHistory)
 {
     writer.writeStartElement("dosages");
     for (int i = 0; i < dosageHistory->size(); i++) {
-        ezechiel::GuiCore::Dosage *dosage = dosageHistory->at(i);
+        Tucuxi::GuiCore::Dosage *dosage = dosageHistory->at(i);
         writer.writeStartElement("dosage");
         writer.writeTextElement("startDate", dosage->getApplied().toString(Qt::ISODate));
         writer.writeTextElement("lastDate", dosage->getEndTime().toString(Qt::ISODate));
@@ -127,7 +127,7 @@ bool InterpretationToRequestXmlExport::saveDosages(ezechiel::GuiCore::DosageHist
     return true;
 }
 
-bool InterpretationToRequestXmlExport::saveSamples(ezechiel::GuiCore::CoreMeasureList *samples)
+bool InterpretationToRequestXmlExport::saveSamples(Tucuxi::GuiCore::CoreMeasureList *samples)
 {
     writer.writeStartElement("samples");
     for (int i = 0; i < samples->size(); i++) {
@@ -153,11 +153,11 @@ bool InterpretationToRequestXmlExport::saveSamples(ezechiel::GuiCore::CoreMeasur
     return true;
 }
 
-bool InterpretationToRequestXmlExport::saveCovariates(ezechiel::GuiCore::PatientVariateList *covariates)
+bool InterpretationToRequestXmlExport::saveCovariates(Tucuxi::GuiCore::PatientVariateList *covariates)
 {
     writer.writeStartElement("covariates");
     for (int i = 0; i < covariates->size(); i++) {
-        ezechiel::GuiCore::PatientVariate *covariate = covariates->at(i);
+        Tucuxi::GuiCore::PatientVariate *covariate = covariates->at(i);
         writer.writeStartElement("covariate");
         // Or covariate->getName() ... To be solved
         writer.writeTextElement("name", covariate->getCovariateId());

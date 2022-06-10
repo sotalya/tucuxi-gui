@@ -9,7 +9,7 @@
 #include <QVariant>
 #include <QMetaType>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -398,7 +398,7 @@ struct DBCurve {
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
 #endif // DBCONTAINER_H

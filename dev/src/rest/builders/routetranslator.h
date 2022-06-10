@@ -16,7 +16,7 @@ public:
     RouteTranslator();
     virtual ~RouteTranslator() = default;
 
-    virtual ezechiel::GuiCore::Admin::Route restToInternalRoute(QString restRoute) = 0;
+    virtual Tucuxi::GuiCore::Admin::Route restToInternalRoute(QString restRoute) = 0;
 };
 
 class DummyRouteTranslator : public RouteTranslator
@@ -24,7 +24,7 @@ class DummyRouteTranslator : public RouteTranslator
 public:
     DummyRouteTranslator();
 
-    virtual ezechiel::GuiCore::Admin::Route restToInternalRoute(QString restRoute) ;
+    virtual Tucuxi::GuiCore::Admin::Route restToInternalRoute(QString restRoute) ;
 };
 
 class ChuvRouteTranslator : public RouteTranslator
@@ -32,10 +32,10 @@ class ChuvRouteTranslator : public RouteTranslator
 public:
     ChuvRouteTranslator();
 
-    virtual ezechiel::GuiCore::Admin::Route restToInternalRoute(QString restRoute) ;
+    virtual Tucuxi::GuiCore::Admin::Route restToInternalRoute(QString restRoute) ;
 
 private:
-    QMap<QString,ezechiel::GuiCore::Admin::Route> map;
+    QMap<QString,Tucuxi::GuiCore::Admin::Route> map;
 };
 
 #endif // ROUTETRANSLATOR_H

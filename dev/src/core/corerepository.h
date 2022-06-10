@@ -12,7 +12,7 @@
 #include "core/utils/errorenums.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 typedef int ident;
@@ -214,7 +214,7 @@ public:
 };
 
 } // namespace core
-} // namespace ezechiel
-Q_DECLARE_INTERFACE(ezechiel::GuiCore::CoreRepository, "ch.heig-vd.ezechiel.CoreInterface/0.1")
+} // namespace Tucuxi
+Q_DECLARE_INTERFACE(Tucuxi::GuiCore::CoreRepository, "ch.heig-vd.ezechiel.CoreInterface/0.1")
 
 #endif // REPOSITORY_H

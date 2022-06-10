@@ -9,7 +9,7 @@
 #include "errors_cliutils.h"
 //#include "dbinterface.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 //The error messages
 const char *const UserAction::_INVALID_SUBCOMMAND   = QT_TR_NOOP_UTF8("please run the help for more information");
@@ -300,9 +300,9 @@ bool UserAction::encryptDatabase(QStringList &args, bool encrypt)
     }
 
     //Encrypt the whole database
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
-    if ((response = APPUTILSREPO->encryptDatabase(encrypt)).error != ezechiel::GuiCore::NoError) {
+    if ((response = APPUTILSREPO->encryptDatabase(encrypt)).error != Tucuxi::GuiCore::NoError) {
         _errors = tr("An error occured while %1 the database.\n\n%2").arg(encrypt ? tr("encrypting") : tr("decrypting"), response.message);
         return false;
     }
@@ -311,4 +311,4 @@ bool UserAction::encryptDatabase(QStringList &args, bool encrypt)
 }
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi

@@ -3,7 +3,7 @@
 
 #include <QXmlStreamWriter>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class PredictionSpec;
@@ -34,26 +34,26 @@ public:
     PredictionSpecExporter();
 
     QString writeDate(QDateTime date);
-    bool save(ezechiel::GuiCore::PredictionSpec *spec, QByteArray &data);
+    bool save(Tucuxi::GuiCore::PredictionSpec *spec, QByteArray &data);
 
-    void save(ezechiel::GuiCore::PredictionSpec *spec);
-    void save(ezechiel::GuiCore::DrugResponseAnalysis *analysis);
-    void save(ezechiel::GuiCore::DrugTreatment *treatment);
-    void save(ezechiel::GuiCore::DrugModel *model);
-    void save(ezechiel::GuiCore::DosageHistory *history);
-    void save(ezechiel::GuiCore::PatientVariateList *list);
-    void save(ezechiel::GuiCore::TargetList *list);
-    void save(ezechiel::GuiCore::CoreMeasureList *list);
-    void save(ezechiel::GuiCore::UncastedValueList *list);
-    void save(ezechiel::GuiCore::ADME *adme);
-    void save(ezechiel::GuiCore::ValidDoses *doses);
-    void save(ezechiel::GuiCore::ValidInfusions *infusions);
-    void save(ezechiel::GuiCore::ValidIntervals *intervals);
-    void save(ezechiel::GuiCore::DrugVariateList *list);
-    void save(ezechiel::GuiCore::ParameterSet *set);
-    void save(ezechiel::GuiCore::OperationList *list);
-    void saveIdentifiableAmount(const QString &tagName, ezechiel::GuiCore::IdentifiableAmount *amount);
-    void saveOperableAmount(const QString &tagName, ezechiel::GuiCore::OperableAmount *amount);
+    void save(Tucuxi::GuiCore::PredictionSpec *spec);
+    void save(Tucuxi::GuiCore::DrugResponseAnalysis *analysis);
+    void save(Tucuxi::GuiCore::DrugTreatment *treatment);
+    void save(Tucuxi::GuiCore::DrugModel *model);
+    void save(Tucuxi::GuiCore::DosageHistory *history);
+    void save(Tucuxi::GuiCore::PatientVariateList *list);
+    void save(Tucuxi::GuiCore::TargetList *list);
+    void save(Tucuxi::GuiCore::CoreMeasureList *list);
+    void save(Tucuxi::GuiCore::UncastedValueList *list);
+    void save(Tucuxi::GuiCore::ADME *adme);
+    void save(Tucuxi::GuiCore::ValidDoses *doses);
+    void save(Tucuxi::GuiCore::ValidInfusions *infusions);
+    void save(Tucuxi::GuiCore::ValidIntervals *intervals);
+    void save(Tucuxi::GuiCore::DrugVariateList *list);
+    void save(Tucuxi::GuiCore::ParameterSet *set);
+    void save(Tucuxi::GuiCore::OperationList *list);
+    void saveIdentifiableAmount(const QString &tagName, Tucuxi::GuiCore::IdentifiableAmount *amount);
+    void saveOperableAmount(const QString &tagName, Tucuxi::GuiCore::OperableAmount *amount);
 
 protected:
 

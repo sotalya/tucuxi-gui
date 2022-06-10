@@ -17,8 +17,8 @@ public:
     //DataSet data[];
 
 
-    ezechiel::math::cxn_list_t data;
-    ezechiel::GuiCore::DataSet dataset;
+    Tucuxi::math::cxn_list_t data;
+    Tucuxi::GuiCore::DataSet dataset;
 
 };
 

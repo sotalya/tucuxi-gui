@@ -17,7 +17,7 @@
 #include "core/errors_core.h"
 #include "core/corerepository.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -233,11 +233,11 @@ AbstractRepository * PluginManager::loadDatabase(const DATABASEENGINE &engine) {
             LOG(QtWarningMsg, NOEZERROR, tr("Unable to load the db %1 with error %2").arg(file.filePath()).arg(loader->errorString()));
         } else {
             if ((repo = qobject_cast<CoreRepository*>(loader->instance()))) {
-                LOG(QtDebugMsg, ezechiel::GuiCore::NOEZERROR, QObject::tr("casted db, loaded plugin"));
+                LOG(QtDebugMsg, Tucuxi::GuiCore::NOEZERROR, QObject::tr("casted db, loaded plugin"));
                 return repo;
             }
             else {
-                LOG(QtFatalMsg, ezechiel::GuiCore::NOEZERROR, QObject::tr("Could not cast db"));
+                LOG(QtFatalMsg, Tucuxi::GuiCore::NOEZERROR, QObject::tr("Could not cast db"));
             }
         }
     }
@@ -309,5 +309,5 @@ void PluginManager::scanDirectory(const QDir &directory)
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

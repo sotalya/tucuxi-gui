@@ -8,7 +8,7 @@
 #include "stdadminrepository.h"
 #include "corerepository.h"
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 Report *ReportSQLiteDAO::findById(int id)
 {

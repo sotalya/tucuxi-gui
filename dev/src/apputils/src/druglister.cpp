@@ -14,9 +14,9 @@
 #include "errors_apputils.h"
 
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiAppUtils {
 
 //The error messages
@@ -342,4 +342,4 @@ void DrugLister::resetDrugs()
 }
 
 } //namespace GuiAppUtils
-} //namespace ezechiel
+} //namespace Tucuxi

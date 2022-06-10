@@ -14,8 +14,8 @@
 
 #include <QDebug>
 
-using namespace ezechiel::GuiCore;
-namespace ezechiel {
+using namespace Tucuxi::GuiCore;
+namespace Tucuxi {
 namespace GuiAppUtils {
 
 DataCrypter::DataCrypter(QObject *parent) :
@@ -84,7 +84,7 @@ std::string DataCrypter::decrypt(const std::string &encrypted)
 {
     if (masterKey.length() <= 0)
     {
-        LOG(QtWarningMsg, ezechiel::GuiAppUtils::NOEZERROR, "No masterkey available. A valid user needs to be logged in.");
+        LOG(QtWarningMsg, Tucuxi::GuiAppUtils::NOEZERROR, "No masterkey available. A valid user needs to be logged in.");
         return std::string();
     }
 
@@ -97,7 +97,7 @@ std::string DataCrypter::decrypt(const std::string &encrypted)
     }
     catch (std::invalid_argument &e)
     {
-        LOG(QtWarningMsg, ezechiel::GuiAppUtils::NOEZERROR, tr("Unexpected data format (%1)").arg(e.what()));
+        LOG(QtWarningMsg, Tucuxi::GuiAppUtils::NOEZERROR, tr("Unexpected data format (%1)").arg(e.what()));
         return std::string();
     }
 
@@ -114,22 +114,22 @@ std::string DataCrypter::decrypt(const std::string &encrypted)
     }
     catch (Botan::Algorithm_Not_Found &e)
     {
-        LOG(QtWarningMsg, ezechiel::GuiAppUtils::NOEZERROR, tr("Algorithm not found (%1)").arg(e.what()));
+        LOG(QtWarningMsg, Tucuxi::GuiAppUtils::NOEZERROR, tr("Algorithm not found (%1)").arg(e.what()));
         return std::string();
     }
     catch (Botan::Invalid_IV_Length &e)
     {
-        LOG(QtWarningMsg, ezechiel::GuiAppUtils::NOEZERROR, tr("Invalid lenght (%1)").arg(e.what()));
+        LOG(QtWarningMsg, Tucuxi::GuiAppUtils::NOEZERROR, tr("Invalid lenght (%1)").arg(e.what()));
         return std::string();
     }
     catch (Botan::Decoding_Error &e)
     {
-        LOG(QtWarningMsg, ezechiel::GuiAppUtils::NOEZERROR, tr("Decoding error (%1)").arg(e.what()));
+        LOG(QtWarningMsg, Tucuxi::GuiAppUtils::NOEZERROR, tr("Decoding error (%1)").arg(e.what()));
         return std::string();
     }
     catch (...)
     {
-        LOG(QtWarningMsg, ezechiel::GuiAppUtils::NOEZERROR, tr("Unexpected decryption exception"));
+        LOG(QtWarningMsg, Tucuxi::GuiAppUtils::NOEZERROR, tr("Unexpected decryption exception"));
         return std::string();
     }
 }
@@ -191,4 +191,4 @@ bool DataCrypter::login(const QString &login, const QString &password, const QSt
 }
 
 }//namespace GuiAppUtils
-}//namespace ezechiel
+}//namespace Tucuxi

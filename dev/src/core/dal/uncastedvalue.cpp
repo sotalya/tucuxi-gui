@@ -2,11 +2,11 @@
 
 #include "core/dal/uncastedvalue.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
-Q_INVOKABLE UncastedValue::UncastedValue(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent)
+Q_INVOKABLE UncastedValue::UncastedValue(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent)
     : Entity(repository, parent), _field(""), _text(""), _comment(""), _status(UncastedStatus::Uncasted), _validated(false)
 {
 
@@ -28,4 +28,4 @@ QML_POINTERLIST_CLASS_IMPL(UncastedValueList, UncastedValue)
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

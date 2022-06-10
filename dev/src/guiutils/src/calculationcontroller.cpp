@@ -34,7 +34,7 @@
 #define POPTIMEOUT 20000
 #define ADJTIMEOUT 35000
 
-using namespace ezechiel;
+using namespace Tucuxi;
 using namespace GuiCore;
 
 CalculationController::CalculationController(QObject *parent)
@@ -68,7 +68,7 @@ void LocalCalculationController::computePopPred(PredictionSpec* prediction)
 {
 
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running typical patient prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running typical patient prediction.");
 
     DataSet dataSet;
     PopulationTraits parametersTraits;
@@ -83,7 +83,7 @@ void LocalCalculationController::computePopPred(PredictionSpec* prediction)
                                            pointsTraits,
                                            *pred);
 
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending typical patient prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending typical patient prediction.");
     pred->moveToThread(qApp->thread());
     emit popPredComputed(pred);
     emit engage();
@@ -102,14 +102,14 @@ void LocalCalculationController::preparePredResults(QVector<int> time, QVector<d
         fpt->setValue(data[i]);
         fpts->append(fpt);
     }
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending typical patient prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending typical patient prediction.");
     pred->moveToThread(qApp->thread());
 }
 
 void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running typical patient percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running typical patient percentiles.");
 
 //    std::vector<double> percentiles = {10, 25, 75, 90};
     QMap<double, DataSet> percsDataSets;
@@ -139,7 +139,7 @@ void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
         emit engage();
         return;
     }
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending typical patient percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending typical patient percentiles.");
     pred->moveToThread(qApp->thread());
     emit popPercComputed(pred);
     emit engage();
@@ -148,7 +148,7 @@ void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
 void LocalCalculationController::computeAprPred(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running a priori prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running a priori prediction.");
 
     AprioriTraits parametersTraits;
     PointsTraits pointsTraits(prediction->getStartDate(),
@@ -162,7 +162,7 @@ void LocalCalculationController::computeAprPred(PredictionSpec* prediction)
                                            pointsTraits,
                                            *pred);
 
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending a priori prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending a priori prediction.");
 
     pred->moveToThread(qApp->thread());
     emit aprPredComputed(pred);
@@ -173,7 +173,7 @@ void LocalCalculationController::computeAprPred(PredictionSpec* prediction)
 void LocalCalculationController::computeAprPerc(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running apriori percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running apriori percentiles.");
 
 //    std::vector<double> percentiles = {10, 25, 75, 90};
 
@@ -197,7 +197,7 @@ void LocalCalculationController::computeAprPerc(PredictionSpec* prediction)
                                                 *pred,
                                                 aprPercAborter);
 
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending apriori percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending apriori percentiles.");
 
     if (result == ProcessingResult::Aborted) {
         emit aprCalcFail();
@@ -213,7 +213,7 @@ void LocalCalculationController::computeAprPerc(PredictionSpec* prediction)
 void LocalCalculationController::computeApoPred(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running a posteriori prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running a posteriori prediction.");
 
     ParamTraits* parametersTraits = new AposterioriTraits();
     PointsTraits pointsTraits(prediction->getStartDate(),
@@ -227,7 +227,7 @@ void LocalCalculationController::computeApoPred(PredictionSpec* prediction)
                                            pointsTraits,
                                            *pred);
 
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending a posteriori prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending a posteriori prediction.");
 
     pred->moveToThread(qApp->thread());
     emit apoPredComputed(pred);
@@ -239,7 +239,7 @@ void LocalCalculationController::computeApoPred(PredictionSpec* prediction)
 void LocalCalculationController::computeApoPerc(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running aposteriori percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running aposteriori percentiles.");
 
     AposterioriTraits parametersTraits;
     PercentilesTraits percentilesTraits(prediction->getNbPoints(),
@@ -258,7 +258,7 @@ void LocalCalculationController::computeApoPerc(PredictionSpec* prediction)
                                                 *pred,
                                                 apoPercAborter);
 
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending aposteriori percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending aposteriori percentiles.");
 
     if (result == ProcessingResult::Aborted) {
         emit apoCalcFail();
@@ -274,7 +274,7 @@ void LocalCalculationController::computeApoPerc(PredictionSpec* prediction)
 void LocalCalculationController::computeAdjPerc(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running adjustments percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running adjustments percentiles.");
 
 
     ParamTraits* parametersTraits;
@@ -348,7 +348,7 @@ void LocalCalculationController::computeAdjPerc(PredictionSpec* prediction)
     }
 
 
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending adjustments percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending adjustments percentiles.");
 
     if (result == ProcessingResult::Aborted) {
         emit adjCalcFail();
@@ -364,7 +364,7 @@ void LocalCalculationController::computeAdjPerc(PredictionSpec* prediction)
 void LocalCalculationController::computeRevPred(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running reverse prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running reverse prediction.");
     //Q_ASSERT_X(dateSetting.isValid());
 
     ParamTraits* parametersTraits;
@@ -427,7 +427,7 @@ void LocalCalculationController::computeRevPred(PredictionSpec* prediction)
                                             reverseTraits,
                                             *pred);
 
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending reverse prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending reverse prediction.");
 
     pred->moveToThread(qApp->thread());
     emit revPredComputed(pred);
@@ -452,7 +452,7 @@ void LocalCalculationController::computeAdjPred(PredictionSpec* prediction)
     */
 
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running a priori adjustment prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running a priori adjustment prediction.");
 
     ParamTraits* parametersTraits;
     if (prediction->getAnalysis()->getTreatment()->getMeasures()->isEmpty()) {
@@ -491,7 +491,7 @@ void LocalCalculationController::computeAdjPred(PredictionSpec* prediction)
                                            pointsTraits,
                                            *pred);
 
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Ending a priori adjustment prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending a priori adjustment prediction.");
     pred->moveToThread(qApp->thread());
     emit adjPredComputed(pred);
     emit engage();
@@ -527,7 +527,7 @@ void CalculationThread::run()
     setPriority(QThread::LowPriority); // So the GUI can be more responsive
 
     while (1) {
-        ezechiel::GuiCore::PredictionSpec *spec;
+        Tucuxi::GuiCore::PredictionSpec *spec;
 
         CalculationBuffer::calculationType what;
         buffer->get(&spec, &what);
@@ -570,31 +570,31 @@ ThreadedCalculationController::ThreadedCalculationController(QObject *parent) : 
 
     CONNECT(controller, SIGNAL(disengage()), this, SIGNAL(disengage()));
     CONNECT(controller, SIGNAL(engage()), this, SIGNAL(engage()));
-    CONNECT(controller, SIGNAL(popPredComputed(ezechiel::GuiCore::PredictionResult*)), buffer, SLOT(popPredComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(aprPredComputed(ezechiel::GuiCore::PredictionResult*)), buffer, SLOT(aprPredComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(apoPredComputed(ezechiel::GuiCore::PredictionResult*)), buffer, SLOT(apoPredComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(revPredComputed(ezechiel::GuiCore::PredictionResult*)), buffer, SLOT(revPredComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(popPercComputed(ezechiel::GuiCore::PredictionResult*)), buffer, SLOT(popPercComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(aprPercComputed(ezechiel::GuiCore::PredictionResult*)), buffer, SLOT(aprPercComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(apoPercComputed(ezechiel::GuiCore::PredictionResult*)), buffer, SLOT(apoPercComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(adjPercComputed(ezechiel::GuiCore::PredictionResult*)), buffer, SLOT(adjPercComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(controller, SIGNAL(adjustmentsComputed(QList<ezechiel::GuiCore::Dosage*>)), buffer, SLOT(adjustmentsComputed(QList<ezechiel::GuiCore::Dosage*>)));
-    CONNECT(controller, SIGNAL(adjPredComputed(ezechiel::GuiCore::PredictionResult*)), buffer, SLOT(adjPredComputed(ezechiel::GuiCore::PredictionResult*)));
+    CONNECT(controller, SIGNAL(popPredComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(popPredComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(controller, SIGNAL(aprPredComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(aprPredComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(controller, SIGNAL(apoPredComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(apoPredComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(controller, SIGNAL(revPredComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(revPredComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(controller, SIGNAL(popPercComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(popPercComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(controller, SIGNAL(aprPercComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(aprPercComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(controller, SIGNAL(apoPercComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(apoPercComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(controller, SIGNAL(adjPercComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(adjPercComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(controller, SIGNAL(adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*>)), buffer, SLOT(adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*>)));
+    CONNECT(controller, SIGNAL(adjPredComputed(Tucuxi::GuiCore::PredictionResult*)), buffer, SLOT(adjPredComputed(Tucuxi::GuiCore::PredictionResult*)));
     CONNECT(controller, SIGNAL(popCalcFail()), this, SIGNAL(popCalcFail()));
     CONNECT(controller, SIGNAL(aprCalcFail()), this, SIGNAL(aprCalcFail()));
     CONNECT(controller, SIGNAL(apoCalcFail()), this, SIGNAL(apoCalcFail()));
     CONNECT(controller, SIGNAL(adjCalcFail()), this, SIGNAL(adjCalcFail()));
 
-    CONNECT(buffer, SIGNAL(sig_popPredUpdated(ezechiel::GuiCore::PredictionResult*)), this, SIGNAL(popPredComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_aprPredUpdated(ezechiel::GuiCore::PredictionResult*)), this, SIGNAL(aprPredComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_apoPredUpdated(ezechiel::GuiCore::PredictionResult*)), this, SIGNAL(apoPredComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_revPredUpdated(ezechiel::GuiCore::PredictionResult*)), this, SIGNAL(revPredComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_popPercUpdated(ezechiel::GuiCore::PredictionResult*)), this, SIGNAL(popPercComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_aprPercUpdated(ezechiel::GuiCore::PredictionResult*)), this, SIGNAL(aprPercComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_apoPercUpdated(ezechiel::GuiCore::PredictionResult*)), this, SIGNAL(apoPercComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_adjPercUpdated(ezechiel::GuiCore::PredictionResult*)), this, SIGNAL(adjPercComputed(ezechiel::GuiCore::PredictionResult*)));
-    CONNECT(buffer, SIGNAL(sig_adjustmentsUpdated(QList<ezechiel::GuiCore::Dosage*>)), this, SIGNAL(adjustmentsComputed(QList<ezechiel::GuiCore::Dosage*>)));
-    CONNECT(buffer, SIGNAL(sig_adjPredUpdated(ezechiel::GuiCore::PredictionResult*)), this, SIGNAL(adjPredComputed(ezechiel::GuiCore::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_popPredUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(popPredComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_aprPredUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(aprPredComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_apoPredUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(apoPredComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_revPredUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(revPredComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_popPercUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(popPercComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_aprPercUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(aprPercComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_apoPercUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(apoPercComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_adjPercUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(adjPercComputed(Tucuxi::GuiCore::PredictionResult*)));
+    CONNECT(buffer, SIGNAL(sig_adjustmentsUpdated(QList<Tucuxi::GuiCore::Dosage*>)), this, SIGNAL(adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*>)));
+    CONNECT(buffer, SIGNAL(sig_adjPredUpdated(Tucuxi::GuiCore::PredictionResult*)), this, SIGNAL(adjPredComputed(Tucuxi::GuiCore::PredictionResult*)));
 
 //#ifndef COMPILE_WITH_TUCUCORE
 #if 0
@@ -623,46 +623,46 @@ ThreadedCalculationController::~ThreadedCalculationController()
     workerThread->wait();
 }
 
-void ThreadedCalculationController::computePopPred(ezechiel::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computePopPred(Tucuxi::GuiCore::PredictionSpec* prediction)
 {
     buffer->pushPopPred(prediction);
 }
 
-void ThreadedCalculationController::computePopPerc(ezechiel::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computePopPerc(Tucuxi::GuiCore::PredictionSpec* prediction)
 {
     buffer->pushPopPerc(prediction);
     _popperctimer.start(POPTIMEOUT);
 }
 
-void ThreadedCalculationController::computeAprPred(ezechiel::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeAprPred(Tucuxi::GuiCore::PredictionSpec* prediction)
 {
     buffer->pushAprPred(prediction);
 }
 
-void ThreadedCalculationController::computeAprPerc(ezechiel::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeAprPerc(Tucuxi::GuiCore::PredictionSpec* prediction)
 {
     buffer->pushAprPerc(prediction);
     _aprperctimer.start(APRTIMEOUT);
 }
 
-void ThreadedCalculationController::computeApoPred(ezechiel::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeApoPred(Tucuxi::GuiCore::PredictionSpec* prediction)
 {
     buffer->pushApoPred(prediction);
 }
 
-void ThreadedCalculationController::computeApoPerc(ezechiel::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeApoPerc(Tucuxi::GuiCore::PredictionSpec* prediction)
 {
     buffer->pushApoPerc(prediction);
     _apoperctimer.start(APOTIMEOUT);
 }
 
-void ThreadedCalculationController::computeAdjPerc(ezechiel::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeAdjPerc(Tucuxi::GuiCore::PredictionSpec* prediction)
 {
     buffer->pushAdjPerc(prediction);
     _adjperctimer.start(ADJTIMEOUT);
 }
 
-void ThreadedCalculationController::computeRevPred(ezechiel::GuiCore::PredictionSpec* prediction)
+void ThreadedCalculationController::computeRevPred(Tucuxi::GuiCore::PredictionSpec* prediction)
 {
     buffer->pushRevPred(prediction);
 }
@@ -771,66 +771,66 @@ void CalculationBuffer::quit()
     dataReady.wakeOne();
 }
 
-void CalculationBuffer::pushPopPred(ezechiel::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushPopPred(Tucuxi::GuiCore::PredictionSpec* predSpec)
 {
     MESS("Push Pop Pred");
-    predSpec->setCalculationType(ezechiel::GuiCore::PredictionSpec::CalculationType::PopPred);
+    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::PopPred);
     push(predSpec, PopPred);
 }
 
-void CalculationBuffer::pushPopPerc(ezechiel::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushPopPerc(Tucuxi::GuiCore::PredictionSpec* predSpec)
 {
     MESS("Push Pop Perc");
-    predSpec->setCalculationType(ezechiel::GuiCore::PredictionSpec::CalculationType::PopPerc);
+    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::PopPerc);
     push(predSpec, PopPerc);
 }
 
-void CalculationBuffer::pushAprPred(ezechiel::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushAprPred(Tucuxi::GuiCore::PredictionSpec* predSpec)
 {
     MESS("Push Apr Pred");
-    predSpec->setCalculationType(ezechiel::GuiCore::PredictionSpec::CalculationType::AprPred);
+    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::AprPred);
     push(predSpec, AprPred);
 }
 
-void CalculationBuffer::pushAprPerc(ezechiel::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushAprPerc(Tucuxi::GuiCore::PredictionSpec* predSpec)
 {
     MESS("Push Apr Perc");
-    predSpec->setCalculationType(ezechiel::GuiCore::PredictionSpec::CalculationType::AprPerc);
+    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::AprPerc);
     push(predSpec, AprPerc);
 }
 
-void CalculationBuffer::pushApoPred(ezechiel::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushApoPred(Tucuxi::GuiCore::PredictionSpec* predSpec)
 {
     MESS("Push Apo Pred");
-    predSpec->setCalculationType(ezechiel::GuiCore::PredictionSpec::CalculationType::ApoPred);
+    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::ApoPred);
     push(predSpec, ApoPred);
 }
 
-void CalculationBuffer::pushApoPerc(ezechiel::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushApoPerc(Tucuxi::GuiCore::PredictionSpec* predSpec)
 {
     MESS("Push Apo Perc");
-    predSpec->setCalculationType(ezechiel::GuiCore::PredictionSpec::CalculationType::ApoPerc);
+    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::ApoPerc);
     push(predSpec, ApoPerc);
 }
 
-void CalculationBuffer::pushAdjPerc(ezechiel::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushAdjPerc(Tucuxi::GuiCore::PredictionSpec* predSpec)
 {
     MESS("Push Adj Perc");
-    predSpec->setCalculationType(ezechiel::GuiCore::PredictionSpec::CalculationType::AdjPerc);
+    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::AdjPerc);
     push(predSpec, AdjPerc);
 }
 
-void CalculationBuffer::pushRevPred(ezechiel::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushRevPred(Tucuxi::GuiCore::PredictionSpec* predSpec)
 {
     MESS("Push Adjustment");
-    predSpec->setCalculationType(ezechiel::GuiCore::PredictionSpec::CalculationType::RevPred);
+    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::RevPred);
     push(predSpec, RevPred);
 }
 
-void CalculationBuffer::pushAdjPred(ezechiel::GuiCore::PredictionSpec* predSpec)
+void CalculationBuffer::pushAdjPred(Tucuxi::GuiCore::PredictionSpec* predSpec)
 {
     MESS("Push Adjustment");
-    predSpec->setCalculationType(ezechiel::GuiCore::PredictionSpec::CalculationType::AdjPred);
+    predSpec->setCalculationType(Tucuxi::GuiCore::PredictionSpec::CalculationType::AdjPred);
     push(predSpec, AdjPred);
 }
 
@@ -919,7 +919,7 @@ void CalculationBuffer::push(PredictionSpec *spec, calculationType what)
 }
 
 
-void CalculationBuffer::get(ezechiel::GuiCore::PredictionSpec **spec, calculationType *what)
+void CalculationBuffer::get(Tucuxi::GuiCore::PredictionSpec **spec, calculationType *what)
 {
     QMutexLocker locker(&mutex);
     while (list.isEmpty())
@@ -984,7 +984,7 @@ bool CalculationBuffer::shouldAbortAdjPerc()
     return shouldAbort;
 }
 
-void CalculationBuffer::popPredComputed(ezechiel::GuiCore::PredictionResult* pred)
+void CalculationBuffer::popPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
 {
     MESS("End Pop Pred");
     QMutexLocker locker(&mutex);
@@ -992,7 +992,7 @@ void CalculationBuffer::popPredComputed(ezechiel::GuiCore::PredictionResult* pre
     emit sig_popPredUpdated(pred);
 }
 
-void CalculationBuffer::aprPredComputed(ezechiel::GuiCore::PredictionResult* pred)
+void CalculationBuffer::aprPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
 {
     MESS("End Apr Pred");
     QMutexLocker locker(&mutex);
@@ -1000,7 +1000,7 @@ void CalculationBuffer::aprPredComputed(ezechiel::GuiCore::PredictionResult* pre
     emit sig_aprPredUpdated(pred);
 }
 
-void CalculationBuffer::apoPredComputed(ezechiel::GuiCore::PredictionResult* pred)
+void CalculationBuffer::apoPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
 {
     MESS("End Apo Pred");
     QMutexLocker locker(&mutex);
@@ -1008,7 +1008,7 @@ void CalculationBuffer::apoPredComputed(ezechiel::GuiCore::PredictionResult* pre
     emit sig_apoPredUpdated(pred);
 }
 
-void CalculationBuffer::revPredComputed(ezechiel::GuiCore::PredictionResult* pred)
+void CalculationBuffer::revPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
 {
     MESS("End Rev Pred");
     QMutexLocker locker(&mutex);
@@ -1016,7 +1016,7 @@ void CalculationBuffer::revPredComputed(ezechiel::GuiCore::PredictionResult* pre
     emit sig_revPredUpdated(pred);
 }
 
-void CalculationBuffer::popPercComputed(ezechiel::GuiCore::PredictionResult* pred)
+void CalculationBuffer::popPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
 {
     MESS("End Pop Perc");
     QMutexLocker locker(&mutex);
@@ -1027,7 +1027,7 @@ void CalculationBuffer::popPercComputed(ezechiel::GuiCore::PredictionResult* pre
     emit sig_popPercUpdated(pred);
 }
 
-void CalculationBuffer::aprPercComputed(ezechiel::GuiCore::PredictionResult* pred)
+void CalculationBuffer::aprPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
 {
     MESS("End Apr Perc");
     QMutexLocker locker(&mutex);
@@ -1038,7 +1038,7 @@ void CalculationBuffer::aprPercComputed(ezechiel::GuiCore::PredictionResult* pre
     emit sig_aprPercUpdated(pred);
 }
 
-void CalculationBuffer::apoPercComputed(ezechiel::GuiCore::PredictionResult* pred)
+void CalculationBuffer::apoPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
 {
     MESS("End Apo Perc");
     QMutexLocker locker(&mutex);
@@ -1049,7 +1049,7 @@ void CalculationBuffer::apoPercComputed(ezechiel::GuiCore::PredictionResult* pre
     emit sig_apoPercUpdated(pred);
 }
 
-void CalculationBuffer::adjPercComputed(ezechiel::GuiCore::PredictionResult* pred)
+void CalculationBuffer::adjPercComputed(Tucuxi::GuiCore::PredictionResult* pred)
 {
     MESS("End Adj Perc");
     QMutexLocker locker(&mutex);
@@ -1060,7 +1060,7 @@ void CalculationBuffer::adjPercComputed(ezechiel::GuiCore::PredictionResult* pre
     emit sig_adjPercUpdated(pred);
 }
 
-void CalculationBuffer::adjustmentsComputed(QList<ezechiel::GuiCore::Dosage*> pred)
+void CalculationBuffer::adjustmentsComputed(QList<Tucuxi::GuiCore::Dosage*> pred)
 {
     MESS("End Adjustment");
     QMutexLocker locker(&mutex);
@@ -1068,7 +1068,7 @@ void CalculationBuffer::adjustmentsComputed(QList<ezechiel::GuiCore::Dosage*> pr
     emit sig_adjustmentsUpdated(pred);
 }
 
-void CalculationBuffer::adjPredComputed(ezechiel::GuiCore::PredictionResult* pred)
+void CalculationBuffer::adjPredComputed(Tucuxi::GuiCore::PredictionResult* pred)
 {
     MESS("End Pop Perc");
     QMutexLocker locker(&mutex);

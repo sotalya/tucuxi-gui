@@ -17,7 +17,7 @@
 //#include "dbobjects/dbobjects.h
 #include "plugin.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 
 
 //enum ParameterType {
@@ -1653,11 +1653,11 @@ namespace ezechiel {
 //signals:
 //    void covariatePKNotify(int, Covariate*);
 //    void curveFKNotify(int, Covariate*);
-//    ezechiel::Curve* curveChanged(Curve*);
+//    Tucuxi::Curve* curveChanged(Curve*);
 //    int patientvariateFKNotify(int, Covariate*);
-//    ezechiel::PatientVariate* patientvariateChanged(PatientVariate*);
+//    Tucuxi::PatientVariate* patientvariateChanged(PatientVariate*);
 //    int drugvariateFKNotify(int, Covariate*);
-//    ezechiel::DrugVariate* drugvariateChanged(DrugVariate*);
+//    Tucuxi::DrugVariate* drugvariateChanged(DrugVariate*);
 
 //private:
 //    int m_id;
@@ -1713,9 +1713,9 @@ namespace ezechiel {
 //signals:
 //    void correlationPKNotify(int, Correlation*);
 //    int drugparameter1FKNotify(int, Correlation*);
-//    ezechiel::DrugParameter* drugparameter1Changed(DrugParameter*);
+//    Tucuxi::DrugParameter* drugparameter1Changed(DrugParameter*);
 //    int drugparameter2FKNotify(int, Correlation*);
-//    ezechiel::DrugParameter* drugparameter2Changed(DrugParameter*);
+//    Tucuxi::DrugParameter* drugparameter2Changed(DrugParameter*);
 //    double factorChanged(double);
 ////    int drugFKNotify(int, Correlation*);
 ////    QObject* drugChanged(QObject*);
@@ -1825,7 +1825,7 @@ namespace ezechiel {
 //    //The model's id
 //    QString _model;
 //};
-//Q_DECLARE_METATYPE(ezechiel::ParameterSet)
+//Q_DECLARE_METATYPE(Tucuxi::ParameterSet)
 
 
 //class ValidDose : public QObject
@@ -2171,84 +2171,84 @@ enum Gender {
 
 }
 
-//Q_DECLARE_METATYPE(ezechiel::ParameterType)
+//Q_DECLARE_METATYPE(Tucuxi::ParameterType)
 
-//Q_DECLARE_METATYPE(ezechiel::ErrorModel*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::ErrorModel, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::ErrorModel*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::ErrorModel, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Drug*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Drug, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Drug*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Drug, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Parameter*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Parameter, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Parameter*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Parameter, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::DrugParameter*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::DrugParameter, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::DrugParameter*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::DrugParameter, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::DrugVariate*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::DrugVariate, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::DrugVariate*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::DrugVariate, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Location*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Location, ezechiel::Location*)
+//Q_DECLARE_METATYPE(Tucuxi::Location*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Location, Tucuxi::Location*)
 
-//Q_DECLARE_METATYPE(ezechiel::Institute*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Institute, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Institute*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Institute, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Patient*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Patient, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Patient*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Patient, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Practician*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Practician, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Practician*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Practician, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::PatientVariate*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::PatientVariate, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::PatientVariate*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::PatientVariate, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::VariateSharedMeasure)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::VariateMeasure, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::VariateSharedMeasure)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::VariateMeasure, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Clinicals*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Clinicals, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Clinicals*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Clinicals, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::ComputeEngine*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::ComputeEngine, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::ComputeEngine*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::ComputeEngine, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Curve*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Curve, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Curve*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Curve, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Dosage*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Dosage, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Dosage*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Dosage, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::SharedMeasure)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Measure, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::SharedMeasure)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Measure, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Option*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Option, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Option*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Option, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::CurveOption*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::CurveOption, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::CurveOption*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::CurveOption, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Report*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Report, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Report*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Report, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Covariate*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Covariate, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Covariate*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Covariate, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Correlation*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Correlation, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Correlation*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Correlation, QObject*)
 
 
-//Q_DECLARE_METATYPE(ezechiel::ValidDose*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::ValidDose, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::ValidDose*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::ValidDose, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::ValidInterval*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::ValidInterval, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::ValidInterval*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::ValidInterval, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::ValidInfusion*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::ValidInfusion, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::ValidInfusion*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::ValidInfusion, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Operation*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Operation, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Operation*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Operation, QObject*)
 
-//Q_DECLARE_METATYPE(ezechiel::Target*)
-//Q_SCRIPT_DECLARE_QMETAOBJECT(ezechiel::Target, QObject*)
+//Q_DECLARE_METATYPE(Tucuxi::Target*)
+//Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Target, QObject*)
 #endif // GENERICDBOBJECTS_H

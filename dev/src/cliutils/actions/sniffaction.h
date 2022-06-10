@@ -16,7 +16,7 @@ class RestRequestsClient;
   This action permit to retrieve data from the database.
   If a specific item is wanted, its informations will be showed, othewise a list of possible item will be printed.
   */
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 class SniffAction : public Action
 {
@@ -51,7 +51,7 @@ private:
 };
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi
 
 
 #endif // SNIFFACTION_H

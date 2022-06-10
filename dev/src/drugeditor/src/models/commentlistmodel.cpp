@@ -64,7 +64,7 @@ int CommentListModel::rowCount(const QModelIndex &parent) const
     return _comments->size();
 }
 
-void CommentListModel::setModelData(ezechiel::GuiCore::TranslatableString *comments)
+void CommentListModel::setModelData(Tucuxi::GuiCore::TranslatableString *comments)
 {
     beginResetModel();
     _comments = comments;
@@ -98,7 +98,7 @@ void CommentListModel::setDataImpl(const QModelIndex &index, const QVariant &new
     }
 }
 
-void CommentListModel::insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities){
+void CommentListModel::insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities){
 
     Q_ASSERT(at >= 0 && count >= 0);
     Q_ASSERT(at+count <= rowCount()+1);
@@ -110,7 +110,7 @@ void CommentListModel::insertRowsImpl(int at, int count, const ezechiel::GuiCore
             key = keyGen();
             value = "";
         } else {
-            ezechiel::GuiCore::TranslatableString *comment = static_cast<ezechiel::GuiCore::TranslatableString*>(entities.at(i));
+            Tucuxi::GuiCore::TranslatableString *comment = static_cast<Tucuxi::GuiCore::TranslatableString*>(entities.at(i));
             key = comment->keys().at(0);
             value = comment->value(key);
         }
@@ -119,16 +119,16 @@ void CommentListModel::insertRowsImpl(int at, int count, const ezechiel::GuiCore
 
 }
 
-ezechiel::GuiCore::SharedEntitySet CommentListModel::removeRowsImpl(int at, int count){
+Tucuxi::GuiCore::SharedEntitySet CommentListModel::removeRowsImpl(int at, int count){
 
     Q_ASSERT(at >= 0 && count >= 0);
     Q_ASSERT(at+count <= rowCount());
 
     QStringList keys =_comments->keys();
 
-    ezechiel::GuiCore::SharedEntitySet removed;
+    Tucuxi::GuiCore::SharedEntitySet removed;
     for (int i = 0; i < count; ++i) {
-        ezechiel::GuiCore::TranslatableString *trans = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TranslatableString>(0);
+        Tucuxi::GuiCore::TranslatableString *trans = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(0);
         QString key = keys.at(i+at);
         trans->insert(key,_comments->take(key));
         removed << trans;

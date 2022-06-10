@@ -9,7 +9,7 @@
 #include "core/utils/autoproperty.h"
 #include "abstractviewcontroller.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class CoreMeasureList;
@@ -24,7 +24,7 @@ public:
     explicit MeasureTabController(QObject *parent = nullptr);
 
     //! This property is used by MeasureTab.qml to access the list of measures
-    STD_PROPERTY_DECL(ezechiel::GuiCore::CoreMeasureList*, measures, Measures)
+    STD_PROPERTY_DECL(Tucuxi::GuiCore::CoreMeasureList*, measures, Measures)
 
 public:
     Q_INVOKABLE void addMeasure();

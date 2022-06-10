@@ -3,7 +3,7 @@
 #include "core/dal/drug/errormodel.h"
 #include "core/dal/drug/translatablestring.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //! The parameter's value standard variability
@@ -14,7 +14,7 @@ AUTO_PROPERTY_IMPL(ErrorModel, double, proportional, Proportional)
 AUTO_PROPERTY_IMPL(ErrorModel, TranslatableString*, comments, Comments)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
 

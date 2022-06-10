@@ -122,7 +122,7 @@ void ListTestWidget::displaySuccess()
 
 void ListTestWidget::parseRequests(const QDomDocument &doc)
 {
-    EXLOG(QtDebugMsg, ezechiel::restclient::NOEZERROR, tr("Parsing requests from doc: %1").arg(doc.toString()));
+    EXLOG(QtDebugMsg, Tucuxi::restclient::NOEZERROR, tr("Parsing requests from doc: %1").arg(doc.toString()));
     QDomElement requestNode = doc.documentElement().firstChildElement("request");
     while (!requestNode.isNull()) {
         QString id        = requestNode.firstChildElement("requestId").firstChild().toText().data();
@@ -163,7 +163,7 @@ void ListTestWidget::parseRequests(const QDomDocument &doc)
 
         _ui->listWidget->resizeColumnsToContents();
 
-        EXLOG(QtDebugMsg, ezechiel::restclient::NOEZERROR, tr("...request parsed..."));
+        EXLOG(QtDebugMsg, Tucuxi::restclient::NOEZERROR, tr("...request parsed..."));
         requestNode = requestNode.nextSiblingElement("request");
     }
 }

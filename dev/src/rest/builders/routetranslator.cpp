@@ -14,30 +14,30 @@ DummyRouteTranslator::DummyRouteTranslator()
 {
 }
 
-ezechiel::GuiCore::Admin::Route DummyRouteTranslator::restToInternalRoute(QString restRoute)
+Tucuxi::GuiCore::Admin::Route DummyRouteTranslator::restToInternalRoute(QString restRoute)
 {
-    return ezechiel::GuiCore::Admin::UNVALID;
+    return Tucuxi::GuiCore::Admin::UNVALID;
 }
 
 ChuvRouteTranslator::ChuvRouteTranslator()
 {
-    map.insert("", ezechiel::GuiCore::Admin::DEFAULT);
+    map.insert("", Tucuxi::GuiCore::Admin::DEFAULT);
     // Internal values
-    map.insert("BOLUS", ezechiel::GuiCore::Admin::BOLUS);
-    map.insert("INFUSION", ezechiel::GuiCore::Admin::INFUSION);
-    map.insert("EXTRA", ezechiel::GuiCore::Admin::EXTRA);
+    map.insert("BOLUS", Tucuxi::GuiCore::Admin::BOLUS);
+    map.insert("INFUSION", Tucuxi::GuiCore::Admin::INFUSION);
+    map.insert("EXTRA", Tucuxi::GuiCore::Admin::EXTRA);
 
     // External values
-    map.insert("i.v", ezechiel::GuiCore::Admin::INFUSION);
-    map.insert("i.v.", ezechiel::GuiCore::Admin::INFUSION);
-    map.insert("injection iv", ezechiel::GuiCore::Admin::INFUSION);
-    map.insert("perfusion i.v. continue", ezechiel::GuiCore::Admin::INFUSION);
-    map.insert("perfusion iv continue", ezechiel::GuiCore::Admin::INFUSION);
-    map.insert("orale", ezechiel::GuiCore::Admin::EXTRA);
-    map.insert("per os", ezechiel::GuiCore::Admin::EXTRA);
+    map.insert("i.v", Tucuxi::GuiCore::Admin::INFUSION);
+    map.insert("i.v.", Tucuxi::GuiCore::Admin::INFUSION);
+    map.insert("injection iv", Tucuxi::GuiCore::Admin::INFUSION);
+    map.insert("perfusion i.v. continue", Tucuxi::GuiCore::Admin::INFUSION);
+    map.insert("perfusion iv continue", Tucuxi::GuiCore::Admin::INFUSION);
+    map.insert("orale", Tucuxi::GuiCore::Admin::EXTRA);
+    map.insert("per os", Tucuxi::GuiCore::Admin::EXTRA);
 }
 
-ezechiel::GuiCore::Admin::Route ChuvRouteTranslator::restToInternalRoute(QString restRoute)
+Tucuxi::GuiCore::Admin::Route ChuvRouteTranslator::restToInternalRoute(QString restRoute)
 {
-    return map.value(restRoute,ezechiel::GuiCore::Admin::UNVALID);
+    return map.value(restRoute,Tucuxi::GuiCore::Admin::UNVALID);
 }

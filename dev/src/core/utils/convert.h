@@ -16,7 +16,7 @@
 // Date format
 #define DATE_FORMAT "dd/mm/yyyy"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -64,6 +64,6 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // CONVERT_H

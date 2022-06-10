@@ -18,7 +18,7 @@ ReplyListXmlMessage::~ReplyListXmlMessage()
 
 QString ReplyListXmlMessage::schemaPath() const
 {
-    return ezechiel::GuiCore::XmlValidator::Reply_List;
+    return Tucuxi::GuiCore::XmlValidator::Reply_List;
 }
 
 QString ReplyListXmlMessage::messageType() const

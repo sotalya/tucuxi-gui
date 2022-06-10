@@ -8,7 +8,7 @@
 #include "core/dal/entity.h"
 #include "core/utils/units.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class CorePatient;
@@ -82,8 +82,8 @@ private:
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugTreatment*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::DrugTreatment*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::DrugTreatment*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::DrugTreatment*>)
 #endif // DRUGTREATMENT_H

@@ -9,7 +9,7 @@
 #include "core/dal/drugresponseanalysis.h"
 #include "core/dal/drug/parameters.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -69,15 +69,15 @@ protected:
         _adjustmentWithRestPeriod(false),
         _clearCache(true)
     {
-        //  _analysis = ezechiel::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(repository);
+        //  _analysis = Tucuxi::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(repository);
     }
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::PredictionSpec*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::PredictionSpec*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::PredictionSpec*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::PredictionSpec*>)
 
 #endif // PREDICTIONSPEC_H

@@ -9,7 +9,7 @@
 #include <QVector>
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -116,6 +116,6 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // DATASET_H

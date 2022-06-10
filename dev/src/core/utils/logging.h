@@ -7,7 +7,7 @@
 #include <QDebug>
 #include <QFile>
 
-namespace ezechiel {
+namespace Tucuxi {
 
 #define EZERROR(MODULE, NAME, DESC) \
     struct NAME { \
@@ -72,7 +72,7 @@ private:
 
 #define OWNLOG(ERRTYPE, ERROR, MSG) { LOG(ERRTYPE, ERROR, MSG); this->log<ERROR>(ERRTYPE, MSG, __FILE__, __LINE__, __FUNCTION__); }
 #define LOG(ERRTYPE, ERROR, MSG) { logging::Logger::log<ERROR>(ERRTYPE, MSG, __FILE__, __LINE__, __FUNCTION__); }
-#define EXLOG(ERRTYPE, ERROR, MSG) { ezechiel::logging::Logger::log<ERROR>(ERRTYPE, MSG, __FILE__, __LINE__, __FUNCTION__); }
+#define EXLOG(ERRTYPE, ERROR, MSG) { Tucuxi::logging::Logger::log<ERROR>(ERRTYPE, MSG, __FILE__, __LINE__, __FUNCTION__); }
 #define PRECOND(CONDITION, ERROR, MSG) \
     if (!(CONDITION)) LOG(QtFatalMsg, ERROR, MSG);
 #define POSTCOND(CONDITION, ERROR, MSG) \
@@ -93,6 +93,6 @@ private:
             LOG(QtWarningMsg, ERROR, MSG); \
         return ProcessingResult::Failure;\
     }
-} //namespace ezechiel
+} //namespace Tucuxi
 #endif // LOGGING
 

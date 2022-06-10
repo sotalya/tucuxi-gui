@@ -8,7 +8,7 @@
 
 #include <QImage>
 
-class Institute : public ezechiel::GuiCore::Entity
+class Institute : public Tucuxi::GuiCore::Entity
 {
     Q_OBJECT
     AUTO_PROPERTY(QString, name)
@@ -18,8 +18,8 @@ class Institute : public ezechiel::GuiCore::Entity
     AUTO_PROPERTY(int, location_id)
 
 public:
-    Q_INVOKABLE Institute(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
-    Q_INVOKABLE Institute(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE Institute(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE Institute(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
     QList<SharedPhone> phones() const;
     void setPhones(const QList<SharedPhone> &phones);
@@ -45,8 +45,8 @@ Q_DECLARE_METATYPE(QList<Institute*>)
 class InstituteSet : public QList<Institute*>
 {
 public :
-    InstituteSet(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent = 0) {}
-    InstituteSet(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent, const InstituteSet* &other);
+    InstituteSet(Tucuxi::GuiCore::AbstractRepository *repository, QObject* parent = 0) {}
+    InstituteSet(Tucuxi::GuiCore::AbstractRepository *repository, QObject* parent, const InstituteSet* &other);
 };
 Q_DECLARE_METATYPE(InstituteSet*)
 

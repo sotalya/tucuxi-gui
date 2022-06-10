@@ -8,7 +8,7 @@
 #include "predictiondata.h"
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class PercentileData : public Entity
@@ -24,7 +24,7 @@ public:
 QML_POINTERLIST_CLASS_DECL(PercentileDataList, PercentileData)
 }
 }
-Q_DECLARE_METATYPE(ezechiel::GuiCore::PercentileData*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::PercentileData*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::PercentileDataList*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::PercentileData*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::PercentileData*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::PercentileDataList*)
 #endif // PERCENTILEPAIR_H

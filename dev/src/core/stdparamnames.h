@@ -6,7 +6,7 @@
 #include <QObject>
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -122,6 +122,6 @@ public:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // STDPARAMNAMES_H

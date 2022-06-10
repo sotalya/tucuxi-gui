@@ -4,7 +4,7 @@
 #include "core/dal/drug/operation.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(IdentifiableAmount, QString, amountId, AmountId)
@@ -19,4 +19,4 @@ AUTO_PROPERTY_IMPL(OperableValue, OperationList*, operations, Operations)
 POINTERLIST_CLASS_IMPL(OperableValueList, OperableValue)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

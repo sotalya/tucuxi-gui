@@ -45,19 +45,19 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(QList<ezechiel::GuiCore::Target*> *targets);
-    void setModelData(ezechiel::GuiCore::DrugModel* drug);
+    void setModelData(QList<Tucuxi::GuiCore::Target*> *targets);
+    void setModelData(Tucuxi::GuiCore::DrugModel* drug);
 
 private:
     virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
-    virtual void insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities = ezechiel::GuiCore::SharedEntitySet());
-    virtual ezechiel::GuiCore::SharedEntitySet removeRowsImpl(int at, int count);
+    virtual void insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities = Tucuxi::GuiCore::SharedEntitySet());
+    virtual Tucuxi::GuiCore::SharedEntitySet removeRowsImpl(int at, int count);
 
     void init();
 
-    QList<ezechiel::GuiCore::Target*> *_targets;
-    ezechiel::GuiCore::DrugModel* _drug;
-    ezechiel::GuiCore::Unit _defaultCUnit;
+    QList<Tucuxi::GuiCore::Target*> *_targets;
+    Tucuxi::GuiCore::DrugModel* _drug;
+    Tucuxi::GuiCore::Unit _defaultCUnit;
     QHash<int, QByteArray> _roleNames;
 };
 

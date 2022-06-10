@@ -3,9 +3,9 @@
 #include "ephemeraldb.h"
 #include "server.h"
 
-using namespace ezechiel::zmq;
+using namespace Tucuxi::zmq;
 int main(int argc, char *argv[])
 {
-    ezechiel::EphemeralDB* _db = new ezechiel::EphemeralDB();
+    Tucuxi::EphemeralDB* _db = new Tucuxi::EphemeralDB();
     ZMQServer _svr();
 }

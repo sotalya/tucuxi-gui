@@ -17,7 +17,7 @@
 #include <QFlags>
 #include <QFile>
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 //! Use this macro to send an error and quit (both CLI and Core errors)
 //! doesnt work in static methods
@@ -59,9 +59,9 @@ using namespace ezechiel::GuiCore;
    In the console and in a Linux environment, the message are printed in color.
   */
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
-class CliMessageHandler : public ezechiel::GuiCore::CoreMessageHandler
+class CliMessageHandler : public Tucuxi::GuiCore::CoreMessageHandler
 {
     Q_OBJECT
 public:
@@ -210,6 +210,6 @@ private:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(CliMessageHandler::OutputFlags)
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi
 
 #endif // CLIMESSAGEHANDLER_H

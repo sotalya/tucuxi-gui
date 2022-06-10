@@ -7,7 +7,7 @@
 #include "adminfactory.h"
 #include "reportbuildermodule.h"
 
-class SampleBuilderModule : public ezechiel::GuiCore::Entity, public ReportBuilderModule
+class SampleBuilderModule : public Tucuxi::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
 

@@ -84,7 +84,7 @@ bool DomainListModel::removeRows(int row, int count, const QModelIndex &parent)
     return false;
 }
 
-void DomainListModel::setModelData(const QList<ezechiel::GuiCore::Descriptor> &domains)
+void DomainListModel::setModelData(const QList<Tucuxi::GuiCore::Descriptor> &domains)
 {
     beginResetModel();
     _domains = domains;

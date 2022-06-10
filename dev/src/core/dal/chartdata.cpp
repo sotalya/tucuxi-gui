@@ -2,7 +2,7 @@
 
 #include "core/dal/chartdata.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 Q_AUTO_PROPERTY_IMPL(ChartData, PredictionResult*, popPred, PopPred)

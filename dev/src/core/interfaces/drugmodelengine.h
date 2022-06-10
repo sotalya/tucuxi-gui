@@ -15,7 +15,7 @@
 #include "core/utils/dataset.h"
 #include "core/utils/duration.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -91,8 +91,8 @@ private:
 typedef DrugModelEngine* SharedModel;
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugModelEngine*);
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::DrugModelEngine*);
 
 #endif // MODEL_H

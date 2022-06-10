@@ -14,7 +14,7 @@
 #include "rest/model/replylistxmlmessage.h"
 #include "rest/builders/replylistmessagebuilder.h"
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 
 DemoRequestFileClient::DemoRequestFileClient(QObject *parent) : RequestsClientProcessing(parent)

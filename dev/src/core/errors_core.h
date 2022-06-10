@@ -7,7 +7,7 @@
 
 #include "core/utils/logging.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
     EZERROR(CORE, NOEZERROR, "There is no error.")
@@ -67,6 +67,6 @@ namespace GuiCore {
     EZERROR(CORE, ICANHAZCHEESEBURGER,"Your spelling is really bad, please open a dictionary.")
     EZERROR(CORE, XENATTAC,"Really, only the Dr. Freeman can resolve this")
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 #endif // ERRORS
 

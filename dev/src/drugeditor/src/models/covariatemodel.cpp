@@ -76,7 +76,7 @@ int CovariateModel::rowCount(const QModelIndex &parent) const
     return !_covariate ? 0 : 1;
 }
 
-void CovariateModel::setModelData(ezechiel::GuiCore::PatientVariate* covariate)
+void CovariateModel::setModelData(Tucuxi::GuiCore::PatientVariate* covariate)
 {
     beginResetModel();
     _covariate = covariate;
@@ -102,7 +102,7 @@ void CovariateModel::setDataImpl(const QModelIndex &index, const QVariant &value
         _covariate->getQuantity()->setValue(value.toDouble());
         break;
     case UnitRole:
-        _covariate->getQuantity()->setUnit(ezechiel::GuiCore::Unit(value.toString()));
+        _covariate->getQuantity()->setUnit(Tucuxi::GuiCore::Unit(value.toString()));
         break;
     case TypeRole:
         _covariate->setType(static_cast<QMetaType::Type>(QMetaType::type(qPrintable(value.toString()))));

@@ -134,12 +134,12 @@ void initRestConfig();
 /*
 class NewBsvCreator;
 
-class NewBsv: public ezechiel::GuiCore::Bsv
+class NewBsv: public Tucuxi::GuiCore::Bsv
 {
-    SUBENTITY_UTILS(NewBsv, ezechiel::GuiCore::Bsv)
+    SUBENTITY_UTILS(NewBsv, Tucuxi::GuiCore::Bsv)
 
 protected:
-    NewBsv(AbstractRepository *repo, QObject *parent) : ezechiel::GuiCore::Bsv(repo, parent) { std::cout << "********************\nI am a new Bsv\n****************\n";}
+    NewBsv(AbstractRepository *repo, QObject *parent) : Tucuxi::GuiCore::Bsv(repo, parent) { std::cout << "********************\nI am a new Bsv\n****************\n";}
 };
 */
 
@@ -184,15 +184,15 @@ int main(int argc, char *argv[])
     qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "23654");
 #endif
     // YTA: Demo of a subclass outside core that uses the factory
-//    ezechiel::GuiCore::Bsv::getFactory()->registerCreator(new NewBsv::NewBsvCreator());
+//    Tucuxi::GuiCore::Bsv::getFactory()->registerCreator(new NewBsv::NewBsvCreator());
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, QString("Built from Gui Git revision %1").arg(GIT_REVISION));
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, QString("Built from Gui Git revision %1").arg(GIT_REVISION));
 #ifdef COMPILE_WITH_TUCUCORE
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, QString("Built from Tucucore Git revision %1").arg(QString::fromStdString(Tucuxi::Core::Version::getGitRevision())));
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, QString("Built from Tucucore Git revision %1").arg(QString::fromStdString(Tucuxi::Core::Version::getGitRevision())));
 #endif // COMPILE_WITH_TUCUCORE
 
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Registering DAL objects.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering DAL objects.");
 
     // Set settings info before CORE is called
     QCoreApplication::setOrganizationName("HEIG-VD");
@@ -209,98 +209,98 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setApplicationVersion("0.3.0");
 
-    CORE->setRunningMode(ezechiel::GuiCore::Core::GUI);
+    CORE->setRunningMode(Tucuxi::GuiCore::Core::GUI);
 
-    qRegisterMetaType<ezechiel::GuiCore::PredictionResult*>("PredictionResult*");
-    qRegisterMetaType<ezechiel::GuiCore::PercentileData*>("PercentilePair*");
-    qRegisterMetaType<ezechiel::GuiCore::PercentileDataList*>("PercentileDataList*");
-    qRegisterMetaType<ezechiel::GuiCore::Predictive*>("Predictive*");
-    qRegisterMetaType<ezechiel::GuiCore::PredictionData*>("PredictionData*");
-    qRegisterMetaType<ezechiel::GuiCore::Points*>("Points*");
-    qRegisterMetaType<ezechiel::GuiCore::ChartData*>("ChartData*");
+    qRegisterMetaType<Tucuxi::GuiCore::PredictionResult*>("PredictionResult*");
+    qRegisterMetaType<Tucuxi::GuiCore::PercentileData*>("PercentilePair*");
+    qRegisterMetaType<Tucuxi::GuiCore::PercentileDataList*>("PercentileDataList*");
+    qRegisterMetaType<Tucuxi::GuiCore::Predictive*>("Predictive*");
+    qRegisterMetaType<Tucuxi::GuiCore::PredictionData*>("PredictionData*");
+    qRegisterMetaType<Tucuxi::GuiCore::Points*>("Points*");
+    qRegisterMetaType<Tucuxi::GuiCore::ChartData*>("ChartData*");
     qRegisterMetaType<QList<QObject*>*>("QList<QObject*>*");
     qRegisterMetaType<InterpretationRequest*>("InterpretationRequest*");
-    qRegisterMetaType<ezechiel::GuiCore::Duration>("Duration");
+    qRegisterMetaType<Tucuxi::GuiCore::Duration>("Duration");
     qRegisterMetaType<Patient*>("Patient*");
-    qRegisterMetaType<ezechiel::GuiCore::Descriptor>("Descriptor");
+    qRegisterMetaType<Tucuxi::GuiCore::Descriptor>("Descriptor");
     qRegisterMetaType<QMetaType::Type>("QMetaType::Type");
-//    qRegisterMetaType<ezechiel::GuiCore::QStringTranslation>("QStringTranslation");
-    qRegisterMetaType<ezechiel::GuiCore::TranslatableString*>("TranslatableString*");
+//    qRegisterMetaType<Tucuxi::GuiCore::QStringTranslation>("QStringTranslation");
+    qRegisterMetaType<Tucuxi::GuiCore::TranslatableString*>("TranslatableString*");
     qRegisterMetaType<Person*>("Person*");
     qRegisterMetaType<Location*>("Location*");
     qRegisterMetaType<Practician*>("Practician*");
-    qRegisterMetaType<ezechiel::GuiCore::DrugModel*>("DrugModel*");
+    qRegisterMetaType<Tucuxi::GuiCore::DrugModel*>("DrugModel*");
     qRegisterMetaType<InterpretationAnalysis*>("InterpretationAnalysis*");
-    qRegisterMetaType<ezechiel::GuiCore::TargetList*>("TargetList*");
-    qRegisterMetaType<ezechiel::GuiCore::Unit>("Unit");
-    qRegisterMetaType<ezechiel::GuiCore::DrugModelList*>("DrugList*");
-    qRegisterMetaType<ezechiel::GuiCore::ActiveSubstance*>("ActiveSubstance*");
-    qRegisterMetaType<ezechiel::GuiCore::ActiveSubstanceList*>("ActiveSubstanceList*");
-    qRegisterMetaType<ezechiel::GuiCore::LightActiveSubstance*>("LightActiveSubstance*");
-    qRegisterMetaType<ezechiel::GuiCore::LightActiveSubstanceList*>("LightActiveSubstanceList*");
-    qRegisterMetaType<ezechiel::GuiCore::CoreMeasure*>("CoreMeasure*");
-    qRegisterMetaType<ezechiel::GuiCore::CoreMeasureList*>("CoreMeasureList*");
+    qRegisterMetaType<Tucuxi::GuiCore::TargetList*>("TargetList*");
+    qRegisterMetaType<Tucuxi::GuiCore::Unit>("Unit");
+    qRegisterMetaType<Tucuxi::GuiCore::DrugModelList*>("DrugList*");
+    qRegisterMetaType<Tucuxi::GuiCore::ActiveSubstance*>("ActiveSubstance*");
+    qRegisterMetaType<Tucuxi::GuiCore::ActiveSubstanceList*>("ActiveSubstanceList*");
+    qRegisterMetaType<Tucuxi::GuiCore::LightActiveSubstance*>("LightActiveSubstance*");
+    qRegisterMetaType<Tucuxi::GuiCore::LightActiveSubstanceList*>("LightActiveSubstanceList*");
+    qRegisterMetaType<Tucuxi::GuiCore::CoreMeasure*>("CoreMeasure*");
+    qRegisterMetaType<Tucuxi::GuiCore::CoreMeasureList*>("CoreMeasureList*");
     qRegisterMetaType<PhoneList*>("PhoneList*");
     qRegisterMetaType<Phone*>("Phone*");
-    qRegisterMetaType<ezechiel::GuiCore::PatientVariate*>("PatientVariate*");
-    qRegisterMetaType<ezechiel::GuiCore::DrugVariate*>("DrugVariate*");
-    qRegisterMetaType<ezechiel::GuiCore::DrugTreatment*>("DrugTreatment*");
-    qRegisterMetaType<ezechiel::GuiCore::PredictionSpec*>("PredictionSpec*");
-    qRegisterMetaType<ezechiel::GuiCore::PatientVariateList*>("PatientVariateList*");
-    qRegisterMetaType<ezechiel::GuiCore::Dosage*>("Dosage*");
-    qRegisterMetaType<ezechiel::GuiCore::AdjustmentDosage*>("AdjustmentDosage*");
-    qRegisterMetaType<ezechiel::GuiCore::DosageHistory*>("DosageHistory*");
-    qRegisterMetaType<ezechiel::GuiCore::CorePatient*>("CorePatient*");
-    qRegisterMetaType<ezechiel::GuiCore::CorePatientList*>("CorePatientList*");
-    qRegisterMetaType<ezechiel::GuiCore::ADME*>("ADME*");
-    qRegisterMetaType<ezechiel::GuiCore::Admin*>("Admin*");
-    qRegisterMetaType<ezechiel::GuiCore::AdminList*>("AdminList*");
-    qRegisterMetaType<ezechiel::GuiCore::Admin::Route>("ADME::Route");
-    qRegisterMetaType<ezechiel::GuiCore::Amount>("Amount");
-    qRegisterMetaType<ezechiel::GuiCore::Reference*>("Reference*");
-    qRegisterMetaType<ezechiel::GuiCore::ReferenceList*>("ReferenceList*");
-    qRegisterMetaType<ezechiel::GuiCore::Editor*>("Editor*");
-    qRegisterMetaType<ezechiel::GuiCore::EditorList*>("EditorList*");
-    // qRegisterMetaType<ezechiel::GuiCore::EditorSet*>("EditorSet*");
-    qRegisterMetaType<ezechiel::GuiCore::IdentifiableAmount*>("IdentifiableAmount*");
-    qRegisterMetaType<ezechiel::GuiCore::Halflife*>("Halflife*");
-    qRegisterMetaType<ezechiel::GuiCore::Concentrations*>("Concentrations*");
-    qRegisterMetaType<ezechiel::GuiCore::Results*>("Results*");
-    qRegisterMetaType<ezechiel::GuiCore::ValidDoses*>("ValidDoses*");
-    qRegisterMetaType<ezechiel::GuiCore::ValidIntervals*>("ValidIntervals*");
-    qRegisterMetaType<ezechiel::GuiCore::ValidInfusions*>("ValidInfusions*");
-    qRegisterMetaType<ezechiel::GuiCore::DrugVariateList*>("DrugVariateList*");
-    qRegisterMetaType<ezechiel::GuiCore::Target*>("Target*");
-    qRegisterMetaType<ezechiel::GuiCore::TargetMethod*>("TargetMethod*");
-    qRegisterMetaType<ezechiel::GuiCore::TargetMethod::TargetType>("TargetType");
-    qRegisterMetaType<ezechiel::GuiCore::Operation*>("Operation*");
-    qRegisterMetaType<QList<ezechiel::GuiCore::Operation*> >("QList<Operation*>");
-    qRegisterMetaType<ezechiel::GuiCore::Bsv*>("Bsv*");
-    qRegisterMetaType<ezechiel::GuiCore::Parameter*>("Parameter*");
-    qRegisterMetaType<ezechiel::GuiCore::ParameterSet*>("ParameterSet*");
-    qRegisterMetaType<ezechiel::GuiCore::Parameters*>("ParameterList*");
-    qRegisterMetaType<ezechiel::GuiCore::DrugTreatment*>("DrugTreatment*");
-    qRegisterMetaType<ezechiel::GuiCore::StandardTreatment*>("StandardTreatment*");
+    qRegisterMetaType<Tucuxi::GuiCore::PatientVariate*>("PatientVariate*");
+    qRegisterMetaType<Tucuxi::GuiCore::DrugVariate*>("DrugVariate*");
+    qRegisterMetaType<Tucuxi::GuiCore::DrugTreatment*>("DrugTreatment*");
+    qRegisterMetaType<Tucuxi::GuiCore::PredictionSpec*>("PredictionSpec*");
+    qRegisterMetaType<Tucuxi::GuiCore::PatientVariateList*>("PatientVariateList*");
+    qRegisterMetaType<Tucuxi::GuiCore::Dosage*>("Dosage*");
+    qRegisterMetaType<Tucuxi::GuiCore::AdjustmentDosage*>("AdjustmentDosage*");
+    qRegisterMetaType<Tucuxi::GuiCore::DosageHistory*>("DosageHistory*");
+    qRegisterMetaType<Tucuxi::GuiCore::CorePatient*>("CorePatient*");
+    qRegisterMetaType<Tucuxi::GuiCore::CorePatientList*>("CorePatientList*");
+    qRegisterMetaType<Tucuxi::GuiCore::ADME*>("ADME*");
+    qRegisterMetaType<Tucuxi::GuiCore::Admin*>("Admin*");
+    qRegisterMetaType<Tucuxi::GuiCore::AdminList*>("AdminList*");
+    qRegisterMetaType<Tucuxi::GuiCore::Admin::Route>("ADME::Route");
+    qRegisterMetaType<Tucuxi::GuiCore::Amount>("Amount");
+    qRegisterMetaType<Tucuxi::GuiCore::Reference*>("Reference*");
+    qRegisterMetaType<Tucuxi::GuiCore::ReferenceList*>("ReferenceList*");
+    qRegisterMetaType<Tucuxi::GuiCore::Editor*>("Editor*");
+    qRegisterMetaType<Tucuxi::GuiCore::EditorList*>("EditorList*");
+    // qRegisterMetaType<Tucuxi::GuiCore::EditorSet*>("EditorSet*");
+    qRegisterMetaType<Tucuxi::GuiCore::IdentifiableAmount*>("IdentifiableAmount*");
+    qRegisterMetaType<Tucuxi::GuiCore::Halflife*>("Halflife*");
+    qRegisterMetaType<Tucuxi::GuiCore::Concentrations*>("Concentrations*");
+    qRegisterMetaType<Tucuxi::GuiCore::Results*>("Results*");
+    qRegisterMetaType<Tucuxi::GuiCore::ValidDoses*>("ValidDoses*");
+    qRegisterMetaType<Tucuxi::GuiCore::ValidIntervals*>("ValidIntervals*");
+    qRegisterMetaType<Tucuxi::GuiCore::ValidInfusions*>("ValidInfusions*");
+    qRegisterMetaType<Tucuxi::GuiCore::DrugVariateList*>("DrugVariateList*");
+    qRegisterMetaType<Tucuxi::GuiCore::Target*>("Target*");
+    qRegisterMetaType<Tucuxi::GuiCore::TargetMethod*>("TargetMethod*");
+    qRegisterMetaType<Tucuxi::GuiCore::TargetMethod::TargetType>("TargetType");
+    qRegisterMetaType<Tucuxi::GuiCore::Operation*>("Operation*");
+    qRegisterMetaType<QList<Tucuxi::GuiCore::Operation*> >("QList<Operation*>");
+    qRegisterMetaType<Tucuxi::GuiCore::Bsv*>("Bsv*");
+    qRegisterMetaType<Tucuxi::GuiCore::Parameter*>("Parameter*");
+    qRegisterMetaType<Tucuxi::GuiCore::ParameterSet*>("ParameterSet*");
+    qRegisterMetaType<Tucuxi::GuiCore::Parameters*>("ParameterList*");
+    qRegisterMetaType<Tucuxi::GuiCore::DrugTreatment*>("DrugTreatment*");
+    qRegisterMetaType<Tucuxi::GuiCore::StandardTreatment*>("StandardTreatment*");
     qRegisterMetaType<DrugVariateInfo*>("DrugVariateInfo*");
     qRegisterMetaType<DrugVariateInfoList*>("DrugVariateInfoList*");
-    qRegisterMetaType<ezechiel::GuiCore::TargetEvaluationResult*>("TargetEvaluationResult*");
-    qRegisterMetaType<ezechiel::GuiCore::TargetEvaluationResults*>("TargetEvaluationResults*");
-    qRegisterMetaType<ezechiel::GuiCore::Adjustment*>("Adjustment*");
-    qRegisterMetaType<ezechiel::GuiCore::Adjustments*>("Adjustments*");
-    qRegisterMetaType<ezechiel::GuiCore::FancyPoint*>("FancyPoint*");
-    qRegisterMetaType<ezechiel::GuiCore::FancyPoints*>("FancyPoints*");
-    qRegisterMetaType<ezechiel::GuiCore::ErrorModel*>("ErrorModel*");
-    qRegisterMetaType<ezechiel::GuiCore::MetaData*>("MetaData*");
-    qRegisterMetaType<ezechiel::GuiCore::Prediction*>("Prediction*");
-    qRegisterMetaType<ezechiel::GuiCore::DrugResponseAnalysis*>("Analysis*");
-    qRegisterMetaType<ezechiel::GuiCore::OperableAmount*>("OperableAmount*");
-    qRegisterMetaType<ezechiel::GuiCore::OperationType>("OperationType");
-    qRegisterMetaType<ezechiel::GuiCore::OperableValue*>("OperableValue*");
-    qRegisterMetaType<ezechiel::GuiCore::OperableValueList*>("OperableValueList*");
-    qRegisterMetaType<ezechiel::GuiCore::OperationList*>("OperationList*");
-    qRegisterMetaType<ezechiel::GuiCore::UncastedValue*>("UncastedValue*");
-    qRegisterMetaType<ezechiel::GuiCore::UncastedValueList*>("UncastedValueList*");
-    qRegisterMetaType<ezechiel::GuiCore::Admin::Route>("Route");
+    qRegisterMetaType<Tucuxi::GuiCore::TargetEvaluationResult*>("TargetEvaluationResult*");
+    qRegisterMetaType<Tucuxi::GuiCore::TargetEvaluationResults*>("TargetEvaluationResults*");
+    qRegisterMetaType<Tucuxi::GuiCore::Adjustment*>("Adjustment*");
+    qRegisterMetaType<Tucuxi::GuiCore::Adjustments*>("Adjustments*");
+    qRegisterMetaType<Tucuxi::GuiCore::FancyPoint*>("FancyPoint*");
+    qRegisterMetaType<Tucuxi::GuiCore::FancyPoints*>("FancyPoints*");
+    qRegisterMetaType<Tucuxi::GuiCore::ErrorModel*>("ErrorModel*");
+    qRegisterMetaType<Tucuxi::GuiCore::MetaData*>("MetaData*");
+    qRegisterMetaType<Tucuxi::GuiCore::Prediction*>("Prediction*");
+    qRegisterMetaType<Tucuxi::GuiCore::DrugResponseAnalysis*>("Analysis*");
+    qRegisterMetaType<Tucuxi::GuiCore::OperableAmount*>("OperableAmount*");
+    qRegisterMetaType<Tucuxi::GuiCore::OperationType>("OperationType");
+    qRegisterMetaType<Tucuxi::GuiCore::OperableValue*>("OperableValue*");
+    qRegisterMetaType<Tucuxi::GuiCore::OperableValueList*>("OperableValueList*");
+    qRegisterMetaType<Tucuxi::GuiCore::OperationList*>("OperationList*");
+    qRegisterMetaType<Tucuxi::GuiCore::UncastedValue*>("UncastedValue*");
+    qRegisterMetaType<Tucuxi::GuiCore::UncastedValueList*>("UncastedValueList*");
+    qRegisterMetaType<Tucuxi::GuiCore::Admin::Route>("Route");
     qRegisterMetaType<ValidationStatus::StatusType>("StatusType");
     qRegisterMetaType<ClinicalSet*>("ClinicalSet*");
     qRegisterMetaType<Interpretation*>("Interpretation*");
@@ -322,46 +322,46 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Section>("ezechiel", 1, 0, "Section", QObject::tr("Cannot instantiate type 'Section'"));
     //qmlRegisterUncreatableType<QList<Section*>>("ezechiel", 1, 0, "QList<Section*>", QObject::tr("Cannot instantiate type 'QList<Section*>'"));
 
-    qRegisterMetaType< ezechiel::GuiCore::IntList >( "IntList" );
+    qRegisterMetaType< Tucuxi::GuiCore::IntList >( "IntList" );
     qmlRegisterUncreatableType<InterpretationRequest>("ezechiel", 1, 0, "InterpretationRequest", QObject::tr("Cannot instantiate type 'InterpretationRequest'"));
     qmlRegisterUncreatableType<Patient>("ezechiel", 1, 0, "Patient", QObject::tr("Cannot instantiate type 'Patient'"));
     qmlRegisterUncreatableType<Phone>("ezechiel", 1, 0, "Phone", QObject::tr("Cannot instantiate type 'Phone'"));
     qmlRegisterUncreatableType<Person>("ezechiel", 1, 0, "Person", QObject::tr("Cannot instantiate type 'Person'"));
     qmlRegisterUncreatableType<Location>("ezechiel", 1, 0, "Location", QObject::tr("Cannot instantiate type 'Location'"));
     qmlRegisterUncreatableType<Practician>("ezechiel", 1, 0, "Practician", QObject::tr("Cannot instantiate type 'Practician'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::DrugModel>("ezechiel", 1, 0, "DrugModel", QObject::tr("Cannot instantiate type 'DrugModel'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::ActiveSubstance>("ezechiel", 1, 0, "ActiveSubstance", QObject::tr("Cannot instantiate type 'ActiveSubstance'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::Target>("ezechiel", 1, 0, "Target", QObject::tr("Cannot instantiate type 'Target'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::TargetEvaluationResult>("ezechiel", 1, 0, "TargetEvaluationResult", QObject::tr("Cannot instantiate type 'TargetEvaluationResult'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::TargetEvaluationResults>("ezechiel", 1, 0, "TargetEvaluationResults", QObject::tr("Cannot instantiate type 'TargetEvaluationResults'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::CoreMeasure>("ezechiel", 1, 0, "CoreMeasure", QObject::tr("Cannot instantiate type 'CoreMeasure'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::PatientVariate>("ezechiel", 1, 0, "PatientVariate", QObject::tr("Cannot instantiate type 'PatientVariate'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::DrugVariate>("ezechiel", 1, 0, "DrugVariate", QObject::tr("Cannot instantiate type 'DrugVariate'"));    
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::DrugModel>("ezechiel", 1, 0, "DrugModel", QObject::tr("Cannot instantiate type 'DrugModel'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::ActiveSubstance>("ezechiel", 1, 0, "ActiveSubstance", QObject::tr("Cannot instantiate type 'ActiveSubstance'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::Target>("ezechiel", 1, 0, "Target", QObject::tr("Cannot instantiate type 'Target'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::TargetEvaluationResult>("ezechiel", 1, 0, "TargetEvaluationResult", QObject::tr("Cannot instantiate type 'TargetEvaluationResult'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::TargetEvaluationResults>("ezechiel", 1, 0, "TargetEvaluationResults", QObject::tr("Cannot instantiate type 'TargetEvaluationResults'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::CoreMeasure>("ezechiel", 1, 0, "CoreMeasure", QObject::tr("Cannot instantiate type 'CoreMeasure'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::PatientVariate>("ezechiel", 1, 0, "PatientVariate", QObject::tr("Cannot instantiate type 'PatientVariate'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::DrugVariate>("ezechiel", 1, 0, "DrugVariate", QObject::tr("Cannot instantiate type 'DrugVariate'"));    
     qmlRegisterUncreatableType<DrugVariateInfo>("ezechiel", 1, 0, "DrugVariateInfo", QObject::tr("Cannot instantiate type 'DrugVariateInfo'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::Adjustment>("ezechiel", 1, 0, "Adjustment", QObject::tr("Cannot instantiate type 'Adjustment'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::DrugTreatment>("ezechiel", 1, 0, "DrugTreatment", QObject::tr("Cannot instantiate type 'Treatment'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::PredictionSpec>("ezechiel", 1, 0, "PredictionSpec", QObject::tr("Cannot instantiate type 'PredictionSpec'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::PatientVariateList>("ezechiel", 1, 0, "PatientVariateList", QObject::tr("Cannot instantiate type 'PatientVariateList'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::Dosage>("ezechiel", 1, 0, "Dosage", QObject::tr("Cannot instantiate type 'Dosage'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::DosageHistory>("ezechiel", 1, 0, "DosageHistory", QObject::tr("Cannot instantiate type 'DosageHistory'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::CorePatient>("ezechiel", 1, 0, "CorePatient", QObject::tr("Cannot instantiate type 'CorePatient'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::ADME>("ezechiel", 1, 0, "ADME", QObject::tr("Cannot instantiate type 'ADME'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::Halflife>("ezechiel", 1, 0, "Halflife", QObject::tr("Cannot instantiate type 'Halflife'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::Concentrations>("ezechiel", 1, 0, "Concentrations", QObject::tr("Cannot instantiate type 'Concentrations'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::Results>("ezechiel", 1, 0, "Results", QObject::tr("Cannot instantiate type 'Results'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::ValidDoses>("ezechiel", 1, 0, "ValidDoses", QObject::tr("Cannot instantiate type 'ValidDoses'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::ValidIntervals>("ezechiel", 1, 0, "ValidIntervals", QObject::tr("Cannot instantiate type 'ValidIntervals'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::ValidInfusions>("ezechiel", 1, 0, "ValidInfusions", QObject::tr("Cannot instantiate type 'ValidInfusions'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::DrugVariateList>("ezechiel", 1, 0, "DrugVariateList", QObject::tr("Cannot instantiate type 'DrugVariateList'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::Operation>("ezechiel", 1, 0, "Operation", QObject::tr("Cannot instantiate type 'Operation'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::ParameterSet>("ezechiel", 1, 0, "ParameterSet", QObject::tr("Cannot instantiate type 'ParameterSet'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::ErrorModel>("ezechiel", 1, 0, "ErrorModel", QObject::tr("Cannot instantiate type 'ErrorModel'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::MetaData>("ezechiel", 1, 0, "MetaData", QObject::tr("Cannot instantiate type 'MetaData'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::Prediction>("ezechiel", 1, 0, "Prediction", QObject::tr("Cannot instantiate type 'Prediction'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::DrugResponseAnalysis>("ezechiel", 1, 0, "Analysis", QObject::tr("Cannot instantiate type 'Analysis'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::OperableAmount>("ezechiel", 1, 0, "OperableAmount", QObject::tr("Cannot instantiate type 'OperableAmount'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::UncastedValue>("ezechiel", 1, 0, "UncastedValue", QObject::tr("Cannot instantiate type 'UncastedValue'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::UncastedValueList>("ezechiel", 1, 0, "UncastedValueList", QObject::tr("Cannot instantiate type 'UncastedValueList'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::Adjustment>("ezechiel", 1, 0, "Adjustment", QObject::tr("Cannot instantiate type 'Adjustment'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::DrugTreatment>("ezechiel", 1, 0, "DrugTreatment", QObject::tr("Cannot instantiate type 'Treatment'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::PredictionSpec>("ezechiel", 1, 0, "PredictionSpec", QObject::tr("Cannot instantiate type 'PredictionSpec'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::PatientVariateList>("ezechiel", 1, 0, "PatientVariateList", QObject::tr("Cannot instantiate type 'PatientVariateList'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::Dosage>("ezechiel", 1, 0, "Dosage", QObject::tr("Cannot instantiate type 'Dosage'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::DosageHistory>("ezechiel", 1, 0, "DosageHistory", QObject::tr("Cannot instantiate type 'DosageHistory'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::CorePatient>("ezechiel", 1, 0, "CorePatient", QObject::tr("Cannot instantiate type 'CorePatient'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::ADME>("ezechiel", 1, 0, "ADME", QObject::tr("Cannot instantiate type 'ADME'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::Halflife>("ezechiel", 1, 0, "Halflife", QObject::tr("Cannot instantiate type 'Halflife'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::Concentrations>("ezechiel", 1, 0, "Concentrations", QObject::tr("Cannot instantiate type 'Concentrations'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::Results>("ezechiel", 1, 0, "Results", QObject::tr("Cannot instantiate type 'Results'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::ValidDoses>("ezechiel", 1, 0, "ValidDoses", QObject::tr("Cannot instantiate type 'ValidDoses'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::ValidIntervals>("ezechiel", 1, 0, "ValidIntervals", QObject::tr("Cannot instantiate type 'ValidIntervals'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::ValidInfusions>("ezechiel", 1, 0, "ValidInfusions", QObject::tr("Cannot instantiate type 'ValidInfusions'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::DrugVariateList>("ezechiel", 1, 0, "DrugVariateList", QObject::tr("Cannot instantiate type 'DrugVariateList'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::Operation>("ezechiel", 1, 0, "Operation", QObject::tr("Cannot instantiate type 'Operation'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::ParameterSet>("ezechiel", 1, 0, "ParameterSet", QObject::tr("Cannot instantiate type 'ParameterSet'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::ErrorModel>("ezechiel", 1, 0, "ErrorModel", QObject::tr("Cannot instantiate type 'ErrorModel'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::MetaData>("ezechiel", 1, 0, "MetaData", QObject::tr("Cannot instantiate type 'MetaData'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::Prediction>("ezechiel", 1, 0, "Prediction", QObject::tr("Cannot instantiate type 'Prediction'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::DrugResponseAnalysis>("ezechiel", 1, 0, "Analysis", QObject::tr("Cannot instantiate type 'Analysis'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::OperableAmount>("ezechiel", 1, 0, "OperableAmount", QObject::tr("Cannot instantiate type 'OperableAmount'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::UncastedValue>("ezechiel", 1, 0, "UncastedValue", QObject::tr("Cannot instantiate type 'UncastedValue'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::UncastedValueList>("ezechiel", 1, 0, "UncastedValueList", QObject::tr("Cannot instantiate type 'UncastedValueList'"));
     qmlRegisterUncreatableType<Interpretation>("ezechiel", 1, 0, "Interpretation", QObject::tr("Cannot instantiate type 'Interpretation'"));
     qmlRegisterUncreatableType<InterpretationController>("ezechiel", 1, 0, "InterpretationController", QObject::tr("Cannot instantiate type 'InterpretationController'"));
     qmlRegisterUncreatableType<MeasureTabController>("ezechiel", 1, 0, "MeasureTabController", QObject::tr("Cannot instantiate type 'MeasureTabController'"));
@@ -372,7 +372,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<DrugTabController>("ezechiel", 1, 0, "DrugTabController", QObject::tr("Cannot instantiate type 'DrugTabController'"));
     qmlRegisterUncreatableType<MainWindowController>("ezechiel", 1, 0, "MainWindowController", QObject::tr("Cannot instantiate type 'MainWindowController'"));
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Registering model objects.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering model objects.");
     /*
     qmlRegisterUncreatableType<AdjustmentListModel>("ezechiel", 1, 0, "AdjustmentListModel", QObject::tr("Cannot instantiate type 'AdjustmentListModel'"));
     qmlRegisterUncreatableType<AdjustmentSettingsModel>("ezechiel", 1, 0, "AdjustmentSettingsModel", QObject::tr("Cannot instantiate type 'AdjustmentSettingsModel'"));
@@ -400,26 +400,26 @@ int main(int argc, char *argv[])
 //    qmlRegisterUncreatableType<TargetListModel>("ezechiel", 1, 0, "TargetListModel", QObject::tr("Cannot instantiate type 'TargetListModel'"));
     qmlRegisterUncreatableType<StartupWindow>("ezechiel", 1, 0, "StartupWindow", QObject::tr("Cannot instantiate type 'StartupWindow'"));
 
-    qmlRegisterUncreatableType<ezechiel::GuiCore::PredictionResult>("ezechiel", 1, 0, "PredictionResult", QObject::tr("Cannot instantiate type 'PredictionResult'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::PercentileData>("ezechiel", 1, 0, "PercentilePair", QObject::tr("Cannot instantiate type 'PercentilePair'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::PercentileDataList>("ezechiel", 1, 0, "PercentileDataList", QObject::tr("Cannot instantiate type 'PecentilePairs'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::Predictive>("ezechiel", 1, 0, "Predictive", QObject::tr("Cannot instantiate type 'Predictive'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::PredictionData>("ezechiel", 1, 0, "PredictionData", QObject::tr("Cannot instantiate type 'PredictionData'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::Points>("ezechiel", 1, 0, "Points", QObject::tr("Cannot instantiate type 'Points'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::ChartData>("ezechiel", 1, 0, "ChartData", QObject::tr("Cannot instantiate type 'ChartData'"));
-    qmlRegisterUncreatableType<ezechiel::GuiCore::CorePatient>("ezechiel", 1, 0, "CorePatient", QObject::tr("Cannot instantiate type 'CorePatient'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::PredictionResult>("ezechiel", 1, 0, "PredictionResult", QObject::tr("Cannot instantiate type 'PredictionResult'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::PercentileData>("ezechiel", 1, 0, "PercentilePair", QObject::tr("Cannot instantiate type 'PercentilePair'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::PercentileDataList>("ezechiel", 1, 0, "PercentileDataList", QObject::tr("Cannot instantiate type 'PecentilePairs'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::Predictive>("ezechiel", 1, 0, "Predictive", QObject::tr("Cannot instantiate type 'Predictive'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::PredictionData>("ezechiel", 1, 0, "PredictionData", QObject::tr("Cannot instantiate type 'PredictionData'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::Points>("ezechiel", 1, 0, "Points", QObject::tr("Cannot instantiate type 'Points'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::ChartData>("ezechiel", 1, 0, "ChartData", QObject::tr("Cannot instantiate type 'ChartData'"));
+    qmlRegisterUncreatableType<Tucuxi::GuiCore::CorePatient>("ezechiel", 1, 0, "CorePatient", QObject::tr("Cannot instantiate type 'CorePatient'"));
     qmlRegisterUncreatableType<ValidationStatus>("ezechiel", 1, 0, "Status", QObject::tr("Cannot instantiate type 'Status'"));
 	qmlRegisterUncreatableType<StepType>("ezechiel", 1, 0, "StepType", QObject::tr("Cannot instantiate type 'StepType'"));
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Registering other types.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering other types.");
     qmlRegisterType<ProxyModelFilter>("ezechiel", 1, 0, "ProxyModelFilter");
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Registering QML singletons.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering QML singletons.");
     qmlRegisterSingletonType(QUrl("qrc:/controls/Status.qml"), "guiutils.qml.controls", 1, 0, "Status");
     qmlRegisterSingletonType(QUrl("qrc:/controls/ToolTips.qml"), "guiutils.qml.controls", 1, 0, "ToolTips");
     qmlRegisterSingletonType(QUrl("qrc:/styles/Style.qml"), "guiutils.qml.styles", 1, 0, "Style");
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Registering QML components.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering QML components.");
     qmlRegisterType(QUrl("qrc:/windows/MainWindow.qml"), "guiutils.qml.windows", 1, 0, "MainWindow");
     qmlRegisterType(QUrl("qrc:/windows/StartupWindow.qml"), "guiutils.qml.windows", 1, 0, "StartupWindow");
     qmlRegisterType(QUrl("qrc:/controls/AdjustmentTab.qml"), "guiutils.qml.controls", 1, 0, "AdjustmentTab");
@@ -447,27 +447,27 @@ int main(int argc, char *argv[])
 
 
     Q_INIT_RESOURCE(core);
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Core.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Core.");
 //    Q_INIT_RESOURCE(report);
-//    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Report.");
+//    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Report.");
     Q_INIT_RESOURCE(rest);
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Rest.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Rest.");
     Q_INIT_RESOURCE(qml);
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Qml.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Qml.");
     Q_INIT_RESOURCE(guiutils);
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Guiutils.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Guiutils.");
 //    Q_INIT_RESOURCE(report);
-//    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Report.");
+//    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Report.");
 
     // Let's create CORE, to modify paths from the options
-    ezechiel::GuiCore::Core::setInstance(new ezechiel::GuiAppUtils::AppCore());
+    Tucuxi::GuiCore::Core::setInstance(new Tucuxi::GuiAppUtils::AppCore());
     parseOptions();
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Options.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Options.");
     initResources();
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Resources.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Resources.");
 #ifdef CONFIG_CONNECTED
     initRestConfig();
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized REST configuration.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized REST configuration.");
 #endif // CONFIG_CONNECTED
 
     QtWebEngine::initialize();
@@ -589,7 +589,7 @@ void parseOptions()
     const QCommandLineOption drugsPathOption(QStringList() << "d" << "drugspath",
                                              QCoreApplication::translate("main", "Drug files path."),
                                              "drugspath",
-                                             CORE->path(ezechiel::GuiCore::Core::Drugs2));
+                                             CORE->path(Tucuxi::GuiCore::Core::Drugs2));
 
     parser.addOption(basePathOption);
     const QCommandLineOption helpOption = parser.addHelpOption();
@@ -610,7 +610,7 @@ void parseOptions()
     if (parser.isSet(versionOption))
         parser.showVersion();
     if (parser.isSet(logMessagesInFileOption))
-        ezechiel::logging::Logger::initLogFile(QCoreApplication::applicationDirPath());
+        Tucuxi::logging::Logger::initLogFile(QCoreApplication::applicationDirPath());
     if (parser.isSet(certificateFileOption)) {
 #ifdef CONFIG_CONNECTED
         NetworkAccessManager::setType(NetworkAccessManager::ManagerType::Unique);
@@ -619,7 +619,7 @@ void parseOptions()
     }
     if (parser.isSet(drugsPathOption)) {
 #ifndef CONFIG_DEMO
-        CORE->setPath(ezechiel::GuiCore::Core::Drugs2, parser.value(drugsPathOption));
+        CORE->setPath(Tucuxi::GuiCore::Core::Drugs2, parser.value(drugsPathOption));
 #endif // CONFIG_DEMO
     }
 
@@ -655,7 +655,7 @@ void parseOptions()
 void initResources()
 {
 //    We do this in main to be able to access Core in parsing
-//    ezechiel::GuiCore::Core::setInstance(new ezechiel::GuiAppUtils::AppCore());
+//    Tucuxi::GuiCore::Core::setInstance(new Tucuxi::GuiAppUtils::AppCore());
 
     CORE->setProcessingInterface(ProcessingFactory::createProcessing());
     APPCORE->drugManager();
@@ -667,10 +667,10 @@ void initResources()
 #ifdef CONFIG_DEMO
     std::string basePath = ":/drugs/";
 #else
-    std::string basePath = CORE->path(ezechiel::GuiCore::Core::Drugs2).toStdString() + "/";
+    std::string basePath = CORE->path(Tucuxi::GuiCore::Core::Drugs2).toStdString() + "/";
 #endif // CONFIG_DEMO
     manager->buildAllDrugModels(basePath);
-    std::vector<ezechiel::GuiCore::DrugModel *> models = manager->getAllEzechielDrugModels();
+    std::vector<Tucuxi::GuiCore::DrugModel *> models = manager->getAllEzechielDrugModels();
     for(auto model : models) {
         if (model != nullptr) {
             APPCORE->drugManager()->tryToAddDrugModelToRepo(model);

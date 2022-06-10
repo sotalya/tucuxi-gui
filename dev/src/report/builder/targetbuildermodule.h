@@ -7,21 +7,21 @@
 #include "core/corerepository.h"
 #include "reportbuildermodule.h"
 
-class TargetBuilderModule : public ezechiel::GuiCore::Entity, public ReportBuilderModule
+class TargetBuilderModule : public Tucuxi::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
 
 public:
-    TargetBuilderModule(const QList<ezechiel::GuiCore::Target*> *targets = 0, QObject *parent = 0);
+    TargetBuilderModule(const QList<Tucuxi::GuiCore::Target*> *targets = 0, QObject *parent = 0);
 
     virtual bool setData(ReportData *data);
     virtual void unsetData(ReportData *data);
 
-    QList<ezechiel::GuiCore::Target*> targets() const;
-    TargetBuilderModule &setTargets(const QList<ezechiel::GuiCore::Target*> targets);
+    QList<Tucuxi::GuiCore::Target*> targets() const;
+    TargetBuilderModule &setTargets(const QList<Tucuxi::GuiCore::Target*> targets);
 
 private:
-    QList<ezechiel::GuiCore::Target*> _targets;
+    QList<Tucuxi::GuiCore::Target*> _targets;
 };
 
 #endif // TARGETBUILDERMODULE_H

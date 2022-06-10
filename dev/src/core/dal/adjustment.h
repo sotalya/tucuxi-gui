@@ -11,7 +11,7 @@
 #include "core/dal/entity.h"
 #include "core/dal/drug/target.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 /**
@@ -72,10 +72,10 @@ QML_POINTERLIST_CLASS_DECL(Adjustments, Adjustment)
 }
 }
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::TargetEvaluationResult*)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::TargetEvaluationResults*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::TargetEvaluationResult*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::TargetEvaluationResults*)
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Adjustment*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Adjustment*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Adjustments*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Adjustment*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Adjustment*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Adjustments*)
 #endif // ADJUSTMENT_H

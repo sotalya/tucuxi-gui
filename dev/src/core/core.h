@@ -55,7 +55,7 @@
 
 class QCoreApplication;
 
-namespace ezechiel {
+namespace Tucuxi {
 
 class IDatabase;
 
@@ -76,17 +76,17 @@ class Settings;
 class ProcessingInterface;
 
 //------------- Shortcuts for objects ----------------
-#define CORE ezechiel::GuiCore::Core::instance()
-#define DEFINITIONS ezechiel::GuiCore::Core::instance()->definitionManager()
-#define ABSTRACTREPO ezechiel::GuiCore::Core::instance()->repository()
-#define REPO dynamic_cast<ezechiel::GuiCore::CoreRepository*>(ABSTRACTREPO)
+#define CORE Tucuxi::GuiCore::Core::instance()
+#define DEFINITIONS Tucuxi::GuiCore::Core::instance()->definitionManager()
+#define ABSTRACTREPO Tucuxi::GuiCore::Core::instance()->repository()
+#define REPO dynamic_cast<Tucuxi::GuiCore::CoreRepository*>(ABSTRACTREPO)
 //#define DB Core::instance()->db()
 //#define NEWDB Core::instance()->newdb()
-#define FILEPATH(ARG) ezechiel::GuiCore::Core::instance()->path(ARG)
-#define DATABASE ezechiel::GuiCore::Core::instance()->database()
-#define PLUGINS ezechiel::GuiCore::Core::instance()->pluginManager()
-#define XMLVALIDATOR ezechiel::GuiCore::Core::instance()->xmlValidator()
-#define SETTINGS ezechiel::GuiCore::Core::instance()->settings()
+#define FILEPATH(ARG) Tucuxi::GuiCore::Core::instance()->path(ARG)
+#define DATABASE Tucuxi::GuiCore::Core::instance()->database()
+#define PLUGINS Tucuxi::GuiCore::Core::instance()->pluginManager()
+#define XMLVALIDATOR Tucuxi::GuiCore::Core::instance()->xmlValidator()
+#define SETTINGS Tucuxi::GuiCore::Core::instance()->settings()
 
 //! Use this macro to send an error
 //#define EZERROR(e,m) CORE->messageHandler()->error(e,__LINE__,__FILE__,typeid(this).name(),QString(m))
@@ -164,7 +164,7 @@ public:
     //! Get the Core's instance
     static Core* instance ();
     //! Set the Core's instance
-    static void setInstance (Core *GuiCore);
+    static void setInstance (Core *core);
 
     //---------------- STATIC OBJECTS --------------------
 
@@ -199,7 +199,7 @@ public:
     //! Get the database object.
 //    Database* database ();
 
-//    ezechiel::IDatabase* newdb(QString bewdb = "");
+//    Tucuxi::IDatabase* newdb(QString bewdb = "");
 
     //! Directly get the database to use.
     //! \sa DB::getDB()
@@ -326,7 +326,7 @@ public:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
 #endif //CORE_H

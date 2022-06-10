@@ -200,7 +200,7 @@ void AbstractTestWidget::requestFinished(QNetworkReply *reply)
     char *data = new char(size);
     if (size > 0) {
         if (reply->read(data, size-1) == -1) {
-            EXLOG(QtFatalMsg, ezechiel::restclient::NOEZERROR, tr("QIODevice read failure"));
+            EXLOG(QtFatalMsg, Tucuxi::restclient::NOEZERROR, tr("QIODevice read failure"));
         }
     }
     */
@@ -214,7 +214,7 @@ void AbstractTestWidget::requestFinished(QNetworkReply *reply)
     out << response.toUtf8();
 //    out << data;
     file.close();
-    EXLOG(QtDebugMsg, ezechiel::restclient::NOEZERROR, tr("response: %1").arg(response));
+    EXLOG(QtDebugMsg, Tucuxi::restclient::NOEZERROR, tr("response: %1").arg(response));
 //    _reply->setData(reply->readAll());
     _reply->setData(response.toUtf8());
 //    _reply->setData(QByteArray::fromRawData(data, size-1));

@@ -4,7 +4,7 @@
 //#include "core/dal/drugresponseanalysis.h"
 #include "core/dal/drugtreatment.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -70,5 +70,5 @@ DBCurve::DBCurve() : id(invalid_ident), patient(invalid_ident), cType(0), pType(
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

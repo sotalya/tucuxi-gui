@@ -6,7 +6,7 @@
 #include "core/dal/entity.h"
 #include "core/utils/ezutils.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class TranslatableString;
@@ -46,12 +46,12 @@ QML_POINTERLIST_CLASS_DECL(OperationList, Operation)
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::OperationType)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::OperationType*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Operation*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Operation*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::OperationList*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::OperationType)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::OperationType*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Operation*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Operation*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::OperationList*)
 
 #endif // OPERATION_H

@@ -15,14 +15,14 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
-namespace ezechiel {
+namespace Tucuxi {
 
 
 class GenericRepositoryFactory : public Factory
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "localdb")
-    Q_INTERFACES(ezechiel::Factory)
+    Q_INTERFACES(Tucuxi::Factory)
 public:
     void init(Core *core);
 

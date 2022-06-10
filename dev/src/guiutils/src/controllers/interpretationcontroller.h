@@ -43,7 +43,7 @@ class AdjustmentTabController;
 class DrugTabController;
 class ValidationTabController;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 class PredictionResult;
 class ChartData;
@@ -92,17 +92,17 @@ class InterpretationController : public QObject
 
     //! This property is used by PatientTab.qml
     //! TODO It should deal with patients, not core patients
-    Q_PROPERTY(ezechiel::GuiCore::CorePatientList* patients READ getPatients NOTIFY patientsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::CorePatientList* patients READ getPatients NOTIFY patientsChanged)
 
     //! This property is used by DrugTab.qml
-    Q_PROPERTY(ezechiel::GuiCore::DrugModelList* drugs READ getDrugs NOTIFY drugsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::DrugModelList* drugs READ getDrugs NOTIFY drugsChanged)
 
     //! This property is used by DrugTab.qml
-    Q_PROPERTY(ezechiel::GuiCore::LightActiveSubstanceList* activeSubstances READ getActiveSubstances NOTIFY activeSubstancesChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::LightActiveSubstanceList* activeSubstances READ getActiveSubstances NOTIFY activeSubstancesChanged)
 
 
     //! This property is used by DrugTab.qml
-    Q_PROPERTY(ezechiel::GuiCore::DrugModelList* drugModels READ getDrugModels NOTIFY drugModelsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::DrugModelList* drugModels READ getDrugModels NOTIFY drugModelsChanged)
 
     //! This property exposes the current patient.
     //! It is used by the FlowInformationPanel to display information about the current patient
@@ -111,12 +111,12 @@ class InterpretationController : public QObject
 
 
     //! This property exposes the current drugModel.
-    STD_PROPERTY_DECL(ezechiel::GuiCore::DrugModel*, currentDrugModel, CurrentDrugModel)
+    STD_PROPERTY_DECL(Tucuxi::GuiCore::DrugModel*, currentDrugModel, CurrentDrugModel)
 
     //! This property exposes the current active substance.
     //! It is used by the FlowInformationPanel to display information about the current active substance
     //! Compared to the previous properties, it is modified by the DrugTab
-    STD_PROPERTY_DECL(ezechiel::GuiCore::LightActiveSubstance*, currentActiveSubstance, CurrentActiveSubstance)
+    STD_PROPERTY_DECL(Tucuxi::GuiCore::LightActiveSubstance*, currentActiveSubstance, CurrentActiveSubstance)
 
     //! This property exposes the current interpretation.
     //! It is used by various tabs
@@ -177,10 +177,10 @@ public:
     void setCurrentPatient(Patient *patient);
     Patient * getCurrentPatient() const;
 
-    ezechiel::GuiCore::DrugModelList* getDrugs() { return _drugs; }
-    ezechiel::GuiCore::DrugModelList* getDrugModels() { return _drugModelsForCurrentSubstance; }
-    ezechiel::GuiCore::LightActiveSubstanceList* getActiveSubstances() { return _activeSubstances; }
-    ezechiel::GuiCore::CorePatientList* getPatients() { return _patients; }
+    Tucuxi::GuiCore::DrugModelList* getDrugs() { return _drugs; }
+    Tucuxi::GuiCore::DrugModelList* getDrugModels() { return _drugModelsForCurrentSubstance; }
+    Tucuxi::GuiCore::LightActiveSubstanceList* getActiveSubstances() { return _activeSubstances; }
+    Tucuxi::GuiCore::CorePatientList* getPatients() { return _patients; }
 
 //    std::vector<double> getAprpv() { return _aprpv; }
 //    std::vector<double> setAprpv(std::vector<double> vec) { _aprpv = vec; emit aprpvChanged(_aprpv); }
@@ -235,7 +235,7 @@ public:
     /// Show statistics in a dialog
     void showStatistics(int what);
 
-    bool associateFormulationToRoute(ezechiel::GuiCore::DosageHistory *dosageHistory, ezechiel::GuiCore::AdminList *adminList);
+    bool associateFormulationToRoute(Tucuxi::GuiCore::DosageHistory *dosageHistory, Tucuxi::GuiCore::AdminList *adminList);
 
     Q_INVOKABLE QByteArray interpretationToJson();
 
@@ -247,10 +247,10 @@ public:
 
 signals:
     void webchannelChanged(QQmlWebChannel&);
-    void drugsChanged(ezechiel::GuiCore::DrugModelList*);
-    void drugModelsChanged(ezechiel::GuiCore::DrugModelList*);
-    void activeSubstancesChanged(ezechiel::GuiCore::LightActiveSubstanceList*);
-    void patientsChanged(ezechiel::GuiCore::CorePatientList*);
+    void drugsChanged(Tucuxi::GuiCore::DrugModelList*);
+    void drugModelsChanged(Tucuxi::GuiCore::DrugModelList*);
+    void activeSubstancesChanged(Tucuxi::GuiCore::LightActiveSubstanceList*);
+    void patientsChanged(Tucuxi::GuiCore::CorePatientList*);
     void defaultUnitChanged(QString);
     void chartscaleChanged(double);
 
@@ -314,7 +314,7 @@ public:
      */
     void loadInterpretation(Interpretation *interpretation);
 
-    ezechiel::GuiCore::PredictionSpec *getPredictionSpec() const;
+    Tucuxi::GuiCore::PredictionSpec *getPredictionSpec() const;
 
 
     void validateInterpretation(bool isValid);
@@ -346,7 +346,7 @@ private:
     void initViewConnexions();
     void clearAdjustments();
 
-    ezechiel::GuiCore::ActiveSubstance *findRealActiveSubstance(const ezechiel::GuiCore::LightActiveSubstance *activeSubstance);
+    Tucuxi::GuiCore::ActiveSubstance *findRealActiveSubstance(const Tucuxi::GuiCore::LightActiveSubstance *activeSubstance);
 
 #ifdef CONFIG_GUITEST
     QObject *root;
@@ -387,14 +387,14 @@ private:
     double _chartscale;
     QString _defaultUnit;
 
-//    ezechiel::GuiCore::ChartData* chartData;     // JRT
+//    Tucuxi::GuiCore::ChartData* chartData;     // JRT
 
-    ezechiel::GuiCore::PredictionSpec* predictionspec;
-    ezechiel::GuiCore::DrugModelList* _drugs;
-    ezechiel::GuiCore::DrugModelList* _drugModelsForCurrentSubstance;
-    ezechiel::GuiCore::LightActiveSubstanceList* _activeSubstances;
-    ezechiel::GuiCore::LightActiveSubstanceList* _privateActiveSubstances;
-    ezechiel::GuiCore::CorePatientList* _patients;
+    Tucuxi::GuiCore::PredictionSpec* predictionspec;
+    Tucuxi::GuiCore::DrugModelList* _drugs;
+    Tucuxi::GuiCore::DrugModelList* _drugModelsForCurrentSubstance;
+    Tucuxi::GuiCore::LightActiveSubstanceList* _activeSubstances;
+    Tucuxi::GuiCore::LightActiveSubstanceList* _privateActiveSubstances;
+    Tucuxi::GuiCore::CorePatientList* _patients;
 
     GraphInformationSelection *_graphInformationSelection;
 
@@ -413,7 +413,7 @@ private:
     public:
 
     ChartDataController *_chartDataController;        // JRT
-    ezechiel::GuiCore::ChartData* chartData;             // JRT
+    Tucuxi::GuiCore::ChartData* chartData;             // JRT
 
     QObject *patientsView;
     QObject *drugsView;

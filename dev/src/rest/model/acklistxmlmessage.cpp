@@ -18,7 +18,7 @@ AckListXmlMessage::~AckListXmlMessage()
 
 QString AckListXmlMessage::schemaPath() const
 {
-    return ezechiel::GuiCore::XmlValidator::Acks;
+    return Tucuxi::GuiCore::XmlValidator::Acks;
 }
 
 QString AckListXmlMessage::messageType() const

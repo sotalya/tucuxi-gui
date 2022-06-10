@@ -7,7 +7,7 @@
 
 #include <QCoreApplication>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 class UserAction : public Action
 {
@@ -60,5 +60,5 @@ private:
 };
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi
 #endif // USERACTION_H

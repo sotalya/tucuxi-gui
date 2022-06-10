@@ -14,7 +14,7 @@
 
 #include <iostream>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -405,5 +405,5 @@ void CycleData::setUnit(const Unit &unit)
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

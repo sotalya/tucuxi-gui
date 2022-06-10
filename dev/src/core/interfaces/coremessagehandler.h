@@ -7,7 +7,7 @@
 
 #include <QString>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 /** \defgroup message Messaging system
@@ -67,6 +67,6 @@ public:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // COREMESSAGEHANDLER_H

@@ -71,7 +71,7 @@
 
 #include "tucucore/version.h"
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 static const double NBCYCLES_TO_COMPUTE_PERCENTILES = 20.0;
 static const double NBCYCLES_VIEWRANGE_MAX = 60.0;
@@ -81,8 +81,8 @@ static const double NBCYCLES_BEFORE_NOW = 1.0;
 static const double NBCYCLES_AFTER_NOW = 2.0;
 static const double NBCYCLES_MAX_FOR_INITIAL_COMPUTATION = 15.0;
 
-STD_PROPERTY_IMPL(InterpretationController, ezechiel::GuiCore::DrugModel*, currentDrugModel, CurrentDrugModel)
-STD_PROPERTY_IMPL(InterpretationController, ezechiel::GuiCore::LightActiveSubstance*, currentActiveSubstance, CurrentActiveSubstance)
+STD_PROPERTY_IMPL(InterpretationController, Tucuxi::GuiCore::DrugModel*, currentDrugModel, CurrentDrugModel)
+STD_PROPERTY_IMPL(InterpretationController, Tucuxi::GuiCore::LightActiveSubstance*, currentActiveSubstance, CurrentActiveSubstance)
 STD_PROPERTY_IMPL(InterpretationController, Interpretation*, interpretation, Interpretation)
 STD_PROPERTY_IMPL(InterpretationController, QString, rawRequest, RawRequest)
 STD_PROPERTY_IMPL(InterpretationController, QString, clinicalsHtml, ClinicalsHtml)
@@ -173,31 +173,31 @@ InterpretationController::InterpretationController(QObject *parent) :
 
     //Each validation section (expectedness, suitability, prediction, remonitoring and warning) have a sentence palette
 
-    _sentencesPalettes = ezechiel::GuiCore::CoreFactory::createEntity<SentencesPalettes>(REPO, this);
+    _sentencesPalettes = Tucuxi::GuiCore::CoreFactory::createEntity<SentencesPalettes>(REPO, this);
 
 
-    _graphInformationSelection = ezechiel::GuiCore::CoreFactory::createEntity<GraphInformationSelection>(REPO, this);
+    _graphInformationSelection = Tucuxi::GuiCore::CoreFactory::createEntity<GraphInformationSelection>(REPO, this);
 
     measureTabController = new MeasureTabController(this);
     measureTabController->setMasterController(this);
-    measureTabController->setMeasures(CoreFactory::createEntity<ezechiel::GuiCore::CoreMeasureList>(ABSTRACTREPO, this));
+    measureTabController->setMeasures(CoreFactory::createEntity<Tucuxi::GuiCore::CoreMeasureList>(ABSTRACTREPO, this));
 
     dosageTabController = new DosageTabController(this);
     dosageTabController->setMasterController(this);
-    dosageTabController->setDosages(CoreFactory::createEntity<ezechiel::GuiCore::DosageHistory>(ABSTRACTREPO, this));
+    dosageTabController->setDosages(CoreFactory::createEntity<Tucuxi::GuiCore::DosageHistory>(ABSTRACTREPO, this));
 
     targetTabController = new TargetTabController(this);
     targetTabController->setMasterController(this);
-    targetTabController->setTargets(CoreFactory::createEntity<ezechiel::GuiCore::TargetList>(ABSTRACTREPO, this));
+    targetTabController->setTargets(CoreFactory::createEntity<Tucuxi::GuiCore::TargetList>(ABSTRACTREPO, this));
 
     covariateTabController = new CovariateTabController(this);
     covariateTabController->setMasterController(this);
-    covariateTabController->reset(CoreFactory::createEntity<ezechiel::GuiCore::DrugVariateList>(ABSTRACTREPO, this));
-    covariateTabController->setPatientVariates(CoreFactory::createEntity<ezechiel::GuiCore::PatientVariateList>(ABSTRACTREPO, this));
+    covariateTabController->reset(CoreFactory::createEntity<Tucuxi::GuiCore::DrugVariateList>(ABSTRACTREPO, this));
+    covariateTabController->setPatientVariates(CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariateList>(ABSTRACTREPO, this));
 
     adjustmentTabController = new AdjustmentTabController(this);
     adjustmentTabController->setMasterController(this);
-    adjustmentTabController->setAdjustments(CoreFactory::createEntity<ezechiel::GuiCore::DosageHistory>(ABSTRACTREPO, this));
+    adjustmentTabController->setAdjustments(CoreFactory::createEntity<Tucuxi::GuiCore::DosageHistory>(ABSTRACTREPO, this));
 
     validationTabController = new ValidationTabController(this);
     validationTabController->_sentencesPalettes = _sentencesPalettes;
@@ -210,7 +210,7 @@ InterpretationController::InterpretationController(QObject *parent) :
     // However these objects will be replaced by new ones when starting an interpretation
     // Let's create an empty interperation and assign it
     Interpretation *interpretation = CoreFactory::createEntity<Interpretation>(ADMINREPO, this);
-    predictionspec = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionSpec>(REPO, this);
+    predictionspec = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionSpec>(REPO, this);
     setInterpretation(interpretation);
     predictionspec->setAnalysis(_interpretation->getDrugResponseAnalysis());
     chartData = _interpretation->getAnalysis()->getChartData();
@@ -239,7 +239,7 @@ void InterpretationController::setNewInterpretation(Interpretation *interpretati
     _currentDrugModel = nullptr;
     _currentPatient = nullptr;
 
-    predictionspec = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionSpec>(REPO, this);
+    predictionspec = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionSpec>(REPO, this);
     std::vector<double> _percv;
     _percv.insert(_percv.begin(), {5, 10, 25, 50, 75, 90, 95});
     predictionspec->setPercentileList(_percv);
@@ -270,7 +270,7 @@ void InterpretationController::setNewInterpretation(Interpretation *interpretati
     else
         flowController->loadInterpretation();
 
-    ezechiel::GuiCore::DrugTreatment *newTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
+    Tucuxi::GuiCore::DrugTreatment *newTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
     measureTabController->setMeasures(newTreatment->getMeasures());
     dosageTabController->setDosages(newTreatment->getDosages());
     targetTabController->setTargets(newTreatment->getTargets());
@@ -477,18 +477,18 @@ void InterpretationController::deleteCurrentRequest()
     if (chartData)
         chartData->initialize();
 
-    measureTabController->setMeasures(CoreFactory::createEntity<ezechiel::GuiCore::CoreMeasureList>(ABSTRACTREPO, this));
-    dosageTabController->setDosages(CoreFactory::createEntity<ezechiel::GuiCore::DosageHistory>(ABSTRACTREPO, this));
-    targetTabController->setTargets(CoreFactory::createEntity<ezechiel::GuiCore::TargetList>(ABSTRACTREPO, this));
-    covariateTabController->reset(CoreFactory::createEntity<ezechiel::GuiCore::DrugVariateList>(ABSTRACTREPO, this));
-    covariateTabController->setPatientVariates(CoreFactory::createEntity<ezechiel::GuiCore::PatientVariateList>(ABSTRACTREPO, this));
-    adjustmentTabController->setAdjustments(CoreFactory::createEntity<ezechiel::GuiCore::DosageHistory>(ABSTRACTREPO, this));
+    measureTabController->setMeasures(CoreFactory::createEntity<Tucuxi::GuiCore::CoreMeasureList>(ABSTRACTREPO, this));
+    dosageTabController->setDosages(CoreFactory::createEntity<Tucuxi::GuiCore::DosageHistory>(ABSTRACTREPO, this));
+    targetTabController->setTargets(CoreFactory::createEntity<Tucuxi::GuiCore::TargetList>(ABSTRACTREPO, this));
+    covariateTabController->reset(CoreFactory::createEntity<Tucuxi::GuiCore::DrugVariateList>(ABSTRACTREPO, this));
+    covariateTabController->setPatientVariates(CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariateList>(ABSTRACTREPO, this));
+    adjustmentTabController->setAdjustments(CoreFactory::createEntity<Tucuxi::GuiCore::DosageHistory>(ABSTRACTREPO, this));
     drugTabController->setDrugHtmlDescription(tr("No drug selected"));
 
 }
 
-bool activeSubstanceComparator(const ezechiel::GuiCore::LightActiveSubstance *a1,
-                               const ezechiel::GuiCore::LightActiveSubstance *a2)
+bool activeSubstanceComparator(const Tucuxi::GuiCore::LightActiveSubstance *a1,
+                               const Tucuxi::GuiCore::LightActiveSubstance *a2)
 {
     return a1->getName()->value() < a2->getName()->value();
 }
@@ -498,11 +498,11 @@ void InterpretationController::populateDrugModels()
     static bool populated = false;
     if (!populated) {
 
-        if (APPUTILSREPO->getDrugsList(_drugs->getList()).error != ezechiel::GuiCore::NoError)
-        EXLOG(QtFatalMsg, ezechiel::guiutils::MODELIOERROR, "Drugs list not retrieved.");
+        if (APPUTILSREPO->getDrugsList(_drugs->getList()).error != Tucuxi::GuiCore::NoError)
+        EXLOG(QtFatalMsg, Tucuxi::guiutils::MODELIOERROR, "Drugs list not retrieved.");
 
         for (int i = 0; i < _drugs->size(); ++i) {
-            ezechiel::GuiCore::DrugModel *model = _drugs->at(i);
+            Tucuxi::GuiCore::DrugModel *model = _drugs->at(i);
             model->setParent(_drugs);
         }
         _drugs->update();
@@ -581,7 +581,7 @@ void InterpretationController::startNewPatient()
     interpretation->setStartInterpretationTime(QDateTime::currentDateTime());
 
     // Create a new treatment and assigns it to both objects
-    ezechiel::GuiCore::DrugTreatment *newTreatment = CoreFactory::createEntity<DrugTreatment>(ABSTRACTREPO, _interpretation->getDrugResponseAnalysis());
+    Tucuxi::GuiCore::DrugTreatment *newTreatment = CoreFactory::createEntity<DrugTreatment>(ABSTRACTREPO, _interpretation->getDrugResponseAnalysis());
 
     interpretation->getDrugResponseAnalysis()->setTreatment(newTreatment);
     interpretation->getRequest()->setTreatment(newTreatment);
@@ -623,7 +623,7 @@ void InterpretationController::startNewPatient()
     _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->clear();
     _interpretation->getDrugResponseAnalysis()->getTreatment()->getTargets()->clear();
     _interpretation->getDrugResponseAnalysis()->getTreatment()->getAdjustments()->clear();
-    _interpretation->getAnalysis()->getChartData()->setAdjPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
+    _interpretation->getAnalysis()->getChartData()->setAdjPred(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
     _interpretation->getDrugResponseAnalysis()->getTreatment()->setPatient(_patients->at(0));
     flowController->patientChanged(0);
     _interpretation->getAnalysis()->getChartData()->getRevPred()->getAdjustments()->clear();
@@ -748,7 +748,7 @@ void InterpretationController::startInterpretationRequest(InterpretationRequest 
         else {
             for (auto dosage : _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->getList()) {
                 if (dosage->getRoute()->getRoute() == Admin::Route::DEFAULT) {
-                    Admin *admin = ezechiel::GuiCore::CoreFactory::createEntity<Admin>(APPUTILSREPO, nullptr);
+                    Admin *admin = Tucuxi::GuiCore::CoreFactory::createEntity<Admin>(APPUTILSREPO, nullptr);
                     admin->setRoute(defaultRoutes[0]);
                     admin->setFormulationAndRoute(defaultAdmins[0]->getFormulationAndRoute());
                     admin->setDescription(defaultAdmins[0]->getDescription());
@@ -774,7 +774,7 @@ void InterpretationController::startInterpretationRequest(InterpretationRequest 
 
         targets->clear();
         for (int i = 0; i < drugTargets->size(); ++i) {
-            ezechiel::GuiCore::Target* target = ezechiel::GuiCore::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
+            Tucuxi::GuiCore::Target* target = Tucuxi::GuiCore::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
             target->copyFrom(drugTargets->at(i));
             targets->append(target);
         }
@@ -863,14 +863,14 @@ void InterpretationController::loadInterpretation(Interpretation *interpretation
     // Try to set the active substance and the drugmodel directly here
     {
 
-        ezechiel::GuiCore::DrugModel *drugModel = _interpretation->getDrugResponseAnalysis()->getDrugModel();
-        ezechiel::GuiCore::ActiveSubstance *activeSubstance = drugModel->getActiveSubstance();
+        Tucuxi::GuiCore::DrugModel *drugModel = _interpretation->getDrugResponseAnalysis()->getDrugModel();
+        Tucuxi::GuiCore::ActiveSubstance *activeSubstance = drugModel->getActiveSubstance();
 
-        ezechiel::GuiCore::LightActiveSubstance *lightActiveSubstance = nullptr;
+        Tucuxi::GuiCore::LightActiveSubstance *lightActiveSubstance = nullptr;
 
         int activeSubstanceIndex = 0;
         // Find the LightActiveSubstance
-        foreach (ezechiel::GuiCore::LightActiveSubstance *substance, _activeSubstances->getList()) {
+        foreach (Tucuxi::GuiCore::LightActiveSubstance *substance, _activeSubstances->getList()) {
             if (substance->getSubstanceId() == activeSubstance->getSubstanceId()) {
                 lightActiveSubstance = substance;
                 break;
@@ -957,7 +957,7 @@ void InterpretationController::resetReqState() {
 //QVariant InterpretationController::getGraphDrugData() {
 //    if (!_interpretation) {return QVariant::fromValue(false);}
 //    if (!_interpretation->getDrugResponseAnalysis()) {return QVariant::fromValue(false);}
-//    ezechiel::GuiCore::DrugModel *drug = _interpretation->getDrugResponseAnalysis()->getDrugModel();
+//    Tucuxi::GuiCore::DrugModel *drug = _interpretation->getDrugResponseAnalysis()->getDrugModel();
 //    if (drug) {
 //        QString desc;
 //        desc += "Drug name: " + drug->getName()->value() + "|| ";
@@ -1106,8 +1106,8 @@ void InterpretationController::adjustmentDateUpdated()
         flowController->evaluate();
 
         _interpretation->getDrugResponseAnalysis()->getTreatment()->getAdjustments()->clear();
-        _interpretation->getAnalysis()->getChartData()->setRevPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
-        _interpretation->getAnalysis()->getChartData()->setAdjPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
+        _interpretation->getAnalysis()->getChartData()->setRevPred(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
+        _interpretation->getAnalysis()->getChartData()->setAdjPred(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
 
         _chartDataController->adjustmentSettingsUpdated();
     }
@@ -1119,8 +1119,8 @@ void InterpretationController::adjustmentSettingsUpdated()
         flowController->evaluate();
 
         _interpretation->getDrugResponseAnalysis()->getTreatment()->getAdjustments()->clear();
-        _interpretation->getAnalysis()->getChartData()->setRevPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
-        _interpretation->getAnalysis()->getChartData()->setAdjPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
+        _interpretation->getAnalysis()->getChartData()->setRevPred(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
+        _interpretation->getAnalysis()->getChartData()->setAdjPred(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
 
         _chartDataController->adjustmentSettingsUpdated();
     }
@@ -1162,8 +1162,8 @@ void InterpretationController::evaluateFlow()
 void InterpretationController::clearAdjustments()
 {
     _interpretation->getDrugResponseAnalysis()->getTreatment()->getAdjustments()->clear();
-    _interpretation->getAnalysis()->getChartData()->setRevPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
-    _interpretation->getAnalysis()->getChartData()->setAdjPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
+    _interpretation->getAnalysis()->getChartData()->setRevPred(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
+    _interpretation->getAnalysis()->getChartData()->setAdjPred(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
     adjustmentTabController->reset();
 }
 
@@ -1192,7 +1192,7 @@ void InterpretationController::covariateUpdated()
 }
 
 
-ezechiel::GuiCore::ActiveSubstance *InterpretationController::findRealActiveSubstance(const LightActiveSubstance *activeSubstance)
+Tucuxi::GuiCore::ActiveSubstance *InterpretationController::findRealActiveSubstance(const LightActiveSubstance *activeSubstance)
 {
     for (int i = 0; i < _drugs->size(); ++i) {
         if (_drugs->at(i)->getActiveSubstance()->getSubstanceId().compare(activeSubstance->getSubstanceId()) == 0) {
@@ -1206,7 +1206,7 @@ ezechiel::GuiCore::ActiveSubstance *InterpretationController::findRealActiveSubs
 
 void InterpretationController::switchActiveSubstance(int index)
 {
-    ezechiel::GuiCore::LightActiveSubstance* activeSubstance = index == -1 ? nullptr : _activeSubstances->at(index);
+    Tucuxi::GuiCore::LightActiveSubstance* activeSubstance = index == -1 ? nullptr : _activeSubstances->at(index);
 
     // If the new active substance is actually the current one, then no need to update anything
     if (_currentActiveSubstance == activeSubstance)
@@ -1250,7 +1250,7 @@ void InterpretationController::switchActiveSubstance(int index)
                     _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->clear();
                     _interpretation->getDrugResponseAnalysis()->getTreatment()->getTargets()->clear();
                     _interpretation->getDrugResponseAnalysis()->getTreatment()->getAdjustments()->clear();
-                    _interpretation->getAnalysis()->getChartData()->setAdjPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
+                    _interpretation->getAnalysis()->getChartData()->setAdjPred(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
                     _interpretation->getDrugResponseAnalysis()->getTreatment()->setPatient(_patients->at(0));
                     _interpretation->getAnalysis()->getChartData()->getRevPred()->getAdjustments()->clear();
 
@@ -1267,7 +1267,7 @@ void InterpretationController::switchActiveSubstance(int index)
 //void InterpretationController::currentDrugChanged(int index)
 void InterpretationController::switchDrugModel(int index)
 {
-    ezechiel::GuiCore::DrugModel* drug = ((index == -1) || (_drugModelsForCurrentSubstance == nullptr)) ? nullptr : _drugModelsForCurrentSubstance->at(index);//(drugListProxyModel->mapToSource(drugListProxyModel->index(index, 0)).row());
+    Tucuxi::GuiCore::DrugModel* drug = ((index == -1) || (_drugModelsForCurrentSubstance == nullptr)) ? nullptr : _drugModelsForCurrentSubstance->at(index);//(drugListProxyModel->mapToSource(drugListProxyModel->index(index, 0)).row());
 
 
     // If the new active substance is actually the current one, then no need to update anything
@@ -1306,7 +1306,7 @@ void InterpretationController::switchDrugModel(int index)
             treatment->getDosages()->clear();
             treatment->getCovariates()->clear();
             treatment->getAdjustments()->clear();
-            _interpretation->getAnalysis()->getChartData()->setAdjPred(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
+            _interpretation->getAnalysis()->getChartData()->setAdjPred(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO, chartData));
             _interpretation->getDrugResponseAnalysis()->setDrugModel(drug);
 
             /**************************************
@@ -1350,7 +1350,7 @@ void InterpretationController::switchDrugModel(int index)
 
             targets->clear();
             for (int i = 0; i < drugTargets->size(); ++i) {
-                ezechiel::GuiCore::Target* target = ezechiel::GuiCore::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
+                Tucuxi::GuiCore::Target* target = Tucuxi::GuiCore::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
                 target->copyFrom(drugTargets->at(i));
                 targets->append(target);
             }
@@ -1380,7 +1380,7 @@ void InterpretationController::switchDrugModel(int index)
 
         targets->clear();
         for (int i = 0; i < drugTargets->size(); ++i) {
-            ezechiel::GuiCore::Target* target = ezechiel::GuiCore::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
+            Tucuxi::GuiCore::Target* target = Tucuxi::GuiCore::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
             target->copyFrom(drugTargets->at(i));
             targets->append(target);
         }
@@ -1860,7 +1860,7 @@ void InterpretationController::goToSaveInterpretation()
     QString dirPath;
 
     // Settings to keep track of the previous path
-    dirPath = SETTINGS.get(ezechiel::GuiCore::Module::GUI,"interpretationDirPath", "").toString();
+    dirPath = SETTINGS.get(Tucuxi::GuiCore::Module::GUI,"interpretationDirPath", "").toString();
 
 //    Patient* currentPatient = getCurrentPatient();
 
@@ -1878,7 +1878,7 @@ void InterpretationController::goToSaveInterpretation()
     //qInfo() << fileName;
 
     dirPath = QFileInfo(fileName).absoluteDir().absolutePath();
-    SETTINGS.set(ezechiel::GuiCore::Module::GUI,"interpretationDirPath", dirPath);
+    SETTINGS.set(Tucuxi::GuiCore::Module::GUI,"interpretationDirPath", dirPath);
 
     saveInterpretation(fileName);
 
@@ -1931,7 +1931,7 @@ void InterpretationController::saveStatistics()
     QString dirPath;
 
     // Settings to keep track of the previous path
-    dirPath = SETTINGS.get(ezechiel::GuiCore::Module::GUI,"statisticsDirPath", "").toString();
+    dirPath = SETTINGS.get(Tucuxi::GuiCore::Module::GUI,"statisticsDirPath", "").toString();
 
     QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Stats File"),
                                                     dirPath,
@@ -1943,7 +1943,7 @@ void InterpretationController::saveStatistics()
         fileName += ".csv";
 
     dirPath = QFileInfo(fileName).absoluteDir().absolutePath();
-    SETTINGS.set(ezechiel::GuiCore::Module::GUI,"statisticsDirPath", dirPath);
+    SETTINGS.set(Tucuxi::GuiCore::Module::GUI,"statisticsDirPath", dirPath);
 
     ChartDataExporter exporter;
     QString content = exporter.exportData(_chartDataController->chartData, EXPORT_ALL);
@@ -2025,7 +2025,7 @@ void InterpretationController::removePatient(int index)
         interpretation->setStartInterpretationTime(QDateTime::currentDateTime());
 
         // Create a new treatment and assigns it to both objects
-        ezechiel::GuiCore::DrugTreatment *newTreatment = CoreFactory::createEntity<DrugTreatment>(ABSTRACTREPO, _interpretation->getDrugResponseAnalysis());
+        Tucuxi::GuiCore::DrugTreatment *newTreatment = CoreFactory::createEntity<DrugTreatment>(ABSTRACTREPO, _interpretation->getDrugResponseAnalysis());
 
         interpretation->getDrugResponseAnalysis()->setTreatment(newTreatment);
         interpretation->getRequest()->setTreatment(newTreatment);

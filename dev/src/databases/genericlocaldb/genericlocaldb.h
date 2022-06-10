@@ -15,14 +15,14 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
-namespace ezechiel {
+namespace Tucuxi {
 
 
 //class GenericLocalDBFactory : public Factory
 //{
 //    Q_OBJECT
 //    Q_PLUGIN_METADATA(IID "genericlocaldb")
-//    Q_INTERFACES(ezechiel::Factory)
+//    Q_INTERFACES(Tucuxi::Factory)
 //public:
 //    void init(Core *core);
 //    PluginBase* newPlugin (QString& id);
@@ -40,7 +40,7 @@ class GenericLocalDB : public IDatabase
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "genericlocaldb")
-    Q_INTERFACES(ezechiel::IDatabase)
+    Q_INTERFACES(Tucuxi::IDatabase)
 public:
 
     GenericLocalDB ();
@@ -92,8 +92,8 @@ public:
     Response deleteDBObjects (QList<QObject*>&, QObject* parent);
 
     QString whereBuilder(const QMetaObject&, const WhereClauseMap&);
-//    virtual ezechiel::Response getVersion(QString &version);
-//    virtual ezechiel::Response isCompatible(bool &compatible);
+//    virtual Tucuxi::Response getVersion(QString &version);
+//    virtual Tucuxi::Response isCompatible(bool &compatible);
 
     virtual Response isEncrypted(bool &encrypted);
     virtual Response setEncrypted(bool encrypted);

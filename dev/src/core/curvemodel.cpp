@@ -21,7 +21,7 @@
 
 #include <cmath>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -229,7 +229,7 @@ bool CurveModel::load(ident id)
 //        emit error(_errors);
 //        return false;
 //    }
-    ezechiel::Response r = NEWDB->getDosagesByDate(_id,dosages);
+    Tucuxi::Response r = NEWDB->getDosagesByDate(_id,dosages);
     if (r.error != NoError && r.error != NotFound) {
         return false;
     }
@@ -312,7 +312,7 @@ bool CurveModel::save()
 //            emit error(_errors);
 //            return false;
 //        }
-        ezechiel::Response r = NEWDB->getDosagesByDate(_id,dosages);
+        Tucuxi::Response r = NEWDB->getDosagesByDate(_id,dosages);
         if (r.error != NoError && r.error != NotFound) {
             return false;
         }
@@ -355,7 +355,7 @@ bool CurveModel::save()
     }
 
     //Save the curve
-    ezechiel::Response r = NEWDB->setCurve(curve);
+    Tucuxi::Response r = NEWDB->setCurve(curve);
     if (r.error != NoError) {
             return false;
     }
@@ -1960,7 +1960,7 @@ bool CurveModel::setPatient(ident patient)
 
     SharedPatient p;
 //    Response r = DB->getPatient(patient,p);
-    ezechiel::Response r = NEWDB->getPatientFromId(patient, p);
+    Tucuxi::Response r = NEWDB->getPatientFromId(patient, p);
     if (r.error != NoError) {
 //        emit error(tr("Failed to fetch the patient %1 from the database %2.\nError :\n%3")
 //                   .arg(patient).arg(r.responder).arg(CORE->database()->errorString(r.error)));
@@ -2320,7 +2320,7 @@ void CurveModel::covariatesChanged()
     //Get the covariates from the database
     QList<SharedPatientVariate> list;
 //    Response r = CORE->db()->getCovariatesByDate(_patient->id(),list);
-    ezechiel::Response r = NEWDB->getPatientVariatesByDate(_patient->id(),list);
+    Tucuxi::Response r = NEWDB->getPatientVariatesByDate(_patient->id(),list);
     if (r.error != NotFound && r.error != NoError) {
         emit error(tr("Failed to fetch the patient's covariate"));
 //        emit error(tr("Failed to fetch the patient's covariate (%1) from the database %2.\nError :\n%3")
@@ -2443,7 +2443,7 @@ void CurveModel::clinicalsChanged()
     //Get the covariates from the database
     QList<SharedClinical> list;
 //    Response r = CORE->db()->getClinicalsByDate(_patient->id(),list);
-    ezechiel::Response r = NEWDB->getClinicalsByDate(_patient->id(),list);
+    Tucuxi::Response r = NEWDB->getClinicalsByDate(_patient->id(),list);
     if (r.error != NoError && r.error != NotFound) {
         emit error(tr("Failed to fetch the patient's clinical"));
 //        emit error(tr("Failed to fetch the patient's clinical (%1) from the database %2.\nError :\n%3")
@@ -2495,7 +2495,7 @@ void CurveModel::measuresChanged()
     //Get the measures from the database
     QList<SharedMeasure> measuresList;
 //    Response r = CORE->db()->getMeasuresByDrug(_patient->id(), _drugId, measuresList);
-    ezechiel::Response r = NEWDB->getMeasuresFromPatientAndDrug(_patient->id(), _drugId, measuresList);
+    Tucuxi::Response r = NEWDB->getMeasuresFromPatientAndDrug(_patient->id(), _drugId, measuresList);
     if (r.error != NoError && r.error != NotFound) {
         emit error(tr("Could not retrieve patient."));
 //        emit error(tr("Could not retrieve patient ID '%1' measures from the database %2.\nError :\n%3").arg(_patient->id()).arg(r.responder).arg(CORE->database()->errorString(r.error)));
@@ -3766,5 +3766,5 @@ void CurveModel::setSaved()
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

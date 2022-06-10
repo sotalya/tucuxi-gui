@@ -3,7 +3,7 @@
 #include "adjustment.h"
 #include "dal/drug/target.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(TargetEvaluationResult, TargetMethod*, targetType, TargetType)

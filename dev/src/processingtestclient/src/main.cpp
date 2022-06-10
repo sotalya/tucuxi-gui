@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 int main(int argc, char *argv[])
 {

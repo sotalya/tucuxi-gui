@@ -12,7 +12,7 @@
 #include <QRegularExpression>
 #include <QRegExpValidator>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //The unique instance
@@ -166,7 +166,7 @@ bool SecurityManager::authenticate(const QString &username, const QString &passw
 //    QString userKey;
 
 //    //Get the userKey from database
-//    if (dynamic_cast<ezechiel::EphemeralDB*>(ABSTRACTREPO)->getUserKey(username, userKey).error != NoError)
+//    if (dynamic_cast<Tucuxi::EphemeralDB*>(ABSTRACTREPO)->getUserKey(username, userKey).error != NoError)
 //        return false;
 
 //    //Try to authenticate the user
@@ -396,7 +396,7 @@ bool SecurityManager::isEncrypted() const
     Response response = APPUTILSREPO->isEncrypted(status);
 
     if (response.error != NoError)
-        LOG(QtCriticalMsg, ezechiel::GuiCore::DATAERROR, tr("Could not retrieve the database encryption status. The database returned the following error:\n%1").arg(response.message));
+        LOG(QtCriticalMsg, Tucuxi::GuiCore::DATAERROR, tr("Could not retrieve the database encryption status. The database returned the following error:\n%1").arg(response.message));
 
     //Return the encryption status
     return status;
@@ -423,7 +423,7 @@ bool SecurityManager::userExists(const QString &username)
 
     //FIX!!!
     return false;
-//    return dynamic_cast<ezechiel::EphemeralDB*>(ABSTRACTREPO)->getUser(username, unused).error == NoError;
+//    return dynamic_cast<Tucuxi::EphemeralDB*>(ABSTRACTREPO)->getUser(username, unused).error == NoError;
 }
 
 //Protected constructor
@@ -463,7 +463,7 @@ bool SecurityManager::createUser(const User &user, const QString &password)
         return false;
 
     //Add the user to the database
-//    if (dynamic_cast<ezechiel::EphemeralDB*>(ABSTRACTREPO)->setUser(user).error != NoError)
+//    if (dynamic_cast<Tucuxi::EphemeralDB*>(ABSTRACTREPO)->setUser(user).error != NoError)
 //        return false;
 
     //Create the user private key
@@ -471,7 +471,7 @@ bool SecurityManager::createUser(const User &user, const QString &password)
         return true;
 
     //Delete the user in case of error
-//    dynamic_cast<ezechiel::EphemeralDB*>(ABSTRACTREPO)->deleteUser(user.username());
+//    dynamic_cast<Tucuxi::EphemeralDB*>(ABSTRACTREPO)->deleteUser(user.username());
 
     return false;
 }
@@ -488,8 +488,8 @@ bool SecurityManager::createUserKey(const User &user, const QString &password)
     //Set the user new private key
     //FIX!!!
     return false;
-//    return dynamic_cast<ezechiel::EphemeralDB*>(ABSTRACTREPO)->setUserKey(user.username(), newKey).error == NoError;
+//    return dynamic_cast<Tucuxi::EphemeralDB*>(ABSTRACTREPO)->setUserKey(user.username(), newKey).error == NoError;
 }
 
 }//namespace core
-}//namespace ezechiel
+}//namespace Tucuxi

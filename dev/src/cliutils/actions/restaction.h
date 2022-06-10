@@ -16,7 +16,7 @@
 class QDomElement;
 class CurveModel;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 class RestAction : public ExchangeAction
 {
@@ -184,5 +184,5 @@ private:
 };
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi
 #endif // IMPORTACTION_H

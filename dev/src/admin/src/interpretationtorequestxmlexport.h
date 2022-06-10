@@ -10,7 +10,7 @@ class Interpretation;
 class ClinicalSet;
 class Patient;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 class ActiveSubstance;
 class DosageHistory;
@@ -28,10 +28,10 @@ public:
 
 protected:
 
-    bool saveActiveSubstance(ezechiel::GuiCore::ActiveSubstance *activeSubstance);
-    bool saveDosages(ezechiel::GuiCore::DosageHistory *dosageHistory);
-    bool saveSamples(ezechiel::GuiCore::CoreMeasureList *samples);
-    bool saveCovariates(ezechiel::GuiCore::PatientVariateList *covariates);
+    bool saveActiveSubstance(Tucuxi::GuiCore::ActiveSubstance *activeSubstance);
+    bool saveDosages(Tucuxi::GuiCore::DosageHistory *dosageHistory);
+    bool saveSamples(Tucuxi::GuiCore::CoreMeasureList *samples);
+    bool saveCovariates(Tucuxi::GuiCore::PatientVariateList *covariates);
     bool saveClinicals(ClinicalSet *clinicals);
     bool savePatient(Patient *patient);
 

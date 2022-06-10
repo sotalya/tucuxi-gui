@@ -2,7 +2,7 @@
 
 #include "exchangeaction.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 //The error strings
 const char *const ExchangeAction::_DATABASE_READ_FAILED   = QT_TR_NOOP_UTF8("Failed to retrieve the %1 %2 '%3' from the database (%4)");
@@ -1862,4 +1862,4 @@ void ExchangeAction::PracticianData::setIgnored(bool ignored)
 }
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi

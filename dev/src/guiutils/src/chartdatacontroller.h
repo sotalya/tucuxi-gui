@@ -10,7 +10,7 @@
 
 class CalculationController;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 class ChartData;
 class PredictionSpec;
@@ -50,23 +50,23 @@ public slots:
 
 
     void initiateUpdatePopPred();
-    void receiveResultsPopPred(ezechiel::GuiCore::PredictionResult*);
+    void receiveResultsPopPred(Tucuxi::GuiCore::PredictionResult*);
     void initiateUpdatePopPerc();
-    void receiveResultsPopPerc(ezechiel::GuiCore::PredictionResult*);
+    void receiveResultsPopPerc(Tucuxi::GuiCore::PredictionResult*);
     void initiateUpdateAprPred();
-    void receiveResultsAprPred(ezechiel::GuiCore::PredictionResult*);
+    void receiveResultsAprPred(Tucuxi::GuiCore::PredictionResult*);
     void initiateUpdateAprPerc();
-    void receiveResultsAprPerc(ezechiel::GuiCore::PredictionResult*);
+    void receiveResultsAprPerc(Tucuxi::GuiCore::PredictionResult*);
     void initiateUpdateApoPred();
-    void receiveResultsApoPred(ezechiel::GuiCore::PredictionResult*);
+    void receiveResultsApoPred(Tucuxi::GuiCore::PredictionResult*);
     void initiateUpdateApoPerc();
-    void receiveResultsApoPerc(ezechiel::GuiCore::PredictionResult*);
+    void receiveResultsApoPerc(Tucuxi::GuiCore::PredictionResult*);
     void initiateUpdateRevPred();
-    void receiveResultsRevPred(ezechiel::GuiCore::PredictionResult*);
+    void receiveResultsRevPred(Tucuxi::GuiCore::PredictionResult*);
     void initiateUpdateAdjPred();
-    void receiveResultsAdjPred(ezechiel::GuiCore::PredictionResult*);
+    void receiveResultsAdjPred(Tucuxi::GuiCore::PredictionResult*);
     void initiateUpdateAdjPerc();
-    void receiveResultsAdjPerc(ezechiel::GuiCore::PredictionResult*);
+    void receiveResultsAdjPerc(Tucuxi::GuiCore::PredictionResult*);
 
 
 protected:
@@ -84,9 +84,9 @@ protected:
 
 public:
 
-    ezechiel::GuiCore::ChartData* chartData;
+    Tucuxi::GuiCore::ChartData* chartData;
 
-    ezechiel::GuiCore::PredictionSpec* predictionspec;
+    Tucuxi::GuiCore::PredictionSpec* predictionspec;
 };
 
 #endif // CHARTDATACONTROLLER_H

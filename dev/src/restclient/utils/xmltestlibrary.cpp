@@ -111,14 +111,14 @@ XmlTestLibrary::XmlTestLibrary(QObject *parent) :
     _notificationsTestFiles << ":/test/xml/169999143/notification.xml";
 
     //Load the files
-    loadTestFile(_queryListTestFile, ezechiel::GuiCore::XmlValidator::Queries, _queryList);
-    loadTestFile(_replyListTestFile, ezechiel::GuiCore::XmlValidator::Reply_List, _replyList);
+    loadTestFile(_queryListTestFile, Tucuxi::GuiCore::XmlValidator::Queries, _queryList);
+    loadTestFile(_replyListTestFile, Tucuxi::GuiCore::XmlValidator::Reply_List, _replyList);
     for (int i = 0; i < _queryRequestsTestFiles.size(); ++i)
-        loadTestFile(_queryRequestsTestFiles.at(i), ezechiel::GuiCore::XmlValidator::Queries, _queryRequests);
+        loadTestFile(_queryRequestsTestFiles.at(i), Tucuxi::GuiCore::XmlValidator::Queries, _queryRequests);
     for (int i = 0; i < _replyRequestsTestFiles.size(); ++i)
-        loadTestFile(_replyRequestsTestFiles.at(i), ezechiel::GuiCore::XmlValidator::Reply_Request, _replyRequests);
+        loadTestFile(_replyRequestsTestFiles.at(i), Tucuxi::GuiCore::XmlValidator::Reply_Request, _replyRequests);
     for (int i = 0; i < _notificationsTestFiles.size(); ++i)
-        loadTestFile(_notificationsTestFiles.at(i), ezechiel::GuiCore::XmlValidator::Notification, _notifications);
+        loadTestFile(_notificationsTestFiles.at(i), Tucuxi::GuiCore::XmlValidator::Notification, _notifications);
 }
 
 XmlTestLibrary::~XmlTestLibrary()
@@ -132,7 +132,7 @@ void XmlTestLibrary::loadTestFile(const QString &filename, const QString &schema
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         qFatal(qPrintable(QString("Could not open the XML test file '%1', aborting...").arg(filename)));
 
-    ezechiel::GuiCore::XmlValidator validator;
+    Tucuxi::GuiCore::XmlValidator validator;
     if (!validator.validate(filename, schema))
         qFatal(qPrintable(QString("Could not validate the XML test file '%1' (%2), aborting...").arg(filename, validator.errorMessage())));
 
@@ -146,7 +146,7 @@ void XmlTestLibrary::loadTestFile(const QString &filename, const QString &schema
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         qFatal(qPrintable(QString("Could not open the XML test file '%1', aborting...").arg(filename)));
 
-    ezechiel::GuiCore::XmlValidator validator;
+    Tucuxi::GuiCore::XmlValidator validator;
     if (!validator.validate(filename, schema))
         qFatal(qPrintable(QString("Could not validate the XML test file '%1' (%2), aborting...").arg(filename, validator.errorMessage())));
 

@@ -8,7 +8,7 @@
 #include "core/dal/drug/operableamount.h"
 #include "core/utils/ezutils.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //class OperableAmount;
@@ -89,12 +89,12 @@ private:
 QML_POINTERLIST_CLASS_DECL(TargetMethodList, TargetMethod)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::TargetMethod*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::TargetMethod*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::TargetMethod*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::TargetMethod*>)
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class Target : public Entity
@@ -195,10 +195,10 @@ static QMap<QString, TargetMethod::TargetType> createMap() {
 QML_POINTERLIST_CLASS_DECL(TargetList, Target)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Target*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Target*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::TargetList*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Target*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Target*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::TargetList*)
 
 #endif // TARGET_H

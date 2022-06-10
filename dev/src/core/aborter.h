@@ -3,7 +3,7 @@
 #ifndef ABORTER_H
 #define ABORTER_H
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace math {
 
 

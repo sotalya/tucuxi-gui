@@ -31,7 +31,7 @@ void ReplyListTestMessage::setData(QByteArray data)
     if (!doc.setContent(data,false, &qxmlError, &errline, &columnline)) {
         QString raw = QString::fromLocal8Bit(data);
 //        displayError(replyError.isEmpty() ? tr("Could not generate DOM for the 'REPLY_LIST' message") : replyError);
-        EXLOG(QtFatalMsg, ezechiel::restclient::NOEZERROR, tr("QXmlError parsing DOM with error: %1, at line: %2, at column: %3, raw data: %4").arg(qxmlError).arg(errline).arg(columnline).arg(raw));
+        EXLOG(QtFatalMsg, Tucuxi::restclient::NOEZERROR, tr("QXmlError parsing DOM with error: %1, at line: %2, at column: %3, raw data: %4").arg(qxmlError).arg(errline).arg(columnline).arg(raw));
         return;
     }
 

@@ -7,7 +7,7 @@
 #include <QMetaType>
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 /** \ingroup drugxmlfiles
@@ -154,6 +154,6 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // DRUGXMLDESCRIPTOR_H

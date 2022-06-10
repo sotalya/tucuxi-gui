@@ -2,7 +2,7 @@
 
 #include "core/dal/drug/editors.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(Editor,QString,name,Name)
@@ -28,7 +28,7 @@ EditorSet::~EditorSet()
 */
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
 

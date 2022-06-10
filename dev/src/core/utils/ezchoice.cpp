@@ -7,7 +7,7 @@
 #include "core/utils/logging.h"
 #include "core/errors_core.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -125,5 +125,5 @@ void EzChoice::clear()
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

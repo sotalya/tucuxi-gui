@@ -1,7 +1,7 @@
 #include "institute.h"
 #include "../adminfactory.h"
 
-Institute::Institute(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent) :
+Institute::Institute(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _location_id(-1),
     _name(),
@@ -14,7 +14,7 @@ Institute::Institute(ezechiel::GuiCore::AbstractRepository *repository, QObject 
     _location = AdminFactory::createEntity<Location>(repository);
 }
 
-Institute::Institute(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
+Institute::Institute(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
     Entity(repository,id, parent),
     _location_id(-1),
     _name(),
@@ -113,7 +113,7 @@ Email* Institute::email(const Type &type) const
     return 0;
 }
 
-InstituteSet::InstituteSet(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent, const InstituteSet* &other)
+InstituteSet::InstituteSet(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent, const InstituteSet* &other)
 {
     foreach (SharedInstitute _i, *other) {
         SharedInstitute _ni = SharedInstitute(new Institute(repository, parent));

@@ -26,7 +26,7 @@
  * \li manage the patient covariates
  */
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 class PatientAction : public Action
 {
@@ -45,7 +45,7 @@ public:
 private:
 
     //Try to do this DB request, and return false if it didn't work with the given message
-    bool tryRequest(const ezechiel::GuiCore::Response &r, const QString &msg);
+    bool tryRequest(const Tucuxi::GuiCore::Response &r, const QString &msg);
 
     // Patients
     bool listPatients ();
@@ -66,5 +66,5 @@ private:
 };
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi
 #endif // PATIENTACTION_H

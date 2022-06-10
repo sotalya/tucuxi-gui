@@ -9,7 +9,7 @@
 #include "core/dal/drug/translatablestring.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(ADME, Admin*, defaultIntake, DefaultIntake)
@@ -84,4 +84,4 @@ void Admin::setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute formulation
 QML_POINTERLIST_CLASS_IMPL(AdminList, Admin)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

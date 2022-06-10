@@ -5,7 +5,7 @@
 #include "core/utils/units.h"
 #include "core/core.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -162,5 +162,5 @@ bool UnitsRegister::unitForName (QString name, unit_id &base, double &multiplier
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

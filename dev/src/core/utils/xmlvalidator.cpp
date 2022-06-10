@@ -11,7 +11,7 @@
 #include <QRegExp>
 #include <QFile>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //Drug XML schemas
@@ -145,4 +145,4 @@ void XmlValidator::ValidatorMessageHandler::handleMessage(QtMsgType type, const 
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

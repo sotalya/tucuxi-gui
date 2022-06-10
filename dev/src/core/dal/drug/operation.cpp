@@ -2,7 +2,7 @@
 
 #include "core/dal/drug/operation.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(Operation, OperationType, type, Type)
@@ -24,7 +24,7 @@ QML_POINTERLIST_CLASS_IMPL(OperationList, Operation)
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
 

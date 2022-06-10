@@ -9,7 +9,7 @@
 #include "percentilepair.h"
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class Predictive : public Entity
@@ -36,6 +36,6 @@ public slots:
 
 }
 }
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Predictive*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Predictive*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Predictive*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Predictive*>)
 #endif // PREDICTIVE_H

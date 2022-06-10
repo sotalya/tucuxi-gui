@@ -18,7 +18,7 @@ QueryListXmlMessage::~QueryListXmlMessage()
 
 QString QueryListXmlMessage::schemaPath() const
 {
-    return ezechiel::GuiCore::XmlValidator::Queries;
+    return Tucuxi::GuiCore::XmlValidator::Queries;
 }
 
 QString QueryListXmlMessage::messageType() const

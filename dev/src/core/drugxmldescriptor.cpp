@@ -4,7 +4,7 @@
 
 #include <QFile>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -130,5 +130,5 @@ void DrugXmlDescriptor::setDescription(const QString &description)
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

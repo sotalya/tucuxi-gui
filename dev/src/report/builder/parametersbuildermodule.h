@@ -5,21 +5,21 @@
 #include "core/dal/drug/parameters.h"
 #include "reportbuildermodule.h"
 
-class ParametersBuilderModule : public ezechiel::GuiCore::Entity, public ReportBuilderModule
+class ParametersBuilderModule : public Tucuxi::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
 
 public:
-    ParametersBuilderModule(ezechiel::GuiCore::ParameterSet* parameters = new ezechiel::GuiCore::ParameterSet(), QObject *parent = 0);
+    ParametersBuilderModule(Tucuxi::GuiCore::ParameterSet* parameters = new Tucuxi::GuiCore::ParameterSet(), QObject *parent = 0);
 
     virtual bool setData(ReportData *data);
     virtual void unsetData(ReportData *data);
 
-    ezechiel::GuiCore::ParameterSet* parameters() const;
-    ParametersBuilderModule &setParameters(ezechiel::GuiCore::ParameterSet* parameters);
+    Tucuxi::GuiCore::ParameterSet* parameters() const;
+    ParametersBuilderModule &setParameters(Tucuxi::GuiCore::ParameterSet* parameters);
 
 private:
-    ezechiel::GuiCore::ParameterSet* _parameters;
+    Tucuxi::GuiCore::ParameterSet* _parameters;
 };
 
 #endif // PARAMETERSBUILDERMODULE_H

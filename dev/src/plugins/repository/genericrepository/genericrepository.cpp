@@ -22,7 +22,7 @@
 #include "QSqlQuery"
 #include <QUrl>
 
-namespace ezechiel {
+namespace Tucuxi {
 
 void GenericRepositoryFactory::init (Core* core) {
 
@@ -96,7 +96,7 @@ Response GenericRepository::deleteObject(Aggregate *aggregate)
 // We can us pointers to pointers so as to let the repository allocate the object
 Response GenericRepository::getPatientById(int id, Patient **patient)
 {
-    ezechiel::Response r;
+    Tucuxi::Response r;
     WhereClauseMap dvwhere;
     dvwhere.insert(Patient::staticMetaObject.indexOfProperty("patient_id"), Comparison(AND_Equals, id));
     r = database->getDBObjects(Patient::staticMetaObject, *currentUser, dvwhere);

@@ -8,8 +8,8 @@
 class ProcessingFactory
 {
 public:
-    static ezechiel::GuiCore::ProcessingInterface* createProcessing();
-    static ezechiel::GuiCore::ProcessingInterface* createProcessing(std::string what);
+    static Tucuxi::GuiCore::ProcessingInterface* createProcessing();
+    static Tucuxi::GuiCore::ProcessingInterface* createProcessing(std::string what);
 
 public:
     ProcessingFactory();

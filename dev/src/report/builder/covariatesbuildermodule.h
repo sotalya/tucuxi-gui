@@ -10,14 +10,14 @@
 #include "reportbuildermodule.h"
 
 
-class CovariatesBuilderModule : public ezechiel::GuiCore::Entity, public ReportBuilderModule
+class CovariatesBuilderModule : public Tucuxi::GuiCore::Entity, public ReportBuilderModule
 {
     Q_OBJECT
-    AUTO_PROPERTY_DECL(ezechiel::GuiCore::DrugVariateList*, drugvariates, Drugvariates)
-    AUTO_PROPERTY_DECL(ezechiel::GuiCore::PatientVariateList*, patientvariates, Patientvariates)
+    AUTO_PROPERTY_DECL(Tucuxi::GuiCore::DrugVariateList*, drugvariates, Drugvariates)
+    AUTO_PROPERTY_DECL(Tucuxi::GuiCore::PatientVariateList*, patientvariates, Patientvariates)
 
 public:
-    CovariatesBuilderModule(ezechiel::GuiCore::DrugVariateList *drugvariates = 0, ezechiel::GuiCore::PatientVariateList *covariates = 0, QObject *parent = 0);
+    CovariatesBuilderModule(Tucuxi::GuiCore::DrugVariateList *drugvariates = 0, Tucuxi::GuiCore::PatientVariateList *covariates = 0, QObject *parent = 0);
 
     virtual bool setData(ReportData *data);
     virtual void unsetData(ReportData *data);

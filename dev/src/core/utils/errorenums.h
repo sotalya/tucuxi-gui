@@ -6,7 +6,7 @@
 #include <QString>
 #include <QVariant>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -65,6 +65,6 @@ struct Response {
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // ERROR_H

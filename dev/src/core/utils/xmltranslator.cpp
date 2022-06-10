@@ -4,7 +4,7 @@
 #include "tag.h"
 #include "core/core.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -78,5 +78,5 @@ QString XmlTranslator::translate(QXmlStreamReader &parser, const QString &langAt
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

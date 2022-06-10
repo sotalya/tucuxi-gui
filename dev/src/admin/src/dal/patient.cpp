@@ -1,7 +1,7 @@
 #include "admin/src/dal/patient.h"
 #include "../adminfactory.h"
 
-Patient::Patient(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent) :
+Patient::Patient(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
     CorePatient(repository,parent),
     _person_id(-1),
     _externalId(),
@@ -14,7 +14,7 @@ Patient::Patient(ezechiel::GuiCore::AbstractRepository *repository, QObject *par
 //    setPerson(_pers.data());
 }
 
-Patient::Patient(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
+Patient::Patient(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
     CorePatient(repository,parent),
     _person_id(-1),
     _externalId(),

@@ -42,7 +42,7 @@ MessageContent ReplyListMessageBuilder::messageContent() const
     if (!doc.setContent(_message->data(),false, &qxmlError, &errline, &columnline)) {
         QString raw = QString::fromLocal8Bit(_message->data());
 //        displayError(replyError.isEmpty() ? tr("Could not generate DOM for the 'REPLY_LIST' message") : replyError);
-        EXLOG(QtFatalMsg, ezechiel::rest::NOEZERROR, tr("QXmlError parsing DOM with error: %1, at line: %2, at column: %3, raw data: %4").arg(qxmlError).arg(errline).arg(columnline).arg(raw));
+        EXLOG(QtFatalMsg, Tucuxi::rest::NOEZERROR, tr("QXmlError parsing DOM with error: %1, at line: %2, at column: %3, raw data: %4").arg(qxmlError).arg(errline).arg(columnline).arg(raw));
     }
 
     //Get the control ID

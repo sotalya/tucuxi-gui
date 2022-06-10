@@ -18,7 +18,7 @@
 #include "core/utils/version.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 using namespace GuiCore;
 
@@ -944,5 +944,5 @@ protected:
 };
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi
 #endif // EXCHANGEACTION_H

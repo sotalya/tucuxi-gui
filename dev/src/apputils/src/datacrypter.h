@@ -15,7 +15,7 @@
 
 using namespace Botan;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiAppUtils {
 class DataCrypter : public QObject
 {
@@ -98,5 +98,5 @@ private:
 };
 
 }//namespace GuiAppUtils
-}//namespace ezechiel
+}//namespace Tucuxi
 #endif // DATACRYPTER_H

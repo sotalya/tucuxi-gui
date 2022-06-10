@@ -26,7 +26,7 @@
 
 #include <QDomDocument>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 //The error messages
 const char *const ImportAction::_NODE_LOCATION          = QT_TR_NOOP_UTF8("(line '%1', column '%2')");
@@ -809,7 +809,7 @@ DrugResponseAnalysis* ImportAction::processResponses(const Dataset &dataset, Sha
 
 bool ImportAction::processMandator(const ImportAction::Dataset &dataset)
 {
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     //The database objects
     SharedPractician practician = AdminFactory::createEntity<Practician>(ADMINREPO);
@@ -889,7 +889,7 @@ bool ImportAction::processMandator(const ImportAction::Dataset &dataset)
 
 SharedPatient ImportAction::processPatient(const ImportAction::Dataset &dataset)
 {
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     //The database objects
     SharedPatient patient = AdminFactory::createEntity<Patient>(ADMINREPO);
@@ -941,7 +941,7 @@ SharedPatient ImportAction::processPatient(const ImportAction::Dataset &dataset)
 DrugModel* ImportAction::processDrug(const ImportAction::Dataset &dataset)
 {
     APPCORE->pluginManager();
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     //The database objects
 //    SharedPatient patient;
@@ -950,8 +950,8 @@ DrugModel* ImportAction::processDrug(const ImportAction::Dataset &dataset)
 
     //The curve object
     QString drugId;
-//    SharedDrugResponseAnalysis _resp = ezechiel::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
-//    SharedDrugTreatment _treat = ezechiel::GuiCore::CoreFactory::createEntity<DrugTreatment>(REPO);
+//    SharedDrugResponseAnalysis _resp = Tucuxi::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
+//    SharedDrugTreatment _treat = Tucuxi::GuiCore::CoreFactory::createEntity<DrugTreatment>(REPO);
 //    _resp->setTreatment(_treat);
 
     //Get the drug ID
@@ -991,7 +991,7 @@ DrugModel* ImportAction::processDrug(const ImportAction::Dataset &dataset)
 //        WARNING(tr(_DATABASE_READ_FAILED).arg(tr("curves"), tr("for patient with the external ID"), dataset.patient().id(), response.message));
 //        return false;
 //    }
-//    SharedPredictionSet _predset = ezechiel::GuiCore::CoreFactory::createEntity<PredictionSet>(REPO);
+//    SharedPredictionSet _predset = Tucuxi::GuiCore::CoreFactory::createEntity<PredictionSet>(REPO);
 //    foreach (SharedPrediction _pr, *_predset) {
 //        _predset->append(_pr);
 //    }
@@ -1107,7 +1107,7 @@ DrugModel* ImportAction::processDrug(const ImportAction::Dataset &dataset)
 
 bool ImportAction::processCovariates(const ImportAction::Dataset &dataset, SharedPatient patient)
 {
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     //The database objects
     QList<PatientVariate*> covariates;
@@ -1139,7 +1139,7 @@ bool ImportAction::processCovariates(const ImportAction::Dataset &dataset, Share
         CovariateData data = dataset.covariates().at(i);
 
         //Build the covariate
-        PatientVariate* covariate = ezechiel::GuiCore::CoreFactory::createEntity<PatientVariate>(ADMINREPO);
+        PatientVariate* covariate = Tucuxi::GuiCore::CoreFactory::createEntity<PatientVariate>(ADMINREPO);
         covariate->setCovariateId(data.name());
         covariate->setDate(data.date());
         covariate->getQuantity()->setValue(data.value());
@@ -1176,7 +1176,7 @@ bool ImportAction::processCovariates(const ImportAction::Dataset &dataset, Share
 
 bool ImportAction::processClinicals(const ImportAction::Dataset &dataset, SharedPatient patient)
 {
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     //The database objects
 //    SharedPatient patient;
@@ -1245,7 +1245,7 @@ bool ImportAction::processClinicals(const ImportAction::Dataset &dataset, Shared
 
 bool ImportAction::processPredictions(const ImportAction::Dataset &dataset, DrugResponseAnalysis* dresponse)
 {
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     //The database objects
 //    SharedPatient patient;
@@ -1275,23 +1275,23 @@ bool ImportAction::processPredictions(const ImportAction::Dataset &dataset, Drug
         PredictionData data = dataset.predictions().at(i);
 
         //Build the Prediction
-        Prediction* prediction = ezechiel::GuiCore::CoreFactory::createEntity<Prediction>(REPO);
+        Prediction* prediction = Tucuxi::GuiCore::CoreFactory::createEntity<Prediction>(REPO);
         prediction->setName(data.name());
-        ezechiel::GuiCore::ParameterType _ptype;
+        Tucuxi::GuiCore::ParameterType _ptype;
         if (data.paramsType() == "apriori") {
-            _ptype = ezechiel::GuiCore::APRIORI;
+            _ptype = Tucuxi::GuiCore::APRIORI;
         } else if (data.paramsType() == "aposteriori") {
-            _ptype = ezechiel::GuiCore::APOSTERIORI;
+            _ptype = Tucuxi::GuiCore::APOSTERIORI;
         } else if (data.paramsType() == "population") {
-            _ptype = ezechiel::GuiCore::POPULATION;
+            _ptype = Tucuxi::GuiCore::POPULATION;
         } else if (data.paramsType() == "manual") {
-            _ptype = ezechiel::GuiCore::MANUAL;
+            _ptype = Tucuxi::GuiCore::MANUAL;
         } else if (data.paramsType() == "last") {
-            _ptype = ezechiel::GuiCore::LAST_PT;
+            _ptype = Tucuxi::GuiCore::LAST_PT;
         }
         prediction->setParamsType(_ptype);
         prediction->setCurveType(data.curveType() == "continuous" ? Continous : Partial);
-        PredictionSpec* _spec = ezechiel::GuiCore::CoreFactory::createEntity<PredictionSpec>(REPO);
+        PredictionSpec* _spec = Tucuxi::GuiCore::CoreFactory::createEntity<PredictionSpec>(REPO);
         _spec->setNbPoints(data.nbPoints().toInt());
         _spec->setStartDate(QDateTime::fromString(data.startdate(), _xmlDateTimeFormat));
         _spec->setEndDate(QDateTime::fromString(data.enddate(), _xmlDateTimeFormat));
@@ -1396,7 +1396,7 @@ bool ImportAction::processDosages(const ImportAction::Dataset &dataset, DrugResp
         DosageData data = dataset.dosages().at(i);
 
         //Set the dosage data
-        Dosage* dosage = ezechiel::GuiCore::CoreFactory::createEntity<Dosage>(REPO);
+        Dosage* dosage = Tucuxi::GuiCore::CoreFactory::createEntity<Dosage>(REPO);
         dosage->getQuantity()->setValue(data.dose().value());
         dosage->getQuantity()->setUnit(data.dose().unit());
         dosage->setInterval(data.interval());
@@ -1459,7 +1459,7 @@ bool ImportAction::processDosages(const ImportAction::Dataset &dataset, DrugResp
 
 bool ImportAction::processSamples(const ImportAction::Dataset &dataset, DrugResponseAnalysis* resp)
 {
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     // YTA: I modified the DAL object, so the measure does not know the drug
 
@@ -1691,4 +1691,4 @@ ImportAction::Document::Document()
 }
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi

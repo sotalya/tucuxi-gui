@@ -21,7 +21,7 @@
 #include "core/errors_core.h"
 #include "core/dal/drug/bsv.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -180,7 +180,7 @@ QVariant Convert::fromString(int type, QString str)
       }
       //Manual, each value is separated with a ':'
       QStringList values = data.at(1).split(":");
-      SharedParameter p = (ezechiel::GuiCore::CoreFactory::createEntity<Parameter>(ABSTRACTREPO, nullptr));
+      SharedParameter p = (Tucuxi::GuiCore::CoreFactory::createEntity<Parameter>(ABSTRACTREPO, nullptr));
       p->setName(data.at(0));
       p->getQuantity()->setValue(values.at(0).toDouble());
       //The rest is optional
@@ -226,5 +226,5 @@ QVariant Convert::fromString(int type, QString str)
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

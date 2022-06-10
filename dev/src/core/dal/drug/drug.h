@@ -7,7 +7,7 @@
 #include "core/utils/ezutils.h"
 #include "core/dal/amount.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class DrugXmlDescriptor;
@@ -179,11 +179,11 @@ private:
 
 QML_POINTERLIST_CLASS_DECL(DrugModelList, DrugModel)
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ActiveSubstance*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ActiveSubstance*)
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::DrugModel*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::DrugModel*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::DrugModel*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::DrugModel*>)
 
 #endif // DRUG_H

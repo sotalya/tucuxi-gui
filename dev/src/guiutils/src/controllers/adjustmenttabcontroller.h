@@ -9,7 +9,7 @@
 #include "core/utils/autoproperty.h"
 #include "abstractviewcontroller.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class DosageHistory;
@@ -27,7 +27,7 @@ public:
     explicit AdjustmentTabController(QObject *parent = nullptr);
 
     //! This property is used by AdjustmentTab.qml to access the list of dosages
-    STD_PROPERTY_DECL(ezechiel::GuiCore::DosageHistory*, adjustments, Adjustments)
+    STD_PROPERTY_DECL(Tucuxi::GuiCore::DosageHistory*, adjustments, Adjustments)
 
     //! This property is not implemented using the standard macro, as it
     //! Shall refer to the PredictionSpec object
@@ -67,21 +67,21 @@ public:
     Q_INVOKABLE void setEndTime(int index, QDateTime time);
     Q_INVOKABLE void forceRefresh();
 
-    void setChartData(ezechiel::GuiCore::ChartData *chartData);
+    void setChartData(Tucuxi::GuiCore::ChartData *chartData);
     void onDosageUpdated();
     void reset();
 
 private:
     bool isIndexValid(int index);
     void removeFromTreatement(const QString &type);
-    static bool compareAdjustment(const ezechiel::GuiCore::Dosage* a, const ezechiel::GuiCore::Dosage* b);
+    static bool compareAdjustment(const Tucuxi::GuiCore::Dosage* a, const Tucuxi::GuiCore::Dosage* b);
 
-    ezechiel::GuiCore::AdjustmentDosage* getAdjustment(const QString &type);
-    ezechiel::GuiCore::AdjustmentDosage* getLastAdjustment(const QString &type);
-    void adaptDates(const ezechiel::GuiCore::AdjustmentDosage *manual, ezechiel::GuiCore::AdjustmentDosage *suggested);
+    Tucuxi::GuiCore::AdjustmentDosage* getAdjustment(const QString &type);
+    Tucuxi::GuiCore::AdjustmentDosage* getLastAdjustment(const QString &type);
+    void adaptDates(const Tucuxi::GuiCore::AdjustmentDosage *manual, Tucuxi::GuiCore::AdjustmentDosage *suggested);
 
 private:
-    ezechiel::GuiCore::ChartData *_chartData;
+    Tucuxi::GuiCore::ChartData *_chartData;
 };
 
 

@@ -6,7 +6,7 @@
 #include "core/dal/entity.h"
 #include "core/utils/ezutils.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class TranslatableString;
@@ -37,9 +37,9 @@ protected:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ErrorModel*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ErrorModel*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ErrorModel*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ErrorModel*>)
 
 #endif // ERRORMODEL_H

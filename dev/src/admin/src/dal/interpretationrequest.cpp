@@ -8,7 +8,7 @@
 #include "admin/src/dal/clinical.h"
 
 
-AUTO_PROPERTY_IMPL(InterpretationRequest, ezechiel::GuiCore::DrugTreatment*, treatment, Treatment)
+AUTO_PROPERTY_IMPL(InterpretationRequest, Tucuxi::GuiCore::DrugTreatment*, treatment, Treatment)
 AUTO_PROPERTY_IMPL(InterpretationRequest, Patient*, patient, Patient)
 AUTO_PROPERTY_IMPL(InterpretationRequest, Practician*, practician, Practician)
 
@@ -21,17 +21,17 @@ AUTO_PROPERTY_IMPL(InterpretationRequest, QString, source, Source)
 AUTO_PROPERTY_IMPL(InterpretationRequest, ClinicalSet*, clinicals, Clinicals)
 
 
-InterpretationRequest::InterpretationRequest(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent) :
+InterpretationRequest::InterpretationRequest(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent)
 {
     setId(-1);
     _patient = AdminFactory::createEntity<Patient>(repository, this);
     _practician = AdminFactory::createEntity<Practician>(repository, this);
-    _treatment = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugTreatment>(repository, this);
+    _treatment = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugTreatment>(repository, this);
     _clinicals = AdminFactory::createEntity<ClinicalSet>(repository, this);
 }
 
-InterpretationRequest::InterpretationRequest(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
+InterpretationRequest::InterpretationRequest(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
     Entity(repository,id, parent)
 {
     setId(id);

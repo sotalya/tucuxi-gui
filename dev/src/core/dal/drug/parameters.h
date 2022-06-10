@@ -13,7 +13,7 @@
 #include "core/utils/duration.h"
 #include "core/dal/drug/operableamount.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class Bsv;
@@ -255,13 +255,13 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ParameterType)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ParameterType*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Parameter*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Parameter*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Parameters*);
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ParameterSet*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ParameterType)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ParameterType*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Parameter*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Parameter*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Parameters*);
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ParameterSet*)
 
 #endif // PARAMETERS_H

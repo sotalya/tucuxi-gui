@@ -6,7 +6,7 @@
 #include "core/utils/units.h"
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -29,6 +29,6 @@ protected:
 typedef Results* SharedResults;
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // RESULTS_H

@@ -2,10 +2,10 @@
 
 #include "core/dal/corepatient.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
-ezechiel::GuiCore::CorePatientSet::CorePatientSet(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent, const ezechiel::GuiCore::CorePatientSet* &other)
+Tucuxi::GuiCore::CorePatientSet::CorePatientSet(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent, const Tucuxi::GuiCore::CorePatientSet* &other)
 {
     foreach (CorePatient* _p, *other) {
         CorePatient* _np = CoreFactory::createEntity<CorePatient>(repository, parent);

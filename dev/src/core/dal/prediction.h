@@ -10,7 +10,7 @@
 #include "core/errors_core.h"
 #include "core/dal/drug/parameters.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class DrugResponseAnalysis;
@@ -59,9 +59,9 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Prediction*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Prediction*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Prediction*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Prediction*>)
 
 #endif // PREDICTION_H

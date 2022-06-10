@@ -44,18 +44,18 @@ Unit buildUnit(const QString &_strUnit)
 }
 
 
-void buildTreatment(DrugTreatment &_treatment, const ezechiel::GuiCore::DrugTreatment *_ezTreatment)
+void buildTreatment(DrugTreatment &_treatment, const Tucuxi::GuiCore::DrugTreatment *_ezTreatment)
 {
-    QList<ezechiel::GuiCore::Dosage*> dosageList = _ezTreatment->getDosages()->getList();
-    QList<ezechiel::GuiCore::Dosage*>::iterator itDosages = dosageList.begin();
+    QList<Tucuxi::GuiCore::Dosage*> dosageList = _ezTreatment->getDosages()->getList();
+    QList<Tucuxi::GuiCore::Dosage*>::iterator itDosages = dosageList.begin();
     while (itDosages != dosageList.end()) {
-        ezechiel::GuiCore::Dosage *dosage = *itDosages++;
+        Tucuxi::GuiCore::Dosage *dosage = *itDosages++;
 
         AbsorptionModel route;
         switch (dosage->getRoute()->getRoute()) {
-            case ezechiel::GuiCore::Admin::Route::BOLUS: route = AbsorptionModel::EXTRAVASCULAR; break;
-            case ezechiel::GuiCore::Admin::Route::INFUSION: route = AbsorptionModel::INTRAVASCULAR; break;
-            case ezechiel::GuiCore::Admin::Route::EXTRA: route = AbsorptionModel::EXTRAVASCULAR; break;
+            case Tucuxi::GuiCore::Admin::Route::BOLUS: route = AbsorptionModel::EXTRAVASCULAR; break;
+            case Tucuxi::GuiCore::Admin::Route::INFUSION: route = AbsorptionModel::INTRAVASCULAR; break;
+            case Tucuxi::GuiCore::Admin::Route::EXTRA: route = AbsorptionModel::EXTRAVASCULAR; break;
             default: route = AbsorptionModel::EXTRAVASCULAR; break;
         }
         LastingDose lastingDose(dosage->getQuantity()->getDbvalue(),
@@ -71,10 +71,10 @@ void buildTreatment(DrugTreatment &_treatment, const ezechiel::GuiCore::DrugTrea
 
     const std::string analyteId = "imatinib";
 
-    QList<ezechiel::GuiCore::PatientVariate*> covariateList = _ezTreatment->getCovariates()->getList();
-    QList<ezechiel::GuiCore::PatientVariate*>::iterator itCovariates = covariateList.begin();
+    QList<Tucuxi::GuiCore::PatientVariate*> covariateList = _ezTreatment->getCovariates()->getList();
+    QList<Tucuxi::GuiCore::PatientVariate*>::iterator itCovariates = covariateList.begin();
     while (itCovariates != covariateList.end()) {
-        ezechiel::GuiCore::PatientVariate *covariate = *itCovariates++;
+        Tucuxi::GuiCore::PatientVariate *covariate = *itCovariates++;
         _treatment.addCovariate(std::make_unique<PatientCovariate>(
             covariate->getName().toLatin1().data(),                    // _id,
             std::to_string(covariate->getQuantity()->getDbvalue()),    // _value,
@@ -83,10 +83,10 @@ void buildTreatment(DrugTreatment &_treatment, const ezechiel::GuiCore::DrugTrea
             buildDateTime(covariate->getDate())));                     // _date
     }
 
-    QList<ezechiel::GuiCore::CoreMeasure*> sampleList = _ezTreatment->getMeasures()->getList();
-    QList<ezechiel::GuiCore::CoreMeasure*>::iterator itSamples = sampleList.begin();
+    QList<Tucuxi::GuiCore::CoreMeasure*> sampleList = _ezTreatment->getMeasures()->getList();
+    QList<Tucuxi::GuiCore::CoreMeasure*>::iterator itSamples = sampleList.begin();
     while (itSamples != sampleList.end()) {
-        ezechiel::GuiCore::CoreMeasure *sample = *itSamples++;
+        Tucuxi::GuiCore::CoreMeasure *sample = *itSamples++;
         _treatment.addSample(std::make_unique<Sample>(
             buildDateTime(sample->getMoment()),                     // date,
             analyteId,                                                   // analyteId,
@@ -95,16 +95,16 @@ void buildTreatment(DrugTreatment &_treatment, const ezechiel::GuiCore::DrugTrea
         ));
     }
 
-    QList<ezechiel::GuiCore::Target*> targetList = _ezTreatment->getTargets()->getList();
-    QList<ezechiel::GuiCore::Target*>::iterator itTargets = targetList.begin();
+    QList<Tucuxi::GuiCore::Target*> targetList = _ezTreatment->getTargets()->getList();
+    QList<Tucuxi::GuiCore::Target*>::iterator itTargets = targetList.begin();
     while (itTargets != targetList.end()) {
-        ezechiel::GuiCore::Target *target = *itTargets++;
+        Tucuxi::GuiCore::Target *target = *itTargets++;
         TargetType targetType;
         switch (target->getType()->getTargetType()) {
-            case ezechiel::GuiCore::TargetMethod::TargetType::ResidualTarget: targetType = TargetType::Residual; break;
-            case ezechiel::GuiCore::TargetMethod::TargetType::PeakTarget:     targetType = TargetType::Peak;     break;
-            case ezechiel::GuiCore::TargetMethod::TargetType::MeanTarget:     targetType = TargetType::Mean;     break;
-            case ezechiel::GuiCore::TargetMethod::TargetType::AUCTarget:      targetType = TargetType::Auc;      break;
+            case Tucuxi::GuiCore::TargetMethod::TargetType::ResidualTarget: targetType = TargetType::Residual; break;
+            case Tucuxi::GuiCore::TargetMethod::TargetType::PeakTarget:     targetType = TargetType::Peak;     break;
+            case Tucuxi::GuiCore::TargetMethod::TargetType::MeanTarget:     targetType = TargetType::Mean;     break;
+            case Tucuxi::GuiCore::TargetMethod::TargetType::AUCTarget:      targetType = TargetType::Auc;      break;
             default:                                                       targetType = TargetType::Residual; break;
         }
         _treatment.addTarget(std::make_unique<Target>(
@@ -137,7 +137,7 @@ TucuxiCalculationController::TucuxiCalculationController(QObject *parent)
 }
 
 
-ezechiel::GuiCore::PredictionResult* TucuxiCalculationController::computePrediction(
+Tucuxi::GuiCore::PredictionResult* TucuxiCalculationController::computePrediction(
     const DrugModel& _model,
     const DrugTreatment &_treatment,
     PredictionParameterType _type,
@@ -165,12 +165,12 @@ ezechiel::GuiCore::PredictionResult* TucuxiCalculationController::computePredict
 
         ComputingResult res = iCore->compute(request, response);
         if (res == ComputingResult::Success) {
-            ezechiel::GuiCore::PredictionResult* pred = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO);
-            ezechiel::GuiCore::Predictive* predictive = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Predictive>(ABSTRACTREPO, pred);
+            Tucuxi::GuiCore::PredictionResult* pred = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO);
+            Tucuxi::GuiCore::Predictive* predictive = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Predictive>(ABSTRACTREPO, pred);
             pred->setPredictive(predictive);
-            ezechiel::GuiCore::PredictionData* pdata = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionData>(ABSTRACTREPO, predictive);
+            Tucuxi::GuiCore::PredictionData* pdata = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionData>(ABSTRACTREPO, predictive);
             predictive->setPredictionData(pdata);
-            ezechiel::GuiCore::FancyPoints* fpts = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::FancyPoints>(ABSTRACTREPO, pdata);
+            Tucuxi::GuiCore::FancyPoints* fpts = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoints>(ABSTRACTREPO, pdata);
             pdata->setPoints(fpts);
 
             for (const std::unique_ptr<SingleComputingResponse>& resp: response->getResponses()) {
@@ -178,7 +178,7 @@ ezechiel::GuiCore::PredictionResult* TucuxiCalculationController::computePredict
                 if (pSinglePred != nullptr) {
                     for (CycleData cycleData: pSinglePred->getData()) {
                         for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {
-                            ezechiel::GuiCore::FancyPoint* fpt = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::FancyPoint>(ABSTRACTREPO, fpts);
+                            Tucuxi::GuiCore::FancyPoint* fpt = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoint>(ABSTRACTREPO, fpts);
                             fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][i]*3600.0);
                             fpt->setValue(cycleData.m_concentrations[0][i]);
                             fpts->append(fpt);
@@ -194,7 +194,7 @@ ezechiel::GuiCore::PredictionResult* TucuxiCalculationController::computePredict
 }
 
 
-ezechiel::GuiCore::PredictionResult* TucuxiCalculationController::computePercentiles(
+Tucuxi::GuiCore::PredictionResult* TucuxiCalculationController::computePercentiles(
     const DrugModel& _model,
     const DrugTreatment &_treatment,
     PredictionParameterType _type,
@@ -225,10 +225,10 @@ ezechiel::GuiCore::PredictionResult* TucuxiCalculationController::computePercent
 
         ComputingResult res = iCore->compute(request, response);
         if (res == ComputingResult::Success) {
-            ezechiel::GuiCore::PredictionResult* pred = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionResult>(ABSTRACTREPO);
-            ezechiel::GuiCore::Predictive* predictive = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Predictive>(ABSTRACTREPO, pred);
+            Tucuxi::GuiCore::PredictionResult* pred = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionResult>(ABSTRACTREPO);
+            Tucuxi::GuiCore::Predictive* predictive = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Predictive>(ABSTRACTREPO, pred);
             pred->setPredictive(predictive);
-            ezechiel::GuiCore::PercentileDataList* percpairs = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PercentileDataList>(ABSTRACTREPO, predictive);
+            Tucuxi::GuiCore::PercentileDataList* percpairs = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PercentileDataList>(ABSTRACTREPO, predictive);
             predictive->setPercentileDataList(percpairs);
 
 
@@ -236,17 +236,17 @@ ezechiel::GuiCore::PredictionResult* TucuxiCalculationController::computePercent
                 PercentilesResponse* pPercentiles = dynamic_cast<PercentilesResponse*>(resp.get());
                 if (pPercentiles != nullptr) {
                     for (size_t i = 0; i < pPercentiles->getNbRanks(); ++i) {
-                        ezechiel::GuiCore::PercentileData* percpair = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PercentileData>(ABSTRACTREPO, predictive);
+                        Tucuxi::GuiCore::PercentileData* percpair = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PercentileData>(ABSTRACTREPO, predictive);
                         percpairs->append(percpair);
-                        ezechiel::GuiCore::PredictionData* pdata = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PredictionData>(ABSTRACTREPO, percpair);
-                        ezechiel::GuiCore::FancyPoints* fpts = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::FancyPoints>(ABSTRACTREPO);
+                        Tucuxi::GuiCore::PredictionData* pdata = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PredictionData>(ABSTRACTREPO, percpair);
+                        Tucuxi::GuiCore::FancyPoints* fpts = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoints>(ABSTRACTREPO);
                         fpts->setParent(pdata);
                         pdata->setPoints(fpts);
                         percpair->setPredictionData(pdata);
                         percpair->setPercentile(pPercentiles->getRank(i));
                         const CycleData& cycleData = pPercentiles->getData(i);
                         for (size_t j=0; i<cycleData.m_concentrations[0].size(); j++) {
-                            ezechiel::GuiCore::FancyPoint* fpt = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::FancyPoint>(ABSTRACTREPO, fpts);
+                            Tucuxi::GuiCore::FancyPoint* fpt = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::FancyPoint>(ABSTRACTREPO, fpts);
                             fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][i]*3600.0);
                             fpt->setValue(cycleData.m_concentrations[0][i]);
                             fpts->append(fpt);
@@ -263,10 +263,10 @@ ezechiel::GuiCore::PredictionResult* TucuxiCalculationController::computePercent
 }
 
 
-void TucuxiCalculationController::computePopPred(ezechiel::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computePopPred(Tucuxi::GuiCore::PredictionSpec *_prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running population prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running population prediction.");
 
     BuildImatinib builder;
     DrugModel *pDrugModel = builder.buildDrugModel();
@@ -274,7 +274,7 @@ void TucuxiCalculationController::computePopPred(ezechiel::GuiCore::PredictionSp
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    ezechiel::GuiCore::PredictionResult *pPred = computePrediction(*pDrugModel,
+    Tucuxi::GuiCore::PredictionResult *pPred = computePrediction(*pDrugModel,
                                                                 drugTreatment,
                                                                 PredictionParameterType::Population,
                                                                 buildDateTime(_prediction->getStartDate()),
@@ -289,10 +289,10 @@ void TucuxiCalculationController::computePopPred(ezechiel::GuiCore::PredictionSp
 }
 
 
-void TucuxiCalculationController::computePopPerc(ezechiel::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computePopPerc(Tucuxi::GuiCore::PredictionSpec *_prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running population percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running population percentiles.");
 
     BuildImatinib builder;
     DrugModel *pDrugModel = builder.buildDrugModel();
@@ -300,7 +300,7 @@ void TucuxiCalculationController::computePopPerc(ezechiel::GuiCore::PredictionSp
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    ezechiel::GuiCore::PredictionResult *pPred = computePercentiles(*pDrugModel,
+    Tucuxi::GuiCore::PredictionResult *pPred = computePercentiles(*pDrugModel,
                                                                  drugTreatment,
                                                                  PredictionParameterType::Population,
                                                                  buildDateTime(_prediction->getStartDate()),
@@ -315,10 +315,10 @@ void TucuxiCalculationController::computePopPerc(ezechiel::GuiCore::PredictionSp
 }
 
 
-void TucuxiCalculationController::computeAprPred(ezechiel::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeAprPred(Tucuxi::GuiCore::PredictionSpec *_prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running apriori prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running apriori prediction.");
 
     BuildImatinib builder;
     DrugModel *pDrugModel = builder.buildDrugModel();
@@ -326,7 +326,7 @@ void TucuxiCalculationController::computeAprPred(ezechiel::GuiCore::PredictionSp
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    ezechiel::GuiCore::PredictionResult *pPred = computePrediction(*pDrugModel,
+    Tucuxi::GuiCore::PredictionResult *pPred = computePrediction(*pDrugModel,
                                                                 drugTreatment,
                                                                 PredictionParameterType::Apriori,
                                                                 buildDateTime(_prediction->getStartDate()),
@@ -340,10 +340,10 @@ void TucuxiCalculationController::computeAprPred(ezechiel::GuiCore::PredictionSp
     emit engage();
 }
 
-void TucuxiCalculationController::computeAprPerc(ezechiel::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeAprPerc(Tucuxi::GuiCore::PredictionSpec *_prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running population percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running population percentiles.");
 
     BuildImatinib builder;
     DrugModel *pDrugModel = builder.buildDrugModel();
@@ -351,7 +351,7 @@ void TucuxiCalculationController::computeAprPerc(ezechiel::GuiCore::PredictionSp
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    ezechiel::GuiCore::PredictionResult *pPred = computePercentiles(*pDrugModel,
+    Tucuxi::GuiCore::PredictionResult *pPred = computePercentiles(*pDrugModel,
                                                                  drugTreatment,
                                                                  PredictionParameterType::Apriori,
                                                                  buildDateTime(_prediction->getStartDate()),
@@ -365,10 +365,10 @@ void TucuxiCalculationController::computeAprPerc(ezechiel::GuiCore::PredictionSp
     emit engage();
 }
 
-void TucuxiCalculationController::computeApoPred(ezechiel::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeApoPred(Tucuxi::GuiCore::PredictionSpec *_prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running aposteriori prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running aposteriori prediction.");
 
     BuildImatinib builder;
     DrugModel *pDrugModel = builder.buildDrugModel();
@@ -376,7 +376,7 @@ void TucuxiCalculationController::computeApoPred(ezechiel::GuiCore::PredictionSp
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    ezechiel::GuiCore::PredictionResult *pPred = computePrediction(*pDrugModel,
+    Tucuxi::GuiCore::PredictionResult *pPred = computePrediction(*pDrugModel,
                                                                 drugTreatment,
                                                                 PredictionParameterType::Aposteriori,
                                                                 buildDateTime(_prediction->getStartDate()),
@@ -390,10 +390,10 @@ void TucuxiCalculationController::computeApoPred(ezechiel::GuiCore::PredictionSp
     emit engage();
 }
 
-void TucuxiCalculationController::computeApoPerc(ezechiel::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeApoPerc(Tucuxi::GuiCore::PredictionSpec *_prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, "Running aposterior percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running aposterior percentiles.");
 
     BuildImatinib builder;
     DrugModel *pDrugModel = builder.buildDrugModel();
@@ -401,7 +401,7 @@ void TucuxiCalculationController::computeApoPerc(ezechiel::GuiCore::PredictionSp
     DrugTreatment drugTreatment;
     buildTreatment(drugTreatment, _prediction->getAnalysis()->getTreatment());
 
-    ezechiel::GuiCore::PredictionResult *pPred = computePercentiles(*pDrugModel,
+    Tucuxi::GuiCore::PredictionResult *pPred = computePercentiles(*pDrugModel,
                                                                  drugTreatment,
                                                                  PredictionParameterType::Aposteriori,
                                                                  buildDateTime(_prediction->getStartDate()),
@@ -415,11 +415,11 @@ void TucuxiCalculationController::computeApoPerc(ezechiel::GuiCore::PredictionSp
     emit engage();
 }
 
-void TucuxiCalculationController::computeRevPred(ezechiel::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeRevPred(Tucuxi::GuiCore::PredictionSpec *_prediction)
 {
 }
 
-void TucuxiCalculationController::computeAdjPred(ezechiel::GuiCore::PredictionSpec *_prediction)
+void TucuxiCalculationController::computeAdjPred(Tucuxi::GuiCore::PredictionSpec *_prediction)
 {
 }
 

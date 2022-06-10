@@ -7,7 +7,7 @@
 #include "core/dal/entity.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 enum class UncastedStatus
@@ -29,7 +29,7 @@ enum class UncastedStatus
  * in the GUI so that the user could manually set correct values.
  * A prediction could then be done only if every list of UncastedValue are empty.
  */
-class UncastedValue : public ezechiel::GuiCore::Entity
+class UncastedValue : public Tucuxi::GuiCore::Entity
 {
     Q_OBJECT
     ENTITY_UTILS(UncastedValue)
@@ -58,7 +58,7 @@ class UncastedValue : public ezechiel::GuiCore::Entity
 
 protected:
 
-    Q_INVOKABLE UncastedValue(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE UncastedValue(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
 
 public:
     bool isValid() Q_DECL_OVERRIDE;
@@ -68,10 +68,10 @@ public:
 QML_POINTERLIST_CLASS_DECL(UncastedValueList, UncastedValue)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::UncastedValue*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::UncastedValue*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::UncastedValueList*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::UncastedValue*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::UncastedValue*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::UncastedValueList*)
 
 #endif // UNCASTEDVALUE_H

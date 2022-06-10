@@ -9,7 +9,7 @@
 
 #include "core/utils/ezutils.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -131,8 +131,8 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::EzChoice)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::EzChoice)
 
 #endif // EZCHOICE_H

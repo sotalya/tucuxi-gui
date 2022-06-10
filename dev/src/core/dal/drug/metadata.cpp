@@ -4,7 +4,7 @@
 #include "core/dal/drug/editors.h"
 #include "references.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -14,7 +14,7 @@ AUTO_PROPERTY_IMPL(MetaData,ReferenceList*,references,References)
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
 

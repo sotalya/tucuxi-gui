@@ -2,7 +2,7 @@
 
 #include "predictive.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 Q_AUTO_PROPERTY_IMPL(Predictive, PredictionData*, predictionData, PredictionData)

@@ -9,9 +9,9 @@
 #include "core/utils/logging.h"
 #include "errors_cliutils.h"
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 QString ListAction::name()
 {
@@ -134,4 +134,4 @@ void ListAction::listOptions(const QString &arg)
 }
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi

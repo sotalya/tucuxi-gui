@@ -25,12 +25,12 @@
 
 #endif
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiAppUtils {
-ezechiel::GuiCore::SecurityManager *AppCore::securityManager()
+Tucuxi::GuiCore::SecurityManager *AppCore::securityManager()
 {
     if (!_securityManager)
-        _securityManager = &ezechiel::GuiCore::SecurityManager::instance();
+        _securityManager = &Tucuxi::GuiCore::SecurityManager::instance();
     return _securityManager;
 
  // TODO Check why this doesn't work (it creates 2 instances)
@@ -44,7 +44,7 @@ AppCore::AppCore() : _securityManager(0), _drugManager(0)
     drugMutex = new QMutex();
     drugPreloadMutex = new QMutex();
 
-    drugloader = new ezechiel::GuiCore::ThreadDrugLoader();
+    drugloader = new Tucuxi::GuiCore::ThreadDrugLoader();
 }
 
 //Destructs the pseudo-singletons
@@ -89,9 +89,9 @@ void AppCore::preloadDrugs ()
 }
 
 } //namespace GuiAppUtils
-} //namespace ezechiel
+} //namespace Tucuxi
 
-void ezechiel::GuiCore::ThreadDrugLoader::run() {
+void Tucuxi::GuiCore::ThreadDrugLoader::run() {
     core->drugMutex->lock();
     core->createDrugManager();
     core->drugMutex->unlock();

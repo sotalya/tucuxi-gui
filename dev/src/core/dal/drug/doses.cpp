@@ -2,7 +2,7 @@
 
 #include "core/dal/drug/doses.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(ValidDose, IdentifiableAmount*, quantity, Quantity)
@@ -23,7 +23,7 @@ AUTO_PROPERTY_IMPL(ValidDoses, QList<double>, dosesList, DosesList)
 
 QML_POINTERLIST_CLASS_IMPL(DoseList, ValidDose)
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 
 

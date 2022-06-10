@@ -32,7 +32,7 @@ class PersistentFileDialog;
 class InterpretationRequest;
 class Interpretation;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 class DrugModel;
 class CorePatient;
@@ -66,161 +66,161 @@ class UndoRedoController : public QQuickView
 {
 
     Q_OBJECT
-    Q_PROPERTY(ezechiel::GuiCore::DrugModelList* drugs READ getDrugs WRITE setDrugs NOTIFY drugsChanged)
-    Q_PROPERTY(ezechiel::GuiCore::TranslatableString*  drugGeneralComments READ getDrugGeneralComments WRITE setDrugGeneralComments NOTIFY drugGeneralCommentsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::DrugModelList* drugs READ getDrugs WRITE setDrugs NOTIFY drugsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::TranslatableString*  drugGeneralComments READ getDrugGeneralComments WRITE setDrugGeneralComments NOTIFY drugGeneralCommentsChanged)
 
-    Q_PROPERTY(ezechiel::GuiCore::DrugModel* currentDrug READ getCurrentDrug WRITE setCurrentDrug NOTIFY currentDrugChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::DrugModel* currentDrug READ getCurrentDrug WRITE setCurrentDrug NOTIFY currentDrugChanged)
 
-    Q_PROPERTY(ezechiel::GuiCore::EditorList* editors READ getEditors WRITE setEditors NOTIFY editorsChanged)
-    Q_PROPERTY(ezechiel::GuiCore::TranslatableString* editorComments READ getEditorComments WRITE setEditorComments NOTIFY editorCommentsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::EditorList* editors READ getEditors WRITE setEditors NOTIFY editorsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::TranslatableString* editorComments READ getEditorComments WRITE setEditorComments NOTIFY editorCommentsChanged)
 
-    Q_PROPERTY(ezechiel::GuiCore::DoseList* doses READ getDoses WRITE setDoses NOTIFY dosesChanged)
-    Q_PROPERTY(ezechiel::GuiCore::TranslatableString* dosesComments READ getDosesComments WRITE setDosesComments NOTIFY dosesCommentsChanged)
-    Q_PROPERTY(ezechiel::GuiCore::IntervalList* intervals READ getIntervals WRITE setIntervals NOTIFY intervalsChanged)
-    Q_PROPERTY(ezechiel::GuiCore::InfusionList* infusions READ getInfusions WRITE setInfusions NOTIFY infusionsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::DoseList* doses READ getDoses WRITE setDoses NOTIFY dosesChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::TranslatableString* dosesComments READ getDosesComments WRITE setDosesComments NOTIFY dosesCommentsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::IntervalList* intervals READ getIntervals WRITE setIntervals NOTIFY intervalsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::InfusionList* infusions READ getInfusions WRITE setInfusions NOTIFY infusionsChanged)
 
-    Q_PROPERTY(ezechiel::GuiCore::TargetList* targets READ getTargets WRITE setTargets NOTIFY targetsChanged)
-    Q_PROPERTY(ezechiel::GuiCore::TranslatableString* targetComments READ getTargetComments WRITE setTargetComments NOTIFY targetCommentsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::TargetList* targets READ getTargets WRITE setTargets NOTIFY targetsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::TranslatableString* targetComments READ getTargetComments WRITE setTargetComments NOTIFY targetCommentsChanged)
 
-    Q_PROPERTY(ezechiel::GuiCore::ADME* adme READ getAdme WRITE setAdme NOTIFY admeChanged)
-    Q_PROPERTY(ezechiel::GuiCore::TranslatableString* admeComments READ getAdmeComments WRITE setAdmeComments NOTIFY admeCommentsChanged)
-    Q_PROPERTY(ezechiel::GuiCore::Halflife* halflife READ getHalflife WRITE setHalflife NOTIFY halflifeChanged)
-    Q_PROPERTY(ezechiel::GuiCore::TranslatableString* halflifeComments READ getHalflifeComments WRITE setHalflifeComments NOTIFY halflifeCommentsChanged)
-    Q_PROPERTY(ezechiel::GuiCore::ErrorModel* errorModel READ getErrorModel WRITE setErrorModel NOTIFY errorModelChanged)
-    Q_PROPERTY(ezechiel::GuiCore::TranslatableString* errorModelComments READ getErrorModelComments WRITE setErrorModelComments NOTIFY errorModelCommentsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::ADME* adme READ getAdme WRITE setAdme NOTIFY admeChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::TranslatableString* admeComments READ getAdmeComments WRITE setAdmeComments NOTIFY admeCommentsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::Halflife* halflife READ getHalflife WRITE setHalflife NOTIFY halflifeChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::TranslatableString* halflifeComments READ getHalflifeComments WRITE setHalflifeComments NOTIFY halflifeCommentsChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::ErrorModel* errorModel READ getErrorModel WRITE setErrorModel NOTIFY errorModelChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::TranslatableString* errorModelComments READ getErrorModelComments WRITE setErrorModelComments NOTIFY errorModelCommentsChanged)
 
 
-    Q_PROPERTY(ezechiel::GuiCore::Parameters* parameters READ getParameters WRITE setParameters NOTIFY parametersChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::Parameters* parameters READ getParameters WRITE setParameters NOTIFY parametersChanged)
 
-    Q_PROPERTY(ezechiel::GuiCore::DrugVariateList* covariates READ getCovariates WRITE setCovariates NOTIFY covariatesChanged)
+    Q_PROPERTY(Tucuxi::GuiCore::DrugVariateList* covariates READ getCovariates WRITE setCovariates NOTIFY covariatesChanged)
 
 
 public:
     explicit UndoRedoController(QWindow* parent = 0);
     //drug
-    ezechiel::GuiCore::DrugModelList* getDrugs() { return _drugs; }
-    void setDrugs(ezechiel::GuiCore::DrugModelList* dlist) { _drugs = dlist; /*setModified(true);*/ emit drugsChanged(_drugs); }
+    Tucuxi::GuiCore::DrugModelList* getDrugs() { return _drugs; }
+    void setDrugs(Tucuxi::GuiCore::DrugModelList* dlist) { _drugs = dlist; /*setModified(true);*/ emit drugsChanged(_drugs); }
     //drug general comments
-    ezechiel::GuiCore::TranslatableString* getDrugGeneralComments() { return _drugGeneralComments; }
-    void setDrugGeneralComments(ezechiel::GuiCore::TranslatableString* cList) { _drugGeneralComments = cList; emit drugGeneralCommentsChanged(_drugGeneralComments); }
+    Tucuxi::GuiCore::TranslatableString* getDrugGeneralComments() { return _drugGeneralComments; }
+    void setDrugGeneralComments(Tucuxi::GuiCore::TranslatableString* cList) { _drugGeneralComments = cList; emit drugGeneralCommentsChanged(_drugGeneralComments); }
 
     //current drug
-    ezechiel::GuiCore::DrugModel* getCurrentDrug(){return  _currentDrug;}
-    void setCurrentDrug(ezechiel::GuiCore::DrugModel* newDrug) { _currentDrug = newDrug; }
+    Tucuxi::GuiCore::DrugModel* getCurrentDrug(){return  _currentDrug;}
+    void setCurrentDrug(Tucuxi::GuiCore::DrugModel* newDrug) { _currentDrug = newDrug; }
 
     //editors
-    ezechiel::GuiCore::EditorList* getEditors() { return _editors; }
-    void setEditors(ezechiel::GuiCore::EditorList* editors) { _editors = editors; }
+    Tucuxi::GuiCore::EditorList* getEditors() { return _editors; }
+    void setEditors(Tucuxi::GuiCore::EditorList* editors) { _editors = editors; }
     //editors comments
-    ezechiel::GuiCore::TranslatableString* getEditorComments() { return _editorComments; }
-    void setEditorComments(ezechiel::GuiCore::TranslatableString* comm) { _editorComments = comm; }
+    Tucuxi::GuiCore::TranslatableString* getEditorComments() { return _editorComments; }
+    void setEditorComments(Tucuxi::GuiCore::TranslatableString* comm) { _editorComments = comm; }
 
     //doses comments
-    ezechiel::GuiCore::TranslatableString* getDosesComments() { return _dosesComments; }
-    void setDosesComments(ezechiel::GuiCore::TranslatableString* transString){ _dosesComments = transString; emit dosesCommentsChanged(_dosesComments);}
+    Tucuxi::GuiCore::TranslatableString* getDosesComments() { return _dosesComments; }
+    void setDosesComments(Tucuxi::GuiCore::TranslatableString* transString){ _dosesComments = transString; emit dosesCommentsChanged(_dosesComments);}
     //doses
-    ezechiel::GuiCore::DoseList* getDoses() { return _doses; }
-    void setDoses(ezechiel::GuiCore::DoseList* doses) { _doses = doses;    }
+    Tucuxi::GuiCore::DoseList* getDoses() { return _doses; }
+    void setDoses(Tucuxi::GuiCore::DoseList* doses) { _doses = doses;    }
     //intervals
-    ezechiel::GuiCore::IntervalList* getIntervals() { return _intervals; }
-    void setIntervals(ezechiel::GuiCore::IntervalList* intervals) { _intervals = intervals; }
+    Tucuxi::GuiCore::IntervalList* getIntervals() { return _intervals; }
+    void setIntervals(Tucuxi::GuiCore::IntervalList* intervals) { _intervals = intervals; }
     //infusions
-    ezechiel::GuiCore::InfusionList* getInfusions() { return _infusions; }
-    void setInfusions(ezechiel::GuiCore::InfusionList* infusions) { _infusions = infusions; }
+    Tucuxi::GuiCore::InfusionList* getInfusions() { return _infusions; }
+    void setInfusions(Tucuxi::GuiCore::InfusionList* infusions) { _infusions = infusions; }
 
     //targets
-    ezechiel::GuiCore::TargetList* getTargets() { return _targets; }
-    void setTargets(ezechiel::GuiCore::TargetList* targets) { _targets = targets; }
+    Tucuxi::GuiCore::TargetList* getTargets() { return _targets; }
+    void setTargets(Tucuxi::GuiCore::TargetList* targets) { _targets = targets; }
     //targetComments
-    ezechiel::GuiCore::TranslatableString* getTargetComments() { return _targetComments; }
-    void setTargetComments(ezechiel::GuiCore::TranslatableString* comment) { _targetComments = comment; }
+    Tucuxi::GuiCore::TranslatableString* getTargetComments() { return _targetComments; }
+    void setTargetComments(Tucuxi::GuiCore::TranslatableString* comment) { _targetComments = comment; }
 
     //ADME
-    ezechiel::GuiCore::ADME* getAdme() { return _adme; }
-    void setAdme(ezechiel::GuiCore::ADME *adme) { _adme = adme; }
+    Tucuxi::GuiCore::ADME* getAdme() { return _adme; }
+    void setAdme(Tucuxi::GuiCore::ADME *adme) { _adme = adme; }
     //ADME comments
-    ezechiel::GuiCore::TranslatableString* getAdmeComments() { return _admeComments; }
-    void setAdmeComments(ezechiel::GuiCore::TranslatableString* comment) { _admeComments = comment; }
+    Tucuxi::GuiCore::TranslatableString* getAdmeComments() { return _admeComments; }
+    void setAdmeComments(Tucuxi::GuiCore::TranslatableString* comment) { _admeComments = comment; }
     //Halflife
-    ezechiel::GuiCore::Halflife*getHalflife() { return _halflife; }
-    void setHalflife(ezechiel::GuiCore::Halflife* hl) { _halflife = hl; }
+    Tucuxi::GuiCore::Halflife*getHalflife() { return _halflife; }
+    void setHalflife(Tucuxi::GuiCore::Halflife* hl) { _halflife = hl; }
     //halflife comments
-    ezechiel::GuiCore::TranslatableString* getHalflifeComments() { return _halflifeComments; }
-    void setHalflifeComments(ezechiel::GuiCore::TranslatableString* comment) { _halflifeComments = comment; }
+    Tucuxi::GuiCore::TranslatableString* getHalflifeComments() { return _halflifeComments; }
+    void setHalflifeComments(Tucuxi::GuiCore::TranslatableString* comment) { _halflifeComments = comment; }
     //error_model
-    ezechiel::GuiCore::ErrorModel* getErrorModel() { return _errorModel; }
-    void setErrorModel(ezechiel::GuiCore::ErrorModel* errorModel) { _errorModel = errorModel; }
+    Tucuxi::GuiCore::ErrorModel* getErrorModel() { return _errorModel; }
+    void setErrorModel(Tucuxi::GuiCore::ErrorModel* errorModel) { _errorModel = errorModel; }
     //error_model comments
-    ezechiel::GuiCore::TranslatableString* getErrorModelComments() { return _errorModelComments; }
-    void setErrorModelComments(ezechiel::GuiCore::TranslatableString* comment) { _errorModelComments = comment; }
+    Tucuxi::GuiCore::TranslatableString* getErrorModelComments() { return _errorModelComments; }
+    void setErrorModelComments(Tucuxi::GuiCore::TranslatableString* comment) { _errorModelComments = comment; }
 
     //parameters
-    ezechiel::GuiCore::Parameters* getParameters() { return _parameters; }
-    void setParameters(ezechiel::GuiCore::Parameters *parameters) { _parameters = parameters; }
+    Tucuxi::GuiCore::Parameters* getParameters() { return _parameters; }
+    void setParameters(Tucuxi::GuiCore::Parameters *parameters) { _parameters = parameters; }
 
     //covariates
-    ezechiel::GuiCore::DrugVariateList* getCovariates() { return _covariates; }
-    void setCovariates(ezechiel::GuiCore::DrugVariateList* coavariates) { _covariates = coavariates; }
+    Tucuxi::GuiCore::DrugVariateList* getCovariates() { return _covariates; }
+    void setCovariates(Tucuxi::GuiCore::DrugVariateList* coavariates) { _covariates = coavariates; }
 
 
 signals:
-    void drugsChanged(ezechiel::GuiCore::DrugModelList*);
-    void drugGeneralCommentsChanged(ezechiel::GuiCore::TranslatableString*);
+    void drugsChanged(Tucuxi::GuiCore::DrugModelList*);
+    void drugGeneralCommentsChanged(Tucuxi::GuiCore::TranslatableString*);
 
-    void currentDrugChanged(ezechiel::GuiCore::DrugModel*);
+    void currentDrugChanged(Tucuxi::GuiCore::DrugModel*);
 
-    void editorsChanged(ezechiel::GuiCore::EditorList*);
-    void editorCommentsChanged(ezechiel::GuiCore::TranslatableString*);
+    void editorsChanged(Tucuxi::GuiCore::EditorList*);
+    void editorCommentsChanged(Tucuxi::GuiCore::TranslatableString*);
 
-    void dosesCommentsChanged(ezechiel::GuiCore::TranslatableString*);
-    void dosesChanged(ezechiel::GuiCore::DoseList*);
-    void intervalsChanged(ezechiel::GuiCore::IntervalList*);
-    void infusionsChanged(ezechiel::GuiCore::InfusionList*);
+    void dosesCommentsChanged(Tucuxi::GuiCore::TranslatableString*);
+    void dosesChanged(Tucuxi::GuiCore::DoseList*);
+    void intervalsChanged(Tucuxi::GuiCore::IntervalList*);
+    void infusionsChanged(Tucuxi::GuiCore::InfusionList*);
 
-    void targetsChanged(ezechiel::GuiCore::TargetList*);
-    void targetCommentsChanged(ezechiel::GuiCore::TranslatableString*);
+    void targetsChanged(Tucuxi::GuiCore::TargetList*);
+    void targetCommentsChanged(Tucuxi::GuiCore::TranslatableString*);
 
-    void admeChanged(ezechiel::GuiCore::ADME*);
-    void admeCommentsChanged(ezechiel::GuiCore::TranslatableString*);
-    void halflifeChanged(ezechiel::GuiCore::Halflife*);
-    void halflifeCommentsChanged(ezechiel::GuiCore::TranslatableString*);
-    void errorModelChanged(ezechiel::GuiCore::ErrorModel*);
-    void errorModelCommentsChanged(ezechiel::GuiCore::TranslatableString*);
+    void admeChanged(Tucuxi::GuiCore::ADME*);
+    void admeCommentsChanged(Tucuxi::GuiCore::TranslatableString*);
+    void halflifeChanged(Tucuxi::GuiCore::Halflife*);
+    void halflifeCommentsChanged(Tucuxi::GuiCore::TranslatableString*);
+    void errorModelChanged(Tucuxi::GuiCore::ErrorModel*);
+    void errorModelCommentsChanged(Tucuxi::GuiCore::TranslatableString*);
 
-    void parametersChanged(ezechiel::GuiCore::Parameters*);
+    void parametersChanged(Tucuxi::GuiCore::Parameters*);
 
-    void covariatesChanged(ezechiel::GuiCore::DrugVariateList*);
+    void covariatesChanged(Tucuxi::GuiCore::DrugVariateList*);
 
 public slots:
     void undo();
     void redo();
 private:
 
-    ezechiel::GuiCore::DrugModelList* _drugs;
-    ezechiel::GuiCore::TranslatableString* _drugGeneralComments;
+    Tucuxi::GuiCore::DrugModelList* _drugs;
+    Tucuxi::GuiCore::TranslatableString* _drugGeneralComments;
 
 
-    ezechiel::GuiCore::EditorList *_editors;
-    ezechiel::GuiCore::TranslatableString* _editorComments;
+    Tucuxi::GuiCore::EditorList *_editors;
+    Tucuxi::GuiCore::TranslatableString* _editorComments;
 
-    ezechiel::GuiCore::TranslatableString* _dosesComments;
-    ezechiel::GuiCore::DoseList* _doses;
-    ezechiel::GuiCore::IntervalList* _intervals;
-    ezechiel::GuiCore::InfusionList* _infusions;
+    Tucuxi::GuiCore::TranslatableString* _dosesComments;
+    Tucuxi::GuiCore::DoseList* _doses;
+    Tucuxi::GuiCore::IntervalList* _intervals;
+    Tucuxi::GuiCore::InfusionList* _infusions;
 
-    ezechiel::GuiCore::TranslatableString* _targetComments;
-    ezechiel::GuiCore::TargetList* _targets;
+    Tucuxi::GuiCore::TranslatableString* _targetComments;
+    Tucuxi::GuiCore::TargetList* _targets;
 
-    ezechiel::GuiCore::ADME* _adme;
-    ezechiel::GuiCore::TranslatableString *_admeComments;
-    ezechiel::GuiCore::Halflife* _halflife;
-    ezechiel::GuiCore::TranslatableString *_halflifeComments;
-    ezechiel::GuiCore::ErrorModel* _errorModel;
-    ezechiel::GuiCore::TranslatableString *_errorModelComments;
+    Tucuxi::GuiCore::ADME* _adme;
+    Tucuxi::GuiCore::TranslatableString *_admeComments;
+    Tucuxi::GuiCore::Halflife* _halflife;
+    Tucuxi::GuiCore::TranslatableString *_halflifeComments;
+    Tucuxi::GuiCore::ErrorModel* _errorModel;
+    Tucuxi::GuiCore::TranslatableString *_errorModelComments;
 
-    ezechiel::GuiCore::Parameters *_parameters;
+    Tucuxi::GuiCore::Parameters *_parameters;
 
-    ezechiel::GuiCore::DrugVariateList* _covariates;
+    Tucuxi::GuiCore::DrugVariateList* _covariates;
 
 
     void resetStaticModels();
@@ -266,7 +266,7 @@ private:
     QObject *parameterView;
     QObject *covariateView;
 
-    ezechiel::GuiCore::DrugModel *_currentDrug;
+    Tucuxi::GuiCore::DrugModel *_currentDrug;
 
 
     void covariatesSignal() { emit covariatesChanged(_covariates); }

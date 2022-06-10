@@ -9,7 +9,7 @@
 #include <QVariant>
 #include "core/dal/drug/parameters.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class ParamTraits {

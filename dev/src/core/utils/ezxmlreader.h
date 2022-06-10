@@ -13,7 +13,7 @@
 #include <QMutex>
 #include <QVariant>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -218,6 +218,6 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // EZXMLREADER_H

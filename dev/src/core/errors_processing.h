@@ -5,7 +5,7 @@
 
 #include "core/utils/logging.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace processing {
 
 EZERROR(PROCESSING, NOEZERROR,"There is no error.")

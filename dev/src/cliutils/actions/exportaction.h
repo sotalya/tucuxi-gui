@@ -13,7 +13,7 @@
 #include "core/dal/percentile.h"
 #include "exchangeaction.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 class ExportAction : public ExchangeAction
 {
@@ -182,5 +182,5 @@ private:
 };
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi
 #endif // EXPORTACTION_H

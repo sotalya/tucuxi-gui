@@ -9,7 +9,7 @@
 #include "core/dal/predictionresult.h"
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class ChartData : public Entity
@@ -48,7 +48,7 @@ protected:
 }
 }
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ChartData*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ChartData*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ChartData*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ChartData*>)
 
 #endif // CHARTDATA_H

@@ -15,7 +15,7 @@
 #include <QFile>
 #include <QMetaType>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -436,5 +436,5 @@ bool EzXMLReader::fatalError (const QXmlParseException & exception)
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

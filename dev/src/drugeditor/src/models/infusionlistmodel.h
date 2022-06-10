@@ -30,17 +30,17 @@ public:
     Q_INVOKABLE virtual int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
 
 public slots:
-    void setModelData(ezechiel::GuiCore::ValidInfusions *infusions);
-    void setModelData(ezechiel::GuiCore::DrugModel* drug);
+    void setModelData(Tucuxi::GuiCore::ValidInfusions *infusions);
+    void setModelData(Tucuxi::GuiCore::DrugModel* drug);
 
 private:
 //    virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
-//    virtual void insertRowsImpl(int at, int count, const ezechiel::GuiCore::SharedEntitySet &entities = ezechiel::GuiCore::SharedEntitySet());
-//    virtual ezechiel::GuiCore::SharedEntitySet removeRowsImpl(int at, int count);
+//    virtual void insertRowsImpl(int at, int count, const Tucuxi::GuiCore::SharedEntitySet &entities = Tucuxi::GuiCore::SharedEntitySet());
+//    virtual Tucuxi::GuiCore::SharedEntitySet removeRowsImpl(int at, int count);
 
     void init();
 
-    ezechiel::GuiCore::ValidInfusions *_infusions;
+    Tucuxi::GuiCore::ValidInfusions *_infusions;
 
     QHash<int, QByteArray> _roleNames;
 };

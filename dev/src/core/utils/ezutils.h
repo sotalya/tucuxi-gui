@@ -10,7 +10,7 @@
 
 #include "dbobjects.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -139,12 +139,12 @@ class DirName : public QString
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::DirName);
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ModelDescriptor)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::FileName);
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Descriptor)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Option)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::DirName);
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ModelDescriptor)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::FileName);
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Descriptor)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Option)
 
 #endif // UTILS_H

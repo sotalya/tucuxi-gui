@@ -9,7 +9,7 @@
 #include "core/corefactory.h"
 #include "core/dal/uncastedvalue.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(PatientVariate, QDateTime, date, Date)
@@ -27,7 +27,7 @@ PatientVariate::PatientVariate(AbstractRepository *repository, QObject* parent, 
     _uncastedValues(CoreFactory::createEntity<UncastedValueList>(repository, this))
 {
     setId(-1);
-    _quantity = ezechiel::GuiCore::CoreFactory::createEntity<OperableAmount>(repository, this);
+    _quantity = Tucuxi::GuiCore::CoreFactory::createEntity<OperableAmount>(repository, this);
     _quantity->setValue(0);
 }
 
@@ -109,5 +109,5 @@ bool PatientVariate::operator !=(const PatientVariate &other) const
 QML_POINTERLIST_CLASS_IMPL(PatientVariateList, PatientVariate)
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

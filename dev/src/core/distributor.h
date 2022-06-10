@@ -14,7 +14,7 @@
 #include "core/utils/ezutils.h"
 #include "core/utils/version.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 // Static server address to use
@@ -257,6 +257,6 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // DISTRIBUTOR_H

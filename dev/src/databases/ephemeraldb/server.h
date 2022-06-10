@@ -3,7 +3,7 @@
 #ifndef SERVER
 #define SERVER
 
-namespace ezechiel {
+namespace Tucuxi {
     namespace zmq {
 
         class ZMQServer {

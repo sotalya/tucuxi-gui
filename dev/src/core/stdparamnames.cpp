@@ -3,7 +3,7 @@
 #include "stdparamnames.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -182,5 +182,5 @@ QString StdParamNames::getNameR(){return tr("Gamma model parameter R [-]");}
 QString StdParamNames::getDescR(){return tr("Gamma model parameter R [-]");}
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

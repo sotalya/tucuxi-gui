@@ -8,7 +8,7 @@
 
 #include "core/dal/drug/translatablestring.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class Editor : public Entity
@@ -50,11 +50,11 @@ class EditorSet : public QList<Editor*>
 */
 QML_POINTERLIST_CLASS_DECL(EditorList,Editor)
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Editor*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Editor*>)
-// Q_DECLARE_METATYPE(ezechiel::GuiCore::EditorSet*)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::EditorList*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Editor*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Editor*>)
+// Q_DECLARE_METATYPE(Tucuxi::GuiCore::EditorSet*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::EditorList*)
 
 #endif // EDITOR_H

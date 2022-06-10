@@ -29,7 +29,7 @@
 #include "errors_cliutils.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 //The error messages
 const char *const ExportAction::_INVALID_SUBCOMMAND = QT_TR_NOOP_UTF8("please run the help to display information about them");
@@ -568,7 +568,7 @@ bool ExportAction::buildDataset(const QDateTime &date, const ident &patientId, c
 
 bool ExportAction::buildInterpretation(ExportAction::Dataset &dataset, const QDateTime &date, const ident &patientId)
 {
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     //The database objects
     QList<Clinical*> clinicals;
@@ -624,7 +624,7 @@ bool ExportAction::buildInterpretation(ExportAction::Dataset &dataset, const QDa
 
 //bool ExportAction::buildCurve(ExportAction::Dataset &dataset, const QDateTime &date, const ident &curveId, const PercentileList &percentiles, const uint nbPoints)
 //{
-//    SharedDrugResponseAnalysis _resp = ezechiel::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
+//    SharedDrugResponseAnalysis _resp = Tucuxi::GuiCore::CoreFactory::createEntity<DrugResponseAnalysis>(REPO);
 
 //    //Ignore if not requested
 //    if (curveId == invalid_ident)
@@ -815,7 +815,7 @@ bool ExportAction::buildInterpretation(ExportAction::Dataset &dataset, const QDa
 
 bool ExportAction::buildPatient(PatientData &patientData, const ident &patientId)
 {
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     //The database objects
     SharedPatient patient;
@@ -862,7 +862,7 @@ bool ExportAction::buildPatient(PatientData &patientData, const ident &patientId
 
 bool ExportAction::buildPractician(ExchangeAction::PracticianData &practicianData, const ident &practicianId)
 {
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     //Check if valid
     if (practicianId == invalid_ident)
@@ -918,7 +918,7 @@ bool ExportAction::buildPractician(ExchangeAction::PracticianData &practicianDat
 
 bool ExportAction::buildInstitute(ExchangeAction::InstituteData &instituteData, const ident &instituteId)
 {
-    ezechiel::GuiCore::Response response;
+    Tucuxi::GuiCore::Response response;
 
     //Check if valid
     if (instituteId == invalid_ident)
@@ -1290,4 +1290,4 @@ void ExportAction::Document::addDataset(const ExportAction::Dataset &dataset)
 }
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi

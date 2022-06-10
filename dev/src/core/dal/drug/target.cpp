@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 QML_POINTERLIST_CLASS_IMPL(TargetMethodList, TargetMethod)
@@ -162,4 +162,4 @@ const QMap<QString, TargetMethod::TargetType> Target::_typeMap = Target::createM
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

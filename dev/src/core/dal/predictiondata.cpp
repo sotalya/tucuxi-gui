@@ -2,7 +2,7 @@
 
 #include "predictiondata.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 VALUELIST_CLASS_IMPL(Points, Point)

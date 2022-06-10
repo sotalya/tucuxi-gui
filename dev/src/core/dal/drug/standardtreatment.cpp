@@ -2,7 +2,7 @@
 
 #include "standardtreatment.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(StandardTreatment, bool, isFixedDuration, IsFixedDuration)
@@ -14,4 +14,4 @@ StandardTreatment::StandardTreatment(AbstractRepository *repository, QObject *pa
   : Entity(repository, parent) , _isFixedDuration(false), _duration(0) {}
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

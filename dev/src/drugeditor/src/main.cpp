@@ -73,7 +73,7 @@ void test()
 
     DrugXmlImport importer;
 
-    ezechiel::GuiCore::DrugModel *drug = importer.load(inputFileName);
+    Tucuxi::GuiCore::DrugModel *drug = importer.load(inputFileName);
     if (!drug) {
         std::cout << "Can not import" << std::endl;
         return;
@@ -112,12 +112,12 @@ int main(int argc, char *argv[])
     CHECK_REGISTER(qmlRegisterType(QUrl("qrc:/editorControls/RequestList.qml"), QML_CONTROLS_NAMESPACE, 1, 0, "RequestList"));
 
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Registering DAL objects.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering DAL objects.");
     CHECK_REGISTER(qmlRegisterUncreatableType<UndoRedoController>("ezechiel", 1, 0, "UndoRedoController", QObject::tr("Cannot instantiate type 'UndoRedoController'")));
 
 
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Registering model objects.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering model objects.");
     CHECK_REGISTER(qmlRegisterUncreatableType<CovariateListModel>("ezechiel", 1, 0, "CovariateListModel", QObject::tr("Cannot instantiate type 'CovariateListModel'")));
     CHECK_REGISTER(qmlRegisterUncreatableType<CovariateModel>("ezechiel", 1, 0, "CovariateModel", QObject::tr("Cannot instantiate type 'CovariateModel'")));
     CHECK_REGISTER(qmlRegisterUncreatableType<DomainListModel>("ezechiel", 1, 0, "DomainListModel", QObject::tr("Cannot instantiate type 'DomainListModel'")));
@@ -125,42 +125,42 @@ int main(int argc, char *argv[])
 //    CHECK_REGISTER(qmlRegisterUncreatableType<DoseModel>("ezechiel", 1, 0, "DosageModel", QObject::tr("Cannot instantiate type 'DosageModel'")));
     CHECK_REGISTER(qmlRegisterUncreatableType<DrugListModel>("ezechiel", 1, 0, "DrugListModel", QObject::tr("Cannot instantiate type 'DrugListModel'")));
     CHECK_REGISTER(qmlRegisterUncreatableType<DrugVariateListModel>("ezechiel", 1, 0, "DrugVariateListModel", QObject::tr("Cannot instantiate type 'DrugVariateListModel'")));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::DrugModelList*>("DrugList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::DrugModel*>("Drug*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::MetaData*>("MetaData*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::EditorList*>("EditorList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::TranslatableString*>("TranslatableString*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::ValidDoses*>("ValidDoses*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::DoseList*>("DoseList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::IdentifiableAmount*>("IdentifiableAmount*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::IntervalList*>("IntervalList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::ValidIntervals*>("ValidIntervals*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::InfusionList*>("InfusionList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::ValidInfusions*>("ValidInfusions*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::TargetList*>("TargetList*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::ADME*>("ADME*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::Halflife*>("Halflife*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::ErrorModel*>("ErrorModel*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::Parameters*>("Parameters*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::Bsv*>("Bsv*"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::DrugVariateList*>("DrugVariateList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::DrugModelList*>("DrugList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::DrugModel*>("Drug*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::MetaData*>("MetaData*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::EditorList*>("EditorList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::TranslatableString*>("TranslatableString*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::ValidDoses*>("ValidDoses*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::DoseList*>("DoseList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::IdentifiableAmount*>("IdentifiableAmount*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::IntervalList*>("IntervalList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::ValidIntervals*>("ValidIntervals*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::InfusionList*>("InfusionList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::ValidInfusions*>("ValidInfusions*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::TargetList*>("TargetList*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::ADME*>("ADME*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::Halflife*>("Halflife*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::ErrorModel*>("ErrorModel*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::Parameters*>("Parameters*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::Bsv*>("Bsv*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::DrugVariateList*>("DrugVariateList*"));
     CHECK_REGISTER(qRegisterMetaType<QMetaType::Type>("Type"));
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::DrugVariate*>("DrugVariate*"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::DrugVariate*>("DrugVariate*"));
 
-    CHECK_REGISTER(qRegisterMetaType<ezechiel::GuiCore::Unit>("Unit"));
+    CHECK_REGISTER(qRegisterMetaType<Tucuxi::GuiCore::Unit>("Unit"));
 
-    //    qRegisterMetaType<ezechiel::GuiCore::TranslatableStringList*>("TranslatableString*");
+    //    qRegisterMetaType<Tucuxi::GuiCore::TranslatableStringList*>("TranslatableString*");
     //    qmlRegisterUncreatableType<InstituteListModel>("ezechiel", 1, 0, "InstituteListModel", QObject::tr("Cannot instantiate type 'InstituteListModel'"));
 //    qmlRegisterUncreatableType<CommentListModel>("ezechiel",1 ,0 ,"editor");
 
 
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Registering other types.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering other types.");
     CHECK_REGISTER(qmlRegisterType<ProxyModelFilter>("ezechiel", 1, 0, "ProxyModelFilter"));
 
 
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Registering QML components.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering QML components.");
     CHECK_REGISTER(qmlRegisterType(QUrl("qrc:/editorControls/AdjustmentTab.qml"), QML_CONTROLS_NAMESPACE, 1, 0, "AdjustmentTab"));
     CHECK_REGISTER(qmlRegisterType(QUrl("qrc:/editorControls/ApplicationBar.qml"), QML_CONTROLS_NAMESPACE, 1, 0, "ApplicationBar"));
     CHECK_REGISTER(qmlRegisterType(QUrl("qrc:/editorControls/ApplicationBarButton.qml"), QML_CONTROLS_NAMESPACE, 1, 0, "ApplicationBarButton"));
@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
 
 
 
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Registering QML singletons.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering QML singletons.");
     CHECK_REGISTER(qmlRegisterSingletonType(QUrl("qrc:/styles/Style.qml"), "guiutils.qml.styles", 1, 0, "Style"));
 //    CHECK_REGISTER(qmlRegisterSingletonType(QUrl("qrc:/controls/Status.qml"), QML_CONTROLS_NAMESPACE, 1, 0, "Status"));
     qmlRegisterUncreatableType<ValidationStatus>("ezechiel", 1, 0, "Status", QObject::tr("Cannot instantiate type 'Status'"));
@@ -198,14 +198,14 @@ int main(int argc, char *argv[])
 
 
     Q_INIT_RESOURCE(qml);
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Qml.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Qml.");
 
     Q_INIT_RESOURCE(guiutils);
     Q_INIT_RESOURCE(core);
 
 
     initResources();
-    EXLOG(QtDebugMsg, ezechiel::gui::NOEZERROR, "Initialized Resources.");
+    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Resources.");
 
 
 
@@ -225,7 +225,7 @@ void parseOptions()
 
 void initResources()
 {
-    ezechiel::GuiCore::Core::setInstance(new ezechiel::GuiAppUtils::AppCore());
+    Tucuxi::GuiCore::Core::setInstance(new Tucuxi::GuiAppUtils::AppCore());
 
 //    CORE->setProcessingInterface(new ProcessingMath());
     APPCORE->drugManager();
@@ -235,11 +235,11 @@ void initResources()
 
 void resetStaticModel(){
 
-    QScopedPointer<QList<ezechiel::GuiCore::DrugModel*>> drugs(new QList<ezechiel::GuiCore::DrugModel*>());
+    QScopedPointer<QList<Tucuxi::GuiCore::DrugModel*>> drugs(new QList<Tucuxi::GuiCore::DrugModel*>());
 
 
-    if (APPUTILSREPO->getDrugsList(*drugs.data()).error != ezechiel::GuiCore::NoError)
-        EXLOG(QtFatalMsg, ezechiel::gui::NOEZERROR, "Drugs list not retreived."); //FIXME wrong error
+    if (APPUTILSREPO->getDrugsList(*drugs.data()).error != Tucuxi::GuiCore::NoError)
+        EXLOG(QtFatalMsg, Tucuxi::gui::NOEZERROR, "Drugs list not retreived."); //FIXME wrong error
 
 //    patientListModel->setModelData(patients.data());
 //    drugListModel->setModelData(drugs.data());

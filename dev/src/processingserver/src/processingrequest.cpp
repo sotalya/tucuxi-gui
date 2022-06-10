@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 ProcessingRequest::ProcessingRequest()
 {

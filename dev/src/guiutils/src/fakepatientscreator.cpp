@@ -12,7 +12,7 @@ FakePatientsCreator::FakePatientsCreator()
 }
 
 
-void FakePatientsCreator::createFakePatients(ezechiel::GuiCore::CorePatientList* patientsList)
+void FakePatientsCreator::createFakePatients(Tucuxi::GuiCore::CorePatientList* patientsList)
 {
     patientsList->clear();
     // Constants //////////////////////////////////////////////////////////////

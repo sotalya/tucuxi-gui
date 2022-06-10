@@ -53,40 +53,40 @@ Tucuxi::Common::TucuUnit EzToTucucoreTranslator::buildUnit(const QString &_strUn
     return Tucuxi::Common::TucuUnit(_strUnit.toStdString());
 }
 
-Tucuxi::Core::PredictionParameterType EzToTucucoreTranslator::buildParameterType(const ezechiel::GuiCore::ParamTraits *traits)
+Tucuxi::Core::PredictionParameterType EzToTucucoreTranslator::buildParameterType(const Tucuxi::GuiCore::ParamTraits *traits)
 {
     switch (traits->ptype()) {
-    case ezechiel::GuiCore::ParameterType::POPULATION  : return Tucuxi::Core::PredictionParameterType::Population;
-    case ezechiel::GuiCore::ParameterType::APRIORI     : return Tucuxi::Core::PredictionParameterType::Apriori;
-    case ezechiel::GuiCore::ParameterType::APOSTERIORI : return Tucuxi::Core::PredictionParameterType::Aposteriori;
+    case Tucuxi::GuiCore::ParameterType::POPULATION  : return Tucuxi::Core::PredictionParameterType::Population;
+    case Tucuxi::GuiCore::ParameterType::APRIORI     : return Tucuxi::Core::PredictionParameterType::Apriori;
+    case Tucuxi::GuiCore::ParameterType::APOSTERIORI : return Tucuxi::Core::PredictionParameterType::Aposteriori;
     default                                         : return Tucuxi::Core::PredictionParameterType::Population;
     }
 }
 
-Tucuxi::Core::DosageTimeRange *EzToTucucoreTranslator::buildTimeRange(const ezechiel::GuiCore::Dosage *_ezDosage)
+Tucuxi::Core::DosageTimeRange *EzToTucucoreTranslator::buildTimeRange(const Tucuxi::GuiCore::Dosage *_ezDosage)
 {
 
     Tucuxi::Core::AbsorptionModel absorptionModel;
     Tucuxi::Core::AdministrationRoute administrationRoute;
     Tucuxi::Core::Formulation formulation;
     switch (_ezDosage->getRoute()->getRoute()) {
-    case ezechiel::GuiCore::Admin::Route::BOLUS: {
+    case Tucuxi::GuiCore::Admin::Route::BOLUS: {
         absorptionModel = Tucuxi::Core::AbsorptionModel::Intravascular;
         administrationRoute = Tucuxi::Core::AdministrationRoute::IntravenousBolus;
         formulation = Tucuxi::Core::Formulation::ParenteralSolution;
     } break;
-    case ezechiel::GuiCore::Admin::Route::INFUSION: {
+    case Tucuxi::GuiCore::Admin::Route::INFUSION: {
         absorptionModel = Tucuxi::Core::AbsorptionModel::Infusion;
         administrationRoute = Tucuxi::Core::AdministrationRoute::IntravenousDrip;
         formulation = Tucuxi::Core::Formulation::ParenteralSolution;
     } break;
-    case ezechiel::GuiCore::Admin::Route::EXTRA: {
+    case Tucuxi::GuiCore::Admin::Route::EXTRA: {
         // Totally arbitrary. Now OK for Imatinib
         absorptionModel = Tucuxi::Core::AbsorptionModel::Extravascular;
         administrationRoute = Tucuxi::Core::AdministrationRoute::Oral;
         formulation = Tucuxi::Core::Formulation::OralSolution;
     } break;
-    case ezechiel::GuiCore::Admin::Route::EXTRALAG: {
+    case Tucuxi::GuiCore::Admin::Route::EXTRALAG: {
         // Totally arbitrary. Now OK for Imatinib
         absorptionModel = Tucuxi::Core::AbsorptionModel::ExtravascularLag;
         administrationRoute = Tucuxi::Core::AdministrationRoute::Oral;
@@ -144,14 +144,14 @@ Tucuxi::Core::DosageTimeRange *EzToTucucoreTranslator::buildTimeRange(const ezec
 }
 
 
-Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechiel::GuiCore::DrugTreatment *_ezTreatment, QDateTime adjTime)
+Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const Tucuxi::GuiCore::DrugTreatment *_ezTreatment, QDateTime adjTime)
 {
 
     Tucuxi::Core::DrugTreatment *newTreatment = new Tucuxi::Core::DrugTreatment();
-    QList<ezechiel::GuiCore::Dosage*> dosageList = _ezTreatment->getDosages()->getList();
-    QList<ezechiel::GuiCore::Dosage*>::iterator itDosages = dosageList.begin();
+    QList<Tucuxi::GuiCore::Dosage*> dosageList = _ezTreatment->getDosages()->getList();
+    QList<Tucuxi::GuiCore::Dosage*>::iterator itDosages = dosageList.begin();
     while (itDosages != dosageList.end()) {
-        ezechiel::GuiCore::Dosage *dosage = *itDosages++;
+        Tucuxi::GuiCore::Dosage *dosage = *itDosages++;
 
         Tucuxi::Core::DosageTimeRange *timeRange = buildTimeRange(dosage);
         if (timeRange != nullptr) {
@@ -162,7 +162,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
 
     if (adjTime.isValid() && _ezTreatment->getAdjustments()->size() > 0) {
 
-        foreach(ezechiel::GuiCore::Dosage* dosage, _ezTreatment->getAdjustments()->getList())
+        foreach(Tucuxi::GuiCore::Dosage* dosage, _ezTreatment->getAdjustments()->getList())
         {
             if (dosage->getApplied() >= adjTime)
             {
@@ -176,10 +176,10 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
     }
 
 
-    QList<ezechiel::GuiCore::PatientVariate*> covariateList = _ezTreatment->getCovariates()->getList();
-    QList<ezechiel::GuiCore::PatientVariate*>::iterator itCovariates = covariateList.begin();
+    QList<Tucuxi::GuiCore::PatientVariate*> covariateList = _ezTreatment->getCovariates()->getList();
+    QList<Tucuxi::GuiCore::PatientVariate*>::iterator itCovariates = covariateList.begin();
     while (itCovariates != covariateList.end()) {
-        ezechiel::GuiCore::PatientVariate *covariate = *itCovariates++;
+        Tucuxi::GuiCore::PatientVariate *covariate = *itCovariates++;
         if (covariate->getCovariateId() == "birthdate") {
             QDateTime birthdate;
             birthdate = QDateTime::fromString(covariate->getValueAsString(), Qt::ISODate);
@@ -208,10 +208,10 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
     Tucuxi::Core::ActiveMoietyId activeMoietyId =
             Tucuxi::Core::ActiveMoietyId(_ezTreatment->getActiveSubstanceId().toStdString());
 
-    QList<ezechiel::GuiCore::CoreMeasure*> sampleList = _ezTreatment->getMeasures()->getList();
-    QList<ezechiel::GuiCore::CoreMeasure*>::iterator itSamples = sampleList.begin();
+    QList<Tucuxi::GuiCore::CoreMeasure*> sampleList = _ezTreatment->getMeasures()->getList();
+    QList<Tucuxi::GuiCore::CoreMeasure*>::iterator itSamples = sampleList.begin();
     while (itSamples != sampleList.end()) {
-        ezechiel::GuiCore::CoreMeasure *sample = *itSamples++;
+        Tucuxi::GuiCore::CoreMeasure *sample = *itSamples++;
         newTreatment->addSample(std::make_unique<Tucuxi::Core::Sample>(
             buildDateTime(sample->getMoment()),                     // date,
             Tucuxi::Core::AnalyteId(analyteId),                     // analyteId,
@@ -220,27 +220,27 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
         ));
     }
 
-    QList<ezechiel::GuiCore::Target*> targetList = _ezTreatment->getTargets()->getList();
-    QList<ezechiel::GuiCore::Target*>::iterator itTargets = targetList.begin();
+    QList<Tucuxi::GuiCore::Target*> targetList = _ezTreatment->getTargets()->getList();
+    QList<Tucuxi::GuiCore::Target*>::iterator itTargets = targetList.begin();
     while (itTargets != targetList.end()) {
-        ezechiel::GuiCore::Target *target = *itTargets++;
+        Tucuxi::GuiCore::Target *target = *itTargets++;
         Tucuxi::Core::TargetType targetType;
         switch (target->getType()->getTargetType()) {
-        case ezechiel::GuiCore::TargetMethod::TargetType::ResidualTarget:             targetType = Tucuxi::Core::TargetType::Residual; break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::PeakTarget:                 targetType = Tucuxi::Core::TargetType::Peak;     break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::MeanTarget:                 targetType = Tucuxi::Core::TargetType::Mean;     break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::AUCTarget:                  targetType = Tucuxi::Core::TargetType::Auc;      break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::AUC24Target:                targetType = Tucuxi::Core::TargetType::Auc24;      break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::CumulativeAUCTarget :       targetType = Tucuxi::Core::TargetType::CumulativeAuc; break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::AUCOverMicTarget :          targetType = Tucuxi::Core::TargetType::AucOverMic; break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::AUC24OverMicTarget :        targetType = Tucuxi::Core::TargetType::Auc24OverMic; break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::TimeOverMicTarget :         targetType = Tucuxi::Core::TargetType::TimeOverMic; break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::AUCDividedByMicTarget :     targetType = Tucuxi::Core::TargetType::AucDividedByMic; break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::AUC24DividedByMicTarget :   targetType = Tucuxi::Core::TargetType::Auc24DividedByMic; break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::PeakDividedByMicTarget :    targetType = Tucuxi::Core::TargetType::PeakDividedByMic; break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::UnknownTarget :             targetType = Tucuxi::Core::TargetType::UnknownTarget; break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::ResidualDividedByMicTarget: targetType = Tucuxi::Core::TargetType::ResidualDividedByMic; break;
-        case ezechiel::GuiCore::TargetMethod::TargetType::FractionTimeOverMicTarget:  targetType = Tucuxi::Core::TargetType::FractionTimeOverMic; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::ResidualTarget:             targetType = Tucuxi::Core::TargetType::Residual; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::PeakTarget:                 targetType = Tucuxi::Core::TargetType::Peak;     break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::MeanTarget:                 targetType = Tucuxi::Core::TargetType::Mean;     break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::AUCTarget:                  targetType = Tucuxi::Core::TargetType::Auc;      break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::AUC24Target:                targetType = Tucuxi::Core::TargetType::Auc24;      break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::CumulativeAUCTarget :       targetType = Tucuxi::Core::TargetType::CumulativeAuc; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::AUCOverMicTarget :          targetType = Tucuxi::Core::TargetType::AucOverMic; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::AUC24OverMicTarget :        targetType = Tucuxi::Core::TargetType::Auc24OverMic; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::TimeOverMicTarget :         targetType = Tucuxi::Core::TargetType::TimeOverMic; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::AUCDividedByMicTarget :     targetType = Tucuxi::Core::TargetType::AucDividedByMic; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::AUC24DividedByMicTarget :   targetType = Tucuxi::Core::TargetType::Auc24DividedByMic; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::PeakDividedByMicTarget :    targetType = Tucuxi::Core::TargetType::PeakDividedByMic; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::UnknownTarget :             targetType = Tucuxi::Core::TargetType::UnknownTarget; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::ResidualDividedByMicTarget: targetType = Tucuxi::Core::TargetType::ResidualDividedByMic; break;
+        case Tucuxi::GuiCore::TargetMethod::TargetType::FractionTimeOverMicTarget:  targetType = Tucuxi::Core::TargetType::FractionTimeOverMic; break;
         }
         if (target->getTbest()->getUnitstring() == "h") {
             newTreatment->addTarget(std::make_unique<Tucuxi::Core::Target>(
@@ -298,7 +298,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const ezechi
 
 #include "drugs2manager.h"
 
-Tucuxi::Core::DrugModel *EzToTucucoreTranslator::buildDrugModel(const ezechiel::GuiCore::DrugModel *_drugModel)
+Tucuxi::Core::DrugModel *EzToTucucoreTranslator::buildDrugModel(const Tucuxi::GuiCore::DrugModel *_drugModel)
 {
     Tucuxi::Core::DrugModel *pDrugModel = nullptr;
 
@@ -319,7 +319,7 @@ Tucuxi::Core::DrugModel *EzToTucucoreTranslator::buildDrugModel(const ezechiel::
 */
 
 
-    std::string basePath = CORE->path(ezechiel::GuiCore::Core::Drugs2).toStdString() + "/";
+    std::string basePath = CORE->path(Tucuxi::GuiCore::Core::Drugs2).toStdString() + "/";
 
     static std::map<std::string, std::string> fileNameMap =
     {

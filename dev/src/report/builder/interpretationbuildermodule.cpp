@@ -19,7 +19,7 @@
 #include "interfaces/processinginterface.h"
 #include "interfaces/processingtraits.h"
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 AUTO_PROPERTY_IMPL(InterpretationBuilderModule, Interpretation*, interpretation, Interpretation)
 AUTO_PROPERTY_IMPL(InterpretationBuilderModule, PredictionSpec*, prediction, Prediction)

@@ -4,7 +4,7 @@
 
 #include <QMutexLocker>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -227,5 +227,5 @@ Settings::~Settings()
 //{}
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

@@ -14,7 +14,7 @@
 
 class Drug;
 
-class Measure : public ezechiel::GuiCore::CoreMeasure
+class Measure : public Tucuxi::GuiCore::CoreMeasure
 {
     Q_OBJECT
     ADMIN_ENTITY_UTILS(Measure)
@@ -22,16 +22,16 @@ class Measure : public ezechiel::GuiCore::CoreMeasure
     AUTO_PROPERTY(QDateTime, arrivalDate)
 
 public:
-    Q_INVOKABLE explicit Measure(ezechiel::GuiCore::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
-    Q_INVOKABLE Measure(ezechiel::GuiCore::AbstractRepository *repository, QDateTime moment, ezechiel::GuiCore::IdentifiableAmount* amount, QString getSdrug, int dbid = -1, QString sampleID = QString(), QDateTime arrivalDate = QDateTime());
+    Q_INVOKABLE explicit Measure(Tucuxi::GuiCore::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
+    Q_INVOKABLE Measure(Tucuxi::GuiCore::AbstractRepository *repository, QDateTime moment, Tucuxi::GuiCore::IdentifiableAmount* amount, QString getSdrug, int dbid = -1, QString sampleID = QString(), QDateTime arrivalDate = QDateTime());
 };
 
-//class MeasureList: public ezechiel::GuiCore::Entity {
+//class MeasureList: public Tucuxi::GuiCore::Entity {
 //    Q_OBJECT
 //    ADMIN_ENTITY_UTILS(MeasureList)
 //    Q_PROPERTY(QList<QObject*> objlist READ getObjList NOTIFY objListChanged)
 //public:
-//    MeasureList(ezechiel::GuiCore::AbstractRepository* repository, QObject* parent = 0);
+//    MeasureList(Tucuxi::GuiCore::AbstractRepository* repository, QObject* parent = 0);
 //    Q_INVOKABLE void append(Measure* target);
 //    Q_INVOKABLE void add();
 //    Q_INVOKABLE void remove(const int);

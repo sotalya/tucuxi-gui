@@ -34,44 +34,44 @@ public:
     DrugXmlExport();
 
     // The only method to be public
-    bool save(ezechiel::GuiCore::DrugModel *drug, const QString &fileName);
+    bool save(Tucuxi::GuiCore::DrugModel *drug, const QString &fileName);
 
 protected:
     QXmlStreamWriter writer;
 
-    bool saveHistory(const ezechiel::GuiCore::DrugModel *drug);
+    bool saveHistory(const Tucuxi::GuiCore::DrugModel *drug);
 
-    bool saveEditor(const ezechiel::GuiCore::Editor *editor);
+    bool saveEditor(const Tucuxi::GuiCore::Editor *editor);
 
-    bool saveDrug(const ezechiel::GuiCore::DrugModel *drug);
+    bool saveDrug(const Tucuxi::GuiCore::DrugModel *drug);
 
-    bool saveHead(const ezechiel::GuiCore::DrugModel *drug);
+    bool saveHead(const Tucuxi::GuiCore::DrugModel *drug);
 
-    bool saveAdme(const ezechiel::GuiCore::ADME *adme);
+    bool saveAdme(const Tucuxi::GuiCore::ADME *adme);
 
-    bool saveHalflife(const ezechiel::GuiCore::Halflife *halflife);
+    bool saveHalflife(const Tucuxi::GuiCore::Halflife *halflife);
 
-    bool saveConversions(const ezechiel::GuiCore::DrugModel *drug);
+    bool saveConversions(const Tucuxi::GuiCore::DrugModel *drug);
 
-    bool saveStandardTreatment(const ezechiel::GuiCore::DrugModel *drug);
+    bool saveStandardTreatment(const Tucuxi::GuiCore::DrugModel *drug);
 
-    bool saveDosages(const ezechiel::GuiCore::DrugModel *drug);
+    bool saveDosages(const Tucuxi::GuiCore::DrugModel *drug);
 
-    bool saveTargets(ezechiel::GuiCore::TargetList *targetSet);
+    bool saveTargets(Tucuxi::GuiCore::TargetList *targetSet);
 
-    bool saveCovariates(ezechiel::GuiCore::DrugVariateList * covariates);
+    bool saveCovariates(Tucuxi::GuiCore::DrugVariateList * covariates);
 
-    bool saveErrormodel(const ezechiel::GuiCore::ErrorModel* errorModel);
+    bool saveErrormodel(const Tucuxi::GuiCore::ErrorModel* errorModel);
 
-    bool saveParameters(const ezechiel::GuiCore::ParameterSet *parameters);
+    bool saveParameters(const Tucuxi::GuiCore::ParameterSet *parameters);
 
-    bool saveCorrelations(const ezechiel::GuiCore::DrugModel *drug);
+    bool saveCorrelations(const Tucuxi::GuiCore::DrugModel *drug);
 
-    bool saveOperations(const ezechiel::GuiCore::DrugModel *drug);
+    bool saveOperations(const Tucuxi::GuiCore::DrugModel *drug);
 
     bool tagInjector(const QString tagName, QString text, QXmlStreamAttributes *attributes = nullptr);
 
-    bool stringSaverTranslation(ezechiel::GuiCore::TranslatableString *QMapStringTranslation,QString elemName);
+    bool stringSaverTranslation(Tucuxi::GuiCore::TranslatableString *QMapStringTranslation,QString elemName);
 
     QString typeToQString(QMetaType::Type type,bool &isConvertible);
 

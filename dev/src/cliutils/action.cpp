@@ -2,7 +2,7 @@
 
 #include "action.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 //The commands parameters
 const char *const Action::_CMD_PARAM_USERNAME = "username=";
@@ -53,4 +53,4 @@ QString Action::error() const
 }
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi

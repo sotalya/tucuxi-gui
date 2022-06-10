@@ -6,7 +6,7 @@
 #include <QDebug>
 #include "core/utils/logging.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 
 EZERROR(CLIUTILS, NOEZERROR,"There is no error.")
@@ -24,7 +24,7 @@ EZERROR(CLIUTILS, DATAERROR,"Couldnt find the file specified.")
 EZERROR(CLIUTILS, OBJECTNOTFOUND,"Couldnt find the object assumed to exist.")
 EZERROR(CLIUTILS, CANTSAVE,"Couldnt save an object to DB.")
 
-} //namespace ezechiel
+} //namespace Tucuxi
 } //namespace cliutils
 #endif // CLIUTILSERRORS
 

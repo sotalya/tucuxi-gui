@@ -11,7 +11,7 @@
 //#include "model.h"
 //#include "postengine.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -36,7 +36,7 @@ namespace GuiCore {
 ////        return *m_desc;
 ////    }
 //};
-//Q_DECLARE_INTERFACE(ezechiel::Factory, "ch.heig-vd.ezechiel.Factory")
+//Q_DECLARE_INTERFACE(Tucuxi::Factory, "ch.heig-vd.ezechiel.Factory")
 
 
 //template<class T>
@@ -59,6 +59,6 @@ namespace GuiCore {
 //};
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // PLUGINFACTORY_H

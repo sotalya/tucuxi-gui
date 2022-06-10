@@ -25,7 +25,7 @@ void DrugSentences::addSentence(QString _sentence){
     _sentences.append(_sentence);
 }
 
-Section::Section(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent){
+Section::Section(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent){
     _repository = repository;
 }
 
@@ -72,7 +72,7 @@ void Section::removeSentenceFromDrugSentencesList(QString _drugId, int _listInde
 }
 
 void Section::addDrugSentences(QString _drugId){
-    auto newSentence = ezechiel::GuiCore::CoreFactory::createEntity<DrugSentences>(_repository);
+    auto newSentence = Tucuxi::GuiCore::CoreFactory::createEntity<DrugSentences>(_repository);
     newSentence->setDrugId(_drugId);
     _specificSentences.push_back(newSentence);
 }
@@ -114,10 +114,10 @@ QString Section::getSentencePerKey(int key)
     return "";
 }
 
-SentencesPalettes::SentencesPalettes(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent){
-    _sectionsList = ezechiel::GuiCore::CoreFactory::createEntity<SectionList>(repository);
+SentencesPalettes::SentencesPalettes(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent){
+    _sectionsList = Tucuxi::GuiCore::CoreFactory::createEntity<SectionList>(repository);
     for (int i=0; i < VALIDATION_SECTIONS; i++){
-        auto newSection = ezechiel::GuiCore::CoreFactory::createEntity<Section>(repository);
+        auto newSection = Tucuxi::GuiCore::CoreFactory::createEntity<Section>(repository);
         newSection->setSectionId(QString::number(i));
         _sectionsList->append(newSection);
     }
@@ -226,11 +226,11 @@ void SentencesPalettes::exportToXml(){
 
 void SentencesPalettes::saveXMLPath(){
 
-    SETTINGS.set(ezechiel::GuiCore::Module::GUI, "sentencesPalettesXML" , _filename);
+    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "sentencesPalettesXML" , _filename);
 }
 
 QString SentencesPalettes::loadXMLPath(){
-    QString xmlPath = SETTINGS.get(ezechiel::GuiCore::Module::GUI, "sentencesPalettesXML").toString();
+    QString xmlPath = SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "sentencesPalettesXML").toString();
 
     return (xmlPath.isEmpty()) ? getDefaultPath() : xmlPath;
 }

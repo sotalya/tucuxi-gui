@@ -21,7 +21,7 @@ class ClinicalSet;
 class Clinical;
 class PhoneList;
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 class PredictionSpec;
 class DrugResponseAnalysis;
@@ -76,38 +76,38 @@ protected:
 
     Interpretation *loadInterpretation(const QString &tagName, QObject *parent = nullptr);
     std::vector<double> loadPercentiles(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::DrugResponseAnalysis *loadDrugResponseAnalysis(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::DrugResponseAnalysis *loadDrugResponseAnalysis(const QString &tagName, QObject *parent);
 
     void loadAdjustment(const QString &tagName, Interpretation *interpretation);
-    ezechiel::GuiCore::DrugModel *loadDrugModel(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::DrugTreatment *loadDrugTreatment(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::OperationList *loadOperations(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::IdentifiableAmount *loadIdentifiableAmount(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::OperableAmount *loadOperableAmount(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::ValidDoses *loadValidDoses(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::ValidIntervals *loadValidIntervals(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::ValidInfusions *loadValidInfusions(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::PatientVariateList *loadPatientVariates(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::PatientVariate *loadPatientVariate(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::DosageHistory *loadDosageHistory(const QString &tagName, QObject *parent, bool isAdjustment = false);
-    ezechiel::GuiCore::AdjustmentDosage *loadAdjustmentDosage(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::Dosage *loadDosage(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::ADME *loadAdme(const QString &tagName, QObject *parent);
-    ezechiel::GuiCore::TargetList *loadTargets(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::DrugModel *loadDrugModel(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::DrugTreatment *loadDrugTreatment(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::OperationList *loadOperations(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::IdentifiableAmount *loadIdentifiableAmount(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::OperableAmount *loadOperableAmount(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::ValidDoses *loadValidDoses(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::ValidIntervals *loadValidIntervals(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::ValidInfusions *loadValidInfusions(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::PatientVariateList *loadPatientVariates(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::PatientVariate *loadPatientVariate(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::DosageHistory *loadDosageHistory(const QString &tagName, QObject *parent, bool isAdjustment = false);
+    Tucuxi::GuiCore::AdjustmentDosage *loadAdjustmentDosage(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::Dosage *loadDosage(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::ADME *loadAdme(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::TargetList *loadTargets(const QString &tagName, QObject *parent);
 
-    ezechiel::GuiCore::Target *loadTarget(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::Target *loadTarget(const QString &tagName, QObject *parent);
 
-    ezechiel::GuiCore::DrugVariateList *loadCovariates(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::DrugVariateList *loadCovariates(const QString &tagName, QObject *parent);
 
-    ezechiel::GuiCore::DrugVariate *loadCovariate(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::DrugVariate *loadCovariate(const QString &tagName, QObject *parent);
 
-    ezechiel::GuiCore::ErrorModel *loadErrorModel(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::ErrorModel *loadErrorModel(const QString &tagName, QObject *parent);
 
-    ezechiel::GuiCore::ParameterSet *loadParameters(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::ParameterSet *loadParameters(const QString &tagName, QObject *parent);
 
-    ezechiel::GuiCore::Parameter *loadParameter(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::Parameter *loadParameter(const QString &tagName, QObject *parent);
 
-    ezechiel::GuiCore::Bsv *loadBsv(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::Bsv *loadBsv(const QString &tagName, QObject *parent);
 
     InterpretationAnalysis *loadAnalysis(const QString &tagName, QObject *parent);
     InterpretationRequest *loadRequest(const QString &tagName, QObject *parent);
@@ -119,7 +119,7 @@ protected:
     Clinical *loadClinical(const QString &tagName, QObject *parent);
     PhoneList *loadPhoneNumber(const QString &tagName, QObject *parent);
 
-    ezechiel::GuiCore::Admin *loadAdmin(const QString &tagName, QObject *parent);
+    Tucuxi::GuiCore::Admin *loadAdmin(const QString &tagName, QObject *parent);
 
 
 

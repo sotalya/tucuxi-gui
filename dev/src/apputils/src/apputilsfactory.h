@@ -12,13 +12,13 @@ public:
     ApputilsFactory();
 
     template<typename entity>
-    static entity* createEntity(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr)
+    static entity* createEntity(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent = nullptr)
     {
         return new entity(repository, parent);
     }
 
     template<typename entity>
-    static entity* cloneEntity(ezechiel::GuiCore::AbstractRepository *repository, QObject* parent, entity* _target)
+    static entity* cloneEntity(Tucuxi::GuiCore::AbstractRepository *repository, QObject* parent, entity* _target)
     {
         return new entity(repository, parent, _target);
     }

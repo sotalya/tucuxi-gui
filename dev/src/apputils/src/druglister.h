@@ -6,7 +6,7 @@
 #include <QCoreApplication>
 #include <QXmlStreamReader>
 
-namespace ezechiel {
+namespace Tucuxi {
     namespace GuiCore {
         class DrugXmlDescriptor;
     }
@@ -44,7 +44,7 @@ namespace ezechiel {
  */
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiAppUtils {
 
 class DrugLister
@@ -75,18 +75,18 @@ public:
      * @param filePath The absolute path to the drug XML file.
      * @return A pointer to the corresponding XML descriptor.
      */
-    const ezechiel::GuiCore::DrugXmlDescriptor *scanDrug(const QString &filePath);
+    const Tucuxi::GuiCore::DrugXmlDescriptor *scanDrug(const QString &filePath);
 
     /** \brief Return the XML descriptor of a drug.
      * @param drugModelId The drug ID.
      * @return The drug XML descriptor.
      */
-    const ezechiel::GuiCore::DrugXmlDescriptor *drug(const QString &drugModelId) const;
+    const Tucuxi::GuiCore::DrugXmlDescriptor *drug(const QString &drugModelId) const;
 
     /** \brief Return the list of the drugs' XML descriptors.
      * @return The list of the drugs' XML descriptors.
      */
-    QList<const ezechiel::GuiCore::DrugXmlDescriptor *> drugs() const;
+    QList<const Tucuxi::GuiCore::DrugXmlDescriptor *> drugs() const;
 
     /** \brief Remove a drug from the lister.
      * @param drugModelId The drug ID.
@@ -145,7 +145,7 @@ private:
     void validateVersion();
 
     //Scans a <drug> element and create the corresponding drug xml descriptor
-    ezechiel::GuiCore::DrugXmlDescriptor *buildDescriptor(const QString &filePath);
+    Tucuxi::GuiCore::DrugXmlDescriptor *buildDescriptor(const QString &filePath);
 
     //Deletes the existing drugs XML descriptors
     void resetDrugs();
@@ -160,9 +160,9 @@ private:
     QList<QDir> _directories;
 
     //QMap of <Drug model ID, Drug XML descriptor>
-    QMap<QString, const ezechiel::GuiCore::DrugXmlDescriptor *> _drugs;
+    QMap<QString, const Tucuxi::GuiCore::DrugXmlDescriptor *> _drugs;
 };
 
 } //namespace GuiAppUtils
-} //namespace ezechiel
+} //namespace Tucuxi
 #endif // DRUGLISTER_H

@@ -7,7 +7,7 @@
 #include "core/core.h"
 #include <string>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class TranslatableString : public Entity, public QMap<QString,QString>
@@ -67,11 +67,11 @@ private:
 
 QML_POINTERLIST_CLASS_DECL(TranslatableStringList, TranslatableString)
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::TranslatableString*)
-//Q_DECLARE_METATYPE(ezechiel::GuiCore::TranslatableString)
-//Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::TranslatableString*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::TranslatableString*)
+//Q_DECLARE_METATYPE(Tucuxi::GuiCore::TranslatableString)
+//Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::TranslatableString*>)
 
 
 #endif // COMMENTS_H

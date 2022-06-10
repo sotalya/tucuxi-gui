@@ -54,7 +54,7 @@
 
 #include "rest/network/mirthrequest.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 // Print a message when Tucuxi is stopped by a signal
 static void signalHandler (int id)
@@ -174,7 +174,7 @@ CommandLineParseResult CliManager::parseCommandLine(QCommandLineParser &parser, 
     parser.addPositionalArgument("Sniff", "Sniffs the requests the server contains");
 
     if (!parser.parse(QCoreApplication::arguments())) {
-            LOG(QtDebugMsg, ezechiel::cliutils::NOEZERROR, parser.errorText());
+            LOG(QtDebugMsg, Tucuxi::cliutils::NOEZERROR, parser.errorText());
             return CommandLineError;
     }
 
@@ -182,7 +182,7 @@ CommandLineParseResult CliManager::parseCommandLine(QCommandLineParser &parser, 
         parser.showVersion();
 
 #ifdef CONFIG_CONNECTED
-    LOG(QtDebugMsg, ezechiel::cliutils::NOEZERROR, tr("Configured to connect to remote server"));
+    LOG(QtDebugMsg, Tucuxi::cliutils::NOEZERROR, tr("Configured to connect to remote server"));
     MirthRequest::updateDefaultBasePath(parser.value(basePathOption));
     MirthRequest::updateDefaultPort(parser.value(portOption).toInt());
     MirthRequest::updateDefaultScheme(parser.value(schemeOption));
@@ -198,7 +198,7 @@ CommandLineParseResult CliManager::parseCommandLine(QCommandLineParser &parser, 
     }
 
     setLanguage(query);
-    LOG(QtDebugMsg, ezechiel::cliutils::NOEZERROR, tr("Set language to %1:").arg(query->language));
+    LOG(QtDebugMsg, Tucuxi::cliutils::NOEZERROR, tr("Set language to %1:").arg(query->language));
 
 //    if (parser.isSet(dbOption)) {
 //        account.url = QString(parser.value(dbOption));
@@ -208,7 +208,7 @@ CommandLineParseResult CliManager::parseCommandLine(QCommandLineParser &parser, 
 
     QStringList positionalArguments = parser.positionalArguments();
     if (positionalArguments.isEmpty()) {
-        LOG(QtDebugMsg, ezechiel::cliutils::NOEZERROR, tr("No commands to execute."));
+        LOG(QtDebugMsg, Tucuxi::cliutils::NOEZERROR, tr("No commands to execute."));
         return CommandLineError;
     }
 
@@ -232,7 +232,7 @@ CommandLineParseResult CliManager::parseCommandLine(QCommandLineParser &parser, 
 //{
 //    Response response;
 
-//    ezechiel::EphemeralDB* _db = dynamic_cast<ezechiel::EphemeralDB*>(ABSTRACTREPO);
+//    Tucuxi::EphemeralDB* _db = dynamic_cast<Tucuxi::EphemeralDB*>(ABSTRACTREPO);
 
     //Connect to the database
 //    if (!_db->connect(account)){}
@@ -261,7 +261,7 @@ CommandLineParseResult CliManager::parseCommandLine(QCommandLineParser &parser, 
 bool CliManager::selectAction(CliCommand* query, bool subaction_override) {
 
     //Switch between the available actions
-    LOG(QtDebugMsg, ezechiel::cliutils::NOEZERROR, tr("selecting action: %1").arg(query->actionName));
+    LOG(QtDebugMsg, Tucuxi::cliutils::NOEZERROR, tr("selecting action: %1").arg(query->actionName));
     Action *action;
     if (query->actionName == UserAction::name())
         action = new UserAction();
@@ -298,21 +298,21 @@ bool CliManager::selectAction(CliCommand* query, bool subaction_override) {
 
         //Authenticate the user if necessary
         if (query->actionName != UserAction::name() && !subaction_override) {
-            LOG(QtDebugMsg, ezechiel::cliutils::NOEZERROR, tr("Authenticating user"));
+            LOG(QtDebugMsg, Tucuxi::cliutils::NOEZERROR, tr("Authenticating user"));
 
             //Check if enough parameters
 //            if (query->actionArgs.size() < 2 || !query->actionArgs.at(0).startsWith(Action::usernameParam()) || !query->actionArgs.at(1).startsWith(Action::passwordParam())) {
-//                LOG(QtDebugMsg, ezechiel::cliutils::DATAMISSING, tr("Missing username and/or password for command '%1', please run the help for more information").arg(query->actionName));
+//                LOG(QtDebugMsg, Tucuxi::cliutils::DATAMISSING, tr("Missing username and/or password for command '%1', please run the help for more information").arg(query->actionName));
 //                return false;
 //            }
 
             //Get the username and password
 //            query->actionArgs[0].remove(Action::usernameParam());
 //            QString username = query->actionArgs.takeFirst();
-//            LOG(QtDebugMsg, ezechiel::cliutils::NOEZERROR, tr("Parsed username: %1").arg(username));
+//            LOG(QtDebugMsg, Tucuxi::cliutils::NOEZERROR, tr("Parsed username: %1").arg(username));
 //            query->actionArgs[0].remove(Action::passwordParam());
 //            QString password = query->actionArgs.takeFirst();
-//            LOG(QtDebugMsg, ezechiel::cliutils::NOEZERROR, tr("Parsed password"));
+//            LOG(QtDebugMsg, Tucuxi::cliutils::NOEZERROR, tr("Parsed password"));
 
             //Try to authenticate the user
 //            if (!APPCORE->securityManager()->authenticate(username, password)) {
@@ -327,10 +327,10 @@ bool CliManager::selectAction(CliCommand* query, bool subaction_override) {
             foreach (QString arg, query->actionArgs) {
                toprint = toprint + " " + arg;
             }
-            LOG(QtCriticalMsg, ezechiel::cliutils::NOEZERROR, tr("Action %1 failed with args: %2").arg(query->actionName).arg(toprint));
+            LOG(QtCriticalMsg, Tucuxi::cliutils::NOEZERROR, tr("Action %1 failed with args: %2").arg(query->actionName).arg(toprint));
             return false;
         }
-        LOG(QtDebugMsg, ezechiel::cliutils::NOEZERROR, tr("Action %1 completed").arg(query->actionName));
+        LOG(QtDebugMsg, Tucuxi::cliutils::NOEZERROR, tr("Action %1 completed").arg(query->actionName));
     }
 
     return true;
@@ -368,7 +368,7 @@ int CliManager::execute(QCoreApplication &app, int argc, char *argv[]) {
     case CommandLineOk:
         break;
     case CommandLineError:
-        LOG(QtCriticalMsg, ezechiel::cliutils::ACTIONERROR, tr("Command line error: %1 ").arg(query.actionName));
+        LOG(QtCriticalMsg, Tucuxi::cliutils::ACTIONERROR, tr("Command line error: %1 ").arg(query.actionName));
         parser.showHelp();
         return EXIT_FAILURE;
     case CommandLineHelpRequested:
@@ -380,4 +380,4 @@ int CliManager::execute(QCoreApplication &app, int argc, char *argv[]) {
 }
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi

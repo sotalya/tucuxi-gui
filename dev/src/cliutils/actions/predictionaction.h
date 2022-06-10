@@ -28,7 +28,7 @@
  * \li show a graphical view of the curve
  * \li compare a set of points to a file and show their difference
  */
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 using namespace GuiCore;
 
@@ -111,5 +111,5 @@ private:
 };
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi
 #endif // PREDICTIONACTION_H

@@ -5,7 +5,7 @@
 #include "core/dal/drugtreatment.h"
 #include "core/dal/drug/drug.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //AUTO_PROPERTY_IMPL(DrugResponseAnalysis, PostEngine*, postEngine, PostEngine)
@@ -19,10 +19,10 @@ DrugResponseAnalysis::DrugResponseAnalysis(AbstractRepository *repository, QObje
 //      _postEngine(0),
 //      _percentileEngine(0),
 //      _reverseEngine(0),
-      _treatment(ezechiel::GuiCore::CoreFactory::createEntity<DrugTreatment>(repository, this)),
+      _treatment(Tucuxi::GuiCore::CoreFactory::createEntity<DrugTreatment>(repository, this)),
       _drugModel(nullptr)
 {
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

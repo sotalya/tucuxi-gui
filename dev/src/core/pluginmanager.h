@@ -54,7 +54,7 @@
 #include "core/interfaces/drugmodelengine.h"
 #include "core/utils/ezutils.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 /** Plugin Manager
@@ -196,6 +196,6 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // MANAGER_H

@@ -30,7 +30,7 @@
 #include "core/dal/drug/infusions.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace cliutils {
 //The action commands
 const char *const RestAction::_ACTION_COMMAND = "rest";
@@ -155,4 +155,4 @@ bool RestAction::run(const QStringList &args)
 }
 
 } //namespace cliutils
-} //namespace ezechiel
+} //namespace Tucuxi

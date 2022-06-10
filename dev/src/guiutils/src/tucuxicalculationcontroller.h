@@ -13,27 +13,27 @@ public:
 
 
 public slots:
-    void computePopPred(ezechiel::GuiCore::PredictionSpec*);
-    void computePopPerc(ezechiel::GuiCore::PredictionSpec*);
-    void computeAprPred(ezechiel::GuiCore::PredictionSpec*);
-    void computeAprPerc(ezechiel::GuiCore::PredictionSpec*);
-    void computeApoPred(ezechiel::GuiCore::PredictionSpec*);
-    void computeApoPerc(ezechiel::GuiCore::PredictionSpec*);
-    void computeRevPred(ezechiel::GuiCore::PredictionSpec*);
-    void computeAdjPred(ezechiel::GuiCore::PredictionSpec*);
+    void computePopPred(Tucuxi::GuiCore::PredictionSpec*);
+    void computePopPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void computeAprPred(Tucuxi::GuiCore::PredictionSpec*);
+    void computeAprPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void computeApoPred(Tucuxi::GuiCore::PredictionSpec*);
+    void computeApoPerc(Tucuxi::GuiCore::PredictionSpec*);
+    void computeRevPred(Tucuxi::GuiCore::PredictionSpec*);
+    void computeAdjPred(Tucuxi::GuiCore::PredictionSpec*);
     void abortAll();
 //    void updateAdj();
 
 private:
-    void preparePredResults(QVector<int> time, QVector<double> data, ezechiel::GuiCore::PredictionResult* pred);
-    ezechiel::GuiCore::PredictionResult* computePrediction(const Tucuxi::Core::DrugModel& _model,
+    void preparePredResults(QVector<int> time, QVector<double> data, Tucuxi::GuiCore::PredictionResult* pred);
+    Tucuxi::GuiCore::PredictionResult* computePrediction(const Tucuxi::Core::DrugModel& _model,
         const Tucuxi::Core::DrugTreatment &_treatment,
         Tucuxi::Core::PredictionParameterType _type,
         const Tucuxi::Common::DateTime &_startDate,
         const Tucuxi::Common::DateTime &_endDate,
         int nbPoints);
 
-    ezechiel::GuiCore::PredictionResult* computePercentiles(const Tucuxi::Core::DrugModel& _model,
+    Tucuxi::GuiCore::PredictionResult* computePercentiles(const Tucuxi::Core::DrugModel& _model,
         const Tucuxi::Core::DrugTreatment &_treatment,
         Tucuxi::Core::PredictionParameterType _type,
         const Tucuxi::Common::DateTime &_startDate,

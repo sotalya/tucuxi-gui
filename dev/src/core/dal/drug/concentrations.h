@@ -7,7 +7,7 @@
 #include "core/dal/entity.h"
 #include "core/dal/amount.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -28,9 +28,9 @@ protected:
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_OPAQUE_POINTER(ezechiel::GuiCore::Concentrations*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::Concentrations*>)
+Q_DECLARE_OPAQUE_POINTER(Tucuxi::GuiCore::Concentrations*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::Concentrations*>)
 
 #endif // CONCENTRATIONS_H

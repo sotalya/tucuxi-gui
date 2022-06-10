@@ -5,7 +5,7 @@
 #include <iostream>
 #include "dataset.h"
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 ProcessingResponse::ProcessingResponse()
 {

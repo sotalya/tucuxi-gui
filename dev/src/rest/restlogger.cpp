@@ -39,7 +39,7 @@ void RestLogger::logList(const QString& text)
     if (!currentDir.exists()) {
         if (!currentDir.mkpath(currentPath)) {
 
-            EXLOG(QtWarningMsg, ezechiel::rest::LOGERROR, QObject::tr("Can not create the LOG directory: %1.").arg(currentPath));
+            EXLOG(QtWarningMsg, Tucuxi::rest::LOGERROR, QObject::tr("Can not create the LOG directory: %1.").arg(currentPath));
             return;
         }
     }
@@ -52,7 +52,7 @@ void RestLogger::logList(const QString& text)
 
     QFile f(fileName);
     if (!f.open(QFile::WriteOnly)) {
-        EXLOG(QtWarningMsg, ezechiel::rest::LOGERROR, QObject::tr("Can not log REST responses."));
+        EXLOG(QtWarningMsg, Tucuxi::rest::LOGERROR, QObject::tr("Can not log REST responses."));
         return;
     }
 
@@ -73,7 +73,7 @@ void RestLogger::logRequest(const QString& text)
 
     QFile f(fileName);
     if (!f.open(QFile::WriteOnly)) {
-        EXLOG(QtWarningMsg, ezechiel::rest::LOGERROR, QObject::tr("Can not log REST responses."));
+        EXLOG(QtWarningMsg, Tucuxi::rest::LOGERROR, QObject::tr("Can not log REST responses."));
         return;
     }
 

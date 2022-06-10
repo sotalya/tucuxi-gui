@@ -3,7 +3,7 @@
 #include "core/dal/amount.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //Amount::Amount(QObject *parent) : QObject(parent)
@@ -195,4 +195,4 @@ bool Amount::operator <=(const Amount &other) const
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

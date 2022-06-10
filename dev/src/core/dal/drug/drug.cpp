@@ -25,7 +25,7 @@
 #include "core/dal/drug/errormodel.h"
 #include "core/dal/drug/standardtreatment.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -250,7 +250,7 @@ void DrugModel::setDescription(const QString &description)
 //Set the population parameters
 //void Drug::setParameters(ParameterSet* parameters)
 //{
-//    ParameterSet* set = ezechiel::GuiCore::CoreFactory::cloneEntity<ParameterSet>(_repository, 0, parameters);
+//    ParameterSet* set = Tucuxi::GuiCore::CoreFactory::cloneEntity<ParameterSet>(_repository, 0, parameters);
 //    set->setModel(modelId());
 //    set->setType(POPULATION);
 
@@ -259,4 +259,4 @@ void DrugModel::setDescription(const QString &description)
 
 QML_POINTERLIST_CLASS_IMPL(DrugModelList, DrugModel)
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

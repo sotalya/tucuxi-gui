@@ -3,7 +3,7 @@
 
 
 #include "core/dal/entity.h"
-namespace ezechiel{
+namespace Tucuxi{
 namespace GuiCore {
     class DrugTreatment;
 }
@@ -13,13 +13,13 @@ class Patient;
 class Practician;
 class ClinicalSet;
 
-class InterpretationRequest : public ezechiel::GuiCore::Entity
+class InterpretationRequest : public Tucuxi::GuiCore::Entity
 {
     Q_OBJECT
 
     ADMIN_ENTITY_UTILS(InterpretationRequest)
 
-    AUTO_PROPERTY_DECL(ezechiel::GuiCore::DrugTreatment*, treatment, Treatment)
+    AUTO_PROPERTY_DECL(Tucuxi::GuiCore::DrugTreatment*, treatment, Treatment)
     AUTO_PROPERTY_DECL(Patient*, patient, Patient)
     AUTO_PROPERTY_DECL(Practician*, practician, Practician)
 
@@ -36,8 +36,8 @@ class InterpretationRequest : public ezechiel::GuiCore::Entity
 
 protected:
 
-    Q_INVOKABLE InterpretationRequest(ezechiel::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
-    Q_INVOKABLE InterpretationRequest(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
+    Q_INVOKABLE InterpretationRequest(Tucuxi::GuiCore::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE InterpretationRequest(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 private:
 

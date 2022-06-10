@@ -27,28 +27,28 @@ QDateTime TucucoreToEzTranslator::buildDateTime(const Tucuxi::Common::DateTime &
 
 bool TucucoreToEzTranslator::buildTargetEvaluation(
         const Tucuxi::Core::TargetEvaluationResult *target,
-        ezechiel::GuiCore::TargetEvaluationResult *newTarget)
+        Tucuxi::GuiCore::TargetEvaluationResult *newTarget)
 {
-    ezechiel::GuiCore::TargetMethod *method = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TargetMethod>(ABSTRACTREPO, newTarget);
-    ezechiel::GuiCore::TargetMethod::TargetType newTargetType;
+    Tucuxi::GuiCore::TargetMethod *method = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TargetMethod>(ABSTRACTREPO, newTarget);
+    Tucuxi::GuiCore::TargetMethod::TargetType newTargetType;
     switch (target->getTargetType()) {
-    case Tucuxi::Core::TargetType::Residual : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::ResidualTarget; break;
-    case Tucuxi::Core::TargetType::Peak : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::PeakTarget; break;
-    case Tucuxi::Core::TargetType::Mean : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::MeanTarget; break;
-    case Tucuxi::Core::TargetType::Auc : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::AUCTarget; break;
-    case Tucuxi::Core::TargetType::Auc24 : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::AUC24Target; break;
-    case Tucuxi::Core::TargetType::CumulativeAuc : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::CumulativeAUCTarget; break;
-    case Tucuxi::Core::TargetType::UnknownTarget : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::UnknownTarget; break;
-    case Tucuxi::Core::TargetType::FractionTimeOverMic: newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::FractionTimeOverMicTarget; break;
+    case Tucuxi::Core::TargetType::Residual : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::ResidualTarget; break;
+    case Tucuxi::Core::TargetType::Peak : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::PeakTarget; break;
+    case Tucuxi::Core::TargetType::Mean : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::MeanTarget; break;
+    case Tucuxi::Core::TargetType::Auc : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::AUCTarget; break;
+    case Tucuxi::Core::TargetType::Auc24 : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::AUC24Target; break;
+    case Tucuxi::Core::TargetType::CumulativeAuc : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::CumulativeAUCTarget; break;
+    case Tucuxi::Core::TargetType::UnknownTarget : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::UnknownTarget; break;
+    case Tucuxi::Core::TargetType::FractionTimeOverMic: newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::FractionTimeOverMicTarget; break;
 
         // The 4 following target types are not yet supported
-    case Tucuxi::Core::TargetType::AucOverMic : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::AUCOverMicTarget; break;
-    case Tucuxi::Core::TargetType::Auc24OverMic : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::AUC24OverMicTarget; break;
-    case Tucuxi::Core::TargetType::TimeOverMic : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::TimeOverMicTarget; break;
-    case Tucuxi::Core::TargetType::AucDividedByMic : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::AUCDividedByMicTarget; break;
-    case Tucuxi::Core::TargetType::Auc24DividedByMic : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::AUC24DividedByMicTarget; break;
-    case Tucuxi::Core::TargetType::PeakDividedByMic : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::PeakDividedByMicTarget; break;
-    case Tucuxi::Core::TargetType::ResidualDividedByMic : newTargetType = ezechiel::GuiCore::TargetMethod::TargetType::ResidualDividedByMicTarget; break;
+    case Tucuxi::Core::TargetType::AucOverMic : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::AUCOverMicTarget; break;
+    case Tucuxi::Core::TargetType::Auc24OverMic : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::AUC24OverMicTarget; break;
+    case Tucuxi::Core::TargetType::TimeOverMic : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::TimeOverMicTarget; break;
+    case Tucuxi::Core::TargetType::AucDividedByMic : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::AUCDividedByMicTarget; break;
+    case Tucuxi::Core::TargetType::Auc24DividedByMic : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::AUC24DividedByMicTarget; break;
+    case Tucuxi::Core::TargetType::PeakDividedByMic : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::PeakDividedByMicTarget; break;
+    case Tucuxi::Core::TargetType::ResidualDividedByMic : newTargetType = Tucuxi::GuiCore::TargetMethod::TargetType::ResidualDividedByMicTarget; break;
     }
 
     method->setTargetType(newTargetType);
@@ -78,37 +78,37 @@ QString TucucoreToEzTranslator::description(const Tucuxi::Core::FormulationAndRo
     return result;
 }
 
-ezechiel::GuiCore::Admin::Route TucucoreToEzTranslator::translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
+Tucuxi::GuiCore::Admin::Route TucucoreToEzTranslator::translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
 {
     switch (_formulationAndRoute.getAbsorptionModel()) {
-    case Tucuxi::Core::AbsorptionModel::Extravascular: return ezechiel::GuiCore::Admin::Route::EXTRA;
-    case Tucuxi::Core::AbsorptionModel::ExtravascularLag: return ezechiel::GuiCore::Admin::Route::EXTRALAG;
-    case Tucuxi::Core::AbsorptionModel::Infusion: return ezechiel::GuiCore::Admin::Route::INFUSION;
-    case Tucuxi::Core::AbsorptionModel::Intravascular: return ezechiel::GuiCore::Admin::Route::BOLUS;
-    case Tucuxi::Core::AbsorptionModel::Undefined: return ezechiel::GuiCore::Admin::Route::UNVALID;
+    case Tucuxi::Core::AbsorptionModel::Extravascular: return Tucuxi::GuiCore::Admin::Route::EXTRA;
+    case Tucuxi::Core::AbsorptionModel::ExtravascularLag: return Tucuxi::GuiCore::Admin::Route::EXTRALAG;
+    case Tucuxi::Core::AbsorptionModel::Infusion: return Tucuxi::GuiCore::Admin::Route::INFUSION;
+    case Tucuxi::Core::AbsorptionModel::Intravascular: return Tucuxi::GuiCore::Admin::Route::BOLUS;
+    case Tucuxi::Core::AbsorptionModel::Undefined: return Tucuxi::GuiCore::Admin::Route::UNVALID;
     }
-    return ezechiel::GuiCore::Admin::Route::UNVALID;
+    return Tucuxi::GuiCore::Admin::Route::UNVALID;
 }
 
 
-ezechiel::GuiCore::Admin::Route TucucoreToEzTranslator::translateAbsorptionModel(Tucuxi::Core::AbsorptionModel _absorptionModel)
+Tucuxi::GuiCore::Admin::Route TucucoreToEzTranslator::translateAbsorptionModel(Tucuxi::Core::AbsorptionModel _absorptionModel)
 {
     switch (_absorptionModel) {
-    case Tucuxi::Core::AbsorptionModel::Extravascular: return ezechiel::GuiCore::Admin::Route::EXTRA;
-    case Tucuxi::Core::AbsorptionModel::ExtravascularLag: return ezechiel::GuiCore::Admin::Route::EXTRALAG;
-    case Tucuxi::Core::AbsorptionModel::Infusion: return ezechiel::GuiCore::Admin::Route::INFUSION;
-    case Tucuxi::Core::AbsorptionModel::Intravascular: return ezechiel::GuiCore::Admin::Route::BOLUS;
-    case Tucuxi::Core::AbsorptionModel::Undefined: return ezechiel::GuiCore::Admin::Route::UNVALID;
+    case Tucuxi::Core::AbsorptionModel::Extravascular: return Tucuxi::GuiCore::Admin::Route::EXTRA;
+    case Tucuxi::Core::AbsorptionModel::ExtravascularLag: return Tucuxi::GuiCore::Admin::Route::EXTRALAG;
+    case Tucuxi::Core::AbsorptionModel::Infusion: return Tucuxi::GuiCore::Admin::Route::INFUSION;
+    case Tucuxi::Core::AbsorptionModel::Intravascular: return Tucuxi::GuiCore::Admin::Route::BOLUS;
+    case Tucuxi::Core::AbsorptionModel::Undefined: return Tucuxi::GuiCore::Admin::Route::UNVALID;
     }
-    return ezechiel::GuiCore::Admin::Route::UNVALID;
+    return Tucuxi::GuiCore::Admin::Route::UNVALID;
 }
 
 bool TucucoreToEzTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistory & dosageHistory,
-                                                  ezechiel::GuiCore::DosageHistory *newHistory)
+                                                  Tucuxi::GuiCore::DosageHistory *newHistory)
 {
 
     for (const auto & dosageRange : dosageHistory.getDosageTimeRanges()) {
-        ezechiel::GuiCore::Dosage *dosage = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Dosage>(ABSTRACTREPO, newHistory);
+        Tucuxi::GuiCore::Dosage *dosage = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Dosage>(ABSTRACTREPO, newHistory);
         dosage->setApplied(buildDateTime(dosageRange->getStartDate()));
         dosage->setEndTime(buildDateTime(dosageRange->getEndDate()));
         const Tucuxi::Core::Dosage * d = dosageRange->getDosage();
@@ -124,14 +124,14 @@ bool TucucoreToEzTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistor
                 dosage->setDbinterval(lasting->getTimeStep().toHours());
                 dosage->setDbtinf(lasting->getInfusionTime().toMinutes());
                 dosage->getQuantity()->setValue(lasting->getDose() );
-                ezechiel::GuiCore::Admin *admin = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO, dosage);
+                Tucuxi::GuiCore::Admin *admin = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Admin>(ABSTRACTREPO, dosage);
                 admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
                 admin->setFormulationAndRoute(lasting->getLastFormulationAndRoute());
                 admin->setDescription(description(lasting->getLastFormulationAndRoute()));
                 dosage->setRoute(admin);
                 // TODO : Deal with units
 
-                dosage->getQuantity()->setUnit(ezechiel::GuiCore::Unit("mg"));
+                dosage->getQuantity()->setUnit(Tucuxi::GuiCore::Unit("mg"));
 
                 // Adjustments are not at steady state
                 dosage->setIsAtSteadyState(false);
@@ -150,13 +150,13 @@ bool TucucoreToEzTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistor
                 dosage->setDbinterval(lasting->getTimeStep().toHours());
                 dosage->setDbtinf(lasting->getInfusionTime().toMinutes());
                 dosage->getQuantity()->setValue(lasting->getDose() );
-                ezechiel::GuiCore::Admin *admin = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO, dosage);
+                Tucuxi::GuiCore::Admin *admin = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Admin>(ABSTRACTREPO, dosage);
                 admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
                 admin->setFormulationAndRoute(lasting->getLastFormulationAndRoute());
                 admin->setDescription(description(lasting->getLastFormulationAndRoute()));
                 dosage->setRoute(admin);
                 // TODO : Deal with units
-                dosage->getQuantity()->setUnit(ezechiel::GuiCore::Unit("mg"));
+                dosage->getQuantity()->setUnit(Tucuxi::GuiCore::Unit("mg"));
 
                 // Adjustments are not at steady state
                 dosage->setIsAtSteadyState(false);
@@ -182,14 +182,14 @@ bool TucucoreToEzTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistor
 #include "tucucommon/translatablestring.h"
 #include "tucucore/drugmodel/covariatedefinition.h"
 
-ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel)
+Tucuxi::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel)
 {
     // We do not support multiple active substances
     if (drugModel->getActiveMoieties().size() > 1) {
         return nullptr;
     }
 
-    ezechiel::GuiCore::DrugModel *newModel = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugModel>(ABSTRACTREPO, nullptr);
+    Tucuxi::GuiCore::DrugModel *newModel = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugModel>(ABSTRACTREPO, nullptr);
 
     //
     // General fields
@@ -211,12 +211,12 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
 
     // For the active substance we only need its Id and its name in english
 
-    ezechiel::GuiCore::ActiveSubstance *activeSubstance =  ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ActiveSubstance>(ABSTRACTREPO, newModel);
+    Tucuxi::GuiCore::ActiveSubstance *activeSubstance =  Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ActiveSubstance>(ABSTRACTREPO, newModel);
 
     const Tucuxi::Core::ActiveMoiety *activeMoiety = drugModel->getActiveMoieties().at(0).get();
     activeSubstance->setSubstanceId(QString::fromStdString(activeMoiety->getActiveMoietyId().toString()));
 
-    ezechiel::GuiCore::TranslatableString *name = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TranslatableString>(ABSTRACTREPO, activeSubstance);
+    Tucuxi::GuiCore::TranslatableString *name = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO, activeSubstance);
     // We only support english now
     name->insert("en", QString::fromStdString(activeMoiety->getActiveMoietyName().getString()));
     activeSubstance->setName(name);
@@ -235,17 +235,17 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
     // ADME
     //
 
-    ezechiel::GuiCore::ADME *adme = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ADME>(ABSTRACTREPO, newModel);
-    ezechiel::GuiCore::Admin *admin = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO, adme);
+    Tucuxi::GuiCore::ADME *adme = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ADME>(ABSTRACTREPO, newModel);
+    Tucuxi::GuiCore::Admin *admin = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Admin>(ABSTRACTREPO, adme);
     admin->setRoute(translateAbsorptionModel(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute().getAbsorptionModel()));
     admin->setFormulationAndRoute(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute());
     admin->setDescription(description(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute()));
     admin->setFormulationAndRoute(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute());
     adme->setDefaultIntake(admin);
 
-    ezechiel::GuiCore::AdminList *adminList = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::AdminList>(ABSTRACTREPO, adme);
+    Tucuxi::GuiCore::AdminList *adminList = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::AdminList>(ABSTRACTREPO, adme);
     for(auto & formulation : drugModel->getFormulationAndRoutes()) {
-        ezechiel::GuiCore::Admin *admin = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Admin>(ABSTRACTREPO, adminList);
+        Tucuxi::GuiCore::Admin *admin = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Admin>(ABSTRACTREPO, adminList);
         admin->setRoute(translateAbsorptionModel(formulation->getFormulationAndRoute().getAbsorptionModel()));
         admin->setFormulationAndRoute(formulation->getFormulationAndRoute());
         admin->setDescription(description(formulation->getFormulationAndRoute()));
@@ -260,18 +260,18 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
     newModel->setAdme(adme);
 
     {
-        ezechiel::GuiCore::TranslatableString *studyName = translate(drugModel->getMetadata().getStudyName(), newModel);
+        Tucuxi::GuiCore::TranslatableString *studyName = translate(drugModel->getMetadata().getStudyName(), newModel);
         newModel->setStudyNameTranslationMap(studyName);
     }
 
     {
-        ezechiel::GuiCore::TranslatableString *description = translate(drugModel->getMetadata().getDescription(), newModel);
+        Tucuxi::GuiCore::TranslatableString *description = translate(drugModel->getMetadata().getDescription(), newModel);
         newModel->setDescriptionsTranslationMap(description);
     }
 
 
     {
-        ezechiel::GuiCore::TranslatableString *domainName = translate(drugModel->getDomain().getDescription(), newModel);
+        Tucuxi::GuiCore::TranslatableString *domainName = translate(drugModel->getDomain().getDescription(), newModel);
         newModel->setDomainNameTranslationMap(domainName);
     }
 
@@ -280,8 +280,8 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
     auto defaultFormulation = drugModel->getFormulationAndRoutes().getDefault();
     {
         // All doses values found on drug model
-        ezechiel::GuiCore::ValidDoses *validDoses = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidDoses>(ABSTRACTREPO, newModel);
-        ezechiel::GuiCore::IdentifiableAmount *amount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::IdentifiableAmount>(ABSTRACTREPO, validDoses);
+        Tucuxi::GuiCore::ValidDoses *validDoses = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidDoses>(ABSTRACTREPO, newModel);
+        Tucuxi::GuiCore::IdentifiableAmount *amount = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::IdentifiableAmount>(ABSTRACTREPO, validDoses);
 
         QString uString = QString::fromStdString(defaultFormulation->getValidDoses()->getUnit().toString());
         QList<double> doseList;
@@ -290,7 +290,7 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
         }
 
         validDoses->setDosesList(doseList);
-        amount->setUnit(ezechiel::GuiCore::Unit(uString));
+        amount->setUnit(Tucuxi::GuiCore::Unit(uString));
         amount->setDbvalue(defaultFormulation->getValidDoses()->getDefaultValue());
         validDoses->setQuantity(amount);
 
@@ -300,8 +300,8 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
     if (defaultFormulation->getValidInfusionTimes() != nullptr)
     {
         //All infusions values found on drug model
-        ezechiel::GuiCore::ValidInfusions *validInfusions = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidInfusions>(ABSTRACTREPO, newModel);
-        ezechiel::GuiCore::IdentifiableAmount *amount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::IdentifiableAmount>(ABSTRACTREPO, validInfusions);
+        Tucuxi::GuiCore::ValidInfusions *validInfusions = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidInfusions>(ABSTRACTREPO, newModel);
+        Tucuxi::GuiCore::IdentifiableAmount *amount = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::IdentifiableAmount>(ABSTRACTREPO, validInfusions);
 
         QString uString = QString::fromStdString(defaultFormulation->getValidInfusionTimes()->getUnit().toString());
         QList<double> infusionsList;
@@ -310,7 +310,7 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
         }
 
         validInfusions->setInfusionsList(infusionsList);
-        amount->setUnit(ezechiel::GuiCore::Unit(uString));
+        amount->setUnit(Tucuxi::GuiCore::Unit(uString));
         amount->setDbvalue(defaultFormulation->getValidInfusionTimes()->getDefaultValue());
         validInfusions->setQuantity(amount);
 
@@ -320,8 +320,8 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
 
     {
         // All intervals values found on drug model
-        ezechiel::GuiCore::ValidIntervals *validIntervals = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ValidIntervals>(ABSTRACTREPO, newModel);
-        ezechiel::GuiCore::IdentifiableAmount *amount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::IdentifiableAmount>(ABSTRACTREPO, validIntervals);
+        Tucuxi::GuiCore::ValidIntervals *validIntervals = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ValidIntervals>(ABSTRACTREPO, newModel);
+        Tucuxi::GuiCore::IdentifiableAmount *amount = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::IdentifiableAmount>(ABSTRACTREPO, validIntervals);
 
         QString uString = QString::fromStdString(defaultFormulation->getValidIntervals()->getUnit().toString());
         QList<double> intervalsList;
@@ -330,14 +330,14 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
         }
 
         validIntervals->setIntervalsList(intervalsList);
-        amount->setUnit(ezechiel::GuiCore::Unit(uString));
+        amount->setUnit(Tucuxi::GuiCore::Unit(uString));
         amount->setDbvalue(defaultFormulation->getValidIntervals()->getDefaultValue());
         validIntervals->setQuantity(amount);
 
         newModel->setIntervals(validIntervals);
     }
 
-    ezechiel::GuiCore::DrugVariateList *variateList = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugVariateList>(ABSTRACTREPO, newModel);
+    Tucuxi::GuiCore::DrugVariateList *variateList = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugVariateList>(ABSTRACTREPO, newModel);
     for (const auto &covariate : drugModel->getCovariates()) {
         // The GUI do not need to know about computed covariates
         if (covariate.get()->isComputed()) {
@@ -347,13 +347,13 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
         if (covariate->getType() == Tucuxi::Core::CovariateType::Dose) {
             continue;
         }
-        ezechiel::GuiCore::DrugVariate *variate = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::DrugVariate>(ABSTRACTREPO, variateList);
+        Tucuxi::GuiCore::DrugVariate *variate = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::DrugVariate>(ABSTRACTREPO, variateList);
         variate->setCovariateId(QString::fromStdString(covariate->getId()));
         variate->setVisualNameTranslation(translate(covariate->getName(), variate));
-        ezechiel::GuiCore::OperableAmount *amount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperableAmount>(ABSTRACTREPO, variate);
+        Tucuxi::GuiCore::OperableAmount *amount = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperableAmount>(ABSTRACTREPO, variate);
         amount->setDbvalue(covariate->getValue());
         QString uString = QString::fromStdString(covariate->getUnit().toString());
-        amount->setUnit(ezechiel::GuiCore::Unit(uString));
+        amount->setUnit(Tucuxi::GuiCore::Unit(uString));
         variate->setQuantity(amount);
         QMetaType::Type newType;
         switch (covariate->getDataType()) {
@@ -373,10 +373,10 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
     newModel->setCovariates(variateList);
 
 
-    ezechiel::GuiCore::TargetList *targetList = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TargetList>(ABSTRACTREPO, newModel);
+    Tucuxi::GuiCore::TargetList *targetList = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TargetList>(ABSTRACTREPO, newModel);
     for(const auto &target : drugModel->getActiveMoieties().at(0)->getTargetDefinitions())
     {
-        ezechiel::GuiCore::Target *newTarget = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Target>(ABSTRACTREPO, targetList);
+        Tucuxi::GuiCore::Target *newTarget = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Target>(ABSTRACTREPO, targetList);
         newTarget->setCmin(translate(target->getCMin(), target.get(), newTarget));
         newTarget->setCmax(translate(target->getCMax(), target.get(), newTarget));
         newTarget->setCbest(translate(target->getCBest(), target.get(), newTarget));
@@ -390,7 +390,7 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
     newModel->setTargets(targetList);
 
     {
-        ezechiel::GuiCore::ParameterSet *parameterSet = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::ParameterSet>(ABSTRACTREPO, newModel);
+        Tucuxi::GuiCore::ParameterSet *parameterSet = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::ParameterSet>(ABSTRACTREPO, newModel);
         // TODO : Be careful, only valid for a single analyteSet
         const Tucuxi::Core::AnalyteGroupId analyteGroupId = drugModel->getAnalyteSets()[0]->getId();
         const Tucuxi::Core::Formulation formulation = drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute().getFormulation();
@@ -400,11 +400,11 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
 
         it.reset();
         while (!it.isDone()) {
-            ezechiel::GuiCore::Parameter *newParameter = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::Parameter>(ABSTRACTREPO, parameterSet);
+            Tucuxi::GuiCore::Parameter *newParameter = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::Parameter>(ABSTRACTREPO, parameterSet);
             newParameter->setName(QString::fromStdString((*it)->getId()));
-            ezechiel::GuiCore::OperableAmount *amount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperableAmount>(ABSTRACTREPO, newParameter);
+            Tucuxi::GuiCore::OperableAmount *amount = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperableAmount>(ABSTRACTREPO, newParameter);
             amount->setDbvalue((*it)->getValue());
-            amount->setUnit(ezechiel::GuiCore::Unit(QString::fromStdString((*it)->getUnit().toString())));
+            amount->setUnit(Tucuxi::GuiCore::Unit(QString::fromStdString((*it)->getUnit().toString())));
             newParameter->setQuantity(amount);
             parameterSet->getParameters()->append(newParameter);
             it.next();
@@ -417,10 +417,10 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
 
         const Tucuxi::Core::StandardTreatment *oldTreatment = drugModel->getFormulationAndRoutes().getDefault()->getStandardTreatment();
         if (oldTreatment != nullptr) {
-            ezechiel::GuiCore::StandardTreatment *standardTreatment = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::StandardTreatment>(ABSTRACTREPO, newModel);
+            Tucuxi::GuiCore::StandardTreatment *standardTreatment = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::StandardTreatment>(ABSTRACTREPO, newModel);
             standardTreatment->setIsFixedDuration(oldTreatment->getIsFixedDuration());
             if (oldTreatment->getIsFixedDuration()) {
-                ezechiel::GuiCore::Duration duration;
+                Tucuxi::GuiCore::Duration duration;
                 if (oldTreatment->getUnit().toString() == "d") {
                     duration.addHours(24 * oldTreatment->getDuration());
                 }
@@ -442,60 +442,60 @@ ezechiel::GuiCore::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
     return newModel;
 }
 
-ezechiel::GuiCore::TargetMethod* TucucoreToEzTranslator::translate(Tucuxi::Core::TargetType targetType, ezechiel::GuiCore::Target *newTarget)
+Tucuxi::GuiCore::TargetMethod* TucucoreToEzTranslator::translate(Tucuxi::Core::TargetType targetType, Tucuxi::GuiCore::Target *newTarget)
 {
-    ezechiel::GuiCore::TargetMethod *method = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TargetMethod>(ABSTRACTREPO, newTarget);
+    Tucuxi::GuiCore::TargetMethod *method = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TargetMethod>(ABSTRACTREPO, newTarget);
     switch (targetType) {
-    case Tucuxi::Core::TargetType::Auc : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::AUCTarget); break;
-    case Tucuxi::Core::TargetType::Auc24 : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::AUC24Target); break;
-    case Tucuxi::Core::TargetType::AucDividedByMic : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::AUCDividedByMicTarget); break;
-    case Tucuxi::Core::TargetType::Auc24DividedByMic : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::AUC24DividedByMicTarget); break;
-    case Tucuxi::Core::TargetType::AucOverMic : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::AUCOverMicTarget); break;
-    case Tucuxi::Core::TargetType::Auc24OverMic : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::AUC24OverMicTarget); break;
-    case Tucuxi::Core::TargetType::CumulativeAuc : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::CumulativeAUCTarget); break;
-    case Tucuxi::Core::TargetType::Mean : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::MeanTarget); break;
-    case Tucuxi::Core::TargetType::Peak : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::PeakTarget); break;
-    case Tucuxi::Core::TargetType::PeakDividedByMic : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::PeakDividedByMicTarget); break;
-    case Tucuxi::Core::TargetType::ResidualDividedByMic : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::ResidualDividedByMicTarget); break;
-    case Tucuxi::Core::TargetType::Residual : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::ResidualTarget); break;
-    case Tucuxi::Core::TargetType::TimeOverMic : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::TimeOverMicTarget); break;
-    case Tucuxi::Core::TargetType::FractionTimeOverMic : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::FractionTimeOverMicTarget); break;
-    case Tucuxi::Core::TargetType::UnknownTarget : method->setTargetType(ezechiel::GuiCore::TargetMethod::TargetType::UnknownTarget); break;
+    case Tucuxi::Core::TargetType::Auc : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::AUCTarget); break;
+    case Tucuxi::Core::TargetType::Auc24 : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::AUC24Target); break;
+    case Tucuxi::Core::TargetType::AucDividedByMic : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::AUCDividedByMicTarget); break;
+    case Tucuxi::Core::TargetType::Auc24DividedByMic : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::AUC24DividedByMicTarget); break;
+    case Tucuxi::Core::TargetType::AucOverMic : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::AUCOverMicTarget); break;
+    case Tucuxi::Core::TargetType::Auc24OverMic : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::AUC24OverMicTarget); break;
+    case Tucuxi::Core::TargetType::CumulativeAuc : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::CumulativeAUCTarget); break;
+    case Tucuxi::Core::TargetType::Mean : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::MeanTarget); break;
+    case Tucuxi::Core::TargetType::Peak : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::PeakTarget); break;
+    case Tucuxi::Core::TargetType::PeakDividedByMic : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::PeakDividedByMicTarget); break;
+    case Tucuxi::Core::TargetType::ResidualDividedByMic : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::ResidualDividedByMicTarget); break;
+    case Tucuxi::Core::TargetType::Residual : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::ResidualTarget); break;
+    case Tucuxi::Core::TargetType::TimeOverMic : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::TimeOverMicTarget); break;
+    case Tucuxi::Core::TargetType::FractionTimeOverMic : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::FractionTimeOverMicTarget); break;
+    case Tucuxi::Core::TargetType::UnknownTarget : method->setTargetType(Tucuxi::GuiCore::TargetMethod::TargetType::UnknownTarget); break;
     }
     return method;
 }
 
-ezechiel::GuiCore::OperableAmount *TucucoreToEzTranslator::translate(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, ezechiel::GuiCore::Target *newTarget)
+Tucuxi::GuiCore::OperableAmount *TucucoreToEzTranslator::translate(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, Tucuxi::GuiCore::Target *newTarget)
 {
-    ezechiel::GuiCore::OperableAmount *amount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperableAmount>(ABSTRACTREPO, newTarget);
+    Tucuxi::GuiCore::OperableAmount *amount = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperableAmount>(ABSTRACTREPO, newTarget);
     amount->setDbvalue(subTarget.getValue());
     QString uString = QString::fromStdString(target->getUnit().toString());
-    amount->setUnit(ezechiel::GuiCore::Unit(uString));
+    amount->setUnit(Tucuxi::GuiCore::Unit(uString));
     return amount;
 }
 
-ezechiel::GuiCore::OperableAmount *TucucoreToEzTranslator::translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::TucuUnit micUnit,
-                                                                     Tucuxi::Common::TucuUnit newUnit, ezechiel::GuiCore::Target *newTarget)
+Tucuxi::GuiCore::OperableAmount *TucucoreToEzTranslator::translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::TucuUnit micUnit,
+                                                                     Tucuxi::Common::TucuUnit newUnit, Tucuxi::GuiCore::Target *newTarget)
 {
-    ezechiel::GuiCore::OperableAmount *amount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperableAmount>(ABSTRACTREPO, newTarget);
+    Tucuxi::GuiCore::OperableAmount *amount = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperableAmount>(ABSTRACTREPO, newTarget);
     amount->setDbvalue(Tucuxi::Common::UnitManager::convertToUnit(subTarget.getValue(), micUnit, newUnit));
-    amount->setUnit(ezechiel::GuiCore::Unit(QString(newUnit.toString().c_str())));
+    amount->setUnit(Tucuxi::GuiCore::Unit(QString(newUnit.toString().c_str())));
     return amount;
 }
 
 
-ezechiel::GuiCore::OperableAmount *TucucoreToEzTranslator::translateTime(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, ezechiel::GuiCore::Target *newTarget)
+Tucuxi::GuiCore::OperableAmount *TucucoreToEzTranslator::translateTime(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, Tucuxi::GuiCore::Target *newTarget)
 {
-    ezechiel::GuiCore::OperableAmount *amount = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::OperableAmount>(ABSTRACTREPO, newTarget);
+    Tucuxi::GuiCore::OperableAmount *amount = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::OperableAmount>(ABSTRACTREPO, newTarget);
     amount->setDbvalue(subTarget.getValue());
     QString uString = QString::fromStdString(target->getTimeUnit().toString());
-    amount->setUnit(ezechiel::GuiCore::Unit(uString));
+    amount->setUnit(Tucuxi::GuiCore::Unit(uString));
     return amount;
 }
 
-ezechiel::GuiCore::TranslatableString* TucucoreToEzTranslator::translate(const Tucuxi::Common::TranslatableString &str, ezechiel::GuiCore::Entity *parent)
+Tucuxi::GuiCore::TranslatableString* TucucoreToEzTranslator::translate(const Tucuxi::Common::TranslatableString &str, Tucuxi::GuiCore::Entity *parent)
 {
-    ezechiel::GuiCore::TranslatableString *newString = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::TranslatableString>(ABSTRACTREPO, parent);
+    Tucuxi::GuiCore::TranslatableString *newString = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::TranslatableString>(ABSTRACTREPO, parent);
     // Now we only insert the english translation
     newString->insert("en", QString::fromStdString(str.getString("en")));
     return newString;

@@ -3,7 +3,7 @@
 #include "core/dal/predictionresult.h"
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //AUTO_PROPERTY_IMPL(PredictionResult, ParameterType, paramsType, ParamsType)

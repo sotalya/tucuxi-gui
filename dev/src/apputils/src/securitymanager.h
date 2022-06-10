@@ -7,7 +7,7 @@
 #include <QCoreApplication>
 
 class QRegExpValidator;
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 /** \ingroup core
@@ -302,11 +302,11 @@ private:
     User _user;
 
     //The en/decryption utility class
-    ezechiel::GuiAppUtils::DataCrypter _crypter;
+    Tucuxi::GuiAppUtils::DataCrypter _crypter;
 };
 
 }//namespace core
-}//namespace ezechiel
+}//namespace Tucuxi
 Q_DECLARE_METATYPE(std::string)
 
 #endif // SECURITYMANAGER_H

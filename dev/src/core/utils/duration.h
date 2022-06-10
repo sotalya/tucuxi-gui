@@ -6,7 +6,7 @@
 #include <QString>
 #include <QMetaType>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 /** Simple class that handle duration.
@@ -236,9 +236,9 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 //Declare this type to Qt
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Duration)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Duration)
 
 #endif // DURATION_H

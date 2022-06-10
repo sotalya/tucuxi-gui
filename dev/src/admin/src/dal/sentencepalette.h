@@ -10,7 +10,7 @@
 ///
 /// \brief The DrugSentences class
 /// \brief This object contains the drug specific sentences list and the drug id
-class DrugSentences : public ezechiel::GuiCore::Entity
+class DrugSentences : public Tucuxi::GuiCore::Entity
 {
     Q_OBJECT
 
@@ -21,7 +21,7 @@ class DrugSentences : public ezechiel::GuiCore::Entity
 
 public:
 
-    Q_INVOKABLE explicit DrugSentences(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr){}
+    Q_INVOKABLE explicit DrugSentences(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent = nullptr){}
     Q_INVOKABLE void addSentence(QString _sentence);
     Q_INVOKABLE void removeSentence(int _listIndex);
 
@@ -30,7 +30,7 @@ public:
 ///
 /// \brief The Section class
 /// \brief This object contains the global sentences list and the DrugSentences list
-class Section : public ezechiel::GuiCore::Entity
+class Section : public Tucuxi::GuiCore::Entity
 {
     Q_OBJECT
 
@@ -40,11 +40,11 @@ class Section : public ezechiel::GuiCore::Entity
     AUTO_PROPERTY_DECL(QStringList, globalSentences, GlobalSentences)
     AUTO_PROPERTY_DECL(QList<DrugSentences*>, specificSentences, SpecificSentences)
 
-    Q_INVOKABLE explicit Section(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE explicit Section(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
 
     void addDrugSentences(QString _drugId);
 
-    ezechiel::GuiCore::AbstractRepository *_repository;
+    Tucuxi::GuiCore::AbstractRepository *_repository;
 
 public:
 
@@ -73,7 +73,7 @@ QML_POINTERLIST_CLASS_DECL(SectionList, Section)
 /// \brief The SentencesPalettes class
 /// \brief This object is the top of the sentences palettes architecture
 ///
-class SentencesPalettes : public ezechiel::GuiCore::Entity
+class SentencesPalettes : public Tucuxi::GuiCore::Entity
 {
     ///
     /// \brief The SentencesPalettesImporter class
@@ -107,7 +107,7 @@ class SentencesPalettes : public ezechiel::GuiCore::Entity
 
 public:
 
-    Q_INVOKABLE explicit SentencesPalettes(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE explicit SentencesPalettes(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent = nullptr);
 
     // Used in QML to get the reference to the section.
     // Especially used to write the sentence from list to the TextArea

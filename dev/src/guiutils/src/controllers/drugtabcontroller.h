@@ -8,7 +8,7 @@
 #include "core/utils/autoproperty.h"
 #include "abstractviewcontroller.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class ActiveSubstance;
@@ -28,8 +28,8 @@ public:
 
 public slots:
 
-    void setDrugInfo(ezechiel::GuiCore::ActiveSubstance *substance);
-    void setDrugModelInfo(ezechiel::GuiCore::DrugModel *drugModel);
+    void setDrugInfo(Tucuxi::GuiCore::ActiveSubstance *substance);
+    void setDrugModelInfo(Tucuxi::GuiCore::DrugModel *drugModel);
 };
 
 #endif // DRUGTABCONTROLLER_H

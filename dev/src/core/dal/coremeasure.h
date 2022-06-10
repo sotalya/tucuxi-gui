@@ -9,7 +9,7 @@
 #include "core/utils/ezutils.h"
 #include "core/dal/entity.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class UncastedValueList;
@@ -41,11 +41,11 @@ public:
 
 QML_POINTERLIST_CLASS_DECL(CoreMeasureList, CoreMeasure)
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::CoreMeasure*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::CoreMeasure*>)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::CoreMeasureList*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::CoreMeasure*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::CoreMeasure*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::CoreMeasureList*)
 
 
 #endif // MEASURE_H

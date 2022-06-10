@@ -2,7 +2,7 @@
 #include "graphinformationselection.h"
 #include "core/settings.h"
 
-GraphInformationSelection::GraphInformationSelection(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent) :
+GraphInformationSelection::GraphInformationSelection(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _currentStep(StepType::Patient)
 {
@@ -62,7 +62,7 @@ QString GraphInformationSelection::getCurrentTab() const{
 void GraphInformationSelection::loadDisplayParametersSettings(){
 
 
-    QMap<QString, QVariant> displayParameters = SETTINGS.get(ezechiel::GuiCore::Module::GUI, "GraphDisplayParameters").toMap();
+    QMap<QString, QVariant> displayParameters = SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "GraphDisplayParameters").toMap();
     QList<QVariant> listParametersValues;
     int curveIndex = 0;
 
@@ -79,7 +79,7 @@ void GraphInformationSelection::loadDisplayParametersSettings(){
         }
     }
 
-    QList<QVariant> percentile = SETTINGS.get(ezechiel::GuiCore::Module::GUI, "PercentilesDisplayParameters").toList();
+    QList<QVariant> percentile = SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "PercentilesDisplayParameters").toList();
     if (percentile.length() != 0){
         _perc50 = percentile[0].toBool();
         _perc25_75 = percentile[1].toBool();
@@ -93,7 +93,7 @@ void GraphInformationSelection::loadDisplayParametersSettings(){
         _perc5_95 = true;
     }
 
-    QMap<QString, QVariant> generalParameters = SETTINGS.get(ezechiel::GuiCore::Module::GUI, "GeneralDisplayParameters").toMap();
+    QMap<QString, QVariant> generalParameters = SETTINGS.get(Tucuxi::GuiCore::Module::GUI, "GeneralDisplayParameters").toMap();
     _displayCurrentTime = generalParameters.value("displayCurrentTime", true).toBool();
     _displayCovariateChange = generalParameters.value("displayCovariateChange", true).toBool();
     _displayLiveAnnotations = generalParameters.value("displayLiveAnnotations", true).toBool();
@@ -156,11 +156,11 @@ void GraphInformationSelection::saveSettings(){
     _parametersSettingsMap[currentTab] = parametersTypeList;
 
 
-    SETTINGS.set(ezechiel::GuiCore::Module::GUI, "GraphDisplayParameters" ,_parametersSettingsMap);
+    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "GraphDisplayParameters" ,_parametersSettingsMap);
 
-    SETTINGS.set(ezechiel::GuiCore::Module::GUI, "PercentilesDisplayParameters" ,percentiles);
+    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "PercentilesDisplayParameters" ,percentiles);
 
-    SETTINGS.set(ezechiel::GuiCore::Module::GUI, "GeneralDisplayParameters", general);
+    SETTINGS.set(Tucuxi::GuiCore::Module::GUI, "GeneralDisplayParameters", general);
 }
 
 void GraphInformationSelection::setPercentile(PercentileRangeEnum percentileRange, bool isAvailable){

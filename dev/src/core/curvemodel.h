@@ -26,7 +26,7 @@
 #include "drugmodel.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class DrugModelEngine;
@@ -1368,6 +1368,6 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // CURVEMODEL_H

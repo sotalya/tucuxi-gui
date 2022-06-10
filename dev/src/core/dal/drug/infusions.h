@@ -8,7 +8,7 @@
 #include "core/utils/duration.h"
 #include "core/dal/drug/operableamount.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -124,10 +124,10 @@ private:
 };
 QML_POINTERLIST_CLASS_DECL(InfusionList,ValidInfusion)
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ValidInfusion*)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::ValidInfusions*)
-Q_DECLARE_METATYPE(QList<ezechiel::GuiCore::ValidInfusion*>)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ValidInfusion*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::ValidInfusions*)
+Q_DECLARE_METATYPE(QList<Tucuxi::GuiCore::ValidInfusion*>)
 
 #endif // INFUSIONS_H

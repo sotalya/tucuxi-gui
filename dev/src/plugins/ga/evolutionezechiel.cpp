@@ -4,7 +4,7 @@
 #include <vector>
 #include <float.h>
 
-EvolutionEzechiel::EvolutionEzechiel(Population *population, quint32 generationCount, qreal crossoverProbability, qreal mutationProbability, qreal mutationPerBitProbability,
+EvolutionTucuxi::EvolutionEzechiel(Population *population, quint32 generationCount, qreal crossoverProbability, qreal mutationProbability, qreal mutationPerBitProbability,
                                      const SharedDosage &currentDosage, const Duration &start, const SharedTargetSet &targets, ParameterType type, SharedDrugResponseAnalysis predictor) :
                                      EvolutionEngine(population, generationCount, crossoverProbability, mutationProbability, mutationPerBitProbability),
                                      dosage(currentDosage),
@@ -17,11 +17,11 @@ EvolutionEzechiel::EvolutionEzechiel(Population *population, quint32 generationC
     errorWeight.insert(Target::PeakTarget, 1.0);
 }
 
-EvolutionEzechiel::~EvolutionEzechiel()
+EvolutionTucuxi::~EvolutionEzechiel()
 {
 }
 
-double EvolutionEzechiel::scoring(const Duration &at, const ParameterType type, const SharedDosage &dosage, const SharedTargetSet &targets, QHash<Target::TargetType, double> errorWeight) const
+double EvolutionTucuxi::scoring(const Duration &at, const ParameterType type, const SharedDosage &dosage, const SharedTargetSet &targets, QHash<Target::TargetType, double> errorWeight) const
 {
     double residualWanted = -1.0;
     double residualMax;
@@ -83,12 +83,12 @@ double EvolutionEzechiel::scoring(const Duration &at, const ParameterType type, 
     return (peakDiff * errorWeight.value(Target::PeakTarget, 0.0)) + (residualDiff * errorWeight.value(Target::ResidualTarget, 0.0));
 }
 
-bool EvolutionEzechiel::BiggerThan::operator() (PopEntity* a, PopEntity* b) const{
+bool EvolutionTucuxi::BiggerThan::operator() (PopEntity* a, PopEntity* b) const{
     return a->getFitness() > b->getFitness();
 }
 
 
-bool EvolutionEzechiel::evaluatePopulation(Prediction* _pred, Population *pop, quint32 generation)
+bool EvolutionTucuxi::evaluatePopulation(Prediction* _pred, Population *pop, quint32 generation)
 {
     QBitArray *genoData;
     Duration steady;

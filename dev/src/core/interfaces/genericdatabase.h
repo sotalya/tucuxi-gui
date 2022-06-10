@@ -26,7 +26,7 @@
 #include "core/utils/duration.h"
 #include "core/utils/errorenums.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class PatientVariate;
@@ -91,7 +91,7 @@ public:
 //    virtual void setNext (DBInterface *next) = 0;
 //    virtual void setList (QList<DBInterface*> plist) = 0;
 //    virtual Descriptor<class Database> descriptor () = 0;
-    virtual bool init (Core *GuiCore) = 0;
+    virtual bool init (Core *core) = 0;
 //    virtual QString errorString () = 0;
     virtual bool connect (DBAccount &account) = 0;
     virtual bool disconnect () = 0;
@@ -237,11 +237,11 @@ public:
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 //enabling WhereClauseMap as QVariant value means we can have nesting with parentheses (e.g. 'AND (X OR Y)')
 //To nest, use '-1' as key value
-Q_DECLARE_METATYPE(ezechiel::GuiCore::WhereClauseMap)
-Q_DECLARE_INTERFACE(ezechiel::GuiCore::IDatabase, "ch.heig-vd.ezechiel.IDatabase/0.1")
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::WhereClauseMap)
+Q_DECLARE_INTERFACE(Tucuxi::GuiCore::IDatabase, "ch.heig-vd.ezechiel.IDatabase/0.1")
 #endif // GDATABASE
 

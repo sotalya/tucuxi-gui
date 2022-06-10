@@ -35,12 +35,12 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(const QList<ezechiel::GuiCore::Descriptor> &studies);
+    void setModelData(const QList<Tucuxi::GuiCore::Descriptor> &studies);
 
 private:
     void init();
 
-    QList<ezechiel::GuiCore::Descriptor> _studies;
+    QList<Tucuxi::GuiCore::Descriptor> _studies;
     QHash<int, QByteArray> _roleNames;
 };
 

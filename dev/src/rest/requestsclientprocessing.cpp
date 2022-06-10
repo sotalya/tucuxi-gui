@@ -17,7 +17,7 @@
 #include "core/dal/drugtreatment.h"
 
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 RequestsClientProcessing::RequestsClientProcessing(QObject *parent) :
     RequestsClient(parent)
@@ -86,7 +86,7 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
             measure->sampleID(content.value("sample.id"));
             measure->setMoment(QDateTime::fromString(content.value("sample.date.sample"), Qt::ISODate));
             measure->arrivalDate(QDateTime::fromString(content.value("sample.date.arrival"), Qt::ISODate));
-            measure->setConcentration(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::IdentifiableAmount>(ABSTRACTREPO, measure));
+            measure->setConcentration(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::IdentifiableAmount>(ABSTRACTREPO, measure));
             measure->getConcentration()->setValue(content.list("sample.concentrations").first().value("value").toDouble());
             measure->getConcentration()->setUnit(content.list("sample.concentrations").first().value("unit"));
         }
@@ -95,13 +95,13 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
             measure->sampleID("nosample");
             measure->setMoment(QDateTime::currentDateTime());
             measure->arrivalDate(QDateTime::currentDateTime());
-            measure->setConcentration(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::IdentifiableAmount>(ABSTRACTREPO, measure));
+            measure->setConcentration(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::IdentifiableAmount>(ABSTRACTREPO, measure));
             measure->getConcentration()->setValue(0);
             measure->getConcentration()->setUnit(Unit("mg/l"));
         }
 
         //The drug data
-        ezechiel::GuiCore::ActiveSubstance* substance = nullptr;
+        Tucuxi::GuiCore::ActiveSubstance* substance = nullptr;
 
 
         //        this->queryRequest(content.value("id"),content.value("patient.id"),content.value("drug.id"));
@@ -118,7 +118,7 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
 
         if (drugId.isEmpty())
         {
-            EXLOG(QtWarningMsg, ezechiel::GuiCore::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. The drug id %1 is unknown. Aborting this request.").arg(restDrugId));
+            EXLOG(QtWarningMsg, Tucuxi::GuiCore::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. The drug id %1 is unknown. Aborting this request.").arg(restDrugId));
             continue;
         }
 
@@ -146,7 +146,7 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
         if (!request->drug()) {
             rlutil::setColor(rlutil::RED);
             informer << "DRUG NOT FOUND: " << content.value("drug.id") << endl;
-            EXLOG(QtWarningMsg, ezechiel::GuiCore::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. Aborting this request."));
+            EXLOG(QtWarningMsg, Tucuxi::GuiCore::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. Aborting this request."));
             rlutil::resetColor();
             continue;
         } else {
@@ -156,7 +156,7 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
         informer << endl;
 
         if (!request->drug()) {
-            EXLOG(QtWarningMsg, ezechiel::GuiCore::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. Aborting."));
+            EXLOG(QtWarningMsg, Tucuxi::GuiCore::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. Aborting."));
             continue;
             return 0;
         }
@@ -184,7 +184,7 @@ InterpretationRequest* SimpleBuilder::buildRequest(const QString &xmlRequest)
 
     InterpretationRequest* ir = irBuilder.buildInterpretationRequest();
     if (!ir) {
-        EXLOG(QtWarningMsg, ezechiel::GuiCore::NOEZERROR, tr("Could not build interpretationRequest from Pending Request. Aborting."));
+        EXLOG(QtWarningMsg, Tucuxi::GuiCore::NOEZERROR, tr("Could not build interpretationRequest from Pending Request. Aborting."));
         return nullptr;
     }
 

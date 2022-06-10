@@ -1,6 +1,6 @@
 #include "location.h"
 
-Location::Location(ezechiel::GuiCore::AbstractRepository *repository, QObject *parent) :
+Location::Location(Tucuxi::GuiCore::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _address(),
     _postcode(),
@@ -10,7 +10,7 @@ Location::Location(ezechiel::GuiCore::AbstractRepository *repository, QObject *p
 {
 }
 
-Location::Location(ezechiel::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
+Location::Location(Tucuxi::GuiCore::AbstractRepository *repository, const int &id, QObject *parent) :
     Entity(repository, id, parent),
     _address(),
     _postcode(),

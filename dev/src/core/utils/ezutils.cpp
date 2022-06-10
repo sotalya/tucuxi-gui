@@ -5,7 +5,7 @@
 #include "core/utils/units.h"
 #include "stdparamnames.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -122,5 +122,5 @@ DirName::DirName(const QString &name):QString(name)
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 

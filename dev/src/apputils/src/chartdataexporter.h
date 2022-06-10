@@ -3,7 +3,7 @@
 
 #include <QString>
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 class ChartData;
 class PredictionResult;
@@ -22,9 +22,9 @@ class ChartDataExporter
 public:
     ChartDataExporter();
 
-    QString exportData(const ezechiel::GuiCore::ChartData *chartData, int what = EXPORT_ALL);
+    QString exportData(const Tucuxi::GuiCore::ChartData *chartData, int what = EXPORT_ALL);
 
-    QString exportPrediction(ezechiel::GuiCore::PredictionResult *pred);
+    QString exportPrediction(Tucuxi::GuiCore::PredictionResult *pred);
 };
 
 class ChartDataHtmlExporter
@@ -32,9 +32,9 @@ class ChartDataHtmlExporter
 public:
     ChartDataHtmlExporter();
 
-    QString exportData(const ezechiel::GuiCore::ChartData *chartData, int what);
+    QString exportData(const Tucuxi::GuiCore::ChartData *chartData, int what);
 
-    QString exportPrediction(ezechiel::GuiCore::PredictionResult *pred);
+    QString exportPrediction(Tucuxi::GuiCore::PredictionResult *pred);
 };
 
 #endif // CHARTDATAEXPORTER_H

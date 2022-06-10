@@ -3,7 +3,7 @@
 
 #include "core/utils/logging.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiAppUtils {
     EZERROR(APPUTILS, NOEZERROR,"There is no error.")
     EZERROR(APPUTILS, NORIGHTS,"Lack of permission.")
@@ -29,7 +29,7 @@ namespace GuiAppUtils {
     EZERROR(APPUTILS, DATAERRPARAM,"The parameter ID '%1' is required by the model but not defined in the drug")
     EZERROR(APPUTILS, SCRIPTERR,"A parameter script can not be evaluated")
 }//namespace GuiAppUtils
-}//namespace ezechiel
+}//namespace Tucuxi
 
 #endif // APPUTILSERRORS
 

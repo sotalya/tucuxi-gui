@@ -39,12 +39,12 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(QList<ezechiel::GuiCore::DrugModel*> *drugs);
+    void setModelData(QList<Tucuxi::GuiCore::DrugModel*> *drugs);
 
 private:
     void init();
 
-    QList<ezechiel::GuiCore::DrugModel*> *_drugs;
+    QList<Tucuxi::GuiCore::DrugModel*> *_drugs;
     QHash<int, QByteArray> _roleNames;
 };
 

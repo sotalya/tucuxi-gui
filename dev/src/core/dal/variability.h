@@ -7,7 +7,7 @@
 #include "core/dal/amount.h"
 #include "core/utils/ezutils.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 class OperationList;
@@ -60,10 +60,10 @@ protected:
 
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
-Q_DECLARE_METATYPE(ezechiel::GuiCore::Variability*)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::VariableValue*)
-Q_DECLARE_METATYPE(ezechiel::GuiCore::OperableDouble*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::Variability*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::VariableValue*)
+Q_DECLARE_METATYPE(Tucuxi::GuiCore::OperableDouble*)
 
 #endif // VARIABILITY_H

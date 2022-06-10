@@ -2,7 +2,7 @@
 
 #include "core/corefactory.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 CoreFactory* CoreFactory::_instance = 0;
@@ -27,4 +27,4 @@ CoreFactory::CoreFactory()
 //}
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

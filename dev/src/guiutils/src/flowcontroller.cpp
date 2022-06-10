@@ -39,8 +39,8 @@ FlowController::~FlowController()
 
 void FlowController::initialize()
 {
-    currentStatus = ezechiel::GuiCore::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
-    oldStatus = ezechiel::GuiCore::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
+    currentStatus = Tucuxi::GuiCore::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
+    oldStatus = Tucuxi::GuiCore::CoreFactory::createEntity<ValidationStatus>(ABSTRACTREPO,this);
 }
 
 void FlowController::setFlowView(QObject *flowView)
@@ -101,14 +101,14 @@ void FlowController::patientChanged(int index)
     start();
     if (index==-1) {
         currentStatus->setDataStatus(StepType::Patient, DataStatusType::InvalidData);
-//        EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Set patientTab to status invalid"))
+//        EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Set patientTab to status invalid"))
     }
     else {
         currentStatus->setDataStatus(StepType::Patient, DataStatusType::ValidData);
         if (!interpretationController->isFlowRequest()) {
             currentStatus->setValidationStatus(StepType::Patient, ValidationStatusType::Validated);
         }
-//        EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Set patientTab to status valid"))
+//        EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Set patientTab to status valid"))
     }
     end();
 }
@@ -120,25 +120,25 @@ void FlowController::drugChanged(int index)
     start();
     if (index==-1) {
         currentStatus->setDataStatus(StepType::Drug, DataStatusType::InvalidData);
-//        EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Set drugTab to status invalid"))
+//        EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Set drugTab to status invalid"))
     }
     else if (currentStatus->getDataStatus(StepType::Patient) == DataStatusType::ValidData) {
         currentStatus->setDataStatus(StepType::Drug, DataStatusType::ValidData);
         if (!interpretationController->isFlowRequest()) {
             currentStatus->setValidationStatus(StepType::Drug, ValidationStatusType::Validated);
         }
-//        EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Set drugTab to status valid"))
+//        EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Set drugTab to status valid"))
     }
     end();
 }
 
 void FlowController::generateEnables()
 {
-    ezechiel::GuiCore::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
+    Tucuxi::GuiCore::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
 
     // Patient
     if (currentStatus->getDataStatus(StepType::Patient) != DataStatusType::ValidData) {
-//        EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Propagate disable drug"))
+//        EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Propagate disable drug"))
         propagateEnable(false, StepType::Drug);
         return;
     }
@@ -146,31 +146,31 @@ void FlowController::generateEnables()
     // Drug
     currentStatus->setEnable(StepType::Drug, true);
     if (currentStatus->getDataStatus(StepType::Drug) != DataStatusType::ValidData) {
-//        EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Propagate disable dosage"))
+//        EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Propagate disable dosage"))
         propagateEnable(false, StepType::Dosage);
         return;
     }
 
     // Dosage
     currentStatus->setEnable(StepType::Dosage, true);
-//    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Enable dosageTab"))
+//    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Enable dosageTab"))
 
     // Covariates
     if (!interpretation->getDrugResponseAnalysis()->getDrugModel()->getCovariates()->isEmpty()) {
         currentStatus->setEnable(StepType::Covariate, true);
-//        EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Enable covariateTab"))
+//        EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Enable covariateTab"))
     } else {
         currentStatus->setEnable(StepType::Covariate, false);
-//        EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Disable covariateTab"))
+//        EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Disable covariateTab"))
     }
 
     // Measures
     currentStatus->setEnable(StepType::Measure, drugTreatment->getDosages()->size() > 0);
-//    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Enable measureTab"))
+//    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Enable measureTab"))
 
     // Target
     currentStatus->setEnable(StepType::Target, true);
-//    EXLOG(QtDebugMsg, ezechiel::guiutils::NOEZERROR, tr("Enable targetTab"))
+//    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Enable targetTab"))
 
     // Adjustment
     bool isDosageValid = true; //(currentStatus->getStatus(StepType::Dosage) == DataStatusType::ValidData);
@@ -192,8 +192,8 @@ void FlowController::generateStatuses()
         return;
     }
 
-    ezechiel::GuiCore::DrugModel* drugModel = interpretation->getDrugResponseAnalysis()->getDrugModel();
-    ezechiel::GuiCore::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
+    Tucuxi::GuiCore::DrugModel* drugModel = interpretation->getDrugResponseAnalysis()->getDrugModel();
+    Tucuxi::GuiCore::DrugTreatment* drugTreatment = interpretation->getDrugResponseAnalysis()->getTreatment();
 
     // Patient
     if (drugTreatment->getPatient()) {
@@ -212,10 +212,10 @@ void FlowController::generateStatuses()
     if (drugTreatment->getDosages() != nullptr) {
         bool isValid = drugTreatment->getDosages()->isValid();
         for(int i = 0; i < drugTreatment->getDosages()->size(); i++) {
-            ezechiel::GuiCore::Dosage *dosage = drugTreatment->getDosages()->at(i);
+            Tucuxi::GuiCore::Dosage *dosage = drugTreatment->getDosages()->at(i);
             for(int j=0; j < dosage->getUncastedValues()->size(); j++) {
-                ezechiel::GuiCore::UncastedValue *value = dosage->getUncastedValues()->at(j);
-                if (value->getStatus() != ezechiel::GuiCore::UncastedStatus::Casted) {
+                Tucuxi::GuiCore::UncastedValue *value = dosage->getUncastedValues()->at(j);
+                if (value->getStatus() != Tucuxi::GuiCore::UncastedStatus::Casted) {
                     if (!value->getValidated()) {
                         isValid = false;
                     }
@@ -247,13 +247,13 @@ void FlowController::generateStatuses()
 //        if (isValid) {
 //            // Set validated as soon as we have at least one patient variable for each drug variable
 //            QSet<QString> drugVariateIds;
-//            for (ezechiel::GuiCore::DrugVariate *variate: drugModel->getCovariates()->getList()) {
+//            for (Tucuxi::GuiCore::DrugVariate *variate: drugModel->getCovariates()->getList()) {
 //                if ((!variate->getAutomatic()) && (variate->getCovariateId() != "birthdate")) {
 //                    drugVariateIds.insert(variate->getCovariateId());
 //                }
 //            }
 //            bool isOk = true;
-//            for (ezechiel::GuiCore::PatientVariate *variate: drugTreatment->getCovariates()->getList()) {
+//            for (Tucuxi::GuiCore::PatientVariate *variate: drugTreatment->getCovariates()->getList()) {
 //                if (drugVariateIds.contains(variate->getCovariateId())) {
 //                    drugVariateIds.remove(variate->getCovariateId());
 //                }
@@ -286,7 +286,7 @@ void FlowController::generateStatuses()
     }
 
     // Adjustments
-    ezechiel::GuiCore::DosageHistory *adjustments = drugTreatment->getAdjustments();
+    Tucuxi::GuiCore::DosageHistory *adjustments = drugTreatment->getAdjustments();
     ValidationStatusType adjValidated = ValidationStatus::UnValidated;
     if (adjustments != nullptr) {
         if (adjustments->isValid()) {

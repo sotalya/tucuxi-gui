@@ -32,7 +32,7 @@
 
 
 
-using namespace ezechiel::GuiCore;
+using namespace Tucuxi::GuiCore;
 
 DemoRequestsClient::DemoRequestsClient(QObject *parent) : RequestsClient(parent)
 {
@@ -88,7 +88,7 @@ void DemoRequestsClient::queryList(QDateTime from,
         measure->sampleID("sample.id");
         measure->setMoment(QDateTime::currentDateTime());
         measure->arrivalDate(QDateTime::currentDateTime());
-        measure->setConcentration(ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::IdentifiableAmount>(ABSTRACTREPO, measure));
+        measure->setConcentration(Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::IdentifiableAmount>(ABSTRACTREPO, measure));
 
         if ((i % 2) == 1) {
             UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
@@ -107,11 +107,11 @@ void DemoRequestsClient::queryList(QDateTime from,
 
         }
         else
-            measure->getConcentration()->setUnit(ezechiel::GuiCore::Unit("mg/l"));
+            measure->getConcentration()->setUnit(Tucuxi::GuiCore::Unit("mg/l"));
 
         //The drug data
 
-        ezechiel::GuiCore::ActiveSubstance *substance;
+        Tucuxi::GuiCore::ActiveSubstance *substance;
         APPUTILSREPO->getActiveSubstanceOfId("imatinib", substance);
         request->drug(substance);
 //        request->drug(APPCORE->drugManager()->drug(content.value("drug.id")));
@@ -153,7 +153,7 @@ InterpretationRequest* DemoInterpretationRequestBuilder::buildInterpretationRequ
 
     InterpretationRequest* interpretationRequest = CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
 
-    ezechiel::GuiCore::DrugTreatment *treatment;
+    Tucuxi::GuiCore::DrugTreatment *treatment;
 
     treatment = interpretationRequest->getTreatment();
     treatment->setParent(interpretationRequest);
@@ -175,7 +175,7 @@ InterpretationRequest* DemoInterpretationRequestBuilder::buildInterpretationRequ
     measures->setParent(treatment);
 
     //Prediction covariates
-//    ezechiel::GuiCore::PatientVariateList * covariates = buildCovariates("covariates", treatment->getPatient());
+//    Tucuxi::GuiCore::PatientVariateList * covariates = buildCovariates("covariates", treatment->getPatient());
 //    treatment->setCovariates(covariates);
 
     return interpretationRequest;
@@ -188,7 +188,7 @@ QString DemoInterpretationRequestBuilder::buildDrug(const QString &rootKey)
     //ToDo: not sure how apputils work, but shouldn't use the drug name to retrieve it
     //ToDo: uncomment the drug value below and remove imatinib
 
-    //ezechiel::GuiCore::ActiveSubstance* drug;
+    //Tucuxi::GuiCore::ActiveSubstance* drug;
 //    APPUTILSREPO->getDrugOfName(content.value(rootKey + ".id").split('.').last(), drug);
     //APPUTILSREPO->getDrugOfName("Imatinib", drug);
     //APPUTILSREPO->getActiveSubstanceOfId("daptomycin" /*"Imatinib"*/, drug);
@@ -196,15 +196,15 @@ QString DemoInterpretationRequestBuilder::buildDrug(const QString &rootKey)
     return "imatinib";
 }
 
-ezechiel::GuiCore::DosageHistory* DemoInterpretationRequestBuilder::buildDosages(const QString &rootKey)
+Tucuxi::GuiCore::DosageHistory* DemoInterpretationRequestBuilder::buildDosages(const QString &rootKey)
 {
     //ToDo: check critical info and build, or store incomplete data
     //ToDo: check how to deal with dosage end date
 
-    ezechiel::GuiCore::DosageHistory* dosages = CoreFactory::createEntity<ezechiel::GuiCore::DosageHistory>(ABSTRACTREPO);
+    Tucuxi::GuiCore::DosageHistory* dosages = CoreFactory::createEntity<Tucuxi::GuiCore::DosageHistory>(ABSTRACTREPO);
 
     for (int i = 0; i < 1; ++i) {
-        ezechiel::GuiCore::Dosage* dosage = CoreFactory::createEntity<ezechiel::GuiCore::Dosage>(ABSTRACTREPO, dosages);
+        Tucuxi::GuiCore::Dosage* dosage = CoreFactory::createEntity<Tucuxi::GuiCore::Dosage>(ABSTRACTREPO, dosages);
 
         //Dosage data
         dosage->getRoute()->setRoute(toDosageRoute("extra"));
@@ -230,16 +230,16 @@ ezechiel::GuiCore::DosageHistory* DemoInterpretationRequestBuilder::buildDosages
     return dosages;
 }
 
-ezechiel::GuiCore::PatientVariateList * DemoInterpretationRequestBuilder::buildCovariates(const QString &rootKey, const SharedPatient patient)
+Tucuxi::GuiCore::PatientVariateList * DemoInterpretationRequestBuilder::buildCovariates(const QString &rootKey, const SharedPatient patient)
 {
     //ToDo: check critical info and build, or store incomplete data
     //ToDo: set the covariate type based on the drug data
     //ToDo: set the covariate nature when added to DAL object
 
-    ezechiel::GuiCore::PatientVariateList * covariates = ezechiel::GuiCore::CoreFactory::createEntity<ezechiel::GuiCore::PatientVariateList>(ABSTRACTREPO, patient);
+    Tucuxi::GuiCore::PatientVariateList * covariates = Tucuxi::GuiCore::CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariateList>(ABSTRACTREPO, patient);
 
     for (int i = 0; i < 2; ++i) {
-        ezechiel::GuiCore::PatientVariate* covariate = CoreFactory::createEntity<ezechiel::GuiCore::PatientVariate>(ABSTRACTREPO, patient);
+        Tucuxi::GuiCore::PatientVariate* covariate = CoreFactory::createEntity<Tucuxi::GuiCore::PatientVariate>(ABSTRACTREPO, patient);
 
         //Covariate data
         if (i == 0) {
@@ -425,7 +425,7 @@ CoreMeasureList * DemoInterpretationRequestBuilder::buildSamples(const QString &
         }
         else {
             sample->getConcentration()->setValue(100*i);
-            sample->getConcentration()->setUnit(ezechiel::GuiCore::Unit("mg/l"));
+            sample->getConcentration()->setUnit(Tucuxi::GuiCore::Unit("mg/l"));
         }
         samples->append(sample);
     }
@@ -475,14 +475,14 @@ QList<Email*> DemoInterpretationRequestBuilder::buildEmails(const QString &rootK
     return emails;
 }
 
-ezechiel::GuiCore::Admin::Route DemoInterpretationRequestBuilder::toDosageRoute(const QString &route)
+Tucuxi::GuiCore::Admin::Route DemoInterpretationRequestBuilder::toDosageRoute(const QString &route)
 {
     if (route == "bolus")
-        return ezechiel::GuiCore::Admin::BOLUS;
+        return Tucuxi::GuiCore::Admin::BOLUS;
     if (route == "infu")
-        return ezechiel::GuiCore::Admin::INFUSION;
+        return Tucuxi::GuiCore::Admin::INFUSION;
     if (route == "extra")
-        return ezechiel::GuiCore::Admin::EXTRA;
+        return Tucuxi::GuiCore::Admin::EXTRA;
 
     Q_UNREACHABLE();
 }

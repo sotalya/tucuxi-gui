@@ -2,7 +2,7 @@
 
 #include "core/dal/percentile.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 //Percentile::Percentile(QObject *parent) : QObject(parent)
@@ -68,4 +68,4 @@ void PercentileList::setType(ParameterType type)
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

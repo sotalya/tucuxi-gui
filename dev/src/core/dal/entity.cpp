@@ -3,7 +3,7 @@
 #include "core/dal/entity.h"
 //#include "core/corerepository.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -34,7 +34,7 @@ bool Entity::save() {
     // YTA : Remove it for now. Could be restored later, but I would prefer not to have an access through setDBObject.
     // I think a visitor pattern would better suite the needs
     /*
-    ezechiel::GuiCore::Response r = NEWDB->setDBObject(*this, 0);
+    Tucuxi::GuiCore::Response r = NEWDB->setDBObject(*this, 0);
     if (r.error != NoError) {
         return false;
     }
@@ -161,4 +161,4 @@ void Entity::setModified(bool modified)
 }
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

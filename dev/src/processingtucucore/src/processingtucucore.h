@@ -10,7 +10,7 @@
 #include "core/utils/logging.h"
 
 
-namespace ezechiel {
+namespace Tucuxi {
     namespace processing {
         class PredictionCalculator;
         class TargetEvaluator;
@@ -39,42 +39,42 @@ namespace Tucuxi {
  * calculateAposterioriPercentiles is the aposteriori percentiles.
  * @see processinginterface.h
 */
-class ProcessingTucucore : public ezechiel::GuiCore::ProcessingInterface
+class ProcessingTucucore : public Tucuxi::GuiCore::ProcessingInterface
 {
 public:
     ProcessingTucucore();
     virtual ~ProcessingTucucore();
 
-    virtual ezechiel::ProcessingResult points(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
-                       const ezechiel::GuiCore::PointsTraits traits,
-                       ezechiel::GuiCore::PredictionResult &prediction);
+    virtual Tucuxi::ProcessingResult points(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
+                       const Tucuxi::GuiCore::PointsTraits traits,
+                       Tucuxi::GuiCore::PredictionResult &prediction);
 
-    virtual ezechiel::ProcessingResult point(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
-                      const ezechiel::GuiCore::PointTraits traits,
-                      ezechiel::GuiCore::Amount &amount,
-                      ezechiel::GuiCore::PredictionResult &prediction);
+    virtual Tucuxi::ProcessingResult point(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
+                      const Tucuxi::GuiCore::PointTraits traits,
+                      Tucuxi::GuiCore::Amount &amount,
+                      Tucuxi::GuiCore::PredictionResult &prediction);
 
-    virtual ezechiel::ProcessingResult percentiles(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
-                            const ezechiel::GuiCore::PercentilesTraits traits,
-                            ezechiel::GuiCore::PredictionResult &prediction,
-                            ezechiel::math::ProcessingAborter *aborter);
+    virtual Tucuxi::ProcessingResult percentiles(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
+                            const Tucuxi::GuiCore::PercentilesTraits traits,
+                            Tucuxi::GuiCore::PredictionResult &prediction,
+                            Tucuxi::math::ProcessingAborter *aborter);
 
-    virtual ezechiel::ProcessingResult calculateAposterioriPercentiles(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
-                               const ezechiel::GuiCore::PercentilesTraits traits,
-                               ezechiel::GuiCore::PredictionResult &prediction,
-                               ezechiel::math::ProcessingAborter *aborter);
+    virtual Tucuxi::ProcessingResult calculateAposterioriPercentiles(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
+                               const Tucuxi::GuiCore::PercentilesTraits traits,
+                               Tucuxi::GuiCore::PredictionResult &prediction,
+                               Tucuxi::math::ProcessingAborter *aborter);
 
-    virtual ezechiel::ProcessingResult computeSuggestedAdjustments(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
-                                            const ezechiel::GuiCore::ReverseTraits spec,
-                                            ezechiel::GuiCore::PredictionResult &prediction);
+    virtual Tucuxi::ProcessingResult computeSuggestedAdjustments(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
+                                            const Tucuxi::GuiCore::ReverseTraits spec,
+                                            Tucuxi::GuiCore::PredictionResult &prediction);
 
 protected:
 
 
-    virtual ezechiel::ProcessingResult generalCalculatePercentiles(const ezechiel::GuiCore::DrugResponseAnalysis* analysis,
-                               const ezechiel::GuiCore::PercentilesTraits traits,
-                               ezechiel::GuiCore::PredictionResult &pred,
-                               ezechiel::math::ProcessingAborter *aborter);
+    virtual Tucuxi::ProcessingResult generalCalculatePercentiles(const Tucuxi::GuiCore::DrugResponseAnalysis* analysis,
+                               const Tucuxi::GuiCore::PercentilesTraits traits,
+                               Tucuxi::GuiCore::PredictionResult &pred,
+                               Tucuxi::math::ProcessingAborter *aborter);
 
     int m_requestID;
 

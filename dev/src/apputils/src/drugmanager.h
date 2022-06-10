@@ -2,7 +2,7 @@
 #define DRUGMANAGER_H
 
 //class Drug;
-namespace ezechiel {namespace GuiCore{class ParameterSet;}}
+namespace Tucuxi {namespace GuiCore{class ParameterSet;}}
 //class DrugXmlDescriptor;
 
 #include <QCoreApplication>
@@ -45,7 +45,7 @@ namespace ezechiel {namespace GuiCore{class ParameterSet;}}
  * \sa Drug, DrugLister, DrugXmlDescriptor
  */
 
-namespace ezechiel {
+namespace Tucuxi {
 
 namespace GuiCore {
     class DrugModel;
@@ -83,7 +83,7 @@ public:
      * @param filePath The path to the drug XML file.
      * @return A drug XML descriptor.
      */
-    const ezechiel::GuiCore::DrugXmlDescriptor *scanDrug(const QString &filePath);
+    const Tucuxi::GuiCore::DrugXmlDescriptor *scanDrug(const QString &filePath);
 
     //! Build a drug.
     /** Build a drug given its XML descriptor. If an error occurred, the function returns null and the
@@ -96,7 +96,7 @@ public:
      * @param xmlDesc The drug XML descriptor.
      * @return The drug, or null if an error occured.
      */
-    ezechiel::GuiCore::DrugModel* buildDrug(const ezechiel::GuiCore::DrugXmlDescriptor *xmlDesc);
+    Tucuxi::GuiCore::DrugModel* buildDrug(const Tucuxi::GuiCore::DrugXmlDescriptor *xmlDesc);
 
     //! Validate a drug.
     /** Validate a drug. If an error occurred, the function returns false and an error message can be
@@ -107,18 +107,18 @@ public:
      * @param drug A drug object.
      * @return True if the drug is valid.
      */
-    bool validateDrug(const ezechiel::GuiCore::DrugModel* drug);
+    bool validateDrug(const Tucuxi::GuiCore::DrugModel* drug);
 
     /** \brief Returns the descriptor of the given drug.
      * @param drugId The ID of the drug.
      * @return The corresponding descriptor.
      */
-    ezechiel::GuiCore::Descriptor description(const QString &drugId);
+    Tucuxi::GuiCore::Descriptor description(const QString &drugId);
 
     /** \brief Returns the descriptors of all the drugs.
      * @return A list of the descriptors.
      */
-    QList<ezechiel::GuiCore::Descriptor> descriptions();
+    QList<Tucuxi::GuiCore::Descriptor> descriptions();
 
     //! Returns the models IDs compatible with the given drug.
     /** Returns the models IDs compatible with the given drug. A model can be used by a drug if it is
@@ -134,7 +134,7 @@ public:
      * @param modelId The ID of the model.
      * @return The list of the corresponding drug descriptors.
      */
-    QList<ezechiel::GuiCore::Descriptor> descriptionsForModel(const QString &modelId);
+    QList<Tucuxi::GuiCore::Descriptor> descriptionsForModel(const QString &modelId);
 
     /** \brief Returns the ATC of the given drug.
      * @param drugId The ID of the drug.
@@ -146,7 +146,7 @@ public:
      * @param atc The drug ATC.
      * @return The list of the corresponding drug descriptors.
      */
-    QList<ezechiel::GuiCore::Descriptor> descriptionsForAtc(const QString &atc);
+    QList<Tucuxi::GuiCore::Descriptor> descriptionsForAtc(const QString &atc);
 
     /** \brief Returns the domain of the given drug.
      * @param drugId The ID of the drug.
@@ -172,7 +172,7 @@ public:
      * @param drugId The drug ID.
      * @return The const pointer to the drug, or null if an error occured.
      */
-    ezechiel::GuiCore::DrugModel* drug(const QString &drugId);
+    Tucuxi::GuiCore::DrugModel* drug(const QString &drugId);
 
     //! Remove a drug.
     /** Remove a drug from the drug manager. The drug will also be removed in the drug lister internal
@@ -225,7 +225,7 @@ public:
      * @return true if it was added, false if the drug model Id is already in the repo.
      *  It allows to avoid duplicates.
      */
-    bool tryToAddDrugModelToRepo(ezechiel::GuiCore::DrugModel *drugModel);
+    bool tryToAddDrugModelToRepo(Tucuxi::GuiCore::DrugModel *drugModel);
 
 public slots:
 
@@ -243,14 +243,14 @@ private:
     void scanDrugs();
 
     //Functions that parse data related to the population parameters
-    bool parseErrorModel(QDomElement node, ezechiel::GuiCore::ParameterSet* parameters);
-    bool parseCorrelations(QDomElement node, ezechiel::GuiCore::ParameterSet* parameters);
+    bool parseErrorModel(QDomElement node, Tucuxi::GuiCore::ParameterSet* parameters);
+    bool parseCorrelations(QDomElement node, Tucuxi::GuiCore::ParameterSet* parameters);
 
     //Functions that validate data extracted from the drug file
-    bool validateModel(const ezechiel::GuiCore::DrugModel* drug);
-    bool validateParameters(const ezechiel::GuiCore::DrugModel* drug);
+    bool validateModel(const Tucuxi::GuiCore::DrugModel* drug);
+    bool validateParameters(const Tucuxi::GuiCore::DrugModel* drug);
 
-    // bool validateScripts(const ezechiel::GuiCore::DrugModel* drug);
+    // bool validateScripts(const Tucuxi::GuiCore::DrugModel* drug);
 
     //Deletes the existing drugs
     void resetDrugs();
@@ -259,7 +259,7 @@ private:
     QString _error;
 
     //The drug lister
-    ezechiel::GuiAppUtils::DrugLister _lister;
+    Tucuxi::GuiAppUtils::DrugLister _lister;
 
     //The map of <Drug ID, Drug domain>
     QMap<QString, QString> _drugIdToDrugDomain;
@@ -268,10 +268,10 @@ private:
     QMap<QString, QString> _drugIdToDrugStudy;
 
     //The map of <Drug ID, Drug object>
-    QMap<QString, ezechiel::GuiCore::DrugModel*> _drugIdToDrugObj;
+    QMap<QString, Tucuxi::GuiCore::DrugModel*> _drugIdToDrugObj;
 
     //The map of <Drug ID, Drug descriptor>
-    QMap<QString, ezechiel::GuiCore::Descriptor> _drugIdToDrugDesc;
+    QMap<QString, Tucuxi::GuiCore::Descriptor> _drugIdToDrugDesc;
 
     //The map of <Drug ID, Drug ATC>
     QMap<QString, QString> _drugIdToDrugAtc;
@@ -280,10 +280,10 @@ private:
     QMultiMap<QString, QString> _drugIdToModelId;
 
     //The map of <Model ID, Drug descriptor>
-    QMultiMap<QString, ezechiel::GuiCore::Descriptor> _modelIdToDrugDesc;
+    QMultiMap<QString, Tucuxi::GuiCore::Descriptor> _modelIdToDrugDesc;
 
     //The map of <Drug ATC, Drug descriptor>
-    QMultiMap<QString, ezechiel::GuiCore::Descriptor> _atcToDrugDesc;
+    QMultiMap<QString, Tucuxi::GuiCore::Descriptor> _atcToDrugDesc;
 
     template < typename error >
     inline void log(QtMsgType type, QString msg, const char * file, int line, const char * function)
@@ -294,5 +294,5 @@ private:
 };
 
 } //namespace GuiAppUtils
-} //namespace ezechiel
+} //namespace Tucuxi
 #endif // DRUGMANAGER_H

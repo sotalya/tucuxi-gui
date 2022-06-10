@@ -8,7 +8,7 @@
 //Number of versions level
 #define LEVELS 3
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -99,6 +99,6 @@ private:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // VERSION_H

@@ -38,7 +38,7 @@
 #include "target.h"
 #include "prediction.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 //#define MODELUTILITIES(CLASSNAME) \
 
 enum ComparisonOperator { AND_Equals, AND_GreaterThanOrEquals, AND_LessThanOrEquals, AND_GreaterThan, AND_LessThan, AND_NotEqual
@@ -246,7 +246,7 @@ public:
 
 //enabling WhereClauseMap as QVariant value means we can have nesting with parentheses (e.g. 'AND (X OR Y)')
 //To nest, use '-1' as key value
-Q_DECLARE_METATYPE(ezechiel::WhereClauseMap)
-Q_DECLARE_INTERFACE(ezechiel::IDatabase, "ch.heig-vd.ezechiel.IDatabase/0.1")
+Q_DECLARE_METATYPE(Tucuxi::WhereClauseMap)
+Q_DECLARE_INTERFACE(Tucuxi::IDatabase, "ch.heig-vd.ezechiel.IDatabase/0.1")
 #endif // GDATABASE
 

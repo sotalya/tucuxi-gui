@@ -3,7 +3,7 @@
 #include "core/dal/coremeasure.h"
 #include "core/dal/uncastedvalue.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 AUTO_PROPERTY_IMPL(CoreMeasure, IdentifiableAmount*, concentration, Concentration)
@@ -68,4 +68,4 @@ bool CoreMeasure::operator !=(CoreMeasure* other)
 
 QML_POINTERLIST_CLASS_IMPL(CoreMeasureList, CoreMeasure)
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi

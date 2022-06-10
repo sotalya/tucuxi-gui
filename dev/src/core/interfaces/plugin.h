@@ -9,7 +9,7 @@
 #include "core/utils/ezutils.h"
 //#include "core/interfaces/optionable.h"
 
-namespace ezechiel {
+namespace Tucuxi {
 namespace GuiCore {
 
 
@@ -229,6 +229,6 @@ public:
 };
 
 } // namespace core
-} // namespace ezechiel
+} // namespace Tucuxi
 
 #endif // PLUGIN_H

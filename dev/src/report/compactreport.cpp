@@ -22,7 +22,7 @@ void CompactReport::finishedLoading()
 
     //Install the translator
     QTranslator translator;
-    translator.load(CORE->path(ezechiel::GuiCore::Core::Translations) + "/report_" + language());
+    translator.load(CORE->path(Tucuxi::GuiCore::Core::Translations) + "/report_" + language());
     QApplication::installTranslator(&translator);
 
     QWebElementCollection collection;

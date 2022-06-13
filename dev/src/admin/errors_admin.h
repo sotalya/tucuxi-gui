@@ -6,9 +6,12 @@
 #include "core/utils/logging.h"
 
 namespace Tucuxi {
-namespace GuiAdmin {
+namespace Gui {
+namespace Admin {
     EZERROR(ADMIN, NOEZERROR,"There is no error.")
-}//namespace cli
+
+}//namespace Admin
+}//namespace Gui
 }//namespace Tucuxi
 #endif // ADMINERRORS
 

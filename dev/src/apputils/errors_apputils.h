@@ -4,7 +4,8 @@
 #include "core/utils/logging.h"
 
 namespace Tucuxi {
-namespace GuiAppUtils {
+namespace Gui {
+namespace AppUtils {
     EZERROR(APPUTILS, NOEZERROR,"There is no error.")
     EZERROR(APPUTILS, NORIGHTS,"Lack of permission.")
     EZERROR(APPUTILS, ENCRYPTIONFAILED,"Could not encrypt.")
@@ -28,7 +29,8 @@ namespace GuiAppUtils {
     EZERROR(APPUTILS, DATAERRMODEL,"The model doesn't match any known model")
     EZERROR(APPUTILS, DATAERRPARAM,"The parameter ID '%1' is required by the model but not defined in the drug")
     EZERROR(APPUTILS, SCRIPTERR,"A parameter script can not be evaluated")
-}//namespace GuiAppUtils
+}//namespace AppUtils
+}//namespace Gui
 }//namespace Tucuxi
 
 #endif // APPUTILSERRORS

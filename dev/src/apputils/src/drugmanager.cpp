@@ -35,7 +35,8 @@
 using namespace Tucuxi::Gui::Core;
 
 namespace Tucuxi {
-namespace GuiAppUtils {
+namespace Gui {
+namespace AppUtils {
 
 //Constructor
 DrugManager::DrugManager()
@@ -519,5 +520,6 @@ void DrugManager::clearErrorMessage()
     _error = "";
 }
 
-} //namespace GuiAppUtils
+} //namespace AppUtils
+} //namespace Gui
 } //namespace Tucuxi

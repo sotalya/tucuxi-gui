@@ -60,7 +60,9 @@ namespace Core {
 }
 }
 
-namespace GuiAppUtils {
+namespace Gui {
+namespace AppUtils {
+
 class DrugManager
 {
     Q_DECLARE_TR_FUNCTIONS(DrugManager)
@@ -268,7 +270,7 @@ private:
     QString _error;
 
     //The drug lister
-    Tucuxi::GuiAppUtils::DrugLister _lister;
+    Tucuxi::Gui::AppUtils::DrugLister _lister;
 
     //The map of <Drug ID, Drug domain>
     QMap<QString, QString> _drugIdToDrugDomain;
@@ -302,6 +304,7 @@ private:
 
 };
 
-} //namespace GuiAppUtils
+} //namespace AppUtils
+} //namespace Gui
 } //namespace Tucuxi
 #endif // DRUGMANAGER_H

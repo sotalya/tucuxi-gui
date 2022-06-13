@@ -460,7 +460,7 @@ int main(int argc, char *argv[])
 //    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Report.");
 
     // Let's create CORE, to modify paths from the options
-    Tucuxi::Gui::Core::Core::setInstance(new Tucuxi::GuiAppUtils::AppCore());
+    Tucuxi::Gui::Core::Core::setInstance(new Tucuxi::Gui::AppUtils::AppCore());
     parseOptions();
     EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Options.");
     initResources();
@@ -655,7 +655,7 @@ void parseOptions()
 void initResources()
 {
 //    We do this in main to be able to access Core in parsing
-//    Tucuxi::Gui::Core::setInstance(new Tucuxi::GuiAppUtils::AppCore());
+//    Tucuxi::Gui::Core::setInstance(new Tucuxi::Gui::AppUtils::AppCore());
 
     CORE->setProcessingInterface(ProcessingFactory::createProcessing());
     APPCORE->drugManager();

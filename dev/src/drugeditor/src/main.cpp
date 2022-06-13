@@ -225,7 +225,7 @@ void parseOptions()
 
 void initResources()
 {
-    Tucuxi::Gui::Core::setInstance(new Tucuxi::GuiAppUtils::AppCore());
+    Tucuxi::Gui::Core::setInstance(new Tucuxi::Gui::AppUtils::AppCore());
 
 //    CORE->setProcessingInterface(new ProcessingMath());
     APPCORE->drugManager();

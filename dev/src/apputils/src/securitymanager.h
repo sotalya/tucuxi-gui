@@ -304,7 +304,7 @@ private:
     User _user;
 
     //The en/decryption utility class
-    Tucuxi::GuiAppUtils::DataCrypter _crypter;
+    Tucuxi::Gui::AppUtils::DataCrypter _crypter;
 };
 
 }//namespace Core

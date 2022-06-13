@@ -16,7 +16,8 @@
 using namespace Botan;
 
 namespace Tucuxi {
-namespace GuiAppUtils {
+namespace Gui {
+namespace AppUtils {
 class DataCrypter : public QObject
 {
     Q_OBJECT
@@ -97,6 +98,7 @@ private:
     Botan::SymmetricKey masterKey;
 };
 
-}//namespace GuiAppUtils
+}//namespace AppUtils
+}//namespace Gui
 }//namespace Tucuxi
 #endif // DATACRYPTER_H

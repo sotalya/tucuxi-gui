@@ -17,7 +17,8 @@
 using namespace Tucuxi::Gui::Core;
 
 namespace Tucuxi {
-namespace GuiAppUtils {
+namespace Gui {
+namespace AppUtils {
 
 //The error messages
 const char *const DrugLister::_DIRECTORY_UNREADABLE = QT_TR_NOOP_UTF8("The directory '%1' is unreadable");
@@ -47,8 +48,8 @@ DrugLister::DrugLister()
     _directories.append(QDir(":/drugs"));
 #endif // DRUGS_AS_RESOURCES
     //Set the default directories
-    _directories.append(QDir(CORE->path(Core::Drugs)));
-    _directories.append(QDir(CORE->path(Core::CustomDrugs)));
+    _directories.append(QDir(CORE->path(Core::Core::Drugs)));
+    _directories.append(QDir(CORE->path(Core::Core::CustomDrugs)));
 
 }
 
@@ -341,5 +342,6 @@ void DrugLister::resetDrugs()
     _drugs.clear();
 }
 
-} //namespace GuiAppUtils
+} //namespace AppUtils
+} //namespace Gui
 } //namespace Tucuxi

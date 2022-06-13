@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 
 void initResources()
 {
-    Tucuxi::Gui::Core::Core::setInstance(new Tucuxi::GuiAppUtils::AppCore());
+    Tucuxi::Gui::Core::Core::setInstance(new Tucuxi::Gui::AppUtils::AppCore());
 
     CORE->setProcessingInterface(ProcessingFactory::createProcessing());
     APPCORE->drugManager();

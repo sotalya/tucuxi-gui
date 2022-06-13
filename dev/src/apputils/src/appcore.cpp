@@ -26,7 +26,8 @@
 #endif
 
 namespace Tucuxi {
-namespace GuiAppUtils {
+namespace Gui {
+namespace AppUtils {
 Tucuxi::Gui::Core::SecurityManager *AppCore::securityManager()
 {
     if (!_securityManager)
@@ -88,7 +89,8 @@ void AppCore::preloadDrugs ()
     drugPreloadMutex->unlock();
 }
 
-} //namespace GuiAppUtils
+} //namespace AppUtils
+} //namespace Gui
 } //namespace Tucuxi
 
 void Tucuxi::Gui::Core::ThreadDrugLoader::run() {

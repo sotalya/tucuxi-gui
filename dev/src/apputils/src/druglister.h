@@ -48,7 +48,8 @@ namespace Tucuxi {
 
 
 namespace Tucuxi {
-namespace GuiAppUtils {
+namespace Gui {
+namespace AppUtils {
 
 class DrugLister
 {
@@ -166,6 +167,7 @@ private:
     QMap<QString, const Tucuxi::Gui::Core::DrugXmlDescriptor *> _drugs;
 };
 
-} //namespace GuiAppUtils
+} //namespace AppUtils
+} //namespace Gui
 } //namespace Tucuxi
 #endif // DRUGLISTER_H

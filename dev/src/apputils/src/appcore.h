@@ -58,12 +58,13 @@ namespace Core {
 
 
 //------------- Shortcuts for objects ----------------
-#define APPCORE (static_cast<Tucuxi::GuiAppUtils::AppCore *>(Tucuxi::Gui::Core::Core::instance()))
-#define SECURITY (static_cast<Tucuxi::GuiAppUtils::AppCore *>(Tucuxi::Gui::Core::Core::instance())->securityManager())
+#define APPCORE (static_cast<Tucuxi::Gui::AppUtils::AppCore *>(Tucuxi::Gui::Core::Core::instance()))
+#define SECURITY (static_cast<Tucuxi::Gui::AppUtils::AppCore *>(Tucuxi::Gui::Core::Core::instance())->securityManager())
 
 
 namespace Tucuxi {
-namespace GuiAppUtils {
+namespace Gui {
+namespace AppUtils {
 class DrugManager;
 
 //! \brief Core main object
@@ -105,7 +106,8 @@ private:
     Tucuxi::Gui::Core::SecurityManager *_securityManager;
 
 };
-} //namespace GuiAppUtils
+} //namespace AppUtils
+} //namespace Gui
 } //namespace Tucuxi
 
 class Tucuxi::Gui::Core::ThreadDrugLoader : public QThread
@@ -113,7 +115,7 @@ class Tucuxi::Gui::Core::ThreadDrugLoader : public QThread
     Q_OBJECT
 public:
 
-    Tucuxi::GuiAppUtils::AppCore *core;
+    Tucuxi::Gui::AppUtils::AppCore *core;
 
     void run();
 };

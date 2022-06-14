@@ -2,22 +2,22 @@
 include(tucuxi.pri)
 
 TEMPLATE    =	subdirs
-SUBDIRS     +=	 core admin apputils databases guiutils gui
+SUBDIRS     +=	 core admin apputils guiutils gui ###databases
 
 SUBDIRS += processingtucucore
 	processingtucucore.depends  = core
         guiutils.depends           += processingtucucore
 
-!config_demo {
-        SUBDIRS += cliutils cli \
-                processingrestserversimple
-}
+#!config_demo {
+#        SUBDIRS += cliutils cli \
+#                processingrestserversimple
+#}
 
 SUBDIRS += rest
 
-config_connected {
-SUBDIRS += restclient restserver
-}
+#config_connected {
+#SUBDIRS += restclient restserver
+#}
 
 #Drug editor has its own sub-project
 #xmleditor.depends = core
@@ -27,11 +27,11 @@ apputils.depends             = core
 admin.depends                = core
 plugins.depends              = core
 rest.depends                 = core admin
-restclient.depends           = rest
-restserver.depends           = rest
+#restclient.depends           = rest
+#restserver.depends           = rest
 #processingserver.depends     = core processing
 #processingtestclient.depends = core processing processingserver
-databases.depends            = core apputils admin
+#databases.depends            = core apputils admin
 #report.depends               = core apputils admin
 config_rest {
 guiutils.depends             = core apputils admin rest
@@ -42,14 +42,14 @@ cliutils.depends             = core apputils admin rest
 !config_rest {
 guiutils.depends             = core apputils admin
 gui.depends                  = core apputils admin guiutils
-cli.depends                  = core apputils admin cliutils
-cliutils.depends             = core apputils admin
+#cli.depends                  = core apputils admin cliutils
+#cliutils.depends             = core apputils admin
 }
 drugeditor.depends	     = core guiutils
 
 guiutils.depends             += processingtucucore
 gui.depends += processingtucucore
-cli.depends += processingtucucore
+#cli.depends += processingtucucore
 
 
 #Custom target for doxygen

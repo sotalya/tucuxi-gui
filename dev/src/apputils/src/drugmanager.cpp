@@ -12,6 +12,7 @@
 // All drug related DAL objects
 #include "core/dal/drug/drug.h"
 #include "core/dal/drug/parameters.h"
+#include "core/dal/drug/drugvariate.h"
 
 #include "core/pluginmanager.h"
 #include "core/definitionmanager.h"
@@ -19,9 +20,6 @@
 #include "core/corefactory.h"
 #include "core/utils/logging.h"
 #include "errors_apputils.h"
-
-#include "drugxmlimport.h"
-#include "drugxmlexport.h"
 
 #include <QFile>
 #include <QIODevice>
@@ -101,83 +99,6 @@ bool DrugManager::tryToAddDrugModelToRepo(Tucuxi::Gui::Core::DrugModel *drugMode
     return false;
 }
 
-//Builds a drug
-Tucuxi::Gui::Core::DrugModel* DrugManager::buildDrug(const DrugXmlDescriptor *xmlDesc)
-{
-    LOG(QtDebugMsg, NOEZERROR, tr("Loading drug ID '%1' from file '%2'").arg(xmlDesc ? xmlDesc->drugId() : "unknown", xmlDesc ? xmlDesc->file() : "unknown"));
-
-    //Check if the descriptor is valid
-    if (!xmlDesc || !xmlDesc->isValid()) {
-       LOG(QtWarningMsg, INVALIDDRUGDESC, "");
-        return nullptr;
-    }
-
-    //Get the drug XML file
-    QFile file(xmlDesc->file());
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        LOG(QtWarningMsg, FILECANNOTOPEN, "");
-        return nullptr;
-    }
-
-    //Build the XML document
-    QDomDocument xmlDoc;
-
-    if (!xmlDoc.setContent(&file)) {
-        LOG(QtWarningMsg, INVALIDDRUGDOC, "");
-        return nullptr;
-    }
-
-
-    DrugXmlImport importer;
-
-    Tucuxi::Gui::Core::DrugModel *drug = importer.load(xmlDesc->file());
-
-    Descriptor _desc;
-    _desc.id = xmlDesc->drugId();
-
-    drug->setDescriptor(_desc);
-
-    if (validateDrug(drug))
-    {
-        tryToAddDrugModelToRepo(drug);
-    }
-    //Return the drug
-    return drug;
-}
-
-//Validates a drug
-bool DrugManager::validateDrug(const DrugModel* drug)
-{
-#if 0
-    LOG(QtDebugMsg, NOEZERROR, tr("Validating drug ID '%1'").arg(drug ? drug->descriptor().id : "unknown"));
-
-    //Check if the drug is valid
-    if (!drug) {
-        LOG(QtWarningMsg, INVALIDDRUGOBJ, "");
-        return false;
-    }
-/*
-    //Validate the model
-    if (!validateModel(drug)) {
-        LOG(QtWarningMsg, DATAERRMODEL, "");
-        return false;
-    }
-*/
-    //Validate the parameters
-    if (!validateParameters(drug)) {
-        LOG(QtWarningMsg, DATAERRPARAM, "");
-        return false;
-    }
-
-    // Validate the scripts
-    if (!validateScripts(drug)) {
-        return false;
-    }
-#endif 0
-    return true;
-}
-
 //Returns the description of a drug
 Descriptor DrugManager::description(const QString &drugId)
 {
@@ -240,24 +161,8 @@ DrugModel* DrugManager::drug(const QString &drugId)
     if (drug)
         return drug;
 
-    //Build the drug
-    drug = buildDrug(_lister.drug(_drugId));
-    if (!drug) {
         OWNLOG(QtDebugMsg, NODRUG, tr("Drug not found with id %1").arg(drugId));
         return nullptr;
-    }
-
-    //Validate the drug
-//    if (!validateDrug(drug)) {
-//        delete drug.data();
-//        return SharedDrug(0);
-//    }
-
-    //Register the drug
-    _drugIdToDrugObj.insert(_drugId, drug);
-    tryToAddDrugModelToRepo(drug);
-
-    return drug;
 }
 
 //Removes a drug from the manager
@@ -300,31 +205,6 @@ QList<QDir> DrugManager::directories() const
     return _lister.directories();
 }
 
-//Add a directory to scan list
-bool DrugManager::addDirectory(const QDir &directory)
-{
-    //Add the directory
-    if (!_lister.addDirectory(directory))
-        return false;
-
-    //Reset and rebuild
-    scanDrugs();
-
-    return true;
-}
-
-//Remove a directory to scan list
-bool DrugManager::removeDirectory(const QDir &directory)
-{
-    //Remove the directory
-    if (!_lister.removeDirectory(directory))
-        return false;
-
-    //Reset and rebuild
-    scanDrugs();
-
-    return true;
-}
 
 //Returns the last error message
 QString DrugManager::errorMessage() const
@@ -332,57 +212,6 @@ QString DrugManager::errorMessage() const
     return _error;
 }
 
-//Reset and rebuild the drugs
-void DrugManager::languageChanged()
-{
-    scanDrugs();
-}
-
-//Scan all drug files
-void DrugManager::scanDrugs()
-{
-    //Remove the existing drugs
-    resetDrugs();
-
-    //Remove the existing data
-    _drugIdToDrugObj.clear();
-    _drugIdToDrugDesc.clear();
-    _drugIdToModelId.clear();
-    _drugIdToDrugAtc.clear();
-    _modelIdToDrugDesc.clear();
-    _atcToDrugDesc.clear();
-
-    //Build the XML descriptors
-    _lister.scanDrugs();
-
-    //Build the descriptions
-    foreach (const DrugXmlDescriptor *xmlDesc, _lister.drugs()) {
-
-        //Check if the descriptor is valid
-        if (!xmlDesc->isValid())
-            continue;
-
-        //Create the drug description
-        Descriptor descriptor;
-        descriptor.id = xmlDesc->drugId();
-        descriptor.name = xmlDesc->name();
-        descriptor.description = xmlDesc->description();
-
-        //Fill in the global maps
-        _drugIdToDrugDomain.insert(xmlDesc->drugId(), xmlDesc->domainName());
-        _drugIdToDrugStudy.insert(xmlDesc->drugId(), xmlDesc->studyName());
-        _drugIdToDrugDesc.insert(xmlDesc->drugId(), descriptor);
-        _drugIdToModelId.insert(xmlDesc->drugId(), xmlDesc->pkModelId());
-        _drugIdToDrugAtc.insert(xmlDesc->drugId(), xmlDesc->atc());
-        _modelIdToDrugDesc.insert(xmlDesc->pkModelId(), descriptor);
-        _atcToDrugDesc.insert(xmlDesc->atc(), descriptor);
-
-        Tucuxi::Gui::Core::DrugModel *drug = buildDrug(xmlDesc);
-        Q_UNUSED(drug);
-    }
-
-//    analyzeCovariates();
-}
 
 //Validate the model
 bool DrugManager::validateModel(const DrugModel* drug)
@@ -485,7 +314,7 @@ bool DrugManager::validateScripts(const DrugModel *drug)
     }
     return resultOk;
 }
-#endif 0
+#endif // 0
 
 //Deletes the existing drugs
 void DrugManager::resetDrugs()
@@ -520,6 +349,6 @@ void DrugManager::clearErrorMessage()
     _error = "";
 }
 
-} //namespace AppUtils
+} //namespace Apputils
 } //namespace Gui
 } //namespace Tucuxi

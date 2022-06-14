@@ -1,4 +1,0 @@
-<data version='0.2' lang='en' type='ack_notification' controlId='66' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="eep.xsd">
-  <replyControlId>66</replyControlId>
-  <acknowledgmentCode>AA</acknowledgmentCode>
-</data>

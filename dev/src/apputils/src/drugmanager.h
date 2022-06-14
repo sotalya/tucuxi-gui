@@ -2,13 +2,7 @@
 #define DRUGMANAGER_H
 
 //class Drug;
-namespace Tucuxi {
-namespace Gui {
-namespace Core {
-class ParameterSet;
-}
-}
-}
+namespace Tucuxi {namespace Gui{namespace Core{class ParameterSet;}}}
 //class DrugXmlDescriptor;
 
 #include <QCoreApplication>
@@ -55,14 +49,10 @@ namespace Tucuxi {
 
 namespace Gui {
 namespace Core {
-
     class DrugModel;
 }
-}
 
-namespace Gui {
 namespace AppUtils {
-
 class DrugManager
 {
     Q_DECLARE_TR_FUNCTIONS(DrugManager)
@@ -96,29 +86,6 @@ public:
      */
     const Tucuxi::Gui::Core::DrugXmlDescriptor *scanDrug(const QString &filePath);
 
-    //! Build a drug.
-    /** Build a drug given its XML descriptor. If an error occurred, the function returns null and the
-     * error message can be retrieved using the errorMessage() function. The caller takes the ownership
-     * of the object and must delete it when appropriate.
-     *
-     * Note: If no error occurred, the drug is built but might contain inconsistent data. To ensure
-     * its data is valid, use the validateDrug() function.
-     *
-     * @param xmlDesc The drug XML descriptor.
-     * @return The drug, or null if an error occured.
-     */
-    Tucuxi::Gui::Core::DrugModel* buildDrug(const Tucuxi::Gui::Core::DrugXmlDescriptor *xmlDesc);
-
-    //! Validate a drug.
-    /** Validate a drug. If an error occurred, the function returns false and an error message can be
-     * retrieved using the errorMessage() function. The caller keeps the ownership of the object.
-     *
-     * Note: The validation will ensure that the drug's data is valid and compatible with its model.
-     *
-     * @param drug A drug object.
-     * @return True if the drug is valid.
-     */
-    bool validateDrug(const Tucuxi::Gui::Core::DrugModel* drug);
 
     /** \brief Returns the descriptor of the given drug.
      * @param drugId The ID of the drug.
@@ -238,20 +205,11 @@ public:
      */
     bool tryToAddDrugModelToRepo(Tucuxi::Gui::Core::DrugModel *drugModel);
 
-public slots:
-
-    //! Reload the drugs.
-    /** Reload the drugs using the new language. The drug manager will reset the current drugs descriptions
-     * and will perform a new scan. The existing drugs will be deleted and rebuild only when needed.
-     */
-    void languageChanged();
 
 private:
     //The shared strings
     static const char *const _IGNORING;
 
-    //Scans all drug files and build the descriptions and global maps
-    void scanDrugs();
 
     //Functions that parse data related to the population parameters
     bool parseErrorModel(QDomElement node, Tucuxi::Gui::Core::ParameterSet* parameters);
@@ -261,7 +219,7 @@ private:
     bool validateModel(const Tucuxi::Gui::Core::DrugModel* drug);
     bool validateParameters(const Tucuxi::Gui::Core::DrugModel* drug);
 
-    // bool validateScripts(const Tucuxi::Gui::Core::DrugModel* drug);
+    // bool validateScripts(const ezechiel::GuiCore::DrugModel* drug);
 
     //Deletes the existing drugs
     void resetDrugs();
@@ -304,7 +262,7 @@ private:
 
 };
 
-} //namespace AppUtils
-} //namespace Gui
+} //namespace Core
+} // namespace Gui
 } //namespace Tucuxi
 #endif // DRUGMANAGER_H

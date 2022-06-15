@@ -6,6 +6,9 @@
 #include "queryrequestmessagebuilder.h"
 #include "rest/model/queryrequestxmlmessage.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
 
 QueryRequestMessageBuilder::QueryRequestMessageBuilder(QObject *parent) :
     XmlMessageBuilder(parent)
@@ -38,4 +41,8 @@ MessageContent QueryRequestMessageBuilder::messageContent() const
 {
     Q_UNIMPLEMENTED();
     return MessageContent();
+}
+
+}
+}
 }

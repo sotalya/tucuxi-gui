@@ -7,6 +7,10 @@
 
 #include "admin/src/dal/interpretationrequest.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class InterpretationRequestToXmlRest
 {
 public:
@@ -17,5 +21,9 @@ public:
 protected:
     QXmlStreamWriter writer;
 };
+
+}
+}
+}
 
 #endif // INTERPRETATIONREQUESTTOXMLREST_H

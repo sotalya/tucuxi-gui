@@ -5,6 +5,10 @@
 
 #include "message.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class XmlMessage : public Message
 {
     Q_OBJECT
@@ -24,5 +28,9 @@ protected:
 
     QByteArray _data;
 };
+
+}
+}
+}
 
 #endif // XMLMESSAGE_H

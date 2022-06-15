@@ -3,6 +3,11 @@
 #include "acklistxmlmessage.h"
 #include "core/utils/xmlvalidator.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 const char *const AckListXmlMessage::_MESSAGE_TYPE = "ACK_LIST";
 
 AckListXmlMessage::AckListXmlMessage(QObject *parent) :
@@ -24,4 +29,8 @@ QString AckListXmlMessage::schemaPath() const
 QString AckListXmlMessage::messageType() const
 {
     return _MESSAGE_TYPE;
+}
+
+}
+}
 }

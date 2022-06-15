@@ -2,6 +2,10 @@
 
 #include "queryrequestrequest.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 const char *const QueryRequestRequest::_PATH = "query";
 
 QueryRequestRequest::QueryRequestRequest() :
@@ -13,4 +17,8 @@ QueryRequestRequest::QueryRequestRequest() :
 QueryRequestRequest::~QueryRequestRequest()
 {
 
+}
+
+}
+}
 }

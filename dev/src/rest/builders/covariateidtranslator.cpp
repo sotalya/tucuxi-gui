@@ -3,6 +3,12 @@
 #include "covariateidtranslator.h"
 #include "drugidtranslator.h"
 
+
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 CovariateIdTranslator::CovariateIdTranslator()
 {
 
@@ -55,3 +61,6 @@ QString ExternalCovariateIdTranslator::restToInternalId(QString restId)
     return settingsFile.value(restId, restId).toString();
 }
 
+}
+}
+}

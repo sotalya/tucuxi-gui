@@ -613,8 +613,8 @@ void parseOptions()
         Tucuxi::logging::Logger::initLogFile(QCoreApplication::applicationDirPath());
     if (parser.isSet(certificateFileOption)) {
 #ifdef CONFIG_CONNECTED
-        NetworkAccessManager::setType(NetworkAccessManager::ManagerType::Unique);
-        NetworkAccessManager::getInstance().setUniqueDefaultCaCertificate(parser.value(certificateFileOption));
+        Tucuxi::Gui::Rest::NetworkAccessManager::setType(Tucuxi::Gui::Rest::NetworkAccessManager::ManagerType::Unique);
+        Tucuxi::Gui::Rest::NetworkAccessManager::getInstance().setUniqueDefaultCaCertificate(parser.value(certificateFileOption));
 #endif // CONFIG_CONNECTED
     }
     if (parser.isSet(drugsPathOption)) {
@@ -634,11 +634,11 @@ void parseOptions()
 
 
 #ifdef CONFIG_CONNECTED
-    MirthRequest::updateDefaultBasePath(parser.value(basePathOption));
-    MirthRequest::updateDefaultPort(parser.value(portOption).toInt());
-    MirthRequest::updateDefaultScheme(parser.value(schemeOption));
-    MirthRequest::updateDefaultHost(parser.value(hostOption));
-    RestLogger::getInstance()->setPath(parser.value(logRestOption));
+    Tucuxi::Gui::Rest::MirthRequest::updateDefaultBasePath(parser.value(basePathOption));
+    Tucuxi::Gui::Rest::MirthRequest::updateDefaultPort(parser.value(portOption).toInt());
+    Tucuxi::Gui::Rest::MirthRequest::updateDefaultScheme(parser.value(schemeOption));
+    Tucuxi::Gui::Rest::MirthRequest::updateDefaultHost(parser.value(hostOption));
+    Tucuxi::Gui::Rest::RestLogger::getInstance()->setPath(parser.value(logRestOption));
 #endif // CONFIG_CONNECTED
 
 }
@@ -696,8 +696,8 @@ void initRestConfig() {
     RestConfigDialog *restConfig = new RestConfigDialog;
     restConfig->exec();
 
-    MirthRequest::updateDefaultPort(restConfig->getPort().toInt());
-    MirthRequest::updateDefaultScheme(restConfig->getScheme());
-    MirthRequest::updateDefaultHost(restConfig->getIp());
+    Tucuxi::Gui::Rest::MirthRequest::updateDefaultPort(restConfig->getPort().toInt());
+    Tucuxi::Gui::Rest::MirthRequest::updateDefaultScheme(restConfig->getScheme());
+    Tucuxi::Gui::Rest::MirthRequest::updateDefaultHost(restConfig->getIp());
 }
 #endif // CONFIG_CONNECTED

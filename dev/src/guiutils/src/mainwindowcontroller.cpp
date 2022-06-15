@@ -58,7 +58,7 @@ MainWindowController::MainWindowController(QObject *parent) :
     //    listFile = requestDefaultDir;
     //}
     if (listFile.isEmpty())
-        requestsController->setClient(new RestRequestsClient(this));
+        requestsController->setClient(new Tucuxi::Gui::Rest::RestRequestsClient(this));
     else {
         DemoRequestFileClient *client = new DemoRequestFileClient(this);
         client->setListFile(listFile);
@@ -473,7 +473,7 @@ void MainWindowController::loadRequestFile(const QString &fileName)
         QString fileContent;
         fileContent = f.readAll();
 
-        SimpleBuilder requestBuilder;
+        Tucuxi::Gui::Rest::SimpleBuilder requestBuilder;
         InterpretationRequest *ir = requestBuilder.buildRequest(fileContent);
         if (ir != nullptr) {
             emit requestReady(ir);

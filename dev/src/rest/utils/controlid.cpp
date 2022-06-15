@@ -2,6 +2,10 @@
 
 #include "controlid.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 ControlId &ControlId::getInstance()
 {
     static ControlId controlId;
@@ -23,4 +27,8 @@ ControlId::ControlId() :
 ControlId::~ControlId()
 {
 
+}
+
+}
+}
 }

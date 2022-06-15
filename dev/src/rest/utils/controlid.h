@@ -5,6 +5,10 @@
 
 #include <QObject>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class ControlId : public QObject
 {
     Q_OBJECT
@@ -19,5 +23,9 @@ private:
 
     qint64 currentId;
 };
+
+}
+}
+}
 
 #endif // CONTROLID_H

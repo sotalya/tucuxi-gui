@@ -2,6 +2,11 @@
 #include "acknotificationxmlmessage.h"
 #include "core/utils/xmlvalidator.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 const char *const AckNotificationXmlMessage::_MESSAGE_TYPE = "ACK_NOTIFICATION";
 
 AckNotificationXmlMessage::AckNotificationXmlMessage(QObject *parent) :
@@ -23,4 +28,8 @@ QString AckNotificationXmlMessage::schemaPath() const
 QString AckNotificationXmlMessage::messageType() const
 {
     return _MESSAGE_TYPE;
+}
+
+}
+}
 }

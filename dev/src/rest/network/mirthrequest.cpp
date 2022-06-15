@@ -3,6 +3,10 @@
 #include "rest/network/mirthrequest.h"
 #include "rest/model/message.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 QString MirthRequest::_DEFAULT_SCHEME    = "https";
 QString MirthRequest::_DEFAULT_USERNAME  = "";
 QString MirthRequest::_DEFAULT_PASSWORD  = "";
@@ -132,4 +136,8 @@ void MirthRequest::updateUrl()
 
     Q_ASSERT(url.isValid());
     setUrl(url);
+}
+
+}
+}
 }

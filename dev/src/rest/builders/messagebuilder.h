@@ -3,11 +3,16 @@
 #ifndef MESSAGEBUILDER_H
 #define MESSAGEBUILDER_H
 
-class Message;
-
 #include "messagecontent.h"
 
 #include <QObject>
+
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
+class Message;
 
 class MessageBuilder : public QObject
 {
@@ -27,5 +32,9 @@ protected:
     const Message *_message;
     MessageContent _content;
 };
+
+}
+}
+}
 
 #endif // MESSAGEBUILDER_H

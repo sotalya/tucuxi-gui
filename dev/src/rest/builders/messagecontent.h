@@ -7,6 +7,11 @@
 #include <QMap>
 #include <QMultiMap>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 class MessageContent
 {
 
@@ -28,5 +33,9 @@ private:
     QMap<QString, QString> content;
     QMultiMap<QString, MessageContent> lists;
 };
+
+}
+}
+}
 
 #endif // MESSAGECONTENT_H

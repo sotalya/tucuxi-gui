@@ -5,6 +5,10 @@
 
 #include <QNetworkAccessManager>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class NetworkAccessManager : public QNetworkAccessManager
 {
     Q_OBJECT
@@ -34,5 +38,10 @@ private:
     static ManagerType sm_type;  // NOLINT(readability-identifier-naming)
 
 };
+
+}
+}
+}
+
 
 #endif // NETWORKACCESSMANAGER_H

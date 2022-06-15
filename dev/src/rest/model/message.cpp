@@ -2,6 +2,11 @@
 
 #include "message.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 Message::Message(QObject *parent) :
     QObject(parent),
     _errorString()
@@ -27,4 +32,8 @@ void Message::setErrorString(const QString &errorString)
 void Message::appendErrorString(const QString &errorString)
 {
     _errorString.append(errorString);
+}
+
+}
+}
 }

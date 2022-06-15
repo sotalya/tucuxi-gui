@@ -5,6 +5,11 @@
 
 #include <QString>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 class RestLogger
 {
 
@@ -24,5 +29,9 @@ private:
     QString currentPath;
 
 };
+
+}
+}
+}
 
 #endif // RESTLOGGER_H

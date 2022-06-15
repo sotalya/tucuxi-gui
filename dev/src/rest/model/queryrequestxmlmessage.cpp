@@ -3,6 +3,10 @@
 #include "queryrequestxmlmessage.h"
 #include "core/utils/xmlvalidator.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 const char *const QueryRequestXmlMessage::_MESSAGE_TYPE = "QUERY_REQUEST";
 
 QueryRequestXmlMessage::QueryRequestXmlMessage(QObject *parent) :
@@ -24,4 +28,8 @@ QString QueryRequestXmlMessage::schemaPath() const
 QString QueryRequestXmlMessage::messageType() const
 {
     return _MESSAGE_TYPE;
+}
+
+}
+}
 }

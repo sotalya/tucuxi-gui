@@ -2,6 +2,10 @@
 
 #include "ackrequestrequest.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 const char *const AckRequestRequest::_PATH = "query";
 
 AckRequestRequest::AckRequestRequest() :
@@ -13,4 +17,8 @@ AckRequestRequest::AckRequestRequest() :
 AckRequestRequest::~AckRequestRequest()
 {
 
+}
+
+}
+}
 }

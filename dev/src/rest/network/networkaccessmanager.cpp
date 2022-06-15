@@ -5,6 +5,10 @@
 #include <QFile>
 #include <QNetworkReply>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 NetworkAccessManager::ManagerType NetworkAccessManager::sm_type = NetworkAccessManager::ManagerType::Default;
 
 void NetworkAccessManager::setType(ManagerType _type)
@@ -54,4 +58,8 @@ void NetworkAccessManager::addDefaultCaCertificate(const QString &fileName)
 void NetworkAccessManager::setUniqueDefaultCaCertificate(const QString &fileName)
 {
     addDefaultCaCertificate(fileName);
+}
+
+}
+}
 }

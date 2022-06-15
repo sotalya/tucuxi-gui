@@ -5,6 +5,11 @@
 
 #include <QDomDocument>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 AckListMessageBuilder::AckListMessageBuilder(QObject *parent) :
     XmlMessageBuilder(parent)
 {
@@ -38,4 +43,8 @@ MessageContent AckListMessageBuilder::messageContent() const
 {
     Q_UNIMPLEMENTED();
     return MessageContent();
+}
+
+}
+}
 }

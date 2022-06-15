@@ -16,8 +16,13 @@
 #include "cli/rlutil.h"
 #include "core/dal/drugtreatment.h"
 
-
 using namespace Tucuxi::Gui::Core;
+
+
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 
 RequestsClientProcessing::RequestsClientProcessing(QObject *parent) :
     RequestsClient(parent)
@@ -220,4 +225,8 @@ int RequestsClientProcessing::analyzeRequest(const QString &xmlRequest)
 
     return 1;
 
+}
+
+}
+}
 }

@@ -3,6 +3,11 @@
 #include "xmlmessage.h"
 #include "core/utils/xmlvalidator.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 XmlMessage::XmlMessage(QObject *parent) :
     Message(parent),
     _data()
@@ -40,4 +45,8 @@ bool XmlMessage::isValid()
     }
 
     return true;
+}
+
+}
+}
 }

@@ -5,6 +5,10 @@
 
 #include "outgoingxmlmessage.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class AckRequestXmlMessage : public OutgoingXmlMessage
 {
     Q_OBJECT
@@ -20,5 +24,9 @@ protected:
 private:
     static const char *const _MESSAGE_TYPE;
 };
+
+}
+}
+}
 
 #endif // ACKREQUESTXMLMESSAGE_H

@@ -6,6 +6,11 @@
 
 #include <QDomDocument>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 XmlMessageBuilder::XmlMessageBuilder(QObject *parent) :
     MessageBuilder(parent)
 {
@@ -64,4 +69,8 @@ void XmlMessageBuilder::addNode(QDomDocument &doc, QDomElement &parent, const QS
 
     QDomText text = doc.createTextNode(_content.value(key));
     node.appendChild(text);
+}
+
+}
+}
 }

@@ -6,6 +6,11 @@
 #include "rest/model/ackrequestxmlmessage.h"
 
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 AckRequestMessageBuilder::AckRequestMessageBuilder(QObject *parent) :
     XmlMessageBuilder(parent)
 {
@@ -39,4 +44,8 @@ MessageContent AckRequestMessageBuilder::messageContent() const
 {
     Q_UNIMPLEMENTED();
     return MessageContent();
+}
+
+}
+}
 }

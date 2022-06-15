@@ -50,7 +50,13 @@
 #include "cli/rlutil.h"
 #include "restlogger.h"
 
+
 using namespace Tucuxi::Gui::Core;
+
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 
 RestRequestsClient::RestRequestsClient(QObject *parent) :
     RequestsClientProcessing(parent),
@@ -178,6 +184,7 @@ void RestRequestsClient::ackRequest(const QString &replyControlId, const QString
     EXLOG(QtDebugMsg, NOEZERROR, tr("Sent ack Request with controlId: %1, ackCode: %2, ackMessage: %3").arg(replyControlId).arg(ackCode).arg(ackMessage));
     connect(&NetworkAccessManager::getInstance(), SIGNAL(finished(QNetworkReply*)), this, SLOT(processAckRequest(QNetworkReply*)));
 }
+
 
 void RestRequestsClient::processQueryList(QNetworkReply *reply)
 {
@@ -309,4 +316,8 @@ void RestRequestsClient::processAckRequest(QNetworkReply *reply)
     reply->deleteLater();
     emit ackRequestFinished();
     EXLOG(QtDebugMsg, NOEZERROR, tr("Processed Ack Request..."));
+}
+
+}
+}
 }

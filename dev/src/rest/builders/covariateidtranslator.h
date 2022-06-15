@@ -8,6 +8,11 @@
 #include <QMap>
 #include <QSettings>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 class CovariateIdTranslator
 {
 public:
@@ -47,5 +52,9 @@ public:
 private:
     QString m_fileName;
 };
+
+}
+}
+}
 
 #endif // COVARIATEIDTRANSLATOR_H

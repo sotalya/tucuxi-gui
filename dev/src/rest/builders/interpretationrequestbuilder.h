@@ -16,6 +16,10 @@
 #include "admin/src/dal/interpretationrequest.h"
 
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class InterpretationRequestBuilder
 {
 
@@ -50,5 +54,9 @@ private:
     QDomDocument content;
     QDomElement datasetNode;
 };
+
+}
+}
+}
 
 #endif // INTERPRETATIONBUILDER_H

@@ -19,6 +19,10 @@
 #include "covariateidtranslator.h"
 #include "core/dal/drug/target.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 
 //InterpretationRequestBuilder::InterpretationRequestBuilder(const MessageContent &content) :
 InterpretationRequestBuilder::InterpretationRequestBuilder(const QDomDocument &content) :
@@ -782,4 +786,8 @@ Type InterpretationRequestBuilder::toEmailType(const QString &type)
         return Type::Private;
 
     Q_UNREACHABLE();
+}
+
+}
+}
 }

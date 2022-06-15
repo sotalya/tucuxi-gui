@@ -6,6 +6,10 @@
 #include <QString>
 #include <QMap>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class DrugIdTranslator
 {
 public:
@@ -46,5 +50,10 @@ public:
 private:
     QString m_fileName;
 };
+
+}
+}
+}
+
 
 #endif // DRUGIDTRANSLATOR_H

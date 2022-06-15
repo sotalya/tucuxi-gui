@@ -12,6 +12,11 @@
 #include "core/utils/logging.h"
 #include "errors_rest.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 RestLogger::RestLogger()
 {
     path = ".";
@@ -79,4 +84,8 @@ void RestLogger::logRequest(const QString& text)
 
     f.write(text.toUtf8());
     f.close();
+}
+
+}
+}
 }

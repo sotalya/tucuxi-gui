@@ -5,7 +5,7 @@
 
 #include "rest/requestsclientprocessing.h"
 
-class DemoRequestFileClient : public RequestsClientProcessing
+class DemoRequestFileClient : public Tucuxi::Gui::Rest::RequestsClientProcessing
 {
     Q_OBJECT
 

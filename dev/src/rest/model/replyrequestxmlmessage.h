@@ -5,6 +5,10 @@
 
 #include "ingoingxmlmessage.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class ReplyRequestXmlMessage : public IngoingXmlMessage
 {
     Q_OBJECT
@@ -20,5 +24,9 @@ protected:
 private:
     static const char *const _MESSAGE_TYPE;
 };
+
+}
+}
+}
 
 #endif // REPLYREQUESTXMLMESSAGE_H

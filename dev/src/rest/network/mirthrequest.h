@@ -3,9 +3,15 @@
 #ifndef MIRTHREQUEST_H
 #define MIRTHREQUEST_H
 
-class Message;
 
 #include <QNetworkRequest>
+
+
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+class Message;
 
 class MirthRequest : public QNetworkRequest
 {
@@ -56,5 +62,9 @@ private:
     int _port;
     QString _path;
 };
+
+}
+}
+}
 
 #endif // MIRTHREQUEST_H

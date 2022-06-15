@@ -3,6 +3,10 @@
 #include "notificationxmlmessage.h"
 #include "core/utils/xmlvalidator.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 const char *const NotificationXmlMessage::_MESSAGE_TYPE = "NOTIFICATION";
 
 NotificationXmlMessage::NotificationXmlMessage(QObject *parent) :
@@ -24,4 +28,8 @@ QString NotificationXmlMessage::schemaPath() const
 QString NotificationXmlMessage::messageType() const
 {
     return _MESSAGE_TYPE;
+}
+
+}
+}
 }

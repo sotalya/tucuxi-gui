@@ -4,6 +4,11 @@
 
 #include "rest/model/message.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 MessageBuilder::MessageBuilder(QObject *parent) :
     QObject(parent),
     _message(nullptr),
@@ -27,4 +32,8 @@ void MessageBuilder::setMessage(Message *message)
 void MessageBuilder::setMessageContent(const MessageContent &content)
 {
     _content = content;
+}
+
+}
+}
 }

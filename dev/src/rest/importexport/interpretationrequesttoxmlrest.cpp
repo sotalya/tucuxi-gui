@@ -2,6 +2,11 @@
 
 #include "interpretationrequesttoxmlrest.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 InterpretationRequestToXmlRest::InterpretationRequestToXmlRest()
 {
 }
@@ -12,4 +17,8 @@ void InterpretationRequestToXmlRest::interpretationRequestToXmlRest(const Interp
 
     // Use the writer to populate the data
 
+}
+
+}
+}
 }

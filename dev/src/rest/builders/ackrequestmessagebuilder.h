@@ -5,6 +5,11 @@
 
 #include "xmlmessagebuilder.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 class AckRequestMessageBuilder : public XmlMessageBuilder
 {
     Q_OBJECT
@@ -16,5 +21,9 @@ public:
     virtual Message *message() const Q_DECL_OVERRIDE;
     virtual MessageContent messageContent() const Q_DECL_OVERRIDE;
 };
+
+}
+}
+}
 
 #endif // ACKREQUESTMESSAGEBUILDER_H

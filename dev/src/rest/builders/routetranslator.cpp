@@ -3,6 +3,9 @@
 #include "routetranslator.h"
 
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
 
 
 RouteTranslator::RouteTranslator()
@@ -40,4 +43,8 @@ ChuvRouteTranslator::ChuvRouteTranslator()
 Tucuxi::Gui::Core::Admin::Route ChuvRouteTranslator::restToInternalRoute(QString restRoute)
 {
     return map.value(restRoute,Tucuxi::Gui::Core::Admin::UNVALID);
+}
+
+}
+}
 }

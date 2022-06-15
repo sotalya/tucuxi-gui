@@ -6,6 +6,11 @@
 #include "admin/src/requestsclient.h"
 #include <QDomDocument>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 class RequestsClientProcessing : public RequestsClient
 {
 public:
@@ -26,5 +31,10 @@ public:
     InterpretationRequest* buildRequest(const QString &xmlRequest);
 
 };
+
+
+}
+}
+}
 
 #endif // REQUESTSCLIENTPROCESSING_H

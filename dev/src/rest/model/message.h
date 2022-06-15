@@ -7,6 +7,10 @@
 #include <QTextStream>
 #include <QDomDocument>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class Message : public QObject
 {
     Q_OBJECT
@@ -29,5 +33,9 @@ protected:
 private:
     QString _errorString;
 };
+
+}
+}
+}
 
 #endif // MESSAGE_H

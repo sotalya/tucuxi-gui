@@ -2,6 +2,10 @@
 
 #include "notificationrequest.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 const char *const NotificationRequest::_PATH = "notify";
 
 NotificationRequest::NotificationRequest() :
@@ -13,4 +17,8 @@ NotificationRequest::NotificationRequest() :
 NotificationRequest::~NotificationRequest()
 {
 
+}
+
+}
+}
 }

@@ -9,6 +9,11 @@
 #include <QDomDocument>
 
 #include "requestsclientprocessing.h"
+class QNetworkReply;
+
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
 
 class QAbstractItemModel;
 class PartialRequestListModel;
@@ -20,8 +25,9 @@ class ReplyListMessageBuilder;
 class ReplyRequestMessageBuilder;
 class AckListMessageBuilder;
 class AckRequestMessageBuilder;
-class QNetworkReply;
+
 class RestLogger;
+
 
 class RestRequestsClient : public RequestsClientProcessing
 {
@@ -69,6 +75,8 @@ private slots:
     void processAckRequest(QNetworkReply*);
 };
 
-
+}
+}
+}
 
 #endif // RESTREQUESTSCLIENT_H

@@ -7,6 +7,10 @@
 
 #include <QDomDocument>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 ReplyListMessageBuilder::ReplyListMessageBuilder(QObject *parent) :
     XmlMessageBuilder(parent)
 {
@@ -178,4 +182,8 @@ MessageContent ReplyListMessageBuilder::messageContent() const
     }
 
     return content;
+}
+
+}
+}
 }

@@ -6,6 +6,11 @@
 #include "rest/model/querylistxmlmessage.h"
 
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 QueryListMessageBuilder::QueryListMessageBuilder(QObject *parent) :
     XmlMessageBuilder(parent)
 {
@@ -35,4 +40,8 @@ MessageContent QueryListMessageBuilder::messageContent() const
 {
     Q_UNIMPLEMENTED();
     return MessageContent();
+}
+
+}
+}
 }

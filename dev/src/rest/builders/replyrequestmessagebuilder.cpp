@@ -5,6 +5,10 @@
 #include "replyrequestmessagebuilder.h"
 #include "rest/model/replyrequestxmlmessage.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 
 ReplyRequestMessageBuilder::ReplyRequestMessageBuilder(QObject *parent) :
     XmlMessageBuilder(parent)
@@ -298,4 +302,8 @@ MessageContent ReplyRequestMessageBuilder::messageContent() const
     }
 
     return content;
+}
+
+}
+}
 }

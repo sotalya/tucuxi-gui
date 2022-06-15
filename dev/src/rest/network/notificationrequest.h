@@ -5,6 +5,10 @@
 
 #include "rest/network/mirthrequest.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class NotificationRequest : public MirthRequest
 {
 
@@ -15,5 +19,9 @@ public:
 private:
     static const char *const _PATH;
 };
+
+}
+}
+}
 
 #endif // NOTIFICATIONREQUEST_H

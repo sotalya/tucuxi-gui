@@ -3,6 +3,10 @@
 #include "ackrequestxmlmessage.h"
 #include "core/utils/xmlvalidator.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 const char *const AckRequestXmlMessage::_MESSAGE_TYPE = "ACK_REQUEST";
 
 AckRequestXmlMessage::AckRequestXmlMessage(QObject *parent) :
@@ -24,4 +28,8 @@ QString AckRequestXmlMessage::schemaPath() const
 QString AckRequestXmlMessage::messageType() const
 {
     return _MESSAGE_TYPE;
+}
+
+}
+}
 }

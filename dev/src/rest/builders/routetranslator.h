@@ -10,6 +10,10 @@
 
 #include "core/dal/drug/adme.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
 class RouteTranslator
 {
 public:
@@ -37,5 +41,9 @@ public:
 private:
     QMap<QString,Tucuxi::Gui::Core::Admin::Route> map;
 };
+
+}
+}
+}
 
 #endif // ROUTETRANSLATOR_H

@@ -5,6 +5,11 @@
 
 #include "drugidtranslator.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 DrugIdTranslator::DrugIdTranslator()
 {
 
@@ -76,5 +81,9 @@ QString ExternalDrugIdTranslator::restToInternalId(QString restId)
 
     // Else try to find it in the file
     return settingsFile.value(restId, "ch.heig-vd.ezechiel.unknown").toString();
+}
+
+}
+}
 }
 

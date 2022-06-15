@@ -2,6 +2,11 @@
 
 #include "messagecontent.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Rest {
+
+
 MessageContent::MessageContent() :
     content(),
     lists()
@@ -52,4 +57,8 @@ void MessageContent::addToList(const QString &key, const MessageContent &item)
 void MessageContent::removeList(const QString &key)
 {
     lists.remove(key);
+}
+
+}
+}
 }

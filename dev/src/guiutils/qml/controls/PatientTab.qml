@@ -228,10 +228,12 @@ Rectangle {
             onModelChanged: {
                 // Update the gender field
                 if (patientRequired.model) {
-                    if (patientRequired.model.person.gender == 1)
+                    if (patientRequired.model.person.gender === 1)
                         maleRadioInput.checked = true;
-                    else
+                    else if (patientRequired.model.person.gender === 0)
                         femaleRadioInput.checked = true;
+                    else
+                        unknownRadioInput.checked = true;
                 }
             }
 
@@ -348,6 +350,15 @@ Rectangle {
                             }
                         }
 */                    }
+                    RadioButton {
+                        id: unknownRadioInput
+                        objectName: "unknownRadioInput"
+                        text: "Unknown"
+                        onClicked: {
+                            patientRequired.model.person.gender = 2                 // gender enum : 2 = Unknown sex
+                            interpretationController.updateSexAndAgeCovariates()
+                        }
+                    }
                 }
                 ,
                 RowLayout {} //Spacer

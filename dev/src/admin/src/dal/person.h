@@ -19,7 +19,7 @@ class UncastedValueList;
 class Person : public Tucuxi::Gui::Core::Entity
 {
 public:
-    enum GenderType { Male = 1, Female = 0 };
+    enum GenderType { Male = 1, Female = 0, Unknown = 2 };
     Q_ENUM(GenderType)
 
     Q_OBJECT

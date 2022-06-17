@@ -37,6 +37,13 @@ Rectangle {
         standardButtons: StandardButton.Close
     }
 
+    MessageDialog {
+        id: messageNoSexDialog
+        title: "Covariates"
+        text: "The sex is based on patient's data."
+        standardButtons: StandardButton.Close
+    }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 5
@@ -111,6 +118,7 @@ Rectangle {
                         }
                         rowlayout.children: [
                             EntityListDelegateItem {
+                                id: modelDataId
                                 Layout.preferredWidth: 200
                                 color: drugVariateListDelegate.mousearea.hovered ? drugVariateList.rowBackgroundHover : (drugVariateListDelegate.ListView.isCurrentItem ? drugVariateList.rowBackgroundSelected : drugVariateList.rowBackground)
                                 label.color: drugVariateListDelegate.mousearea.hovered ? drugVariateList.rowForegroundHover : drugVariateList.rowForeground
@@ -160,7 +168,6 @@ Rectangle {
                                         default: return "Undefined"
                                         }
                                     }
-
                                     return modelData.actualValue.dbvalue + " " + modelData.defaultValue.unitstring;
                                 }
                             }
@@ -228,11 +235,12 @@ Rectangle {
                         tooltipText : ToolTips.covariateTab.date
                     }
                     EntityListHeaderImage {
+                        id: addCovariateId
                         objectName: "addCovariate";
 
                         image.source: drugVariateListView.currentIndex == -1 ? "qrc:/icons/buttons/add_disabled.png" :
                                                                                (drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].automatic ?
-                                                                                    "qrc:/icons/buttons/add_disabled.png" : "qrc:/icons/buttons/add.png")
+                                                                                    "qrc:/icons/buttons/add_disabled.png" : (drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].name === "Sex" ? "qrc:/icons/buttons/add_disabled.png" : "qrc:/icons/buttons/add.png"))
                         tooltipText : ToolTips.covariateTab.add
 
                         mousearea.onClicked: {
@@ -243,14 +251,17 @@ Rectangle {
                                 messageNoAgeDialog.open();
 //                                covariateTabController.removePatientVariate(patientVariateListView.currentIndex);
                             }
+                            else if (drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].name === "Sex") {
+                                messageNoSexDialog.open();
+                            }
                             else {
                                 covariateTabController.addPatientVariate(drugVariateListView.currentIndex);
                                 patientVariateListView.currentIndex = patientVariateListView.count-1;
                                 var model = covariateTabController.fileredVariates.objlist[patientVariateListView.currentIndex];
                                 covariateDialog.exec(model, true)
                             }
+//                            console.log(drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].name)
                         }
-
 
                     }
                 },
@@ -316,6 +327,9 @@ Rectangle {
                                     if (modelData.covariateId === "age") {
                                         messageNoAgeDialog.open();
                                     }
+                                    else if (modelData.covariateId === "sex") {
+                                        messageNoSexDialog.open();
+                                    }
                                     else {
                                         patientVariateListView.currentIndex = index
                                         covariateDialog.exec(modelData, false)
@@ -326,11 +340,15 @@ Rectangle {
                                 objectName: "removeCovariate_" + index;
                                 image.source: drugVariateListView.currentIndex == -1 ? "qrc:/icons/buttons/remove_disabled.png" :
                                                                                                                        (drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].automatic ?
-                                                                                                                            "qrc:/icons/buttons/remove_disabled.png" : "qrc:/icons/buttons/remove.png")
+                                                                                                                            "qrc:/icons/buttons/remove_disabled.png" : (drugVariateListView.drugVariates.objlist[drugVariateListView.currentIndex].name === "Sex" ? "qrc:/icons/buttons/remove_disabled.png" : "qrc:/icons/buttons/remove.png"))
                                 mousearea.onClicked: {
                                     // Do not modify the age
                                     if (modelData.covariateId === "age") {
                                         messageNoAgeDialog.open();
+                                    }
+                                    else if (modelData.covariateId === "sex") {
+
+                                        messageNoSexDialog.open();
                                     }
                                     else {
                                         covariateTabController.removePatientVariate(index);

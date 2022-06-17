@@ -1827,8 +1827,10 @@ void InterpretationController::updateSexAndAgeCovariates()
 {
     Person::GenderType gender = _currentPatient->person()->gender();
     double sex = 1.0;
-    if (gender == Person::GenderType::Female)
+    if (gender == Person::GenderType::Female)       // enum : 0
         sex = 0.0;
+    if (gender == Person::GenderType::Unknown)      // enum : 2
+        sex = 0.5;
 
     covariateTabController->setSinglePatientVariate("sex", sex);
 

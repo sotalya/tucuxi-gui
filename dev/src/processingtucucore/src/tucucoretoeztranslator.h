@@ -44,6 +44,10 @@ class DrugModel;
 } // namespace Core
 } // namespace Tucuxi
 
+namespace Tucuxi {
+namespace Gui {
+namespace Processing {
+
 class TucucoreToEzTranslator
 {
 public:
@@ -74,5 +78,9 @@ public:
 
     Tucuxi::Gui::Core::TranslatableString *translate(const Tucuxi::Common::TranslatableString &str, Tucuxi::Gui::Core::Entity *parent);
 };
+
+}
+}
+}
 
 #endif // TUCUCORETOEZTRANSLATOR_H

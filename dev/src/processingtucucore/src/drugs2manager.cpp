@@ -10,6 +10,10 @@
 #include "tucucore/drugmodelchecker.h"
 #include "tucucore/pkmodel.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Processing {
+
 Drugs2Manager::Drugs2Manager()
 {
 
@@ -165,6 +169,10 @@ void Drugs2Manager::buildAllDrugModels(std::string dirName)
 
 }
 
+}
+}
+}
+
 #ifdef DRUGMODELTESTS
 
 #include "tucucore/../../test/tucucore/drugmodels/buildconstantelimination.h"
@@ -172,7 +180,7 @@ void Drugs2Manager::buildAllDrugModels(std::string dirName)
 #include "tucucore/../../test/tucucore/drugmodels/buildmultianalytessingleactivemoiety.h"
 // #include "tucucore/../../test/tucucore/drugmodels/buildmultianalytesmultiactivemoieties.h"
 
-void Drugs2Manager::addDrugModelTests()
+void Tucuxi::Gui::Processing::Drugs2Manager::addDrugModelTests()
 {
     {
 

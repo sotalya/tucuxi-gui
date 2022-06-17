@@ -22,7 +22,7 @@ Tucuxi::Gui::Core::ProcessingInterface *ProcessingFactory::createProcessing()
 #ifdef COMPILE_WITH_COMPARATOR
     return new ProcessingComparator();
 #else
-    return new ProcessingTucucore();
+    return new Tucuxi::Gui::Processing::ProcessingTucucore();
 #endif // COMPILE_WITH_COMPARATOR
 #else
     return new ProcessingMath();
@@ -45,7 +45,7 @@ Tucuxi::Gui::Core::ProcessingInterface *ProcessingFactory::createProcessing(std:
     }
     else if (what == "tucucore") {
 #ifdef COMPILE_WITH_TUCUCORE
-        return new ProcessingTucucore();
+        return new Tucuxi::Gui::Processing::ProcessingTucucore();
 #else
         return nullptr;
 #endif // COMPILE_WITH_TUCUCORE

@@ -32,7 +32,9 @@ namespace Tucuxi {
     }
 }
 
-
+namespace Tucuxi {
+namespace Gui {
+namespace Processing {
 
 /**
  * This class implements the interface ProcessingInterface,
@@ -91,5 +93,9 @@ protected:
     ///
     std::vector<std::unique_ptr<Tucuxi::Core::CacheComputing> > m_caches;
 };
+
+}
+}
+}
 
 #endif // PROCESSINGTUCUCORE_H

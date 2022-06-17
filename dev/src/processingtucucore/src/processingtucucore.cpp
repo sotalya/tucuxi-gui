@@ -42,6 +42,10 @@
 #include "tucucore/operation.h"
 #include "tucucore/cachecomputing.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Processing {
+
 void checkCovariate(const Tucuxi::Common::DateTime _startDate, const Tucuxi::Core::DrugTreatment &drugTreatment, const Tucuxi::Core::DrugModel &drugModel, Tucuxi::Gui::Core::PredictionResult& prediction, const Tucuxi::Common::DateTime _endDate)
 {
     // This check should be done when building processing data. We keep it here to be safe.
@@ -622,6 +626,10 @@ Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
     }
 
     return Tucuxi::ProcessingResult::Success;
+}
+
+}
+}
 }
 
 

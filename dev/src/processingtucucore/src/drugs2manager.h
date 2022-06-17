@@ -27,6 +27,10 @@ class DrugModel;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace Processing {
+
 class Drugs2Manager
 {
 public:
@@ -60,5 +64,9 @@ protected:
 #endif // DRUGMODELTESTS
 
 };
+
+}
+}
+}
 
 #endif // DRUGS2MANAGER_H

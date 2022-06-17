@@ -33,6 +33,7 @@ class Dosage;
 }
 }
 
+
 class EzToTucucoreTranslator
 {
 public:
@@ -51,5 +52,7 @@ public:
     Tucuxi::Core::DrugModel *buildDrugModel(const Tucuxi::Gui::Core::DrugModel *_drugModel);
 
 };
+
+
 
 #endif // EZTOTUCUCORETRANSLATOR_H

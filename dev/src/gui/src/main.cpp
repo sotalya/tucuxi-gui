@@ -129,7 +129,6 @@ void initRestConfig();
 #include "../test/gui/src/guitest.h"
 #endif // CONFIG_GUITEST
 
-
 // YTA: Demo of a subclass outside core that uses the factory
 /*
 class NewBsvCreator;
@@ -663,7 +662,7 @@ void initResources()
     // We try to load the new drug models
 
 #ifdef COMPILE_WITH_TUCUCORE
-    Drugs2Manager* manager = Drugs2Manager::getInstance();
+    Tucuxi::Gui::Processing::Drugs2Manager* manager = Tucuxi::Gui::Processing::Drugs2Manager::getInstance();
 #ifdef CONFIG_DEMO
     std::string basePath = ":/drugs/";
 #else

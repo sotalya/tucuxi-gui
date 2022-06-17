@@ -302,7 +302,7 @@ Tucuxi::Core::DrugModel *EzToTucucoreTranslator::buildDrugModel(const Tucuxi::Gu
 {
     Tucuxi::Core::DrugModel *pDrugModel = nullptr;
 
-    pDrugModel = Drugs2Manager::getInstance()->getTucucoreById(_drugModel->getDrugModelId().toStdString());
+    pDrugModel = Tucuxi::Gui::Processing::Drugs2Manager::getInstance()->getTucucoreById(_drugModel->getDrugModelId().toStdString());
     if (pDrugModel != nullptr) {
         return pDrugModel;
     }
@@ -351,3 +351,5 @@ Tucuxi::Core::DrugModel *EzToTucucoreTranslator::buildDrugModel(const Tucuxi::Gu
 
     return pDrugModel;
 }
+
+

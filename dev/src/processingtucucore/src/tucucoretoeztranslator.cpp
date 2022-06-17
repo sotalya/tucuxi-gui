@@ -13,6 +13,12 @@
 #include "tucucore/drugmodel/parameterdefinition.h"
 #include "tucucore/drugmodel/formulationandroute.h"
 
+using namespace Tucuxi::Gui::Processing;
+
+namespace Tucuxi {
+namespace Gui {
+namespace Processing {
+
 TucucoreToEzTranslator::TucucoreToEzTranslator()
 {
 
@@ -76,6 +82,10 @@ QString TucucoreToEzTranslator::description(const Tucuxi::Core::FormulationAndRo
     default: result = "Undefined"; break;
     }
     return result;
+}
+
+}
+}
 }
 
 Tucuxi::Gui::Core::Admin::Route TucucoreToEzTranslator::translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
@@ -500,3 +510,4 @@ Tucuxi::Gui::Core::TranslatableString* TucucoreToEzTranslator::translate(const T
     newString->insert("en", QString::fromStdString(str.getString("en")));
     return newString;
 }
+

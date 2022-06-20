@@ -223,6 +223,7 @@ Rectangle {
             id: patientRequired
             Layout.preferredHeight: 100
             Layout.minimumHeight:   50
+            Layout.minimumWidth: 630        // added extra width to add "unknown" radio button
 
             property var model: patientListView.currentItem? patientListView.currentItem.selected_model : 0
             onModelChanged: {
@@ -368,6 +369,7 @@ Rectangle {
 
         EntityBlockEnd {
             visible : patientRequiredExpandHeader.expanded && (patientRequired.model ? 1 : 0)
+            Layout.minimumWidth: 630
         }
 
         /*
@@ -393,7 +395,7 @@ Rectangle {
         EntityTitle {
             label.text: "Patient Extra Informations"
             id: patientExtraExpandHeader
-            expanded: false  // modified in extPatientData for GUI-tests    JRT 21.03.2022
+            expanded: false     // modified in extPatientData for GUI-tests
             visible : patientRequired.model ? 1 : 0
         }
 

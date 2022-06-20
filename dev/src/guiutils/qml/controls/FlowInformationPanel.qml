@@ -68,7 +68,7 @@ Item {
         anchors.rightMargin: iconSpacing
         width:  32
         height: 32
-        source:  patientGender !== 0 ? "qrc:/icons/other/gender_male.png" : "qrc:/icons/other/gender_female.png";
+        source:  patientGender == 1 ? "qrc:/icons/other/gender_male.png" : (patientGender == 0 ? "qrc:/icons/other/gender_female.png" : "qrc:/icons/toolbar/help_hover.png");
         antialiasing: true
         mipmap:       true
         fillMode: Image.PreserveAspectFit

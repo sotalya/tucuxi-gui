@@ -3,6 +3,8 @@
 #include "core/utils/units.h"
 #include "core/dal/amount.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 Measure::Measure(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent)
     : Tucuxi::Gui::Core::CoreMeasure(repository, parent),
     _arrivalDate(QDateTime::currentDateTime())

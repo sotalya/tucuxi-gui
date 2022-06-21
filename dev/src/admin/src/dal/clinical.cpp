@@ -5,6 +5,8 @@
 
 #include <QDebug>
 
+using namespace Tucuxi::Gui::Admin;
+
 AUTO_PROPERTY_IMPL(Clinical, QString, name, Name)
 AUTO_PROPERTY_IMPL(Clinical, QDateTime, date, Date)
 AUTO_PROPERTY_IMPL(Clinical, QString, value, Value)

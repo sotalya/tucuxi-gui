@@ -16,6 +16,10 @@ namespace Core {
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class PartialRequest : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
@@ -35,18 +39,32 @@ public:
     Q_INVOKABLE PartialRequest(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };
-Q_DECLARE_METATYPE(PartialRequest*)
-Q_DECLARE_METATYPE(QList<PartialRequest*>)
 
-class PartialRequestSet : public QList<PartialRequest*>
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::PartialRequest*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::PartialRequest*>)
+
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
+class PartialRequestSet : public QList<Tucuxi::Gui::Admin::PartialRequest*>
 {
 public :
     PartialRequestSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = 0) {}
     PartialRequestSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent, const PartialRequestSet* &other);
 };
-Q_DECLARE_METATYPE(PartialRequestSet*)
 
-typedef PartialRequest* SharedPartialRequest;
-typedef PartialRequestSet* SharedPartialRequestSet;
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::PartialRequestSet*)
+
+typedef Tucuxi::Gui::Admin::PartialRequest* SharedPartialRequest;
+typedef Tucuxi::Gui::Admin::PartialRequestSet* SharedPartialRequestSet;
 
 #endif // PARTIALREQUEST_H

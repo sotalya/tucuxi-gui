@@ -11,6 +11,10 @@ namespace Core {
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class Patient;
 class Practician;
 class ClinicalSet;
@@ -51,8 +55,12 @@ public:
 
 };
 
-Q_DECLARE_METATYPE(InterpretationRequest*)
-Q_DECLARE_METATYPE(QList<InterpretationRequest*>)
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::InterpretationRequest*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::InterpretationRequest*>)
 
 
 #endif // INTERPRETATIONREQUEST_H

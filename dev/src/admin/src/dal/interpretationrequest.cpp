@@ -7,9 +7,10 @@
 #include "admin/src/dal/patient.h"
 #include "admin/src/dal/clinical.h"
 
+using namespace Tucuxi::Gui::Admin;
 
 AUTO_PROPERTY_IMPL(InterpretationRequest, Tucuxi::Gui::Core::DrugTreatment*, treatment, Treatment)
-AUTO_PROPERTY_IMPL(InterpretationRequest, Patient*, patient, Patient)
+AUTO_PROPERTY_IMPL(InterpretationRequest, Tucuxi::Gui::Admin::Patient*, patient, Patient)
 AUTO_PROPERTY_IMPL(InterpretationRequest, Practician*, practician, Practician)
 
 AUTO_PROPERTY_IMPL(InterpretationRequest, QString, comedication, Comedication)

@@ -8,17 +8,6 @@
 #include <QString>
 #include <QXmlStreamWriter>
 
-class Interpretation;
-class InterpretationAnalysis;
-class InterpretationRequest;
-class Practician;
-class ValidationStatus;
-class PhoneList;
-
-class ClinicalSet;
-class Patient;
-class Person;
-
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
@@ -45,6 +34,21 @@ class OperableAmount;
 }
 }
 }
+
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
+class Interpretation;
+class InterpretationAnalysis;
+class InterpretationRequest;
+class Practician;
+class ValidationStatus;
+class PhoneList;
+
+class ClinicalSet;
+class Patient;
+class Person;
 
 class InterpretationXmlExport
 {
@@ -89,7 +93,10 @@ protected:
 
     QXmlStreamWriter writer;
 
-
 };
+
+}
+}
+}
 
 #endif // INTERPRETATIONXMLEXPORT_H

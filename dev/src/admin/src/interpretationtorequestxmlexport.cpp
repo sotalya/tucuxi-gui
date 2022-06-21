@@ -17,6 +17,8 @@
 
 #include "core/dal/drug/translatablestring.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 InterpretationToRequestXmlExport::InterpretationToRequestXmlExport()
 {
 }

@@ -1,5 +1,7 @@
 #include "admin/src/dal/validationstatus.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 ValidationStatus::ValidationStatus(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Tucuxi::Gui::Core::Entity(repository, parent)
 {

@@ -9,18 +9,6 @@
 #include <QTextStream>
 #include <QFile>
 
-
-class Interpretation;
-class InterpretationAnalysis;
-class InterpretationRequest;
-class Practician;
-class ValidationStatus;
-class Patient;
-class Person;
-class ClinicalSet;
-class Clinical;
-class PhoneList;
-
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
@@ -57,6 +45,21 @@ class Admin;
 }
 }
 }
+
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
+class Interpretation;
+class InterpretationAnalysis;
+class InterpretationRequest;
+class Practician;
+class ValidationStatus;
+class Patient;
+class Person;
+class ClinicalSet;
+class Clinical;
+class PhoneList;
 
 class InterpretationXmlImport
 {
@@ -144,5 +147,9 @@ protected:
 
     void raiseConversionError();
 };
+
+}
+}
+}
 
 #endif // INTERPRETATIONXMLIMPORT_H

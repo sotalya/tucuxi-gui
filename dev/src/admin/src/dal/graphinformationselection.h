@@ -6,6 +6,10 @@
 #include "curvetypes.h"
 #include "core/settings.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 struct GraphInfo
 {
     bool available;
@@ -19,9 +23,15 @@ typedef enum{
     Perc50
 }PercentileRangeEnum;
 
+}
+}
+}
 
-Q_DECLARE_METATYPE(PercentileRangeEnum)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::PercentileRangeEnum)
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
 
 class GraphInformationSelection : public Tucuxi::Gui::Core::Entity
 {
@@ -80,5 +90,9 @@ class GraphInformationSelection : public Tucuxi::Gui::Core::Entity
         StepType::Enum _currentStep;
         QMap<QString, QVariant> _parametersSettingsMap;
 };
+
+}
+}
+}
 
 #endif // GRAPHINFORMATIONSELECTION_H

@@ -6,6 +6,10 @@
 #include <QObject>
 #include <QDateTime>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class InterpretationRequest;
 class PartialRequest;
 
@@ -90,5 +94,9 @@ signals:
     void requestListReady(QList<PartialRequest*> requests);
 
 };
+
+}
+}
+}
 
 #endif // REQUESTSCLIENT_H

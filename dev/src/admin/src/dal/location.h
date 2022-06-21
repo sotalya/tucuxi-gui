@@ -4,6 +4,11 @@
 #include "core/dal/entity.h"
 #include "core/utils/autoproperty.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
+
 class Location : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
@@ -26,7 +31,11 @@ public:
     QVariant toQVariant(void) const;
 };
 
-Q_DECLARE_METATYPE(Location*)
-Q_DECLARE_METATYPE(QList<Location*>)
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::Location*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::Location*>)
 
 #endif // LOCATION_H

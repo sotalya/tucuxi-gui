@@ -6,6 +6,10 @@
 #include <QObject>
 #include "core/interfaces/abstractrepository.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class AdminFactory
 {
 public:
@@ -24,5 +28,9 @@ public:
     }
 
 };
+
+}
+}
+}
 
 #endif // COREFACTORY_H

@@ -1,6 +1,8 @@
 #include "admin/src/dal/patient.h"
 #include "../adminfactory.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 Patient::Patient(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     CorePatient(repository,parent),
     _person_id(-1),

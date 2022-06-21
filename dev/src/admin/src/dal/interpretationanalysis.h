@@ -4,6 +4,10 @@
 #include "core/dal/entity.h"
 #include "core/dal/chartdata.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class InterpretationAnalysis : public Tucuxi::Gui::Core::Entity
 {
 
@@ -43,8 +47,12 @@ public:
 
 };
 
-Q_DECLARE_METATYPE(InterpretationAnalysis*)
-Q_DECLARE_METATYPE(QList<InterpretationAnalysis*>)
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::InterpretationAnalysis*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::InterpretationAnalysis*>)
 
 #endif // INTERPRETATIONANALYSIS_H
 

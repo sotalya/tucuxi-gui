@@ -4,6 +4,10 @@
 #include "core/dal/entity.h"
 #include "core/utils/autoproperty.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 enum class PhoneType {
     Private,
     Professional,
@@ -37,8 +41,12 @@ public:
 
 QML_POINTERLIST_CLASS_DECL(PhoneList, Phone)
 
-typedef Phone* SharedPhone;
-Q_DECLARE_METATYPE(PhoneType)
-Q_DECLARE_METATYPE(Phone*)
-Q_DECLARE_METATYPE(QList<Phone*>)
+}
+}
+}
+
+typedef Tucuxi::Gui::Admin::Phone* SharedPhone;
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::PhoneType)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::Phone*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::Phone*>)
 #endif // PHONE_H

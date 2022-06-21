@@ -1,5 +1,7 @@
 #include "interpretationanalysis.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 InterpretationAnalysis::InterpretationAnalysis(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _chartData(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ChartData>(repository, this))

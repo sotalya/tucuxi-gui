@@ -8,6 +8,8 @@
 #include "admin/src/dal/validationstatus.h"
 #include "admin/src/dal/practician.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 Interpretation::Interpretation(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent), _intepretationType(InterpretationType::Undefined)
 {
@@ -24,12 +26,12 @@ Interpretation::Interpretation(Tucuxi::Gui::Core::AbstractRepository *repository
 }
 
 AUTO_PROPERTY_IMPL(Interpretation, Interpretation::InterpretationType, intepretationType, InterpretationType)
-AUTO_PROPERTY_IMPL(Interpretation, InterpretationAnalysis*, analysis, Analysis)
-AUTO_PROPERTY_IMPL(Interpretation, InterpretationRequest*, request, Request)
+AUTO_PROPERTY_IMPL(Interpretation, Tucuxi::Gui::Admin::InterpretationAnalysis*, analysis, Analysis)
+AUTO_PROPERTY_IMPL(Interpretation, Tucuxi::Gui::Admin::InterpretationRequest*, request, Request)
 AUTO_PROPERTY_IMPL(Interpretation, Tucuxi::Gui::Core::DrugResponseAnalysis*, drugResponseAnalysis, DrugResponseAnalysis)
 
-AUTO_PROPERTY_IMPL(Interpretation, Practician*, analyst, Analyst)
-AUTO_PROPERTY_IMPL(Interpretation, ValidationStatus*, validationStatus, ValidationStatus)
+AUTO_PROPERTY_IMPL(Interpretation, Tucuxi::Gui::Admin::Practician*, analyst, Analyst)
+AUTO_PROPERTY_IMPL(Interpretation, Tucuxi::Gui::Admin::ValidationStatus*, validationStatus, ValidationStatus)
 
 
 AUTO_PROPERTY_IMPL(Interpretation, bool, adjustmentDateIsSet, AdjustmentDateIsSet)

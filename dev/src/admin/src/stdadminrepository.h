@@ -18,9 +18,11 @@
 #include "core/dal/covariate.h"
 #include "core/interfaces/abstractrepository.h"
 
-
 #define ADMINREPO (dynamic_cast<StdAdminDbInterface*>(ABSTRACTREPO))
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
 
 class StdAdminDbInterface : public Tucuxi::Gui::Core::AbstractRepository
 {
@@ -102,6 +104,10 @@ public:
     virtual Tucuxi::Gui::Core::Response deletePartialRequest(const int&) = 0;
 };
 
-Q_DECLARE_INTERFACE(StdAdminDbInterface, "ch.heig-vd.ezechiel.StdAdminDbInterface/0.1")
+}
+}
+}
+
+Q_DECLARE_INTERFACE(Tucuxi::Gui::Admin::StdAdminDbInterface, "ch.heig-vd.ezechiel.StdAdminDbInterface/0.1")
 
 #endif // STDADMINREPOSITORY_H

@@ -3,6 +3,10 @@
 
 #include <QObject>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class StepType : public QObject
 {
     Q_OBJECT
@@ -28,6 +32,10 @@ public:
     inline static bool isValid(int value) { return (value >= 0 && value<size); }
 };
 
-Q_DECLARE_METATYPE(StepType::Enum)
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::StepType::Enum)
 
 #endif // STEPTYPES_H

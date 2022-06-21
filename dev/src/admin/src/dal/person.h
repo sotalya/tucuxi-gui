@@ -16,6 +16,10 @@ class UncastedValueList;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class Person : public Tucuxi::Gui::Core::Entity
 {
 public:
@@ -68,8 +72,12 @@ private:
     QList<Email*> _emails;
 };
 
-typedef Person* SharedPerson;
-Q_DECLARE_METATYPE(Person*)
-Q_DECLARE_METATYPE(QList<Person*>)
+}
+}
+}
+
+typedef Tucuxi::Gui::Admin::Person* SharedPerson;
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::Person*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::Person*>)
 
 #endif // PERSON_H

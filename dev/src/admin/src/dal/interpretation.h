@@ -5,12 +5,6 @@
 
 #include "core/dal/entity.h"
 
-
-class InterpretationAnalysis;
-class InterpretationRequest;
-class Practician;
-class ValidationStatus;
-
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
@@ -19,6 +13,15 @@ namespace Core {
 }
 }
 }
+
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
+class InterpretationAnalysis;
+class InterpretationRequest;
+class Practician;
+class ValidationStatus;
 
 class Interpretation : public Tucuxi::Gui::Core::Entity
 {
@@ -74,8 +77,12 @@ public:
 
 };
 
-typedef Interpretation* SharedInterpretation;
-Q_DECLARE_METATYPE(Interpretation*)
-Q_DECLARE_METATYPE(QList<Interpretation*>)
+}
+}
+}
+
+typedef Tucuxi::Gui::Admin::Interpretation* SharedInterpretation;
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::Interpretation*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::Interpretation*>)
 
 #endif // INTERPRETATION_H

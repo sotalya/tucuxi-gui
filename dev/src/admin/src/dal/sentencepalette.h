@@ -7,6 +7,10 @@
 #include "tucucommon/xmldocument.h"
 #include "tucucommon/xmlimporter.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 ///
 /// \brief The DrugSentences class
 /// \brief This object contains the drug specific sentences list and the drug id
@@ -128,8 +132,12 @@ public:
 
 };
 
-Q_DECLARE_METATYPE(Section*)
-Q_DECLARE_METATYPE(QList<Section*>)
-Q_DECLARE_METATYPE(SectionList*)
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::Section*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::Section*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::SectionList*)
 
 #endif // SENTENCEPALETTE_H

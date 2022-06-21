@@ -15,6 +15,8 @@
 #endif
 #include<iostream>
 
+using namespace Tucuxi::Gui::Admin;
+
 QML_POINTERLIST_CLASS_IMPL(SectionList, Section)
 
 void DrugSentences::removeSentence(int _listIndex){
@@ -323,7 +325,6 @@ bool SentencesPalettes::SentencesPalettesImporter::isXMLSentenceExisting(QString
     }
     return 1;
 }
-
 
 AUTO_PROPERTY_IMPL(DrugSentences, QString, drugId, DrugId)
 AUTO_PROPERTY_IMPL(DrugSentences, QStringList, sentences, Sentences)

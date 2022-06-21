@@ -11,6 +11,9 @@
 #include "core/interfaces/abstractrepository.h"
 #include "core/utils/ezutils.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
 
 class Drug;
 
@@ -51,8 +54,12 @@ public:
 //    QList<Measure*> _list;
 //};
 
-Q_DECLARE_METATYPE(Measure*)
-Q_DECLARE_METATYPE(QList<Measure*>)
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::Measure*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::Measure*>)
 
 
 #endif // MEASURE_H

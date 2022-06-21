@@ -49,7 +49,7 @@
 
 #define WHILE_NOT_END_ELEM(elem)     while(isOk && !reader.hasError() && (!reader.isEndElement() || reader.name() != elem))
 
-
+using namespace Tucuxi::Gui::Admin;
 
 InterpretationXmlImport::InterpretationXmlImport()
 {

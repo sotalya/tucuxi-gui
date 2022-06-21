@@ -1,6 +1,8 @@
 #include "institute.h"
 #include "../adminfactory.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 Institute::Institute(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _location_id(-1),

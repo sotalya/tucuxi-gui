@@ -1,5 +1,9 @@
 #include "email.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 AUTO_PROPERTY_IMPL(Email, QString, email, Email)
 AUTO_PROPERTY_IMPL(Email, Type, type, Type)
 
@@ -40,3 +44,7 @@ Email::Email(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, Q
 //    _type = type;
 //    emit typeChanged(type);
 //}
+
+}
+}
+}

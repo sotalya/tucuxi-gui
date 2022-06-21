@@ -5,6 +5,9 @@
 #include "person.h"
 #include "institute.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
 
 class Practician : public Tucuxi::Gui::Core::Entity
 {
@@ -30,8 +33,17 @@ public:
     Q_INVOKABLE Practician(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };
-Q_DECLARE_METATYPE(Practician*)
-Q_DECLARE_METATYPE(QList<Practician*>)
+
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::Practician*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::Practician*>)
+
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
 
 class PracticianSet : public QList<Practician*>
 {
@@ -39,9 +51,14 @@ public :
     PracticianSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = 0) {}
     PracticianSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent, const PracticianSet* &other);
 };
-Q_DECLARE_METATYPE(PracticianSet*)
 
-typedef Practician* SharedPractician;
-typedef PracticianSet* SharedPracticianSet;
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::PracticianSet*)
+
+typedef Tucuxi::Gui::Admin::Practician* SharedPractician;
+typedef Tucuxi::Gui::Admin::PracticianSet* SharedPracticianSet;
 
 #endif // PRACTICIAN_H

@@ -41,6 +41,7 @@
 
 #include "admin/src/dal/practician.h"
 
+using namespace Tucuxi::Gui::Admin;
 
 InterpretationXmlExport::InterpretationXmlExport()
 {}

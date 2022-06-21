@@ -18,6 +18,10 @@
 
 //class Patient;
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 /** \ingroup utils
  *  \brief A patient medical information or condition.
  *
@@ -82,9 +86,12 @@ public :
 };
 typedef ClinicalSet* SharedClinicalSet;
 
+}
+}
+}
 
-Q_DECLARE_METATYPE(Clinical*)
-Q_DECLARE_METATYPE(QList<Clinical*>)
-Q_DECLARE_METATYPE(ClinicalSet*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::Clinical*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::Clinical*>)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::ClinicalSet*)
 
 #endif // CLINICAL_H

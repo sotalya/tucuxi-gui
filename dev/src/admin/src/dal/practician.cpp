@@ -3,6 +3,8 @@
 #include "../adminfactory.h"
 #include "core/settings.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 Practician::Practician(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _externalId(),

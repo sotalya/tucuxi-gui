@@ -6,10 +6,6 @@
 #include <QString>
 #include <QXmlStreamWriter>
 
-class Interpretation;
-class ClinicalSet;
-class Patient;
-
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
@@ -20,6 +16,14 @@ class PatientVariateList;
 }
 }
 }
+
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
+class Interpretation;
+class ClinicalSet;
+class Patient;
 
 class InterpretationToRequestXmlExport
 {
@@ -39,8 +43,10 @@ protected:
 
     QXmlStreamWriter writer;
 
-
 };
 
+}
+}
+}
 
 #endif // INTERPRETATIONTOREQUESTXMLEXPORT_H

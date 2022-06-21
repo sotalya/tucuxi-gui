@@ -3,6 +3,8 @@
 #include "core/corefactory.h"
 #include "core/dal/drug/drug.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 PartialRequest::PartialRequest(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository, parent)
 {

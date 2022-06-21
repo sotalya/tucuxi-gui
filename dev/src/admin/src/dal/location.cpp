@@ -1,5 +1,7 @@
 #include "location.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 Location::Location(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _address(),

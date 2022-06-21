@@ -2,6 +2,8 @@
 #include "graphinformationselection.h"
 #include "core/settings.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 GraphInformationSelection::GraphInformationSelection(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _currentStep(StepType::Patient)

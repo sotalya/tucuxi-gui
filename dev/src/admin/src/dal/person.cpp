@@ -2,6 +2,7 @@
 #include "../adminfactory.h"
 #include "core/dal/uncastedvalue.h"
 
+using namespace Tucuxi::Gui::Admin;
 
 AUTO_PROPERTY_IMPL(Person, Tucuxi::Gui::Core::UncastedValueList *, uncastedValues, UncastedValues)
 AUTO_PROPERTY_IMPL(Person, PhoneList*, phones, Phones)

@@ -8,6 +8,10 @@
 
 #include <QImage>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class Institute : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
@@ -39,18 +43,32 @@ private:
     QList<SharedPhone> _phones;
     QList<Email*> _emails;
 };
-Q_DECLARE_METATYPE(Institute*)
-Q_DECLARE_METATYPE(QList<Institute*>)
 
-class InstituteSet : public QList<Institute*>
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::Institute*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::Institute*>)
+
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
+class InstituteSet : public QList<Tucuxi::Gui::Admin::Institute*>
 {
 public :
     InstituteSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = 0) {}
     InstituteSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent, const InstituteSet* &other);
 };
-Q_DECLARE_METATYPE(InstituteSet*)
 
-typedef Institute* SharedInstitute;
-typedef InstituteSet* SharedInstituteSet;
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::InstituteSet*)
+
+typedef Tucuxi::Gui::Admin::Institute* SharedInstitute;
+typedef Tucuxi::Gui::Admin::InstituteSet* SharedInstituteSet;
 
 #endif // INSTITUTE_H

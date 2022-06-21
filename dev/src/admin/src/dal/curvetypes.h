@@ -3,6 +3,10 @@
 
 #include <QObject>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class CurveType : public QObject
 {
     Q_OBJECT
@@ -29,6 +33,10 @@ public:
     inline static bool isValid(int value) { return (value >= 0 && value<size); }
 };
 
-Q_DECLARE_METATYPE(CurveType::Enum)
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::CurveType::Enum)
 
 #endif // CURVETYPES_H

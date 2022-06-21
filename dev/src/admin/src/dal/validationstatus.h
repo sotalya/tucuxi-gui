@@ -6,6 +6,9 @@
 #include "core/dal/entity.h"
 #include "steptypes.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
 
 class ValidationStatus : public Tucuxi::Gui::Core::Entity
 {
@@ -69,7 +72,11 @@ private:
     QVector<bool> _enable;
 };
 
-Q_DECLARE_METATYPE(ValidationStatus*)
-Q_DECLARE_METATYPE(QList<ValidationStatus*>)
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::ValidationStatus*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::ValidationStatus*>)
 
 #endif // VALIDATIONSTATUS_H

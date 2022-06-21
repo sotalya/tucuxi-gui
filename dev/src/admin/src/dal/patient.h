@@ -4,6 +4,10 @@
 #include "core/dal/corepatient.h"
 #include "person.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class Patient : public Tucuxi::Gui::Core::CorePatient
 {
     Q_OBJECT
@@ -28,8 +32,13 @@ public:
     Q_INVOKABLE Patient(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };
-Q_DECLARE_METATYPE(Patient*)
-Q_DECLARE_METATYPE(QList<Patient*>)
+
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Admin::Patient*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Admin::Patient*>)
 
 //QML_POINTERLIST_CLASS_DECL(PatientList, Patient)
 

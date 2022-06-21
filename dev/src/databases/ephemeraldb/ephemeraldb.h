@@ -43,6 +43,8 @@
 #include "core/dal/drugresponseanalysis.h"
 
 
+using namespace Tucuxi::Gui::Admin;
+
 class User;
 namespace Tucuxi {
 
@@ -272,7 +274,7 @@ public:
 
   */
 
-class EphemeralDB : public QObject, public CoreRepository, public AppUtilsRepository, public StdAdminDbInterface
+class EphemeralDB : public QObject, public CoreRepository, public AppUtilsRepository, public Tucuxi::Gui::Admin::StdAdminDbInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "ch.heig-vd.ezechiel.ephemeralDBInterface/0.1")

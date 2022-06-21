@@ -2,7 +2,7 @@
 include(tucuxi.pri)
 
 TEMPLATE    =	subdirs
-SUBDIRS     +=	 core admin apputils guiutils gui ###databases
+SUBDIRS     +=	 core admin apputils databases guiutils gui
 
 SUBDIRS += processingtucucore
 	processingtucucore.depends  = core
@@ -31,7 +31,7 @@ rest.depends                 = core admin
 #restserver.depends           = rest
 #processingserver.depends     = core processing
 #processingtestclient.depends = core processing processingserver
-#databases.depends            = core apputils admin
+databases.depends            = core apputils admin
 #report.depends               = core apputils admin
 config_rest {
 guiutils.depends             = core apputils admin rest

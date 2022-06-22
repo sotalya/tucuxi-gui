@@ -2,6 +2,8 @@
 
 #include "xmlresttointerpretationrequest.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 namespace Tucuxi {
 namespace Gui {
 namespace Rest {

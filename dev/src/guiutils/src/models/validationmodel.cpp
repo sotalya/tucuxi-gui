@@ -4,6 +4,8 @@
 
 #include "core/dal/prediction.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 ValidationModel::ValidationModel(QObject *parent) :
     AbstractEntityModel(parent),
     _analysis(),

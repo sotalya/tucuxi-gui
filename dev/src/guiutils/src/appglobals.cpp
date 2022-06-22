@@ -6,6 +6,8 @@
 
 #include "admin/src/dal/practician.h"
 
+//using namespace Tucuxi::Gui::Admin;
+
 AppGlobals* AppGlobals::m_instance = nullptr;
 
 AppGlobals::AppGlobals() :
@@ -70,7 +72,7 @@ void AppGlobals::loadAnalystSettings()
 
     auto phoneNumber = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/phones/default" ,"").toString();
     if (!phoneNumber.isEmpty()) {
-        auto phone = Tucuxi::Gui::Core::CoreFactory::createEntity<Phone>(ABSTRACTREPO);
+        auto phone = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Admin::Phone>(ABSTRACTREPO);
         phone->setNumber(phoneNumber);
         m_analyst->person()->getPhones()->append(phone);
     }

@@ -37,6 +37,8 @@
 
 #include "guiutils/src/appglobals.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 MainWindowController::MainWindowController(QObject *parent) :
     currentView(HOME),
     launchView(nullptr),
@@ -474,7 +476,7 @@ void MainWindowController::loadRequestFile(const QString &fileName)
         fileContent = f.readAll();
 
         Tucuxi::Gui::Rest::SimpleBuilder requestBuilder;
-        InterpretationRequest *ir = requestBuilder.buildRequest(fileContent);
+        Tucuxi::Gui::Admin::InterpretationRequest *ir = requestBuilder.buildRequest(fileContent);
         if (ir != nullptr) {
             emit requestReady(ir);
         }

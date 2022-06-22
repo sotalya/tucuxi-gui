@@ -6,6 +6,8 @@
 #include "admin/src/dal/patient.h"
 #include "admin/src/adminfactory.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 FakePatientsCreator::FakePatientsCreator()
 {
 

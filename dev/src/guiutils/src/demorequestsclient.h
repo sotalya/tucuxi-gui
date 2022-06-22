@@ -28,14 +28,14 @@ public:
     explicit DemoInterpretationRequestBuilder(const QString &requestId);
     ~DemoInterpretationRequestBuilder();
 
-    InterpretationRequest* buildInterpretationRequest(const QString &patientId, const QString &drugId);
+    Tucuxi::Gui::Admin::InterpretationRequest* buildInterpretationRequest(const QString &patientId, const QString &drugId);
 
 private:
     QString buildDrug(const QString &rootKey);
     Tucuxi::Gui::Core::DosageHistory* buildDosages(const QString &rootKey);
 
     Tucuxi::Gui::Core::PatientVariateList * buildCovariates(const QString &rootKey, const SharedPatient patient);
-    QList<Clinical*> buildClinical(const QString &rootKey, const SharedPatient patient);
+    QList<Tucuxi::Gui::Admin::Clinical*> buildClinical(const QString &rootKey, const SharedPatient patient);
 
     SharedPatient buildPatient(const QString &rootKey);
     SharedPractician buildPractician(const QString &rootKey);
@@ -43,18 +43,19 @@ private:
 
     Tucuxi::Gui::Core::CoreMeasureList * buildSamples(const QString &rootKey, const SharedPatient patient, const QString &drug);
     QList<SharedPhone> buildPhones(const QString &rootKey);
-    PhoneList* buildPhoneList(const QString &rootKey);
-    QList<Email*> buildEmails(const QString &rootKey);
+    Tucuxi::Gui::Admin::PhoneList* buildPhoneList(const QString &rootKey);
+    QList<Tucuxi::Gui::Admin::Email*> buildEmails(const QString &rootKey);
 
     Tucuxi::Gui::Core::Admin::Route toDosageRoute(const QString &route);
-    PhoneType toPhoneType(const QString &type);
-    Type toEmailType(const QString &type);
+
+    Tucuxi::Gui::Admin::PhoneType toPhoneType(const QString &type);
+    Tucuxi::Gui::Admin::Type toEmailType(const QString &type);
 
     QString requestId;
 };
 
 
-class DemoRequestsClient : public RequestsClient
+class DemoRequestsClient : public Tucuxi::Gui::Admin::RequestsClient
 {
     Q_OBJECT
 

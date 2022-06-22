@@ -38,7 +38,7 @@ public:
     void targetUpdated();
     void covariateUpdated(bool bShowPerc);
 
-    void setCurrentTab(StepType::Enum type);
+    void setCurrentTab(Tucuxi::Gui::Admin::StepType::Enum type);
 
 signals:
 
@@ -80,7 +80,7 @@ protected:
     bool isReverseValid() const;
     bool isAdjustedValid() const;
 
-    StepType::Enum _currentTab;
+    Tucuxi::Gui::Admin::StepType::Enum _currentTab;
 
     CalculationController *calculationController;
 

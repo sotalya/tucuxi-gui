@@ -401,7 +401,7 @@ private:
 
     GraphInformationSelection *_graphInformationSelection;
 
-    SentencesPalettes *_sentencesPalettes;
+    Tucuxi::Gui::Admin::SentencesPalettes *_sentencesPalettes;
 
     FlowController* flowController;
     CalculationController* calculationController;

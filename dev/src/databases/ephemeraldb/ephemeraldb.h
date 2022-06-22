@@ -43,8 +43,6 @@
 #include "core/dal/drugresponseanalysis.h"
 
 
-using namespace Tucuxi::Gui::Admin;
-
 class User;
 namespace Tucuxi {
 
@@ -278,7 +276,7 @@ class EphemeralDB : public QObject, public CoreRepository, public AppUtilsReposi
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "ch.heig-vd.ezechiel.ephemeralDBInterface/0.1")
-    Q_INTERFACES(AppUtilsRepository StdAdminDbInterface)
+    Q_INTERFACES(AppUtilsRepository Tucuxi::Gui::Admin::StdAdminDbInterface)
     Q_INTERFACES(Tucuxi::Gui::Core::CoreRepository)
 public:
 
@@ -376,12 +374,12 @@ Response getCoreMeasuresFromPatientAndDrug(const int&_id, const QString&_drugid,
 
 Response getCoreMeasuresFromPatientAndDrug(const int& _id, const int& _drugid, QList<CoreMeasure*>& _in) {
     _in.clear();
-    QList<Measure *> _measures;
+    QList<Tucuxi::Gui::Admin::Measure *> _measures;
     Response r = measures.getListByPatientAndDrug(_id, _drugid, _measures);
     if (r.error != NoError){
        //throw
     }
-    foreach (Measure * _m, _measures) {
+    foreach (Tucuxi::Gui::Admin::Measure * _m, _measures) {
         _in.append(static_cast<CoreMeasure*>(_m));
     }
 
@@ -395,19 +393,19 @@ Response getCoreMeasuresByDate(const int&_id, QList<CoreMeasure*>&_in) {
     return r;
 }
 
-Response getClinicalFromId(const int &_id, Clinical* _p);
-Response setClinical(Clinical* _p);
-Response getClinicalsList(QList<Clinical*>& _in);
-Response getClinicalsByDate(const int &_id, QList<Clinical*>& _in);
-Response deleteClinical(Clinical*  _p);
+Response getClinicalFromId(const int &_id, Tucuxi::Gui::Admin::Clinical* _p);
+Response setClinical(Tucuxi::Gui::Admin::Clinical* _p);
+Response getClinicalsList(QList<Tucuxi::Gui::Admin::Clinical*>& _in);
+Response getClinicalsByDate(const int &_id, QList<Tucuxi::Gui::Admin::Clinical*>& _in);
+Response deleteClinical(Tucuxi::Gui::Admin::Clinical*  _p);
 Response deleteClinical(const int &_id);
 
-Response getPartialRequestFromId(const int &_id, PartialRequest* _p);
-Response getPartialRequestFromRequestId(QString &_id, PartialRequest*& _p);
-Response setPartialRequest(PartialRequest* _p);
-Response getPartialRequestsList(QList<PartialRequest*>& _in);
-Response getPartialRequestsByDate(const int &_id, QList<PartialRequest*>& _in);
-Response deletePartialRequest(PartialRequest*  _p);
+Response getPartialRequestFromId(const int &_id, Tucuxi::Gui::Admin::PartialRequest* _p);
+Response getPartialRequestFromRequestId(QString &_id, Tucuxi::Gui::Admin::PartialRequest*& _p);
+Response setPartialRequest(Tucuxi::Gui::Admin::PartialRequest* _p);
+Response getPartialRequestsList(QList<Tucuxi::Gui::Admin::PartialRequest*>& _in);
+Response getPartialRequestsByDate(const int &_id, QList<Tucuxi::Gui::Admin::PartialRequest*>& _in);
+Response deletePartialRequest(Tucuxi::Gui::Admin::PartialRequest*  _p);
 Response deletePartialRequest(const int &_id);
 
 Response getPatientVariateFromId(const int &_id, PatientVariate* _p);
@@ -493,19 +491,19 @@ Response deleteDrug(DrugModel* _p);
 Response setValidDoses(const int &_id, ValidDoses *_in);
 Response setValidInfusions(const int &_id, ValidInfusions*_in);
 Response setValidIntervals(const int &_id, ValidIntervals *_in);
-Response getEmailFromId(const int &_id, Email* _p);
-Response setEmail(Email* _p);
-Response getEmailsList(QList<Email*>& _in);
-Response deleteEmail(Email*  _p);
-Response getMeasureFromId(const int &_id, Measure * _p);
-Response setMeasure(Measure * _p);
-Response setMeasure(const int &_pid, Measure * _p);
-Response getMeasuresList(QList<Measure *>& _in);
-Response deleteMeasure(Measure *  _p);
+Response getEmailFromId(const int &_id, Tucuxi::Gui::Admin::Email* _p);
+Response setEmail(Tucuxi::Gui::Admin::Email* _p);
+Response getEmailsList(QList<Tucuxi::Gui::Admin::Email*>& _in);
+Response deleteEmail(Tucuxi::Gui::Admin::Email*  _p);
+Response getMeasureFromId(const int &_id, Tucuxi::Gui::Admin::Measure * _p);
+Response setMeasure(Tucuxi::Gui::Admin::Measure * _p);
+Response setMeasure(const int &_pid, Tucuxi::Gui::Admin::Measure * _p);
+Response getMeasuresList(QList<Tucuxi::Gui::Admin::Measure *>& _in);
+Response deleteMeasure(Tucuxi::Gui::Admin::Measure *  _p);
 Response deleteMeasure(const int &_id);
-Response getMeasuresByDate(const int &_id, QList<Measure *>& _in);
-Response getMeasuresFromPatientAndDrug(const int& _id, const QString& _drugid, QList<Measure *>& _in);
-Response getMeasuresFromPatientAndDrug(const int& _id, const int& _drugid, QList<Measure *>& _in);
+Response getMeasuresByDate(const int &_id, QList<Tucuxi::Gui::Admin::Measure *>& _in);
+Response getMeasuresFromPatientAndDrug(const int& _id, const QString& _drugid, QList<Tucuxi::Gui::Admin::Measure *>& _in);
+Response getMeasuresFromPatientAndDrug(const int& _id, const int& _drugid, QList<Tucuxi::Gui::Admin::Measure *>& _in);
 Response getOperationFromId(const int &_id, Operation* _p);
 Response setOperation(Operation* _p);
 Response getOperationsList(QList<Operation*>& _in);
@@ -544,11 +542,11 @@ Response getTargetsOfDrug(const int & did, TargetList* _in) {
 }
 
 Response deleteTarget(Target*  _p);
-Response getLocationFromId(const int &_id, Location* _p);
-Response setLocation(Location* _p);
-Response getLocationsList(QList<Location*>& _in);
+Response getLocationFromId(const int &_id, Tucuxi::Gui::Admin::Location* _p);
+Response setLocation(Tucuxi::Gui::Admin::Location* _p);
+Response getLocationsList(QList<Tucuxi::Gui::Admin::Location*>& _in);
 Response deleteLocation(const int &_id);
-Response deleteLocation(Location*  _p);
+Response deleteLocation(Tucuxi::Gui::Admin::Location*  _p);
 // Encryption /////////////////////////////////////////////////////////////////////////////////////
 
 Response isEncrypted(const bool &encrypted);
@@ -619,19 +617,19 @@ private:
     EntityList<ValidDose*> validDoses;
     EntityList<ValidInterval*> validIntervals;
     EntityList<ValidInfusion*> validInfusions;
-    EntityList<Email*> emails;
-    EntityList<Measure *> measures;
+    EntityList<Tucuxi::Gui::Admin::Email*> emails;
+    EntityList<Tucuxi::Gui::Admin::Measure *> measures;
     EntityList<CoreMeasure*> coremeasures;
     EntityList<Operation*> operations;
     EntityList<SharedParameter> parameters;
     EntityList<SharedPhone> phones;
     EntityList<Target*> targets;
     EntityList<DosageHistory*> dosageHistories;
-    EntityList<Location*> locations;
+    EntityList<Tucuxi::Gui::Admin::Location*> locations;
     EntityList<SharedInstitute> institutes;
-    EntityList<Clinical*> clinicals;
+    EntityList<Tucuxi::Gui::Admin::Clinical*> clinicals;
     EntityList<DrugResponseAnalysis*> drugResponseAnalyses;
-    EntityList<PartialRequest*> partialrequests;
+    EntityList<Tucuxi::Gui::Admin::PartialRequest*> partialrequests;
 };
 
 }

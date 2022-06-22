@@ -89,6 +89,7 @@ STD_PROPERTY_IMPL(InterpretationController, QString, clinicalsHtml, ClinicalsHtm
 STD_PROPERTY_IMPL(InterpretationController, bool, isDemo, IsDemo)
 STD_PROPERTY_IMPL(InterpretationController, QString, reportFileName, ReportFileName)
 
+using namespace Tucuxi::Gui::Admin;
 
 InterpretationController::InterpretationController(QObject *parent) :
     QObject (parent),
@@ -836,7 +837,7 @@ void InterpretationController::loadInterpretation(Interpretation *interpretation
     _patients->append(_interpretation->getDrugResponseAnalysis()->getTreatment()->getPatient());
 
 
-    setCurrentPatient(dynamic_cast<Patient*>(_patients->at(0)));
+    setCurrentPatient(dynamic_cast<Tucuxi::Gui::Admin::Patient*>(_patients->at(0)));
 
     // We populate the drug list depending on the type of interpretation we are loading
     if (interpretation->getInterpretationType() == Interpretation::InterpretationType::FromRequest)

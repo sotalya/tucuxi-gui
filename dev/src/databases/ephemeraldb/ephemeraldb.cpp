@@ -8,6 +8,8 @@
 #include "core/dal/drug/operation.h"
 #include "core/dal/drugtreatment.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 class Patient;
 
 namespace Tucuxi {

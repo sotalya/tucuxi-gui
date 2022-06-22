@@ -6,6 +6,8 @@
 
 #include <QDebug>
 
+using namespace Tucuxi::Gui::Admin;
+
 PatientListModel::PatientListModel(QObject *parent) :
     AbstractEntityListModel(parent),
     _patients(0),

@@ -29,9 +29,7 @@
 #include "models/sortfilterentitylistproxymodel.h"
 
 
-
-
-
+using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::Core;
 
 DemoRequestsClient::DemoRequestsClient(QObject *parent) : RequestsClient(parent)

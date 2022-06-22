@@ -18,8 +18,10 @@
 #include "core/utils/connect.h"
 #include "core/dal/drug/parameters.h"
 
+//using namespace Tucuxi::Gui::Admin;
+
 ChartDataController::ChartDataController(QObject *parent) : QObject(parent),
-    _currentTab(StepType::Patient),
+    _currentTab(Tucuxi::Gui::Admin::StepType::Patient),
     calculationController(nullptr)
 {
 }
@@ -43,7 +45,7 @@ void ChartDataController::setCalculationController(CalculationController *contro
     CONNECT(calculationController, SIGNAL(adjCalcFail()), this, SLOT(adjCalcFailed()));
 }
 
-void ChartDataController::setCurrentTab(StepType::Enum step)
+void ChartDataController::setCurrentTab(Tucuxi::Gui::Admin::StepType::Enum step)
 {
     _currentTab = step;
 }

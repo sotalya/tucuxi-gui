@@ -7,7 +7,6 @@
 #include <QAbstractItemModel>
 #include <QDateTime>
 
-
 class RequestsClient;
 class InterpretationRequest;
 class PartialRequest;

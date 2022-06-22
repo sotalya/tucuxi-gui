@@ -19,6 +19,8 @@
 #include "covariateidtranslator.h"
 #include "core/dal/drug/target.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 namespace Tucuxi {
 namespace Gui {
 namespace Rest {

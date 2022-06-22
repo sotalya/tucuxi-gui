@@ -18,6 +18,7 @@
 #include "core/dal/drug/drug.h"
 #include "core/utils/ezutils.h"
 
+using namespace Tucuxi::Gui::Admin;
 
 PartialRequestListModel::PartialRequestListModel(QObject *parent) :
     AbstractEntityListModel(parent),

@@ -8,6 +8,8 @@
 #include "models/partialrequestlistmodel.h"
 #include "models/sortfilterentitylistproxymodel.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 RequestsController::RequestsController(QObject *parent) :
     QObject(parent),
     client(0),
@@ -22,7 +24,7 @@ RequestsController::~RequestsController()
 
 }
 
-void RequestsController::setClient(RequestsClient *client)
+void RequestsController::setClient(Tucuxi::Gui::Admin::RequestsClient *client)
 {
     this->client = client;
 
@@ -30,7 +32,7 @@ void RequestsController::setClient(RequestsClient *client)
     CONNECT(client, SIGNAL(requestReady(InterpretationRequest*)), this, SIGNAL(requestReady(InterpretationRequest*)));
 }
 
-void RequestsController::processListReady(QList<PartialRequest *> list)
+void RequestsController::processListReady(QList<PartialRequest*> list)
 {
     _requestModel->setModelData(list);
 }

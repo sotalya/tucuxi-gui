@@ -22,6 +22,8 @@
 
 #include "core/core.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 typedef ValidationStatus::StatusType StatusType;
 
 FlowController::FlowController(QObject *parent) :

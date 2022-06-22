@@ -17,6 +17,7 @@
 #include "core/dal/drugtreatment.h"
 
 using namespace Tucuxi::Gui::Core;
+using namespace Tucuxi::Gui::Admin;
 
 
 namespace Tucuxi {

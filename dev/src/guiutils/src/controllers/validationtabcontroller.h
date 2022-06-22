@@ -20,7 +20,7 @@ public:
 
     Q_INVOKABLE QString getShortCutText(int section, int key, int modifiers);
 
-    SentencesPalettes *_sentencesPalettes;
+    Tucuxi::Gui::Admin::SentencesPalettes *_sentencesPalettes;
 
     // These two fields are actually not used at all.
 //    STD_PROPERTY_DECL(QString, posology, Posology)

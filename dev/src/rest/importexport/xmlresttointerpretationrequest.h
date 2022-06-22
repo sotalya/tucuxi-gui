@@ -17,7 +17,7 @@ class XmlRestToInterpretationRequest
 public:
     XmlRestToInterpretationRequest();
 
-    InterpretationRequest *interpretationRequestFromXml(const QByteArray &data);
+    Tucuxi::Gui::Admin::InterpretationRequest *interpretationRequestFromXml(const QByteArray &data);
 
 protected:
     QXmlStreamReader reader;

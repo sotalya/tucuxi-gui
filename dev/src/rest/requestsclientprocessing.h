@@ -10,8 +10,7 @@ namespace Tucuxi {
 namespace Gui {
 namespace Rest {
 
-
-class RequestsClientProcessing : public RequestsClient
+class RequestsClientProcessing : public Tucuxi::Gui::Admin::RequestsClient
 {
 public:
     RequestsClientProcessing(QObject *parent);
@@ -28,7 +27,7 @@ class SimpleBuilder : QObject
 {
 public:
 
-    InterpretationRequest* buildRequest(const QString &xmlRequest);
+    Tucuxi::Gui::Admin::InterpretationRequest* buildRequest(const QString &xmlRequest);
 
 };
 

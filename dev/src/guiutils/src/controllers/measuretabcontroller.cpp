@@ -11,6 +11,8 @@
 #include "admin/src/dal/interpretation.h"
 #include "interpretationcontroller.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 STD_PROPERTY_IMPL(MeasureTabController, Tucuxi::Gui::Core::CoreMeasureList*, measures, Measures)
 
 MeasureTabController::MeasureTabController(QObject *parent) : AbstractViewController(parent)

@@ -9,6 +9,7 @@
 #include "errors_guiutils.h"
 #include "core/dal/drug/concentrations.h"
 
+using namespace Tucuxi::Gui::Admin;
 
 MeasureListModel::MeasureListModel(QObject *parent) :
     AbstractEntityListModel(parent),

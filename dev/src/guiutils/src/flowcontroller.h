@@ -10,9 +10,9 @@
 class Interpretation;
 class InterpretationController;
 
-typedef ValidationStatus::StatusType StatusType;
-typedef ValidationStatus::DataStatusType DataStatusType;
-typedef ValidationStatus::ValidationStatusType ValidationStatusType;
+typedef Tucuxi::Gui::Admin::ValidationStatus::StatusType StatusType;
+typedef Tucuxi::Gui::Admin::ValidationStatus::DataStatusType DataStatusType;
+typedef Tucuxi::Gui::Admin::ValidationStatus::ValidationStatusType ValidationStatusType;
 
 class FlowController : public QObject
 {
@@ -49,15 +49,15 @@ public:
 
 public slots:
 
-    void validateTab(StepType::Enum tabNumber);
-    void toggleValidation(StepType::Enum tabNumber);
-    void invalidateTab(StepType::Enum tabNumber);
+    void validateTab(Tucuxi::Gui::Admin::StepType::Enum tabNumber);
+    void toggleValidation(Tucuxi::Gui::Admin::StepType::Enum tabNumber);
+    void invalidateTab(Tucuxi::Gui::Admin::StepType::Enum tabNumber);
     void evaluate();
 
 protected:
-    void propagateEnable(bool s, StepType::Enum from);
-    void propagateStatus(DataStatusType s, StepType::Enum from);
-    void propagateUnvalidate(StepType::Enum from);
+    void propagateEnable(bool s, Tucuxi::Gui::Admin::StepType::Enum from);
+    void propagateStatus(DataStatusType s, Tucuxi::Gui::Admin::StepType::Enum from);
+    void propagateUnvalidate(Tucuxi::Gui::Admin::StepType::Enum from);
 
     void generateEnables();
     void generateStatuses();
@@ -66,11 +66,11 @@ protected:
     void end();
 
     Interpretation *interpretation;
-    ValidationStatus *currentStatus;
-    ValidationStatus * oldStatus;
+    Tucuxi::Gui::Admin::ValidationStatus *currentStatus;
+    Tucuxi::Gui::Admin::ValidationStatus * oldStatus;
 
-    StepType::Enum validating;
-    StepType::Enum invalidating;
+    Tucuxi::Gui::Admin::StepType::Enum validating;
+    Tucuxi::Gui::Admin::StepType::Enum invalidating;
 
     QObject *flowView;
 

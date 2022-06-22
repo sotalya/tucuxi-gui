@@ -33,14 +33,14 @@ signals:
     void updateStatus();
 
 public slots:
-    void setModelData(InterpretationAnalysis *analysis);
+    void setModelData(Tucuxi::Gui::Admin::InterpretationAnalysis *analysis);
 
 private:
     virtual void setDataImpl(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
 
     void init();
 
-    InterpretationAnalysis* _analysis;
+    Tucuxi::Gui::Admin::InterpretationAnalysis* _analysis;
     QHash<int, QByteArray> _roleNames;
 };
 

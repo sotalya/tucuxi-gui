@@ -16,7 +16,7 @@ class InterpretationRequestToXmlRest
 public:
     InterpretationRequestToXmlRest();
 
-    void interpretationRequestToXmlRest(const InterpretationRequest &interpretation, QByteArray &data);
+    void interpretationRequestToXmlRest(const Tucuxi::Gui::Admin::InterpretationRequest &interpretation, QByteArray &data);
 
 protected:
     QXmlStreamWriter writer;

@@ -5,7 +5,13 @@
 
 #include <QObject>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
 class Practician;
+}
+}
+}
 
 class AppGlobals : public QObject
 {    
@@ -25,7 +31,7 @@ public:
 
     const QString getRequestFile();
 
-    Q_INVOKABLE Practician *getAnalyst();
+    Q_INVOKABLE Tucuxi::Gui::Admin::Practician *getAnalyst();
 
     Q_INVOKABLE void saveAnalystSettings();
 
@@ -44,7 +50,7 @@ private:
     QString m_listFile;
     QString m_requestFile;
 
-    Practician *m_analyst;
+    Tucuxi::Gui::Admin::Practician *m_analyst;
 
     bool m_showProcessingTime;
 };

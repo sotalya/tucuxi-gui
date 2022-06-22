@@ -7,9 +7,16 @@
 #include <QAbstractItemModel>
 #include <QDateTime>
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
 class RequestsClient;
-class InterpretationRequest;
 class PartialRequest;
+}
+}
+}
+
+class InterpretationRequest;
 class PartialRequestListModel;
 class SortFilterEntityListProxyModel;
 
@@ -23,16 +30,16 @@ public:
 
     virtual QAbstractItemModel *model() const;
 
-    void setClient(RequestsClient *client);
+    void setClient(Tucuxi::Gui::Admin::RequestsClient *client);
 
 private:
-    RequestsClient *client;
+    Tucuxi::Gui::Admin::RequestsClient *client;
 
     PartialRequestListModel *_requestModel;
     SortFilterEntityListProxyModel *_proxyModel;
 
 private slots:
-    void processListReady(QList<PartialRequest *> list);
+    void processListReady(QList<Tucuxi::Gui::Admin::PartialRequest *> list);
 
 public slots:
 

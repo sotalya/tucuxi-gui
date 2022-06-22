@@ -6,7 +6,7 @@
 
 #include "admin/src/dal/practician.h"
 
-//using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::Admin;
 
 AppGlobals* AppGlobals::m_instance = nullptr;
 

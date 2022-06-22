@@ -32,7 +32,7 @@ void RequestsController::setClient(Tucuxi::Gui::Admin::RequestsClient *client)
     CONNECT(client, SIGNAL(requestReady(InterpretationRequest*)), this, SIGNAL(requestReady(InterpretationRequest*)));
 }
 
-void RequestsController::processListReady(QList<PartialRequest*> list)
+void RequestsController::processListReady(QList<Tucuxi::Gui::Admin::PartialRequest*> list)
 {
     _requestModel->setModelData(list);
 }

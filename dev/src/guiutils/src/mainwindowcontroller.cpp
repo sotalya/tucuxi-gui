@@ -222,7 +222,7 @@ void MainWindowController::initViewConnections() {
 
 }
 
-void MainWindowController::requestReady(InterpretationRequest *request)
+void MainWindowController::requestReady(Tucuxi::Gui::Admin::InterpretationRequest *request)
 {
     interpretationController->startInterpretationRequest(request);
     currentView = FLOW;

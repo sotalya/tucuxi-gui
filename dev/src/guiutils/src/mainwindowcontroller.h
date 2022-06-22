@@ -8,10 +8,18 @@
 
 class InterpretationController;
 class RequestsController;
-class InterpretationRequest;
 class ValidateDrugDialog;
+
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
+class InterpretationRequest;
 class Interpretation;
 
+}
+}
+}
 
 #ifdef CONFIG_GUITEST
 class QQmlApplicationEngine;
@@ -71,9 +79,9 @@ public slots:
 
     void goToLoadInterpretation();
 
-    void requestReady(InterpretationRequest *request);
+    void requestReady(Tucuxi::Gui::Admin::InterpretationRequest *request);
 
-    void interpretationReady(Interpretation *interpretation);
+    void interpretationReady(Tucuxi::Gui::Admin::Interpretation *interpretation);
 
     void loadInterpretationFile(const QString &fileName);
     void extSlotSetView(const QDateTime &startView, const QDateTime &endView);//emptySlot();

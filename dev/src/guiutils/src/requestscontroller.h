@@ -12,11 +12,12 @@ namespace Gui {
 namespace Admin {
 class RequestsClient;
 class PartialRequest;
+class InterpretationRequest;
 }
 }
 }
 
-class InterpretationRequest;
+
 class PartialRequestListModel;
 class SortFilterEntityListProxyModel;
 
@@ -49,7 +50,7 @@ public slots:
     virtual void queryRequest(const QString &requestId, const QString &patientId, const QString &drugId);
 
 signals:
-    void requestReady(InterpretationRequest* ir);
+    void requestReady(Tucuxi::Gui::Admin::InterpretationRequest* ir);
 
 };
 

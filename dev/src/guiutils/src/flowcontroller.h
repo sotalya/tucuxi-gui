@@ -7,7 +7,16 @@
 
 #include "admin/src/dal/validationstatus.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class Interpretation;
+
+}
+}
+}
+
 class InterpretationController;
 
 typedef Tucuxi::Gui::Admin::ValidationStatus::StatusType StatusType;
@@ -21,7 +30,7 @@ public:
     explicit FlowController(QObject *parent = nullptr);
 
     virtual ~FlowController();
-    void setInterpretation(Interpretation *interpretation);
+    void setInterpretation(Tucuxi::Gui::Admin::Interpretation *interpretation);
 
     void patientChanged(int index);
     void drugChanged(int index);
@@ -65,7 +74,7 @@ protected:
     void start();
     void end();
 
-    Interpretation *interpretation;
+    Tucuxi::Gui::Admin::Interpretation *interpretation;
     Tucuxi::Gui::Admin::ValidationStatus *currentStatus;
     Tucuxi::Gui::Admin::ValidationStatus * oldStatus;
 

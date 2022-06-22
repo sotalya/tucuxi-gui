@@ -28,10 +28,18 @@ class Report;
 class QPrinter;
 class PersistentFileDialog;
 
+namespace Tucuxi {
+namespace Gui {
+namespace Admin {
+
 class InterpretationRequest;
 class Interpretation;
 class Patient;
 class GraphInformationSelection;
+
+}
+}
+}
 
 class FlowController;
 
@@ -65,7 +73,6 @@ class DosageHistory;
 }
 }
 }
-
 
 enum class EViewRangeUpdateContext {
     Start,
@@ -110,7 +117,7 @@ class InterpretationController : public QObject
     //! This property exposes the current patient.
     //! It is used by the FlowInformationPanel to display information about the current patient
     //! Compared to the previous properties, it is modified by the PatientTab
-    Q_PROPERTY(Patient* currentPatient READ getCurrentPatient WRITE setCurrentPatient NOTIFY newCurrentPatient)
+    Q_PROPERTY(Tucuxi::Gui::Admin::Patient* currentPatient READ getCurrentPatient WRITE setCurrentPatient NOTIFY newCurrentPatient)
 
 
     //! This property exposes the current drugModel.
@@ -123,7 +130,7 @@ class InterpretationController : public QObject
 
     //! This property exposes the current interpretation.
     //! It is used by various tabs
-    STD_PROPERTY_DECL(Interpretation*, interpretation, Interpretation)
+    STD_PROPERTY_DECL(Tucuxi::Gui::Admin::Interpretation*, interpretation, Interpretation)
 
     //! This property is used by RawRequest.qml
     //! Only used in request mode
@@ -175,10 +182,10 @@ public:
 
     void initAfterQmlLoading(QObject *root, QQmlContext *rootContext);
 
-    Patient* _currentPatient;
+    Tucuxi::Gui::Admin::Patient* _currentPatient;
 
-    void setCurrentPatient(Patient *patient);
-    Patient * getCurrentPatient() const;
+    void setCurrentPatient(Tucuxi::Gui::Admin::Patient *patient);
+    Tucuxi::Gui::Admin::Patient * getCurrentPatient() const;
 
     Tucuxi::Gui::Core::DrugModelList* getDrugs() { return _drugs; }
     Tucuxi::Gui::Core::DrugModelList* getDrugModels() { return _drugModelsForCurrentSubstance; }
@@ -301,7 +308,7 @@ public:
      * This function is one of the two to start an interpretation flow, the other one
      * being startNewPatient().
      */
-    void startInterpretationRequest(InterpretationRequest *_interpretation);
+    void startInterpretationRequest(Tucuxi::Gui::Admin::InterpretationRequest *_interpretation);
 
     /**
      * @brief startNewPatient Starts the flow with a new patient
@@ -315,7 +322,7 @@ public:
      * @param interpretation
      * This function is one of the three to start an interpretation flow.
      */
-    void loadInterpretation(Interpretation *interpretation);
+    void loadInterpretation(Tucuxi::Gui::Admin::Interpretation *interpretation);
 
     Tucuxi::Gui::Core::PredictionSpec *getPredictionSpec() const;
 
@@ -328,7 +335,7 @@ public:
     /// \param interpretation
     /// \param newInterpretation If true it is a new interpretation, if false, we are loading an existing one
     ///
-    void setNewInterpretation(Interpretation *interpretation, bool newInterpretation);
+    void setNewInterpretation(Tucuxi::Gui::Admin::Interpretation *interpretation, bool newInterpretation);
 
 public:
 
@@ -385,7 +392,7 @@ private:
      * This function will look at measures, dosage history, and covariates to find the
      * last one recorded. It allows to evaluate the full process time.
      */
-    QDateTime getLastDataTime(Interpretation *interpretation) const;
+    QDateTime getLastDataTime(Tucuxi::Gui::Admin::Interpretation *interpretation) const;
 
     double _chartscale;
     QString _defaultUnit;
@@ -399,7 +406,7 @@ private:
     Tucuxi::Gui::Core::LightActiveSubstanceList* _privateActiveSubstances;
     Tucuxi::Gui::Core::CorePatientList* _patients;
 
-    GraphInformationSelection *_graphInformationSelection;
+    Tucuxi::Gui::Admin::GraphInformationSelection *_graphInformationSelection;
 
     Tucuxi::Gui::Admin::SentencesPalettes *_sentencesPalettes;
 

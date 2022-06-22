@@ -24,15 +24,15 @@ RequestsController::~RequestsController()
 
 }
 
-void RequestsController::setClient(Tucuxi::Gui::Admin::RequestsClient *client)
+void RequestsController::setClient(RequestsClient *client)
 {
     this->client = client;
 
-    CONNECT(client, SIGNAL(requestListReady(QList<PartialRequest*>)), this, SLOT(processListReady(QList<PartialRequest*>)));
+    CONNECT(client, SIGNAL(requestListReady(QList<Tucuxi::Gui::Admin::PartialRequest*>)), this, SLOT(processListReady(QList<Tucuxi::Gui::Admin::PartialRequest*>)));
     CONNECT(client, SIGNAL(requestReady(InterpretationRequest*)), this, SIGNAL(requestReady(InterpretationRequest*)));
 }
 
-void RequestsController::processListReady(QList<Tucuxi::Gui::Admin::PartialRequest*> list)
+void RequestsController::processListReady(QList<PartialRequest*> list)
 {
     _requestModel->setModelData(list);
 }

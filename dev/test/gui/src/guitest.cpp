@@ -36,6 +36,7 @@
 
 #include <QMessageBox>
 
+using namespace Tucuxi::Gui::Admin;
 
 class SpixGTest;
 SpixGTest* srv;

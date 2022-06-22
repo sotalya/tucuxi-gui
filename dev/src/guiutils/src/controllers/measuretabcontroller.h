@@ -13,7 +13,6 @@ namespace Tucuxi {
 namespace Gui {
 namespace Core {
 
-
 class CoreMeasureList;
 
 }

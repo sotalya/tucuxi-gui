@@ -72,6 +72,7 @@
 #include "tucucore/version.h"
 
 using namespace Tucuxi::Gui::Core;
+using namespace Tucuxi::Gui::Admin;
 
 static const double NBCYCLES_TO_COMPUTE_PERCENTILES = 20.0;
 static const double NBCYCLES_VIEWRANGE_MAX = 60.0;
@@ -81,15 +82,15 @@ static const double NBCYCLES_BEFORE_NOW = 1.0;
 static const double NBCYCLES_AFTER_NOW = 2.0;
 static const double NBCYCLES_MAX_FOR_INITIAL_COMPUTATION = 15.0;
 
+
 STD_PROPERTY_IMPL(InterpretationController, Tucuxi::Gui::Core::DrugModel*, currentDrugModel, CurrentDrugModel)
 STD_PROPERTY_IMPL(InterpretationController, Tucuxi::Gui::Core::LightActiveSubstance*, currentActiveSubstance, CurrentActiveSubstance)
-STD_PROPERTY_IMPL(InterpretationController, Interpretation*, interpretation, Interpretation)
+STD_PROPERTY_IMPL(InterpretationController, Tucuxi::Gui::Admin::Interpretation*, interpretation, Interpretation)
 STD_PROPERTY_IMPL(InterpretationController, QString, rawRequest, RawRequest)
 STD_PROPERTY_IMPL(InterpretationController, QString, clinicalsHtml, ClinicalsHtml)
 STD_PROPERTY_IMPL(InterpretationController, bool, isDemo, IsDemo)
 STD_PROPERTY_IMPL(InterpretationController, QString, reportFileName, ReportFileName)
 
-using namespace Tucuxi::Gui::Admin;
 
 InterpretationController::InterpretationController(QObject *parent) :
     QObject (parent),
@@ -210,7 +211,7 @@ InterpretationController::InterpretationController(QObject *parent) :
     // The following lines are necessary to avoid warnings from QML.
     // However these objects will be replaced by new ones when starting an interpretation
     // Let's create an empty interperation and assign it
-    Interpretation *interpretation = CoreFactory::createEntity<Interpretation>(ADMINREPO, this);
+    Tucuxi::Gui::Admin::Interpretation *interpretation = CoreFactory::createEntity<Tucuxi::Gui::Admin::Interpretation>(ADMINREPO, this);
     predictionspec = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionSpec>(REPO, this);
     setInterpretation(interpretation);
     predictionspec->setAnalysis(_interpretation->getDrugResponseAnalysis());
@@ -222,7 +223,7 @@ InterpretationController::InterpretationController(QObject *parent) :
 //    _webchannel->registerObject("interpretation", _interpretation);
 }
 
-void InterpretationController::setNewInterpretation(Interpretation *interpretation, bool newInterpretation)
+void InterpretationController::setNewInterpretation(Tucuxi::Gui::Admin::Interpretation *interpretation, bool newInterpretation)
 {
     auto oldInterpretation = _interpretation;
     if (_interpretation != nullptr) {

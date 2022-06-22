@@ -187,7 +187,7 @@ public:
 
     int getNbProposedAdjustments();
 
-    QMap<QString, QString> fillMapWithInterpretation(Interpretation *interpretation);
+    QMap<QString, QString> fillMapWithInterpretation(Tucuxi::Gui::Admin::Interpretation *interpretation);
 
     void fillInAnalystData(struct AnalystData);
 

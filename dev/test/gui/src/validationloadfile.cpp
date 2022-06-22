@@ -36,6 +36,8 @@
 #include "core/corefactory.h"
 #include "core/core.h"
 
+using namespace Tucuxi::Gui::Admin;
+
 extern SpixGTest* srv;
 
 TEST(ValidationLoadFile, Test1)

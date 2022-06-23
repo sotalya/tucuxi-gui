@@ -86,6 +86,7 @@ protected:
     bool _isInterpretationValidated;
 
     InterpretationController *interpretationController;
+
 };
 
 #endif // FLOWCONTROLLER_H

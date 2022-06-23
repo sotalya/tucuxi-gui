@@ -28,7 +28,9 @@ void RequestsController::setClient(RequestsClient *client)
 {
     this->client = client;
 
-    CONNECT(client, SIGNAL(requestListReady(QList<Tucuxi::Gui::Admin::PartialRequest*>)), this, SLOT(processListReady(QList<Tucuxi::Gui::Admin::PartialRequest*>)));
+//    CONNECT(client, SIGNAL(requestListReady(QList<PartialRequest*>)), this, SLOT(processListReady(QList<PartialRequest*>)));
+    CONNECT(client, &RequestsClient::requestListReady, this, &RequestsController::processListReady);
+
     CONNECT(client, SIGNAL(requestReady(InterpretationRequest*)), this, SIGNAL(requestReady(InterpretationRequest*)));
 }
 

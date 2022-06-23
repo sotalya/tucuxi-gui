@@ -61,11 +61,6 @@ ColumnLayout {
         }
     }
 
-    function extGetTabIndex()                   // JRT 30.03.2022
-    {
-        return 545; //flow.currentIndex;
-    }
-
     Keys.onPressed: {
 
         if (event.key === Qt.Key_Right) {

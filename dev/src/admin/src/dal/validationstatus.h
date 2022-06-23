@@ -44,19 +44,19 @@ public:
     bool getEnable() { return true; }
     void setEnable(bool type) {}
 
-    Q_INVOKABLE StatusType getStatus(StepType::Enum step) const;
+    Q_INVOKABLE StatusType getStatus(Tucuxi::Gui::Admin::StepType::Enum step) const;
 //    Q_INVOKABLE void setStatus(StepType step, StatusType type);
 
-    Q_INVOKABLE DataStatusType getDataStatus(StepType::Enum step) const;
-    Q_INVOKABLE ValidationStatusType getValidationStatus(StepType::Enum step) const;
-    Q_INVOKABLE void setDataStatus(StepType::Enum step, DataStatusType type);
-    Q_INVOKABLE void setValidationStatus(StepType::Enum step, ValidationStatusType type);
+    Q_INVOKABLE DataStatusType getDataStatus(Tucuxi::Gui::Admin::StepType::Enum step) const;
+    Q_INVOKABLE ValidationStatusType getValidationStatus(Tucuxi::Gui::Admin::StepType::Enum step) const;
+    Q_INVOKABLE void setDataStatus(Tucuxi::Gui::Admin::StepType::Enum step, DataStatusType type);
+    Q_INVOKABLE void setValidationStatus(Tucuxi::Gui::Admin::StepType::Enum step, ValidationStatusType type);
 
     void validate(StepType::Enum step);
     void toggleValidation(StepType::Enum step);
 
-    Q_INVOKABLE bool getEnable(StepType::Enum step) const;
-    Q_INVOKABLE void setEnable(StepType::Enum step, bool type);
+    Q_INVOKABLE bool getEnable(Tucuxi::Gui::Admin::StepType::Enum step) const;
+    Q_INVOKABLE void setEnable(Tucuxi::Gui::Admin::StepType::Enum step, bool type);
 
     void copyFrom(ValidationStatus *other);
 

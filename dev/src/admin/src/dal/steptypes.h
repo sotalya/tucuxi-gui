@@ -7,9 +7,12 @@ namespace Tucuxi {
 namespace Gui {
 namespace Admin {
 
+//    Q_NAMESPACE
+
 class StepType : public QObject
 {
     Q_OBJECT
+
 public:
     enum Enum
     {
@@ -30,6 +33,7 @@ public:
     static const int size = last + 1;
     inline static Enum convert(int value) { return static_cast<Enum>(value); }
     inline static bool isValid(int value) { return (value >= 0 && value<size); }
+
 };
 
 }

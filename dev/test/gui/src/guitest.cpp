@@ -45,7 +45,7 @@ SpixGTest* srv;
 int waitTime1 = 1;
 int waitTimeLong = 10;
 
-SpixGTest::SpixGTest(MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[])
+SpixGTest::SpixGTest(Tucuxi::Gui::GuiUtils::MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[])
 {
     m_mainWindowController = mainWindowController;
     m_window = window;
@@ -157,7 +157,7 @@ void SpixGTest::loadInterpretation(QString loadName)
     if (!loadName.endsWith(".tui"))
         loadName += ".tui";
 
-    fromGuiTest obj;
+    Tucuxi::Gui::GuiUtils::fromGuiTest obj;
     if (QObject::connect(&obj, SIGNAL(loadInterpretation(QString)), srv->m_mainWindowController, SLOT(loadInterpretationFile(QString))) != 0) {
         std::cout << "Interpretation load : Ok" << std::endl;
     }
@@ -167,7 +167,7 @@ void SpixGTest::loadInterpretation(QString loadName)
 
 void SpixGTest::extSetView(QDateTime startView, QDateTime endView)
 {
-    fromGuiTest obj;
+    Tucuxi::Gui::GuiUtils::fromGuiTest obj;
     if (QObject::connect(&obj, SIGNAL(extSignalSetView(QDateTime, QDateTime)), srv->m_mainWindowController, SLOT(extSlotSetView(QDateTime, QDateTime)/*emptySlot()*/)) != 0) {
 //        std::cout << "setViewRange : Ok" << std::endl;
     }else std::cout << "setViewRange : Nok" << std::endl;

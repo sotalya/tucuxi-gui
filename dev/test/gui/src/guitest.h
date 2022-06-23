@@ -120,11 +120,11 @@ struct AnalystData {
 
 class SpixGTest : public spix::TestServer {
 public:
-    SpixGTest(MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[]);
+    SpixGTest(Tucuxi::Gui::GuiUtils::MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[]);
     int testResult();
 
     QQuickWindow* m_window;
-    MainWindowController *m_mainWindowController;
+    Tucuxi::Gui::GuiUtils::MainWindowController *m_mainWindowController;
 
     QObject *getObjectByName(QObject *root, std::string name);
 

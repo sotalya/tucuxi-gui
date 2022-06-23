@@ -59,6 +59,8 @@ class DosageHistory;
 }
 }
 
+class QPrinter;
+
 namespace Tucuxi {
 namespace Gui {
 namespace GuiUtils {
@@ -67,7 +69,7 @@ class CalculationController;
 class ChartDataController;
 
 class Report;
-class QPrinter;
+
 class PersistentFileDialog;
 
 class FlowController;

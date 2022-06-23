@@ -5,7 +5,7 @@
 
 #include "abstractentitylistmodel.h"
 
-#include "core/utils/ezutils.h
+#include "core/utils/ezutils.h"
 
 namespace Tucuxi {
 namespace Gui {

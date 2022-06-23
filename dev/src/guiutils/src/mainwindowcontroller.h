@@ -6,10 +6,6 @@
 #include <QQuickView>
 #include <QDateTime>
 
-class InterpretationController;
-class RequestsController;
-class ValidateDrugDialog;
-
 namespace Tucuxi {
 namespace Gui {
 namespace Admin {
@@ -21,14 +17,17 @@ class Interpretation;
 }
 }
 
-namespace Tucuxi {
-namespace Gui {
-namespace GuiUtils {
-
 #ifdef CONFIG_GUITEST
 class QQmlApplicationEngine;
 #endif // CONFIG_GUITEST
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
+class InterpretationController;
+class RequestsController;
+class ValidateDrugDialog;
 
 class fromGuiTest: public QObject
 {

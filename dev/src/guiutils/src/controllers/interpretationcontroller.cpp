@@ -502,7 +502,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::populateDrugModels()
     if (!populated) {
 
         if (APPUTILSREPO->getDrugsList(_drugs->getList()).error != Tucuxi::Gui::Core::NoError)
-        EXLOG(QtFatalMsg, Tucuxi::guiutils::MODELIOERROR, "Drugs list not retrieved.");
+        EXLOG(QtFatalMsg, Tucuxi::Gui::GuiUtils::MODELIOERROR, "Drugs list not retrieved.");
 
         for (int i = 0; i < _drugs->size(); ++i) {
             Tucuxi::Gui::Core::DrugModel *model = _drugs->at(i);
@@ -1422,34 +1422,34 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
 bool Tucuxi::Gui::GuiUtils::InterpretationController::associateFormulationToRoute(DosageHistory *dosageHistory, AdminList *adminList)
 {
     for (int i = 0; i < dosageHistory->size(); i++) {
-        Admin *d = dosageHistory->at(i)->getRoute();
+        Tucuxi::Gui::Core::Admin *d = dosageHistory->at(i)->getRoute();
 
         bool found = false;
         for (int j = 0; j < adminList->size(); j++) {
-            Admin *a = adminList->at(j);
+            Tucuxi::Gui::Core::Admin *a = adminList->at(j);
             if (a->getFormulationAndRoute().getAbsorptionModel() == Tucuxi::Core::AbsorptionModel::Infusion) {
-                if (d->getRoute() == Admin::Route::INFUSION) {
+                if (d->getRoute() == Tucuxi::Gui::Core::Admin::Route::INFUSION) {
                     found = true;
                     d->setFormulationAndRoute(a->getFormulationAndRoute());
                 }
             }
 
             if (a->getFormulationAndRoute().getAbsorptionModel() == Tucuxi::Core::AbsorptionModel::Extravascular) {
-                if (d->getRoute() == Admin::Route::EXTRA) {
+                if (d->getRoute() == Tucuxi::Gui::Core::Admin::Route::EXTRA) {
                     found = true;
                     d->setFormulationAndRoute(a->getFormulationAndRoute());
                 }
             }
 
             if (a->getFormulationAndRoute().getAbsorptionModel() == Tucuxi::Core::AbsorptionModel::ExtravascularLag) {
-                if (d->getRoute() == Admin::Route::EXTRALAG) {
+                if (d->getRoute() == Tucuxi::Gui::Core::Admin::Route::EXTRALAG) {
                     found = true;
                     d->setFormulationAndRoute(a->getFormulationAndRoute());
                 }
             }
 
             if (a->getFormulationAndRoute().getAbsorptionModel() == Tucuxi::Core::AbsorptionModel::Intravascular) {
-                if (d->getRoute() == Admin::Route::BOLUS) {
+                if (d->getRoute() == Tucuxi::Gui::Core::Admin::Route::BOLUS) {
                     found = true;
                     d->setFormulationAndRoute(a->getFormulationAndRoute());
                 }

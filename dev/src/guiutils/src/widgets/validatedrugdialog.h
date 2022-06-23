@@ -5,12 +5,6 @@
 
 #include <QDialog>
 
-namespace Tucuxi {
-namespace Gui {
-namespace GuiUtils {
-
-class PersistentFileDialog;
-
 namespace Ui {
     class ValidateDrugDialog;
 }
@@ -24,6 +18,13 @@ namespace Ui {
  *
  * \sa DrugManager, Drug
  */
+
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
+class PersistentFileDialog;
+
 class ValidateDrugDialog : public QDialog
 {
     Q_OBJECT

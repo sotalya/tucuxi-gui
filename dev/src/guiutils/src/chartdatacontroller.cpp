@@ -211,28 +211,28 @@ void ChartDataController::receiveResultsAdjPerc(Tucuxi::Gui::Core::PredictionRes
 }
 
 void ChartDataController::popCalcFailed() {
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Calculation timedout for Population Percentiles"))
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, tr("Calculation timedout for Population Percentiles"))
     togglePercentiles(Tucuxi::Gui::Core::POPULATION);
 }
 
 void ChartDataController::aprCalcFailed() {
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Calculation timedout for Apriori Percentiles"))
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, tr("Calculation timedout for Apriori Percentiles"))
     togglePercentiles(Tucuxi::Gui::Core::APRIORI);
 }
 
 void ChartDataController::apoCalcFailed() {
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Calculation timedout for Aposteriori Percentiles"))
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, tr("Calculation timedout for Aposteriori Percentiles"))
     togglePercentiles(Tucuxi::Gui::Core::APOSTERIORI);
 }
 
 void ChartDataController::adjCalcFailed() {
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Calculation timedout for adjustment Percentiles"))
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, tr("Calculation timedout for adjustment Percentiles"))
     //togglePercentiles(Tucuxi::Gui::Core::APOSTERIORI);
 }
 
 void ChartDataController::togglePercentiles(int ptype) {
 
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, tr("Toggling percentiles of type: %1").arg(ptype))
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, tr("Toggling percentiles of type: %1").arg(ptype))
     //toggle the showing of parameters for failed calc or for chosen
 }
 
@@ -281,7 +281,7 @@ bool ChartDataController::isAPosterioriValid() const
 bool ChartDataController::isReverseValid() const
 {
     if (!predictionspec->getAdjustmentDate().isValid()) {
-       // EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Reverse prediction not run because adjustment time not valid.");
+       // EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Reverse prediction not run because adjustment time not valid.");
         return false;
     }
 
@@ -298,12 +298,12 @@ bool ChartDataController::isAdjustedValid() const
         return false;
     }
     if (!predictionspec->getAdjustmentDate().isValid()) {
-        EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Adjustment prediction not run because adjustment time not valid.");
+        EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Adjustment prediction not run because adjustment time not valid.");
         return false;
     }
 
     if (predictionspec->getAnalysis()->getTreatment()->getAdjustments()->size() == 0) {
-        EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Adjustment prediction not run because there is no defined adjustment.");
+        EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Adjustment prediction not run because there is no defined adjustment.");
        return false;
     }
 

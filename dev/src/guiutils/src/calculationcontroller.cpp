@@ -69,7 +69,7 @@ void LocalCalculationController::computePopPred(PredictionSpec* prediction)
 {
 
     emit disengage();
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running typical patient prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running typical patient prediction.");
 
     DataSet dataSet;
     PopulationTraits parametersTraits;
@@ -84,7 +84,7 @@ void LocalCalculationController::computePopPred(PredictionSpec* prediction)
                                            pointsTraits,
                                            *pred);
 
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending typical patient prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Ending typical patient prediction.");
     pred->moveToThread(qApp->thread());
     emit popPredComputed(pred);
     emit engage();
@@ -103,14 +103,14 @@ void LocalCalculationController::preparePredResults(QVector<int> time, QVector<d
         fpt->setValue(data[i]);
         fpts->append(fpt);
     }
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending typical patient prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Ending typical patient prediction.");
     pred->moveToThread(qApp->thread());
 }
 
 void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running typical patient percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running typical patient percentiles.");
 
 //    std::vector<double> percentiles = {10, 25, 75, 90};
     QMap<double, DataSet> percsDataSets;
@@ -140,7 +140,7 @@ void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
         emit engage();
         return;
     }
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending typical patient percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Ending typical patient percentiles.");
     pred->moveToThread(qApp->thread());
     emit popPercComputed(pred);
     emit engage();
@@ -149,7 +149,7 @@ void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
 void LocalCalculationController::computeAprPred(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running a priori prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running a priori prediction.");
 
     AprioriTraits parametersTraits;
     PointsTraits pointsTraits(prediction->getStartDate(),
@@ -163,7 +163,7 @@ void LocalCalculationController::computeAprPred(PredictionSpec* prediction)
                                            pointsTraits,
                                            *pred);
 
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending a priori prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Ending a priori prediction.");
 
     pred->moveToThread(qApp->thread());
     emit aprPredComputed(pred);
@@ -174,7 +174,7 @@ void LocalCalculationController::computeAprPred(PredictionSpec* prediction)
 void LocalCalculationController::computeAprPerc(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running apriori percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running apriori percentiles.");
 
 //    std::vector<double> percentiles = {10, 25, 75, 90};
 
@@ -198,7 +198,7 @@ void LocalCalculationController::computeAprPerc(PredictionSpec* prediction)
                                                 *pred,
                                                 aprPercAborter);
 
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending apriori percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Ending apriori percentiles.");
 
     if (result == ProcessingResult::Aborted) {
         emit aprCalcFail();
@@ -214,7 +214,7 @@ void LocalCalculationController::computeAprPerc(PredictionSpec* prediction)
 void LocalCalculationController::computeApoPred(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running a posteriori prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running a posteriori prediction.");
 
     ParamTraits* parametersTraits = new AposterioriTraits();
     PointsTraits pointsTraits(prediction->getStartDate(),
@@ -228,7 +228,7 @@ void LocalCalculationController::computeApoPred(PredictionSpec* prediction)
                                            pointsTraits,
                                            *pred);
 
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending a posteriori prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Ending a posteriori prediction.");
 
     pred->moveToThread(qApp->thread());
     emit apoPredComputed(pred);
@@ -240,7 +240,7 @@ void LocalCalculationController::computeApoPred(PredictionSpec* prediction)
 void LocalCalculationController::computeApoPerc(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running aposteriori percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running aposteriori percentiles.");
 
     AposterioriTraits parametersTraits;
     PercentilesTraits percentilesTraits(prediction->getNbPoints(),
@@ -259,7 +259,7 @@ void LocalCalculationController::computeApoPerc(PredictionSpec* prediction)
                                                 *pred,
                                                 apoPercAborter);
 
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending aposteriori percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Ending aposteriori percentiles.");
 
     if (result == ProcessingResult::Aborted) {
         emit apoCalcFail();
@@ -275,7 +275,7 @@ void LocalCalculationController::computeApoPerc(PredictionSpec* prediction)
 void LocalCalculationController::computeAdjPerc(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running adjustments percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running adjustments percentiles.");
 
 
     ParamTraits* parametersTraits;
@@ -349,7 +349,7 @@ void LocalCalculationController::computeAdjPerc(PredictionSpec* prediction)
     }
 
 
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending adjustments percentiles.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Ending adjustments percentiles.");
 
     if (result == ProcessingResult::Aborted) {
         emit adjCalcFail();
@@ -365,7 +365,7 @@ void LocalCalculationController::computeAdjPerc(PredictionSpec* prediction)
 void LocalCalculationController::computeRevPred(PredictionSpec* prediction)
 {
     emit disengage();
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running reverse prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running reverse prediction.");
     //Q_ASSERT_X(dateSetting.isValid());
 
     ParamTraits* parametersTraits;
@@ -428,7 +428,7 @@ void LocalCalculationController::computeRevPred(PredictionSpec* prediction)
                                             reverseTraits,
                                             *pred);
 
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending reverse prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Ending reverse prediction.");
 
     pred->moveToThread(qApp->thread());
     emit revPredComputed(pred);
@@ -453,7 +453,7 @@ void LocalCalculationController::computeAdjPred(PredictionSpec* prediction)
     */
 
     emit disengage();
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Running a priori adjustment prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running a priori adjustment prediction.");
 
     ParamTraits* parametersTraits;
     if (prediction->getAnalysis()->getTreatment()->getMeasures()->isEmpty()) {
@@ -492,7 +492,7 @@ void LocalCalculationController::computeAdjPred(PredictionSpec* prediction)
                                            pointsTraits,
                                            *pred);
 
-    EXLOG(QtDebugMsg, Tucuxi::guiutils::NOEZERROR, "Ending a priori adjustment prediction.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Ending a priori adjustment prediction.");
     pred->moveToThread(qApp->thread());
     emit adjPredComputed(pred);
     emit engage();

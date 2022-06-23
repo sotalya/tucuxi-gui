@@ -16,7 +16,6 @@ namespace Tucuxi {
 namespace Gui {
 namespace Core {
 
-
 class PatientVariateList;
 class DrugVariateList;
 class OperableAmount;
@@ -34,7 +33,7 @@ class DrugVariateInfo : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
 
-    ADMIN_ENTITY_UTILS(DrugVariateInfo)
+    ADMIN_ENTITY_UTILS(Tucuxi::Gui::GuiUtils::DrugVariateInfo)
 
     AUTO_PROPERTY_DECL(QString, covariateId, CovariateId)
     AUTO_PROPERTY_DECL(QString, name, Name)
@@ -66,6 +65,9 @@ public:
 
 };
 
+QML_POINTERLIST_CLASS_DECL(DrugVariateInfoList, DrugVariateInfo)
+
+
 }
 }
 }
@@ -73,8 +75,7 @@ public:
 Q_DECLARE_METATYPE(Tucuxi::Gui::GuiUtils::DrugVariateInfo*)
 Q_DECLARE_METATYPE(QList<Tucuxi::Gui::GuiUtils::DrugVariateInfo*>)
 
-QML_POINTERLIST_CLASS_DECL(DrugVariateInfoList, DrugVariateInfo)
-Q_DECLARE_METATYPE(DrugVariateInfoList*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::GuiUtils::DrugVariateInfoList*)
 
 
 namespace Tucuxi {

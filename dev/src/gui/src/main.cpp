@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("HEIG-VD");
 //    QSettings::setDefaultFormat(QSettings::Format::IniFormat);
 
-    AppMode* appMode = AppMode::getInstance();
+    Tucuxi::Gui::GuiUtils::AppMode* appMode = Tucuxi::Gui::GuiUtils::AppMode::getInstance();
 
     if(appMode->isDemo()){
         QCoreApplication::setApplicationName("Tucuxi - Demo version - Not intended for medical use");
@@ -280,8 +280,8 @@ int main(int argc, char *argv[])
     qRegisterMetaType<Tucuxi::Gui::Core::Parameters*>("ParameterList*");
     qRegisterMetaType<Tucuxi::Gui::Core::DrugTreatment*>("DrugTreatment*");
     qRegisterMetaType<Tucuxi::Gui::Core::StandardTreatment*>("StandardTreatment*");
-    qRegisterMetaType<DrugVariateInfo*>("DrugVariateInfo*");
-    qRegisterMetaType<DrugVariateInfoList*>("DrugVariateInfoList*");
+    qRegisterMetaType<Tucuxi::Gui::GuiUtils::DrugVariateInfo*>("DrugVariateInfo*");
+    qRegisterMetaType<Tucuxi::Gui::GuiUtils::DrugVariateInfoList*>("DrugVariateInfoList*");
     qRegisterMetaType<Tucuxi::Gui::Core::TargetEvaluationResult*>("TargetEvaluationResult*");
     qRegisterMetaType<Tucuxi::Gui::Core::TargetEvaluationResults*>("TargetEvaluationResults*");
     qRegisterMetaType<Tucuxi::Gui::Core::Adjustment*>("Adjustment*");
@@ -304,14 +304,14 @@ int main(int argc, char *argv[])
     qRegisterMetaType<Tucuxi::Gui::Admin::ClinicalSet*>("ClinicalSet*");
     qRegisterMetaType<Tucuxi::Gui::Admin::Interpretation*>("Interpretation*");
     qRegisterMetaType<Tucuxi::Gui::Admin::Interpretation::InterpretationType>("InterpretationType");
-    qRegisterMetaType<InterpretationController*>("InterpretationController*");
-    qRegisterMetaType<MeasureTabController*>("MeasureTabController*");
-    qRegisterMetaType<DosageTabController*>("DosageTabController*");
-    qRegisterMetaType<TargetTabController*>("TargetTabController*");
-    qRegisterMetaType<CovariateTabController*>("CovariateTabController*");
-    qRegisterMetaType<AdjustmentTabController*>("AdjustmentTabController*");
-    qRegisterMetaType<DrugTabController*>("DrugTabController*");
-    qRegisterMetaType<MainWindowController*>("MainWindowController*");
+    qRegisterMetaType<Tucuxi::Gui::GuiUtils::InterpretationController*>("InterpretationController*");
+    qRegisterMetaType<Tucuxi::Gui::GuiUtils::MeasureTabController*>("MeasureTabController*");
+    qRegisterMetaType<Tucuxi::Gui::GuiUtils::DosageTabController*>("DosageTabController*");
+    qRegisterMetaType<Tucuxi::Gui::GuiUtils::TargetTabController*>("TargetTabController*");
+    qRegisterMetaType<Tucuxi::Gui::GuiUtils::CovariateTabController*>("CovariateTabController*");
+    qRegisterMetaType<Tucuxi::Gui::GuiUtils::AdjustmentTabController*>("AdjustmentTabController*");
+    qRegisterMetaType<Tucuxi::Gui::GuiUtils::DrugTabController*>("DrugTabController*");
+    qRegisterMetaType<Tucuxi::Gui::GuiUtils::MainWindowController*>("MainWindowController*");
     qRegisterMetaType<Tucuxi::Gui::Admin::Person::GenderType>("GenderType");
     qRegisterMetaType<Tucuxi::Gui::Admin::SentencesPalettes*>("SentencesPalettes*");
     qRegisterMetaType<Tucuxi::Gui::Admin::Section*>("Section*");
@@ -336,7 +336,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::CoreMeasure>("ezechiel", 1, 0, "CoreMeasure", QObject::tr("Cannot instantiate type 'CoreMeasure'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::PatientVariate>("ezechiel", 1, 0, "PatientVariate", QObject::tr("Cannot instantiate type 'PatientVariate'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::DrugVariate>("ezechiel", 1, 0, "DrugVariate", QObject::tr("Cannot instantiate type 'DrugVariate'"));    
-    qmlRegisterUncreatableType<DrugVariateInfo>("ezechiel", 1, 0, "DrugVariateInfo", QObject::tr("Cannot instantiate type 'DrugVariateInfo'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::DrugVariateInfo>("ezechiel", 1, 0, "DrugVariateInfo", QObject::tr("Cannot instantiate type 'DrugVariateInfo'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::Adjustment>("ezechiel", 1, 0, "Adjustment", QObject::tr("Cannot instantiate type 'Adjustment'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::DrugTreatment>("ezechiel", 1, 0, "DrugTreatment", QObject::tr("Cannot instantiate type 'Treatment'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::PredictionSpec>("ezechiel", 1, 0, "PredictionSpec", QObject::tr("Cannot instantiate type 'PredictionSpec'"));
@@ -362,14 +362,14 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::UncastedValue>("ezechiel", 1, 0, "UncastedValue", QObject::tr("Cannot instantiate type 'UncastedValue'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::UncastedValueList>("ezechiel", 1, 0, "UncastedValueList", QObject::tr("Cannot instantiate type 'UncastedValueList'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Admin::Interpretation>("ezechiel", 1, 0, "Interpretation", QObject::tr("Cannot instantiate type 'Interpretation'"));
-    qmlRegisterUncreatableType<InterpretationController>("ezechiel", 1, 0, "InterpretationController", QObject::tr("Cannot instantiate type 'InterpretationController'"));
-    qmlRegisterUncreatableType<MeasureTabController>("ezechiel", 1, 0, "MeasureTabController", QObject::tr("Cannot instantiate type 'MeasureTabController'"));
-    qmlRegisterUncreatableType<TargetTabController>("ezechiel", 1, 0, "TargetTabController", QObject::tr("Cannot instantiate type 'TargetTabController'"));
-    qmlRegisterUncreatableType<DosageTabController>("ezechiel", 1, 0, "DosageTabController", QObject::tr("Cannot instantiate type 'DosageTabController'"));
-    qmlRegisterUncreatableType<CovariateTabController>("ezechiel", 1, 0, "CovariateTabController", QObject::tr("Cannot instantiate type 'CovariateTabController'"));
-    qmlRegisterUncreatableType<AdjustmentTabController>("ezechiel", 1, 0, "AdjustmentTabController", QObject::tr("Cannot instantiate type 'AdjustmentTabController'"));
-    qmlRegisterUncreatableType<DrugTabController>("ezechiel", 1, 0, "DrugTabController", QObject::tr("Cannot instantiate type 'DrugTabController'"));
-    qmlRegisterUncreatableType<MainWindowController>("ezechiel", 1, 0, "MainWindowController", QObject::tr("Cannot instantiate type 'MainWindowController'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::InterpretationController>("ezechiel", 1, 0, "InterpretationController", QObject::tr("Cannot instantiate type 'InterpretationController'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::MeasureTabController>("ezechiel", 1, 0, "MeasureTabController", QObject::tr("Cannot instantiate type 'MeasureTabController'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::TargetTabController>("ezechiel", 1, 0, "TargetTabController", QObject::tr("Cannot instantiate type 'TargetTabController'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::DosageTabController>("ezechiel", 1, 0, "DosageTabController", QObject::tr("Cannot instantiate type 'DosageTabController'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::CovariateTabController>("ezechiel", 1, 0, "CovariateTabController", QObject::tr("Cannot instantiate type 'CovariateTabController'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::AdjustmentTabController>("ezechiel", 1, 0, "AdjustmentTabController", QObject::tr("Cannot instantiate type 'AdjustmentTabController'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::DrugTabController>("ezechiel", 1, 0, "DrugTabController", QObject::tr("Cannot instantiate type 'DrugTabController'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::MainWindowController>("ezechiel", 1, 0, "MainWindowController", QObject::tr("Cannot instantiate type 'MainWindowController'"));
 
     EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering model objects.");
     /*
@@ -387,17 +387,17 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<ValidationModel>("ezechiel", 1, 0, "ValidationModel", QObject::tr("Cannot instantiate type 'ValidationModel'"));
 */
 //#ifdef CONFIG_CONNECTED
-    qmlRegisterUncreatableType<PartialRequestListModel>("ezechiel", 1, 0, "PartialRequestListModel", QObject::tr("Cannot instantiate type 'PartialRequestListModel'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::PartialRequestListModel>("ezechiel", 1, 0, "PartialRequestListModel", QObject::tr("Cannot instantiate type 'PartialRequestListModel'"));
 //#endif // CONFIG_CONNECTED
 //    qmlRegisterUncreatableType<PracticianListModel>("ezechiel", 1, 0, "PracticianListModel", QObject::tr("Cannot instantiate type 'PracticianListModel'"));
 #ifdef CONFIG_CONNECTED
-    qmlRegisterUncreatableType<RequestsController>("ezechiel", 1, 0, "RequestsController", QObject::tr("Cannot instantiate type 'RequestsController'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::RequestsController>("ezechiel", 1, 0, "RequestsController", QObject::tr("Cannot instantiate type 'RequestsController'"));
 #endif // CONFIG_CONNECTED
 //    qmlRegisterUncreatableType<ReverseModel>("ezechiel", 1, 0, "ReverseModel", QObject::tr("Cannot instantiate type 'ReverseModel'"));
-    qmlRegisterUncreatableType<SortFilterEntityListProxyModel>("ezechiel", 1, 0, "SortFilterEntityListProxyModel", QObject::tr("Cannot instantiate type 'SortFilterEntityListProxyModel'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::SortFilterEntityListProxyModel>("ezechiel", 1, 0, "SortFilterEntityListProxyModel", QObject::tr("Cannot instantiate type 'SortFilterEntityListProxyModel'"));
 //    qmlRegisterUncreatableType<StudyListModel>("ezechiel", 1, 0, "StudyListModel", QObject::tr("Cannot instantiate type 'StudyListModel'"));
 //    qmlRegisterUncreatableType<TargetListModel>("ezechiel", 1, 0, "TargetListModel", QObject::tr("Cannot instantiate type 'TargetListModel'"));
-    qmlRegisterUncreatableType<StartupWindow>("ezechiel", 1, 0, "StartupWindow", QObject::tr("Cannot instantiate type 'StartupWindow'"));
+    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::StartupWindow>("ezechiel", 1, 0, "StartupWindow", QObject::tr("Cannot instantiate type 'StartupWindow'"));
 
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::PredictionResult>("ezechiel", 1, 0, "PredictionResult", QObject::tr("Cannot instantiate type 'PredictionResult'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::PercentileData>("ezechiel", 1, 0, "PercentilePair", QObject::tr("Cannot instantiate type 'PercentilePair'"));
@@ -411,7 +411,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Tucuxi::Gui::Admin::StepType>("ezechiel", 1, 0, "StepType", QObject::tr("Cannot instantiate type 'StepType'"));
 
     EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering other types.");
-    qmlRegisterType<ProxyModelFilter>("ezechiel", 1, 0, "ProxyModelFilter");
+    qmlRegisterType<Tucuxi::Gui::GuiUtils::ProxyModelFilter>("ezechiel", 1, 0, "ProxyModelFilter");
 
     EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering QML singletons.");
     qmlRegisterSingletonType(QUrl("qrc:/controls/Status.qml"), "guiutils.qml.controls", 1, 0, "Status");
@@ -499,12 +499,12 @@ int main(int argc, char *argv[])
 #endif
 
 #ifndef NOSTARTUPSCREEN
-    StartupScreen startupScreen;
+    Tucuxi::Gui::GuiUtils::StartupScreen startupScreen;
     if (startupScreen.exec() != QDialog::Accepted)
         return 0;
 #endif // NOSTARTUPSCREEN
 
-    MainWindowController* mainWindow = new MainWindowController(&app);
+    Tucuxi::Gui::GuiUtils::MainWindowController* mainWindow = new Tucuxi::Gui::GuiUtils::MainWindowController(&app);
 #ifndef CONFIG_GUITEST
     mainWindow->setResizeMode(QQuickView::SizeRootObjectToView);
     mainWindow->setMinimumSize(QSize(800,680));
@@ -626,7 +626,7 @@ void parseOptions()
     //and other network related features
     Q_UNUSED(standaloneOption);
 
-    AppGlobals *appGlobals = AppGlobals::getInstance();
+    Tucuxi::Gui::GuiUtils::AppGlobals *appGlobals = Tucuxi::Gui::GuiUtils::AppGlobals::getInstance();
 
     appGlobals->setListFile(parser.value(listFileOption));
     appGlobals->setRequestFile(parser.value(requestFileOption));

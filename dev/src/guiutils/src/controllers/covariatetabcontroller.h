@@ -26,6 +26,10 @@ class AbstractRepository;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class DrugVariateInfo : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
@@ -62,11 +66,20 @@ public:
 
 };
 
-Q_DECLARE_METATYPE(DrugVariateInfo*)
-Q_DECLARE_METATYPE(QList<DrugVariateInfo*>)
+}
+}
+}
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::GuiUtils::DrugVariateInfo*)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::GuiUtils::DrugVariateInfo*>)
 
 QML_POINTERLIST_CLASS_DECL(DrugVariateInfoList, DrugVariateInfo)
 Q_DECLARE_METATYPE(DrugVariateInfoList*)
+
+
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
 
 class CovariateTabController : public AbstractViewController
 {
@@ -111,5 +124,9 @@ protected:
 private:
     static bool compareVariate(const Tucuxi::Gui::Core::PatientVariate* a, const Tucuxi::Gui::Core::PatientVariate* b);
 };
+
+}
+}
+}
 
 #endif // COVARIATETABCONTROLLER_H

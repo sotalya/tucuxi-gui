@@ -31,6 +31,7 @@
 
 using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::Core;
+using namespace Tucuxi::Gui::GuiUtils;
 
 DemoRequestsClient::DemoRequestsClient(QObject *parent) : RequestsClient(parent)
 {

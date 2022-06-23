@@ -8,6 +8,10 @@
 #include <QAbstractListModel>
 #include <QUndoCommand>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class AbstractEntityModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -52,5 +56,9 @@ private:
     int _row;
     int _col;
 };
+
+}
+}
+}
 
 #endif // ABSTRACTENTITYMODEL_H

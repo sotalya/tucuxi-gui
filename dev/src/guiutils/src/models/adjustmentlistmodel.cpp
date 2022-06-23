@@ -3,6 +3,8 @@
 #include "adjustmentlistmodel.h"
 #include "core/utils/errorenums.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 AdjustmentListModel::AdjustmentListModel(QObject *parent) :
     AbstractEntityListModel(parent),
     _roleNames(),

@@ -5,6 +5,8 @@
 #include <QQmlContext>
 #include <QQuickItem>
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 StartupWindow::StartupWindow(QWidget *parent) :
     QQuickWidget(parent)
 {

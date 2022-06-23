@@ -8,6 +8,10 @@
 #include "core/dal/drug/target.h"
 #include "core/dal/drug/drug.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class TargetListModel : public AbstractEntityListModel
 {
     Q_OBJECT
@@ -60,5 +64,9 @@ private:
     Tucuxi::Gui::Core::Unit _defaultCUnit;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // TARGETLISTMODEL_H

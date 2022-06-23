@@ -12,6 +12,7 @@
 #include "interpretationcontroller.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 STD_PROPERTY_IMPL(MeasureTabController, Tucuxi::Gui::Core::CoreMeasureList*, measures, Measures)
 

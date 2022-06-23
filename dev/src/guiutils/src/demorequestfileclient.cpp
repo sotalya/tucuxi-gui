@@ -15,7 +15,7 @@
 #include "rest/builders/replylistmessagebuilder.h"
 
 using namespace Tucuxi::Gui::Core;
-
+using namespace Tucuxi::Gui::GuiUtils;
 
 DemoRequestFileClient::DemoRequestFileClient(QObject *parent) : RequestsClientProcessing(parent)
 {

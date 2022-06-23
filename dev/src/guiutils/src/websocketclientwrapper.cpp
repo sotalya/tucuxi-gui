@@ -20,6 +20,9 @@
     All clients connecting to the QWebSocketServer will be automatically wrapped
     in WebSocketTransport objects.
 */
+
+using namespace Tucuxi::Gui::GuiUtils;
+
 WebSocketClientWrapper::WebSocketClientWrapper(QWebSocketServer *server, QObject *parent)
     : QObject(parent)
     , m_server(server)

@@ -10,6 +10,10 @@
 #include "admin/src/dal/measure.h"
 #include "core/dal/coremeasure.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class MeasureListModel : public AbstractEntityListModel
 {
     Q_OBJECT
@@ -54,5 +58,9 @@ private:
     Tucuxi::Gui::Core::DrugModel* _drug;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // MEASURELISTMODEL_H

@@ -8,6 +8,7 @@
 #include "errors_guiutils.h"
 
 using namespace Tucuxi::Gui::Core;
+using namespace Tucuxi::Gui::GuiUtils;
 
 CovariateListModel::CovariateListModel(QObject *parent) :
     AbstractEntityListModel(parent),

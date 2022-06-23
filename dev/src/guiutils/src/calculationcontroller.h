@@ -32,8 +32,6 @@ namespace Core {
 }
 }
 
-class CalculationBuffer;
-
 namespace Tucuxi {
 namespace Common {
     class DateTime;
@@ -44,6 +42,12 @@ namespace Core {
     enum class PredictionParameterType;
 }
 }
+
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
+class CalculationBuffer;
 
 
 #ifdef COMPILE_WITH_TUCUCORE
@@ -546,6 +550,10 @@ protected:
     //! Push a calculation in the buffer (generic method used internally)
     void push(Tucuxi::Gui::Core::PredictionSpec*spec, calculationType what);
 };
+
+}
+}
+}
 
 
 #endif // CALCULATIONCONTROLLER_H

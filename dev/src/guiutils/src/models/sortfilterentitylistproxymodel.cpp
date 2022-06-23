@@ -6,6 +6,8 @@
 #include <QDateTime>
 #include <QQmlEngine>
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 ProxyModelFilter::ProxyModelFilter(QObject *parent) :
     QObject(parent),
     _role(-1),

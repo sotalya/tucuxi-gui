@@ -42,9 +42,7 @@
 #include "tucucore/operation.h"
 #include "tucucore/cachecomputing.h"
 
-namespace Tucuxi {
-namespace Gui {
-namespace Processing {
+using namespace Tucuxi::Gui::Processing;
 
 void checkCovariate(const Tucuxi::Common::DateTime _startDate, const Tucuxi::Core::DrugTreatment &drugTreatment, const Tucuxi::Core::DrugModel &drugModel, Tucuxi::Gui::Core::PredictionResult& prediction, const Tucuxi::Common::DateTime _endDate)
 {
@@ -394,7 +392,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
                     ranks,
                     nbPointsPerHour,
                     options,
-                    static_cast<MixAborter*>(aborter)->getTucuxiAborter());
+                    static_cast<Tucuxi::Gui::GuiUtils::MixAborter*>(aborter)->getTucuxiAborter());
 
         Tucuxi::Core::ComputingRequest request(std::to_string(m_requestID), *drugModel, *drugTreatment, std::move(computingTrait));
         std::unique_ptr<Tucuxi::Core::ComputingResponse> response = std::make_unique<Tucuxi::Core::ComputingResponse>(std::to_string(m_requestID));
@@ -626,10 +624,6 @@ Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
     }
 
     return Tucuxi::ProcessingResult::Success;
-}
-
-}
-}
 }
 
 

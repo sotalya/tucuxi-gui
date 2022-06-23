@@ -73,6 +73,7 @@
 
 using namespace Tucuxi::Gui::Core;
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 static const double NBCYCLES_TO_COMPUTE_PERCENTILES = 20.0;
 static const double NBCYCLES_VIEWRANGE_MAX = 60.0;
@@ -83,16 +84,16 @@ static const double NBCYCLES_AFTER_NOW = 2.0;
 static const double NBCYCLES_MAX_FOR_INITIAL_COMPUTATION = 15.0;
 
 
-STD_PROPERTY_IMPL(InterpretationController, Tucuxi::Gui::Core::DrugModel*, currentDrugModel, CurrentDrugModel)
-STD_PROPERTY_IMPL(InterpretationController, Tucuxi::Gui::Core::LightActiveSubstance*, currentActiveSubstance, CurrentActiveSubstance)
-STD_PROPERTY_IMPL(InterpretationController, Tucuxi::Gui::Admin::Interpretation*, interpretation, Interpretation)
-STD_PROPERTY_IMPL(InterpretationController, QString, rawRequest, RawRequest)
-STD_PROPERTY_IMPL(InterpretationController, QString, clinicalsHtml, ClinicalsHtml)
-STD_PROPERTY_IMPL(InterpretationController, bool, isDemo, IsDemo)
-STD_PROPERTY_IMPL(InterpretationController, QString, reportFileName, ReportFileName)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::InterpretationController, Tucuxi::Gui::Core::DrugModel*, currentDrugModel, CurrentDrugModel)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::InterpretationController, Tucuxi::Gui::Core::LightActiveSubstance*, currentActiveSubstance, CurrentActiveSubstance)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::InterpretationController, Tucuxi::Gui::Admin::Interpretation*, interpretation, Interpretation)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::InterpretationController, QString, rawRequest, RawRequest)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::InterpretationController, QString, clinicalsHtml, ClinicalsHtml)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::InterpretationController, bool, isDemo, IsDemo)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::InterpretationController, QString, reportFileName, ReportFileName)
 
 
-InterpretationController::InterpretationController(QObject *parent) :
+Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObject *parent) :
     QObject (parent),
     _currentDrugModel(nullptr),
     _currentActiveSubstance(nullptr),
@@ -223,7 +224,7 @@ InterpretationController::InterpretationController(QObject *parent) :
 //    _webchannel->registerObject("interpretation", _interpretation);
 }
 
-void InterpretationController::setNewInterpretation(Tucuxi::Gui::Admin::Interpretation *interpretation, bool newInterpretation)
+void Tucuxi::Gui::GuiUtils::InterpretationController::setNewInterpretation(Tucuxi::Gui::Admin::Interpretation *interpretation, bool newInterpretation)
 {
     auto oldInterpretation = _interpretation;
     if (_interpretation != nullptr) {
@@ -327,7 +328,7 @@ void InterpretationController::setNewInterpretation(Tucuxi::Gui::Admin::Interpre
 }
 
 
-void InterpretationController::initAfterQmlLoading(QObject *root, QQmlContext *rootContext)
+void Tucuxi::Gui::GuiUtils::InterpretationController::initAfterQmlLoading(QObject *root, QQmlContext *rootContext)
 {
 #ifdef CONFIG_GUITEST
     this->root = root;
@@ -362,7 +363,7 @@ void InterpretationController::bindModelsToRootContext(QQmlContext *rootContext)
 }
 
 
-void InterpretationController::retrieveViewsFromQml()
+void Tucuxi::Gui::GuiUtils::InterpretationController::retrieveViewsFromQml()
 {
     adjustmentsView = root->findChild<QObject *>("adjustmentsView");
     Q_ASSERT(adjustmentsView);
@@ -420,7 +421,7 @@ void InterpretationController::retrieveViewsFromQml()
     Q_ASSERT(sentencePaletteDialog);
 }
 
-void InterpretationController::initViewConnexions()
+void Tucuxi::Gui::GuiUtils::InterpretationController::initViewConnexions()
 {
     CONNECT(flowView, SIGNAL(changedTab(int)), this, SLOT(currentTabChanged(int)));
     CONNECT(flowView, SIGNAL(validateTab(int)), this, SLOT(validateTab(int)));
@@ -437,17 +438,17 @@ void InterpretationController::initViewConnexions()
 //    CONNECT(adjustmentTabController, SIGNAL(adjustmentDateChanged(QDateTime)), adjustmentsView, SLOT(setAdjustmentDate(QDateTime)));
 }
 
-QObject *InterpretationController::view() const
+QObject *Tucuxi::Gui::GuiUtils::InterpretationController::view() const
 {
     return flowView;
 }
 
-bool InterpretationController::isFlowRequest() const
+bool Tucuxi::Gui::GuiUtils::InterpretationController::isFlowRequest() const
 {
     return _interpretation->getInterpretationType() == Interpretation::InterpretationType::FromRequest;
 }
 
-bool InterpretationController::acceptAndQuit()
+bool Tucuxi::Gui::GuiUtils::InterpretationController::acceptAndQuit()
 {/*
     // Check if we can loose the work done
     if (QMessageBox::warning(QApplication::activeWindow(),
@@ -473,7 +474,7 @@ bool InterpretationController::acceptAndQuit()
 
 // This function should be called to delete the current request.
 // It deletes all objects related to the request and leaves the flow in its initial state
-void InterpretationController::deleteCurrentRequest()
+void Tucuxi::Gui::GuiUtils::InterpretationController::deleteCurrentRequest()
 {
 
     if (chartData)
@@ -495,7 +496,7 @@ bool activeSubstanceComparator(const Tucuxi::Gui::Core::LightActiveSubstance *a1
     return a1->getName()->value() < a2->getName()->value();
 }
 
-void InterpretationController::populateDrugModels()
+void Tucuxi::Gui::GuiUtils::InterpretationController::populateDrugModels()
 {
     static bool populated = false;
     if (!populated) {
@@ -513,7 +514,7 @@ void InterpretationController::populateDrugModels()
     }
 }
 
-void InterpretationController::populateMultipleActiveSubstance()
+void Tucuxi::Gui::GuiUtils::InterpretationController::populateMultipleActiveSubstance()
 {
     populateDrugModels();
 
@@ -546,7 +547,7 @@ void InterpretationController::populateMultipleActiveSubstance()
     _activeSubstances->update();
 }
 
-void InterpretationController::populateSingleActiveSubstance(const QString &activeSubstanceId)
+void Tucuxi::Gui::GuiUtils::InterpretationController::populateSingleActiveSubstance(const QString &activeSubstanceId)
 {
     populateDrugModels();
 
@@ -574,7 +575,7 @@ void InterpretationController::populateSingleActiveSubstance(const QString &acti
     _activeSubstances->update();
 }
 
-void InterpretationController::startNewPatient()
+void Tucuxi::Gui::GuiUtils::InterpretationController::startNewPatient()
 {
 
     // Inialize the new interpretation
@@ -634,7 +635,7 @@ void InterpretationController::startNewPatient()
     setCurrentPatient(dynamic_cast<Patient*>(_patients->at(0)));
 }
 
-void InterpretationController::startInterpretationRequest(InterpretationRequest *interpretationRequest)
+void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest(InterpretationRequest *interpretationRequest)
 {
     // First build the interpretation
     Interpretation *interpretation = CoreFactory::createEntity<Interpretation>(ABSTRACTREPO, this);
@@ -719,8 +720,8 @@ void InterpretationController::startInterpretationRequest(InterpretationRequest 
 
     bool foundDrugModel = false;
 
-    QList<Admin::Route> defaultRoutes;
-    QList<Admin*> defaultAdmins;
+    QList<Tucuxi::Gui::Core::Admin::Route> defaultRoutes;
+    QList<Tucuxi::Gui::Core::Admin*> defaultAdmins;
 
     for (int i = 0; i < _drugs->size(); ++i) {
         if (_drugs->at(i)->getActiveSubstance()->getSubstanceId().compare(dt->getActiveSubstanceId()) == 0) {
@@ -749,8 +750,8 @@ void InterpretationController::startInterpretationRequest(InterpretationRequest 
         }
         else {
             for (auto dosage : _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->getList()) {
-                if (dosage->getRoute()->getRoute() == Admin::Route::DEFAULT) {
-                    Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Admin>(APPUTILSREPO, nullptr);
+                if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::Admin::Route::DEFAULT) {
+                    Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(APPUTILSREPO, nullptr);
                     admin->setRoute(defaultRoutes[0]);
                     admin->setFormulationAndRoute(defaultAdmins[0]->getFormulationAndRoute());
                     admin->setDescription(defaultAdmins[0]->getDescription());
@@ -814,7 +815,7 @@ void InterpretationController::startInterpretationRequest(InterpretationRequest 
 
 }
 
-void InterpretationController::loadInterpretation(Interpretation *interpretation)
+void Tucuxi::Gui::GuiUtils::InterpretationController::loadInterpretation(Interpretation *interpretation)
 {
 
     _chartDataController->dosageUpdated(shouldPercentilesBeComputed);
@@ -938,21 +939,21 @@ void InterpretationController::loadInterpretation(Interpretation *interpretation
 }
 
 
-InterpretationController::~InterpretationController()
+Tucuxi::Gui::GuiUtils::InterpretationController::~InterpretationController()
 {
     if (calculationController != nullptr)
         delete calculationController;
 }
 
 
-void InterpretationController::setReportTabShow(QVariant vecin) {
+void Tucuxi::Gui::GuiUtils::InterpretationController::setReportTabShow(QVariant vecin) {
     QObject* canvas = chartView->findChild<QObject*>("canvas");
     canvas->setProperty("reportshow", vecin);
     canvas->setProperty("show", vecin);
 }
 
 // TODO : This method should not be here
-void InterpretationController::resetReqState() {
+void Tucuxi::Gui::GuiUtils::InterpretationController::resetReqState() {
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(root, "resetReqState"));
 }
 
@@ -983,7 +984,7 @@ void InterpretationController::resetReqState() {
 //}
 
 
-bool InterpretationController::exportReport(Report *report)
+bool Tucuxi::Gui::GuiUtils::InterpretationController::exportReport(Report *report)
 {
     Q_UNUSED(report);
 //    ReportExportToolFactory factory;
@@ -1030,7 +1031,7 @@ bool InterpretationController::exportReport(Report *report)
 }
 
 //TODO: doesnt work! Not implicitly convertable to QImage. image is invalid here
-void InterpretationController::publishReport(QImage image) {
+void Tucuxi::Gui::GuiUtils::InterpretationController::publishReport(QImage image) {
     Q_UNUSED(image);
 //    QScopedPointer<ReportBuilder> builder(new NewReportBuilder());
 
@@ -1049,7 +1050,7 @@ void InterpretationController::publishReport(QImage image) {
 //    exportReport(report.data());
 }
 
-bool InterpretationController::printReport(Report *report)
+bool Tucuxi::Gui::GuiUtils::InterpretationController::printReport(Report *report)
 {
     Q_UNUSED(report);
     Q_UNIMPLEMENTED();
@@ -1061,7 +1062,7 @@ bool InterpretationController::printReport(Report *report)
     return false;
 }
 
-bool InterpretationController::sendReport(Report *report)
+bool Tucuxi::Gui::GuiUtils::InterpretationController::sendReport(Report *report)
 {
     Q_UNUSED(report);
     Q_UNIMPLEMENTED();
@@ -1077,7 +1078,7 @@ bool InterpretationController::sendReport(Report *report)
 
 
 
-void InterpretationController::currentDomainChanged(int index)
+void Tucuxi::Gui::GuiUtils::InterpretationController::currentDomainChanged(int index)
 {
     // ToDo-MVC ///////////////////////////////////////////////////////////////
     // Update the study
@@ -1086,7 +1087,7 @@ void InterpretationController::currentDomainChanged(int index)
     Q_UNUSED(index);
 }
 
-QVariantHash InterpretationController::hashToJS(QVariant qlobj) {
+QVariantHash Tucuxi::Gui::GuiUtils::InterpretationController::hashToJS(QVariant qlobj) {
     Q_UNUSED(qlobj);
    QVariantHash ret;
 //   QObject* qobj = qlobj.value<QObject*>();
@@ -1099,7 +1100,7 @@ QVariantHash InterpretationController::hashToJS(QVariant qlobj) {
    return ret;
 }
 
-void InterpretationController::adjustmentDateUpdated()
+void Tucuxi::Gui::GuiUtils::InterpretationController::adjustmentDateUpdated()
 {
     if (_currentDrugModel == nullptr) {
         return;
@@ -1115,7 +1116,7 @@ void InterpretationController::adjustmentDateUpdated()
     }
 }
 
-void InterpretationController::adjustmentSettingsUpdated()
+void Tucuxi::Gui::GuiUtils::InterpretationController::adjustmentSettingsUpdated()
 {
     if (updateInterpretationRange(EViewRangeUpdateContext::AdjustmentDate)) {
         flowController->evaluate();
@@ -1128,14 +1129,14 @@ void InterpretationController::adjustmentSettingsUpdated()
     }
 }
 
-void InterpretationController::adjustmentUpdated()
+void Tucuxi::Gui::GuiUtils::InterpretationController::adjustmentUpdated()
 {
     updateInterpretationRange(EViewRangeUpdateContext::Adjustment);
     flowController->evaluate();
     _chartDataController->adjustmentUpdated();
 }
 
-void InterpretationController::dosageUpdated(bool clearAdjustment)
+void Tucuxi::Gui::GuiUtils::InterpretationController::dosageUpdated(bool clearAdjustment)
 {
     updateInterpretationRange(EViewRangeUpdateContext::Dosage);
     flowController->evaluate();
@@ -1150,18 +1151,18 @@ void InterpretationController::dosageUpdated(bool clearAdjustment)
     _chartDataController->dosageUpdated(shouldPercentilesBeComputed);
 }
 
-void InterpretationController::chartScaleChanged()
+void Tucuxi::Gui::GuiUtils::InterpretationController::chartScaleChanged()
 {
     dosageUpdated(false);
 }
 
 
-void InterpretationController::evaluateFlow()
+void Tucuxi::Gui::GuiUtils::InterpretationController::evaluateFlow()
 {
     flowController->evaluate();
 }
 
-void InterpretationController::clearAdjustments()
+void Tucuxi::Gui::GuiUtils::InterpretationController::clearAdjustments()
 {
     _interpretation->getDrugResponseAnalysis()->getTreatment()->getAdjustments()->clear();
     _interpretation->getAnalysis()->getChartData()->setRevPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
@@ -1169,7 +1170,7 @@ void InterpretationController::clearAdjustments()
     adjustmentTabController->reset();
 }
 
-void InterpretationController::measureUpdated()
+void Tucuxi::Gui::GuiUtils::InterpretationController::measureUpdated()
 {
     clearAdjustments();
     flowController->invalidateInterpretation();
@@ -1177,7 +1178,7 @@ void InterpretationController::measureUpdated()
     _chartDataController->measureUpdated(shouldPercentilesBeComputed);
 }
 
-void InterpretationController::targetUpdated()
+void Tucuxi::Gui::GuiUtils::InterpretationController::targetUpdated()
 {
     clearAdjustments();
     flowController->invalidateInterpretation();
@@ -1185,7 +1186,7 @@ void InterpretationController::targetUpdated()
     _chartDataController->targetUpdated();
 }
 
-void InterpretationController::covariateUpdated()
+void Tucuxi::Gui::GuiUtils::InterpretationController::covariateUpdated()
 {
     clearAdjustments();
     flowController->invalidateInterpretation();
@@ -1194,7 +1195,7 @@ void InterpretationController::covariateUpdated()
 }
 
 
-Tucuxi::Gui::Core::ActiveSubstance *InterpretationController::findRealActiveSubstance(const LightActiveSubstance *activeSubstance)
+Tucuxi::Gui::Core::ActiveSubstance *Tucuxi::Gui::GuiUtils::InterpretationController::findRealActiveSubstance(const LightActiveSubstance *activeSubstance)
 {
     for (int i = 0; i < _drugs->size(); ++i) {
         if (_drugs->at(i)->getActiveSubstance()->getSubstanceId().compare(activeSubstance->getSubstanceId()) == 0) {
@@ -1206,7 +1207,7 @@ Tucuxi::Gui::Core::ActiveSubstance *InterpretationController::findRealActiveSubs
     return nullptr;
 }
 
-void InterpretationController::switchActiveSubstance(int index)
+void Tucuxi::Gui::GuiUtils::InterpretationController::switchActiveSubstance(int index)
 {
     Tucuxi::Gui::Core::LightActiveSubstance* activeSubstance = index == -1 ? nullptr : _activeSubstances->at(index);
 
@@ -1267,7 +1268,7 @@ void InterpretationController::switchActiveSubstance(int index)
 }
 
 //void InterpretationController::currentDrugChanged(int index)
-void InterpretationController::switchDrugModel(int index)
+void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
 {
     Tucuxi::Gui::Core::DrugModel* drug = ((index == -1) || (_drugModelsForCurrentSubstance == nullptr)) ? nullptr : _drugModelsForCurrentSubstance->at(index);//(drugListProxyModel->mapToSource(drugListProxyModel->index(index, 0)).row());
 
@@ -1418,7 +1419,7 @@ void InterpretationController::switchDrugModel(int index)
 
 }
 
-bool InterpretationController::associateFormulationToRoute(DosageHistory *dosageHistory, AdminList *adminList)
+bool Tucuxi::Gui::GuiUtils::InterpretationController::associateFormulationToRoute(DosageHistory *dosageHistory, AdminList *adminList)
 {
     for (int i = 0; i < dosageHistory->size(); i++) {
         Admin *d = dosageHistory->at(i)->getRoute();
@@ -1465,14 +1466,14 @@ bool InterpretationController::associateFormulationToRoute(DosageHistory *dosage
 }
 
 
-void InterpretationController::currentStudyChanged(int index)
+void Tucuxi::Gui::GuiUtils::InterpretationController::currentStudyChanged(int index)
 {
     // Not used now. There is a one-to-one relationship between the study and the domain
 
     Q_UNUSED(index);
 }
 
-void InterpretationController::goToNextEvent()
+void Tucuxi::Gui::GuiUtils::InterpretationController::goToNextEvent()
 {
     QList<QDateTime> eventList = buildEventsList();
     QDateTime eventDate;
@@ -1487,7 +1488,7 @@ void InterpretationController::goToNextEvent()
     }
 }
 
-void InterpretationController::goToPreviousEvent()
+void Tucuxi::Gui::GuiUtils::InterpretationController::goToPreviousEvent()
 {
     QList<QDateTime> eventList = buildEventsList();
     QDateTime eventDate;
@@ -1502,7 +1503,7 @@ void InterpretationController::goToPreviousEvent()
     }
 }
 
-QList<QDateTime> InterpretationController::buildEventsList()
+QList<QDateTime> Tucuxi::Gui::GuiUtils::InterpretationController::buildEventsList()
 {
     // We build the list of all events: dosage changes, covariate changes, measures, adjustment time
     QList<QDateTime> list;
@@ -1529,25 +1530,25 @@ QList<QDateTime> InterpretationController::buildEventsList()
     return list;
 }
 
-Q_INVOKABLE void InterpretationController::resetViewRange()
+Q_INVOKABLE void Tucuxi::Gui::GuiUtils::InterpretationController::resetViewRange()
 {
     updateInterpretationRange(EViewRangeUpdateContext::Start);
     flowController->evaluate();
     _chartDataController->dosageUpdated(shouldPercentilesBeComputed);
 }
 
-void InterpretationController::shiftViewRange(double dX)
+void Tucuxi::Gui::GuiUtils::InterpretationController::shiftViewRange(double dX)
 {
     setViewRange(_minX.addSecs(dX), _maxX.addSecs(dX));
 }
 
-void InterpretationController::zoomViewRange(double f)
+void Tucuxi::Gui::GuiUtils::InterpretationController::zoomViewRange(double f)
 {
     int d = _minX.secsTo(_maxX) * f;
     setViewRange(_minX, _minX.addSecs(d));
 }
 
-void InterpretationController::setDateViewRange(const QDateTime &date)
+void Tucuxi::Gui::GuiUtils::InterpretationController::setDateViewRange(const QDateTime &date)
 {
     qint64 currentRange = _minX.secsTo(_maxX);
     QDateTime dMin = date.addSecs(- currentRange / 2);
@@ -1555,7 +1556,7 @@ void InterpretationController::setDateViewRange(const QDateTime &date)
     setViewRange(dMin, dMax);
 }
 
-void InterpretationController::setViewRange(const QDateTime &minX, const QDateTime &maxX)
+void Tucuxi::Gui::GuiUtils::InterpretationController::setViewRange(const QDateTime &minX, const QDateTime &maxX)
 {
     std::cout << "in setViewRange()";
 
@@ -1582,7 +1583,7 @@ void InterpretationController::setViewRange(const QDateTime &minX, const QDateTi
 }
 
 
-bool InterpretationController::updateInterpretationRange(EViewRangeUpdateContext context)
+bool Tucuxi::Gui::GuiUtils::InterpretationController::updateInterpretationRange(EViewRangeUpdateContext context)
 {
     Q_ASSERT(predictionspec);
     Q_ASSERT(_interpretation->getDrugResponseAnalysis()->getTreatment());
@@ -1730,22 +1731,22 @@ bool InterpretationController::updateInterpretationRange(EViewRangeUpdateContext
     return true;
 }
 
-void InterpretationController::validateTab(int step)
+void Tucuxi::Gui::GuiUtils::InterpretationController::validateTab(int step)
 {
     flowController->validateTab(StepType::convert(step));
 }
 
-void InterpretationController::toggleValidation(int step)
+void Tucuxi::Gui::GuiUtils::InterpretationController::toggleValidation(int step)
 {
     flowController->toggleValidation(StepType::convert(step));
 }
 
-Patient * InterpretationController::getCurrentPatient() const
+Patient *Tucuxi::Gui::GuiUtils::InterpretationController::getCurrentPatient() const
 {
     return _currentPatient;
 }
 
-void InterpretationController::setCurrentPatient(Patient *patient)
+void Tucuxi::Gui::GuiUtils::InterpretationController::setCurrentPatient(Patient *patient)
 {
     if (_currentPatient != patient) {
         _currentPatient = patient;
@@ -1753,7 +1754,7 @@ void InterpretationController::setCurrentPatient(Patient *patient)
     }
 }
 
-void InterpretationController::currentTabChanged(int index)
+void Tucuxi::Gui::GuiUtils::InterpretationController::currentTabChanged(int index)
 {
     if (StepType::isValid(index))
     {
@@ -1762,12 +1763,12 @@ void InterpretationController::currentTabChanged(int index)
     }
 }
 
-PredictionSpec *InterpretationController::getPredictionSpec() const
+PredictionSpec *Tucuxi::Gui::GuiUtils::InterpretationController::getPredictionSpec() const
 {
     return predictionspec;
 }
 
-QDateTime InterpretationController::getLastDataTime(Interpretation *interpretation) const
+QDateTime Tucuxi::Gui::GuiUtils::InterpretationController::getLastDataTime(Interpretation *interpretation) const
 {
     QDateTime lastTime;
     DrugTreatment *treatment = interpretation->getDrugResponseAnalysis()->getTreatment();
@@ -1786,7 +1787,7 @@ QDateTime InterpretationController::getLastDataTime(Interpretation *interpretati
 
 }
 
-void InterpretationController::validateInterpretation(bool isValid)
+void Tucuxi::Gui::GuiUtils::InterpretationController::validateInterpretation(bool isValid)
 {
     if (isValid) {
         _interpretation->setValidateInterpretationTime(QDateTime::currentDateTime());
@@ -1820,12 +1821,12 @@ void InterpretationController::validateInterpretation(bool isValid)
     }
 }
 
-bool InterpretationController::isInterpretationValid()
+bool Tucuxi::Gui::GuiUtils::InterpretationController::isInterpretationValid()
 {
     return flowController->isInterpretationValidated();
 }
 
-void InterpretationController::updateSexAndAgeCovariates()
+void Tucuxi::Gui::GuiUtils::InterpretationController::updateSexAndAgeCovariates()
 {
     Person::GenderType gender = _currentPatient->person()->gender();
     double sex = 1.0;
@@ -1858,7 +1859,7 @@ void InterpretationController::updateSexAndAgeCovariates()
 //}
 
 
-void InterpretationController::goToSaveInterpretation()
+void Tucuxi::Gui::GuiUtils::InterpretationController::goToSaveInterpretation()
 {
 #ifndef CONFIG_DEMO
     QString dirPath;
@@ -1891,7 +1892,7 @@ void InterpretationController::goToSaveInterpretation()
 #endif // CONFIG_DEMO
 }
 
-void InterpretationController::saveInterpretation(QString fileName)
+void Tucuxi::Gui::GuiUtils::InterpretationController::saveInterpretation(QString fileName)
     {
 
 #ifndef CONFIG_DEMO
@@ -1915,7 +1916,7 @@ void InterpretationController::saveInterpretation(QString fileName)
 }
 
 
-QString InterpretationController::handleFileChosen(const QString &urlString) {
+QString Tucuxi::Gui::GuiUtils::InterpretationController::handleFileChosen(const QString &urlString) {
     const QUrl url(urlString);
     QString fileName;
     if (url.isLocalFile()) {
@@ -1929,7 +1930,7 @@ QString InterpretationController::handleFileChosen(const QString &urlString) {
     return fileName;
 }
 
-void InterpretationController::saveStatistics()
+void Tucuxi::Gui::GuiUtils::InterpretationController::saveStatistics()
 {
 
     QString dirPath;
@@ -1960,7 +1961,7 @@ void InterpretationController::saveStatistics()
     statisticsFile.close();
 }
 
-void InterpretationController::showStatistics(int what)
+void Tucuxi::Gui::GuiUtils::InterpretationController::showStatistics(int what)
 {
     ChartDataHtmlExporter exporter;
     QString content = exporter.exportData(_chartDataController->chartData, what);
@@ -1968,7 +1969,7 @@ void InterpretationController::showStatistics(int what)
 
 }
 
-void InterpretationController::addPatient()
+void Tucuxi::Gui::GuiUtils::InterpretationController::addPatient()
 {
 #ifndef CONFIG_DEMO
 
@@ -1993,7 +1994,7 @@ void InterpretationController::addPatient()
 #endif // CONFIG_DEMO
 }
 
-void InterpretationController::removePatient(int index)
+void Tucuxi::Gui::GuiUtils::InterpretationController::removePatient(int index)
 {
 #ifndef CONFIG_DEMO
     if (index < 0) {
@@ -2051,7 +2052,7 @@ void InterpretationController::removePatient(int index)
 #endif // CONFIG_DEMO
 }
 
-bool InterpretationController::isTesting()
+bool Tucuxi::Gui::GuiUtils::InterpretationController::isTesting()
 {
 #ifdef CONFIG_GUITEST
     return true;
@@ -2089,7 +2090,7 @@ QString unitStringModifier(QString unitString)
     return unitString;
 }
 
-QByteArray InterpretationController::interpretationToJson()
+QByteArray Tucuxi::Gui::GuiUtils::InterpretationController::interpretationToJson()
 {
     QJsonDocument doc;
     QJsonObject interpretation;
@@ -2307,7 +2308,7 @@ QByteArray InterpretationController::interpretationToJson()
 
 }
 
-void InterpretationController::saveGraph()
+void Tucuxi::Gui::GuiUtils::InterpretationController::saveGraph()
 {
     QString dirPath;
     QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Graph"),

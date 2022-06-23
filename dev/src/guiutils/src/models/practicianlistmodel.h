@@ -6,6 +6,10 @@
 #include "abstractentitylistmodel.h"
 #include "admin/src/dal/practician.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class PracticianListModel : public AbstractEntityListModel
 {
     Q_OBJECT
@@ -52,5 +56,9 @@ private:
     QList<SharedPractician> *_practicians;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // PRACTICIANLISTMODEL_H

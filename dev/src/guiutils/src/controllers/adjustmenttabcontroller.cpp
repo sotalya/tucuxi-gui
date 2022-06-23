@@ -14,25 +14,27 @@
 #include "core/dal/drugtreatment.h"
 #include "core/dal/drug/standardtreatment.h"
 
-STD_PROPERTY_IMPL(AdjustmentTabController, Tucuxi::Gui::Core::DosageHistory*, adjustments, Adjustments)
-STD_PROPERTY_IMPL(AdjustmentTabController, bool, isManualAdjustmentDefined, IsManualAdjustmentDefined)
+using namespace Tucuxi::Gui::GuiUtils;
+
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::AdjustmentTabController, Tucuxi::Gui::Core::DosageHistory*, adjustments, Adjustments)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::AdjustmentTabController, bool, isManualAdjustmentDefined, IsManualAdjustmentDefined)
 
 static const QString MANUAL = "Manual";
 static const QString SUGGESTED = "Suggested";
 
-AdjustmentTabController::AdjustmentTabController(QObject *parent) : AbstractViewController(parent),
+Tucuxi::Gui::GuiUtils::AdjustmentTabController::AdjustmentTabController(QObject *parent) : AbstractViewController(parent),
     _isManualAdjustmentDefined(false)
 {
     _adjustments = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO, this);
 }
 
-QDateTime AdjustmentTabController::getAdjustmentDate() const
+QDateTime Tucuxi::Gui::GuiUtils::AdjustmentTabController::getAdjustmentDate() const
 {
     return masterController->getPredictionSpec()->getAdjustmentDate();
 }
 
 
-void AdjustmentTabController::setAdjustmentDate(QDateTime date)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setAdjustmentDate(QDateTime date)
 {
     // Round it at the minute
     date = date.fromMSecsSinceEpoch(60000*(date.toMSecsSinceEpoch()/60000));
@@ -47,12 +49,12 @@ void AdjustmentTabController::setAdjustmentDate(QDateTime date)
     masterController->adjustmentDateUpdated();
 }
 
-bool AdjustmentTabController::getAdjustmentWithLoadingDose() const
+bool Tucuxi::Gui::GuiUtils::AdjustmentTabController::getAdjustmentWithLoadingDose() const
 {
     return masterController->getInterpretation()->getAdjustmentWithLoadingDose();
 }
 
-void AdjustmentTabController::setAdjustmentWithLoadingDose(bool value)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setAdjustmentWithLoadingDose(bool value)
 {
     if (value == masterController->getInterpretation()->getAdjustmentWithLoadingDose()) {
         return;
@@ -62,12 +64,12 @@ void AdjustmentTabController::setAdjustmentWithLoadingDose(bool value)
     masterController->adjustmentSettingsUpdated();
 }
 
-bool AdjustmentTabController::getAdjustmentWithRestPeriod() const
+bool Tucuxi::Gui::GuiUtils::AdjustmentTabController::getAdjustmentWithRestPeriod() const
 {
     return masterController->getInterpretation()->getAdjustmentWithRestPeriod();
 }
 
-void AdjustmentTabController::setAdjustmentWithRestPeriod(bool value)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setAdjustmentWithRestPeriod(bool value)
 {
     if (value == masterController->getInterpretation()->getAdjustmentWithRestPeriod()) {
         return;
@@ -77,7 +79,7 @@ void AdjustmentTabController::setAdjustmentWithRestPeriod(bool value)
     masterController->adjustmentSettingsUpdated();
 }
 
-void AdjustmentTabController::setAdjustmentDateFromMaster(QDateTime date)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setAdjustmentDateFromMaster(QDateTime date)
 {
     // Round it at the minute
     date = date.fromMSecsSinceEpoch(60000*(date.toMSecsSinceEpoch()/60000));
@@ -90,7 +92,7 @@ void AdjustmentTabController::setAdjustmentDateFromMaster(QDateTime date)
     emit adjustmentDateChanged(date);
 }
 
-void AdjustmentTabController::setInitialAdjustmentDateFromMaster(QDateTime date)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setInitialAdjustmentDateFromMaster(QDateTime date)
 {
     // Round it at the minute
     date = date.fromMSecsSinceEpoch(60000*(date.toMSecsSinceEpoch()/60000));
@@ -101,7 +103,7 @@ void AdjustmentTabController::setInitialAdjustmentDateFromMaster(QDateTime date)
     emit adjustmentDateChanged(date);
 }
 
-void AdjustmentTabController::setAppliedTime(int index, QDateTime time)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setAppliedTime(int index, QDateTime time)
 {
     if (!isIndexValid(index)) {
         return;
@@ -115,7 +117,7 @@ void AdjustmentTabController::setAppliedTime(int index, QDateTime time)
     adjustment->setApplied(time);
 }
 
-void AdjustmentTabController::setEndTime(int index, QDateTime time)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setEndTime(int index, QDateTime time)
 {
     if (!isIndexValid(index)) {
         return;
@@ -129,7 +131,7 @@ void AdjustmentTabController::setEndTime(int index, QDateTime time)
     adjustment->setEndTime(time);
 }
 
-void AdjustmentTabController::setDbValue(int index, double value)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setDbValue(int index, double value)
 {
     if (!isIndexValid(index)) {
         return;
@@ -143,7 +145,7 @@ void AdjustmentTabController::setDbValue(int index, double value)
     adjustment->getQuantity()->setDbvalue(value);
 }
 
-void AdjustmentTabController::setDbTinf(int index, double value)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setDbTinf(int index, double value)
 {
     if (!isIndexValid(index)) {
         return;
@@ -158,7 +160,7 @@ void AdjustmentTabController::setDbTinf(int index, double value)
     adjustment->setDbtinf(value);
 }
 
-void AdjustmentTabController::setDbInterval(int index, double interval)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setDbInterval(int index, double interval)
 {
     if (!isIndexValid(index)) return;
 
@@ -171,7 +173,7 @@ void AdjustmentTabController::setDbInterval(int index, double interval)
     adjustment->setDbinterval(interval);
 }
 
-void AdjustmentTabController::setRouteValue(int index, int routeValue)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setRouteValue(int index, int routeValue)
 {
     if (!isIndexValid(index)) {
         return;
@@ -188,7 +190,7 @@ void AdjustmentTabController::setRouteValue(int index, int routeValue)
     adjustment->getRoute()->setFormulationAndRoute(adme->getIntakes()->at(routeValue)->getFormulationAndRoute());
 }
 
-void AdjustmentTabController::addAdjustment()
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::addAdjustment()
 {    
     Tucuxi::Gui::Core::DrugModel *drugModel;
     drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
@@ -219,7 +221,7 @@ void AdjustmentTabController::addAdjustment()
     forceRefresh();
 }
 
-void AdjustmentTabController::removeAdjustment(int index)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::removeAdjustment(int index)
 {
     if (!isIndexValid(index)) {
         return;
@@ -235,7 +237,7 @@ void AdjustmentTabController::removeAdjustment(int index)
     forceRefresh();
 }
 
-void AdjustmentTabController::selectAdjustment(int index)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::selectAdjustment(int index)
 {
     Tucuxi::Gui::Core::Adjustments *adjustments = _chartData->getRevPred()->getAdjustments();
     Q_ASSERT(adjustments->size() > index);
@@ -269,19 +271,19 @@ void AdjustmentTabController::selectAdjustment(int index)
     forceRefresh();
 }
 
-void AdjustmentTabController::forceRefresh()
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::forceRefresh()
 {
     adaptDates(getAdjustment(MANUAL), getLastAdjustment(SUGGESTED));
     _adjustments->sort(compareAdjustment);
     masterController->adjustmentUpdated();
 }
 
-void AdjustmentTabController::setChartData(Tucuxi::Gui::Core::ChartData *chartData)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setChartData(Tucuxi::Gui::Core::ChartData *chartData)
 {
     _chartData = chartData;
 }
 
-void AdjustmentTabController::onDosageUpdated()
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::onDosageUpdated()
 {
     // Check if we need to update the adjustment date
     QDateTime newAdjustmentDate;
@@ -292,18 +294,18 @@ void AdjustmentTabController::onDosageUpdated()
     reset();
 }
 
-void AdjustmentTabController::reset()
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::reset()
 {
     _adjustments->clear();
     setIsManualAdjustmentDefined(false);
 }
 
-bool AdjustmentTabController::isIndexValid(int index)
+bool Tucuxi::Gui::GuiUtils::AdjustmentTabController::isIndexValid(int index)
 {
     return (index >= 0) && (index < _adjustments->size());
 }
 
-void AdjustmentTabController::removeFromTreatement(const QString &type)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::removeFromTreatement(const QString &type)
 {
     for (int i=0; i<_adjustments->size(); i++){
         if (static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(i))->getType() == type) {
@@ -315,12 +317,12 @@ void AdjustmentTabController::removeFromTreatement(const QString &type)
     }
 }
 
-bool AdjustmentTabController::compareAdjustment(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
+bool Tucuxi::Gui::GuiUtils::AdjustmentTabController::compareAdjustment(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
 {
     return (a->getApplied() < b->getApplied());
 }
 
-Tucuxi::Gui::Core::AdjustmentDosage* AdjustmentTabController::getAdjustment(const QString &type)
+Tucuxi::Gui::Core::AdjustmentDosage* Tucuxi::Gui::GuiUtils::AdjustmentTabController::getAdjustment(const QString &type)
 {
     for (int i=0; i<_adjustments->size(); i++) {
         Tucuxi::Gui::Core::AdjustmentDosage* adj = static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(i));
@@ -332,7 +334,7 @@ Tucuxi::Gui::Core::AdjustmentDosage* AdjustmentTabController::getAdjustment(cons
 }
 
 
-Tucuxi::Gui::Core::AdjustmentDosage* AdjustmentTabController::getLastAdjustment(const QString &type)
+Tucuxi::Gui::Core::AdjustmentDosage* Tucuxi::Gui::GuiUtils::AdjustmentTabController::getLastAdjustment(const QString &type)
 {
     for (int i=_adjustments->size() - 1; i >= 0; i--) {
         Tucuxi::Gui::Core::AdjustmentDosage* adj = static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(i));
@@ -344,7 +346,7 @@ Tucuxi::Gui::Core::AdjustmentDosage* AdjustmentTabController::getLastAdjustment(
 }
 
 
-void AdjustmentTabController::adaptDates(const Tucuxi::Gui::Core::AdjustmentDosage *manual, Tucuxi::Gui::Core::AdjustmentDosage *suggested)
+void Tucuxi::Gui::GuiUtils::AdjustmentTabController::adaptDates(const Tucuxi::Gui::Core::AdjustmentDosage *manual, Tucuxi::Gui::Core::AdjustmentDosage *suggested)
 {
     if (suggested != nullptr) {
         QDateTime appliedDate = suggested->getApplied();

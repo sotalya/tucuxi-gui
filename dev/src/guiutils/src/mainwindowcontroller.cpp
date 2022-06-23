@@ -38,6 +38,7 @@
 #include "guiutils/src/appglobals.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 MainWindowController::MainWindowController(QObject *parent) :
     currentView(HOME),

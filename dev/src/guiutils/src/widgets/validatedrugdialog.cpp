@@ -15,6 +15,8 @@
 #include <QStandardPaths>
 #include <QSettings>
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 //The shared strings
 const char *const ValidateDrugDialog::_OK               =  QT_TR_NOOP_UTF8("OK!");
 const char *const ValidateDrugDialog::_FAILED           =  QT_TR_NOOP_UTF8("Failed.");

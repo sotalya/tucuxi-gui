@@ -5,6 +5,10 @@
 
 #include <QFileDialog>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 /** \ingroup dialogs
  *  \brief File dialog which remembers the previously selected files and directories.
  *
@@ -50,5 +54,9 @@ private:
     QString _currentFile;
 
 };
+
+}
+}
+}
 
 #endif // PERSISTENTFILEDIALOG_H

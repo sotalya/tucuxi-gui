@@ -7,6 +7,7 @@
 #include "admin/src/adminfactory.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 FakePatientsCreator::FakePatientsCreator()
 {

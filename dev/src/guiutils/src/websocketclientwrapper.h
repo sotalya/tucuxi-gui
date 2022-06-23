@@ -9,6 +9,10 @@
 #include <QtWebChannel/QWebChannelAbstractTransport>
 #include "websockettransport.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class WebSocketClientWrapper : public QObject
 {
     Q_OBJECT
@@ -25,5 +29,9 @@ private Q_SLOTS:
 private:
     QWebSocketServer *m_server;
 };
+
+}
+}
+}
 
 #endif // WEBSOCKETCLIENTWRAPPER_H

@@ -10,6 +10,7 @@
 
 using namespace Tucuxi;
 using namespace Gui::Core;
+using namespace Tucuxi::Gui::GuiUtils;
 
 MultiThreadedCalculationController::MultiThreadedCalculationController(QObject *parent) : CalculationController(parent),
     nbDisengaged(0)

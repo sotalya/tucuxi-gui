@@ -21,12 +21,7 @@
 #include "guiutils/src/calculationcontroller.h"
 #include "admin/src/dal/sentencepalette.h"
 
-class CalculationController;
-class ChartDataController;
 
-class Report;
-class QPrinter;
-class PersistentFileDialog;
 
 namespace Tucuxi {
 namespace Gui {
@@ -40,16 +35,6 @@ class GraphInformationSelection;
 }
 }
 }
-
-class FlowController;
-
-class MeasureTabController;
-class DosageTabController;
-class TargetTabController;
-class CovariateTabController;
-class AdjustmentTabController;
-class DrugTabController;
-class ValidationTabController;
 
 namespace Tucuxi {
 namespace Gui {
@@ -73,6 +58,27 @@ class DosageHistory;
 }
 }
 }
+
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
+class CalculationController;
+class ChartDataController;
+
+class Report;
+class QPrinter;
+class PersistentFileDialog;
+
+class FlowController;
+
+class MeasureTabController;
+class DosageTabController;
+class TargetTabController;
+class CovariateTabController;
+class AdjustmentTabController;
+class DrugTabController;
+class ValidationTabController;
 
 enum class EViewRangeUpdateContext {
     Start,
@@ -486,5 +492,9 @@ public slots:
     bool updateInterpretationRange(EViewRangeUpdateContext context);
 
 };
+
+}
+}
+}
 
 #endif // INTERPRETATIONCONTROLER_H

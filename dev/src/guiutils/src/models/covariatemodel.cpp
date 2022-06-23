@@ -4,6 +4,8 @@
 
 #include "core/utils/units.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 CovariateModel::CovariateModel(QObject *parent) :
     AbstractEntityModel(parent),
     _covariate(),

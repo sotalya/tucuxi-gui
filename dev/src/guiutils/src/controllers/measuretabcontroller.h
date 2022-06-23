@@ -19,6 +19,10 @@ class CoreMeasureList;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class MeasureTabController : public AbstractViewController
 {
     Q_OBJECT
@@ -41,5 +45,9 @@ public:
 private:
     bool isIndexValid(int index);
 };
+
+}
+}
+}
 
 #endif // MEASURETABCONTROLLER_H

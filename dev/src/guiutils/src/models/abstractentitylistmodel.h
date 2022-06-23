@@ -7,6 +7,10 @@
 
 #include <QUndoCommand>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class AbstractEntityListModel : public AbstractEntityModel
 {
     Q_OBJECT
@@ -62,5 +66,9 @@ private:
     int _at;
     int _count;
 };
+
+}
+}
+}
 
 #endif // ABSTRACTENTITYLISTMODEL_H

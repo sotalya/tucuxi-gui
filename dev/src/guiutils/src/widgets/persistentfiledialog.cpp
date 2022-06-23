@@ -2,6 +2,8 @@
 
 #include "persistentfiledialog.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 PersistentFileDialog::PersistentFileDialog(QWidget *parent, Qt::WindowFlags flags) : QFileDialog(parent, flags)
 {
     trackChanges();

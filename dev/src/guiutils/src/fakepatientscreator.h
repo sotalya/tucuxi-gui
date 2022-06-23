@@ -12,6 +12,10 @@ class CorePatientList;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class FakePatientsCreator
 {
 public:
@@ -19,5 +23,9 @@ public:
 
     void createFakePatients(Tucuxi::Gui::Core::CorePatientList* patientsList);
 };
+
+}
+}
+}
 
 #endif // FAKEPATIENTSCREATOR_H

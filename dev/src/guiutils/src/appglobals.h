@@ -13,6 +13,10 @@ class Practician;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class AppGlobals : public QObject
 {    
 public:
@@ -54,5 +58,10 @@ private:
 
     bool m_showProcessingTime;
 };
+
+}
+}
+}
+
 
 #endif // APPGLOBALS_H

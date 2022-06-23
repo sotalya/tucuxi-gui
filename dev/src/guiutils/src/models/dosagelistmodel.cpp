@@ -10,6 +10,8 @@
 #include "core/dal/drug/adme.h"
 #include "core/dal/drug/infusions.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 DosageListModel::DosageListModel(QObject *parent) :
     AbstractEntityListModel(parent),
     _dosages(),

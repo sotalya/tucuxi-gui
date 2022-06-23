@@ -5,6 +5,7 @@
 #include "admin/src/stdadminrepository.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 InstituteListModel::InstituteListModel(QObject *parent) :
     AbstractEntityListModel(parent),

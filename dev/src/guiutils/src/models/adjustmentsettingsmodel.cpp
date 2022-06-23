@@ -2,6 +2,8 @@
 
 #include "adjustmentsettingsmodel.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 AdjustmentSettingsModel::AdjustmentSettingsModel(QObject *parent) :
     AbstractEntityModel(parent),
     _date(QDateTime(QDate::currentDate(), QTime::currentTime())),

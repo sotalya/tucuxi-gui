@@ -5,6 +5,10 @@
 
 #include <QObject>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class AppMode : public QObject
 {
 private:
@@ -25,5 +29,9 @@ public:
     Q_INVOKABLE bool isPractice();
 
 };
+
+}
+}
+}
 
 #endif // APPMODE_H

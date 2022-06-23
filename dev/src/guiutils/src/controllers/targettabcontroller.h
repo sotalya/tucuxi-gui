@@ -21,6 +21,10 @@ class TargetList;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class TargetTabController : public AbstractViewController
 {
     Q_OBJECT
@@ -64,5 +68,8 @@ private:
     void updateTvalues(int index, double &min, double &best, double &max);
 };
 
+}
+}
+}
 
 #endif // TARGETTABCONTROLLER_H

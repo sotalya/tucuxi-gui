@@ -6,6 +6,10 @@
 #include "abstractentitylistmodel.h"
 #include "admin/src/dal/institute.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class InstituteListModel : public AbstractEntityListModel
 {
     Q_OBJECT
@@ -48,5 +52,10 @@ private:
     QList<SharedInstitute> *_institutes;
     QHash<int, QByteArray> _roleNames;
 };
+
+
+}
+}
+}
 
 #endif // INSTITUTELISTMODEL_H

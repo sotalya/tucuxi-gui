@@ -22,6 +22,10 @@ class DrugModel;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class DosageTabController : public AbstractViewController
 {
     Q_OBJECT
@@ -86,5 +90,9 @@ public:
 private:
     static bool compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b);
 };
+
+}
+}
+}
 
 #endif // DOSAGETABCONTROLLER_H

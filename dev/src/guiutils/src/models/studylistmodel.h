@@ -5,7 +5,11 @@
 
 #include "abstractentitylistmodel.h"
 
-#include "core/utils/ezutils.h"
+#include "core/utils/ezutils.h
+
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
 
 class StudyListModel : public AbstractEntityListModel
 {
@@ -43,5 +47,9 @@ private:
     QList<Tucuxi::Gui::Core::Descriptor> _studies;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // STUDYLISTMODEL_H

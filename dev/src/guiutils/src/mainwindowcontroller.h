@@ -21,6 +21,10 @@ class Interpretation;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 #ifdef CONFIG_GUITEST
 class QQmlApplicationEngine;
 #endif // CONFIG_GUITEST
@@ -133,5 +137,9 @@ protected:
     ValidateDrugDialog *_validateDrug;
 
 };
+
+}
+}
+}
 
 #endif // MAINWINDOWCONTROLLER_H

@@ -9,6 +9,7 @@
 #include "models/sortfilterentitylistproxymodel.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 RequestsController::RequestsController(QObject *parent) :
     QObject(parent),

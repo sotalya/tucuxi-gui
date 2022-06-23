@@ -5,6 +5,9 @@
 
 #include <QObject>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
 
 class InterpretationController;
 
@@ -22,5 +25,9 @@ protected:
 
     InterpretationController *masterController;
 };
+
+}
+}
+}
 
 #endif // ABSTRACTVIEWCONTROLLER_H

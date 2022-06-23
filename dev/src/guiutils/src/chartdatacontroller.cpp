@@ -19,6 +19,7 @@
 #include "core/dal/drug/parameters.h"
 
 //using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 ChartDataController::ChartDataController(QObject *parent) : QObject(parent),
     _currentTab(Tucuxi::Gui::Admin::StepType::Patient),

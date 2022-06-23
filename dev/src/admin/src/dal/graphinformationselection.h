@@ -71,17 +71,17 @@ class GraphInformationSelection : public Tucuxi::Gui::Core::Entity
 
     public:
         void setCurrentTab(StepType::Enum step);
-        Q_INVOKABLE void setAvailable(CurveType::Enum curveType, bool isAvailable);
-        Q_INVOKABLE void setAvailable(StepType::Enum stepType, CurveType::Enum curveType, bool isAvailable);
+        Q_INVOKABLE void setAvailable(Tucuxi::Gui::Admin::CurveType::Enum curveType, bool isAvailable);
+        Q_INVOKABLE void setAvailable(Tucuxi::Gui::Admin::StepType::Enum stepType, CurveType::Enum curveType, bool isAvailable);
         Q_INVOKABLE void saveSettings();
-        Q_INVOKABLE void setPercentile(PercentileRangeEnum percentileRange, bool isAvailable);
+        Q_INVOKABLE void setPercentile(Tucuxi::Gui::Admin::PercentileRangeEnum percentileRange, bool isAvailable);
         Q_INVOKABLE QString getCurrentTab() const;
 
     protected:
         Q_INVOKABLE GraphInformationSelection(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr);
 
     private:
-        void initStep(StepType::Enum stepType, bool curveInfo[CurveType::size]);
+        void initStep(Tucuxi::Gui::Admin::StepType::Enum stepType, bool curveInfo[CurveType::size]);
         void updateProperties();
         void loadDisplayParametersSettings();
 

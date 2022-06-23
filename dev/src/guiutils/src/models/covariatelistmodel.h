@@ -8,6 +8,10 @@
 #include "core/dal/covariate.h"
 #include "core/dal/drug/drugvariate.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class CovariateListModel : public AbstractEntityListModel
 {
     Q_OBJECT
@@ -50,5 +54,9 @@ private:
     Tucuxi::Gui::Core::DrugVariate* _drugVariate;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // COVARIATELISTMODEL_H

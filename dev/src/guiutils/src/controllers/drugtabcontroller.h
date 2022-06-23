@@ -20,6 +20,10 @@ class DrugModel;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class DrugTabController : public AbstractViewController
 {
     Q_OBJECT
@@ -34,5 +38,9 @@ public slots:
     void setDrugInfo(Tucuxi::Gui::Core::ActiveSubstance *substance);
     void setDrugModelInfo(Tucuxi::Gui::Core::DrugModel *drugModel);
 };
+
+}
+}
+}
 
 #endif // DRUGTABCONTROLLER_H

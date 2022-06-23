@@ -4,6 +4,8 @@
 
 #include <QUndoStack>
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 AbstractEntityModel::AbstractEntityModel(QObject *parent) :
     QAbstractListModel(parent),
     _undoStack(new QUndoStack(this))

@@ -6,6 +6,10 @@
 #include "abstractentitymodel.h"
 #include "core/dal/covariate.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class CovariateModel : public AbstractEntityModel
 {
     Q_OBJECT
@@ -44,5 +48,9 @@ private:
     Tucuxi::Gui::Core::PatientVariate* _covariate;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // COVARIATEMODEL_H

@@ -17,6 +17,9 @@ class InterpretationRequest;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
 
 class PartialRequestListModel;
 class SortFilterEntityListProxyModel;
@@ -54,6 +57,9 @@ signals:
 
 };
 
+}
+}
+}
 
 #endif // REQUESTCONTROLLER_H
 

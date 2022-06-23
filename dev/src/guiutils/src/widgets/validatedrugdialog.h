@@ -5,6 +5,10 @@
 
 #include <QDialog>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class PersistentFileDialog;
 
 namespace Ui {
@@ -95,5 +99,9 @@ private slots:
     //Clears the errors
     void clearErrors();
 };
+
+}
+}
+}
 
 #endif // VALIDATEDRUG_H

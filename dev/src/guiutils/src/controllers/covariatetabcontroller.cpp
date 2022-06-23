@@ -7,7 +7,7 @@
 #include "core/utils/connect.h"
 #include "core/dal/drug/translatablestring.h"
 
-
+using namespace Tucuxi::Gui::GuiUtils;
 
 DrugVariateInfo::DrugVariateInfo(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
@@ -27,20 +27,20 @@ AUTO_PROPERTY_IMPL(DrugVariateInfo, QMetaType::Type, type, Type)
 AUTO_PROPERTY_IMPL(DrugVariateInfo, bool, automatic, Automatic)
 QML_POINTERLIST_CLASS_IMPL(DrugVariateInfoList, DrugVariateInfo)
 
-STD_PROPERTY_IMPL(CovariateTabController, DrugVariateInfoList*, drugVariateInfos, DrugVariateInfos)
-STD_PROPERTY_IMPL(CovariateTabController, Tucuxi::Gui::Core::PatientVariateList*, fileredVariates, FileredVariates)
-STD_PROPERTY_IMPL(CovariateTabController, Tucuxi::Gui::Core::PatientVariateList*, patientVariates, PatientVariates)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::CovariateTabController, DrugVariateInfoList*, drugVariateInfos, DrugVariateInfos)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::CovariateTabController, Tucuxi::Gui::Core::PatientVariateList*, fileredVariates, FileredVariates)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::CovariateTabController, Tucuxi::Gui::Core::PatientVariateList*, patientVariates, PatientVariates)
 
 
 
-CovariateTabController::CovariateTabController(QObject *parent) : AbstractViewController(parent)
+Tucuxi::Gui::GuiUtils::CovariateTabController::CovariateTabController(QObject *parent) : AbstractViewController(parent)
 {
     _drugVariateInfos = Tucuxi::Gui::Core::CoreFactory::createEntity<DrugVariateInfoList>(ABSTRACTREPO, this);
     _fileredVariates = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, this);
     _patientVariates = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, this);
 }
 
-void CovariateTabController::reset(Tucuxi::Gui::Core::DrugVariateList* drugVariates)
+void Tucuxi::Gui::GuiUtils::CovariateTabController::reset(Tucuxi::Gui::Core::DrugVariateList* drugVariates)
 {
     _drugVariateInfos->clear();
     _fileredVariates->clearWithoutDeletion();
@@ -66,7 +66,7 @@ void CovariateTabController::reset(Tucuxi::Gui::Core::DrugVariateList* drugVaria
     updateAllActualValues();
 }
 
-void CovariateTabController::selectDrugVariate(int drugVariateFromIndex)
+void Tucuxi::Gui::GuiUtils::CovariateTabController::selectDrugVariate(int drugVariateFromIndex)
 {
     if (!isDrugIndexValid(drugVariateFromIndex)) return;
 
@@ -84,7 +84,7 @@ void CovariateTabController::selectDrugVariate(int drugVariateFromIndex)
     emit fileredVariatesChanged(_fileredVariates);
 }
 
-void CovariateTabController::addPatientVariate(const int drugVariateFromIndex)
+void Tucuxi::Gui::GuiUtils::CovariateTabController::addPatientVariate(const int drugVariateFromIndex)
 {
     if (!isDrugIndexValid(drugVariateFromIndex)) return;
 
@@ -109,7 +109,7 @@ void CovariateTabController::addPatientVariate(const int drugVariateFromIndex)
 }
 
 
-void CovariateTabController::setBirthdate(QDateTime date)
+void Tucuxi::Gui::GuiUtils::CovariateTabController::setBirthdate(QDateTime date)
 {
     // Remove the birthdate if it exists
     for(int i = 0; i < _patientVariates->size() ; i++) {
@@ -204,7 +204,7 @@ void CovariateTabController::setBirthdate(QDateTime date)
     emit patientVariatesChanged(_patientVariates);
 }
 
-void CovariateTabController::setSinglePatientVariate(QString id, double value)
+void Tucuxi::Gui::GuiUtils::CovariateTabController::setSinglePatientVariate(QString id, double value)
 {
     bool specialSet = false;
     if (id == "age") {
@@ -283,7 +283,7 @@ void CovariateTabController::setSinglePatientVariate(QString id, double value)
 */
 }
 
-void CovariateTabController::removePatientVariate(int index)
+void Tucuxi::Gui::GuiUtils::CovariateTabController::removePatientVariate(int index)
 {
     if (!isPatientIndexValid(index)) return;
 
@@ -309,7 +309,7 @@ void CovariateTabController::removePatientVariate(int index)
     masterController->covariateUpdated();
 }
 
-void CovariateTabController::setDbValue(int index, double value)
+void Tucuxi::Gui::GuiUtils::CovariateTabController::setDbValue(int index, double value)
 {
     if (!isPatientIndexValid(index)) return;
 
@@ -321,7 +321,7 @@ void CovariateTabController::setDbValue(int index, double value)
     }
 }
 
-void CovariateTabController::setDate(int index, QDateTime time)
+void Tucuxi::Gui::GuiUtils::CovariateTabController::setDate(int index, QDateTime time)
 {
     if (!isPatientIndexValid(index)) return;
 
@@ -333,7 +333,7 @@ void CovariateTabController::setDate(int index, QDateTime time)
     }
 }
 
-void CovariateTabController::updateAllActualValues()
+void Tucuxi::Gui::GuiUtils::CovariateTabController::updateAllActualValues()
 {
     foreach (DrugVariateInfo *dv, _drugVariateInfos->getList())
     {
@@ -364,7 +364,7 @@ void CovariateTabController::updateAllActualValues()
     _fileredVariates->sort(compareVariate);
 }
 
-void CovariateTabController::updateActualValue(QString variateName)
+void Tucuxi::Gui::GuiUtils::CovariateTabController::updateActualValue(QString variateName)
 {
     // Find the currently selected drug
     foreach (DrugVariateInfo *dv, _drugVariateInfos->getList())
@@ -399,22 +399,22 @@ void CovariateTabController::updateActualValue(QString variateName)
     _fileredVariates->sort(compareVariate);
 }
 
-void CovariateTabController::forceRefresh()
+void Tucuxi::Gui::GuiUtils::CovariateTabController::forceRefresh()
 {
     masterController->covariateUpdated();
 }
 
-bool CovariateTabController::isPatientIndexValid(int index)
+bool Tucuxi::Gui::GuiUtils::CovariateTabController::isPatientIndexValid(int index)
 {
     return (index >= 0) && (index < _fileredVariates->size());
 }
 
-bool CovariateTabController::isDrugIndexValid(int index)
+bool Tucuxi::Gui::GuiUtils::CovariateTabController::isDrugIndexValid(int index)
 {
     return (index >= 0) && (index < _drugVariateInfos->size());
 }
 
-bool CovariateTabController::compareVariate(const Tucuxi::Gui::Core::PatientVariate* a, const Tucuxi::Gui::Core::PatientVariate* b)
+bool Tucuxi::Gui::GuiUtils::CovariateTabController::compareVariate(const Tucuxi::Gui::Core::PatientVariate* a, const Tucuxi::Gui::Core::PatientVariate* b)
 {
     return (a->getDate() < b->getDate());
 }

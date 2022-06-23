@@ -7,6 +7,10 @@
 #include "QDateTime"
 #include "core/dal/predictionresult.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class ReverseModel : public AbstractEntityModel
 {
     Q_OBJECT
@@ -41,5 +45,9 @@ private:
     Tucuxi::Gui::Core::PredictionResult* _pred;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // REVERSEMODEL_H

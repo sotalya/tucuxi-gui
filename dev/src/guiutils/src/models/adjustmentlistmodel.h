@@ -7,6 +7,10 @@
 #include "core/dal/dosage.h"
 #include "core/dal/predictionresult.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class AdjustmentListModel : public AbstractEntityListModel
 {
     Q_OBJECT
@@ -52,5 +56,9 @@ private:
 //    QList<Tucuxi::Gui::Core::Dosage*> _adjustments;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // ADJUSTMENTLISTMODEL_H

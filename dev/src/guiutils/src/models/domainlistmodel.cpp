@@ -2,6 +2,8 @@
 
 #include "domainlistmodel.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 DomainListModel::DomainListModel(QObject *parent) :
     AbstractEntityListModel(parent),
     _domains(),

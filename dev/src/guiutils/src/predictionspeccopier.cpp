@@ -21,6 +21,8 @@
 #include "core/dal/drug/bsv.h"
 #include "core/dal/drug/standardtreatment.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 PredictionSpecCopier::PredictionSpecCopier()
 {
 

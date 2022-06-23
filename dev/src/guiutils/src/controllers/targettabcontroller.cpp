@@ -15,6 +15,8 @@
 #include "core/dal/drug/infusions.h"
 #include "core/dal/drug/target.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 STD_PROPERTY_IMPL(TargetTabController, Tucuxi::Gui::Core::TargetList*, targets, Targets)
 
 TargetTabController::TargetTabController(QObject *parent) : AbstractViewController(parent)

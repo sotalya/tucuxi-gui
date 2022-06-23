@@ -2,6 +2,8 @@
 
 #include "reversemodel.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 ReverseModel::ReverseModel(QObject *parent) :
     AbstractEntityModel(parent),
     _roleNames()

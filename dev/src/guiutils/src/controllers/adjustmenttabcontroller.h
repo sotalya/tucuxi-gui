@@ -22,6 +22,10 @@ class AdjustmentDosage;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class AdjustmentTabController : public AbstractViewController
 {
     Q_OBJECT
@@ -86,6 +90,10 @@ private:
 private:
     Tucuxi::Gui::Core::ChartData *_chartData;
 };
+
+}
+}
+}
 
 
 #endif // ADJUSTMENTTABCONTROLLER_H

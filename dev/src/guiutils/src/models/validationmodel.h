@@ -6,6 +6,10 @@
 #include "abstractentitymodel.h"
 #include "admin/src/dal/interpretationanalysis.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class ValidationModel: public AbstractEntityModel
 {
     Q_OBJECT
@@ -43,5 +47,9 @@ private:
     Tucuxi::Gui::Admin::InterpretationAnalysis* _analysis;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // DOSAGEMODEL_H

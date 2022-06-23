@@ -6,6 +6,10 @@
 #include "abstractentitylistmodel.h"
 #include "admin/src/dal/partialrequest.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class PartialRequestListModel : public AbstractEntityListModel
 {
     Q_OBJECT
@@ -52,5 +56,9 @@ private:
     QList<SharedPartialRequest> _requests;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // PARTIALREQUESTLISTMODEL_H

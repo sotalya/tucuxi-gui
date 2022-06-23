@@ -8,6 +8,8 @@
 #include "errors_guiutils.h"
 #include "core/dal/drug/translatablestring.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 DrugVariateListModel::DrugVariateListModel(QObject *parent) :
     AbstractEntityListModel( parent),
     _drugVariates(0),

@@ -52,6 +52,10 @@ class StandardTreatment;
 }
 }
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class PredictionSpecCopier
 {
 public:
@@ -100,5 +104,9 @@ public:
 
 
 };
+
+}
+}
+}
 
 #endif // PREDICTIONSPECCOPIER_H

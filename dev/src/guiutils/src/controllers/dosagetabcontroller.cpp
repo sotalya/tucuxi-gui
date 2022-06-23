@@ -14,23 +14,24 @@
 #include "core/dal/drug/infusions.h"
 #include "core/dal/drug/standardtreatment.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
 
-STD_PROPERTY_IMPL(DosageTabController, Tucuxi::Gui::Core::DosageHistory*, dosages, Dosages)
+STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::DosageTabController, Tucuxi::Gui::Core::DosageHistory*, dosages, Dosages)
 
 //STD_PROPERTY_IMPL(DosageTabController, Tucuxi::Gui::Core::DrugModel*, drugModel, DrugModel)
 
-DosageTabController::DosageTabController(QObject *parent) : AbstractViewController(parent)
+Tucuxi::Gui::GuiUtils::DosageTabController::DosageTabController(QObject *parent) : AbstractViewController(parent)
 {
 //    _drugModel = nullptr;
     _dosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO, this);
 }
 
-bool DosageTabController::isIndexValid(int index)
+bool Tucuxi::Gui::GuiUtils::DosageTabController::isIndexValid(int index)
 {
     return (index >= 0) && (index < _dosages->size());
 }
 
-void DosageTabController::setAppliedTime(int index, QDateTime time)
+void Tucuxi::Gui::GuiUtils::DosageTabController::setAppliedTime(int index, QDateTime time)
 {
     if (!isIndexValid(index)) return;
 
@@ -54,7 +55,7 @@ void DosageTabController::setAppliedTime(int index, QDateTime time)
     }
 }
 
-void DosageTabController::setEndTime(int index, QDateTime time)
+void Tucuxi::Gui::GuiUtils::DosageTabController::setEndTime(int index, QDateTime time)
 {
     if (!isIndexValid(index)) return;
 
@@ -70,7 +71,7 @@ void DosageTabController::setEndTime(int index, QDateTime time)
     _dosages->at(index)->setEndTime(time);
 }
 
-void DosageTabController::setDbValue(int index, double value)
+void Tucuxi::Gui::GuiUtils::DosageTabController::setDbValue(int index, double value)
 {
     if (!isIndexValid(index)) return;
     if (_dosages->at(index)->getQuantity()->getDbvalue() == value) return;
@@ -79,7 +80,7 @@ void DosageTabController::setDbValue(int index, double value)
 }
 
 
-void DosageTabController::setDbTinf(int index, double value)
+void Tucuxi::Gui::GuiUtils::DosageTabController::setDbTinf(int index, double value)
 {
     if (!isIndexValid(index)) return;
 
@@ -89,7 +90,7 @@ void DosageTabController::setDbTinf(int index, double value)
     _dosages->at(index)->setDbtinf(value);
 }
 
-void DosageTabController::setDbInterval(int index, double interval)
+void Tucuxi::Gui::GuiUtils::DosageTabController::setDbInterval(int index, double interval)
 {
     if (!isIndexValid(index)) return;
 
@@ -99,7 +100,7 @@ void DosageTabController::setDbInterval(int index, double interval)
     _dosages->at(index)->setDbinterval(interval);
 }
 
-int DosageTabController::getRelativeRouteValue(int index)
+int Tucuxi::Gui::GuiUtils::DosageTabController::getRelativeRouteValue(int index)
 {
     if (!isIndexValid(index)) return 0;
 
@@ -114,7 +115,7 @@ int DosageTabController::getRelativeRouteValue(int index)
     return 0;
 }
 
-void DosageTabController::setRouteValue(int index, int routeValue)
+void Tucuxi::Gui::GuiUtils::DosageTabController::setRouteValue(int index, int routeValue)
 {
     if (!isIndexValid(index)) return;
 
@@ -129,13 +130,13 @@ void DosageTabController::setRouteValue(int index, int routeValue)
     _dosages->at(index)->getRoute()->setFormulationAndRoute(adminList->at(routeValue)->getFormulationAndRoute());
 }
 
-void DosageTabController::setHasEndDate(int index, bool hasEndDate)
+void Tucuxi::Gui::GuiUtils::DosageTabController::setHasEndDate(int index, bool hasEndDate)
 {
     if (!isIndexValid(index)) return;
     _dosages->at(index)->setHasEndDate(hasEndDate);
 }
 
-void DosageTabController::setAtSteadyState(int index, bool isAtSteadyState, QDateTime lastDoseTime)
+void Tucuxi::Gui::GuiUtils::DosageTabController::setAtSteadyState(int index, bool isAtSteadyState, QDateTime lastDoseTime)
 {
     if (!isIndexValid(index)) return;
     _dosages->at(index)->setIsAtSteadyState(isAtSteadyState);
@@ -150,14 +151,14 @@ void DosageTabController::setAtSteadyState(int index, bool isAtSteadyState, QDat
     }
 }
 
-void DosageTabController::forceRefresh()
+void Tucuxi::Gui::GuiUtils::DosageTabController::forceRefresh()
 {
     _dosages->sort(compareDosage);
     masterController->dosageUpdated();
     emit canHaveMoreDosagesChanged(getCanHaveMoreDosages());
 }
 
-void DosageTabController::addDosage()
+void Tucuxi::Gui::GuiUtils::DosageTabController::addDosage()
 { 
     Tucuxi::Gui::Core::DrugModel *drugModel;
     drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
@@ -205,7 +206,7 @@ void DosageTabController::addDosage()
 }
 
 
-QDateTime DosageTabController::getNewEndTime(QDateTime start)
+QDateTime Tucuxi::Gui::GuiUtils::DosageTabController::getNewEndTime(QDateTime start)
 {
     Tucuxi::Gui::Core::DrugModel *drugModel;
     drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
@@ -217,24 +218,24 @@ QDateTime DosageTabController::getNewEndTime(QDateTime start)
     return start;
 }
 
-void DosageTabController::removeDosage(int index)
+void Tucuxi::Gui::GuiUtils::DosageTabController::removeDosage(int index)
 {
     if (index >= _dosages->size()) return;
     _dosages->remove(index);
     forceRefresh();
 }
 
-bool DosageTabController::compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
+bool Tucuxi::Gui::GuiUtils::DosageTabController::compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
 {
     return (a->getApplied() < b->getApplied());
 }
 
-int DosageTabController::getNbDosages()
+int Tucuxi::Gui::GuiUtils::DosageTabController::getNbDosages()
 {
     return _dosages->getList().size();
 }
 
-bool DosageTabController::getCanHaveMoreDosages()
+bool Tucuxi::Gui::GuiUtils::DosageTabController::getCanHaveMoreDosages()
 {
     return true;
     QList<Tucuxi::Gui::Core::Dosage*>::iterator it = _dosages->getList().begin();
@@ -248,12 +249,12 @@ bool DosageTabController::getCanHaveMoreDosages()
     return true;
 }
 
-void DosageTabController::reset()
+void Tucuxi::Gui::GuiUtils::DosageTabController::reset()
 {
     emit canHaveMoreDosagesChanged(getCanHaveMoreDosages());
 }
 
-bool DosageTabController::checkModifiedDates(int index, const QDateTime &appliedDate, const QDateTime &endDate)
+bool Tucuxi::Gui::GuiUtils::DosageTabController::checkModifiedDates(int index, const QDateTime &appliedDate, const QDateTime &endDate)
 {
     if (!isIndexValid(index)) return true;
 

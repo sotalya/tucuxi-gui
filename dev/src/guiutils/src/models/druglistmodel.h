@@ -7,6 +7,10 @@
 
 #include "core/dal/drug/drug.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class DrugListModel : public AbstractEntityListModel
 {
     Q_OBJECT
@@ -47,5 +51,9 @@ private:
     QList<Tucuxi::Gui::Core::DrugModel*> *_drugs;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // DRUGLISTMODEL_H

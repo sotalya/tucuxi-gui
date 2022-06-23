@@ -63,6 +63,8 @@
         /* error default */  99 \
     )
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 StartupScreen::StartupScreen(QWidget *parent) :
     QDialog(parent)
 {

@@ -17,11 +17,15 @@ class Interpretation;
 }
 }
 
-class InterpretationController;
-
 typedef Tucuxi::Gui::Admin::ValidationStatus::StatusType StatusType;
 typedef Tucuxi::Gui::Admin::ValidationStatus::DataStatusType DataStatusType;
 typedef Tucuxi::Gui::Admin::ValidationStatus::ValidationStatusType ValidationStatusType;
+
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
+class InterpretationController;
 
 class FlowController : public QObject
 {
@@ -88,5 +92,9 @@ protected:
     InterpretationController *interpretationController;
 
 };
+
+}
+}
+}
 
 #endif // FLOWCONTROLLER_H

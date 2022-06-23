@@ -2,6 +2,8 @@
 
 #include "appmode.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 AppMode* AppMode::m_instance = nullptr;
 
 AppMode::AppMode()

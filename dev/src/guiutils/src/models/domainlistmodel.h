@@ -7,6 +7,10 @@
 
 #include "core/utils/ezutils.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class DomainListModel : public AbstractEntityListModel
 {
     Q_OBJECT
@@ -43,5 +47,9 @@ private:
     QList<Tucuxi::Gui::Core::Descriptor> _domains;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // DOMAINLISTMODEL_H

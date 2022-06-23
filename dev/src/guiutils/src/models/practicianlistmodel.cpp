@@ -5,6 +5,7 @@
 #include "admin/src/stdadminrepository.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 PracticianListModel::PracticianListModel(QObject *parent) :
     AbstractEntityListModel(parent),

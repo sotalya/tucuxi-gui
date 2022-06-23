@@ -8,8 +8,6 @@
 
 #include "admin/src/dal/validationstatus.h"
 
-class CalculationController;
-
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
@@ -20,6 +18,12 @@ class PredictionResult;
 }
 }
 }
+
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
+class CalculationController;
 
 class ChartDataController : public QObject
 {
@@ -91,5 +95,9 @@ public:
 
     Tucuxi::Gui::Core::PredictionSpec* predictionspec;
 };
+
+}
+}
+}
 
 #endif // CHARTDATACONTROLLER_H

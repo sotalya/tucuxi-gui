@@ -21,6 +21,9 @@
 
     The socket is also set as the parent of the transport object.
 */
+
+using namespace Tucuxi::Gui::GuiUtils;
+
 WebSocketTransport::WebSocketTransport(QWebSocket *socket)
 : QWebChannelAbstractTransport(socket)
 , m_socket(socket)

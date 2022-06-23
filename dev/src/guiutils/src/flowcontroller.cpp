@@ -23,6 +23,7 @@
 #include "core/core.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 typedef ValidationStatus::StatusType StatusType;
 

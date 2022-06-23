@@ -5,6 +5,10 @@
 
 #include <QQuickWidget>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class StartupWindow : public QQuickWidget
 {
     Q_OBJECT
@@ -28,5 +32,9 @@ public:
 signals:
     void optionSelected(int option);
 };
+
+}
+}
+}
 
 #endif // STARTUPWINDOW_H

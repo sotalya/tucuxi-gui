@@ -3,6 +3,8 @@
 #include "unavailablefunctionality.h"
 #include <QMessageBox>
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 UnavailableFunctionality::UnavailableFunctionality()
 {
 

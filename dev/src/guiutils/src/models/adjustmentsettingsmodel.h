@@ -7,6 +7,10 @@
 
 #include <QDateTime>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class AdjustmentSettingsModel : public AbstractEntityModel
 {
     Q_OBJECT
@@ -45,5 +49,9 @@ private:
     bool _valid;
     QHash<int, QByteArray> _roleNames;
 };
+
+}
+}
+}
 
 #endif // ADJUSTMENTSETTINGSMODEL_H

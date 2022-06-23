@@ -36,6 +36,7 @@
 
 using namespace Tucuxi;
 using namespace Gui::Core;
+using namespace Tucuxi::Gui::GuiUtils;
 
 CalculationController::CalculationController(QObject *parent)
     : QObject(parent)

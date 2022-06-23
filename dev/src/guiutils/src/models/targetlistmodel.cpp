@@ -10,6 +10,7 @@
 #include "core/dal/drug/results.h"
 
 using namespace Tucuxi::Gui::Core;
+using namespace Tucuxi::Gui::GuiUtils;
 
 TargetListModel::TargetListModel(QObject *parent) :
     AbstractEntityListModel(parent),

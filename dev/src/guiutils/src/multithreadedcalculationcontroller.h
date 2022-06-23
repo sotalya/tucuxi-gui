@@ -31,6 +31,11 @@
  * threads could start computations in parallel, and if the ProcessingInterface is
  * a singleton, then its methods should be reentrant in order to perform as expected.
  */
+
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class MultiThreadedCalculationController : public CalculationController
 {
 
@@ -76,5 +81,9 @@ private:
     int nbDisengaged;
 
 };
+
+}
+}
+}
 
 #endif // MULTITHREADEDCALCULATIONCONTROLLER_H

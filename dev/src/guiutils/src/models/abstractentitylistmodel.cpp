@@ -4,6 +4,8 @@
 
 #include <QUndoStack>
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 AbstractEntityListModel::AbstractEntityListModel(QObject *parent) :
     AbstractEntityModel(parent)
 {

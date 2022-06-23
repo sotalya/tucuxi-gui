@@ -10,6 +10,9 @@
 #include "abstractviewcontroller.h"
 #include "admin/src/dal/sentencepalette.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
 
 class ValidationTabController : public AbstractViewController
 {
@@ -28,5 +31,8 @@ public:
 
 };
 
+}
+}
+}
 
 #endif // VALIDATIONTABCONTROLLER_H

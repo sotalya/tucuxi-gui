@@ -8,6 +8,10 @@
 #include <QtWebEngine/qtwebengineversion.h>
 #include <QtWebChannel/QWebChannelAbstractTransport>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class WebSocketTransport : public QWebChannelAbstractTransport
 {
     Q_OBJECT
@@ -24,5 +28,8 @@ private:
     QWebSocket *m_socket;
 };
 
+}
+}
+}
 
 #endif // WEBSOCKETTRANSPORT_H

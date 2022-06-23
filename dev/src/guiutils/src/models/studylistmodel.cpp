@@ -2,6 +2,8 @@
 
 #include "studylistmodel.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 StudyListModel::StudyListModel(QObject *parent) :
     AbstractEntityListModel(parent),
     _studies(),

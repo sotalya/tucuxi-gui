@@ -5,6 +5,10 @@
 
 #include "rest/requestsclientprocessing.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class DemoRequestFileClient : public Tucuxi::Gui::Rest::RequestsClientProcessing
 {
     Q_OBJECT
@@ -28,5 +32,8 @@ private:
 
 };
 
+}
+}
+}
 
 #endif // DEMOREQUESTFILECLIENT_H

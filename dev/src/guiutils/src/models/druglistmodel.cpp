@@ -7,6 +7,8 @@
 #include "errors_guiutils.h"
 #include "core/dal/drug/translatablestring.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 DrugListModel::DrugListModel(QObject *parent) :
     AbstractEntityListModel(parent),
     _drugs(0),

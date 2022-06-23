@@ -4,6 +4,7 @@
 #include "core/dal/drug/drug.h"
 #include "guiutils/src/drugtohtml.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
 
 STD_PROPERTY_IMPL(DrugTabController, QString, drugHtmlDescription, DrugHtmlDescription)
 

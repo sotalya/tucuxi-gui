@@ -21,6 +21,10 @@
 #include "admin/src/dal/email.h"
 #include "admin/src/dal/interpretationrequest.h"
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class DemoInterpretationRequestBuilder
 {
 
@@ -74,6 +78,8 @@ private:
 
 };
 
-
+}
+}
+}
 
 #endif // DemoRequestsClient_H

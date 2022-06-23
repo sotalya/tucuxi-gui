@@ -10,6 +10,7 @@
 #include "core/dal/drug/concentrations.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 MeasureListModel::MeasureListModel(QObject *parent) :
     AbstractEntityListModel(parent),

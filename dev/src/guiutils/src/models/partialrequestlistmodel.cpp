@@ -19,6 +19,7 @@
 #include "core/utils/ezutils.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::GuiUtils;
 
 PartialRequestListModel::PartialRequestListModel(QObject *parent) :
     AbstractEntityListModel(parent),

@@ -7,6 +7,8 @@
 #include "core/dal/drug/adme.h"
 #include "core/dal/drug/drugvariate.h"
 
+using namespace Tucuxi::Gui::GuiUtils;
+
 DrugToHtml::DrugToHtml()
 {
 

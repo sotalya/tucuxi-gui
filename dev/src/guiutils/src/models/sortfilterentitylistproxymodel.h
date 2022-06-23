@@ -5,6 +5,10 @@
 
 #include <QSortFilterProxyModel>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class ProxyModelFilter : public QObject
 {
     Q_OBJECT
@@ -111,5 +115,9 @@ protected slots:
 private:
     QMultiHash<int, ProxyModelFilter *> _filters;
 };
+
+}
+}
+}
 
 #endif // SORTFILTERENTITYLISTPROXYMODEL_H

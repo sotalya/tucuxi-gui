@@ -7,6 +7,10 @@
 #include <QTextEdit>
 #include <QPushButton>
 
+namespace Tucuxi {
+namespace Gui {
+namespace GuiUtils {
+
 class StartupScreen : public QDialog
 {
     Q_OBJECT
@@ -22,5 +26,9 @@ signals:
 public slots:
 
 };
+
+}
+}
+}
 
 #endif // STARTUPSCREEN_H

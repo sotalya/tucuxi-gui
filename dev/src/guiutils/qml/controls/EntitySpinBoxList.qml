@@ -24,7 +24,7 @@ EntitySpinBox {
 
     function valueValidation()
     {
-        console.log("value : " + value)
+        // console.log("value : " + value)
     }
 
     function adaptStepUp()

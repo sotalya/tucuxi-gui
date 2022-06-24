@@ -103,7 +103,7 @@ Rectangle
             Layout.fillWidth: true
             Layout.preferredHeight: Style.splash.copyright.height
             horizontalAlignment: Text.AlignHCenter
-            text: "Copyright (c) HEIG-VD/CHUV - 2020"
+            text: "Copyright (c) HEIG-VD/CHUV - 2022"
             font.family: Style.splash.copyright.family
             fontSizeMode: Text.Fit
             minimumPixelSize: Style.splash.copyright.size

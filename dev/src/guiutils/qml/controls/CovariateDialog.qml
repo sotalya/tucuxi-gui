@@ -111,7 +111,7 @@ DialogBase {
         bOk = timeInput.validate() && bOk
         bOk = valueGenderControl.validate() && bOk
 
-        console.log(bOk)
+        // console.log(bOk)
 
         return bOk;
     }

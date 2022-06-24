@@ -41,9 +41,9 @@ int main(int argc, char *argv[])
      *                              TCP Demonstrator                                         *
      *                              ----------------                                         *
      *                                                                                       *
-     * You can find below an example of data sent to Ezechiel. This data consists of measures*
+     * You can find below an example of data sent to Tucuxi. This data consists of measures*
      * and posology adaptations for a prediction made for John Doe using the Imatinib drug.  *
-     * In order to have the best results, please follow the steps below in Ezechiel before   *
+     * In order to have the best results, please follow the steps below in Tucuxi before   *
      * launching this TCP client.                                                            *
      *                                                                                       *
      * 1. Make sure the measures and covariates are emtpy for the patient John Doe.          *

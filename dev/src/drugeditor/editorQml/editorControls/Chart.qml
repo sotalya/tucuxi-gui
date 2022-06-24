@@ -250,7 +250,7 @@ Canvas {
     var popcolors = ["#0B360E", "#17701E", "#2CD438"];
     var aprcolors = ["#E84229", "#B53A70", "#FF4200"];
     var apocolors = ["#4A24B5", "#5848B5", "#5168B5"];
-    var nographtext = "Welcome to Ezechiel! Graphs of predicted concentrations will be shown here.";
+    var nographtext = "Welcome to Tucuxi! Graphs of predicted concentrations will be shown here.";
     var nographdrugtext = interpretationController.getGraphDrugData();
 
     //Draw the content

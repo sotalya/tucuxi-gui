@@ -219,7 +219,7 @@ private:
     bool validateModel(const Tucuxi::Gui::Core::DrugModel* drug);
     bool validateParameters(const Tucuxi::Gui::Core::DrugModel* drug);
 
-    // bool validateScripts(const ezechiel::GuiCore::DrugModel* drug);
+    // bool validateScripts(const Tucuxi::Gui::Core::DrugModel* drug);
 
     //Deletes the existing drugs
     void resetDrugs();

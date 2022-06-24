@@ -10,7 +10,7 @@ EditorPanel::EditorPanel(QWidget *parent) : EzPanel(parent), _ui(new Ui::EditorP
     _ui->setupUi(this);
 
     //Set the window title for standalone mode
-    setWindowTitle("Ezechiel Drug Editor");
+    setWindowTitle("Tucuxi Drug Editor");
 
     //Initialize the usual GUI objects
     createActions();
@@ -62,7 +62,7 @@ QString EditorPanel::title()
 //Returns the panel description
 QString EditorPanel::description()
 {
-    return tr("The editor allows to create and edit new drugs XML files which can be used by Ezechiel");
+    return tr("The editor allows to create and edit new drugs XML files which can be used by Tucuxi");
 }
 
 //Sets up the editor actions

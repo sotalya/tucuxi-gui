@@ -147,7 +147,7 @@ protected:
 #include <iostream>
 #include <cstdlib>
 
-// Print a message when Ezechiel is stopped by a signal
+// Print a message when Tucuxi is stopped by a signal
 void signalHandler (int id)
 {
 //    std::cout << "sig handler " << qPrintable(QObject::tr("Interrupted by signal %1").arg(id)) << std::endl;
@@ -550,7 +550,7 @@ void parseOptions()
     parser.setApplicationDescription("Tucuxi is a TDM software for pharmacologists");
 
     const QCommandLineOption standaloneOption(QStringList() << "a" << "standalone",
-                                    QCoreApplication::translate("main", "Run EzeCHieL as a standalone software, effectively disabling any feature relying on retrieving medical data from a server."));
+                                    QCoreApplication::translate("main", "Run Tucuxi as a standalone software, effectively disabling any feature relying on retrieving medical data from a server."));
     const QCommandLineOption basePathOption(QStringList() << "b" << "base-path",
                                     QCoreApplication::translate("main", "Set the base path of the medical institution's server from which interpretion request can be retrieved."),
                                     "path",

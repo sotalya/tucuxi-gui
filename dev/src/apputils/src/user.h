@@ -6,9 +6,9 @@
 #include "apputils/src/apputilsrepository.h"
 
 /** \ingroup security
- *  \brief An EzeCHieL user.
+ *  \brief An Tucuxi user.
  *
- * This simple class describes an EzeCHieL user. It does contain the username and other
+ * This simple class describes an Tucuxi user. It does contain the username and other
  * general information about the user such as its authorization level. It does not store
  * the user's private key, used for authentication, but provides both functions to retrieve
  * and set the private key.

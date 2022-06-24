@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     //Setup the application
     QApplication a(argc, argv);
 
-    QCoreApplication::setApplicationName("EzeCHieL-DBUpdater");
+    QCoreApplication::setApplicationName("Tucuxi-DBUpdater");
     QCoreApplication::setOrganizationName("REDS");
     QCoreApplication::setOrganizationDomain("http://www.ezechiel.ch/");
 

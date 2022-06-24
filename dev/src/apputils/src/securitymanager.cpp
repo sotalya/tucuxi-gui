@@ -22,7 +22,7 @@ SecurityManager *SecurityManager::_instance = 0;
 
 //The information texts
 const char *const SecurityManager::_INFORMATION_ENCRYPTION = QT_TR_NOOP_UTF8(
-            "<html><head/><body><p align=\"justify\">In EzeCHieL, you have the possibility to "
+            "<html><head/><body><p align=\"justify\">In Tucuxi, you have the possibility to "
             "encrypt sensitive data such as personal information and medical records. Encryting "
             "sensitive data may be useful as it restricts access to users with valid usernames and "
             "passwords. If a malicious or unauthorized user were to obtain an encrypted database, "
@@ -32,7 +32,7 @@ const char *const SecurityManager::_INFORMATION_ENCRYPTION = QT_TR_NOOP_UTF8(
             "you lose your username and/or password, the data in the database will be permanently "
             "lost</span>. If you decide not to encrypt your data, you would be able to recover it, "
             "but anyone else with access to the database would also. In either case, you still need "
-            "to provide a valid username and password to use EzeCHieL.</p></body></html>");
+            "to provide a valid username and password to use Tucuxi.</p></body></html>");
 
 //The username error strings
 const char *const SecurityManager::_USERNAME_TOO_SHORT  = QT_TR_NOOP_UTF8("The username must contain at least %1 characters");

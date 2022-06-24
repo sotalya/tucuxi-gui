@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     //Setup the application
     QApplication a(argc, argv);
 
-    QCoreApplication::setApplicationName("EzeCHieL-Anonymisator");
+    QCoreApplication::setApplicationName("Tucuxi-Anonymisator");
     QCoreApplication::setOrganizationName("REDS");
     QCoreApplication::setOrganizationDomain("http://www.ezechiel.ch/");
 

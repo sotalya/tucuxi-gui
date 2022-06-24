@@ -193,7 +193,7 @@ int main(int argc, char *argv[])
 
 
     QApplication app(argc, argv);
-    QCoreApplication::setApplicationName("EzeCHieL Drug Editor");
+    QCoreApplication::setApplicationName("Tucuxi Drug Editor");
     QCoreApplication::setApplicationVersion("0.1.0");
 
 

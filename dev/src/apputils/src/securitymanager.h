@@ -15,13 +15,13 @@ namespace Core {
 /** \ingroup core
  *  \defgroup security Security
  *
- * EzeCHieL provides a security manager that allows the encryption and the decryption
+ * Tucuxi provides a security manager that allows the encryption and the decryption
  * of sensitive data such as the patients information and medical data. It uses a master
  * key which is the same for all the users. In order to retrieve the master key, a user
  * must provide its username and password.
  *
  * The security manager also provides mechanisms to ensure that a drug XML file provided
- * by EzeCHieL is valid. For this purpose, all drug XML files are signed before being
+ * by Tucuxi is valid. For this purpose, all drug XML files are signed before being
  * integrated into the software.
  *
  */

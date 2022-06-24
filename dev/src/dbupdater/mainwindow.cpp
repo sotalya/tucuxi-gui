@@ -71,7 +71,7 @@ void MainWindow::evaluationFinished(bool result, QStringList patches)
     }
     else
     {
-        ui->vLayout->addWidget(new QLabel("A problem occured. Either the database was unreachable, or not EzeCHieL compatible. Please try again, and make sure you select the correct database. "));
+        ui->vLayout->addWidget(new QLabel("A problem occured. Either the database was unreachable, or not Tucuxi compatible. Please try again, and make sure you select the correct database. "));
     }
 }
 

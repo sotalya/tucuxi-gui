@@ -275,7 +275,7 @@ QString Core::buildID()
 Version Core::version(VersionType vType)
 {
     switch (vType) {
-    case Tucuxi: return Version(EZECHIEL_VERSION);
+    case Tucuxi: return Version(TUCUXI_VERSION);
     case Editor:   return Version(EDITOR_VERSION);
     case Data:     return Version(DATABASE_VERSION);
     default:       return Version();

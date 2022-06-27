@@ -23,7 +23,7 @@ CONFIG += qt
 #Removing the QtGui module (the maths must NOT use any gui element)
 QT -= gui
 
-TARGET      = ezechiel-processingtucucore
+TARGET      = tucuxi-gui-processingtucucore
 TEMPLATE    = lib
 DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 
@@ -32,7 +32,7 @@ unix {
     QMAKE_CXXFLAGS = -Wunused-variable
 }
 
-ezechiel-processingtucucore.depends = ../core
+tucuxi-gui-processingtucucore.depends = ../core
 
 
 #CONFIG += shared
@@ -60,7 +60,7 @@ SOURCES += \
 SOURCES += $${TUCUXIROOTDIR}/libs/spdlog-master-20170622/include/spdlog/fmt/bundled/format.cc
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
-DEPENDENCIES = ezechiel-core
+DEPENDENCIES = tucuxi-gui-core
 for(dep, DEPENDENCIES) {
     LIBNAME = $${OUT_PWD}/../$${DIST_DIR}/$${LIBPRE}$${dep}.$${SONAME}
     LIBS += $${LIBNAME}

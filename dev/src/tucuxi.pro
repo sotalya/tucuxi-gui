@@ -1,4 +1,4 @@
-#EzeCHieL configuration
+# Tucuxi configuration
 include(tucuxi.pri)
 
 TEMPLATE    =	subdirs
@@ -27,12 +27,7 @@ apputils.depends             = core
 admin.depends                = core
 plugins.depends              = core
 rest.depends                 = core admin
-#restclient.depends           = rest
-#restserver.depends           = rest
-#processingserver.depends     = core processing
-#processingtestclient.depends = core processing processingserver
 databases.depends            = core apputils admin
-#report.depends               = core apputils admin
 config_rest {
 guiutils.depends             = core apputils admin rest
 gui.depends                  = core apputils admin rest guiutils
@@ -42,14 +37,11 @@ cliutils.depends             = core apputils admin rest
 !config_rest {
 guiutils.depends             = core apputils admin
 gui.depends                  = core apputils admin guiutils
-#cli.depends                  = core apputils admin cliutils
-#cliutils.depends             = core apputils admin
 }
 drugeditor.depends	     = core guiutils
 
 guiutils.depends             += processingtucucore
 gui.depends += processingtucucore
-#cli.depends += processingtucucore
 
 
 #Custom target for doxygen

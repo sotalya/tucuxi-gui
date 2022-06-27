@@ -1,7 +1,7 @@
 //@@license@@
 
 //Determine the current Tucuxi version
-#define EZECHIEL_VERSION "0.2.11"
+#define TUCUXI_VERSION "0.2.11"
 
 //Determine the current database version
 #define DATABASE_VERSION "0.2.7"

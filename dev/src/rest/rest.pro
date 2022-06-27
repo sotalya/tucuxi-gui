@@ -3,7 +3,7 @@ include (../tucuxi.pri)
 QT += core xml xmlpatterns network
 QT -= gui
 
-TARGET   = ezechiel-rest
+TARGET   = tucuxi-giu-rest
 TEMPLATE = lib
 DESTDIR  = $${OUT_PWD}/../$${DIST_DIR}
 
@@ -98,7 +98,7 @@ RESOURCES += \
 CODECFORTR   += UTF-8
 TRANSLATIONS += $${TRANS_DIR}/rest_fr.ts
 
-DEPENDENCIES =  ezechiel-admin ezechiel-core
+DEPENDENCIES =  tucuxi-gui-admin tucuxi-gui-core
 for(dep, DEPENDENCIES) {
     LIBNAME = $${OUT_PWD}/../$${DIST_DIR}/$${LIBPRE}$${dep}.$${SONAME}
     LIBS += $${LIBNAME}

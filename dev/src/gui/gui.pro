@@ -5,6 +5,11 @@ isEmpty(TESTDRUGSPATH) {
     error("The variable DRUGSPATH should be set when invoking qmake. Like : qmake DRUGSPATH=<somepath>/tucuxi-drugs/drugfiles")
 }
 
+unix {
+    # Else the executable is not clickable in Ubuntu
+    QMAKE_LFLAGS += -no-pie
+}
+
 TARGET      = tucuxi
 TEMPLATE    = app
 DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
@@ -43,10 +48,10 @@ QML_IMPORT_PATH += $$PWD/..
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
 
-DEPENDENCIES = ezechiel-guiutils ezechiel-rest
-DEPENDENCIES += ezechiel-admin ezechiel-apputils ezechiel-core #ezechiel-report
+DEPENDENCIES = tucuxi-gui-guiutils tucuxi-giu-rest
+DEPENDENCIES += tucuxi-gui-admin tucuxi-gui-apputils tucuxi-gui-core
 
-DEPENDENCIES += ezechiel-processingtucucore
+DEPENDENCIES += tucuxi-gui-processingtucucore
 
 
 for(dep, DEPENDENCIES) {

@@ -1,7 +1,7 @@
 
 include (../tucuxi.pri)
 
-TARGET      = ezechiel-guiutils
+TARGET      = tucuxi-gui-guiutils
 TEMPLATE    = lib
 DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 
@@ -188,7 +188,7 @@ TRANSLATIONS    += $${TRANS_DIR}/guiutils_fr.ts
 QML_IMPORT_PATH += $$PWD/..
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
-DEPENDENCIES = ezechiel-core ezechiel-admin ezechiel-apputils ezechiel-rest #ezechiel-report
+DEPENDENCIES = tucuxi-gui-core tucuxi-gui-admin tucuxi-gui-apputils tucuxi-giu-rest
 
 for(dep, DEPENDENCIES) {
     LIBNAME = $${OUT_PWD}/../$${DIST_DIR}/$${LIBPRE}$${dep}.$${SONAME}

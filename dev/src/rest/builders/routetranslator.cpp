@@ -38,6 +38,7 @@ ChuvRouteTranslator::ChuvRouteTranslator()
     map.insert("perfusion iv continue", Tucuxi::Gui::Core::Admin::INFUSION);
     map.insert("orale", Tucuxi::Gui::Core::Admin::EXTRA);
     map.insert("per os", Tucuxi::Gui::Core::Admin::EXTRA);
+    map.insert("p.o", Tucuxi::Gui::Core::Admin::EXTRA);
 }
 
 Tucuxi::Gui::Core::Admin::Route ChuvRouteTranslator::restToInternalRoute(QString restRoute)

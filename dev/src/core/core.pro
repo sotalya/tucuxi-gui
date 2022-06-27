@@ -1,6 +1,6 @@
 include (../tucuxi.pri)
 
-TARGET      = ezechiel-core
+TARGET      = tucuxi-gui-core
 TEMPLATE    = lib
 DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 # DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}

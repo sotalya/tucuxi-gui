@@ -303,51 +303,9 @@ Tucuxi::Core::DrugModel *EzToTucucoreTranslator::buildDrugModel(const Tucuxi::Gu
     Tucuxi::Core::DrugModel *pDrugModel = nullptr;
 
     pDrugModel = Tucuxi::Gui::Processing::Drugs2Manager::getInstance()->getTucucoreById(_drugModel->getDrugModelId().toStdString());
-    if (pDrugModel != nullptr) {
-        return pDrugModel;
+    if (pDrugModel == nullptr) {
+        std::cout << "Can not import the drugs2 drug model" << std::endl;
     }
-
-    /*
-     * Not necessary now. Maybe when we have a repository of drug models
-    static std::map<std::string, std::string> map =
-    {
-        {"ch.heig-vd.ezechiel.vancomycin", "ch.tucuxi.vancomycin"},
-        {"ch.heig-vd.ezechiel.vancomycin.adult", "ch.tucuxi.vancomycin.adult"},
-        {"ch.heig-vd.ezechiel.vancomycin.adult.1CP", "ch.tucuxi.vancomycin.adult.1CP"},
-        {"ch.heig-vd.ezechiel.busulfan_children", "ch.tucuxi.busulfan.children_1comp"}
-    };
-*/
-
-
-    std::string basePath = CORE->path(Tucuxi::Gui::Core::Core::Drugs2).toStdString() + "/";
-
-    static std::map<std::string, std::string> fileNameMap =
-    {
-        {"ch.heig-vd.ezechiel.imatinib", basePath + "ch.tucuxi.imatinib.tdd"},
-        {"ch.heig-vd.ezechiel.vancomycin", basePath + "ch.tucuxi.vancomycin.tdd"},
-        {"ch.heig-vd.ezechiel.vancomycin.adult", basePath + "ch.tucuxi.vancomycin_adults.tdd"},
-        {"ch.heig-vd.ezechiel.vancomycin.adult.1CP", basePath + "ch.tucuxi.vancomycin_adults_1CP.tdd"},
-        {"ch.heig-vd.ezechiel.busulfan_children", basePath + "ch.tucuxi.busulfan_children.tdd"},
-        {"ch.heig-vd.ezechiel.tobramycin", basePath + "ch.tucuxi.tobramycin.tdd"}
-
-
-    };
-
-    std::string originalDrugModelId = _drugModel->getDrugModelId().toStdString();
-
-    if (fileNameMap.count(originalDrugModelId) > 0) {
-        // We have a model
-        std::string fileName = fileNameMap[originalDrugModelId];
-        Tucuxi::Core::DrugModelImport importer;
-        Tucuxi::Common::IImport::Status result;
-        std::unique_ptr<Tucuxi::Core::DrugModel> uniqueDrugModel;
-        result = importer.importFromFile(uniqueDrugModel, fileName);
-        if (result == Tucuxi::Common::IImport::Status::Ok) {
-            return uniqueDrugModel.release();
-        }
-    }
-
-    std::cout << "Can not import the drugs2 drug model" << std::endl;
 
     return pDrugModel;
 }

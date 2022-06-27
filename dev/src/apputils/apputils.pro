@@ -1,6 +1,6 @@
 include (../tucuxi.pri)
 
-TARGET      = ezechiel-apputils
+TARGET      = tucuxi-gui-apputils
 TEMPLATE    = lib
 DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 
@@ -56,7 +56,7 @@ TRANSLATIONS    += $${TRANS_DIR}/apputils_fr.ts
 
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
-DEPENDENCIES = ezechiel-core
+DEPENDENCIES = tucuxi-gui-core
 
 for(dep, DEPENDENCIES) {
    LIBNAME = $${OUT_PWD}/../$${DIST_DIR}/$${LIBPRE}$${dep}.$${SONAME}

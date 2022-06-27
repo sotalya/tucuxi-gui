@@ -28,7 +28,7 @@ DECLARE_CORE_ERROR( DATAERROR, 10)
 DECLARE_CORE_ERROR( DATAMISSING, 11)
 //! The XML file is incorrectly formatted.
 DECLARE_CORE_ERROR( XMLFORMATERROR, 12)
-//! Ezechiel was stopped by the OS.
+//! Tucuxi was stopped by the OS.
 DECLARE_CORE_ERROR( INTERRUPTED, 13)
 //! An non-initialised data has been accessed
 DECLARE_CORE_ERROR( UNINITIALISED, 14)

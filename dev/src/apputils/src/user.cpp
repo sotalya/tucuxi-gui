@@ -4,12 +4,12 @@
 
 //The authorizathion names
 const char *const User::_LEVEL_ADMIN_NAME  = QT_TR_NOOP_UTF8("Administrator");
-const char *const User::_LEVEL_USER_NAME   = QT_TR_NOOP_UTF8("EzeCHieL User");
+const char *const User::_LEVEL_USER_NAME   = QT_TR_NOOP_UTF8("Tucuxi User");
 const char *const User::_LEVEL_UNKOWN_NAME = QT_TR_NOOP_UTF8("Unknown Level");
 
 //The authorizathion descriptions
 const char *const User::_LEVEL_ADMIN_DESC  = QT_TR_NOOP_UTF8("An administrator can create new user as well as edit the existing users. He does have full access to the database and software functionalities.");
-const char *const User::_LEVEL_USER_DESC   = QT_TR_NOOP_UTF8("An EzeCHieL user can modify its own information and have full access to the database and software functionalities.");
+const char *const User::_LEVEL_USER_DESC   = QT_TR_NOOP_UTF8("An Tucuxi user can modify its own information and have full access to the database and software functionalities.");
 const char *const User::_LEVEL_UNKOWN_DESC = QT_TR_NOOP_UTF8("Unknown or invalid authorization level.");
 
 //Returns a level name

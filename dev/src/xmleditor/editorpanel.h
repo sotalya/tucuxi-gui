@@ -23,7 +23,7 @@ public:
 
     //! Default constructor.
     /** The default constructor initialize the XML engine and the GUI elements of the application.
-     * It implements the EzPanel interface, which means it can be used as any other panel in Ezechiel.
+     * It implements the EzPanel interface, which means it can be used as any other panel in Tucuxi.
      * @param parent An optional parent widget.
      */
     explicit EditorPanel(QWidget *parent = 0);

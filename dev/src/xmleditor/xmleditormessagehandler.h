@@ -161,7 +161,7 @@ public:
 
     //! Sets the log file.
     /** Unless this function is called, nothing is printed in the log file.
-     * Before any message is printed, the Ezechiel build and build date along with the time when the writing began is written.
+     * Before any message is printed, the Tucuxi build and build date along with the time when the writing began is written.
      * @param logfile File where to write messages
      */
     void setLogFile(QString file);

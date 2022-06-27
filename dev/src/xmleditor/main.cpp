@@ -10,7 +10,7 @@
 #define LANGUAGE "language"
 
 /** \defgroup xmleditor XML Editor
- * The XML Editor is an application used to create and edit Ezechiel's drugs XML files.
+ * The XML Editor is an application used to create and edit Tucuxi's drugs XML files.
  * While being a standalone application, it needs to be linked against the core module.
  * The editor's objects are separated in sub-directory following their usage:
  * \li gui/ The GUI elements of the applications

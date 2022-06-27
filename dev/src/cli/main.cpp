@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     //Setup the application
     QCoreApplication app(argc, argv);
 
-    QCoreApplication::setApplicationName("EzeCHieL-CLI");
+    QCoreApplication::setApplicationName("Tucuxi-CLI");
     QCoreApplication::setOrganizationName("REDS");
     QCoreApplication::setOrganizationDomain("http://www.ezechiel.ch/");
 

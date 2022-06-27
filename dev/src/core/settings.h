@@ -18,7 +18,7 @@ namespace Core {
  *
  * The settings are used to store users preferences and non-critical configuration. This includes,
  * for example, the windows geometry and position, or the displaying of the chart's grid. In order
- * to achieve this, EzeCHieL offers a singleton that inherits from QSettings and offers helper
+ * to achieve this, Tucuxi offers a singleton that inherits from QSettings and offers helper
  * functions to set each setting's specific key depending on the module and class from where they
  * are set and retrieved.
  *
@@ -36,7 +36,7 @@ namespace Core {
  * \sa Settings, Module, QSettings
  */
 
-//! This enum represents a list of the different EzeCHieL's modules.
+//! This enum represents a list of the different Tucuxi's modules.
 enum class Module {
     Chart,      //! The chart module.
     CLI,        //! The CLI module.

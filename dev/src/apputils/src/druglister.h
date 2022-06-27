@@ -18,13 +18,13 @@ namespace Tucuxi {
 /** \defgroup drugxmlfiles Drug XML Files
  *  \ingroup core
  *
- * EzeCHieL uses drug XML files in order to define the drugs used in the software. At
- * startup, EzeCHieL will search the default and preferred drugs directories and build
+ * Tucuxi uses drug XML files in order to define the drugs used in the software. At
+ * startup, Tucuxi will search the default and preferred drugs directories and build
  * a drug for each valid XML file found.
  *
- * EzeCHieL provides an XML editor in order to edit the existing drug XML files, or
- * create new ones. The drugs XML files provided by EzeCHieL are certified (signed)
- * by the EzeCHieL group.
+ * Tucuxi provides an XML editor in order to edit the existing drug XML files, or
+ * create new ones. The drugs XML files provided by Tucuxi are certified (signed)
+ * by the Tucuxi group.
  *
  * \sa DrugLister, DrugXmlDescriptor, DrugManager, Drug
  */
@@ -36,7 +36,7 @@ namespace Tucuxi {
  * they contain. For each drug XML file, it will construct an adequate DrugXmlDescriptor
  * object that can then be used to display basic information about the drug and retrieve
  * the corresponding file. To be considered valid, a drug XML file must be validated against
- * the EzeCHieL drug XSD schema, and its verion must match the current drug version.
+ * the Tucuxi drug XSD schema, and its verion must match the current drug version.
  *
  * The drug lister is using a QXmlStreamReader in order to extract only what it needs (the
  * drug ID, names and descriptions, as well as the drug version). It can therefore parse

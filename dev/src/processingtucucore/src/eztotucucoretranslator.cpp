@@ -65,40 +65,6 @@ Tucuxi::Core::PredictionParameterType EzToTucucoreTranslator::buildParameterType
 
 Tucuxi::Core::DosageTimeRange *EzToTucucoreTranslator::buildTimeRange(const Tucuxi::Gui::Core::Dosage *_ezDosage)
 {
-
-    Tucuxi::Core::AbsorptionModel absorptionModel;
-    Tucuxi::Core::AdministrationRoute administrationRoute;
-    Tucuxi::Core::Formulation formulation;
-    switch (_ezDosage->getRoute()->getRoute()) {
-    case Tucuxi::Gui::Core::Admin::Route::BOLUS: {
-        absorptionModel = Tucuxi::Core::AbsorptionModel::Intravascular;
-        administrationRoute = Tucuxi::Core::AdministrationRoute::IntravenousBolus;
-        formulation = Tucuxi::Core::Formulation::ParenteralSolution;
-    } break;
-    case Tucuxi::Gui::Core::Admin::Route::INFUSION: {
-        absorptionModel = Tucuxi::Core::AbsorptionModel::Infusion;
-        administrationRoute = Tucuxi::Core::AdministrationRoute::IntravenousDrip;
-        formulation = Tucuxi::Core::Formulation::ParenteralSolution;
-    } break;
-    case Tucuxi::Gui::Core::Admin::Route::EXTRA: {
-        // Totally arbitrary. Now OK for Imatinib
-        absorptionModel = Tucuxi::Core::AbsorptionModel::Extravascular;
-        administrationRoute = Tucuxi::Core::AdministrationRoute::Oral;
-        formulation = Tucuxi::Core::Formulation::OralSolution;
-    } break;
-    case Tucuxi::Gui::Core::Admin::Route::EXTRALAG: {
-        // Totally arbitrary. Now OK for Imatinib
-        absorptionModel = Tucuxi::Core::AbsorptionModel::ExtravascularLag;
-        administrationRoute = Tucuxi::Core::AdministrationRoute::Oral;
-        formulation = Tucuxi::Core::Formulation::OralSolution;
-    } break;
-    default: {
-        absorptionModel = Tucuxi::Core::AbsorptionModel::Extravascular;
-        administrationRoute = Tucuxi::Core::AdministrationRoute::Intramuscular;
-        formulation = Tucuxi::Core::Formulation::ParenteralSolution;
-    } break;
-    }
-//    Tucuxi::Core::FormulationAndRoute formulationAndRoute(formulation, administrationRoute, absorptionModel, "");
     Tucuxi::Core::FormulationAndRoute formulationAndRoute = _ezDosage->getRoute()->getFormulationAndRoute();
     Tucuxi::Core::LastingDose lastingDose(_ezDosage->getQuantity()->getDbvalue(),
                                           Tucuxi::Common::TucuUnit(_ezDosage->getQuantity()->getUnitstring().toStdString()),

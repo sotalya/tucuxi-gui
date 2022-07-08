@@ -771,9 +771,10 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
         setCurrentDrugModel(_drugModelsForCurrentSubstance->at(0));
         _interpretation->getDrugResponseAnalysis()->setDrugModel(_drugModelsForCurrentSubstance->at(0));
 
+        auto drugModel = _drugModelsForCurrentSubstance->at(0);
 
         TargetList* targets = _interpretation->getDrugResponseAnalysis()->getTreatment()->getTargets();
-        TargetList* drugTargets            = _drugModelsForCurrentSubstance->at(0)->getTargets();
+        TargetList* drugTargets            = drugModel->getTargets();
 
         targets->clear();
         for (int i = 0; i < drugTargets->size(); ++i) {
@@ -781,6 +782,10 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
             target->copyFrom(drugTargets->at(i));
             targets->append(target);
         }
+
+        // TODO: To be checked: Do we really need that?
+        dosagesView->setProperty("routes", QVariant::fromValue(drugModel->getAdme()->getIntakes()));
+        adjustmentsView->setProperty("routes", QVariant::fromValue(drugModel->getAdme()->getIntakes()));
 
 
         flowController->drugChanged(0);

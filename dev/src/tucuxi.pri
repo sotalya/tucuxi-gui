@@ -10,6 +10,9 @@ DEFINES += GIT_REVISION='\\"$$system(git rev-parse --short HEAD)\\"'
 # Builds with Tucucore and use it as processing engine
 DEFINES += COMPILE_WITH_TUCUCORE
 
+config_sign {
+    DEFINES += CONFIG_SIGN
+}
 
 config_guitest {
     DEFINES += CONFIG_GUITEST

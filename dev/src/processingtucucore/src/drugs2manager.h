@@ -45,6 +45,8 @@ public:
 
     Tucuxi::Core::DrugModel *getTucucoreById(std::string id) const;
 
+    bool checkSign(std::string fileName);
+
 
 protected:
     Drugs2Manager();

@@ -10,6 +10,11 @@
 #include "tucucore/drugmodelchecker.h"
 #include "tucucore/pkmodel.h"
 
+#ifdef CONFIG_SIGN
+#include "tucusign/signvalidator.h"
+#include "tucusign/signparser.h"
+#endif // CONFIG_SIGN
+
 namespace Tucuxi {
 namespace Gui {
 namespace Processing {
@@ -45,6 +50,31 @@ Tucuxi::Core::DrugModel * Drugs2Manager::getTucucoreById(std::string id) const
         }
     }
     return nullptr;
+}
+
+bool Drugs2Manager::checkSign(std::string fileName)
+{
+#ifdef CONFIG_SIGN
+    std::string signedDrugfilePath = fileName;
+    Tucuxi::Sign::Signature signature;
+    // load signature from drug file
+    Tucuxi::Sign::ParsingError parsingResponse =
+        Tucuxi::Sign::SignParser::loadSignature(signedDrugfilePath, signature);
+
+    if (parsingResponse == Tucuxi::Sign::ParsingError::SIGNATURE_OK) {
+        // validate signature
+        Tucuxi::Sign::SignatureError signatureResponse =
+            Tucuxi::Sign::SignValidator::validateSignature(signature);
+
+        if (signatureResponse == Tucuxi::Sign::SignatureError::SIGNATURE_VALID) {
+            // print signer info
+            std::cout << "\nThe drug file has been signed by: \n"
+                      << Tucuxi::Sign::SignValidator::loadSigner(signature.getUserCert()) << std::endl;
+        }
+    }
+#else // CONFIG_SIGN
+    return false;
+#endif // CONFIG_SIGN
 }
 
 Tucuxi::Core::DrugModel* Drugs2Manager::scanDrug(const QString & fileName)

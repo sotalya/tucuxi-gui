@@ -52,7 +52,7 @@ Tucuxi::Core::DrugModel * Drugs2Manager::getTucucoreById(std::string id) const
     return nullptr;
 }
 
-bool Drugs2Manager::checkSign(std::string fileName)
+Tucuxi::Sign::Signer /*bool*/ Drugs2Manager::checkSign(std::string fileName)
 {
 #ifdef CONFIG_SIGN
     std::string signedDrugfilePath = fileName;
@@ -61,19 +61,32 @@ bool Drugs2Manager::checkSign(std::string fileName)
     Tucuxi::Sign::ParsingError parsingResponse =
         Tucuxi::Sign::SignParser::loadSignature(signedDrugfilePath, signature);
 
+
+    if (parsingResponse == Tucuxi::Sign::ParsingError::UNABLE_TO_LOAD_DRUGFILE)
+        std::cout << "Unable to load drug file" << std::endl;
+
     if (parsingResponse == Tucuxi::Sign::ParsingError::SIGNATURE_OK) {
         // validate signature
         Tucuxi::Sign::SignatureError signatureResponse =
             Tucuxi::Sign::SignValidator::validateSignature(signature);
+        std::cout << "Signature OK" << std::endl;
 
-        if (signatureResponse == Tucuxi::Sign::SignatureError::SIGNATURE_VALID) {
+        if (true/*signatureResponse == Tucuxi::Sign::SignatureError::SIGNATURE_VALID*/) {
+            //get signer info
+            Tucuxi::Sign::Signer signer = Tucuxi::Sign::SignValidator::loadSigner(signature.getUserCert());
             // print signer info
             std::cout << "\nThe drug file has been signed by: \n"
-                      << Tucuxi::Sign::SignValidator::loadSigner(signature.getUserCert()) << std::endl;
+                      /*<< signer*/ /*Tucuxi::Sign::SignValidator::loadSigner(signature.getUserCert())*/ << std::endl;
+
+             return signer;
         }
+
     }
+    else std::cout << "Signature NOK !" << std::endl;
+
 #else // CONFIG_SIGN
     return false;
+
 #endif // CONFIG_SIGN
 }
 

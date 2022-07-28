@@ -8,6 +8,11 @@
 
 #include <QDir>
 
+#ifdef CONFIG_SIGN
+#include "tucusign/signvalidator.h"
+#include "tucusign/signparser.h"
+#endif // CONFIG_SIGN
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
@@ -45,11 +50,12 @@ public:
 
     Tucuxi::Core::DrugModel *getTucucoreById(std::string id) const;
 
-    bool checkSign(std::string fileName);
+    Tucuxi::Sign::Signer /*bool*/ checkSign(std::string fileName);
 
+    Drugs2Manager();
 
 protected:
-    Drugs2Manager();
+//    Drugs2Manager();
 
     std::vector<Tucuxi::Core::DrugModel *> m_tucuxiDrugModels;
 

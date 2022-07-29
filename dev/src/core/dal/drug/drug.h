@@ -161,12 +161,15 @@ public:
     QString description() const;
     void setDescription(const QString &description);
 
-
 //    QList<DrugVariate*> covariates() const;
 //    void setCovariates(const QList<DrugVariate*> &covariates);
 
 //    ParameterSet* parameters() const;
 //    void setParameters(ParameterSet* parameters);
+
+    std::string getSignName() { return signName; }
+    std::string getSignOgranization() { return signOrganization; }
+    std::string getSignLocality() { return signLocality; }
 
 signals:
     void modelidChanged(QString);
@@ -177,6 +180,11 @@ private:
     QString _modelId;
 //    QList<DrugVariate*> _covariates;
 //    ParameterSet* _parameters;
+
+    std::string signName = "Unknown";
+    std::string signOrganization = "Unknown";
+    std::string signLocality = "Unknown";
+
 };
 
 QML_POINTERLIST_CLASS_DECL(DrugModelList, DrugModel)

@@ -57,10 +57,12 @@ Tucuxi::Sign::Signer /*bool*/ Drugs2Manager::checkSign(std::string fileName)
 #ifdef CONFIG_SIGN
     std::string signedDrugfilePath = fileName;
     Tucuxi::Sign::Signature signature;
+
     // load signature from drug file
     Tucuxi::Sign::ParsingError parsingResponse =
-        Tucuxi::Sign::SignParser::loadSignature(signedDrugfilePath, signature);
+            Tucuxi::Sign::SignParser::loadSignature(signedDrugfilePath, signature);
 
+    Tucuxi::Sign::Signer signer;
 
     if (parsingResponse == Tucuxi::Sign::ParsingError::UNABLE_TO_LOAD_DRUGFILE)
         std::cout << "Unable to load drug file" << std::endl;
@@ -68,21 +70,24 @@ Tucuxi::Sign::Signer /*bool*/ Drugs2Manager::checkSign(std::string fileName)
     if (parsingResponse == Tucuxi::Sign::ParsingError::SIGNATURE_OK) {
         // validate signature
         Tucuxi::Sign::SignatureError signatureResponse =
-            Tucuxi::Sign::SignValidator::validateSignature(signature);
+                Tucuxi::Sign::SignValidator::validateSignature(signature);
         std::cout << "Signature OK" << std::endl;
 
-        if (true/*signatureResponse == Tucuxi::Sign::SignatureError::SIGNATURE_VALID*/) {
+        if (true /*signatureResponse == Tucuxi::Sign::SignatureError::SIGNATURE_VALID*/) {
             //get signer info
-            Tucuxi::Sign::Signer signer = Tucuxi::Sign::SignValidator::loadSigner(signature.getUserCert());
+            signer = Tucuxi::Sign::SignValidator::loadSigner(signature.getUserCert());
             // print signer info
             std::cout << "\nThe drug file has been signed by: \n"
-                      /*<< signer*/ /*Tucuxi::Sign::SignValidator::loadSigner(signature.getUserCert())*/ << std::endl;
+                      << signer /*Tucuxi::Sign::SignValidator::loadSigner(signature.getUserCert())*/ << std::endl;
 
-             return signer;
+            //             return signer;
         }
-
     }
-    else std::cout << "Signature NOK !" << std::endl;
+    else {
+        std::cout << "Signature NOK !" << std::endl;
+    }
+
+    return signer;
 
 #else // CONFIG_SIGN
     return false;
@@ -139,7 +144,7 @@ Tucuxi::Core::DrugModel* Drugs2Manager::scanDrug(const QString & fileName)
 //Scans a directory recursively
 void Drugs2Manager::scanDirectory(const QDir &directory)
 {
-//    LOG(QtDebugMsg, Tucuxi::Gui::AppUtils::NOEZERROR, tr("Scanning directory '%1'").arg(directory.absolutePath()));
+    //    LOG(QtDebugMsg, Tucuxi::Gui::AppUtils::NOEZERROR, tr("Scanning directory '%1'").arg(directory.absolutePath()));
 
     //For each files in the directory
     foreach (QFileInfo entry, directory.entryInfoList(QDir::Files)) {
@@ -153,7 +158,7 @@ void Drugs2Manager::scanDirectory(const QDir &directory)
 
         //Ignore unreadable files
         if (!entry.isReadable()) {
- //           LOG(QtWarningMsg, NOEZERROR, tr(_FILE_UNREADABLE).arg(entry.absoluteFilePath()) + tr(_IGNORING));
+            //           LOG(QtWarningMsg, NOEZERROR, tr(_FILE_UNREADABLE).arg(entry.absoluteFilePath()) + tr(_IGNORING));
             continue;
         }
 
@@ -163,10 +168,11 @@ void Drugs2Manager::scanDirectory(const QDir &directory)
 
         //Check if the drug does not already exists
         if (m_tucuxiDrugModelsByIds.count(drug->getDrugModelId()) != 0) {
- //           LOG(QtWarningMsg, NOEZERROR, tr(_DRUG_DUPLICATED).arg(entry.filePath(), drug->drugId()) + tr(_IGNORING));
+            //           LOG(QtWarningMsg, NOEZERROR, tr(_DRUG_DUPLICATED).arg(entry.filePath(), drug->drugId()) + tr(_IGNORING));
             continue;
         }
 
+        //        std::cout << drug->getDrugId() << std::endl;
 
         TucucoreToEzTranslator translator;
         Tucuxi::Gui::Core::DrugModel *newModel = translator.buildLightDrugModel(drug);
@@ -176,6 +182,17 @@ void Drugs2Manager::scanDirectory(const QDir &directory)
             m_tucuxiDrugModels.push_back(drug);
             m_ezechielDrugModels.push_back(newModel);
         }
+
+        //----------------------------------------------------------------------------------------------------------------
+
+        //        std::cout << drug->getDrugModelId() << std::endl;
+
+        //        std::string localDrugModelsPath = "/home/julien/Documents/tucuxi-drugs/drugfiles/";
+        //        localDrugModelsPath += drug->getDrugModelId() + ".tdd";
+        //        std::cout << localDrugModelsPath << std::endl;
+        //        Tucuxi::Sign::Signer signer = this->checkSign(localDrugModelsPath + drug->getDrugModelId() + "tdd");
+
+        //----------------------------------------------------------------------------------------------------------------
 
     }
 
@@ -198,7 +215,7 @@ void Drugs2Manager::buildAllDrugModels(std::string dirName)
 
         //Ignore unreadable directories
         if (!directory.isReadable()) {
-        //    LOG(QtDebugMsg, NOEZERROR, tr(_DIRECTORY_UNREADABLE).arg(directory.absolutePath()) + tr(_IGNORING));
+            //    LOG(QtDebugMsg, NOEZERROR, tr(_DIRECTORY_UNREADABLE).arg(directory.absolutePath()) + tr(_IGNORING));
             continue;
         }
 
@@ -229,7 +246,7 @@ void Tucuxi::Gui::Processing::Drugs2Manager::addDrugModelTests()
 
         BuildConstantElimination builder;
         auto drug = builder.buildDrugModel(
-        ResidualErrorType::PROPORTIONAL,std::vector<Value>({0.2}));
+                    ResidualErrorType::PROPORTIONAL,std::vector<Value>({0.2}));
         // Add targets
         TargetDefinition *target = new TargetDefinition(TargetType::Residual,
                                                         Unit("mg/l"),
@@ -259,7 +276,7 @@ void Tucuxi::Gui::Processing::Drugs2Manager::addDrugModelTests()
 
         BuildPkAsymptotic builder;
         auto drug = builder.buildDrugModel(
-        ResidualErrorType::PROPORTIONAL,std::vector<Value>({0.2}));
+                    ResidualErrorType::PROPORTIONAL,std::vector<Value>({0.2}));
         // Add targets
         TargetDefinition *target = new TargetDefinition(TargetType::Residual,
                                                         Unit("mg/l"),
@@ -288,17 +305,17 @@ void Tucuxi::Gui::Processing::Drugs2Manager::addDrugModelTests()
     {
         BuildMultiAnalytesSingleActiveMoiety builder;
         auto drug = builder.buildDrugModel(0.3,
-                                                               0.7,
-                                                               ResidualErrorType::ADDITIVE,
-                                                               {100.0},
-                                                               Tucuxi::Core::ParameterVariabilityType::Additive,
-                                                               Tucuxi::Core::ParameterVariabilityType::None,
-                                                               Tucuxi::Core::ParameterVariabilityType::None,
-                                                               Tucuxi::Core::ParameterVariabilityType::None,
-                                                               10.0,
-                                                               0.0,
-                                                               0.0,
-                                                               0.0);
+                                           0.7,
+                                           ResidualErrorType::ADDITIVE,
+        {100.0},
+                                           Tucuxi::Core::ParameterVariabilityType::Additive,
+                                           Tucuxi::Core::ParameterVariabilityType::None,
+                                           Tucuxi::Core::ParameterVariabilityType::None,
+                                           Tucuxi::Core::ParameterVariabilityType::None,
+                                           10.0,
+                                           0.0,
+                                           0.0,
+                                           0.0);
 
         TucucoreToEzTranslator translator;
         Tucuxi::Gui::Core::DrugModel *newModel = translator.buildLightDrugModel(drug.get());

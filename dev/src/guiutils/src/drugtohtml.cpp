@@ -98,7 +98,7 @@ QString DrugToHtml::drugToHtml(const Tucuxi::Gui::Core::DrugModel *drug)
 
         //        desc += "<tr><td>Validation: </td><td>" + drug->getName()->value() + "</td></tr>";
 
-        std::string localDrugModelsPath = "/home/julien/Documents/tucuxi-drugs/drugfiles/";
+        std::string localDrugModelsPath = "/home/julien/Documents/tucuxi-drugs/drugfiles/";     // hard coded for now
         Tucuxi::Gui::Processing::Drugs2Manager drugManager;
 
         localDrugModelsPath += drug->getDrugModelId().toStdString() + ".tdd";
@@ -108,16 +108,35 @@ QString DrugToHtml::drugToHtml(const Tucuxi::Gui::Core::DrugModel *drug)
 
         QString validationText = "";
 
-        if (signer.getName() != "") {
+        desc += "<tr><td></td><td></td></tr>";      // empty line
 
-            std::cout << signer.getName() << std::endl;
-            validationText = QString::fromStdString(signer.getName() + ", " + signer.getOrganizationName() + ", " + signer.getLocality());
+        //***************Proposal n°1***************
+
+        //Validation: name, orgnization , locality
+
+        //        if (signer.getName() != "") {
+
+        //            std::cout << signer.getName() << std::endl;
+        //            validationText = QString::fromStdString(signer.getName() + ", " + signer.getOrganizationName() + ", " + signer.getLocality());
+        //        }
+        //        else validationText = "No valid signature found";
+
+        //        desc += "<tr><td><b>Validation: </b></td><td><b>" + validationText + "</b></td></tr>";
+
+
+        //***************Proposal n°2***************
+
+        //Validation: name
+        //Organization: organization1
+        //Locality: locality1, country1
+
+        if (signer.getName() != "" and signer.getOrganizationName() != "") {
+
+            desc += "<tr><td><b>Validation: </b></td><td><b>" + QString::fromStdString(signer.getName()) + "</b></td></tr>";
+            desc += "<tr><td>Organization: </td><td>" + QString::fromStdString(signer.getOrganizationName()) + "</td></tr>";
+            desc += "<tr><td>Locality: </td><td>" + QString::fromStdString(signer.getLocality()) + ", " + QString::fromStdString(signer.getCountryCode()) + "</td></tr>";
         }
-        else validationText = "No valid signature found";
-
-        desc += "<tr><td></td><td></td></tr>";
-        desc += "<tr><td><b>Validation: </b></td><td><b>" + validationText + "</b></td></tr>";
-
+        else desc += "<tr><td><b>Validation: </b></td><td><b>" + QString::fromStdString("No valid signature found") + "</b></td></tr>";
 
         //-----------------------------------------------------------------------------------------------------------------
 

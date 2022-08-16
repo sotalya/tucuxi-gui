@@ -175,6 +175,18 @@ void SpixGTest::extSetView(QDateTime startView, QDateTime endView)
 
 }
 
+void SpixGTest::mouseClickIfPathOk(std::string clickPath)
+{
+    if (srv->existsAndVisible(spix::ItemPath(clickPath)))
+    {
+        std::cout << "Path exists : " << clickPath << std::endl;
+
+        srv->mouseClick(spix::ItemPath(clickPath));
+        srv->synchronize();
+    }
+    else std::cout << "Path does not exists : " << clickPath << std::endl;
+}
+
 //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
 void SpixGTest::findObjectAndSetValue(QString objectName, int propertyInput)
@@ -299,7 +311,7 @@ void SpixGTest::addDosage(DosageData dosageData1)
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
     srv->waitPeriod(waitTime1);
 
-    // adds new Dose (will open Dosage dialog window)
+    // adds new Dose (will open Dosage dialog window)audi a3 2016
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
     srv->waitPeriod(waitTime1);
 

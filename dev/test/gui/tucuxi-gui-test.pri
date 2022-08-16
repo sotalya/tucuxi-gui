@@ -10,6 +10,7 @@ SOURCES += $$PWD/src/guitest.cpp \
     $$PWD/src/guidedstresstest.cpp \
     $$PWD/src/issueshighlighter.cpp \
     $$PWD/src/minimaldatatest.cpp \
+    $$PWD/src/pendingrequesttest.cpp \
     $$PWD/src/randomtest.cpp \
     $$PWD/src/reporttest.cpp \
     $$PWD/src/savedtestcomparison.cpp \

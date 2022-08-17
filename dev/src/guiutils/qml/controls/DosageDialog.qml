@@ -263,7 +263,7 @@ DialogBase {
 
                 EntityTextField {
                     id: routeText
-                    objectName: "routeText"                         // JRT 18.02.2022
+                    objectName: "routeText"
                     visible : !root.multipleRoutes
                     readOnly: true
                     Layout.preferredWidth: 250
@@ -321,7 +321,7 @@ DialogBase {
                 DatePicker {
                     id: appliedDateInput
                     // @disable-check M16
-                    objectName: "LastDoseOrFromDateInput"      // JRT 17.02.2022
+                    objectName: "LastDoseOrFromDateInput"
                     // @disable-check M16
                     onEditingFinished: {
                         self.validate();
@@ -336,7 +336,7 @@ DialogBase {
                 TimePicker {
                     id: appliedTimeInput
                     // @disable-check M16
-                    objectName: "LastDoseOrFromTimeInput"      // JRT 17.02.2022
+                    objectName: "LastDoseOrFromTimeInput"
                     // @disable-check M16
                     onEditingFinished: {
                         self.validate();

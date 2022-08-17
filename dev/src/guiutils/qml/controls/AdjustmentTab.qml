@@ -16,7 +16,7 @@ Rectangle {
     property int status: Status.invalid;
     property bool enabled: false;
 
-    property bool withLoadingDoseYN: true;       // JRT 17.03.2022
+    property bool withLoadingDoseYN: true;
 
     signal imUpdated();
     signal currentIndexChanged(int index)
@@ -40,12 +40,12 @@ Rectangle {
         }
     }
 
-    function extAdjDate(yearAdj, monthAdj, dayAdj, hourAdj, minuteAdj) {                    // JRT 17.03.2022
+    function extAdjDate(yearAdj, monthAdj, dayAdj, hourAdj, minuteAdj) {
 //        adjustmentTabController.adjustmentDate = (new Date("2027","08","09","00","00"));
         adjustmentTabController.adjustmentDate = (new Date(yearAdj, monthAdj, dayAdj, hourAdj, minuteAdj))
     }
 
-    function extLoadingDose(input) {            // not able to edit Loading dose or Rest time. To be continued... JRT 17.03.2022
+    function extLoadingDose(input) {            // not able to edit Loading dose or Rest time. To be continued...
 
 //        withLoadingDose.checked = true
 //        withRestPeriod.checked = true
@@ -215,7 +215,7 @@ Rectangle {
                                     objectName: "withLoadingDose"
 
                                     text: "Loading dose?"
-                                    checked: adjustmentTabController.adjustmentWithLoadingDose  // JRT 17.03.2022
+                                    checked: adjustmentTabController.adjustmentWithLoadingDose
                                     onCheckStateChanged: adjustmentTabController.adjustmentWithLoadingDose = checked
 
                                     ToolTip.visible: (show_tooltip) ? withLoadingDoseMousearea.containsMouse : false

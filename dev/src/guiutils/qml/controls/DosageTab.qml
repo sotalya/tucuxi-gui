@@ -150,7 +150,7 @@ Rectangle {
                                 label.color: dosageListDelegate.mousearea.hovered ? dosageList.rowForegroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowForegroundSelected : dosageList.rowForeground)
                             },
                             EntityListImage {
-                                objectName: "editDosage_" + index;                        // JRT 22.02.2022
+                                objectName: "editDosage_" + index;
                                 image.source: "qrc:/icons/buttons/edit.png"
                                 mousearea.onClicked: {
                                     dosageListView.currentIndex = index;

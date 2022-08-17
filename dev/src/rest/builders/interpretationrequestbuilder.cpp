@@ -238,18 +238,18 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
                 std::cout << "Dose [unit] : " << dose << " [" << unit << "]" << std::endl;
 
                 if (dose != "")
-                    dosage->getQuantity()->setValue(QString::fromStdString(dose).toDouble() + 1);   // Runs Ok (adding 1 to check if change is effective)
+                    dosage->getQuantity()->setValue(QString::fromStdString(dose).toDouble() /*+ 1*/);   // Runs Ok (adding 1 to check if change is effective)
 
                 if (unit != "") {
                     QString QUnit = QString::fromStdString(unit);
                     dosage->getQuantity()->setUnitstring(QUnit);
                 }
                 else {
-                    Tucuxi::Gui::Core::Unit unit1;
-                    unit1.fromString("beans");
-                    dosage->getQuantity()->setUnit(unit1);
+                    //                    Tucuxi::Gui::Core::Unit unit1;                // 1st way to set unit
+                    //                    unit1.fromString("beans");
+                    //                    dosage->getQuantity()->setUnit(unit1);
 
-                    //                    QString unit2 = "sprouts";
+                    //                    QString unit2 = "sprouts";                    // 2nd way to set unit
                     //                    dosage->getQuantity()->setUnitstring(unit2);
 
                     //                    dosage->getQuantity()->setUnit(unit1);
@@ -269,7 +269,8 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
                 Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("dose value");
                 uncasted->setText(valueString);
-                uncasted->setComment("Please fill yourself the dosage");
+//                uncasted->setComment("Please fill yourself the dosage");
+                uncasted->setComment("Please check dosage value and unit");
                 dosage->getUncastedValues()->append(uncasted);
 
 

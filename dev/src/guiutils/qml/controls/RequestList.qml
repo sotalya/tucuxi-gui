@@ -17,10 +17,6 @@ Item {
         visible = true;
     }
 
-    function requestClickedOn() {
-
-    }
-
     Rectangle {
         id: container
         anchors.fill: parent

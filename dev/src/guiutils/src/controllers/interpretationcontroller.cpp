@@ -403,7 +403,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::retrieveViewsFromQml()
     targetsView = root->findChild<QObject *>("targetsView");
     Q_ASSERT(targetsView);
 
-    targetDialog = root->findChild<QObject *>("targetDialog");      // JRT 24.02.2022
+    targetDialog = root->findChild<QObject *>("targetDialog");
     Q_ASSERT(targetDialog);
 
     reportView = root->findChild<QObject *>("reportView");
@@ -1806,7 +1806,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::validateInterpretation(boo
                                                           "<br/><br/>Processing time from starting the interpretation was :  <br/><b>%2</b>"
                                        "<br/><br/>Go to settings if you wish to disable this dialog.").arg(processingTimeFromData.toLongString()).arg(processingTime.toLongString()));
             messageBox.setTextFormat(Qt::TextFormat::RichText);
-            messageBox.setWindowModality(Qt::NonModal);     // make window non modal (allows interaction with other windows) JRT 10.03.2022
+            messageBox.setWindowModality(Qt::NonModal);     // make window non modal (allows interaction with other windows)
             messageBox.show();                              // creates non modal window
             messageBox.exec();
 //        QMessageBox::information(0, "Processing time", QString("Interpretation total processing time from last data was : \n<b>%1</b> "

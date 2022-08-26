@@ -5,6 +5,8 @@
 #include "interpretationrequestbuilder.h"
 #include "drugidtranslator.h"
 #include "routetranslator.h"
+#include "formulationandroutetranslator.h"
+
 
 #include "admin/src/adminfactory.h"
 
@@ -168,6 +170,17 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
             dosage->getUncastedValues()->append(uncasted);
         }
         admin->setRoute(route);
+
+        QString drugId = buildDrug("drug");
+
+//        FormulationAndRouteTranslator *translatorFormulationAndRoute = new ChuvFormulationAndRouteTranslator();
+        ExternalFormulationAndRouteTranslator *translatorFormulationAndRoute = new ExternalFormulationAndRouteTranslator();
+        translatorFormulationAndRoute->setFileName(QCoreApplication::applicationDirPath() + "/formulationandroutetranslator.ini");
+
+        Tucuxi::Core::FormulationAndRoute formulationAndRoute = translatorFormulationAndRoute->restToInternalFormulationAndRoute(drugId, restRoute);
+        delete translatorFormulationAndRoute;
+
+        admin->setFormulationAndRoute(formulationAndRoute);
         dosage->setRoute(admin);
 
         {

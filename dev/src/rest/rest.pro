@@ -11,6 +11,7 @@ DEPENDPATH  += model network ..
 INCLUDEPATH += ..
 
 SOURCES += \
+    builders/formulationandroutetranslator.cpp \
     builders/messagecontent.cpp \
     builders/messagebuilder.cpp \
     builders/querylistmessagebuilder.cpp \
@@ -51,6 +52,7 @@ SOURCES += \
     builders/covariateidtranslator.cpp
 
 HEADERS += \
+    builders/formulationandroutetranslator.h \
     resterrors.h \
     builders/messagecontent.h \
     builders/messagebuilder.h \

@@ -14,6 +14,8 @@ Tucuxi::Core::Formulation extractFormulation(QString s)
         {"undefined", Tucuxi::Core::Formulation::Undefined},
         {"parenteral solution", Tucuxi::Core::Formulation::ParenteralSolution},
         {"oral solution", Tucuxi::Core::Formulation::OralSolution},
+        {"parenteralSolution", Tucuxi::Core::Formulation::ParenteralSolution},
+        {"oralSolution", Tucuxi::Core::Formulation::OralSolution},
         {"test", Tucuxi::Core::Formulation::Test}
     };
 

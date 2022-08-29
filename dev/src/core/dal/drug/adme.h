@@ -45,6 +45,7 @@ class Admin : public Entity
           _route(admin->getRoute()),
           _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
     {
+        setFormulationAndRoute(admin->_formulationAndRoute);
     }
 
     QString getLabel () const {

@@ -358,6 +358,7 @@ bool InterpretationXmlExport::save(PhoneList *list)
         writer.writeTextElement("number", phone->getNumber());
     }
     writer.writeEndElement();
+    return true;
 }
 
 

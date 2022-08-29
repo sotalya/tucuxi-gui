@@ -9,7 +9,6 @@
 
 #include "tucucore/targetevaluationresult.h"
 #include "tucucore/dosage.h"
-#include "tucucore/drugmodelimport.h"
 #include "tucucore/drugmodel/parameterdefinition.h"
 #include "tucucore/drugmodel/formulationandroute.h"
 

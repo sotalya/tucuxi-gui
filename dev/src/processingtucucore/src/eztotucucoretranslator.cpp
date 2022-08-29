@@ -17,7 +17,6 @@
 
 #include "tucucommon/utils.h"
 
-#include "tucucore/drugmodelimport.h"
 #include "tucucore/drugmodel/drugmodel.h"
 #include "tucucore/drugtreatment/drugtreatment.h"
 #include "tucucore/definitions.h"

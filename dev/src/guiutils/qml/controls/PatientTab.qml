@@ -544,7 +544,7 @@ Rectangle {
         EntityTitle {
             label.text: "Physician in charge"
             id: physicianInChargeHeader
-            expanded: false         // modified in extPatientData       JRT 21.03.2022
+            expanded: false         // modified in extPatientData
             visible : patientRequired.model ? 1 : 0
         }
 

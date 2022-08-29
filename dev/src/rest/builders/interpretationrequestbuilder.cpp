@@ -33,12 +33,12 @@ InterpretationRequestBuilder::InterpretationRequestBuilder(const QDomDocument &c
     content(content)
 {
     //Get the control ID
-//    content.setValue("controlId", doc.documentElement().attributeNode("controlId").value());
+    //    content.setValue("controlId", doc.documentElement().attributeNode("controlId").value());
     datasetNode = content.documentElement().firstChildElement("dataset");
 
     //Get request data
-//    content.setValue("request.id",    datasetNode.firstChildElement("requestId").firstChild().toText().data());
-//    content.setValue("request.state", datasetNode.firstChildElement("requestState").firstChild().toText().data());
+    //    content.setValue("request.id",    datasetNode.firstChildElement("requestId").firstChild().toText().data());
+    //    content.setValue("request.state", datasetNode.firstChildElement("requestState").firstChild().toText().data());
 
 }
 
@@ -232,13 +232,61 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
             double value = valueString.toDouble(&ok);
             if (ok)
                 dosage->getQuantity()->setValue(value);
+
             else {
+
+                /***************************************************************/
+
+                std::string dose, unit;
+                std::string doseUnit = valueString.toStdString();
+
+                for (int i = 0; i < valueString.length(); i++)
+                {
+                    if (isdigit(doseUnit[i]))
+                        dose.push_back(doseUnit[i]);
+                    else if ((doseUnit[i]) >= 'a' && doseUnit[i] <= 'z') /*|| (doseUnit[i] >= 'A' && doseUnit[i] >= 'Z'))*/
+                        unit.push_back(doseUnit[i]);
+                }
+
+                std::cout << "Dose [unit] : " << dose << " [" << unit << "]" << std::endl;
+
+                if (dose != "")
+                    dosage->getQuantity()->setValue(QString::fromStdString(dose).toDouble() /*+ 1*/);   // Runs Ok (adding 1 to check if change is effective)
+
+                if (unit != "") {
+                    QString QUnit = QString::fromStdString(unit);
+                    dosage->getQuantity()->setUnitstring(QUnit);
+                }
+                else {
+                    //                    Tucuxi::Gui::Core::Unit unit1;                // 1st way to set unit
+                    //                    unit1.fromString("beans");
+                    //                    dosage->getQuantity()->setUnit(unit1);
+
+                    //                    QString unit2 = "sprouts";                    // 2nd way to set unit
+                    //                    dosage->getQuantity()->setUnitstring(unit2);
+
+                    //                    dosage->getQuantity()->setUnit(unit1);
+                }
+
+                if (dosage->getQuantity()->getUnitstring().toStdString() == "") {
+
+                }
+
+                std::cout << "Dosage : " << dosage->getQuantity()->getUnitstring().toStdString() << std::endl;    // Actually gets kg
+
+
+
+                /***************************************************************/
+
                 EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
                 Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
                 uncasted->setField("dose value");
                 uncasted->setText(valueString);
-                uncasted->setComment("Please fill yourself the dosage");
+//                uncasted->setComment("Please fill yourself the dosage");
+                uncasted->setComment("Please check dosage value and unit");
                 dosage->getUncastedValues()->append(uncasted);
+
+
             }
         }
 
@@ -246,7 +294,7 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
             /**************************************************
              * TODO: Generated Uncasted values if required. Not yet ready to handle that correctly
              *************************************************/
-            dosage->getQuantity()->setUnit(dosageNode.firstChildElement("dose").firstChildElement("unit").firstChild().toText().data());
+            //            dosage->getQuantity()->setUnit(dosageNode.firstChildElement("dose").firstChildElement("unit").firstChild().toText().data());
         }
 
         //Dosage interval
@@ -539,7 +587,7 @@ SharedPatient InterpretationRequestBuilder::buildPatient(const QString &rootKey)
     patient->person()->setEmails(buildEmails(rootKey, ""));
 
     //Get patient data
-//    content.setValue("patient.name.middle", datasetNode.firstChildElement("patient").firstChildElement("name").firstChildElement("middleName").firstChild().toText().data());
+    //    content.setValue("patient.name.middle", datasetNode.firstChildElement("patient").firstChildElement("name").firstChildElement("middleName").firstChild().toText().data());
     return shpatient;
 }
 
@@ -587,7 +635,7 @@ SharedPractician InterpretationRequestBuilder::buildPractician(const QString &ro
     practician->institute(buildInstitute(rootKey));
 
     //Get mandator data
-//    content.setValue("mandator.name.middle", datasetNode.firstChildElement("mandator").firstChildElement("name").firstChildElement("middleName").firstChild().toText().data());
+    //    content.setValue("mandator.name.middle", datasetNode.firstChildElement("mandator").firstChildElement("name").firstChildElement("middleName").firstChild().toText().data());
     return practician;
 }
 
@@ -603,7 +651,7 @@ SharedInstitute InterpretationRequestBuilder::buildInstitute(const QString &root
 
     //Institute contact
     institute->location()->address(datasetNode.firstChildElement(rootKey).firstChildElement("institute").firstChildElement("contact").firstChildElement("address").firstChild().toText().data());
-//    institute->location()->postcode(content.value(rootKey + ".contact.postcode"));
+    //    institute->location()->postcode(content.value(rootKey + ".contact.postcode"));
     institute->location()->city(datasetNode.firstChildElement(rootKey).firstChildElement("institute").firstChildElement("contact").firstChildElement("city").firstChild().toText().data());
     institute->location()->state(datasetNode.firstChildElement(rootKey).firstChildElement("institute").firstChildElement("contact").firstChildElement("state").firstChild().toText().data());
     institute->location()->country(datasetNode.firstChildElement(rootKey).firstChildElement("institute").firstChildElement("contact").firstChildElement("country").firstChild().toText().data());
@@ -615,7 +663,7 @@ SharedInstitute InterpretationRequestBuilder::buildInstitute(const QString &root
     institute->setEmails(buildEmails(rootKey, "institute"));
 
     //Get patient institute contact
-//    content.setValue("patient.institute.contact.postcode", datasetNode.firstChildElement("patient").firstChildElement("institute").firstChildElement("contact").firstChildElement("postcode").firstChild().toText().data());
+    //    content.setValue("patient.institute.contact.postcode", datasetNode.firstChildElement("patient").firstChildElement("institute").firstChildElement("contact").firstChildElement("postcode").firstChild().toText().data());
     return institute;
 }
 

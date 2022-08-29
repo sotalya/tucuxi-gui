@@ -12,7 +12,7 @@ import ezechiel 1.0
 
 Rectangle {
 
-    function setCovariateType(i){                           // JRT 02.03.2022
+    function setCovariateType(i){
         drugVariateListView.currentIndex = i;
     } // Runs ok !
 

@@ -132,7 +132,7 @@ Rectangle {
                                 label.color: root.mousearea.hovered ? measureList.rowForegroundHover : (root.ListView.isCurrentItem ? measureList.rowForegroundSelected : measureList.rowForeground)
                             },
                             EntityListImage {
-                                objectName: "editMeasure_" + index;                       // JRT 23.02.2022
+                                objectName: "editMeasure_" + index;
                                 image.source: "qrc:/icons/buttons/edit.png"
                                 mousearea.onClicked: {
                                     measureListView.currentIndex = index;

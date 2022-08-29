@@ -56,6 +56,7 @@ Rectangle
             }
             StartupButton {
                 title: "Pending requests"
+                objectName: "pendingRequests"
                 icon: Style.splash.buttons.icon.requests
                 iconHover: Style.splash.buttons.icon.requests_hover
                 onSelected: optionSelected(StartupWindow.PendingRequestGivenPatient)

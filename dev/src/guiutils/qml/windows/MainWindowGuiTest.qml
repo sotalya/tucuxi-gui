@@ -10,9 +10,9 @@ import guiutils.qml.controls 1.0
 Window {
     id: mainWindow
     objectName: "mainWindow"
-    width: 1366                         // instead of 1366x768 (see "MainWindow.qml"), JRT 21.20.2022
+    width: 1366                         // instead of 1366x768 (see "MainWindow.qml")
     height: 768
-    //visibility: Window.FullScreen;    // Not quite working, JRT 21.02.2022
+    //visibility: Window.FullScreen;    // Not quite working
 
     readonly property int minimumWidth:  960
     readonly property int minimumHeight: 540

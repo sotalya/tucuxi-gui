@@ -241,7 +241,7 @@ public:
     Q_INVOKABLE QString handleFileChosen(const QString &urlString);
 
 
-    //Q_INVOKABLE void setExtCurrentActiveType(int index);        // JRT 24.02.2022
+    //Q_INVOKABLE void setExtCurrentActiveType(int index);
     ///
     /// \brief saveStatistics
     /// Saves statistics in a file
@@ -405,7 +405,7 @@ private:
     double _chartscale;
     QString _defaultUnit;
 
-//    Tucuxi::Gui::Core::ChartData* chartData;     // JRT
+//    Tucuxi::Gui::Core::ChartData* chartData;
 
     Tucuxi::Gui::Core::PredictionSpec* predictionspec;
     Tucuxi::Gui::Core::DrugModelList* _drugs;
@@ -421,7 +421,7 @@ private:
     FlowController* flowController;
     CalculationController* calculationController;
 
-//    ChartDataController *_chartDataController;        // JRT
+//    ChartDataController *_chartDataController;
 
 //    QObject *chartView;
     QObject *domainsView;
@@ -430,8 +430,8 @@ private:
     // Added drugsView & targetsView as public for testing purposes
     public:
 
-    ChartDataController *_chartDataController;        // JRT
-    Tucuxi::Gui::Core::ChartData* chartData;             // JRT
+    ChartDataController *_chartDataController;
+    Tucuxi::Gui::Core::ChartData* chartData;
 
     QObject *patientsView;
     QObject *drugsView;

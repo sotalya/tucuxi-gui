@@ -330,6 +330,7 @@ Item {
 
             TableView {
                 id: requestView
+                objectName: "requestView"
                 anchors.fill: viewContainer
                 anchors.margins: 2
 
@@ -339,12 +340,14 @@ Item {
 
                 model: requestListModel
 
-                onDoubleClicked: {
+                //                onDoubleClicked: {        // easier to single click from Gui tests
+                onClicked: {
                     var requestId = requestListModel.data(requestListModel.index(row, 0), PartialRequestListModel.RequestIdRole);
                     var patientId = requestListModel.data(requestListModel.index(row, 0), PartialRequestListModel.PatientIdRole);
                     var drugId    = requestListModel.data(requestListModel.index(row, 0), PartialRequestListModel.DrugIdRole);
                     root.requestSelected(requestId, patientId, drugId);
 
+                    console.log(requestListModel.index(row, 0))
                 }
 
                 onSortIndicatorColumnChanged: sort()

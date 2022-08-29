@@ -20,7 +20,7 @@ Rectangle {
         return 1;
     }
 
-    // Used for automated Gui tests, fills in text entries - JRT 09.03.2022
+    // Used for automated Gui tests, fills in text entries
     function extTextInputs(expectednessText, suitabilityText, predictionText, remonitoringText, warningText){
 
         expectednessInput.text  = expectednessText;
@@ -543,7 +543,7 @@ Rectangle {
                             spacing: 1
                             Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 50
-                            id: expectSaveButton                // JRT 09.03.2022
+                            id: expectSaveButton
                             objectName: "expectednessSaveButton"
                             text: "Save"
                             onClicked: {

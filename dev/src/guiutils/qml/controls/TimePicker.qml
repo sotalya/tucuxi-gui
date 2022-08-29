@@ -9,7 +9,7 @@ import guiutils.qml.styles 1.0
 
 TextField {
     id: root
-    objectName: "timePickerObj"                      // JRT 21.02.2022
+    objectName: "timePickerObj"
     implicitWidth: 60
 
     property string separator: ":"

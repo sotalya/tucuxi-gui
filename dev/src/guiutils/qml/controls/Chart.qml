@@ -142,7 +142,7 @@ Canvas {
     property real unitefforder: 1
 
 
-    property bool isRunning : false             // JRT 14.03.2022
+    property bool isRunning : false
 
     function rePaint() {
         requestPaint();

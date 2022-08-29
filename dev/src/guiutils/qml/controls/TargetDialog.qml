@@ -107,7 +107,7 @@ DialogBase {
         return bOk
     }
 
-    // This function is used for automated tests, called from the C++ of GuiTests   JRT 23.02.2022
+    // This function is used for automated tests, called from the C++ of GuiTests
     function setActiveType(typeIndex) {
         typeInput.currentIndex = typeIndex;
         //switchActiveType(typeIndex);
@@ -193,7 +193,7 @@ DialogBase {
                 }
                 EntitySpinBox {
                     id: cMinInput
-                    objectName: "cMinInput"                        // JRT 23.02.2022
+                    objectName: "cMinInput"
                     Layout.preferredWidth: 200
                     onTextChangedSignal: { checkValues() }
                     onEditingFinished: { root.validate() }

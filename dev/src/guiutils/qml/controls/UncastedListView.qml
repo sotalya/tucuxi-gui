@@ -135,6 +135,7 @@ Rectangle {
 
                             EntityListImage {
                                 Layout.minimumWidth: 25
+                                objectName: "UncastedItem_" + index     // For Gui test purposes
                                 image.source: "qrc:/icons/buttons/check.png"
                                 mousearea.onClicked: {
                                     if (modelData.validated)

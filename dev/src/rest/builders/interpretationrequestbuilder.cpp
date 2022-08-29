@@ -175,7 +175,7 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
 
 //        FormulationAndRouteTranslator *translatorFormulationAndRoute = new ChuvFormulationAndRouteTranslator();
         ExternalFormulationAndRouteTranslator *translatorFormulationAndRoute = new ExternalFormulationAndRouteTranslator();
-        translatorFormulationAndRoute->setFileName(QCoreApplication::applicationDirPath() + "/formulationandroutetranslator.ini");
+        translatorFormulationAndRoute->setFileName(QCoreApplication::applicationDirPath() + "/formulationandroutetranslations.ini");
 
         Tucuxi::Core::FormulationAndRoute formulationAndRoute = translatorFormulationAndRoute->restToInternalFormulationAndRoute(drugId, restRoute);
         delete translatorFormulationAndRoute;

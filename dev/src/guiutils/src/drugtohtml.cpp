@@ -6,6 +6,7 @@
 #include "core/dal/drug/translatablestring.h"
 #include "core/dal/drug/adme.h"
 #include "core/dal/drug/drugvariate.h"
+#include "processingtucucore/src/drugs2manager.h"
 
 using namespace Tucuxi::Gui::GuiUtils;
 
@@ -41,7 +42,7 @@ QString DrugToHtml::drugToHtml(const Tucuxi::Gui::Core::DrugModel *drug)
         desc += "<tr><td><b>Domain:   </b></td><td><b>" + drug->getDomainName()+ "</b></td></tr>";
         desc += "<tr><td><b>Study:   </b></td><td><b>" + drug->getStudyName() + "</b></td></tr>";
         desc += "<tr><td>Study description:   </td><td>" + drug->description() + "</td></tr>";
-//        desc += "<h5>Absorption, distribution, metabolism, and excretion</h5>";
+        //        desc += "<h5>Absorption, distribution, metabolism, and excretion</h5>";
         desc += "<tr><td>Study authors:   </td><td>" + drug->getStudyAuthors() + "</td></tr>";
 
         //        desc += "<tr><td>Written by:   </td><td>" + QString("TODO") + "</td></tr>";
@@ -92,6 +93,52 @@ QString DrugToHtml::drugToHtml(const Tucuxi::Gui::Core::DrugModel *drug)
             }
             desc += "</td></tr>";
         }
+
+        //-----------------------------------------------------------------------------------------------------------------
+
+        //        desc += "<tr><td>Validation: </td><td>" + drug->getName()->value() + "</td></tr>";
+
+        std::string localDrugModelsPath = "/home/julien/Documents/tucuxi-drugs/drugfiles/";     // hard coded for now
+        Tucuxi::Gui::Processing::Drugs2Manager drugManager;
+
+        localDrugModelsPath += drug->getDrugModelId().toStdString() + ".tdd";
+        //        std::cout << localDrugModelsPath << std::endl;
+
+        Tucuxi::Sign::Signer signer = drugManager.checkSign(localDrugModelsPath);
+
+        QString validationText = "";
+
+        desc += "<tr><td></td><td></td></tr>";      // empty line
+
+        //***************Proposal n°1***************
+
+        //Validation: name, orgnization , locality
+
+        //        if (signer.getName() != "") {
+
+        //            std::cout << signer.getName() << std::endl;
+        //            validationText = QString::fromStdString(signer.getName() + ", " + signer.getOrganizationName() + ", " + signer.getLocality());
+        //        }
+        //        else validationText = "No valid signature found";
+
+        //        desc += "<tr><td><b>Validation: </b></td><td><b>" + validationText + "</b></td></tr>";
+
+
+        //***************Proposal n°2***************
+
+        //Validation: name
+        //Organization: organization1
+        //Locality: locality1, country1
+
+        if (signer.getName() != "" and signer.getOrganizationName() != "") {
+
+            desc += "<tr><td><b>Validation: </b></td><td><b>" + QString::fromStdString(signer.getName()) + "</b></td></tr>";
+            desc += "<tr><td>Organization: </td><td>" + QString::fromStdString(signer.getOrganizationName()) + "</td></tr>";
+            desc += "<tr><td>Locality: </td><td>" + QString::fromStdString(signer.getLocality()) + ", " + QString::fromStdString(signer.getCountryCode()) + "</td></tr>";
+        }
+        else desc += "<tr><td><b>Validation: </b></td><td><b>" + QString::fromStdString("No valid signature found") + "</b></td></tr>";
+
+        //-----------------------------------------------------------------------------------------------------------------
 
         desc += "</table>";
 

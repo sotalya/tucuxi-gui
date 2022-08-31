@@ -50,7 +50,10 @@ public:
 
     Tucuxi::Core::DrugModel *getTucucoreById(std::string id) const;
 
+#ifdef CONFIG_SIGN
     Tucuxi::Sign::Signer /*bool*/ checkSign(std::string fileName);
+    Tucuxi::Sign::Signer /*bool*/ checkSign(const Tucuxi::Gui::Core::DrugModel* drugModel);
+#endif // CONFIG_SIGN
 
     Drugs2Manager();
 

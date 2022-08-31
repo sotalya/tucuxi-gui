@@ -13,6 +13,8 @@
 #ifdef CONFIG_SIGN
 #include "tucusign/signvalidator.h"
 #include "tucusign/signparser.h"
+
+#include "core/dal/drug/drug.h"
 #endif // CONFIG_SIGN
 
 namespace Tucuxi {
@@ -52,6 +54,7 @@ Tucuxi::Core::DrugModel * Drugs2Manager::getTucucoreById(std::string id) const
     return nullptr;
 }
 
+#ifdef CONFIG_SIGN
 Tucuxi::Sign::Signer /*bool*/ Drugs2Manager::checkSign(std::string fileName)
 {
 #ifdef CONFIG_SIGN
@@ -94,6 +97,17 @@ Tucuxi::Sign::Signer /*bool*/ Drugs2Manager::checkSign(std::string fileName)
 
 #endif // CONFIG_SIGN
 }
+#endif // CONFIG_SIGN
+
+#ifdef CONFIG_SIGN
+
+Tucuxi::Sign::Signer Drugs2Manager::checkSign(const Tucuxi::Gui::Core::DrugModel* drugModel)
+{
+    return checkSign(drugModel->)
+
+}
+
+#endif // CONFIG_SIGN
 
 Tucuxi::Core::DrugModel* Drugs2Manager::scanDrug(const QString & fileName)
 {

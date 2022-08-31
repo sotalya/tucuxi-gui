@@ -98,18 +98,17 @@ QString DrugToHtml::drugToHtml(const Tucuxi::Gui::Core::DrugModel *drug)
 
         //        desc += "<tr><td>Validation: </td><td>" + drug->getName()->value() + "</td></tr>";
 
-        std::string localDrugModelsPath = "/home/julien/Documents/tucuxi-drugs/drugfiles/";     // hard coded for now
+#ifdef CONFIG_SIGN
         Tucuxi::Gui::Processing::Drugs2Manager drugManager;
 
-        localDrugModelsPath += drug->getDrugModelId().toStdString() + ".tdd";
-        //        std::cout << localDrugModelsPath << std::endl;
-
-        Tucuxi::Sign::Signer signer = drugManager.checkSign(localDrugModelsPath);
+        Tucuxi::Sign::Signer signer = drugManager.checkSign(drug);
 
         QString validationText = "";
+#endif // CONFIG_SIGN
 
         desc += "<tr><td></td><td></td></tr>";      // empty line
 
+#ifdef CONFIG_SIGN
         //***************Proposal n°1***************
 
         //Validation: name, orgnization , locality
@@ -136,8 +135,13 @@ QString DrugToHtml::drugToHtml(const Tucuxi::Gui::Core::DrugModel *drug)
             desc += "<tr><td>Organization: </td><td>" + QString::fromStdString(signer.getOrganizationName()) + "</td></tr>";
             desc += "<tr><td>Locality: </td><td>" + QString::fromStdString(signer.getLocality()) + ", " + QString::fromStdString(signer.getCountryCode()) + "</td></tr>";
         }
-        else desc += "<tr><td><b>Validation: </b></td><td><b>" + QString::fromStdString("No valid signature found") + "</b></td></tr>";
+        else {
+            desc += "<tr><td><b>Validation: </b></td><td><b>" + QString::fromStdString("No valid signature found") + "</b></td></tr>";
+        }
+#else // CONFIG_SIGN
+        desc += "<tr><td><b>Validation: </b></td><td><b>" + QString::fromStdString("This version does not check the drug model validation status") + "</b></td></tr>";
 
+#endif // CONFIG_SIGN
         //-----------------------------------------------------------------------------------------------------------------
 
         desc += "</table>";

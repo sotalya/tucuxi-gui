@@ -103,7 +103,7 @@ Tucuxi::Sign::Signer /*bool*/ Drugs2Manager::checkSign(std::string fileName)
 
 Tucuxi::Sign::Signer Drugs2Manager::checkSign(const Tucuxi::Gui::Core::DrugModel* drugModel)
 {
-    return checkSign(drugModel->)
+    return checkSign(drugModel->getMetaData()->)
 
 }
 

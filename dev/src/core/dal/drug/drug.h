@@ -137,6 +137,8 @@ class DrugModel : public Entity
     TRANSLATABLE_STRING_PROPERTY_DECL(conversionsComments, ConversionsComments)
     TRANSLATABLE_STRING_PROPERTY_DECL(generalComments, GeneralComments)
 
+    AUTO_PROPERTY_DECL(QString, filePath, FilePath)
+
 protected:
     Q_INVOKABLE DrugModel(AbstractRepository *repository, const Descriptor &descriptor);
 

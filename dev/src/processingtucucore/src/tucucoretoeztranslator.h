@@ -68,7 +68,7 @@ public:
 
     QString description(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute);
 
-    Tucuxi::Gui::Core::DrugModel* buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel);
+    Tucuxi::Gui::Core::DrugModel* buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel, const QString filePath);
 
     Tucuxi::Gui::Core::OperableAmount *translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::TucuUnit micUnit,
                                                  Tucuxi::Common::TucuUnit newUnit, Tucuxi::Gui::Core::Target *newTarget);

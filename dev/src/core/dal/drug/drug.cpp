@@ -111,6 +111,8 @@ TRANSLATABLE_STRING_PROPERTY_IMPL(DrugModel, headComments, HeadComments)
 TRANSLATABLE_STRING_PROPERTY_IMPL(DrugModel, conversionsComments, ConversionsComments)
 TRANSLATABLE_STRING_PROPERTY_IMPL(DrugModel, generalComments, GeneralComments)
 
+AUTO_PROPERTY_IMPL(DrugModel, QString, filePath, FilePath)
+
 //Constructor
 DrugModel::DrugModel(AbstractRepository *repository, QObject* parent) : Entity(repository, parent),
   _doses(CoreFactory::createEntity<ValidDoses>(repository, this)),
@@ -130,7 +132,8 @@ DrugModel::DrugModel(AbstractRepository *repository, QObject* parent) : Entity(r
   _headComments(CoreFactory::createEntity<TranslatableString>(repository, this)),
   _conversionsComments(CoreFactory::createEntity<TranslatableString>(repository, this)),
   _generalComments(CoreFactory::createEntity<TranslatableString>(repository, this)),
-  _metaData(0)
+  _metaData(0),
+  _filePath("")
 {
 
 }

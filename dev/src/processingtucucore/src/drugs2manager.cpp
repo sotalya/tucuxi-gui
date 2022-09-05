@@ -103,8 +103,7 @@ Tucuxi::Sign::Signer /*bool*/ Drugs2Manager::checkSign(std::string fileName)
 
 Tucuxi::Sign::Signer Drugs2Manager::checkSign(const Tucuxi::Gui::Core::DrugModel* drugModel)
 {
-    return checkSign(drugModel->getMetaData()->)
-
+    return checkSign(drugModel->getFilePath().toUtf8().toStdString());
 }
 
 #endif // CONFIG_SIGN
@@ -189,7 +188,7 @@ void Drugs2Manager::scanDirectory(const QDir &directory)
         //        std::cout << drug->getDrugId() << std::endl;
 
         TucucoreToEzTranslator translator;
-        Tucuxi::Gui::Core::DrugModel *newModel = translator.buildLightDrugModel(drug);
+        Tucuxi::Gui::Core::DrugModel *newModel = translator.buildLightDrugModel(drug, entry.filePath());
         if (newModel != nullptr) {
             // Store the Tucuxi and ezechiel drug models
             m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug;

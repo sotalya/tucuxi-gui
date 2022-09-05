@@ -78,6 +78,9 @@ void Admin::setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute formulation
     case Tucuxi::Core::AbsorptionModel::Intravascular : {
         setRoute(Route::BOLUS);
     } break;
+    case Tucuxi::Core::AbsorptionModel::Undefined : {
+        setRoute(Route::UNVALID);
+    }
     }
 
     setDescription(formulationAndRoutedescription(_formulationAndRoute));

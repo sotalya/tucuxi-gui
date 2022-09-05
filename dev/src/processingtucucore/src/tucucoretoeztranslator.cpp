@@ -191,7 +191,8 @@ bool TucucoreToEzTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistor
 #include "tucucommon/translatablestring.h"
 #include "tucucore/drugmodel/covariatedefinition.h"
 
-Tucuxi::Gui::Core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel)
+Tucuxi::Gui::Core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel,
+                                                                          const QString filePath)
 {
     // We do not support multiple active substances
     if (drugModel->getActiveMoieties().size() > 1) {
@@ -204,6 +205,7 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
     // General fields
     //
 
+    newModel->setFilePath(filePath);
 
     newModel->setDrugModelId(QString::fromStdString(drugModel->getDrugModelId()));
 

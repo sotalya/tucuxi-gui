@@ -206,8 +206,9 @@ public:
 //    std::vector<double> getApopv() { return _apopv; }
 //    std::vector<double> setApopv(std::vector<double> vec) { _apopv = vec; emit apopvChanged(_apopv); }
 
-    QString getDefaultUnit() { return _defaultUnit; }
-    void setDefaultUnit(QString unit) {_defaultUnit = unit; emit defaultUnitChanged(unit);}
+    QString getDefaultUnit();
+
+    void setDefaultUnit(QString unit);
 
     double getChartscale() { return _chartscale; }
     void setChartscale(const double scale) {

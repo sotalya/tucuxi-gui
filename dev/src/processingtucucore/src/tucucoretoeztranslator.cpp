@@ -215,6 +215,8 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
 
     newModel->setDescription(QString::fromStdString(drugModel->getMetadata().getDescription().getString()));
 
+    newModel->setDefaultUnit(QString::fromStdString(drugModel->getActiveMoieties()[0]->getUnit().toString()));
+
 
     //
     // Active substance

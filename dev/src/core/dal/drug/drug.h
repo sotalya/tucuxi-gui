@@ -125,8 +125,6 @@ class DrugModel : public Entity
     AUTO_PROPERTY_DECL(DrugVariateList*, covariates, Covariates)
 //    AUTO_PROPERTY_DECL(QStringList, brands, Brands)
     AUTO_PROPERTY_DECL(TargetList*, targets, Targets)
-    // YTA: The operation should be in Parameter. To be removed very soon
-    AUTO_PROPERTY_DECL(QList<Operation*>, operations, Operations)
     AMOUNT_PROPERTY_DECL(Amount, molarMass, MolarMass)
     AUTO_PROPERTY_DECL(ParameterSet*, parameters, Parameters)
     AUTO_PROPERTY_DECL(ErrorModel*, errorModel, ErrorModel)
@@ -138,6 +136,7 @@ class DrugModel : public Entity
     TRANSLATABLE_STRING_PROPERTY_DECL(generalComments, GeneralComments)
 
     AUTO_PROPERTY_DECL(QString, filePath, FilePath)
+    AUTO_PROPERTY_DECL(QString, defaultUnit, DefaultUnit)
 
 protected:
     Q_INVOKABLE DrugModel(AbstractRepository *repository, const Descriptor &descriptor);

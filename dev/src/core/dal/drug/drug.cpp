@@ -98,8 +98,6 @@ AUTO_PROPERTY_IMPL(DrugModel, ValidIntervals*, intervals, Intervals)
 AUTO_PROPERTY_IMPL(DrugModel, DrugVariateList*, covariates, Covariates)
 //AUTO_PROPERTY_IMPL(DrugModel, QStringList, brands, Brands)
 AUTO_PROPERTY_IMPL(DrugModel, TargetList*, targets, Targets)
-// YTA: The operation should be in Parameter. To be removed very soon
-AUTO_PROPERTY_IMPL(DrugModel, QList<Operation*>, operations, Operations)
 AMOUNT_PROPERTY_IMPL(DrugModel, Amount, molarMass, MolarMass)
 AUTO_PROPERTY_IMPL(DrugModel, ParameterSet*, parameters, Parameters)
 AUTO_PROPERTY_IMPL(DrugModel, ErrorModel*, errorModel, ErrorModel)
@@ -112,6 +110,7 @@ TRANSLATABLE_STRING_PROPERTY_IMPL(DrugModel, conversionsComments, ConversionsCom
 TRANSLATABLE_STRING_PROPERTY_IMPL(DrugModel, generalComments, GeneralComments)
 
 AUTO_PROPERTY_IMPL(DrugModel, QString, filePath, FilePath)
+AUTO_PROPERTY_IMPL(DrugModel, QString, defaultUnit, DefaultUnit)
 
 //Constructor
 DrugModel::DrugModel(AbstractRepository *repository, QObject* parent) : Entity(repository, parent),

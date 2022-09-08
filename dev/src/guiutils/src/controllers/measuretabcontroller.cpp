@@ -75,6 +75,7 @@ void MeasureTabController::setDbValue(int index, double value)
 void MeasureTabController::addMeasure()
 {
     Measure* measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, _measures);
+    measure->getConcentration()->setUnitstring(masterController->getDefaultUnit());
     measure->getConcentration()->setUnit(Tucuxi::Gui::Core::Unit(masterController->getDefaultUnit()));
     _measures->append(measure);
 }

@@ -26,7 +26,7 @@ public:
     QString getUnitstring() {
         return this->unit().name();
     }//toString(); }
-    void setUnitstring(QString& unit) {
+    void setUnitstring(const QString& unit) {
         Unit u;
         u.fromString("["+unit+"]");
         if (u != this->unit()) {

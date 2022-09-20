@@ -421,6 +421,19 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::retrieveViewsFromQml()
     Q_ASSERT(sentencePaletteDialog);
 }
 
+
+QString Tucuxi::Gui::GuiUtils::InterpretationController::getDefaultUnit() {
+    if (_currentDrugModel != nullptr) {
+        return _currentDrugModel->getDefaultUnit();
+    }
+    else {
+        return _defaultUnit;
+    }
+}
+
+void Tucuxi::Gui::GuiUtils::InterpretationController::setDefaultUnit(QString unit) {_defaultUnit = unit; emit defaultUnitChanged(unit);}
+
+
 void Tucuxi::Gui::GuiUtils::InterpretationController::initViewConnexions()
 {
     CONNECT(flowView, SIGNAL(changedTab(int)), this, SLOT(currentTabChanged(int)));

@@ -62,6 +62,15 @@ void MeasureTabController::setArrivalDate(int index, QDateTime time)
     measure->arrivalDate(time);
 }
 
+void MeasureTabController::setEnable(int index, bool enable)
+{
+    if (!isIndexValid(index)) return;
+
+    Measure *measure = static_cast<Measure*>(_measures->at(index));
+
+    measure->enable(enable);
+}
+
 void MeasureTabController::setDbValue(int index, double value)
 {
     if (!isIndexValid(index)) return;

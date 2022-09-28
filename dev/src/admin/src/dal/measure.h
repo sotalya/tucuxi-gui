@@ -23,10 +23,11 @@ class Measure : public Tucuxi::Gui::Core::CoreMeasure
     ADMIN_ENTITY_UTILS(Measure)
     AUTO_PROPERTY(QString, sampleID)
     AUTO_PROPERTY(QDateTime, arrivalDate)
+    AUTO_PROPERTY(bool, enable)
 
 public:
     Q_INVOKABLE explicit Measure(Tucuxi::Gui::Core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
-    Q_INVOKABLE Measure(Tucuxi::Gui::Core::AbstractRepository *repository, QDateTime moment, Tucuxi::Gui::Core::IdentifiableAmount* amount, QString getSdrug, int dbid = -1, QString sampleID = QString(), QDateTime arrivalDate = QDateTime());
+    Q_INVOKABLE Measure(Tucuxi::Gui::Core::AbstractRepository *repository, QDateTime moment, Tucuxi::Gui::Core::IdentifiableAmount* amount, QString getSdrug, int dbid = -1, QString sampleID = QString(), QDateTime arrivalDate = QDateTime(), bool enable = true);
 };
 
 //class MeasureList: public Tucuxi::Gui::Core::Entity {

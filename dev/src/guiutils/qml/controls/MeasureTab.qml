@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Layouts 1.2
-import QtQuick.Controls 1.4
+//import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 
 import guiutils.qml.styles 1.0
@@ -41,6 +42,11 @@ Rectangle {
             columnlayout.children: [
                 //MeasureList header
                 EntityListHeader {
+                    EntityListHeaderItem {
+                        Layout.preferredWidth: 80
+                        label.text: "Enable"
+                        tooltipText : ToolTips.measureTab.enable
+                    }
                     EntityListHeaderItem {
                         Layout.preferredWidth: 50
                         label.text: "ID"
@@ -107,6 +113,11 @@ Rectangle {
                         }
                         rowlayout.children: [
 
+                            CheckBox{
+                                Layout.preferredHeight: 10
+                                checked: modelData.enable
+                                onCheckStateChanged: modelData.enable = checked
+                            },
                             EntityListDelegateItem {
                                 Layout.preferredWidth: 50
                                 color: root.mousearea.hovered ? measureList.rowBackgroundHover : (root.ListView.isCurrentItem ? measureList.rowBackgroundSelected : measureList.rowBackground)
@@ -335,6 +346,7 @@ Rectangle {
             measureTabController.setDbValue(measureListView.currentIndex, this.getValue())
             measureTabController.setMoment(measureListView.currentIndex, sampleDate)
             measureTabController.setArrivalDate(measureListView.currentIndex, arrivalDate)
+            measureTabController.setEnable(measureListView.currentIndex, true)
             measureTabController.forceRefresh()
             return true
         }

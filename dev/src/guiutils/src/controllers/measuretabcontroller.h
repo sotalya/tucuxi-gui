@@ -39,6 +39,7 @@ public:
     Q_INVOKABLE void setDbValue(int index, double value);
     Q_INVOKABLE void setMoment(int index, QDateTime time);
     Q_INVOKABLE void setArrivalDate(int index, QDateTime time);
+    Q_INVOKABLE void setEnable(int index, bool enable);
 
     Q_INVOKABLE void forceRefresh();
 

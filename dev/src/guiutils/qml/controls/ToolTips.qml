@@ -137,6 +137,7 @@ QtObject {
         readonly property string add : qsTr("Add a new concentration measurement value")
         readonly property string modify : qsTr("Modify the selected concentration value")
         readonly property string remove : qsTr("Remove the selected concentration measurement")
+        readonly property string enable : qsTr("Enable/Disable the measurement")
     }
 
     property QtObject measureDialog: QtObject {

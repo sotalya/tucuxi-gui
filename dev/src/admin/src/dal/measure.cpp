@@ -20,7 +20,8 @@ Measure::Measure(Tucuxi::Gui::Core::AbstractRepository *repository,
                  QString drug,
                  int dbid,
                  QString sampleID,
-                 QDateTime arrivalDate) :
+                 QDateTime arrivalDate,
+                 bool enable) :
     Tucuxi::Gui::Core::CoreMeasure(repository)
 {
     this->setMoment(moment);
@@ -29,6 +30,7 @@ Measure::Measure(Tucuxi::Gui::Core::AbstractRepository *repository,
     this->sampleID(sampleID);
     this->arrivalDate(arrivalDate);
     this->setId(dbid);
+    this->enable(enable);
 }
 
 //MeasureList::MeasureList(Tucuxi::Gui::Core::AbstractRepository* repository, QObject* parent) : Entity(repository, parent) {}

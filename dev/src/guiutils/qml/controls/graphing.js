@@ -592,23 +592,25 @@ function drawMeasures(cdata, ctx)
 
     //Draw the samples
     for (var i = 0; i < cdata.measures.length; ++i) {//measures.length; ++i) {
-        var x = atime2screen(cdata, cdata.measures[i].moment.getTime() / 1000);
-        var y = acxn2screen(cdata, cdata.measures[i].concentration.dbvalue * cdata.measures[i].concentration.multiplier);
+        if (cdata.measures[i].enable) {
+            var x = atime2screen(cdata, cdata.measures[i].moment.getTime() / 1000);
+            var y = acxn2screen(cdata, cdata.measures[i].concentration.dbvalue * cdata.measures[i].concentration.multiplier);
 
-        //console.log("measurex: " + x)
-        //console.log("measurey: " + y)
-        ctx.beginPath();
-        ctx.arc(x, y, 5 * cdata.scale, 0, 2 * Math.PI, true);
-        ctx.fill();
-        ctx.stroke();
+            //console.log("measurex: " + x)
+            //console.log("measurey: " + y)
+            ctx.beginPath();
+            ctx.arc(x, y, 5 * cdata.scale, 0, 2 * Math.PI, true);
+            ctx.fill();
+            ctx.stroke();
 
-        if (checkPointProximity(x, y, mouseX, mouseY, true) && cdata.mArea.isMouseOver) {
-            cdata.currentMeasure = {
-                x: x,
-                y: y,
-                value: cdata.measures[i].concentration.dbvalue.toFixed(2) + " " + cdata.measures[i].concentration.unitstring,
-                time: formatDate(cdata.measures[i].moment), //formatDateInLine(cdata.measures[i].moment),
-                color: "red"
+            if (checkPointProximity(x, y, mouseX, mouseY, true) && cdata.mArea.isMouseOver) {
+                cdata.currentMeasure = {
+                    x: x,
+                    y: y,
+                    value: cdata.measures[i].concentration.dbvalue.toFixed(2) + " " + cdata.measures[i].concentration.unitstring,
+                    time: formatDate(cdata.measures[i].moment), //formatDateInLine(cdata.measures[i].moment),
+                    color: "red"
+                }
             }
         }
     }

@@ -116,7 +116,7 @@ Rectangle {
                             CheckBox{
                                 Layout.preferredHeight: 10
                                 checked: modelData.enable
-                                onCheckStateChanged: {
+                                onClicked: {
                                     modelData.enable = checked
                                     measureTabController.forceRefresh()
                                 }

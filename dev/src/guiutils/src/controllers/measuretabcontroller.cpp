@@ -68,7 +68,7 @@ void MeasureTabController::setEnable(int index, bool enable)
 
     Measure *measure = static_cast<Measure*>(_measures->at(index));
 
-    measure->enable(enable);
+    measure->setEnable(enable);
 }
 
 void MeasureTabController::setDbValue(int index, double value)

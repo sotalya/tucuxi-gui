@@ -25,13 +25,14 @@ class CoreMeasure : public Entity
     AUTO_PROPERTY_DECL(IdentifiableAmount*, concentration, Concentration)
     AUTO_PROPERTY_DECL(QDateTime, moment, Moment)
     AUTO_PROPERTY_DECL(QString, sdrug, Sdrug)
+    AUTO_PROPERTY_DECL(bool, enable, Enable)
 
     AUTO_PROPERTY_DECL(UncastedValueList*, uncastedValues, UncastedValues)
 
 protected:
 
     Q_INVOKABLE explicit CoreMeasure(AbstractRepository *repository = 0, QObject *parent = nullptr);
-    Q_INVOKABLE CoreMeasure(AbstractRepository *repository, QDateTime moment, IdentifiableAmount* amount, QString getSdrug, ident dbid = -1);
+    Q_INVOKABLE CoreMeasure(AbstractRepository *repository, QDateTime moment, IdentifiableAmount* amount, QString getSdrug, bool enable, ident dbid = -1);
 
 public:
     void convert(const Unit &getUnit);

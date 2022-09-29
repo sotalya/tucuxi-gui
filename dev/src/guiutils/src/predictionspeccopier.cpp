@@ -407,7 +407,8 @@ Tucuxi::Gui::Core::CoreMeasureList* PredictionSpecCopier::copy(Tucuxi::Gui::Core
     Tucuxi::Gui::Core::CoreMeasureList *target;
     target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO,parent);
     foreach(Tucuxi::Gui::Core::CoreMeasure* t, source->getList())
-        target->append(copy(t, target));
+        if(t->getEnable())
+            target->append(copy(t, target));
 
     return target;
 }

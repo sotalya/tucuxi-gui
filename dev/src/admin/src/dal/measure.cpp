@@ -30,7 +30,7 @@ Measure::Measure(Tucuxi::Gui::Core::AbstractRepository *repository,
     this->sampleID(sampleID);
     this->arrivalDate(arrivalDate);
     this->setId(dbid);
-    this->enable(enable);
+    this->setEnable(enable);
 }
 
 //MeasureList::MeasureList(Tucuxi::Gui::Core::AbstractRepository* repository, QObject* parent) : Entity(repository, parent) {}

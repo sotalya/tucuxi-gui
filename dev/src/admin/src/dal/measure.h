@@ -23,7 +23,6 @@ class Measure : public Tucuxi::Gui::Core::CoreMeasure
     ADMIN_ENTITY_UTILS(Measure)
     AUTO_PROPERTY(QString, sampleID)
     AUTO_PROPERTY(QDateTime, arrivalDate)
-    AUTO_PROPERTY(bool, enable)
 
 public:
     Q_INVOKABLE explicit Measure(Tucuxi::Gui::Core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);

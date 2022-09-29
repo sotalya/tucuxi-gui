@@ -116,7 +116,10 @@ Rectangle {
                             CheckBox{
                                 Layout.preferredHeight: 10
                                 checked: modelData.enable
-                                onCheckStateChanged: modelData.enable = checked
+                                onCheckStateChanged: {
+                                    modelData.enable = checked
+                                    measureTabController.forceRefresh()
+                                }
                             },
                             EntityListDelegateItem {
                                 Layout.preferredWidth: 50

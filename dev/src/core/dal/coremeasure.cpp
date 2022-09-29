@@ -12,6 +12,7 @@ AUTO_PROPERTY_IMPL(CoreMeasure, IdentifiableAmount*, concentration, Concentratio
 AUTO_PROPERTY_IMPL(CoreMeasure, QDateTime, moment, Moment)
 AUTO_PROPERTY_IMPL(CoreMeasure, QString, sdrug, Sdrug)
 AUTO_PROPERTY_IMPL(CoreMeasure, UncastedValueList*, uncastedValues, UncastedValues)
+AUTO_PROPERTY_IMPL(CoreMeasure, bool, enable, Enable)
 
 
 CoreMeasure::CoreMeasure(AbstractRepository *repository, QObject* parent) :
@@ -25,11 +26,12 @@ CoreMeasure::CoreMeasure(AbstractRepository *repository, QObject* parent) :
     _concentration->setUnit(Unit("mg/l"));
 }
 
-CoreMeasure::CoreMeasure(AbstractRepository *repository, QDateTime moment, IdentifiableAmount* amount, QString drug, ident dbid) :
+CoreMeasure::CoreMeasure(AbstractRepository *repository, QDateTime moment, IdentifiableAmount* amount, QString drug, bool enable, ident dbid) :
     Entity(repository),
     _moment(moment),
     _concentration(amount),
-    _sdrug(drug)
+    _sdrug(drug),
+    _enable(enable)
 {
     this->setId(dbid);
 }

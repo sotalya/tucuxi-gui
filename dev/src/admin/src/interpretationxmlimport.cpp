@@ -526,7 +526,10 @@ Tucuxi::Gui::Core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(co
                                 if(isOk && reader.readNextStartElement()){
                                     QString name = reader.name().toString();
 
-                                    if (name == "sampleId") {
+                                    if (name == "enable") {
+                                        measure->setEnable(extractBool());
+                                    }
+                                    else if (name == "sampleId") {
                                         measure->sampleID(extractor());
                                     }
                                     else if (name == "arrivalDate") {

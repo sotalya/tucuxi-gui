@@ -368,6 +368,7 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::CoreMeasureList *list)
     foreach (Tucuxi::Gui::Core::CoreMeasure *coreMeasure, list->getList()) {
         Measure *measure = dynamic_cast<Measure *>(coreMeasure);
         writer.writeStartElement("measure");
+        writer.writeTextElement("enable", measure->getEnable() ? "true" : "false");
         writer.writeTextElement("sampleId", measure->sampleID());
         writer.writeTextElement("arrivalDate", writeDate(measure->arrivalDate()));
         writer.writeTextElement("moment", writeDate(measure->getMoment()));

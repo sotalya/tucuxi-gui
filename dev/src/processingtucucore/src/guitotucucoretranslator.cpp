@@ -1,6 +1,6 @@
 //@@license@@
 
-#include "eztotucucoretranslator.h"
+#include "guitotucucoretranslator.h"
 
 #include "core/dal/predictionspec.h"
 #include "core/dal/predictive.h"
@@ -25,12 +25,12 @@
 #include "tucucore/drugmodel/formulationandroute.h"
 
 
-EzToTucucoreTranslator::EzToTucucoreTranslator()
+GuiToTucucoreTranslator::GuiToTucucoreTranslator()
 {
 }
 
 
-DateTime EzToTucucoreTranslator::buildDateTime(const QDateTime &qDate)
+DateTime GuiToTucucoreTranslator::buildDateTime(const QDateTime &qDate)
 {
 //    if (!qDate.isValid()) {
 //        return DateTime();
@@ -47,12 +47,12 @@ DateTime EzToTucucoreTranslator::buildDateTime(const QDateTime &qDate)
 }
 
 
-Tucuxi::Common::TucuUnit EzToTucucoreTranslator::buildUnit(const QString &_strUnit)
+Tucuxi::Common::TucuUnit GuiToTucucoreTranslator::buildUnit(const QString &_strUnit)
 {
     return Tucuxi::Common::TucuUnit(_strUnit.toStdString());
 }
 
-Tucuxi::Core::PredictionParameterType EzToTucucoreTranslator::buildParameterType(const Tucuxi::Gui::Core::ParamTraits *traits)
+Tucuxi::Core::PredictionParameterType GuiToTucucoreTranslator::buildParameterType(const Tucuxi::Gui::Core::ParamTraits *traits)
 {
     switch (traits->ptype()) {
     case Tucuxi::Gui::Core::ParameterType::POPULATION  : return Tucuxi::Core::PredictionParameterType::Population;
@@ -62,7 +62,7 @@ Tucuxi::Core::PredictionParameterType EzToTucucoreTranslator::buildParameterType
     }
 }
 
-Tucuxi::Core::DosageTimeRange *EzToTucucoreTranslator::buildTimeRange(const Tucuxi::Gui::Core::Dosage *_ezDosage)
+Tucuxi::Core::DosageTimeRange *GuiToTucucoreTranslator::buildTimeRange(const Tucuxi::Gui::Core::Dosage *_ezDosage)
 {
     Tucuxi::Core::FormulationAndRoute formulationAndRoute = _ezDosage->getRoute()->getFormulationAndRoute();
     Tucuxi::Core::LastingDose lastingDose(_ezDosage->getQuantity()->getDbvalue(),
@@ -109,7 +109,7 @@ Tucuxi::Core::DosageTimeRange *EzToTucucoreTranslator::buildTimeRange(const Tucu
 }
 
 
-Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const Tucuxi::Gui::Core::DrugTreatment *_ezTreatment, QDateTime adjTime)
+Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucuxi::Gui::Core::DrugTreatment *_ezTreatment, QDateTime adjTime)
 {
 
     Tucuxi::Core::DrugTreatment *newTreatment = new Tucuxi::Core::DrugTreatment();
@@ -263,7 +263,7 @@ Tucuxi::Core::DrugTreatment *EzToTucucoreTranslator::buildTreatment(const Tucuxi
 
 #include "drugs2manager.h"
 
-Tucuxi::Core::DrugModel *EzToTucucoreTranslator::buildDrugModel(const Tucuxi::Gui::Core::DrugModel *_drugModel)
+Tucuxi::Core::DrugModel *GuiToTucucoreTranslator::buildDrugModel(const Tucuxi::Gui::Core::DrugModel *_drugModel)
 {
     Tucuxi::Core::DrugModel *pDrugModel = nullptr;
 

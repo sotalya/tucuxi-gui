@@ -43,10 +43,10 @@ tucuxi-gui-processingtucucore.depends = ../core
 INCLUDEPATH += ..
 
 HEADERS	+= \
+    src/guitotucucoretranslator.h \
     src/processingtucucore.h \
-    src/eztotucucoretranslator.h \
-    src/tucucoretoeztranslator.h \
-    src/drugs2manager.h
+    src/drugs2manager.h \
+    src/tucucoretoguitranslator.h
 
 #CODECFORTR      += UTF-8
 #TRANSLATIONS    += $${TRANS_DIR}/processing_fr.ts
@@ -55,10 +55,10 @@ HEADERS	+= \
 include(../translation.pri)
 
 SOURCES += \
+    src/guitotucucoretranslator.cpp \
     src/processingtucucore.cpp \
-    src/eztotucucoretranslator.cpp \
-    src/tucucoretoeztranslator.cpp \
-    src/drugs2manager.cpp
+    src/drugs2manager.cpp \
+    src/tucucoretoguitranslator.cpp
 
 SOURCES += $${TUCUXIROOTDIR}/libs/spdlog-master-20170622/include/spdlog/fmt/bundled/format.cc
 

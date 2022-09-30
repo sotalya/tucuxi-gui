@@ -5,8 +5,8 @@
 #include "processingtucucore.h"
 
 
-#include "eztotucucoretranslator.h"
-#include "tucucoretoeztranslator.h"
+#include "guitotucucoretranslator.h"
+#include "tucucoretoguitranslator.h"
 
 // #include "errors_processing.h"
 #include "core/core.h"
@@ -107,7 +107,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
 {
 
 
-    EzToTucucoreTranslator translator;
+    GuiToTucucoreTranslator translator;
 
     Tucuxi::Core::DrugModel *drugModel = translator.buildDrugModel(analysis->getDrugModel());
 
@@ -197,7 +197,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
         Tucuxi::Core::ComputingStatus res1 = iCore->compute(request1, response1);
         if ((res == Tucuxi::Core::ComputingStatus::Ok) && (res1 == Tucuxi::Core::ComputingStatus::Ok)) {
 
-            TucucoreToEzTranslator tuToEzTranslator;
+            TucucoreToGuiTranslator tuToEzTranslator;
 
             Tucuxi::Gui::Core::FancyPoints* fpts = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoints>(ABSTRACTREPO, prediction.getPredictive()->getPredictionData());
 
@@ -327,7 +327,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
 {
 
 
-    EzToTucucoreTranslator translator;
+    GuiToTucucoreTranslator translator;
 
     Tucuxi::Core::DrugModel *drugModel = translator.buildDrugModel(analysis->getDrugModel());
 
@@ -410,7 +410,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
 
         if (res == Tucuxi::Core::ComputingStatus::Ok) {
 
-            TucucoreToEzTranslator tuToEzTranslator;
+            TucucoreToGuiTranslator tuToEzTranslator;
 
             Tucuxi::Gui::Core::PercentileDataList* percpairs = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PercentileDataList>(ABSTRACTREPO, prediction.getPredictive());
             prediction.getPredictive()->setPercentileDataList(percpairs);
@@ -469,7 +469,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
         Tucuxi::Gui::Core::PredictionResult& prediction)
 {
 
-    EzToTucucoreTranslator translator;
+    GuiToTucucoreTranslator translator;
 
     Tucuxi::Core::DrugModel *drugModel = translator.buildDrugModel(analysis->getDrugModel());
 
@@ -573,12 +573,12 @@ Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
     }
 
 
-    TucucoreToEzTranslator tuToEzTranslator;
+    TucucoreToGuiTranslator tuToEzTranslator;
 
     // Process the adjustment
     for (const auto & fullDosage : resp->getAdjustments()) {
 
-        TucucoreToEzTranslator translator;
+        TucucoreToGuiTranslator translator;
 
         Tucuxi::Gui::Core::Adjustment *adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Adjustment>(ABSTRACTREPO, prediction.getAdjustments());
 

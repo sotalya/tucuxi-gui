@@ -1,7 +1,7 @@
 //@@license@@
 
-#ifndef TUCUCORETOEZTRANSLATOR_H
-#define TUCUCORETOEZTRANSLATOR_H
+#ifndef TUCUCORETOGUITRANSLATOR_H
+#define TUCUCORETOGUITRANSLATOR_H
 
 #include <QDateTime>
 #include <QString>
@@ -48,10 +48,10 @@ namespace Tucuxi {
 namespace Gui {
 namespace Processing {
 
-class TucucoreToEzTranslator
+class TucucoreToGuiTranslator
 {
 public:
-    TucucoreToEzTranslator();
+    TucucoreToGuiTranslator();
 
 
     QDateTime buildDateTime(const Tucuxi::Common::DateTime &date);
@@ -83,4 +83,4 @@ public:
 }
 }
 
-#endif // TUCUCORETOEZTRANSLATOR_H
+#endif // TUCUCORETOGUITRANSLATOR_H

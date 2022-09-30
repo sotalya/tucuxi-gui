@@ -1,6 +1,6 @@
 //@@license@@
 
-#include "tucucoretoeztranslator.h"
+#include "tucucoretoguitranslator.h"
 
 #include "core/dal/adjustment.h"
 #include "core/dal/drug/target.h"
@@ -18,19 +18,19 @@ namespace Tucuxi {
 namespace Gui {
 namespace Processing {
 
-TucucoreToEzTranslator::TucucoreToEzTranslator()
+TucucoreToGuiTranslator::TucucoreToGuiTranslator()
 {
 
 }
 
-QDateTime TucucoreToEzTranslator::buildDateTime(const Tucuxi::Common::DateTime &date)
+QDateTime TucucoreToGuiTranslator::buildDateTime(const Tucuxi::Common::DateTime &date)
 {
     QDateTime result(QDate(date.year(), date.month(), date.day()), QTime(date.hour(), date.minute(), date.second()));
     return result;
 }
 
 
-bool TucucoreToEzTranslator::buildTargetEvaluation(
+bool TucucoreToGuiTranslator::buildTargetEvaluation(
         const Tucuxi::Core::TargetEvaluationResult *target,
         Tucuxi::Gui::Core::TargetEvaluationResult *newTarget)
 {
@@ -65,7 +65,7 @@ bool TucucoreToEzTranslator::buildTargetEvaluation(
     return true;
 }
 
-QString TucucoreToEzTranslator::description(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
+QString TucucoreToGuiTranslator::description(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
 {
     QString result;
     switch(_formulationAndRoute.getAdministrationRoute()) {
@@ -87,7 +87,7 @@ QString TucucoreToEzTranslator::description(const Tucuxi::Core::FormulationAndRo
 }
 }
 
-Tucuxi::Gui::Core::Admin::Route TucucoreToEzTranslator::translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
+Tucuxi::Gui::Core::Admin::Route TucucoreToGuiTranslator::translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
 {
     switch (_formulationAndRoute.getAbsorptionModel()) {
     case Tucuxi::Core::AbsorptionModel::Extravascular: return Tucuxi::Gui::Core::Admin::Route::EXTRA;
@@ -100,7 +100,7 @@ Tucuxi::Gui::Core::Admin::Route TucucoreToEzTranslator::translateFormulationAndR
 }
 
 
-Tucuxi::Gui::Core::Admin::Route TucucoreToEzTranslator::translateAbsorptionModel(Tucuxi::Core::AbsorptionModel _absorptionModel)
+Tucuxi::Gui::Core::Admin::Route TucucoreToGuiTranslator::translateAbsorptionModel(Tucuxi::Core::AbsorptionModel _absorptionModel)
 {
     switch (_absorptionModel) {
     case Tucuxi::Core::AbsorptionModel::Extravascular: return Tucuxi::Gui::Core::Admin::Route::EXTRA;
@@ -112,7 +112,7 @@ Tucuxi::Gui::Core::Admin::Route TucucoreToEzTranslator::translateAbsorptionModel
     return Tucuxi::Gui::Core::Admin::Route::UNVALID;
 }
 
-bool TucucoreToEzTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistory & dosageHistory,
+bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistory & dosageHistory,
                                                   Tucuxi::Gui::Core::DosageHistory *newHistory)
 {
 
@@ -191,7 +191,7 @@ bool TucucoreToEzTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistor
 #include "tucucommon/translatablestring.h"
 #include "tucucore/drugmodel/covariatedefinition.h"
 
-Tucuxi::Gui::Core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel,
+Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const Tucuxi::Core::DrugModel *drugModel,
                                                                           const QString filePath)
 {
     // We do not support multiple active substances
@@ -455,7 +455,7 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToEzTranslator::buildLightDrugModel(const 
     return newModel;
 }
 
-Tucuxi::Gui::Core::TargetMethod* TucucoreToEzTranslator::translate(Tucuxi::Core::TargetType targetType, Tucuxi::Gui::Core::Target *newTarget)
+Tucuxi::Gui::Core::TargetMethod* TucucoreToGuiTranslator::translate(Tucuxi::Core::TargetType targetType, Tucuxi::Gui::Core::Target *newTarget)
 {
     Tucuxi::Gui::Core::TargetMethod *method = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetMethod>(ABSTRACTREPO, newTarget);
     switch (targetType) {
@@ -478,7 +478,7 @@ Tucuxi::Gui::Core::TargetMethod* TucucoreToEzTranslator::translate(Tucuxi::Core:
     return method;
 }
 
-Tucuxi::Gui::Core::OperableAmount *TucucoreToEzTranslator::translate(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, Tucuxi::Gui::Core::Target *newTarget)
+Tucuxi::Gui::Core::OperableAmount *TucucoreToGuiTranslator::translate(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, Tucuxi::Gui::Core::Target *newTarget)
 {
     Tucuxi::Gui::Core::OperableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, newTarget);
     amount->setDbvalue(subTarget.getValue());
@@ -487,7 +487,7 @@ Tucuxi::Gui::Core::OperableAmount *TucucoreToEzTranslator::translate(const Tucux
     return amount;
 }
 
-Tucuxi::Gui::Core::OperableAmount *TucucoreToEzTranslator::translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::TucuUnit micUnit,
+Tucuxi::Gui::Core::OperableAmount *TucucoreToGuiTranslator::translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::TucuUnit micUnit,
                                                                      Tucuxi::Common::TucuUnit newUnit, Tucuxi::Gui::Core::Target *newTarget)
 {
     Tucuxi::Gui::Core::OperableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, newTarget);
@@ -497,7 +497,7 @@ Tucuxi::Gui::Core::OperableAmount *TucucoreToEzTranslator::translateMic(const Tu
 }
 
 
-Tucuxi::Gui::Core::OperableAmount *TucucoreToEzTranslator::translateTime(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, Tucuxi::Gui::Core::Target *newTarget)
+Tucuxi::Gui::Core::OperableAmount *TucucoreToGuiTranslator::translateTime(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, Tucuxi::Gui::Core::Target *newTarget)
 {
     Tucuxi::Gui::Core::OperableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, newTarget);
     amount->setDbvalue(subTarget.getValue());
@@ -506,7 +506,7 @@ Tucuxi::Gui::Core::OperableAmount *TucucoreToEzTranslator::translateTime(const T
     return amount;
 }
 
-Tucuxi::Gui::Core::TranslatableString* TucucoreToEzTranslator::translate(const Tucuxi::Common::TranslatableString &str, Tucuxi::Gui::Core::Entity *parent)
+Tucuxi::Gui::Core::TranslatableString* TucucoreToGuiTranslator::translate(const Tucuxi::Common::TranslatableString &str, Tucuxi::Gui::Core::Entity *parent)
 {
     Tucuxi::Gui::Core::TranslatableString *newString = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO, parent);
     // Now we only insert the english translation

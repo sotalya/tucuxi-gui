@@ -1,7 +1,7 @@
 //@@license@@
 
-#ifndef EZTOTUCUCORETRANSLATOR_H
-#define EZTOTUCUCORETRANSLATOR_H
+#ifndef GUITOTUCUCORETRANSLATOR_H
+#define GUITOTUCUCORETRANSLATOR_H
 
 #include <QDateTime>
 #include <QString>
@@ -34,10 +34,10 @@ class Dosage;
 }
 
 
-class EzToTucucoreTranslator
+class GuiToTucucoreTranslator
 {
 public:
-    EzToTucucoreTranslator();
+    GuiToTucucoreTranslator();
 
     Tucuxi::Common::DateTime buildDateTime(const QDateTime &qDate);
 
@@ -55,4 +55,4 @@ public:
 
 
 
-#endif // EZTOTUCUCORETRANSLATOR_H
+#endif // GUITOTUCUCORETRANSLATOR_H

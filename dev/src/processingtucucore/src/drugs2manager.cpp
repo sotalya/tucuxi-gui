@@ -39,9 +39,9 @@ const std::vector<Tucuxi::Core::DrugModel *> & Drugs2Manager::getAllTucucoreDrug
     return m_tucuxiDrugModels;
 }
 
-const std::vector<Tucuxi::Gui::Core::DrugModel *> & Drugs2Manager::getAllEzechielDrugModels() const
+const std::vector<Tucuxi::Gui::Core::DrugModel *> & Drugs2Manager::getAllGuiDrugModels() const
 {
-    return m_ezechielDrugModels;
+    return m_guiDrugModels;
 }
 
 Tucuxi::Core::DrugModel * Drugs2Manager::getTucucoreById(std::string id) const
@@ -193,7 +193,7 @@ void Drugs2Manager::scanDirectory(const QDir &directory)
             // Store the Tucuxi and ezechiel drug models
             m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug;
             m_tucuxiDrugModels.push_back(drug);
-            m_ezechielDrugModels.push_back(newModel);
+            m_guiDrugModels.push_back(newModel);
         }
 
         //----------------------------------------------------------------------------------------------------------------
@@ -282,7 +282,7 @@ void Tucuxi::Gui::Processing::Drugs2Manager::addDrugModelTests()
             // Store the Tucuxi and ezechiel drug models
             m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug.get();
             m_tucuxiDrugModels.push_back(drug.release());
-            m_ezechielDrugModels.push_back(newModel);
+            m_guiDrugModels.push_back(newModel);
         }
     }
     {
@@ -312,7 +312,7 @@ void Tucuxi::Gui::Processing::Drugs2Manager::addDrugModelTests()
             // Store the Tucuxi and ezechiel drug models
             m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug.get();
             m_tucuxiDrugModels.push_back(drug.release());
-            m_ezechielDrugModels.push_back(newModel);
+            m_guiDrugModels.push_back(newModel);
         }
     }
     {
@@ -336,7 +336,7 @@ void Tucuxi::Gui::Processing::Drugs2Manager::addDrugModelTests()
             // Store the Tucuxi and ezechiel drug models
             m_tucuxiDrugModelsByIds[drug->getDrugModelId()] = drug.get();
             m_tucuxiDrugModels.push_back(drug.release());
-            m_ezechielDrugModels.push_back(newModel);
+            m_guiDrugModels.push_back(newModel);
         }
     }
 }

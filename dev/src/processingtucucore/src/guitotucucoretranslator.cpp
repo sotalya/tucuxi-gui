@@ -62,24 +62,24 @@ Tucuxi::Core::PredictionParameterType GuiToTucucoreTranslator::buildParameterTyp
     }
 }
 
-Tucuxi::Core::DosageTimeRange *GuiToTucucoreTranslator::buildTimeRange(const Tucuxi::Gui::Core::Dosage *_ezDosage)
+Tucuxi::Core::DosageTimeRange *GuiToTucucoreTranslator::buildTimeRange(const Tucuxi::Gui::Core::Dosage *guiDosage)
 {
-    Tucuxi::Core::FormulationAndRoute formulationAndRoute = _ezDosage->getRoute()->getFormulationAndRoute();
-    Tucuxi::Core::LastingDose lastingDose(_ezDosage->getQuantity()->getDbvalue(),
-                                          Tucuxi::Common::TucuUnit(_ezDosage->getQuantity()->getUnitstring().toStdString()),
+    Tucuxi::Core::FormulationAndRoute formulationAndRoute = guiDosage->getRoute()->getFormulationAndRoute();
+    Tucuxi::Core::LastingDose lastingDose(guiDosage->getQuantity()->getDbvalue(),
+                                          Tucuxi::Common::TucuUnit(guiDosage->getQuantity()->getUnitstring().toStdString()),
                                           formulationAndRoute,
-                                          std::chrono::seconds(static_cast<int>(_ezDosage->getDbtinf()*60.0)),
-                                          std::chrono::seconds(static_cast<int>(_ezDosage->getDbinterval()*3600.0)));
+                                          std::chrono::seconds(static_cast<int>(guiDosage->getDbtinf()*60.0)),
+                                          std::chrono::seconds(static_cast<int>(guiDosage->getDbinterval()*3600.0)));
 
-    Tucuxi::Common::DateTime appliedDate = buildDateTime(_ezDosage->getApplied());
+    Tucuxi::Common::DateTime appliedDate = buildDateTime(guiDosage->getApplied());
 
 
-    Tucuxi::Common::DateTime endDate = buildDateTime(_ezDosage->getEndTime());
+    Tucuxi::Common::DateTime endDate = buildDateTime(guiDosage->getEndTime());
 
     if (appliedDate == endDate) {
-        if (_ezDosage->getDbinterval() > 0.0) {
+        if (guiDosage->getDbinterval() > 0.0) {
             // Seems that the user wants a single dose, so add the interval
-            endDate = appliedDate + Duration(std::chrono::seconds(static_cast<int>(_ezDosage->getDbinterval()*3600.0)));
+            endDate = appliedDate + Duration(std::chrono::seconds(static_cast<int>(guiDosage->getDbinterval()*3600.0)));
         }
         else {
             // Don't know how to manage a 0 time interval with no end time
@@ -92,8 +92,8 @@ Tucuxi::Core::DosageTimeRange *GuiToTucucoreTranslator::buildTimeRange(const Tuc
     }
 
 
-    if (_ezDosage->getIsAtSteadyState()) {
-        Tucuxi::Core::DosageSteadyState steadyState(lastingDose, buildDateTime(_ezDosage->getApplied()));
+    if (guiDosage->getIsAtSteadyState()) {
+        Tucuxi::Core::DosageSteadyState steadyState(lastingDose, buildDateTime(guiDosage->getApplied()));
         return new Tucuxi::Core::DosageTimeRange(
             appliedDate,    // startDate,
             endDate,    // endDate,
@@ -109,11 +109,11 @@ Tucuxi::Core::DosageTimeRange *GuiToTucucoreTranslator::buildTimeRange(const Tuc
 }
 
 
-Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucuxi::Gui::Core::DrugTreatment *_ezTreatment, QDateTime adjTime)
+Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucuxi::Gui::Core::DrugTreatment *guiTreatment, QDateTime adjTime)
 {
 
     Tucuxi::Core::DrugTreatment *newTreatment = new Tucuxi::Core::DrugTreatment();
-    QList<Tucuxi::Gui::Core::Dosage*> dosageList = _ezTreatment->getDosages()->getList();
+    QList<Tucuxi::Gui::Core::Dosage*> dosageList = guiTreatment->getDosages()->getList();
     QList<Tucuxi::Gui::Core::Dosage*>::iterator itDosages = dosageList.begin();
     while (itDosages != dosageList.end()) {
         Tucuxi::Gui::Core::Dosage *dosage = *itDosages++;
@@ -125,9 +125,9 @@ Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucux
     }
 
 
-    if (adjTime.isValid() && _ezTreatment->getAdjustments()->size() > 0) {
+    if (adjTime.isValid() && guiTreatment->getAdjustments()->size() > 0) {
 
-        foreach(Tucuxi::Gui::Core::Dosage* dosage, _ezTreatment->getAdjustments()->getList())
+        foreach(Tucuxi::Gui::Core::Dosage* dosage, guiTreatment->getAdjustments()->getList())
         {
             if (dosage->getApplied() >= adjTime)
             {
@@ -141,7 +141,7 @@ Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucux
     }
 
 
-    QList<Tucuxi::Gui::Core::PatientVariate*> covariateList = _ezTreatment->getCovariates()->getList();
+    QList<Tucuxi::Gui::Core::PatientVariate*> covariateList = guiTreatment->getCovariates()->getList();
     QList<Tucuxi::Gui::Core::PatientVariate*>::iterator itCovariates = covariateList.begin();
     while (itCovariates != covariateList.end()) {
         Tucuxi::Gui::Core::PatientVariate *covariate = *itCovariates++;
@@ -169,11 +169,11 @@ Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucux
     }
 
     // TODO : Be careful her, we use the active substance ID
-    std::string analyteId = _ezTreatment->getActiveSubstanceId().toStdString();
+    std::string analyteId = guiTreatment->getActiveSubstanceId().toStdString();
     Tucuxi::Core::ActiveMoietyId activeMoietyId =
-            Tucuxi::Core::ActiveMoietyId(_ezTreatment->getActiveSubstanceId().toStdString());
+            Tucuxi::Core::ActiveMoietyId(guiTreatment->getActiveSubstanceId().toStdString());
 
-    QList<Tucuxi::Gui::Core::CoreMeasure*> sampleList = _ezTreatment->getMeasures()->getList();
+    QList<Tucuxi::Gui::Core::CoreMeasure*> sampleList = guiTreatment->getMeasures()->getList();
     QList<Tucuxi::Gui::Core::CoreMeasure*>::iterator itSamples = sampleList.begin();
     while (itSamples != sampleList.end()) {
         Tucuxi::Gui::Core::CoreMeasure *sample = *itSamples++;
@@ -185,7 +185,7 @@ Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucux
         ));
     }
 
-    QList<Tucuxi::Gui::Core::Target*> targetList = _ezTreatment->getTargets()->getList();
+    QList<Tucuxi::Gui::Core::Target*> targetList = guiTreatment->getTargets()->getList();
     QList<Tucuxi::Gui::Core::Target*>::iterator itTargets = targetList.begin();
     while (itTargets != targetList.end()) {
         Tucuxi::Gui::Core::Target *target = *itTargets++;
@@ -263,11 +263,11 @@ Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucux
 
 #include "drugs2manager.h"
 
-Tucuxi::Core::DrugModel *GuiToTucucoreTranslator::buildDrugModel(const Tucuxi::Gui::Core::DrugModel *_drugModel)
+Tucuxi::Core::DrugModel *GuiToTucucoreTranslator::buildDrugModel(const Tucuxi::Gui::Core::DrugModel *guiDrugModel)
 {
     Tucuxi::Core::DrugModel *pDrugModel = nullptr;
 
-    pDrugModel = Tucuxi::Gui::Processing::Drugs2Manager::getInstance()->getTucucoreById(_drugModel->getDrugModelId().toStdString());
+    pDrugModel = Tucuxi::Gui::Processing::Drugs2Manager::getInstance()->getTucucoreById(guiDrugModel->getDrugModelId().toStdString());
     if (pDrugModel == nullptr) {
         std::cout << "Can not import the drugs2 drug model" << std::endl;
     }

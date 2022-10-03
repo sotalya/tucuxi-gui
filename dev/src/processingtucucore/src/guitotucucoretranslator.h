@@ -46,10 +46,10 @@ public:
 
     Tucuxi::Core::PredictionParameterType buildParameterType(const Tucuxi::Gui::Core::ParamTraits *traits);
 
-    Tucuxi::Core::DosageTimeRange *buildTimeRange(const Tucuxi::Gui::Core::Dosage *_ezDosage);
+    Tucuxi::Core::DosageTimeRange *buildTimeRange(const Tucuxi::Gui::Core::Dosage *guiDosage);
 
-    Tucuxi::Core::DrugTreatment *buildTreatment(const Tucuxi::Gui::Core::DrugTreatment *_ezTreatment, QDateTime adjTime = QDateTime());
-    Tucuxi::Core::DrugModel *buildDrugModel(const Tucuxi::Gui::Core::DrugModel *_drugModel);
+    Tucuxi::Core::DrugTreatment *buildTreatment(const Tucuxi::Gui::Core::DrugTreatment *guiTreatment, QDateTime adjTime = QDateTime());
+    Tucuxi::Core::DrugModel *buildDrugModel(const Tucuxi::Gui::Core::DrugModel *guiDrugModel);
 
 };
 

@@ -46,7 +46,7 @@ public:
 
     const std::vector<Tucuxi::Core::DrugModel *> & getAllTucucoreDrugModels() const;
 
-    const std::vector<Tucuxi::Gui::Core::DrugModel *> & getAllEzechielDrugModels() const;
+    const std::vector<Tucuxi::Gui::Core::DrugModel *> & getAllGuiDrugModels() const;
 
     Tucuxi::Core::DrugModel *getTucucoreById(std::string id) const;
 
@@ -64,7 +64,7 @@ protected:
 
     std::map<std::string, Tucuxi::Core::DrugModel *> m_tucuxiDrugModelsByIds;
 
-    std::vector<Tucuxi::Gui::Core::DrugModel *> m_ezechielDrugModels;
+    std::vector<Tucuxi::Gui::Core::DrugModel *> m_guiDrugModels;
 
     void scanDirectory(const QDir &directory);
 

@@ -669,7 +669,7 @@ void initResources()
     std::string basePath = CORE->path(Tucuxi::Gui::Core::Core::Drugs2).toStdString() + "/";
 #endif // CONFIG_DEMO
     manager->buildAllDrugModels(basePath);
-    std::vector<Tucuxi::Gui::Core::DrugModel *> models = manager->getAllEzechielDrugModels();
+    std::vector<Tucuxi::Gui::Core::DrugModel *> models = manager->getAllGuiDrugModels();
     for(auto model : models) {
         if (model != nullptr) {
             APPCORE->drugManager()->tryToAddDrugModelToRepo(model);

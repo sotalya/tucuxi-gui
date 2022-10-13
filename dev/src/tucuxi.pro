@@ -2,7 +2,8 @@
 include(tucuxi.pri)
 
 TEMPLATE    =	subdirs
-SUBDIRS     +=	 core admin apputils databases guiutils gui
+SUBDIRS     +=	 core admin apputils databases guiutils gui \
+    ICCA
 
 SUBDIRS += processingtucucore
 	processingtucucore.depends  = core

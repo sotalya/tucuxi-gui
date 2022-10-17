@@ -10,7 +10,9 @@ QT -= gui
 
 INCLUDEPATH += ..
 
-HEADERS	+=
+HEADERS	+= \
+    iccarequestfileclient.h \
+    iccarequestsclientprocessing.h
 
 CODECFORTR      += UTF-8
 #TRANSLATIONS    += $${TRANS_DIR}/admin_fr.ts
@@ -18,7 +20,9 @@ CODECFORTR      += UTF-8
 #Translation configuration
 include(../translation.pri)
 
-SOURCES +=
+SOURCES += \
+    iccarequestfileclient.cpp \
+    iccarequestsclientprocessing.cpp
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
 DEPENDENCIES = tucuxi-gui-core tucuxi-gui-admin tucuxi-gui-guiutils tucuxi-gui-apputils tucuxi-giu-rest

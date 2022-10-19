@@ -53,16 +53,32 @@ ICCAInterpretationRequestBuilder::~ICCAInterpretationRequestBuilder()
 
 InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequest()
 {
-    //ToDo: check critical info and build, or store incomplete data
-    //ToDo: set requestId and state when added to DAL object
-    //ToDo: set the practician when added to DAL object
-    //ToDo: set the clinicals when added to DAL object
-
     InterpretationRequest* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
     Tucuxi::Gui::Core::DrugTreatment *treatment = interpretationRequest->getTreatment();
     treatment->setParent(interpretationRequest);
+
+
+    //Build patient
+    SharedPatient shpatient = AdminFactory::createEntity<Patient>(ABSTRACTREPO);
+    //Patient data
+    Patient* patient = static_cast<Patient*>(shpatient);
+
+    //Take the first details element
+    //QDomElement detailsCollection = datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection");
+    QDomElement detailElement = datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection").firstChildElement("Détail");
+
+    //Take the encounter id each details element have the same encounter id for the current interpretation
+    patient->externalId(detailElement.attribute("encounterid"));
+
+    //Iterate through all details element to built an interpretation request
+    while (!detailElement.isNull()) {
+
+        detailElement = detailElement.nextSiblingElement("Détail");
+    }
+
+#if 0
     //Prediction patient
-    treatment->setPatient(buildPatient("patient"));
+    treatment->setPatient(shpatient);
     treatment->getPatient()->setParent(treatment);
     //Prediction drug
     QString activeSubstanceId = buildDrug("drug");
@@ -89,6 +105,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     interpretationRequest->setClinicals(buildClinical("clinicals"));
 
     //targets
+#endif
 
 
     return interpretationRequest;
@@ -556,7 +573,9 @@ SharedPatient ICCAInterpretationRequestBuilder::buildPatient(const QString &root
 
     //Patient data
     Patient* patient = static_cast<Patient*>(shpatient);
-    patient->externalId(datasetNode.firstChildElement("patient").firstChildElement("patientId").firstChild().toText().data());
+    patient->externalId(datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection").firstChildElement("Détails").attribute("encounterid"));
+
+
     patient->stayNumber(datasetNode.firstChildElement("patient").firstChildElement("stayNumber").firstChild().toText().data());
     patient->person()->firstname(datasetNode.firstChildElement("patient").firstChildElement("name").firstChildElement("firstName").firstChild().toText().data());
     patient->person()->name(datasetNode.firstChildElement("patient").firstChildElement("name").firstChildElement("lastName").firstChild().toText().data());
@@ -575,22 +594,6 @@ SharedPatient ICCAInterpretationRequestBuilder::buildPatient(const QString &root
         patient->person()->getUncastedValues()->append(uncasted);
     }
 
-
-    //Patient contact
-    patient->person()->location()->address(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("address").firstChild().toText().data());
-    patient->person()->location()->postcode(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("postcode").firstChild().toText().data());
-    patient->person()->location()->city(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("city").firstChild().toText().data());
-    patient->person()->location()->state(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("state").firstChild().toText().data());
-    patient->person()->location()->country(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("country").firstChild().toText().data());
-
-    //Patient phones
-    patient->person()->setPhones(buildPhoneList(rootKey, ""));
-
-    //Patient mails
-    patient->person()->setEmails(buildEmails(rootKey, ""));
-
-    //Get patient data
-    //    content.setValue("patient.name.middle", datasetNode.firstChildElement("patient").firstChildElement("name").firstChildElement("middleName").firstChild().toText().data());
     return shpatient;
 }
 

@@ -11,6 +11,7 @@ QT -= gui
 INCLUDEPATH += ..
 
 HEADERS	+= \
+    iccainterpretationrequestbuilder.h \
     iccarequestfileclient.h \
     iccarequestsclientprocessing.h
 
@@ -21,6 +22,7 @@ CODECFORTR      += UTF-8
 include(../translation.pri)
 
 SOURCES += \
+    iccainterpretationrequestbuilder.cpp \
     iccarequestfileclient.cpp \
     iccarequestsclientprocessing.cpp
 

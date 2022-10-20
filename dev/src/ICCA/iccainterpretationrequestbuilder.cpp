@@ -70,27 +70,65 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     //Take the encounter id each details element have the same encounter id for the current interpretation
     patient->externalId(detailElement.attribute("encounterid"));
 
-    //Iterate through all details element to built an interpretation request
-    while (!detailElement.isNull()) {
+    //Build dosages to be filled when parsinf the file
+    Tucuxi::Gui::Core::DosageHistory* dosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO);
 
-        detailElement = detailElement.nextSiblingElement("Détail");
+
+    //Iterate through all details element to built an interpretation request
+    QString dataType;
+    while (!detailElement.isNull()) {
+        dataType = detailElement.attribute("donnees");
+
+        if (dataType == "Sexe") {
+
+            patient->person()->gender(detailElement.attribute("valeur") == "Masculin" ? Person::Male : Person::Female);
+
+        } else if (dataType == "DDN") {
+
+            QString dateString = detailElement.attribute("horaire");
+            QDate date = QDateTime::fromString(dateString, Qt::ISODate).date();
+            patient->person()->birthday(date);
+
+        } else if (dataType == "poids") {
+
+            //TODO (JRP) : where to set the weight
+
+        } else if (dataType == "Dosage creat") {
+
+        } else if (dataType == "Dosage vanco") {
+
+            Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
+
+            Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
+            admin->setRoute(Tucuxi::Gui::Core::Admin::BOLUS);
+            dosage->setRoute(admin);
+
+            QString dateString = detailElement.attribute("horaire");
+            QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
+            dosage->setApplied(appl);
+
+        } else if (dataType == "concentration") {
+
+        } else if (dataType == "debit") {
+
+        }
+
+        detailElement = detailElement.nextSiblingElement("Détails");
     }
 
-#if 0
     //Prediction patient
     treatment->setPatient(shpatient);
     treatment->getPatient()->setParent(treatment);
+
+    //TODO (JRP) : currently fix value for testing purpose
     //Prediction drug
-    QString activeSubstanceId = buildDrug("drug");
-    if (activeSubstanceId.isEmpty()) {
-        EXLOG(QtWarningMsg, Tucuxi::Gui::Core::NOEZERROR, QObject::tr("Drug not found, cannot build interpretationRequest for analysis."));
-        return nullptr;
-    }
+    QString activeSubstanceId = "ch.heig-vd.ezechiel.vancomycin.bolus";
 
     treatment->setActiveSubstanceId(activeSubstanceId);
 
+#if 1
     //Prediction dosage
-    treatment->setDosages(buildDosages("dosages"));
+    treatment->setDosages(dosages);
     treatment->getDosages()->setParent(treatment);
 
     //Prediction samples

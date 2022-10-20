@@ -70,9 +70,11 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     //Take the encounter id each details element have the same encounter id for the current interpretation
     patient->externalId(detailElement.attribute("encounterid"));
 
-    //Build dosages to be filled when parsinf the file
+    //Build dosages to be filled when parsing the file
     Tucuxi::Gui::Core::DosageHistory* dosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO);
 
+    //Build measure to be filled when parsing the file
+    Tucuxi::Gui::Core::CoreMeasureList* measures = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO);
 
     //Iterate through all details element to built an interpretation request
     QString dataType;
@@ -107,7 +109,24 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
             dosage->setApplied(appl);
 
+            QString valueString = detailElement.attribute("valeur");
+            double value = valueString.toDouble();
+            dosage->getQuantity()->setValue(value);
+
+            //TODO (JRP) : No dosage interval ?
+
+            //TODO (JRP) : Set at steady state or not ?
+            //TODO : To be checked
+            //dosage->setIsAtSteadyState(false);
+
+            dosages->append(dosage);
+
         } else if (dataType == "concentration") {
+
+            Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
+
+
+            measures->append(measure);
 
         } else if (dataType == "debit") {
 
@@ -126,13 +145,13 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
     treatment->setActiveSubstanceId(activeSubstanceId);
 
-#if 1
     //Prediction dosage
     treatment->setDosages(dosages);
     treatment->getDosages()->setParent(treatment);
 
+#if 1
     //Prediction samples
-    Tucuxi::Gui::Core::CoreMeasureList* measures = buildSamples("samples", treatment->getPatient(), activeSubstanceId);
+    //Tucuxi::Gui::Core::CoreMeasureList* measures = buildSamples("samples", treatment->getPatient(), activeSubstanceId);
     treatment->setMeasures(measures);
     treatment->getMeasures()->setParent(treatment);
 

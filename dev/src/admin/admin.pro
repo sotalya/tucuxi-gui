@@ -52,7 +52,8 @@ HEADERS	+= \
     src/dal/curvetypes.h \
     src/interpretationxmlexport.h \
     src/interpretationtorequestxmlexport.h \
-    src/interpretationxmlimport.h
+    src/interpretationxmlimport.h \
+    src/dataxmlexport.h
 
 CODECFORTR      += UTF-8
 TRANSLATIONS    += $${TRANS_DIR}/admin_fr.ts
@@ -80,7 +81,8 @@ SOURCES += \
     src/dal/graphinformationselection.cpp \
     src/interpretationxmlexport.cpp \
     src/interpretationtorequestxmlexport.cpp \
-    src/interpretationxmlimport.cpp
+    src/interpretationxmlimport.cpp \
+    src/dataxmlexport.cpp
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
 DEPENDENCIES = tucuxi-gui-core

@@ -391,6 +391,14 @@ bool MainWindowController::event(QEvent *event)
             }
         }
     }
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
+        if (e) {
+            if ((e->key() == Qt::Key_X) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
+                interpretationController->exportCurrentDatas();
+            }
+        }
+    }
 
     return QQuickView::event(event);
 }

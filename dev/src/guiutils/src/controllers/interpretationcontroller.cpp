@@ -48,6 +48,7 @@
 #include "admin/src/dal/graphinformationselection.h"
 #include "admin/src/interpretationxmlexport.h"
 #include "admin/src/interpretationtorequestxmlexport.h"
+#include "admin/src/dataxmlexport.h"
 
 #include "guiutils/src/flowcontroller.h"
 #include "guiutils/src/drugtohtml.h"
@@ -2340,4 +2341,36 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::saveGraph()
 
 
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "saveGraph", Q_ARG(QVariant, QVariant::fromValue(fileName))));
+}
+
+void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()
+{
+    // Create exporter
+    DataXmlExport exporter;
+    QString xml = exporter.toXml(getInterpretation());
+
+    // Open a dialog window to choose where to save datas
+    QString dirPath;
+    /* QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Datas"),
+                                                    dirPath,
+                                                    tr("XML File (*.xml)")); */
+    QString fileName = "/home/tucuxi/Desktop/test.xml";
+    // Check a filename is given
+    if (fileName.isEmpty())
+        return;
+
+    // Check extension is correct
+    if (!fileName.endsWith(".xml"))
+        fileName += ".xml";
+
+    // Create and save file
+    QFile dataFile(fileName);
+    if (!dataFile.open(QFile::WriteOnly)) {
+        exit(0);
+    }
+
+    QTextStream out(&dataFile);
+    out.setCodec("UTF-8");
+    out << xml;
+    dataFile.close();
 }

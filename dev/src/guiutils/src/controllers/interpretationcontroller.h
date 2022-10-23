@@ -264,6 +264,12 @@ public:
     ///
     void saveGraph();
 
+    ///
+    /// \brief exportCurrentDatas
+    /// Exports useful datas of current patient, in XML format
+    ///
+    void exportCurrentDatas();
+
 signals:
     void webchannelChanged(QQmlWebChannel&);
     void drugsChanged(Tucuxi::Gui::Core::DrugModelList*);

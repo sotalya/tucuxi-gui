@@ -63,6 +63,10 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     //Patient data
     Patient* patient = static_cast<Patient*>(shpatient);
 
+    //TODO (JRP) : currently fix value for testing purpose
+    //Prediction drug
+    QString activeSubstanceId = "ch.heig-vd.ezechiel.vancomycin.bolus";
+
     //Take the first details element
     //QDomElement detailsCollection = datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection");
     QDomElement detailElement = datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection").firstChildElement("Détail");
@@ -75,6 +79,9 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
     //Build measure to be filled when parsing the file
     Tucuxi::Gui::Core::CoreMeasureList* measures = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO);
+
+    //Build covariate list when parsing the file
+    Tucuxi::Gui::Core::PatientVariateList * covariates = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, patient);
 
     //Iterate through all details element to built an interpretation request
     QString dataType;
@@ -93,16 +100,48 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
         } else if (dataType == "poids") {
 
-            //TODO (JRP) : where to set the weight
+            Tucuxi::Gui::Core::PatientVariate* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
+            QString covariateId = "bodyweight";
+            covariate->setCovariateId(covariateId);
+
+            QString dateString = detailElement.attribute("horaire");
+            QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
+            covariate->setDate(date);
+
+            QString valueString = detailElement.attribute("valeur");
+            double value = valueString.toDouble();
+            covariate->getQuantity()->setValue(value);
+            covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("KG"));
+
+            covariate->setType(QMetaType::Double);
+
+            covariates->append(covariate);
 
         } else if (dataType == "Dosage creat") {
+
+            Tucuxi::Gui::Core::PatientVariate* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
+            QString covariateId = "creatinine";
+            covariate->setCovariateId(covariateId);
+
+            QString dateString = detailElement.attribute("horaire");
+            QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
+            covariate->setDate(date);
+
+            QString valueString = detailElement.attribute("valeur");
+            double value = valueString.toDouble();
+            covariate->getQuantity()->setValue(value);
+            covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("mmol/l"));
+
+            covariate->setType(QMetaType::Double);
+
+            covariates->append(covariate);
 
         } else if (dataType == "Dosage vanco") {
 
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-            admin->setRoute(Tucuxi::Gui::Core::Admin::BOLUS);
+            admin->setRoute(Tucuxi::Gui::Core::Admin::BOLUS); //TODO perfusion/infusion, use rate to compute dosage
             dosage->setRoute(admin);
 
             QString dateString = detailElement.attribute("horaire");
@@ -113,7 +152,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             double value = valueString.toDouble();
             dosage->getQuantity()->setValue(value);
 
-            //TODO (JRP) : No dosage interval ?
+            //TODO (JRP) : No dosage interval ? cf. perfusion
 
             //TODO (JRP) : Set at steady state or not ?
             //TODO : To be checked
@@ -125,10 +164,44 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 
+            measure->setSdrug(activeSubstanceId);
+
+            QString dateString = detailElement.attribute("horaire");
+            QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
+            measure->setMoment(date);
+
+            Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
+            QString valueString = detailElement.attribute("valeur");
+            double value = valueString.toDouble();
+            amt->setValue(value);
+            amt->setUnit(Tucuxi::Gui::Core::Unit("mmol/l"));
+
+            measure->setConcentration(amt);
 
             measures->append(measure);
 
         } else if (dataType == "debit") {
+
+            Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
+
+            Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
+            admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION); //TODO perfusion/infusion, use rate to compute dosage
+            dosage->setRoute(admin);
+
+            QString dateString = detailElement.attribute("horaire");
+            QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
+            dosage->setApplied(appl);
+
+            //TODO here we should calculate a dosage but we have flow rate, keep it like this for testing import
+            QString valueString = detailElement.attribute("valeur");
+            double value = valueString.toDouble();
+            dosage->getQuantity()->setValue(value);
+
+            //TODO (JRP) : Set at steady state or not ?
+            //TODO : To be checked
+            //dosage->setIsAtSteadyState(false);
+
+            dosages->append(dosage);
 
         }
 
@@ -139,31 +212,24 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     treatment->setPatient(shpatient);
     treatment->getPatient()->setParent(treatment);
 
-    //TODO (JRP) : currently fix value for testing purpose
-    //Prediction drug
-    QString activeSubstanceId = "ch.heig-vd.ezechiel.vancomycin.bolus";
-
     treatment->setActiveSubstanceId(activeSubstanceId);
 
     //Prediction dosage
     treatment->setDosages(dosages);
     treatment->getDosages()->setParent(treatment);
 
-#if 1
     //Prediction samples
     //Tucuxi::Gui::Core::CoreMeasureList* measures = buildSamples("samples", treatment->getPatient(), activeSubstanceId);
     treatment->setMeasures(measures);
     treatment->getMeasures()->setParent(treatment);
 
     //Prediction covariates
-    Tucuxi::Gui::Core::PatientVariateList * covariates = buildCovariates("covariates", treatment->getPatient());
+    //Tucuxi::Gui::Core::PatientVariateList * covariates = buildCovariates("covariates", treatment->getPatient());
     treatment->setCovariates(covariates);
 
     interpretationRequest->setClinicals(buildClinical("clinicals"));
 
     //targets
-#endif
-
 
     return interpretationRequest;
 }

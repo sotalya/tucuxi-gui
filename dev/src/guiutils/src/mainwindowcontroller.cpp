@@ -30,6 +30,9 @@
 #include "guiutils/src/demorequestfileclient.h"
 #endif
 
+// TODO JRP : Is conditional include needed ?
+#include "ICCA/iccarequestfileclient.h"
+
 #include "guiutils/src/widgets/validatedrugdialog.h"
 #include "admin/src/interpretationxmlimport.h"
 
@@ -39,6 +42,7 @@
 
 using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::GuiUtils;
+using namespace Tucuxi::Gui::ICCA;
 
 MainWindowController::MainWindowController(QObject *parent) :
     currentView(HOME),
@@ -52,7 +56,8 @@ MainWindowController::MainWindowController(QObject *parent) :
     requestsController = new RequestsController(this);
 
 
-
+// TODO (JRP) : For testing
+#if 1
 #ifdef CONFIG_CONNECTED
     QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
     AppGlobals* appGlobals = AppGlobals::getInstance();
@@ -72,6 +77,13 @@ MainWindowController::MainWindowController(QObject *parent) :
     QString listFile = ":/requests/List.xml";
     DemoRequestFileClient *client = new DemoRequestFileClient(this);
     client->setListFile(listFile);
+    requestsController->setClient(client);
+
+#endif
+
+#else
+
+    ICCARequestFileClient *client = new ICCARequestFileClient(this);
     requestsController->setClient(client);
 
 #endif

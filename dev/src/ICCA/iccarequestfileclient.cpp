@@ -53,40 +53,31 @@ void ICCARequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 void ICCARequestFileClient::queryRequest(const QString &requestId, const QString &patientId, const QString &drugId)
 {
 
-    // We look for the request file in the same directory as the list of requests.
-    // We look for the file with the same request ID as the one asked by the client
-    // and send the raw file data.
+    QFile reqFile("vanco fulldata2.xml");
+    QDomDocument doc;
+    QDomDocument filtredDoc;
 
-    QFileInfo fi(m_listFileName);
-    QDir dir = fi.dir();
+    //TODO (JRP) : Fixed value for testing
+    QString id = "156406";
 
-    QStringList filters;
-    filters << "Req_*.xml" << "*.prf";
-    dir.setNameFilters(filters);
+    if (!doc.setContent(&reqFile))
+        return;
 
-    QStringList reqFiles = dir.entryList();
+    QDomElement detailCollectionElement = doc.documentElement().firstChildElement("Détails_Collection");
+    QDomElement detailElement = detailCollectionElement.firstChildElement("Détails");
 
-    foreach (QString fileName, reqFiles) {
-        QFile reqFile(dir.absoluteFilePath(fileName));
-        QDomDocument doc;
-        if (!doc.setContent(&reqFile)) {
-            return;}
+    QDomElement filtredRootElement = filtredDoc.createElement("Tablix1");
+    filtredDoc.appendChild(filtredRootElement);
+    QDomElement filtredDetailCollectionElement = filtredDoc.createElement("Détails_Collection");
+    filtredRootElement.appendChild(filtredDetailCollectionElement);
 
-            //TODO (JRP) : one XML fle can have more than one encounterid (= partientId) and contain no requestID
-            //Shall we loop through all patient in a file to verify if the patien exist c.f. patienID
+    while (!detailElement.isNull()) {
+        if (detailElement.attribute("encounterid") == id) {
+            filtredDetailCollectionElement.appendChild(detailElement);
+        }
 
-            //TODO (JRP) : currently for testing purpose take the entire file, first one in the list.
-
-            //QString requestId1 = doc.documentElement().firstChildElement("dataset").firstChildElement("requestId").firstChild().toText().data();
-            //if (requestId1.compare(requestId) == 0) {
-                //std::cout << "Matched Request id : " << qPrintable(requestId) << std::endl;
-                // Got it, thats the right file
-                reqFile.seek(0);
-                QString response = reqFile.readAll();
-
-                analyzeRequest(response);
-
-                return;
-            //}
+        detailElement = detailElement.nextSiblingElement("Détails");
     }
+
+    analyzeRequest(filtredDoc.toString());
 }

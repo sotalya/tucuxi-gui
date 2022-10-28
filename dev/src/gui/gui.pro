@@ -49,7 +49,7 @@ QML_IMPORT_PATH += $$PWD/..
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
 
 DEPENDENCIES = tucuxi-gui-guiutils tucuxi-giu-rest
-DEPENDENCIES += tucuxi-gui-admin tucuxi-gui-apputils tucuxi-gui-core
+DEPENDENCIES += tucuxi-gui-admin tucuxi-gui-apputils tucuxi-gui-core tucuxi-gui-ICCA
 
 DEPENDENCIES += tucuxi-gui-processingtucucore
 

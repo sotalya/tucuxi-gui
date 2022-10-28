@@ -34,15 +34,15 @@ void ICCARequestFileClient::setListFile(const QString &fileName)
 void ICCARequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 {
 
-    QFile source(m_listFileName);
-    if (!source.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return;
-    }
+//    QFile source(m_listFileName);
+//    if (!source.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//        return;
+//    }
 
-    source.seek(0);
+//    source.seek(0);
 
-    QString response = QString(source.readAll());
-
+//    QString response = QString(source.readAll());
+    QString response;
     QString controlId;
     analyzeList(response, controlId);
 }

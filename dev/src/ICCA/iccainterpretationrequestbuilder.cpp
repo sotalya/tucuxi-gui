@@ -65,7 +65,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
     //TODO (JRP) : currently fix value for testing purpose
     //Prediction drug
-    QString activeSubstanceId = "ch.heig-vd.ezechiel.vancomycin.bolus";
+    QString activeSubstanceId = "ch.heig-vd.ezechiel.vancomycin.adult.1CP";
 
     //Take the first details element
     //QDomElement detailsCollection = datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection");

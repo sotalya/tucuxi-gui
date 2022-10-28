@@ -56,7 +56,7 @@ MainWindowController::MainWindowController(QObject *parent) :
 
 
 // TODO (JRP) : For testing
-#if 1
+#if 0
 #ifdef CONFIG_CONNECTED
     QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
     AppGlobals* appGlobals = AppGlobals::getInstance();

@@ -42,7 +42,6 @@
 
 using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::GuiUtils;
-using namespace Tucuxi::Gui::ICCA;
 
 MainWindowController::MainWindowController(QObject *parent) :
     currentView(HOME),
@@ -83,7 +82,7 @@ MainWindowController::MainWindowController(QObject *parent) :
 
 #else
 
-    ICCARequestFileClient *client = new ICCARequestFileClient(this);
+    Tucuxi::Gui::ICCA::ICCARequestFileClient *client = new Tucuxi::Gui::ICCA::ICCARequestFileClient(this);
     requestsController->setClient(client);
 
 #endif

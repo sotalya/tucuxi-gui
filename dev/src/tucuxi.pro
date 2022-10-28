@@ -40,6 +40,7 @@ guiutils.depends             = core apputils admin
 gui.depends                  = core apputils admin guiutils
 }
 drugeditor.depends	     = core guiutils
+ICCA.depends                 = core admin apputils rest
 
 guiutils.depends             += processingtucucore
 gui.depends += processingtucucore

@@ -32,7 +32,7 @@ public:
 private:
 //    MessageContent content;
     QDomDocument content;
-    QDomElement datasetNode;
+    QDomElement reportNode;
 };
 
 }

@@ -37,7 +37,7 @@ ICCAInterpretationRequestBuilder::ICCAInterpretationRequestBuilder(const QDomDoc
 {
     //Get the control ID
     //    content.setValue("controlId", doc.documentElement().attributeNode("controlId").value());
-    datasetNode = content.documentElement().firstChildElement("dataset");
+    reportNode = content.documentElement();
 
     //Get request data
     //    content.setValue("request.id",    datasetNode.firstChildElement("requestId").firstChild().toText().data());
@@ -69,7 +69,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
     //Take the first details element
     //QDomElement detailsCollection = datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection");
-    QDomElement detailElement = datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection").firstChildElement("Détail");
+    QDomElement detailElement = reportNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection").firstChildElement("Détails");
 
     //Take the encounter id each details element have the same encounter id for the current interpretation
     patient->externalId(detailElement.attribute("encounterid"));
@@ -216,7 +216,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     treatment->setPatient(shpatient);
     treatment->getPatient()->setParent(treatment);
 
-    treatment->setActiveSubstanceId(activeSubstanceId);
+    treatment->setActiveSubstanceId("vancomycin");
 
     //Prediction dosage
     treatment->setDosages(dosages);

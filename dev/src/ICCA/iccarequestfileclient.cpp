@@ -53,7 +53,7 @@ void ICCARequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 void ICCARequestFileClient::queryRequest(const QString &requestId, const QString &patientId, const QString &drugId)
 {
 
-    QFile reqFile("vanco fulldata2.xml");
+    QFile reqFile("vanco_fulldata2.xml");
     QDomDocument doc;
     QDomDocument filtredDoc;
 
@@ -63,21 +63,29 @@ void ICCARequestFileClient::queryRequest(const QString &requestId, const QString
     if (!doc.setContent(&reqFile))
         return;
 
-    QDomElement detailCollectionElement = doc.documentElement().firstChildElement("Détails_Collection");
+    QDomElement detailCollectionElement = doc.documentElement().firstChildElement("Tablix1").firstChildElement("Détails_Collection");
     QDomElement detailElement = detailCollectionElement.firstChildElement("Détails");
 
-    QDomElement filtredRootElement = filtredDoc.createElement("Tablix1");
+    QDomElement filtredRootElement = filtredDoc.createElement("Report");
     filtredDoc.appendChild(filtredRootElement);
+    QDomElement filtredTabElement = filtredDoc.createElement("Tablix1");
+    filtredRootElement.appendChild(filtredTabElement);
     QDomElement filtredDetailCollectionElement = filtredDoc.createElement("Détails_Collection");
-    filtredRootElement.appendChild(filtredDetailCollectionElement);
+    filtredTabElement.appendChild(filtredDetailCollectionElement);
 
     while (!detailElement.isNull()) {
         if (detailElement.attribute("encounterid") == id) {
-            filtredDetailCollectionElement.appendChild(detailElement);
+            filtredDetailCollectionElement.appendChild(detailElement.cloneNode());
         }
 
         detailElement = detailElement.nextSiblingElement("Détails");
     }
+
+    QTextStream informer(stdout);
+
+    informer << filtredDoc.toString();
+    informer << endl;
+    informer.flush();
 
     analyzeRequest(filtredDoc.toString());
 }

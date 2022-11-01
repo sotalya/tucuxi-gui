@@ -192,6 +192,9 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
             dosage->setApplied(appl);
 
+            QDateTime end = appl.addSecs(3599);
+            dosage->setEndTime(end);
+
             //TODO here we should calculate a dosage but we have flow rate, keep it like this for testing import
             QString valueString = detailElement.attribute("valeur");
             double value = valueString.toDouble();
@@ -203,7 +206,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             //TODO (JRP) : Set at steady state or not ?
             //TODO : To be checked
-            //dosage->setIsAtSteadyState(false);
+            dosage->setIsAtSteadyState(false);
 
             dosages->append(dosage);
 

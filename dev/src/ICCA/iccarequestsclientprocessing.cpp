@@ -30,171 +30,44 @@ ICCARequestsClientProcessing::ICCARequestsClientProcessing(QObject *parent) :
 
 int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &controlId)
 {
-//    QDomDocument reply_request;
-//    if (!reply_request.setContent(xmlList)) {
-//        //    internalError(response, "Unkown convertion error");
-//        return 0;
-//    }
+    QDomDocument doc;
 
+    if (!doc.setContent(xmlList))
+        return 0;
 
+    QDomElement detailCollectionElement = doc.documentElement().firstChildElement("Tablix1").firstChildElement("Détails_Collection");
+    QDomElement detailElement = detailCollectionElement.firstChildElement("Détails");
 
-//    ReplyListXmlMessage replyListMessage;
-//    replyListMessage.setData(xmlList.toUtf8());
-
-//    if (!replyListMessage.isValid()) {
-//        EXLOG(QtWarningMsg, NOEZERROR, tr("The content of the requests list is invalid (%1)").arg(replyListMessage.errorString()));
-//        return 0;
-//    }
-
-//    ReplyListMessageBuilder* _replyListBuilder = new ReplyListMessageBuilder(this);
-//    _replyListBuilder->setMessage(&replyListMessage);
-//    MessageContent content = _replyListBuilder->messageContent();
-
-//    //ToDo: use interpretation request builder instead
-
-//    QList<MessageContent> requestsContent = content.list("request");
     QList<SharedPartialRequest> requests;
-
-    SharedPartialRequest request = AdminFactory::createEntity<PartialRequest>(ABSTRACTREPO);
-    request->setId(1);
-
-    Patient* patient = static_cast<Patient*>(request->patient());
-    patient->externalId("123");
-    patient->stayNumber("2234");
-    patient->person()->firstname("Jean");
-    patient->person()->name("Bolomey");
-
-    Measure* measure = static_cast<Measure*>(request->sample());
-    measure->sampleID("nosample");
-    measure->setMoment(QDateTime::currentDateTime());
-    measure->arrivalDate(QDateTime::currentDateTime());
-    measure->setConcentration(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure));
-    measure->getConcentration()->setValue(0);
-    measure->getConcentration()->setUnit(Unit("mg/l"));
-
+    SharedPartialRequest request;
+    Patient* patient;
     Tucuxi::Gui::Core::ActiveSubstance* substance = nullptr;
-    APPUTILSREPO->getActiveSubstanceOfId("vancomycin", substance);
-    request->drug(substance);
+    QString patientID;
+    QString lastPatientID = "None";
 
-    requests.append(request);
-    ADMINREPO->setPartialRequest(request);
+    while (!detailElement.isNull()) {
+        patientID = detailElement.attribute("encounterid");
 
+        if (patientID != lastPatientID) {
+            lastPatientID = patientID;
 
+            request = AdminFactory::createEntity<PartialRequest>(ABSTRACTREPO);
+            request->requestId(patientID);
 
-    //    for (int i = 0; i < requestsContent.size(); ++i) {
-    //        MessageContent content = requestsContent.at(i);
-    //        // Q_ASSERT(content.listCount("sample.concentrations") > 0);
+            patient = static_cast<Patient*>(request->patient());
+            patient->externalId(patientID);
+            patient->person()->name(patient->externalId());
 
-    //        SharedPartialRequest request = AdminFactory::createEntity<PartialRequest>(ABSTRACTREPO);
+            substance = nullptr;
+            APPUTILSREPO->getActiveSubstanceOfId("vancomycin", substance);
+            request->drug(substance);
 
-    //        //ToDo: complete the share request data
-    //        //ToDo: uncomment the drug value below and remove imatinib
+            requests.append(request);
+            ADMINREPO->setPartialRequest(request);
+        }
 
-    //        //The request data
-    //        request->requestId(content.value("id"));
-    //        request->setId(request->requestId().toInt());
-    //        request->requestCpcl(content.value("state"));
-
-    //        //The patient data
-    //        Patient* patient = static_cast<Patient*>(request->patient());
-    //        patient->externalId(content.value("patient.id"));
-    //        patient->stayNumber(content.value("patient.stayNumber"));
-    //        patient->person()->firstname(content.value("patient.name.first"));
-    //        patient->person()->name(content.value("patient.name.last"));
-    //        patient->person()->birthday(QDateTime::fromString(content.value("patient.birthDate"), Qt::ISODate).date());
-    //        patient->person()->gender(content.value("patient.gender") == "male" ? Person::Male : Person::Female);
-
-    //        //The patient institute
-    //        request->institute()->externalId(content.value("patient.institute.id"));
-    //        request->institute()->name(content.value("patient.institute.name"));
-
-    //        //The sample data
-    //        if (content.listCount("sample.concentrations") > 0) {
-    //            Measure* measure = static_cast<Measure*>(request->sample());
-    //            measure->sampleID(content.value("sample.id"));
-    //            measure->setMoment(QDateTime::fromString(content.value("sample.date.sample"), Qt::ISODate));
-    //            measure->arrivalDate(QDateTime::fromString(content.value("sample.date.arrival"), Qt::ISODate));
-    //            measure->setConcentration(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure));
-    //            measure->getConcentration()->setValue(content.list("sample.concentrations").first().value("value").toDouble());
-    //            measure->getConcentration()->setUnit(content.list("sample.concentrations").first().value("unit"));
-    //        }
-    //        else {
-    //            Measure* measure = static_cast<Measure*>(request->sample());
-    //            measure->sampleID("nosample");
-    //            measure->setMoment(QDateTime::currentDateTime());
-    //            measure->arrivalDate(QDateTime::currentDateTime());
-    //            measure->setConcentration(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure));
-    //            measure->getConcentration()->setValue(0);
-    //            measure->getConcentration()->setUnit(Unit("mg/l"));
-    //        }
-
-    //        //The drug data
-    //        Tucuxi::Gui::Core::ActiveSubstance* substance = nullptr;
-
-
-    //        //        this->queryRequest(content.value("id"),content.value("patient.id"),content.value("drug.id"));
-
-    //#ifdef CONFIG_DEMO
-    //        DummyDrugIdTranslator *translator = new DummyDrugIdTranslator();
-    //#else
-    //        ExternalDrugIdTranslator *translator = new ExternalDrugIdTranslator();
-    //        translator->setFileName(QCoreApplication::applicationDirPath() + "/drugidtranslations.ini");
-    //#endif
-    //        QString restDrugId = content.value("drug.id");
-    //        QString drugId = translator->restToInternalId(restDrugId);
-    //        delete translator;
-
-    //        if (drugId.isEmpty())
-    //        {
-    //            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. The drug id %1 is unknown. Aborting this request.").arg(restDrugId));
-    //            continue;
-    //        }
-
-
-    //        if (drugId.compare("ch.heig-vd.ezechiel.unknown") == 0) {
-    //            request->uncastedSourceSubstance(restDrugId);
-    //        }
-
-    //        APPUTILSREPO->getActiveSubstanceOfId(drugId, substance);
-    //        request->drug(substance);
-
-
-    //        QTextStream informer(stdout);
-    //        rlutil::setColor(rlutil::GREEN);
-    //        informer << "RequestId:\t"; informer.flush();
-    //        rlutil::resetColor();
-    //        informer << request->requestId(); informer.flush();
-    //        rlutil::setColor(rlutil::GREEN);
-    //        informer << "\tPatientId:\t"; informer.flush();
-    //        rlutil::resetColor();
-    //        informer << request->patient()->externalId(); informer.flush();
-    //        rlutil::setColor(rlutil::GREEN);
-    //        informer << "\tDrugId:\t"; informer.flush();
-    //        rlutil::resetColor();
-    //        if (!request->drug()) {
-    //            rlutil::setColor(rlutil::RED);
-    //            informer << "DRUG NOT FOUND: " << content.value("drug.id") << endl;
-    //            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. Aborting this request."));
-    //            rlutil::resetColor();
-    //            continue;
-    //        } else {
-    //            informer << request->drug()->getSubstanceId();
-    //        }
-    //        rlutil::resetColor();
-    //        informer << endl;
-
-    //        if (!request->drug()) {
-    //            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. Aborting."));
-    //            continue;
-    //            return 0;
-    //        }
-    //        requests.append(request);
-    //        ADMINREPO->setPartialRequest(request);
-    //    }
-
-    //    controlId = content.value("controlId");
-
-    //    rlutil::resetColor();
+        detailElement = detailElement.nextSiblingElement("Détails");
+    }
 
     emit requestListReady(requests);
     return 1;

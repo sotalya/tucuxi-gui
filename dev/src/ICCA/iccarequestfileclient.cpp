@@ -34,15 +34,14 @@ void ICCARequestFileClient::setListFile(const QString &fileName)
 void ICCARequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 {
 
-//    QFile source(m_listFileName);
-//    if (!source.open(QIODevice::ReadOnly | QIODevice::Text)) {
-//        return;
-//    }
+    QFile source(m_listFileName);
+    if (!source.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
 
-//    source.seek(0);
+    source.seek(0);
 
-//    QString response = QString(source.readAll());
-    QString response;
+    QString response = QString(source.readAll());
     QString controlId;
     analyzeList(response, controlId);
 }
@@ -53,12 +52,9 @@ void ICCARequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 void ICCARequestFileClient::queryRequest(const QString &requestId, const QString &patientId, const QString &drugId)
 {
 
-    QFile reqFile("vanco_fulldata2.xml");
+    QFile reqFile(m_listFileName);
     QDomDocument doc;
     QDomDocument filtredDoc;
-
-    //TODO (JRP) : Fixed value for testing
-    QString id = "156406";
 
     if (!doc.setContent(&reqFile))
         return;
@@ -74,7 +70,7 @@ void ICCARequestFileClient::queryRequest(const QString &requestId, const QString
     filtredTabElement.appendChild(filtredDetailCollectionElement);
 
     while (!detailElement.isNull()) {
-        if (detailElement.attribute("encounterid") == id) {
+        if (detailElement.attribute("encounterid") == patientId) {
             filtredDetailCollectionElement.appendChild(detailElement.cloneNode());
         }
 

@@ -141,7 +141,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-            admin->setRoute(Tucuxi::Gui::Core::Admin::BOLUS); //TODO perfusion/infusion, use rate to compute dosage
+            admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION); //TODO perfusion/infusion, use rate to compute dosage
             dosage->setRoute(admin);
 
             QString dateString = detailElement.attribute("horaire");

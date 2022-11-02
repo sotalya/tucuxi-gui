@@ -106,7 +106,16 @@ DialogBase {
         dateInput.focus = true
 
 //        var bOk = valueDoubleControl.validate()
-        var bOk = textEntry.textIsOk
+
+        //var bOk = textEntry.textIsOk
+        var bOk
+
+        if (dataType === "bool") {
+            bOk = valueBoolControl.validate()
+        } else {
+            bOk = textEntry.textIsOk
+        }
+
         bOk = dateInput.validate() && bOk
         bOk = timeInput.validate() && bOk
         bOk = valueGenderControl.validate() && bOk

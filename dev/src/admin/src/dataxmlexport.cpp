@@ -204,6 +204,7 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::CoreMeasureList *list)
 bool DataXmlExport::save(Tucuxi::Gui::Core::AdjustmentDosage *dosage)
 {
     writer.writeStartElement("dosage");
+    writer.writeStartElement("dosageLoop");
     writer.writeStartElement("lastingDosage");
 
     writer.writeTextElement("interval", QString("%1").arg(dosage->getDbinterval()));
@@ -222,6 +223,7 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::AdjustmentDosage *dosage)
     writer.writeEndElement(); // End of formulationAndRoute
 
     writer.writeEndElement(); // End of lastingDosage
+    writer.writeEndElement(); // End of dosageLoop
     writer.writeEndElement(); // End of dosage
     return true;
 }

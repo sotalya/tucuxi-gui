@@ -2345,16 +2345,16 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::saveGraph()
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()
 {
+    // Open a dialog window to choose where to save datas
+    QString dirPath;
+    QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Datas"),
+                                                    dirPath,
+                                                    tr("XML File (*.xml)"));
     // Create exporter
     DataXmlExport exporter;
     QString xml = exporter.toXml(getInterpretation());
 
-    // Open a dialog window to choose where to save datas
-    QString dirPath;
-    /* QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Datas"),
-                                                    dirPath,
-                                                    tr("XML File (*.xml)")); */
-    QString fileName = "/home/tucuxi/Desktop/test.xml";
+    // QString fileName = "/home/tucuxi/Desktop/test.xml";
     // Check a filename is given
     if (fileName.isEmpty())
         return;

@@ -17,8 +17,9 @@ AUTO_PROPERTY_IMPL(CoreMeasure, bool, enable, Enable)
 
 CoreMeasure::CoreMeasure(AbstractRepository *repository, QObject* parent) :
     Entity(repository, parent),
-    _moment(QDateTime::currentDateTime()),
     _concentration(CoreFactory::createEntity<IdentifiableAmount>(repository, this)),
+    _moment(QDateTime::currentDateTime()),
+    _enable(true),
     _uncastedValues(CoreFactory::createEntity<UncastedValueList>(repository, this))
 {
     this->setId(-1);
@@ -28,8 +29,8 @@ CoreMeasure::CoreMeasure(AbstractRepository *repository, QObject* parent) :
 
 CoreMeasure::CoreMeasure(AbstractRepository *repository, QDateTime moment, IdentifiableAmount* amount, QString drug, bool enable, ident dbid) :
     Entity(repository),
-    _moment(moment),
     _concentration(amount),
+    _moment(moment),
     _sdrug(drug),
     _enable(enable)
 {

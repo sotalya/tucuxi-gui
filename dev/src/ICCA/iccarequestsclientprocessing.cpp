@@ -62,6 +62,36 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
             APPUTILSREPO->getActiveSubstanceOfId("vancomycin", substance);
             request->drug(substance);
 
+            // Init no measure default
+            QDomElement detailElementCurrentPatient = detailElement;
+            QString currentPatientID = patientID;
+            QString sampleID = "nosample";
+            double concentration = 0.0;
+            bool sampleFound = false;
+            QDateTime sampleDate = QDateTime::currentDateTime();
+
+            // Find first concentration element for measure (if any)
+            while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID && !sampleFound) {
+                if (detailElementCurrentPatient.attribute("donnees") == "concentration") {
+                    concentration = detailElementCurrentPatient.attribute("valeur").toDouble();
+                    sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute("horaire"), Qt::ISODate);
+                    sampleID = currentPatientID;
+                    sampleFound = true;
+                }
+
+                detailElementCurrentPatient = detailElementCurrentPatient.nextSiblingElement("Détails");
+                if (!detailElementCurrentPatient.isNull())
+                    currentPatientID = detailElementCurrentPatient.attribute("encounterid");
+            }
+
+            Measure* measure = static_cast<Measure*>(request->sample());
+            measure->sampleID(sampleID);
+            measure->setMoment(sampleDate);
+            measure->arrivalDate(sampleDate);
+            measure->setConcentration(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure));
+            measure->getConcentration()->setValue(concentration);
+            measure->getConcentration()->setUnit(Unit("µmol/l"));
+
             requests.append(request);
             ADMINREPO->setPartialRequest(request);
         }

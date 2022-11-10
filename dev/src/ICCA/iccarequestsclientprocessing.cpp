@@ -38,6 +38,8 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
     QDomElement detailCollectionElement = doc.documentElement().firstChildElement("Tablix1").firstChildElement("Détails_Collection");
     QDomElement detailElement = detailCollectionElement.firstChildElement("Détails");
 
+    QString substanceStr = doc.documentElement().attribute("Name");
+
     QList<SharedPartialRequest> requests;
     SharedPartialRequest request;
     Patient* patient;

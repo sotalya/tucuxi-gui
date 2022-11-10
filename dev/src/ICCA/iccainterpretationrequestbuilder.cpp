@@ -149,14 +149,19 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             dosage->setApplied(appl);
 
             QString valueString = detailElement.attribute("valeur");
+            valueString.replace(',', '.');
             double value = valueString.toDouble();
             dosage->getQuantity()->setValue(value);
+
+            // TODO (JRP) : Set 60 minutes infusion and interval time for testing
+            dosage->setInterval(Tucuxi::Gui::Core::Duration(0,60));
+            dosage->setTinf(Tucuxi::Gui::Core::Duration(0,60));
 
             //TODO (JRP) : No dosage interval ? cf. perfusion
 
             //TODO (JRP) : Set at steady state or not ?
             //TODO : To be checked
-            //dosage->setIsAtSteadyState(false);
+            dosage->setIsAtSteadyState(false);
 
             dosages->append(dosage);
 

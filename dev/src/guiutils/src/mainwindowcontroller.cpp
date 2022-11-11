@@ -83,7 +83,7 @@ MainWindowController::MainWindowController(QObject *parent) :
 #else
 
     Tucuxi::Gui::ICCA::ICCARequestFileClient *client = new Tucuxi::Gui::ICCA::ICCARequestFileClient(this);
-    client->setListFile("vanco_fulldata2.xml");
+    client->setListFile("cefepime_fulldata.xml");
     requestsController->setClient(client);
 
 #endif

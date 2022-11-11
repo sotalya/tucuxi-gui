@@ -40,6 +40,15 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 
     QString substanceStr = doc.documentElement().attribute("Name");
 
+    QString substanceID = "";
+
+    // TODO (JRP) : use a dictionay (cf INI files)
+    if (substanceStr == "vanco fulldata") {
+        substanceID = "vancomycin";
+    } else if (substanceStr == "cefepime fulldata") {
+        substanceID = "cefepime";
+    }
+
     QList<SharedPartialRequest> requests;
     SharedPartialRequest request;
     Patient* patient;
@@ -61,7 +70,7 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
             patient->person()->name(patient->externalId());
 
             substance = nullptr;
-            APPUTILSREPO->getActiveSubstanceOfId("vancomycin", substance);
+            APPUTILSREPO->getActiveSubstanceOfId(substanceID, substance);
             request->drug(substance);
 
             // Init no measure default

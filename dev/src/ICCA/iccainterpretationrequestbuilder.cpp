@@ -63,9 +63,15 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     //Patient data
     Patient* patient = static_cast<Patient*>(shpatient);
 
-    //TODO (JRP) : currently fix value for testing purpose
+    QString activeSubstanceStr = reportNode.attribute("Name");
+    QString activeSubstanceId = "";
+
     //Prediction drug
-    QString activeSubstanceId = "ch.heig-vd.ezechiel.vancomycin.adult.1CP";
+    if (activeSubstanceStr == "vanco fulldata") {
+        activeSubstanceId = "ch.heig-vd.ezechiel.vancomycin.adult.1CP";
+    } else if (activeSubstanceStr == "cefepime fulldata") {
+        activeSubstanceId = "ch.tucuxi.cefepime.buclin2020";
+    }
 
     //Take the first details element
     //QDomElement detailsCollection = datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection");
@@ -130,7 +136,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QString valueString = detailElement.attribute("valeur");
             double value = valueString.toDouble();
             covariate->getQuantity()->setValue(value);
-            covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("mmol/l"));
+            covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("µmol/l"));
 
             covariate->setType(QMetaType::Double);
 
@@ -204,10 +210,40 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QString valueString = detailElement.attribute("valeur");
             double value = valueString.toDouble();
             dosage->getQuantity()->setValue(value);
+            dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("ml/h"));
 
             // TODO (JRP) : Set 60 minutes infusion and interval time for testing
             dosage->setInterval(Tucuxi::Gui::Core::Duration(0,60));
             dosage->setTinf(Tucuxi::Gui::Core::Duration(0,60));
+
+            //TODO (JRP) : Set at steady state or not ?
+            //TODO : To be checked
+            dosage->setIsAtSteadyState(false);
+
+            dosages->append(dosage);
+
+        } else if (dataType == "dose") {
+
+            Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
+
+            Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
+            admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
+            dosage->setRoute(admin);
+
+            QString dateString = detailElement.attribute("horaire");
+            QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
+            dosage->setApplied(appl);
+
+            QDateTime end = appl.addSecs(10800);
+            dosage->setEndTime(end);
+
+            QString valueString = detailElement.attribute("valeur");
+            double value = valueString.toDouble();
+            dosage->getQuantity()->setValue(value);
+            dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("g"));
+
+            dosage->setInterval(Tucuxi::Gui::Core::Duration(0,180));
+            dosage->setTinf(Tucuxi::Gui::Core::Duration(0,180));
 
             //TODO (JRP) : Set at steady state or not ?
             //TODO : To be checked
@@ -224,7 +260,11 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     treatment->setPatient(shpatient);
     treatment->getPatient()->setParent(treatment);
 
-    treatment->setActiveSubstanceId("vancomycin");
+    if (activeSubstanceStr == "vanco fulldata") {
+        treatment->setActiveSubstanceId("vancomycin");
+    } else if (activeSubstanceStr == "cefepime fulldata") {
+        treatment->setActiveSubstanceId("cefepime");
+    }
 
     //Prediction dosage
     treatment->setDosages(dosages);

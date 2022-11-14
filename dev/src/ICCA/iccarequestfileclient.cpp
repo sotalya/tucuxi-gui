@@ -62,7 +62,10 @@ void ICCARequestFileClient::queryRequest(const QString &requestId, const QString
     QDomElement detailCollectionElement = doc.documentElement().firstChildElement("Tablix1").firstChildElement("Détails_Collection");
     QDomElement detailElement = detailCollectionElement.firstChildElement("Détails");
 
-    QDomNode filtredRootElement = doc.documentElement().cloneNode(false); //filtredDoc.createElement("Report");
+    QString reportName = doc.documentElement().attribute("Name");
+
+    QDomElement filtredRootElement = filtredDoc.createElement("Report");
+    filtredRootElement.setAttribute("Name", reportName);
     filtredDoc.appendChild(filtredRootElement);
     QDomElement filtredTabElement = filtredDoc.createElement("Tablix1");
     filtredRootElement.appendChild(filtredTabElement);

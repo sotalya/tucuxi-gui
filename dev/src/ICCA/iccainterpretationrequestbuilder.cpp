@@ -100,8 +100,9 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
         } else if (dataType == "DDN") {
 
-            QString dateString = detailElement.attribute("horaire");
-            QDate date = QDateTime::fromString(dateString, Qt::ISODate).date();
+            QString dateString = detailElement.attribute("valeur");
+            // QDate date = QDateTime::fromString(dateString, Qt::ISODate).date();
+            QDate date = QDateTime::fromString(dateString, "MM-dd-yyyy hh:mm:ss").date();
             patient->person()->birthday(date);
 
         } else if (dataType == "poids") {
@@ -148,6 +149,15 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
             admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION); //TODO perfusion/infusion, use rate to compute dosage
+
+            Tucuxi::Core::FormulationAndRoute formulationAndRoute(
+                    Tucuxi::Core::Formulation::ParenteralSolution,
+                    Tucuxi::Core::AdministrationRoute::IntravenousDrip,
+                    Tucuxi::Core::AbsorptionModel::Infusion,
+                    "");
+
+            admin->setFormulationAndRoute(formulationAndRoute);
+
             dosage->setRoute(admin);
 
             QString dateString = detailElement.attribute("horaire");
@@ -197,6 +207,15 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
             admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION); //TODO perfusion/infusion, use rate to compute dosage
+
+            Tucuxi::Core::FormulationAndRoute formulationAndRoute(
+                    Tucuxi::Core::Formulation::ParenteralSolution,
+                    Tucuxi::Core::AdministrationRoute::IntravenousDrip,
+                    Tucuxi::Core::AbsorptionModel::Infusion,
+                    "");
+
+            admin->setFormulationAndRoute(formulationAndRoute);
+
             dosage->setRoute(admin);
 
             QString dateString = detailElement.attribute("horaire");
@@ -228,6 +247,14 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
             admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
+
+            Tucuxi::Core::FormulationAndRoute formulationAndRoute(
+                    Tucuxi::Core::Formulation::ParenteralSolution,
+                    Tucuxi::Core::AdministrationRoute::IntravenousDrip,
+                    Tucuxi::Core::AbsorptionModel::Infusion,
+                    "");
+
+            admin->setFormulationAndRoute(formulationAndRoute);
             dosage->setRoute(admin);
 
             QString dateString = detailElement.attribute("horaire");
@@ -242,7 +269,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             dosage->getQuantity()->setValue(value);
             dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("g"));
 
-            dosage->setInterval(Tucuxi::Gui::Core::Duration(0,180));
+            dosage->setInterval(Tucuxi::Gui::Core::Duration(8));
             dosage->setTinf(Tucuxi::Gui::Core::Duration(0,180));
 
             //TODO (JRP) : Set at steady state or not ?

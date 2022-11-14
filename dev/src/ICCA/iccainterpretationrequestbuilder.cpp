@@ -118,7 +118,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QString valueString = detailElement.attribute("valeur");
             double value = valueString.toDouble();
             covariate->getQuantity()->setValue(value);
-            covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("KG"));
+            covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("kg"));
 
             covariate->setType(QMetaType::Double);
 

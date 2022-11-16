@@ -64,6 +64,7 @@ void ICCARequestFileClient::queryRequest(const QString &requestId, const QString
 
     QString reportName = doc.documentElement().attribute("Name");
 
+    // Construct a filtred xml doc containing only the seleted patient, by using patienId as criteria
     QDomElement filtredRootElement = filtredDoc.createElement("Report");
     filtredRootElement.setAttribute("Name", reportName);
     filtredDoc.appendChild(filtredRootElement);
@@ -72,6 +73,7 @@ void ICCARequestFileClient::queryRequest(const QString &requestId, const QString
     QDomElement filtredDetailCollectionElement = filtredDoc.createElement("Détails_Collection");
     filtredTabElement.appendChild(filtredDetailCollectionElement);
 
+    // Take only details element with the selected encounterid (=patientId)
     while (!detailElement.isNull()) {
         if (detailElement.attribute("encounterid") == patientId) {
             filtredDetailCollectionElement.appendChild(detailElement.cloneNode());
@@ -82,6 +84,7 @@ void ICCARequestFileClient::queryRequest(const QString &requestId, const QString
 
     QTextStream informer(stdout);
 
+    // TODO JRP : For debug, to be removed
     informer << filtredDoc.toString();
     informer << endl;
     informer.flush();

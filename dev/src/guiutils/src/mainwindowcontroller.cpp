@@ -55,38 +55,36 @@ MainWindowController::MainWindowController(QObject *parent) :
     requestsController = new RequestsController(this);
 
 
-// TODO (JRP) : For testing
-#if 0
-#ifdef CONFIG_CONNECTED
-    QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
-    AppGlobals* appGlobals = AppGlobals::getInstance();
-    QString listFile = appGlobals->getListFile();
-    //if (listFile.isEmpty()) {
-    //    listFile = requestDefaultDir;
-    //}
-    if (listFile.isEmpty())
-        requestsController->setClient(new Tucuxi::Gui::Rest::RestRequestsClient(this));
-    else {
+AppGlobals* appGlobals = AppGlobals::getInstance();
+
+QString iccaFile = appGlobals->getIccaFile();
+if (iccaFile.isEmpty()) {
+    #ifdef CONFIG_CONNECTED
+        QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
+        QString listFile = appGlobals->getListFile();
+        //if (listFile.isEmpty()) {
+        //    listFile = requestDefaultDir;
+        //}
+        if (listFile.isEmpty())
+            requestsController->setClient(new Tucuxi::Gui::Rest::RestRequestsClient(this));
+        else {
+            DemoRequestFileClient *client = new DemoRequestFileClient(this);
+            client->setListFile(listFile);
+            requestsController->setClient(client);
+        }
+    #else
+    //    requestsController->setClient(new DemoRequestsClient(this));
+        QString listFile = ":/requests/List.xml";
         DemoRequestFileClient *client = new DemoRequestFileClient(this);
         client->setListFile(listFile);
         requestsController->setClient(client);
-    }
-#else
-//    requestsController->setClient(new DemoRequestsClient(this));
-    QString listFile = ":/requests/List.xml";
-    DemoRequestFileClient *client = new DemoRequestFileClient(this);
-    client->setListFile(listFile);
-    requestsController->setClient(client);
 
-#endif
-
-#else
-
+    #endif
+} else {
     Tucuxi::Gui::ICCA::ICCARequestFileClient *client = new Tucuxi::Gui::ICCA::ICCARequestFileClient(this);
-    client->setListFile("cefepime_fulldata.xml");
+    client->setListFile(iccaFile);
     requestsController->setClient(client);
-
-#endif
+}
 
 #ifdef CONFIG_GUITEST
     engine = new QQmlApplicationEngine();

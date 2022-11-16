@@ -563,6 +563,10 @@ void parseOptions()
                                     QCoreApplication::translate("main", "Set the file containing single request. This option allows to start the software with a single request."),
                                     "requestfile",
                                     "");
+    const QCommandLineOption iccaFileOption(QStringList() << "i" << "iccafile",
+                                    QCoreApplication::translate("main", "Set the file containing ICCA request. This option allows to start the software with ICCA requests"),
+                                    "iccafile",
+                                    "");
     const QCommandLineOption portOption(QStringList() << "p" << "port",
                                     QCoreApplication::translate("main", "Set the port number of the medical institution's server from which interpretion request can be retrieved."),
                                     "port",
@@ -594,6 +598,7 @@ void parseOptions()
     const QCommandLineOption helpOption = parser.addHelpOption();
     parser.addOption(listFileOption);
     parser.addOption(requestFileOption);
+    parser.addOption(iccaFileOption);
     parser.addOption(hostOption);
     parser.addOption(portOption);
     parser.addOption(schemeOption);
@@ -630,6 +635,7 @@ void parseOptions()
 
     appGlobals->setListFile(parser.value(listFileOption));
     appGlobals->setRequestFile(parser.value(requestFileOption));
+    appGlobals->setIccaFile(parser.value(iccaFileOption));
 
 
 #ifdef CONFIG_CONNECTED

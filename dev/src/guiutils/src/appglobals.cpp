@@ -14,6 +14,7 @@ AppGlobals* AppGlobals::m_instance = nullptr;
 AppGlobals::AppGlobals() :
     m_listFile(),
     m_requestFile(),
+    m_iccaFile(),
     m_analyst(nullptr)
 {
 
@@ -42,12 +43,20 @@ const QString AppGlobals::getRequestFile(){
     return m_requestFile;
 }
 
+const QString AppGlobals::getIccaFile(){
+    return m_iccaFile;
+}
+
 void AppGlobals::setListFile(QString _listFile){
     m_listFile = _listFile;
 }
 
 void AppGlobals::setRequestFile(QString _requestFile){
     m_requestFile = _requestFile;
+}
+
+void AppGlobals::setIccaFile(QString _iccaFile){
+    m_iccaFile = _iccaFile;
 }
 
 Practician* AppGlobals::getAnalyst()

@@ -59,6 +59,7 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
     while (!detailElement.isNull()) {
         patientID = detailElement.attribute("encounterid");
 
+        // Verify if patient already have been parsed. Also imply that patient details are grouped by encouderid in the XML.
         if (patientID != lastPatientID) {
             lastPatientID = patientID;
 
@@ -73,11 +74,12 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
             APPUTILSREPO->getActiveSubstanceOfId(substanceID, substance);
             request->drug(substance);
 
-            // Init no measure default
+            // Init measure default, useful if no measure found
             QDomElement detailElementCurrentPatient = detailElement;
             QString currentPatientID = patientID;
             QString sampleID = "nosample";
             double concentration = 0.0;
+            QString unit = "µmol/l";
             bool sampleFound = false;
             QDateTime sampleDate = QDateTime::currentDateTime();
 
@@ -85,6 +87,7 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
             while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID && !sampleFound) {
                 if (detailElementCurrentPatient.attribute("donnees") == "concentration") {
                     concentration = detailElementCurrentPatient.attribute("valeur").toDouble();
+                    unit = detailElementCurrentPatient.attribute("unite");
                     sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute("horaire"), Qt::ISODate);
                     sampleID = currentPatientID;
                     sampleFound = true;
@@ -101,7 +104,7 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
             measure->arrivalDate(sampleDate);
             measure->setConcentration(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure));
             measure->getConcentration()->setValue(concentration);
-            measure->getConcentration()->setUnit(Unit("µmol/l"));
+            measure->getConcentration()->setUnit(Unit(unit));
 
             requests.append(request);
             ADMINREPO->setPartialRequest(request);
@@ -143,25 +146,9 @@ int ICCARequestsClientProcessing::analyzeRequest(const QString &xmlRequest)
         return 0;
     }
 
-    QTextStream informer(stdout);
-    rlutil::setColor(rlutil::CYAN);
-    informer <<  "Received Pending Request from Remote Server" << endl;
-    informer <<  "*******************************************" << endl;
-    rlutil::setColor(rlutil::GREEN);
-    informer << "PatientId:\t"; informer.flush();
-    rlutil::resetColor();
-    informer << static_cast<Patient*>(ir->getTreatment()->getPatient())->externalId(); informer.flush();
-    rlutil::setColor(rlutil::GREEN);
-    informer << "\tDrugId:\t"; informer.flush();
-    rlutil::resetColor();
-    informer << ir->getTreatment()->getActiveSubstanceId();
-    rlutil::resetColor();
-    informer << endl;
-
     emit requestReady(ir);
 
     return 1;
-
 }
 
 //}

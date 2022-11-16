@@ -67,6 +67,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     QString activeSubstanceId = "";
 
     //Prediction drug
+    //TODO JRP : use a dictionary of config file
     if (activeSubstanceStr == "vanco fulldata") {
         activeSubstanceId = "ch.heig-vd.ezechiel.vancomycin.adult.1CP";
     } else if (activeSubstanceStr == "cefepime fulldata") {
@@ -116,9 +117,10 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             covariate->setDate(date);
 
             QString valueString = detailElement.attribute("valeur");
+            QString unit = detailElement.attribute("unite");
             double value = valueString.toDouble();
             covariate->getQuantity()->setValue(value);
-            covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("kg"));
+            covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(unit));
 
             covariate->setType(QMetaType::Double);
 
@@ -135,9 +137,10 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             covariate->setDate(date);
 
             QString valueString = detailElement.attribute("valeur");
+            QString unit = detailElement.attribute("unite");
             double value = valueString.toDouble();
             covariate->getQuantity()->setValue(value);
-            covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("µmol/l"));
+            covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(unit));
 
             covariate->setType(QMetaType::Double);
 
@@ -265,10 +268,12 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             dosage->setEndTime(end);
 
             QString valueString = detailElement.attribute("valeur");
+            QString unit = detailElement.attribute("unite");
             double value = valueString.toDouble();
             dosage->getQuantity()->setValue(value);
-            dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("g"));
+            dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(unit));
 
+            //TODO (JRP) : interval and duration should be deducted from the XML
             dosage->setInterval(Tucuxi::Gui::Core::Duration(8));
             dosage->setTinf(Tucuxi::Gui::Core::Duration(0,180));
 
@@ -287,6 +292,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     treatment->setPatient(shpatient);
     treatment->getPatient()->setParent(treatment);
 
+    //TODO JRP : use a dictionary of config file
     if (activeSubstanceStr == "vanco fulldata") {
         treatment->setActiveSubstanceId("vancomycin");
     } else if (activeSubstanceStr == "cefepime fulldata") {
@@ -298,12 +304,10 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     treatment->getDosages()->setParent(treatment);
 
     //Prediction samples
-    //Tucuxi::Gui::Core::CoreMeasureList* measures = buildSamples("samples", treatment->getPatient(), activeSubstanceId);
     treatment->setMeasures(measures);
     treatment->getMeasures()->setParent(treatment);
 
     //Prediction covariates
-    //Tucuxi::Gui::Core::PatientVariateList * covariates = buildCovariates("covariates", treatment->getPatient());
     treatment->setCovariates(covariates);
 
     //interpretationRequest->setClinicals(buildClinical("clinicals"));

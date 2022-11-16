@@ -31,9 +31,13 @@ public:
 
     void setRequestFile(QString _requestFile);
 
+    void setIccaFile(QString _iccaFile);
+
     const QString getListFile();
 
     const QString getRequestFile();
+
+    const QString getIccaFile();
 
     Q_INVOKABLE Tucuxi::Gui::Admin::Practician *getAnalyst();
 
@@ -53,6 +57,7 @@ private:
 
     QString m_listFile;
     QString m_requestFile;
+    QString m_iccaFile;
 
     Tucuxi::Gui::Admin::Practician *m_analyst;
 

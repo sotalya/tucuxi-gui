@@ -193,12 +193,35 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QString dateString = detailElement.attribute("horaire");
             QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
             measure->setMoment(date);
+            measure->arrivalDate(date);
 
             Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
             QString valueString = detailElement.attribute("valeur");
             double value = valueString.toDouble();
             amt->setValue(value);
             amt->setUnit(Tucuxi::Gui::Core::Unit("mmol/l"));
+
+            measure->setConcentration(amt);
+
+            measures->append(measure);
+
+        } else if (dataType == "Dosage Residuel cefepime") {
+
+            Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
+
+            measure->setSdrug(activeSubstanceId);
+
+            QString dateString = detailElement.attribute("horaire");
+            QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
+            measure->setMoment(date);
+            measure->arrivalDate(date);
+
+            Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
+            QString valueString = detailElement.attribute("valeur");
+            QString unit = detailElement.attribute("unite");
+            double value = valueString.toDouble();
+            amt->setValue(value);
+            amt->setUnit(Tucuxi::Gui::Core::Unit(unit));
 
             measure->setConcentration(amt);
 

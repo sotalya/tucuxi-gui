@@ -39,14 +39,16 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
     QDomElement detailElement = detailCollectionElement.firstChildElement("Détails");
 
     QString substanceStr = doc.documentElement().attribute("Name");
-
     QString substanceID = "";
+    QString measureTagName = "";
 
     // TODO (JRP) : use a dictionay (cf INI files)
     if (substanceStr == "vanco fulldata") {
         substanceID = "vancomycin";
+        measureTagName = "concentration";
     } else if (substanceStr == "cefepime fulldata") {
         substanceID = "cefepime";
+        measureTagName = "Dosage Residuel cefepime";
     }
 
     QList<SharedPartialRequest> requests;
@@ -85,7 +87,7 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 
             // Find first concentration element for measure (if any)
             while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID && !sampleFound) {
-                if (detailElementCurrentPatient.attribute("donnees") == "concentration") {
+                if (detailElementCurrentPatient.attribute("donnees") == measureTagName) {
                     concentration = detailElementCurrentPatient.attribute("valeur").toDouble();
                     unit = detailElementCurrentPatient.attribute("unite");
                     sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute("horaire"), Qt::ISODate);

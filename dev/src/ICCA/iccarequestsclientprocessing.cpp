@@ -45,7 +45,7 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
     // TODO (JRP) : use a dictionay (cf INI files)
     if (substanceStr == "vanco fulldata") {
         substanceID = "vancomycin";
-        measureTagName = "concentration";
+        measureTagName = "Dosage vanco";
     } else if (substanceStr == "cefepime fulldata") {
         substanceID = "cefepime";
         measureTagName = "Dosage Residuel cefepime";
@@ -88,8 +88,10 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
             // Find first concentration element for measure (if any)
             while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID && !sampleFound) {
                 if (detailElementCurrentPatient.attribute("donnees") == measureTagName) {
-                    concentration = detailElementCurrentPatient.attribute("valeur").toDouble();
-                    unit = detailElementCurrentPatient.attribute("unite");
+                    QString valueString = detailElementCurrentPatient.attribute("valeur");
+                    valueString.replace(',', '.');
+                    concentration = valueString.toDouble();
+                    unit = detailElementCurrentPatient.attribute("unite", "mg/l");
                     sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute("horaire"), Qt::ISODate);
                     sampleID = currentPatientID;
                     sampleFound = true;

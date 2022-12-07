@@ -81,6 +81,8 @@ void Tucuxi::Gui::GuiUtils::CovariateTabController::selectDrugVariate(int drugVa
             _fileredVariates->append(patientVariate);
         }
     }
+
+    _fileredVariates->sort(compareVariate);
     emit fileredVariatesChanged(_fileredVariates);
 }
 

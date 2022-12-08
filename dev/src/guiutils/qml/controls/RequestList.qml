@@ -410,7 +410,7 @@ Item {
                     }
                 }
                 TableViewColumn {
-                    title: "Sample value"
+                    title: "Last sample value"
                     width: 100
                     delegate: Component {
                         Text {

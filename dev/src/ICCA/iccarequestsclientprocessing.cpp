@@ -82,11 +82,11 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
             QString sampleID = "nosample";
             double concentration = 0.0;
             QString unit = "µmol/l";
-            bool sampleFound = false;
+            // bool sampleFound = false;
             QDateTime sampleDate = QDateTime::currentDateTime();
 
             // Find first concentration element for measure (if any)
-            while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID && !sampleFound) {
+            while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID/* && !sampleFound*/) {
                 if (detailElementCurrentPatient.attribute("donnees") == measureTagName) {
                     QString valueString = detailElementCurrentPatient.attribute("valeur");
                     valueString.replace(',', '.');
@@ -94,7 +94,7 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
                     unit = detailElementCurrentPatient.attribute("unite", "mg/l");
                     sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute("horaire"), Qt::ISODate);
                     sampleID = currentPatientID;
-                    sampleFound = true;
+                    // sampleFound = true;
                 }
 
                 detailElementCurrentPatient = detailElementCurrentPatient.nextSiblingElement("Détails");

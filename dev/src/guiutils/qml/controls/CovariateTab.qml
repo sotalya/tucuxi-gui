@@ -211,8 +211,8 @@ Rectangle {
             visible: patientVariatesListExpandHeader.expanded
 
             Layout.fillWidth:  true
-            Layout.fillHeight: false
-            Layout.preferredHeight: patientVariateList.headerHeight + 10 + (patientVariateList.rowHeight + patientVariateListView.spacing) * patientVariateListView.count
+            Layout.fillHeight: true
+            Layout.preferredHeight: patientVariateList.headerHeight + 40 + (patientVariateList.rowHeight + patientVariateListView.spacing) * patientVariateListView.count
 
             //Layout.preferredHeight: 100 + 50 * patientVariateListView.count;
 

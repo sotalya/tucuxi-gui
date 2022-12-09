@@ -74,14 +74,14 @@ namespace Core {
 
 struct CycleStatistics
 {
-    CycleStatistics(double _cycleStart, double _duration, double _mean, double _auc, double _auc24, double _cumulatedAuc, double _trough, double _peak) :
-        cycleStart(_cycleStart), duration(_duration), mean(_mean), auc(_auc), auc24(_auc24), cumulatedAuc(_cumulatedAuc), trough(_trough), peak(_peak) {}
+    CycleStatistics(double _cycleStart, double _duration, double _mean, double _auc, double _auc24, double _cumulativeAuc, double _trough, double _peak) :
+        cycleStart(_cycleStart), duration(_duration), mean(_mean), auc(_auc), auc24(_auc24), cumulativeAuc(_cumulativeAuc), trough(_trough), peak(_peak) {}
     double cycleStart;
     double duration;
     double mean;
     double auc;
     double auc24;
-    double cumulatedAuc;
+    double cumulativeAuc;
     double trough;
     double peak;
 };
@@ -115,9 +115,9 @@ class PredictionData : public Entity
 public:
     explicit PredictionData(AbstractRepository *repository,QObject *parent = nullptr);
 
-    void addStats(double _cycleStart, double _duration, double _mean, double _auc, double _cumulatedAuc, double _trough, double _peak)
+    void addStats(double _cycleStart, double _duration, double _mean, double _auc, double _cumulativeAuc, double _trough, double _peak)
     {
-        m_stats.push_back(CycleStatistics(_cycleStart, _duration, _mean, _auc, _auc / _duration * 24.0, _cumulatedAuc, _trough, _peak));
+        m_stats.push_back(CycleStatistics(_cycleStart, _duration, _mean, _auc, _auc / _duration * 24.0, _cumulativeAuc, _trough, _peak));
     }
 
     Q_INVOKABLE double meanAt(const int index) {
@@ -144,10 +144,10 @@ public:
         return 0.0;
     }
 
-    Q_INVOKABLE double cumulatedAucAt(const int index) {
+    Q_INVOKABLE double cumulativeAucAt(const int index) {
         const CycleStatistics *pStats = getStats(index);
         if (nullptr != pStats) {
-            return pStats->cumulatedAuc;
+            return pStats->cumulativeAuc;
         }
         return 0.0;
     }

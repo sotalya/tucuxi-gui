@@ -1725,7 +1725,7 @@ function findClosestValue(cdata, ctx, predictive, predData, index, color)
         mean: prepareValueForDisplay(cdata, predData.meanAt(current)),
         auc: prepareValueForDisplay(cdata, predData.aucAt(current)),
         auc24: prepareValueForDisplay(cdata, predData.auc24At(current)),
-        cumulatedAuc: prepareValueForDisplay(cdata, predData.cumulatedAucAt(current)),
+        cumulativeAuc: prepareValueForDisplay(cdata, predData.cumulativeAucAt(current)),
         trough: prepareValueForDisplay(cdata, predData.troughAt(current)),
         peak: prepareValueForDisplay(cdata, predData.peakAt(current)),
         timeAfterDose: predData.timeAfterDose(current),
@@ -1805,7 +1805,7 @@ function drawTooltips(cdata, ctx)
     var troughText = "C trough:";
     var peakText = "C peak:";
     var aucText = "AUC";
-    var cumulatedAucText = "Cum. AUC";
+    var cumulativeAucText = "Cum. AUC";
 
     var labelsWidth = ctx.measureText(timeAfterDoseText).width + 4 * cdata.scale;
     var valuesWidth, tooltipWidth, tooltipHeight, x, y;
@@ -1888,10 +1888,10 @@ function drawTooltips(cdata, ctx)
                         ctx.fillText(aucText + " (24h):" , xText, yText);
                         ctx.fillText(auc24 + " " + cdata.unit + "*h", x + labelsWidth, yText);
                         yText = yText + 14 * cdata.scale
-                        var cumulatedAuc = cdata.currentPoints[i].cumulatedAuc
-                        if (!(cumulatedAuc > 0)) cumulatedAuc = "-"
-                        ctx.fillText(cumulatedAucText, xText, yText);
-                        ctx.fillText(cumulatedAuc + " " + cdata.unit + "*h", x + labelsWidth, yText);
+                        var cumulativeAuc = cdata.currentPoints[i].cumulativeAuc
+                        if (!(cumulativeAuc > 0)) cumulativeAuc = "-"
+                        ctx.fillText(cumulativeAucText, xText, yText);
+                        ctx.fillText(cumulativeAuc + " " + cdata.unit + "*h", x + labelsWidth, yText);
 
                         if (cdata.currentPoints[i].measureTime.length > 0) {
                             var measureIndex;

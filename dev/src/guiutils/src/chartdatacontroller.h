@@ -44,6 +44,9 @@ public:
 
     void setCurrentTab(Tucuxi::Gui::Admin::StepType::Enum type);
 
+    void setComputeImmediatly(bool computeImmediately);
+    void launchCompute();
+
 signals:
 
 public slots:
@@ -75,6 +78,8 @@ public slots:
     void initiateUpdateAdjPerc();
     void receiveResultsAdjPerc(Tucuxi::Gui::Core::PredictionResult*);
 
+private:
+    bool computeImmediately;
 
 protected:
 

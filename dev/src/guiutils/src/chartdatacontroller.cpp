@@ -23,8 +23,19 @@ using namespace Tucuxi::Gui::GuiUtils;
 
 ChartDataController::ChartDataController(QObject *parent) : QObject(parent),
     _currentTab(Tucuxi::Gui::Admin::StepType::Patient),
-    calculationController(nullptr)
+    calculationController(nullptr),
+    computeImmediately(true)
 {
+}
+
+void ChartDataController::setComputeImmediatly(bool computeImmediately)
+{
+    this->computeImmediately = computeImmediately;
+}
+
+void ChartDataController::launchCompute()
+{
+
 }
 
 void ChartDataController::setCalculationController(CalculationController *controller)
@@ -57,7 +68,9 @@ void ChartDataController::initiateUpdatePopPred()
         chartData->setPopPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    calculationController->computePopPred(predictionspec);
+    if (computeImmediately) {
+        calculationController->computePopPred(predictionspec);
+    }
 }
 
 void ChartDataController::receiveResultsPopPred(Tucuxi::Gui::Core::PredictionResult* pred) {
@@ -75,8 +88,9 @@ void ChartDataController::initiateUpdatePopPerc() {
         chartData->setPopPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-
-    calculationController->computePopPerc(predictionspec);
+    if (computeImmediately) {
+        calculationController->computePopPerc(predictionspec);
+    }
 }
 
 void ChartDataController::receiveResultsPopPerc(Tucuxi::Gui::Core::PredictionResult* pred) {
@@ -90,7 +104,9 @@ void ChartDataController::initiateUpdateApoPred()
         chartData->setApoPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    calculationController->computeApoPred(predictionspec);
+    if (computeImmediately) {
+        calculationController->computeApoPred(predictionspec);
+    }
 }
 
 void ChartDataController::receiveResultsApoPred(Tucuxi::Gui::Core::PredictionResult* pred) {
@@ -106,7 +122,9 @@ void ChartDataController::initiateUpdateApoPerc() {
         chartData->setApoPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    calculationController->computeApoPerc(predictionspec);
+    if (computeImmediately) {
+        calculationController->computeApoPerc(predictionspec);
+    }
 }
 
 void ChartDataController::receiveResultsApoPerc(Tucuxi::Gui::Core::PredictionResult* pred) {
@@ -121,7 +139,9 @@ void ChartDataController::initiateUpdateAprPred()
         chartData->setAprPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    calculationController->computeAprPred(predictionspec);
+    if (computeImmediately) {
+        calculationController->computeAprPred(predictionspec);
+    }
 }
 
 void ChartDataController::receiveResultsAprPred(Tucuxi::Gui::Core::PredictionResult* pred) {
@@ -137,7 +157,9 @@ void ChartDataController::initiateUpdateAprPerc() {
         chartData->setAprPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    calculationController->computeAprPerc(predictionspec);
+    if (computeImmediately) {
+        calculationController->computeAprPerc(predictionspec);
+    }
 }
 
 void ChartDataController::receiveResultsAprPerc(Tucuxi::Gui::Core::PredictionResult* pred) {
@@ -151,7 +173,9 @@ void ChartDataController::initiateUpdateRevPred()
         chartData->setRevPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    calculationController->computeRevPred(predictionspec);
+    if (computeImmediately) {
+        calculationController->computeRevPred(predictionspec);
+    }
 }
 
 void ChartDataController::initiateUpdateAdjPred()
@@ -163,7 +187,9 @@ void ChartDataController::initiateUpdateAdjPred()
     // Here we add 2 months to get the steady state values in ChartDataController::receiveResultsAdjPred()
     QDateTime oldEndDate = predictionspec->getEndDate();
     predictionspec->setEndDate(oldEndDate.addMonths(2));
-    calculationController->computeAdjPred(predictionspec);
+    if (computeImmediately) {
+        calculationController->computeAdjPred(predictionspec);
+    }
     // And back to the initial end date
     predictionspec->setEndDate(oldEndDate);
 }
@@ -173,7 +199,9 @@ void ChartDataController::initiateUpdateAdjPerc()
     if (!isAdjustedValid()) {
         return;
     }
-    calculationController->computeAdjPerc(predictionspec);
+    if (computeImmediately) {
+        calculationController->computeAdjPerc(predictionspec);
+    }
 }
 
 void ChartDataController::receiveResultsRevPred(Tucuxi::Gui::Core::PredictionResult* pred) {

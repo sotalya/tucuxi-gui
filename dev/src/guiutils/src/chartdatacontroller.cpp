@@ -35,7 +35,55 @@ void ChartDataController::setComputeImmediatly(bool computeImmediately)
 
 void ChartDataController::launchCompute()
 {
+    QSet<computationType>::ConstIterator computation;
 
+    // Iterate to launch the selected computations
+    for (computation = toComputeSet.begin(); computation != toComputeSet.end(); ++computation) {
+        switch (*computation) {
+            case POP_PRED:
+                calculationController->computePopPred(predictionspec);
+                break;
+
+            case POP_PERC:
+                calculationController->computePopPerc(predictionspec);
+                break;
+
+            case APO_PRED:
+                calculationController->computeApoPred(predictionspec);
+                break;
+
+            case APO_PERC:
+                calculationController->computeApoPerc(predictionspec);
+                break;
+
+            case APR_PRED:
+                calculationController->computeAprPred(predictionspec);
+                break;
+
+            case APR_PERC:
+                calculationController->computeAprPerc(predictionspec);
+                break;
+
+            case REV_PRED:
+                calculationController->computeRevPred(predictionspec);
+                break;
+
+            case ADJ_PRED:
+                calculationController->computeAdjPred(predictionspec);
+                break;
+
+            case ADJ_PERC:
+                calculationController->computeAdjPerc(predictionspec);
+                break;
+
+            default:
+                // Should never append
+                Q_ASSERT(false);
+        }
+    }
+
+    // Comutation launched, reset the list
+    toComputeSet.clear();
 }
 
 void ChartDataController::setCalculationController(CalculationController *controller)
@@ -70,6 +118,8 @@ void ChartDataController::initiateUpdatePopPred()
     }
     if (computeImmediately) {
         calculationController->computePopPred(predictionspec);
+    } else {
+        toComputeSet.insert(POP_PRED);
     }
 }
 
@@ -90,6 +140,8 @@ void ChartDataController::initiateUpdatePopPerc() {
     }
     if (computeImmediately) {
         calculationController->computePopPerc(predictionspec);
+    } else {
+        toComputeSet.insert(POP_PERC);
     }
 }
 
@@ -106,6 +158,8 @@ void ChartDataController::initiateUpdateApoPred()
     }
     if (computeImmediately) {
         calculationController->computeApoPred(predictionspec);
+    } else {
+        toComputeSet.insert(APO_PRED);
     }
 }
 
@@ -124,6 +178,8 @@ void ChartDataController::initiateUpdateApoPerc() {
     }
     if (computeImmediately) {
         calculationController->computeApoPerc(predictionspec);
+    } else {
+        toComputeSet.insert(APO_PERC);
     }
 }
 
@@ -141,6 +197,8 @@ void ChartDataController::initiateUpdateAprPred()
     }
     if (computeImmediately) {
         calculationController->computeAprPred(predictionspec);
+    } else {
+        toComputeSet.insert(APR_PRED);
     }
 }
 
@@ -159,6 +217,8 @@ void ChartDataController::initiateUpdateAprPerc() {
     }
     if (computeImmediately) {
         calculationController->computeAprPerc(predictionspec);
+    } else {
+        toComputeSet.insert(APR_PERC);
     }
 }
 
@@ -175,6 +235,8 @@ void ChartDataController::initiateUpdateRevPred()
     }
     if (computeImmediately) {
         calculationController->computeRevPred(predictionspec);
+    } else {
+        toComputeSet.insert(REV_PRED);
     }
 }
 
@@ -189,6 +251,8 @@ void ChartDataController::initiateUpdateAdjPred()
     predictionspec->setEndDate(oldEndDate.addMonths(2));
     if (computeImmediately) {
         calculationController->computeAdjPred(predictionspec);
+    } else {
+        toComputeSet.insert(ADJ_PRED);
     }
     // And back to the initial end date
     predictionspec->setEndDate(oldEndDate);
@@ -201,6 +265,8 @@ void ChartDataController::initiateUpdateAdjPerc()
     }
     if (computeImmediately) {
         calculationController->computeAdjPerc(predictionspec);
+    } else {
+        toComputeSet.insert(ADJ_PERC);
     }
 }
 

@@ -2341,3 +2341,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::saveGraph()
 
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "saveGraph", Q_ARG(QVariant, QVariant::fromValue(fileName))));
 }
+
+void Tucuxi::Gui::GuiUtils::InterpretationController::launchUpdate()
+{
+    _chartDataController->launchCompute();
+}

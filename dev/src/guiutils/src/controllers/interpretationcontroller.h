@@ -264,6 +264,8 @@ public:
     ///
     void saveGraph();
 
+    void launchUpdate();
+
 signals:
     void webchannelChanged(QQmlWebChannel&);
     void drugsChanged(Tucuxi::Gui::Core::DrugModelList*);

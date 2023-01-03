@@ -23,7 +23,7 @@ win32 {
     else {
         exists(C:/Botan/Botan2-64) {
             CONFIG(debug, debug|release) {
-                LIBS += -LC:\Botan\botan2-64\lib -lbotand
+                LIBS += -LC:\Botan\botan2-64\lib -lbotan
             }
             CONFIG(release, debug|release) {
                 LIBS += -LC:\Botan\botan2-64\lib -lbotan

@@ -1834,7 +1834,10 @@ function drawTooltips(cdata, ctx)
                         
                         // measure height of the box 
                         // (if we want all measures in the box: (9*14+8 + cdata.currentPoints[i].measureTime.length * 14 * 2) * cdata.scale)
-                        tooltipHeight = (9*14+8 + 14 * 2) * cdata.scale;
+                        var existingMeasure = 0; // if no measure, do not add space below basic tooltips
+                        if (cdata.currentPoints[i].measureTime.length >= 1){existingMeasure = 1;} // else, add 1 space for a measure
+                        tooltipHeight = (9*14+8 + existingMeasure * 14 * 2) * cdata.scale;
+                        
                         x = x - tooltipWidth  / 2;
                         y = y - tooltipHeight - 10 * cdata.scale;
 

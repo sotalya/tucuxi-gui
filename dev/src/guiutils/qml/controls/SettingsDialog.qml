@@ -50,6 +50,11 @@ DialogBase {
                 appGlobals.setShowProcessingTime(true);
             else
                 appGlobals.setShowProcessingTime(false);
+
+            if (autoCalculation.checkState == Qt.Checked)
+                appGlobals.setAutoCalculation(true);
+            else
+               appGlobals.setAutoCalculation(false);
         }
     }
 
@@ -71,6 +76,11 @@ DialogBase {
             showProcessingTime.checkState = Qt.Checked
         else
             showProcessingTime.checkState = Qt.Unchecked
+
+        if (appGlobals.autoCalculation())
+            autoCalculation.checkState = Qt.Checked;
+        else
+            autoCalculation.checkState = Qt.Unchecked;
 
         pathChanged = false
     }
@@ -347,7 +357,7 @@ DialogBase {
                         Layout.fillHeight:  true
                     }
                     ColumnLayout{
-                        Layout.row: 1
+                        Layout.row: 2
                         Layout.column:1
                         width: parent.width
                         height: parent.height
@@ -370,6 +380,13 @@ DialogBase {
                                     width: parent.width - 30
                                     hoverEnabled: true
                                 }
+                            }
+
+                            CheckBox {
+                                id: autoCalculation
+                                text: "Enable automatic calculation?"
+                                checked: false // true
+                                enabled: !appMode.isDemo()
                             }
                         }
                     }

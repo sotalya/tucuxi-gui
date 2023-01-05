@@ -44,7 +44,6 @@ public:
 
     void setCurrentTab(Tucuxi::Gui::Admin::StepType::Enum type);
 
-    void setComputeImmediatly(bool computeImmediately);
     void launchCompute();
 
 signals:
@@ -92,7 +91,6 @@ private:
     };
 
     QSet<computationType> toComputeSet;
-    bool computeImmediately;
 
 
 

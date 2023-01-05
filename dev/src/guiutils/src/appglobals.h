@@ -46,6 +46,9 @@ public:
     Q_INVOKABLE bool showProcessingTime();
     Q_INVOKABLE void setShowProcessingTime(bool show);
 
+    Q_INVOKABLE bool autoCalculation();
+    Q_INVOKABLE void setAutoCalculation(bool enable);
+
 private:
     Q_OBJECT
     AppGlobals();
@@ -62,6 +65,7 @@ private:
     Tucuxi::Gui::Admin::Practician *m_analyst;
 
     bool m_showProcessingTime;
+    bool m_autoCalculation;
 };
 
 }

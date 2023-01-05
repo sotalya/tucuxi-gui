@@ -19,6 +19,7 @@ AppGlobals::AppGlobals() :
 {
 
     m_showProcessingTime = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "showProcessingTime" ,true).toBool();
+    m_autoCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "autoCalculation" ,true).toBool();
 
 }
 
@@ -32,6 +33,19 @@ void AppGlobals::setShowProcessingTime(bool show)
     if (show != m_showProcessingTime) {
         m_showProcessingTime = show;
         SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "showProcessingTime" ,show);
+    }
+}
+
+bool AppGlobals::autoCalculation()
+{
+    return m_autoCalculation;
+}
+
+void AppGlobals::setAutoCalculation(bool enable)
+{
+    if (enable != m_autoCalculation) {
+        m_autoCalculation = enable;
+        SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "autoCalculation" ,enable);
     }
 }
 

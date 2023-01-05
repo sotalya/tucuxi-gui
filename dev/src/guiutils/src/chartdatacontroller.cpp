@@ -17,20 +17,15 @@
 #include "errors_guiutils.h"
 #include "core/utils/connect.h"
 #include "core/dal/drug/parameters.h"
+#include "guiutils/src/appglobals.h"
 
 //using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::GuiUtils;
 
 ChartDataController::ChartDataController(QObject *parent) : QObject(parent),
     _currentTab(Tucuxi::Gui::Admin::StepType::Patient),
-    calculationController(nullptr),
-    computeImmediately(true)
+    calculationController(nullptr)
 {
-}
-
-void ChartDataController::setComputeImmediatly(bool computeImmediately)
-{
-    this->computeImmediately = computeImmediately;
 }
 
 void ChartDataController::launchCompute()
@@ -116,7 +111,7 @@ void ChartDataController::initiateUpdatePopPred()
         chartData->setPopPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    if (computeImmediately) {
+    if (AppGlobals::getInstance()->autoCalculation()) {
         calculationController->computePopPred(predictionspec);
     } else {
         toComputeSet.insert(POP_PRED);
@@ -138,7 +133,7 @@ void ChartDataController::initiateUpdatePopPerc() {
         chartData->setPopPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    if (computeImmediately) {
+    if (AppGlobals::getInstance()->autoCalculation()) {
         calculationController->computePopPerc(predictionspec);
     } else {
         toComputeSet.insert(POP_PERC);
@@ -156,7 +151,7 @@ void ChartDataController::initiateUpdateApoPred()
         chartData->setApoPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    if (computeImmediately) {
+    if (AppGlobals::getInstance()->autoCalculation()) {
         calculationController->computeApoPred(predictionspec);
     } else {
         toComputeSet.insert(APO_PRED);
@@ -176,7 +171,7 @@ void ChartDataController::initiateUpdateApoPerc() {
         chartData->setApoPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    if (computeImmediately) {
+    if (AppGlobals::getInstance()->autoCalculation()) {
         calculationController->computeApoPerc(predictionspec);
     } else {
         toComputeSet.insert(APO_PERC);
@@ -195,7 +190,7 @@ void ChartDataController::initiateUpdateAprPred()
         chartData->setAprPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    if (computeImmediately) {
+    if (AppGlobals::getInstance()->autoCalculation()) {
         calculationController->computeAprPred(predictionspec);
     } else {
         toComputeSet.insert(APR_PRED);
@@ -215,7 +210,7 @@ void ChartDataController::initiateUpdateAprPerc() {
         chartData->setAprPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    if (computeImmediately) {
+    if (AppGlobals::getInstance()->autoCalculation()) {
         calculationController->computeAprPerc(predictionspec);
     } else {
         toComputeSet.insert(APR_PERC);
@@ -233,7 +228,7 @@ void ChartDataController::initiateUpdateRevPred()
         chartData->setRevPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
     }
-    if (computeImmediately) {
+    if (AppGlobals::getInstance()->autoCalculation()) {
         calculationController->computeRevPred(predictionspec);
     } else {
         toComputeSet.insert(REV_PRED);
@@ -249,7 +244,7 @@ void ChartDataController::initiateUpdateAdjPred()
     // Here we add 2 months to get the steady state values in ChartDataController::receiveResultsAdjPred()
     QDateTime oldEndDate = predictionspec->getEndDate();
     predictionspec->setEndDate(oldEndDate.addMonths(2));
-    if (computeImmediately) {
+    if (AppGlobals::getInstance()->autoCalculation()) {
         calculationController->computeAdjPred(predictionspec);
     } else {
         toComputeSet.insert(ADJ_PRED);
@@ -263,7 +258,7 @@ void ChartDataController::initiateUpdateAdjPerc()
     if (!isAdjustedValid()) {
         return;
     }
-    if (computeImmediately) {
+    if (AppGlobals::getInstance()->autoCalculation()) {
         calculationController->computeAdjPerc(predictionspec);
     } else {
         toComputeSet.insert(ADJ_PERC);

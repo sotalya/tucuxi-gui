@@ -264,7 +264,7 @@ public:
     ///
     void saveGraph();
 
-    void launchUpdate();
+    Q_INVOKABLE void launchUpdate();
 
 signals:
     void webchannelChanged(QQmlWebChannel&);

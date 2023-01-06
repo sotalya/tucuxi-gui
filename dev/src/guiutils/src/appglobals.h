@@ -49,6 +49,9 @@ public:
     Q_INVOKABLE bool autoCalculation();
     Q_INVOKABLE void setAutoCalculation(bool enable);
 
+    Q_INVOKABLE bool percentileCalculation();
+    Q_INVOKABLE void setPercentileCalculation(bool enable);
+
 private:
     Q_OBJECT
     AppGlobals();
@@ -66,6 +69,7 @@ private:
 
     bool m_showProcessingTime;
     bool m_autoCalculation;
+    bool m_percentileCalculation;
 };
 
 }

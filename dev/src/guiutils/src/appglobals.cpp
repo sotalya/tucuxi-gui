@@ -20,6 +20,7 @@ AppGlobals::AppGlobals() :
 
     m_showProcessingTime = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "showProcessingTime" ,true).toBool();
     m_autoCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "autoCalculation" ,true).toBool();
+    m_percentileCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "percentileCalculation" ,true).toBool();
 
 }
 
@@ -46,6 +47,19 @@ void AppGlobals::setAutoCalculation(bool enable)
     if (enable != m_autoCalculation) {
         m_autoCalculation = enable;
         SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "autoCalculation" ,enable);
+    }
+}
+
+bool AppGlobals::percentileCalculation()
+{
+    return m_percentileCalculation;
+}
+
+void AppGlobals::setPercentileCalculation(bool enable)
+{
+    if (enable != m_percentileCalculation) {
+        m_percentileCalculation = enable;
+        SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "percentileCalculation" ,enable);
     }
 }
 

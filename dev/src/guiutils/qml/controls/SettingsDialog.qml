@@ -55,6 +55,11 @@ DialogBase {
                 appGlobals.setAutoCalculation(true);
             else
                appGlobals.setAutoCalculation(false);
+
+            if (percentileCalculation.checkState == Qt.Checked)
+                appGlobals.setPercentileCalculation(true);
+            else
+               appGlobals.setPercentileCalculation(false);
         }
     }
 
@@ -81,6 +86,11 @@ DialogBase {
             autoCalculation.checkState = Qt.Checked;
         else
             autoCalculation.checkState = Qt.Unchecked;
+
+        if (appGlobals.percentileCalculation())
+            percentileCalculation.checkState = Qt.Checked;
+        else
+            percentileCalculation.checkState = Qt.Unchecked;
 
         pathChanged = false
     }
@@ -381,13 +391,20 @@ DialogBase {
                                     hoverEnabled: true
                                 }
                             }
+                        }
 
-                            CheckBox {
-                                id: autoCalculation
-                                text: "Enable automatic calculation?"
-                                checked: false // true
-                                enabled: !appMode.isDemo()
-                            }
+                        CheckBox {
+                            id: autoCalculation
+                            text: "Enable automatic calculation?"
+                            checked: false // true
+                            enabled: !appMode.isDemo()
+                        }
+
+                        CheckBox {
+                            id: percentileCalculation
+                            text: "Enable percentile calculation?"
+                            checked: false // true
+                            enabled: !appMode.isDemo()
                         }
                     }
 

@@ -169,7 +169,7 @@ Tucuxi::Core::FormulationAndRoute ExternalFormulationAndRouteTranslator::restToI
     Tucuxi::Core::AbsorptionModel absorptionModel = Tucuxi::Core::AbsorptionModel::Undefined;
     std::string administrationName = "";
 
-    settingsFile.beginGroup(drugId + "." + intake);
+    settingsFile.beginGroup(drugId + "/" + intake);
 
     QStringList childKeys = settingsFile.childKeys();
 

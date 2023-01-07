@@ -1805,7 +1805,7 @@ function drawTooltips(cdata, ctx)
     var troughText = "C trough:";
     var peakText = "C peak:";
     var aucText = "AUC";
-    var cumulativeAucText = "Cum. AUC";
+    var cumulativeAucText = "Cum. AUC:";
 
     var labelsWidth = ctx.measureText(timeAfterDoseText).width + 4 * cdata.scale;
     var valuesWidth, tooltipWidth, tooltipHeight, x, y;

@@ -146,30 +146,7 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
         //Dosage data
         Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
 
-
-        RouteTranslator *translator = new ChuvRouteTranslator();
         QString restRoute = dosageNode.firstChildElement("intake").firstChild().toText().data();
-        Tucuxi::Gui::Core::Admin::Route route = translator->restToInternalRoute(restRoute);
-        delete translator;
-        if (route == Tucuxi::Gui::Core::Admin::UNVALID)
-        {
-            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The applied intake: %1 was not parsed into a valid intake").arg(restRoute));
-            Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
-            uncasted->setField("intake");
-            uncasted->setText(restRoute);
-            uncasted->setComment("The applied intake was not parsed into a valid intake.");
-            dosage->getUncastedValues()->append(uncasted);
-        }
-        else if (route == Tucuxi::Gui::Core::Admin::DEFAULT)
-        {
-            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The applied intake is an empty field. Assuming the default intake of the drug.").arg(restRoute));
-            Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
-            uncasted->setField("intake");
-            uncasted->setText(restRoute);
-            uncasted->setComment("The applied intake is an empty field. Assuming the default intake of the drug.");
-            dosage->getUncastedValues()->append(uncasted);
-        }
-        admin->setRoute(route);
 
         QString drugId = buildDrug("drug");
 
@@ -179,6 +156,22 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
 
         Tucuxi::Core::FormulationAndRoute formulationAndRoute = translatorFormulationAndRoute->restToInternalFormulationAndRoute(drugId, restRoute);
         delete translatorFormulationAndRoute;
+
+        switch (formulationAndRoute.getAbsorptionModel()) {
+        case Tucuxi::Core::AbsorptionModel::Extravascular: admin->setRoute(Tucuxi::Gui::Core::Admin::EXTRA); break;
+        case Tucuxi::Core::AbsorptionModel::ExtravascularLag: admin->setRoute(Tucuxi::Gui::Core::Admin::EXTRALAG); break;
+        case Tucuxi::Core::AbsorptionModel::Infusion: admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION); break;
+        case Tucuxi::Core::AbsorptionModel::Intravascular: admin->setRoute(Tucuxi::Gui::Core::Admin::BOLUS); break;
+        case Tucuxi::Core::AbsorptionModel::Undefined: {
+            admin->setRoute(Tucuxi::Gui::Core::Admin::UNVALID);
+            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The applied intake: %1 was not parsed into a valid intake").arg(restRoute));
+            Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+            uncasted->setField("intake");
+            uncasted->setText(restRoute);
+            uncasted->setComment("The applied intake was not parsed into a valid intake.");
+            dosage->getUncastedValues()->append(uncasted);
+        } break;
+        }
 
         admin->setFormulationAndRoute(formulationAndRoute);
         dosage->setRoute(admin);

@@ -72,6 +72,8 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
         activeSubstanceId = "vancomycin";
     } else if (activeSubstanceStr == "cefepime fulldata") {
         activeSubstanceId = "cefepime";
+    } else if (activeSubstanceStr == "voriconazole fulldata") {
+        activeSubstanceId = "voriconazole";
     }
 
     //Take the first details element
@@ -107,7 +109,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             // TODO (JRP) : The date should have the same format for all XML files
             if (activeSubstanceStr == "vanco fulldata") {
                 date = QDateTime::fromString(dateString, "MMM dd yyyy").date();
-            } else if (activeSubstanceStr == "cefepime fulldata") {
+            } else if (activeSubstanceStr == "cefepime fulldata" || activeSubstanceStr == "voriconazole fulldata") {
                 date = QDateTime::fromString(dateString, "MM-dd-yyyy hh:mm:ss").date();
             }
 
@@ -235,6 +237,30 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             measures->append(measure);
 
+        } else if (dataType == "Tx Vorico") {
+
+            Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
+
+            measure->setSdrug(activeSubstanceId);
+
+            QString dateString = detailElement.attribute("horaire");
+            QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
+            measure->setMoment(date);
+            measure->arrivalDate(date);
+
+            Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
+            QString valueString = detailElement.attribute("valeur");
+            valueString.replace(',', '.');
+            QString unit = detailElement.attribute("unite", "mg/l");
+            unit = unit.toLower();
+            double value = valueString.toDouble();
+            amt->setValue(value);
+            amt->setUnit(Tucuxi::Gui::Core::Unit(unit));
+
+            measure->setConcentration(amt);
+
+            measures->append(measure);
+
         } else if (dataType == "debit") {
 
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
@@ -305,8 +331,13 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(unit));
 
             //TODO (JRP) : interval and duration should be deducted from the XML
-            dosage->setInterval(Tucuxi::Gui::Core::Duration(8));
-            dosage->setTinf(Tucuxi::Gui::Core::Duration(0,180));
+            if (activeSubstanceStr == "cefepime fulldata") {
+                dosage->setInterval(Tucuxi::Gui::Core::Duration(8));
+                dosage->setTinf(Tucuxi::Gui::Core::Duration(0,180));
+            } else if (activeSubstanceStr == "voriconazole fulldata") {
+                dosage->setInterval(Tucuxi::Gui::Core::Duration(12));
+                dosage->setTinf(Tucuxi::Gui::Core::Duration(0,120));
+            }
 
             //TODO (JRP) : Set at steady state or not ?
             //TODO : To be checked

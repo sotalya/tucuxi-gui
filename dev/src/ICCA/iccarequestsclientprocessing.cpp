@@ -49,6 +49,9 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
     } else if (substanceStr == "cefepime fulldata") {
         substanceID = "cefepime";
         measureTagName = "Dosage Residuel cefepime";
+    } else if (substanceStr == "voriconazole fulldata") {
+        substanceID = "voriconazole";
+        measureTagName = "Tx Vorico";
     }
 
     QList<SharedPartialRequest> requests;

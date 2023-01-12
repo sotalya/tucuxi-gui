@@ -160,7 +160,7 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::ActiveSubstance *substance)
 
 bool DataXmlExport::save(Tucuxi::Gui::Core::DrugTreatment *treatment)
 {
-    save(treatment->getAdjustments());
+    save(treatment->getDosages());
     save(treatment->getMeasures());
 
     return true;
@@ -201,7 +201,7 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::CoreMeasureList *list)
     return true;
 }
 
-bool DataXmlExport::save(Tucuxi::Gui::Core::AdjustmentDosage *dosage)
+bool DataXmlExport::save(Tucuxi::Gui::Core::Dosage *dosage)
 {
     writer.writeStartElement("dosage");
     writer.writeStartElement("dosageLoop");
@@ -235,10 +235,7 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::DosageHistory *history)
     foreach(Tucuxi::Gui::Core::Dosage *dosage, history->getList()) {
         writer.writeTextElement("start", writeDate(dosage->getApplied()));
         writer.writeTextElement("end", writeDate(dosage->getEndTime()));
-        if (dynamic_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(dosage))
-            save(dynamic_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(dosage));
-        else
-            return false;
+        save(dosage);
     }
     writer.writeEndElement(); // End of dosageHistory
     writer.writeEndElement(); // End of treatment

@@ -64,7 +64,7 @@ protected:
     bool save(Tucuxi::Gui::Core::CoreMeasureList *list);
     bool save(Tucuxi::Gui::Core::ActiveSubstance *substance);
     bool save(Patient *patient);
-    bool save(Tucuxi::Gui::Core::AdjustmentDosage *dosage);
+    bool save(Core::Dosage *dosage);
     bool save(Tucuxi::Gui::Core::DosageHistory *history);
     bool saveIdentifiableAmount(const QString &tagName, Tucuxi::Gui::Core::IdentifiableAmount *amount);
 

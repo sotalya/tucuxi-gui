@@ -1,3 +1,5 @@
+!config_nobotan {
+
 #Paths and linker flags for Windows
 win32 {
 #    exists(C:/Botan-1.10.5) {
@@ -71,3 +73,4 @@ win32 {
     }
 }
 
+} # config_nobotan

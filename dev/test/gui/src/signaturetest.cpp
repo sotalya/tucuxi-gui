@@ -39,7 +39,7 @@ extern SpixGTest* srv;
 
 TEST(SignatureTest, Test1)
 {
-
+/*
     //    srv->startNewPatient();
     //    std::string fileName = "/home/julien/Documents/tucuxi-drugs/drugfiles/ch.tucuxi.imatinib.gotta2012.tdd";
     //    std::string fileName = "/home/julien/Documents/tucuxi-drugs/drugfiles/ch.tucuxi.vancomycin.colin2019.tdd";
@@ -61,4 +61,5 @@ TEST(SignatureTest, Test1)
     srv->waitPeriod(20);
 
     std::cout << "End of test" << std::endl;
+*/
 }

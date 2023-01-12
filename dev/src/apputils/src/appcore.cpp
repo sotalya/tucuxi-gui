@@ -28,6 +28,8 @@
 namespace Tucuxi {
 namespace Gui {
 namespace AppUtils {
+
+#ifndef CONFIG_NOBOTAN
 Tucuxi::Gui::Core::SecurityManager *AppCore::securityManager()
 {
     if (!_securityManager)
@@ -37,10 +39,15 @@ Tucuxi::Gui::Core::SecurityManager *AppCore::securityManager()
  // TODO Check why this doesn't work (it creates 2 instances)
  //   return &SecurityManager::instance();
 }
+#endif // CONFIG_NOBOTAN
 
 
 //Constructor
-AppCore::AppCore() : _securityManager(0), _drugManager(0)
+AppCore::AppCore() :
+#ifndef CONFIG_NOBOTAN
+    _securityManager(0),
+    #endif // CONFIG_NOBOTAN
+    _drugManager(0)
 {
     drugMutex = new QMutex();
     drugPreloadMutex = new QMutex();

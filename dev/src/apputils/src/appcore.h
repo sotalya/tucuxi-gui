@@ -78,9 +78,6 @@ class AppCore : public Tucuxi::Gui::Core::Core
 {
 public:
 
-    //! Get the security manager.
-    Tucuxi::Gui::Core::SecurityManager *securityManager();
-
     //Constructor
     AppCore();
 
@@ -102,8 +99,15 @@ private:
     //Destructor
     ~AppCore();
 
+
+#ifndef CONFIG_NOBOTAN
+public:
+    //! Get the security manager.
+    Tucuxi::Gui::Core::SecurityManager *securityManager();
+private:
     //The pseudo-singletons
     Tucuxi::Gui::Core::SecurityManager *_securityManager;
+#endif CONFIG_NOBOTAN
 
 };
 } //namespace AppUtils

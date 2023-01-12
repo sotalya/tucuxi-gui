@@ -742,14 +742,9 @@ Canvas {
         }
 
         Button {
-            text: "Calculate"
             Layout.alignment: Qt.AlignTop
-            background: Rectangle {
-                        implicitWidth: 20
-                        implicitHeight: 10
-                        border.width: 1
-                        radius: 4
-                    }
+            text: "Refresh"
+            implicitWidth: 75
             onClicked: interpretationController.launchUpdate()
         }
     }

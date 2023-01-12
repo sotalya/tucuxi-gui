@@ -395,14 +395,14 @@ DialogBase {
 
                         CheckBox {
                             id: autoCalculation
-                            text: "Enable automatic calculation?"
+                            text: "Enable automatic computation?"
                             checked: false // true
                             enabled: !appMode.isDemo()
                         }
 
                         CheckBox {
                             id: percentileCalculation
-                            text: "Enable percentile calculation?"
+                            text: "Enable percentile computation?"
                             checked: false // true
                             enabled: !appMode.isDemo()
                         }

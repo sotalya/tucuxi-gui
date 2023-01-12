@@ -837,7 +837,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
 void Tucuxi::Gui::GuiUtils::InterpretationController::loadInterpretation(Interpretation *interpretation)
 {
 
-    _chartDataController->dosageUpdated(shouldPercentilesBeComputed);
+    _chartDataController->dosageUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed);
     // No need to prepare the interpretation, as we simply load it
 
 
@@ -1162,12 +1162,12 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::dosageUpdated(bool clearAd
     if (clearAdjustment) {
         if (_interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->size() == 0) {
             _interpretation->getDrugResponseAnalysis()->getTreatment()->getMeasures()->clear();
-            _chartDataController->measureUpdated(shouldPercentilesBeComputed);
+            _chartDataController->measureUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed);
         }
         clearAdjustments();
         adjustmentTabController->onDosageUpdated();
     }
-    _chartDataController->dosageUpdated(shouldPercentilesBeComputed);
+    _chartDataController->dosageUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed);
 }
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::chartScaleChanged()
@@ -1194,7 +1194,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::measureUpdated()
     clearAdjustments();
     flowController->invalidateInterpretation();
     flowController->evaluate();
-    _chartDataController->measureUpdated(shouldPercentilesBeComputed);
+    _chartDataController->measureUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed);
 }
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::targetUpdated()
@@ -1210,7 +1210,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::covariateUpdated()
     clearAdjustments();
     flowController->invalidateInterpretation();
     flowController->evaluate();
-    _chartDataController->covariateUpdated(shouldPercentilesBeComputed);
+    _chartDataController->covariateUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed);
 }
 
 
@@ -1387,7 +1387,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
         flowController->drugChanged(index);
         flowController->evaluate();
 
-        _chartDataController->dosageUpdated(shouldPercentilesBeComputed, false);
+        _chartDataController->dosageUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed, false);
 
         // To start a first dose proposition
         adjustmentSettingsUpdated();
@@ -1433,7 +1433,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
         flowController->drugChanged(index);
         flowController->evaluate();
 
-        _chartDataController->dosageUpdated(shouldPercentilesBeComputed, true);
+        _chartDataController->dosageUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed, true);
     }
 
 }
@@ -1553,7 +1553,7 @@ Q_INVOKABLE void Tucuxi::Gui::GuiUtils::InterpretationController::resetViewRange
 {
     updateInterpretationRange(EViewRangeUpdateContext::Start);
     flowController->evaluate();
-    _chartDataController->dosageUpdated(shouldPercentilesBeComputed);
+    _chartDataController->dosageUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed);
 }
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::shiftViewRange(double dX)
@@ -1594,7 +1594,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setViewRange(const QDateTi
 
     if (updateInterpretationRange(EViewRangeUpdateContext::UserResize)) {
         flowController->evaluate();
-        _chartDataController->viewRangeUpdated(shouldPercentilesBeComputed);
+        _chartDataController->viewRangeUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed);
     }
     else {
         CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "requestPaint"));
@@ -2341,6 +2341,11 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::saveGraph()
 
 
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "saveGraph", Q_ARG(QVariant, QVariant::fromValue(fileName))));
+}
+
+void Tucuxi::Gui::GuiUtils::InterpretationController::launchUpdate()
+{
+    _chartDataController->launchCompute();
 }
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()

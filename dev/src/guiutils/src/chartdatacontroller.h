@@ -44,6 +44,8 @@ public:
 
     void setCurrentTab(Tucuxi::Gui::Admin::StepType::Enum type);
 
+    void launchCompute();
+
 signals:
 
 public slots:
@@ -74,6 +76,22 @@ public slots:
     void receiveResultsAdjPred(Tucuxi::Gui::Core::PredictionResult*);
     void initiateUpdateAdjPerc();
     void receiveResultsAdjPerc(Tucuxi::Gui::Core::PredictionResult*);
+
+private:
+    enum computationType {
+        POP_PRED,
+        POP_PERC,
+        APO_PRED,
+        APO_PERC,
+        APR_PRED,
+        APR_PERC,
+        REV_PRED,
+        ADJ_PRED,
+        ADJ_PERC
+    };
+
+    QSet<computationType> toComputeSet;
+
 
 
 protected:

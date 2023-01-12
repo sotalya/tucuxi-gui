@@ -31,9 +31,13 @@ public:
 
     void setRequestFile(QString _requestFile);
 
+    void setIccaFile(QString _iccaFile);
+
     const QString getListFile();
 
     const QString getRequestFile();
+
+    const QString getIccaFile();
 
     Q_INVOKABLE Tucuxi::Gui::Admin::Practician *getAnalyst();
 
@@ -41,6 +45,12 @@ public:
 
     Q_INVOKABLE bool showProcessingTime();
     Q_INVOKABLE void setShowProcessingTime(bool show);
+
+    Q_INVOKABLE bool autoCalculation();
+    Q_INVOKABLE void setAutoCalculation(bool enable);
+
+    Q_INVOKABLE bool percentileCalculation();
+    Q_INVOKABLE void setPercentileCalculation(bool enable);
 
 private:
     Q_OBJECT
@@ -53,10 +63,13 @@ private:
 
     QString m_listFile;
     QString m_requestFile;
+    QString m_iccaFile;
 
     Tucuxi::Gui::Admin::Practician *m_analyst;
 
     bool m_showProcessingTime;
+    bool m_autoCalculation;
+    bool m_percentileCalculation;
 };
 
 }

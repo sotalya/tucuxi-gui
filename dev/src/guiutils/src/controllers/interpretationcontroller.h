@@ -270,6 +270,8 @@ public:
     ///
     void exportCurrentDatas();
 
+    Q_INVOKABLE void launchUpdate();
+
 signals:
     void webchannelChanged(QQmlWebChannel&);
     void drugsChanged(Tucuxi::Gui::Core::DrugModelList*);

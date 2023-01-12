@@ -237,7 +237,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             measures->append(measure);
 
-        } else if (dataType == "Tx Vorico") {
+        } else if (dataType.startsWith("Tx Vorico")) {
 
             Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 

@@ -90,7 +90,7 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 
             // Find first concentration element for measure (if any)
             while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID/* && !sampleFound*/) {
-                if (detailElementCurrentPatient.attribute("donnees") == measureTagName) {
+                if (detailElementCurrentPatient.attribute("donnees").startsWith(measureTagName)) {
                     QString valueString = detailElementCurrentPatient.attribute("valeur");
                     valueString.replace(',', '.');
                     concentration = valueString.toDouble();

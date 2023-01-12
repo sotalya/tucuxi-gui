@@ -408,11 +408,13 @@ void ChartDataController::start()
     initiateUpdateRevPred();
     initiateUpdateAdjPred();
 
-    initiateUpdatePopPerc();
-    initiateUpdateAprPerc();
-    initiateUpdateApoPerc();
+    if (AppGlobals::getInstance()->percentileCalculation()) {
+        initiateUpdatePopPerc();
+        initiateUpdateAprPerc();
+        initiateUpdateApoPerc();
 
-    initiateUpdateAdjPerc();
+        initiateUpdateAdjPerc();
+    }
 
 }
 
@@ -424,7 +426,9 @@ void ChartDataController::adjustmentSettingsUpdated()
 void ChartDataController::adjustmentUpdated()
 {
     initiateUpdateAdjPred();
-    initiateUpdateAdjPerc();
+
+    if (AppGlobals::getInstance()->percentileCalculation())
+        initiateUpdateAdjPerc();
 }
 
 

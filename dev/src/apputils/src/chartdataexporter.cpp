@@ -22,7 +22,7 @@ QString ChartDataExporter::exportPrediction(PredictionResult *pred)
     for(int statIndex = 0; statIndex < data->getNbCycles(); statIndex ++) {
         CycleStatistics stat = data->getCycleStatistics(statIndex);
         content += QString("%1;%2;%3;%4;%5;%6\n").arg(statIndex).arg(stat.mean)
-                .arg(stat.auc).arg(stat.cumulatedAuc).arg(stat.trough).arg(stat.peak);
+                .arg(stat.auc).arg(stat.cumulativeAuc).arg(stat.trough).arg(stat.peak);
     }
 
     content += QString("\n\n");
@@ -88,7 +88,7 @@ QString ChartDataHtmlExporter::exportPrediction(PredictionResult *pred)
     for(int statIndex = 0; statIndex < data->getNbCycles(); statIndex ++) {
         CycleStatistics stat = data->getCycleStatistics(statIndex);
         content += QString("<tr><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td>%5</td><td>%6</td></tr>\n").arg(statIndex).arg(stat.mean)
-                .arg(stat.auc).arg(stat.cumulatedAuc).arg(stat.trough).arg(stat.peak);
+                .arg(stat.auc).arg(stat.cumulativeAuc).arg(stat.trough).arg(stat.peak);
     }
     content += "</table>";
 

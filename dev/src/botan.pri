@@ -1,3 +1,5 @@
+!config_nobotan {
+
 #Paths and linker flags for Windows
 win32 {
 #    exists(C:/Botan-1.10.5) {
@@ -23,7 +25,7 @@ win32 {
     else {
         exists(C:/Botan/Botan2-64) {
             CONFIG(debug, debug|release) {
-                LIBS += -LC:\Botan\botan2-64\lib -lbotand
+                LIBS += -LC:\Botan\botan2-64\lib -lbotan
             }
             CONFIG(release, debug|release) {
                 LIBS += -LC:\Botan\botan2-64\lib -lbotan
@@ -71,3 +73,4 @@ win32 {
     }
 }
 
+} # config_nobotan

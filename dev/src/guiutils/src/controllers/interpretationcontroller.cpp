@@ -463,7 +463,7 @@ bool Tucuxi::Gui::GuiUtils::InterpretationController::isFlowRequest() const
 }
 
 bool Tucuxi::Gui::GuiUtils::InterpretationController::acceptAndQuit()
-{/*
+{
     // Check if we can loose the work done
     if (QMessageBox::warning(QApplication::activeWindow(),
                              tr("Be careful"),
@@ -471,7 +471,7 @@ bool Tucuxi::Gui::GuiUtils::InterpretationController::acceptAndQuit()
                              QMessageBox::Yes,
                              QMessageBox::No) == QMessageBox::No)
         return false;
-*/
+
     // Stop every calculation
     calculationController->abortAll();
 

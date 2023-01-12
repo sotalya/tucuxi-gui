@@ -39,6 +39,7 @@ ChuvRouteTranslator::ChuvRouteTranslator()
     map.insert("orale", Tucuxi::Gui::Core::Admin::EXTRA);
     map.insert("per os", Tucuxi::Gui::Core::Admin::EXTRA);
     map.insert("p.o", Tucuxi::Gui::Core::Admin::EXTRA);
+    map.insert("intravenousDrip", Tucuxi::Gui::Core::Admin::INFUSION);
 }
 
 Tucuxi::Gui::Core::Admin::Route ChuvRouteTranslator::restToInternalRoute(QString restRoute)

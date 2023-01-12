@@ -1225,8 +1225,8 @@ function drawLegends(cdata, ctx)
     var aposterioriText = "A posteriori";
     var reverseText     = "Suggested adjustments";
     var adjustmentText  = "Adjustments";
-    var aprPercText		= "A priori percentiles"
-    var apoPercText		= "A posteriori percentiles"
+    var aprPercText        = "A priori percentiles"
+    var apoPercText        = "A posteriori percentiles"
 
     var internalSpacing = 5 * cdata.scale;
     var externalSpacing = 10 * cdata.scale;
@@ -1725,7 +1725,7 @@ function findClosestValue(cdata, ctx, predictive, predData, index, color)
         mean: prepareValueForDisplay(cdata, predData.meanAt(current)),
         auc: prepareValueForDisplay(cdata, predData.aucAt(current)),
         auc24: prepareValueForDisplay(cdata, predData.auc24At(current)),
-        cumulatedAuc: prepareValueForDisplay(cdata, predData.cumulatedAucAt(current)),
+        cumulativeAuc: prepareValueForDisplay(cdata, predData.cumulativeAucAt(current)),
         trough: prepareValueForDisplay(cdata, predData.troughAt(current)),
         peak: prepareValueForDisplay(cdata, predData.peakAt(current)),
         timeAfterDose: predData.timeAfterDose(current),
@@ -1805,7 +1805,7 @@ function drawTooltips(cdata, ctx)
     var troughText = "C trough:";
     var peakText = "C peak:";
     var aucText = "AUC";
-    var cumulatedAucText = "Cum. AUC";
+    var cumulativeAucText = "Cum. AUC:";
 
     var labelsWidth = ctx.measureText(timeAfterDoseText).width + 4 * cdata.scale;
     var valuesWidth, tooltipWidth, tooltipHeight, x, y;
@@ -1831,7 +1831,13 @@ function drawTooltips(cdata, ctx)
                         valuesWidth = Math.max(ctx.measureText(cdata.currentPoints[i].value).width, ctx.measureText(cdata.currentPoints[i].time).width) + 2;
 
                         tooltipWidth = (labelsWidth + valuesWidth);
-                        tooltipHeight = (9*14+8 + cdata.currentPoints[i].measureTime.length * 14 * 2) * cdata.scale;
+                        
+                        // measure height of the box 
+                        // (if we want all measures in the box: (9*14+8 + cdata.currentPoints[i].measureTime.length * 14 * 2) * cdata.scale)
+                        var existingMeasure = 0; // if no measure, do not add space below basic tooltips
+                        if (cdata.currentPoints[i].measureTime.length >= 1){existingMeasure = 1;} // else, add 1 space for a measure
+                        tooltipHeight = (9*14+8 + existingMeasure * 14 * 2) * cdata.scale;
+                        
                         x = x - tooltipWidth  / 2;
                         y = y - tooltipHeight - 10 * cdata.scale;
 
@@ -1888,26 +1894,47 @@ function drawTooltips(cdata, ctx)
                         ctx.fillText(aucText + " (24h):" , xText, yText);
                         ctx.fillText(auc24 + " " + cdata.unit + "*h", x + labelsWidth, yText);
                         yText = yText + 14 * cdata.scale
-                        var cumulatedAuc = cdata.currentPoints[i].cumulatedAuc
-                        if (!(cumulatedAuc > 0)) cumulatedAuc = "-"
-                        ctx.fillText(cumulatedAucText, xText, yText);
-                        ctx.fillText(cumulatedAuc + " " + cdata.unit + "*h", x + labelsWidth, yText);
+                        var cumulativeAuc = cdata.currentPoints[i].cumulativeAuc
+                        if (!(cumulativeAuc > 0)) cumulativeAuc = "-"
+                        ctx.fillText(cumulativeAucText, xText, yText);
+                        ctx.fillText(cumulativeAuc + " " + cdata.unit + "*h", x + labelsWidth, yText);
 
+                        // if there is more than 1 measure in the list of measures,
                         if (cdata.currentPoints[i].measureTime.length > 0) {
-                            var measureIndex;
-                            for (measureIndex = 0; measureIndex < cdata.currentPoints[i].measureTime.length; measureIndex++) {
-                                yText = yText + 14 * cdata.scale;
-                                var textMeasure = "Value at ";
-                                var textMeasure2 = formatDate(new Date(cdata.currentPoints[i].measureTime[measureIndex]));
-                                ctx.fillText(textMeasure, xText, yText);
-                                ctx.fillText(textMeasure2, x + labelsWidth, yText);
+                            var measureIndex = 0;
 
-                                yText = yText + 14 * cdata.scale;
-                                textMeasure = "is : ";
-                                textMeasure2 = prepareValueForDisplay(cdata, cdata.currentPoints[i].measurePredicted[measureIndex]) + " " + cdata.unit;
-                                ctx.fillText(textMeasure, xText, yText);
-                                ctx.fillText(textMeasure2, x + labelsWidth, yText);
-                            }
+                            // transform the time where the mouse is to a real date
+                            var pattern = /(\d{2})\:(\d{2})\ (\d{2})\.(\d{2})\.(\d{4})/;
+                            var pointedTime = cdata.currentPoints[i].time;
+                            pointedTime = new Date(pointedTime.replace(pattern,'$5-$4-$3T$1:$2:00'));
+
+                            // search for the date amongst the dates of measures that is the nearest the hovered date 
+                            var bestDate = 0;
+                            var bestDiff = Math.abs(new Date(cdata.currentPoints[i].measureTime[0]) - pointedTime);
+                            var currDiff = 0;
+                            var dateId;
+                            
+                            for(dateId = 0; dateId < cdata.currentPoints[i].measureTime.length; dateId++){
+                               currDiff = Math.abs(new Date(cdata.currentPoints[i].measureTime[dateId]) - pointedTime);
+                               if(currDiff < bestDiff){
+                                   measureIndex = dateId;
+                                   bestDiff = currDiff;
+                               }   
+                            } 
+                            
+                            // print the data of this date in the output frame, on the graph
+                            yText = yText + 14 * cdata.scale;
+                            var textMeasure = "Value at ";
+                            var textMeasure2 = formatDate(new Date(cdata.currentPoints[i].measureTime[measureIndex]));
+                            // textMeasure2 = cdata.currentPoints[i].measureTime;
+                            ctx.fillText(textMeasure, xText, yText);
+                            ctx.fillText(textMeasure2, x + labelsWidth, yText);
+
+                            yText = yText + 14 * cdata.scale;
+                            textMeasure = "is : ";
+                            textMeasure2 = prepareValueForDisplay(cdata, cdata.currentPoints[i].measurePredicted[measureIndex]) + " " + cdata.unit;
+                            ctx.fillText(textMeasure, xText, yText);
+                            ctx.fillText(textMeasure2, x + labelsWidth, yText);
                         }
                     }
                 }

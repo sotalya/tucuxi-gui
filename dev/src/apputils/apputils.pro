@@ -17,8 +17,6 @@ HEADERS += \
     src/drugxmlexport.h \
     ../current_version.h \
     src/appcore.h \
-    src/securitymanager.h \
-    src/datacrypter.h \
     src/user.h \
     src/druglister.h \
     src/drugmanager.h \
@@ -40,8 +38,6 @@ SOURCES += \
     src/drugxmlimport.cpp \
     src/drugxmlexport.cpp \
     src/appcore.cpp \
-    src/securitymanager.cpp \
-    src/datacrypter.cpp \
     src/user.cpp \
     src/druglister.cpp \
     src/drugmanager.cpp \
@@ -50,6 +46,17 @@ SOURCES += \
     src/predictionspecimporter.cpp \
     src/modelvstreatmentcompatibilitychecker.cpp \
     src/chartdataexporter.cpp
+
+!config_nobotan {
+HEADERS += \
+    src/securitymanager.h \
+    src/datacrypter.h
+
+SOURCES += \
+    src/securitymanager.cpp \
+    src/datacrypter.cpp
+
+} # config_nobotan
 
 CODECFORTR      += UTF-8
 TRANSLATIONS    += $${TRANS_DIR}/apputils_fr.ts

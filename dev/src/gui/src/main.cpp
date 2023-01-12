@@ -469,7 +469,7 @@ int main(int argc, char *argv[])
     EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized REST configuration.");
 #endif // CONFIG_CONNECTED
 
-    QtWebEngine::initialize();
+    //QtWebEngine::initialize();
 
     std::string path = QCoreApplication::applicationDirPath().toLatin1().data();
 #ifndef NOLICENSE

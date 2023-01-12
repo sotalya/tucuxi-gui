@@ -703,7 +703,8 @@ Canvas {
             z: -1
             objectName: "chartOverlayView"
             visible: false
-            anchors.fill: parent
+            height: 53
+            width: 53
             property var overlay: this
             property var mouseArea: canvas.mouseArea
 
@@ -742,6 +743,7 @@ Canvas {
 
         Button {
             text: "Calculate"
+            Layout.alignment: Qt.AlignTop
             background: Rectangle {
                         implicitWidth: 20
                         implicitHeight: 10

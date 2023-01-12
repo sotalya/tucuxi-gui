@@ -30,6 +30,9 @@
 #include "guiutils/src/demorequestfileclient.h"
 #endif
 
+// TODO JRP : Is conditional include needed ?
+#include "ICCA/iccarequestfileclient.h"
+
 #include "guiutils/src/widgets/validatedrugdialog.h"
 #include "admin/src/interpretationxmlimport.h"
 
@@ -52,29 +55,36 @@ MainWindowController::MainWindowController(QObject *parent) :
     requestsController = new RequestsController(this);
 
 
+AppGlobals* appGlobals = AppGlobals::getInstance();
 
-#ifdef CONFIG_CONNECTED
-    QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
-    AppGlobals* appGlobals = AppGlobals::getInstance();
-    QString listFile = appGlobals->getListFile();
-    //if (listFile.isEmpty()) {
-    //    listFile = requestDefaultDir;
-    //}
-    if (listFile.isEmpty())
-        requestsController->setClient(new Tucuxi::Gui::Rest::RestRequestsClient(this));
-    else {
+QString iccaFile = appGlobals->getIccaFile();
+if (iccaFile.isEmpty()) {
+    #ifdef CONFIG_CONNECTED
+        QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
+        QString listFile = appGlobals->getListFile();
+        //if (listFile.isEmpty()) {
+        //    listFile = requestDefaultDir;
+        //}
+        if (listFile.isEmpty())
+            requestsController->setClient(new Tucuxi::Gui::Rest::RestRequestsClient(this));
+        else {
+            DemoRequestFileClient *client = new DemoRequestFileClient(this);
+            client->setListFile(listFile);
+            requestsController->setClient(client);
+        }
+    #else
+    //    requestsController->setClient(new DemoRequestsClient(this));
+        QString listFile = ":/requests/List.xml";
         DemoRequestFileClient *client = new DemoRequestFileClient(this);
         client->setListFile(listFile);
         requestsController->setClient(client);
-    }
-#else
-//    requestsController->setClient(new DemoRequestsClient(this));
-    QString listFile = ":/requests/List.xml";
-    DemoRequestFileClient *client = new DemoRequestFileClient(this);
-    client->setListFile(listFile);
-    requestsController->setClient(client);
 
-#endif
+    #endif
+} else {
+    Tucuxi::Gui::ICCA::ICCARequestFileClient *client = new Tucuxi::Gui::ICCA::ICCARequestFileClient(this);
+    client->setListFile(iccaFile);
+    requestsController->setClient(client);
+}
 
 #ifdef CONFIG_GUITEST
     engine = new QQmlApplicationEngine();

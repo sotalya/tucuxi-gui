@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.15
 
 import guiutils.qml.styles 1.0
 import guiutils.qml.controls 1.0
@@ -696,47 +697,59 @@ Canvas {
         waittima.start();
     }
 
+    RowLayout {
+        Canvas {
+            id: overlay
+            z: -1
+            objectName: "chartOverlayView"
+            visible: false
+            anchors.fill: parent
+            property var overlay: this
+            property var mouseArea: canvas.mouseArea
 
-    Canvas {
-        id: overlay
-        z: -1
-        objectName: "chartOverlayView"
-        visible: false
-        anchors.fill: parent
-        property var overlay: this
-        property var mouseArea: canvas.mouseArea
+            property int screen_width: width;
+            property int screen_height: height;
+            property real radius: 50;
+            property real radius_scale: 1;
+            property real radius_scale_min: 1;
+            property real radius_scale_max: 1.5;
+            property int quantity: 25;
+            property var particles: [];
+            property real fadealpha: 0.05;
+            property bool fadeout: false
+            property bool waitStatus : isRunning
 
-        property int screen_width: width;
-        property int screen_height: height;
-        property real radius: 50;
-        property real radius_scale: 1;
-        property real radius_scale_min: 1;
-        property real radius_scale_max: 1.5;
-        property int quantity: 25;
-        property var particles: [];
-        property real fadealpha: 0.05;
-        property bool fadeout: false
-        property bool waitStatus : isRunning
+            Timer {
+                id: waittima
+                interval: 100/60; running: false; repeat: true
+                onTriggered: overlay.requestPaint();
+            }
 
-        Timer {
-            id: waittima
-            interval: 100/60; running: false; repeat: true
-            onTriggered: overlay.requestPaint();
+
+            Component.onCompleted: {
+                Trails.init(overlay);
+                Trails.setTargetSize(overlay, 0);
+    //            waitStatus = false;
+
+            }
+            onPaint: {
+                isRunning = Trails.loop(overlay);
+                waitStatus = isRunning;
+    //             isRunning = Trails.waitStatus();
+            }
+
         }
 
-
-        Component.onCompleted: {
-            Trails.init(overlay);
-            Trails.setTargetSize(overlay, 0);
-//            waitStatus = false;
-
+        Button {
+            text: "Calculate"
+            background: Rectangle {
+                        implicitWidth: 20
+                        implicitHeight: 10
+                        border.width: 1
+                        radius: 4
+                    }
+            onClicked: interpretationController.launchUpdate()
         }
-        onPaint: {
-            isRunning = Trails.loop(overlay);
-            waitStatus = isRunning;
-//             isRunning = Trails.waitStatus();
-        }
-
     }
 
 }

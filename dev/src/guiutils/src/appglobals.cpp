@@ -14,10 +14,13 @@ AppGlobals* AppGlobals::m_instance = nullptr;
 AppGlobals::AppGlobals() :
     m_listFile(),
     m_requestFile(),
+    m_iccaFile(),
     m_analyst(nullptr)
 {
 
     m_showProcessingTime = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "showProcessingTime" ,true).toBool();
+    m_autoCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "autoCalculation" ,true).toBool();
+    m_percentileCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "percentileCalculation" ,true).toBool();
 
 }
 
@@ -34,6 +37,32 @@ void AppGlobals::setShowProcessingTime(bool show)
     }
 }
 
+bool AppGlobals::autoCalculation()
+{
+    return m_autoCalculation;
+}
+
+void AppGlobals::setAutoCalculation(bool enable)
+{
+    if (enable != m_autoCalculation) {
+        m_autoCalculation = enable;
+        SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "autoCalculation" ,enable);
+    }
+}
+
+bool AppGlobals::percentileCalculation()
+{
+    return m_percentileCalculation;
+}
+
+void AppGlobals::setPercentileCalculation(bool enable)
+{
+    if (enable != m_percentileCalculation) {
+        m_percentileCalculation = enable;
+        SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "percentileCalculation" ,enable);
+    }
+}
+
 const QString AppGlobals::getListFile(){
     return m_listFile;
 }
@@ -42,12 +71,20 @@ const QString AppGlobals::getRequestFile(){
     return m_requestFile;
 }
 
+const QString AppGlobals::getIccaFile(){
+    return m_iccaFile;
+}
+
 void AppGlobals::setListFile(QString _listFile){
     m_listFile = _listFile;
 }
 
 void AppGlobals::setRequestFile(QString _requestFile){
     m_requestFile = _requestFile;
+}
+
+void AppGlobals::setIccaFile(QString _iccaFile){
+    m_iccaFile = _iccaFile;
 }
 
 Practician* AppGlobals::getAnalyst()

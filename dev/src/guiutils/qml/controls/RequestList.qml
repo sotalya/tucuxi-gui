@@ -410,11 +410,11 @@ Item {
                     }
                 }
                 TableViewColumn {
-                    title: "Sample value"
+                    title: "Last sample value"
                     width: 100
                     delegate: Component {
                         Text {
-                            text: model.sampleValue + " " + model.sampleUnit
+                            text: (model.sampleValue === 0.0) ? "" : model.sampleValue + " " + model.sampleUnit
                             color: model.color
                             elide: styleData.elideMode
                         }
@@ -425,7 +425,7 @@ Item {
                     width: 150
                     delegate: Component {
                         Text {
-                            text: model.sampleDate
+                            text: (model.sampleValue === 0.0) ? "" : model.sampleDate
                             color: model.color
                             elide: styleData.elideMode
                         }

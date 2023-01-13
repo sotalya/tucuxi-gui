@@ -282,6 +282,11 @@ Canvas {
         //ToDo: remove default unit
         unit = "ug/l";
         unitefforder = 1;
+
+        if (appGlobals.autoCalculation())
+            hideRefreshButton();
+        else
+            showRefreshButton();
     }
 
     function updateChartDimensions()
@@ -697,6 +702,14 @@ Canvas {
         waittima.start();
     }
 
+    function hideRefreshButton() {
+        refreshButton.visible = false
+    }
+
+    function showRefreshButton() {
+        refreshButton.visible = true
+    }
+
     RowLayout {
         Canvas {
             id: overlay
@@ -742,14 +755,10 @@ Canvas {
         }
 
         Button {
-            text: "Calculate"
+            id: refreshButton
             Layout.alignment: Qt.AlignTop
-            background: Rectangle {
-                        implicitWidth: 20
-                        implicitHeight: 10
-                        border.width: 1
-                        radius: 4
-                    }
+            text: "Refresh"
+            implicitWidth: 75
             onClicked: interpretationController.launchUpdate()
         }
     }

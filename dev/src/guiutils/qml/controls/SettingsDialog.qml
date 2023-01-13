@@ -51,10 +51,13 @@ DialogBase {
             else
                 appGlobals.setShowProcessingTime(false);
 
-            if (autoCalculation.checkState == Qt.Checked)
+            if (autoCalculation.checkState == Qt.Checked) {
                 appGlobals.setAutoCalculation(true);
-            else
+                interpretationController.setRefreshButtonVisible(false)
+            } else {
                appGlobals.setAutoCalculation(false);
+               interpretationController.setRefreshButtonVisible(true)
+            }
 
             if (percentileCalculation.checkState == Qt.Checked)
                 appGlobals.setPercentileCalculation(true);
@@ -395,14 +398,14 @@ DialogBase {
 
                         CheckBox {
                             id: autoCalculation
-                            text: "Enable automatic calculation?"
+                            text: "Enable automatic computation?"
                             checked: false // true
                             enabled: !appMode.isDemo()
                         }
 
                         CheckBox {
                             id: percentileCalculation
-                            text: "Enable percentile calculation?"
+                            text: "Enable percentile computation?"
                             checked: false // true
                             enabled: !appMode.isDemo()
                         }

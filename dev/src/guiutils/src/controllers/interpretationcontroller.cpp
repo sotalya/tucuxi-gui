@@ -2348,6 +2348,15 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchUpdate()
     _chartDataController->launchCompute();
 }
 
+void Tucuxi::Gui::GuiUtils::InterpretationController::setRefreshButtonVisible(bool visible)
+{
+    if (visible) {
+        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "showRefreshButton"));
+    } else {
+        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "hideRefreshButton"));
+    }
+}
+
 void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()
 {
     // Open a dialog window to choose where to save datas

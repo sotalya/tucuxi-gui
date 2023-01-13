@@ -89,7 +89,8 @@ void AppGlobals::setIccaFile(QString _iccaFile){
 
 Practician* AppGlobals::getAnalyst()
 {
-    if (m_analyst == nullptr) {
+    //TODO (JRP): To debug c.f. correspondig issue #14
+    if (true || m_analyst == nullptr) {
         m_analyst = new Practician();
         loadAnalystSettings();
     }

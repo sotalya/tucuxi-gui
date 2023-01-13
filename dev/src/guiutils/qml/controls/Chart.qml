@@ -282,6 +282,11 @@ Canvas {
         //ToDo: remove default unit
         unit = "ug/l";
         unitefforder = 1;
+
+        if (appGlobals.autoCalculation())
+            hideRefreshButton();
+        else
+            showRefreshButton();
     }
 
     function updateChartDimensions()
@@ -697,6 +702,14 @@ Canvas {
         waittima.start();
     }
 
+    function hideRefreshButton() {
+        refreshButton.visible = false
+    }
+
+    function showRefreshButton() {
+        refreshButton.visible = true
+    }
+
     RowLayout {
         Canvas {
             id: overlay
@@ -742,6 +755,7 @@ Canvas {
         }
 
         Button {
+            id: refreshButton
             Layout.alignment: Qt.AlignTop
             text: "Refresh"
             implicitWidth: 75

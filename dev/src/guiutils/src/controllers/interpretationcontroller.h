@@ -272,6 +272,8 @@ public:
 
     Q_INVOKABLE void launchUpdate();
 
+    Q_INVOKABLE void setRefreshButtonVisible(bool visible);
+
 signals:
     void webchannelChanged(QQmlWebChannel&);
     void drugsChanged(Tucuxi::Gui::Core::DrugModelList*);

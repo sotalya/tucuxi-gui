@@ -51,10 +51,13 @@ DialogBase {
             else
                 appGlobals.setShowProcessingTime(false);
 
-            if (autoCalculation.checkState == Qt.Checked)
+            if (autoCalculation.checkState == Qt.Checked) {
                 appGlobals.setAutoCalculation(true);
-            else
+                interpretationController.setRefreshButtonVisible(false)
+            } else {
                appGlobals.setAutoCalculation(false);
+               interpretationController.setRefreshButtonVisible(true)
+            }
 
             if (percentileCalculation.checkState == Qt.Checked)
                 appGlobals.setPercentileCalculation(true);

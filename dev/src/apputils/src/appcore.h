@@ -107,7 +107,7 @@ public:
 private:
     //The pseudo-singletons
     Tucuxi::Gui::Core::SecurityManager *_securityManager;
-#endif CONFIG_NOBOTAN
+#endif // CONFIG_NOBOTAN
 
 };
 } //namespace AppUtils

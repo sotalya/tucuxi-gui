@@ -37,7 +37,7 @@ cliutils.depends             = core apputils admin rest
 }
 !config_rest {
 guiutils.depends             = core apputils admin
-gui.depends                  = core apputils admin guiutils
+gui.depends                  = core apputils admin guiutils ICCA
 }
 drugeditor.depends	     = core guiutils
 ICCA.depends                 = core admin apputils rest

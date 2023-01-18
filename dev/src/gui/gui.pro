@@ -141,6 +141,7 @@ android {
 INSTALLS    += dbs
 }
 
+
 #Translation configuration
 include(../translation.pri)
 

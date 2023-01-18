@@ -80,6 +80,8 @@ bool DrugManager::tryToAddDrugModelToRepo(Tucuxi::Gui::Core::DrugModel *drugMode
     Response r;
     bool canAdd = true;
     QList<Tucuxi::Gui::Core::DrugModel* > existingList;
+    if (ABSTRACTREPO == nullptr) {exit(4);}
+    if (APPUTILSREPO == nullptr) {exit(5);}
     r = APPUTILSREPO->getDrugsList(existingList);
     if (r.error == NoError) {
         for(int i=0; i < existingList.size(); i++) {

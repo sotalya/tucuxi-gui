@@ -407,6 +407,7 @@ void Core::initPaths()
     _paths[ApplicationData] = _paths[Executable];
 #ifdef Q_OS_MACX
     _paths[ApplicationData] = _paths[Executable] + "/../Resources";
+    //_paths[ApplicationData] = _paths[Executable];
 #endif
 #ifdef Q_OS_ANDROID
     _paths[ApplicationData] = "assets:";

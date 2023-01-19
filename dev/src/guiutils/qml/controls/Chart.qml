@@ -645,10 +645,7 @@ Canvas {
 
         onPressed: {
             if (mouse.button  == Qt.RightButton) {
-                // Open a dialog to select the objects to show on the graph
-                graphSettingsDialog.init()
-                graphSettingsDialog.open(true)
-
+                contextMenu.popup()
             }
             else {
                 pressX = mouse.x;
@@ -686,6 +683,37 @@ Canvas {
                 // For most mice, 120 equals one step of the wheel.
                 zoom(wheel.angleDelta.y/120);
                 tooltipX = -1; // Clear tooltip
+            }
+        }
+
+        Menu {
+            id: contextMenu
+            MenuItem {
+                text: "Graph settings"
+
+                onTriggered: {
+                    // Open a dialog to select the objects to show on the graph
+                    graphSettingsDialog.init()
+                    graphSettingsDialog.open(true)
+                }
+            }
+
+            MenuItem {
+                text: "Vertical Zoom In"
+
+                onTriggered: {
+                    zoomY(1);
+                    rePaint();
+                }
+            }
+
+            MenuItem {
+                text: "Vertical Zoom Out"
+
+                onTriggered: {
+                    zoomY(-1);
+                    rePaint();
+                }
             }
         }
     }

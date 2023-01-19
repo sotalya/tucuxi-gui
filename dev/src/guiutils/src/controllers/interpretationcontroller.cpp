@@ -132,6 +132,7 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
     validationView(nullptr),
     reportView(nullptr),
     _webchannel(nullptr),
+    shouldPercentilesBeComputed(true),
     printer(),
     exportFileDialog()
 {

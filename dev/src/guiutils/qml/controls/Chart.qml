@@ -688,18 +688,9 @@ Canvas {
 
         Menu {
             id: contextMenu
-            MenuItem {
-                text: "Graph settings"
-
-                onTriggered: {
-                    // Open a dialog to select the objects to show on the graph
-                    graphSettingsDialog.init()
-                    graphSettingsDialog.open(true)
-                }
-            }
 
             MenuItem {
-                text: "Vertical Zoom In"
+                text: "Vertical Zoom In \n[shift + wheel up]"
 
                 onTriggered: {
                     zoomY(1);
@@ -708,11 +699,39 @@ Canvas {
             }
 
             MenuItem {
-                text: "Vertical Zoom Out"
+                text: "Vertical Zoom Out \n[shift + wheel down]"
 
                 onTriggered: {
                     zoomY(-1);
                     rePaint();
+                }
+            }
+
+            MenuItem {
+                text: "Horizontal Zoom In \n[wheel up]"
+
+                onTriggered: {
+                    zoom(1);
+                    tooltipX = -1; // Clear tooltip
+                }
+            }
+
+            MenuItem {
+                text: "Horizontal Zoom Out \n[wheel down]"
+
+                onTriggered: {
+                    zoom(-1);
+                    tooltipX = -1; // Clear tooltip
+                }
+            }
+
+            MenuItem {
+                text: "Graph settings"
+
+                onTriggered: {
+                    // Open a dialog to select the objects to show on the graph
+                    graphSettingsDialog.init()
+                    graphSettingsDialog.open(true)
                 }
             }
         }

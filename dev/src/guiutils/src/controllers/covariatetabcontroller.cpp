@@ -351,6 +351,7 @@ void Tucuxi::Gui::GuiUtils::CovariateTabController::updateAllActualValues()
                 {
                     latestDate = date;
                     dv->getActualValue()->setDbvalue(pv->getQuantity()->getDbvalue());
+                    dv->getActualValue()->setUnitstring(pv->getQuantity()->getUnitstring());
                     dv->setDate(pv->getDate());
                 }
             }
@@ -360,6 +361,7 @@ void Tucuxi::Gui::GuiUtils::CovariateTabController::updateAllActualValues()
         if (latestDate == 0)
         {
             dv->getActualValue()->setDbvalue(dv->getDefaultValue()->value());
+            dv->getActualValue()->setUnitstring(dv->getDefaultValue()->getUnitstring());
         }
     }
 
@@ -384,6 +386,7 @@ void Tucuxi::Gui::GuiUtils::CovariateTabController::updateActualValue(QString va
                     {
                         latestDate = date;
                         dv->getActualValue()->setDbvalue(pv->getQuantity()->getDbvalue());
+                        dv->getActualValue()->setUnitstring(pv->getQuantity()->getUnitstring());
                         dv->setDate(pv->getDate());
                     }
                 }
@@ -393,6 +396,7 @@ void Tucuxi::Gui::GuiUtils::CovariateTabController::updateActualValue(QString va
             if (latestDate == 0)
             {
                 dv->getActualValue()->setDbvalue(dv->getDefaultValue()->value());
+                dv->getActualValue()->setUnitstring(dv->getDefaultValue()->getUnitstring());
             }
             break;
         }

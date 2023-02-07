@@ -690,8 +690,10 @@ Canvas {
         Menu {
             id: contextMenu
 
+            width: 300
+
             MenuItem {
-                text: "Vertical Zoom In \n[shift + wheel up]"
+                text: "Vertical Zoom In <b>[shift + wheel up]</b>"
 
                 onTriggered: {
                     zoomY(1);
@@ -700,7 +702,7 @@ Canvas {
             }
 
             MenuItem {
-                text: "Vertical Zoom Out \n[shift + wheel down]"
+                text: "Vertical Zoom Out <b>[shift + wheel down]</b>"
 
                 onTriggered: {
                     zoomY(-1);
@@ -709,7 +711,7 @@ Canvas {
             }
 
             MenuItem {
-                text: "Horizontal Zoom In \n[wheel up]"
+                text: "Horizontal Zoom In <b>[wheel up]</b>"
 
                 onTriggered: {
                     zoom(1);
@@ -718,7 +720,7 @@ Canvas {
             }
 
             MenuItem {
-                text: "Horizontal Zoom Out \n[wheel down]"
+                text: "Horizontal Zoom Out <b>[wheel down]</b>"
 
                 onTriggered: {
                     zoom(-1);

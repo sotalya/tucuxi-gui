@@ -1522,6 +1522,13 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::goToPreviousEvent()
     }
 }
 
+void Tucuxi::Gui::GuiUtils::InterpretationController::goToDate(const QDateTime &date)
+{
+    if (date.isValid()) {
+        setDateViewRange(date);
+    }
+}
+
 QList<QDateTime> Tucuxi::Gui::GuiUtils::InterpretationController::buildEventsList()
 {
     // We build the list of all events: dosage changes, covariate changes, measures, adjustment time

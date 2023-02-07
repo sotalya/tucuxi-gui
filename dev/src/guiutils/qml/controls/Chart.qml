@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.3
 
 import guiutils.qml.styles 1.0
 import guiutils.qml.controls 1.0
@@ -745,7 +746,7 @@ Canvas {
                 text: "Goto date"
 
                 onTriggered: {
-
+                    dateDialog.open()
                 }
             }
 
@@ -758,6 +759,22 @@ Canvas {
                     graphSettingsDialog.open(true)
                 }
             }
+        }
+    }
+
+    Dialog {
+        id: dateDialog
+        modality: Qt.WindowModale
+
+        standardButtons: StandardButton.Ok | StandardButton.Cancel
+
+        DatePicker {
+            id: datePicker
+            anchors.centerIn: parent
+        }
+
+        onAccepted: {
+            interpretationController.goToDate(datePicker.date)
         }
     }
 

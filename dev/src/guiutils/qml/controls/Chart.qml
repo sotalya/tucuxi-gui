@@ -715,7 +715,6 @@ Canvas {
 
                 onTriggered: {
                     zoom(1);
-                    tooltipX = -1; // Clear tooltip
                 }
             }
 
@@ -724,7 +723,6 @@ Canvas {
 
                 onTriggered: {
                     zoom(-1);
-                    tooltipX = -1; // Clear tooltip
                 }
             }
 

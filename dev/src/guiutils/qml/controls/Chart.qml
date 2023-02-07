@@ -726,6 +726,30 @@ Canvas {
             }
 
             MenuItem {
+                text: "Goto next event"
+
+                onTriggered: {
+                    interpretationController.goToNextEvent();
+                }
+            }
+
+            MenuItem {
+                text: "Goto previous event"
+
+                onTriggered: {
+                    interpretationController.goToPreviousEvent();
+                }
+            }
+
+            MenuItem {
+                text: "Goto date"
+
+                onTriggered: {
+
+                }
+            }
+
+            MenuItem {
                 text: "Graph settings"
 
                 onTriggered: {

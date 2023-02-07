@@ -169,6 +169,11 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
+    // This trick allows to handle decimal numbers correctly on non-english OS
+    // It could be handled differently by correcting some QML files, like
+    // CovariateDialog.qml, MeasureDialog.qml and EntityTextValueEntry.qml
+    QLocale::setDefault(QLocale("en_US"));
+
 /*
  * For the day we want to play with the system tray
  *

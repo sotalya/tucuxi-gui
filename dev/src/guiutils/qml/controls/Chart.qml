@@ -696,7 +696,11 @@ Canvas {
                 text: "Vertical Zoom In <b>[shift + wheel up]</b>"
 
                 onTriggered: {
-                    zoomY(1);
+                    var maxYDiplayed = Graphing.maxYDisplayedValue(yFactor, minY, maxY, scale);
+                    do {
+                        zoomY(1);
+                    } while(maxYDiplayed === Graphing.maxYDisplayedValue(yFactor, minY, maxYDiplayed, scale))
+
                     rePaint();
                 }
             }
@@ -705,7 +709,11 @@ Canvas {
                 text: "Vertical Zoom Out <b>[shift + wheel down]</b>"
 
                 onTriggered: {
-                    zoomY(-1);
+                    var maxYDiplayed = Graphing.maxYDisplayedValue(yFactor, minY, maxY, scale);
+                    do {
+                        zoomY(-1);
+                    } while(maxYDiplayed === Graphing.maxYDisplayedValue(yFactor, minY, maxYDiplayed, scale))
+
                     rePaint();
                 }
             }

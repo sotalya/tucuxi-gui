@@ -866,6 +866,49 @@ function ascreen2time(cdata, p)
     return cdata.minX + ((p - cdata.bottomLeftX) / cdata.xRatio);
 }
 
+function maxYDisplayedValue(yFactor, minY, maxY, scale)
+{
+    maxY = maxY * yFactor;
+    var lg10 = Math.pow(10, Math.ceil(Math.log(1.1 * maxY) / Math.LN10) - 1);
+    maxY = Math.ceil(1.1 / lg10 * maxY) * lg10;
+
+    return maxY;
+
+//    var tickSpacingy = 0.2 * scale;
+//    var unitefforder = 1;
+
+//    var down = -1.0;
+//    var up = 1.0;
+//    var down_i = Math.ceil(down / tickSpacingy);
+//    var up_i = Math.floor(up / tickSpacingy);
+
+//    var nbTicksY = up_i - down_i + 1;
+//    if (nbTicksY > 21)
+//        nbTicksY = 21;
+
+//    var order = (2 - Math.log(maxY - minY) / Math.LN10);
+//    if (order >= 1 && order < 4) {
+//        unitefforder = 1e3;
+//    }
+//    if (order >= 4 && order < 7) {
+//        unitefforder = 1e6;
+//    }
+//    if (order > -5 && order < -2) {
+//        unitefforder = 1e-3;
+//    }
+//    if (order > -8 && order < -5) {
+//        unitefforder = 1e-6;
+//    }
+//    if (order < 1 && order >= -2) {
+//        unitefforder = 1;
+//    }
+
+//    var val = minY + (0.5 * (nbTicksY - 1) * tickSpacingy) * (maxY - minY);
+
+//    //Return max displayed tick value
+//    return Math.max(0,Math.round(unitefforder * val));
+}
+
 function drawAxisTicks(cdata, ctx)
 {
     //Settings

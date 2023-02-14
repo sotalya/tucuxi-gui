@@ -698,7 +698,7 @@ Canvas {
                 onTriggered: {
                     var maxYDiplayed = Graphing.maxYDisplayedValue(yFactor, minY, maxY, scale);
                     do {
-                        zoomY(1);
+                        zoomY(2);
                     } while(maxYDiplayed === Graphing.maxYDisplayedValue(yFactor, minY, maxYDiplayed, scale))
 
                     rePaint();
@@ -711,7 +711,7 @@ Canvas {
                 onTriggered: {
                     var maxYDiplayed = Graphing.maxYDisplayedValue(yFactor, minY, maxY, scale);
                     do {
-                        zoomY(-1);
+                        zoomY(-2);
                     } while(maxYDiplayed === Graphing.maxYDisplayedValue(yFactor, minY, maxYDiplayed, scale))
 
                     rePaint();

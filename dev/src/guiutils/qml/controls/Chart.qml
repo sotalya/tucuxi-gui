@@ -277,7 +277,6 @@ Canvas {
         //        apopercsP = chartData.apoPred.predictive.percentilePairs;
         //        revP = chartData.revPred.adjustments;
 
-        maxYData = 0;
         maxX = 0;
         minX = 0;
         maxY = 0;
@@ -778,17 +777,33 @@ Canvas {
 
     Dialog {
         id: dateDialog
-        modality: Qt.WindowModale
+        title: "Go to date"
 
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        standardButtons: StandardButton.NoButton
 
-        DatePicker {
-            id: datePicker
-            anchors.centerIn: parent
-        }
+        ColumnLayout {
+            DatePicker {
+                id: datePicker
+            }
 
-        onAccepted: {
-            interpretationController.goToDate(datePicker.date)
+            RowLayout {
+                Button {
+                    text: "OK"
+
+                    onClicked: {
+                        interpretationController.goToDate(datePicker.date)
+                        dateDialog.close()
+                    }
+                }
+
+                Button {
+                    text: "Cancel"
+
+                    onClicked: {
+                        dateDialog.close()
+                    }
+                }
+            }
         }
     }
 

@@ -1585,8 +1585,6 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setDateViewRange(const QDa
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::setViewRange(const QDateTime &minX, const QDateTime &maxX)
 {
-    std::cout << "in setViewRange()";
-
     _userRequestedMinX = minX;
     _userRequestedMaxX = maxX;
 
@@ -1605,7 +1603,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setViewRange(const QDateTi
         _chartDataController->viewRangeUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed);
     }
     else {
-        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "requestPaint"));
+        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "rePaint"));
     }
 }
 

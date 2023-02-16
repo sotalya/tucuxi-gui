@@ -488,12 +488,9 @@ function extents(cdata)
         }
     }
 
-    // Modify maxY with respect to the manual y factor
-    cdata.maxY = cdata.maxY * cdata.yFactor;
+    maxYData = cdata.maxY;
 
-    var lg10 = Math.pow(10, Math.ceil(Math.log(1.1 * cdata.maxY) / Math.LN10) - 1);
-    cdata.maxY = Math.ceil(1.1 / lg10 * cdata.maxY) * lg10;
-
+    cdata.maxY = maxYDisplayedValue(yFactor, minX, maxYData);
 
     cdata.xRatio = cdata.plotWidth  / (cdata.maxX - cdata.minX);
     cdata.yRatio = cdata.plotHeight / (cdata.maxY - cdata.minY);
@@ -866,13 +863,14 @@ function ascreen2time(cdata, p)
     return cdata.minX + ((p - cdata.bottomLeftX) / cdata.xRatio);
 }
 
-function maxYDisplayedValue(yFactor, minY, maxY, scale)
-{
-    maxY = maxY * yFactor;
-    var lg10 = Math.pow(10, Math.ceil(Math.log(1.1 * maxY) / Math.LN10) - 1);
-    maxY = Math.ceil(1.1 / lg10 * maxY) * lg10;
 
-    return maxY;
+function maxYDisplayedValue(yFactor, minY, maxY)
+{
+    var maxY2 = maxY * yFactor;
+    var lg10 = Math.pow(10, Math.ceil(Math.log(1.1 * maxY2) / Math.LN10) - 1);
+    var maxY3 = Math.ceil(1.1 / lg10 * maxY2) * lg10;
+
+    return maxY3;
 
 //    var tickSpacingy = 0.2 * scale;
 //    var unitefforder = 1;
@@ -1560,10 +1558,12 @@ function drawAnnotations(cdata)     //eslint-disable-line @typescript-eslint/no-
     }
 
     //    ctx.clearRect(0, 0, cdata.canvas.width, cdata.canvas.height);
+
     annotatePrediction(cdata, ctx, cdata.popP, cdata.pop, cdata.colors[1]);
     annotatePrediction(cdata, ctx, cdata.aprP, cdata.apr, cdata.colors[2]);
     annotatePrediction(cdata, ctx, cdata.apoP, cdata.apo, cdata.colors[4]);
     annotatePrediction(cdata, ctx, cdata.adjP, cdata.adj, cdata.adjcolors[1]);
+
 
     if (cdata.revP !== null && cdata.revP.isValid) {
         if (cdata.gInformationSelection.displayPossibleAdjustments) {

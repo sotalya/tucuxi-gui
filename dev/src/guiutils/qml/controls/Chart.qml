@@ -129,10 +129,15 @@ Canvas {
     property var adjpercsP: chartData.adjPred.predictive.percentilePairs
     property var revP: chartData.revPred.adjustments
 
+    // The maximum Y value of data (predictions, percentiles, targets)
+    property real maxYData: 0
 
     property real maxX: 0
     property real minX: 0
+
+    // The maximum Y value that will be displayed
     property real maxY: 0
+
     property real minY: 0
     property real xRatio: 0
     property real yRatio: 0
@@ -272,6 +277,7 @@ Canvas {
         //        apopercsP = chartData.apoPred.predictive.percentilePairs;
         //        revP = chartData.revPred.adjustments;
 
+        maxYData = 0;
         maxX = 0;
         minX = 0;
         maxY = 0;
@@ -696,10 +702,10 @@ Canvas {
                 text: "Vertical Zoom In <b>[shift + wheel up]</b>"
 
                 onTriggered: {
-                    var maxYDiplayed = Graphing.maxYDisplayedValue(yFactor, minY, maxY, scale);
+                    var origMaxY = maxY;
                     do {
-                        zoomY(2);
-                    } while(maxYDiplayed === Graphing.maxYDisplayedValue(yFactor, minY, maxYDiplayed, scale))
+                        zoomY(1);
+                    } while (origMaxY === Graphing.maxYDisplayedValue(yFactor, minX, maxYData));
 
                     rePaint();
                 }
@@ -709,10 +715,10 @@ Canvas {
                 text: "Vertical Zoom Out <b>[shift + wheel down]</b>"
 
                 onTriggered: {
-                    var maxYDiplayed = Graphing.maxYDisplayedValue(yFactor, minY, maxY, scale);
+                    var origMaxY = maxY;
                     do {
-                        zoomY(-2);
-                    } while(maxYDiplayed === Graphing.maxYDisplayedValue(yFactor, minY, maxYDiplayed, scale))
+                        zoomY(-1);
+                    } while (origMaxY === Graphing.maxYDisplayedValue(yFactor, minX, maxYData));
 
                     rePaint();
                 }

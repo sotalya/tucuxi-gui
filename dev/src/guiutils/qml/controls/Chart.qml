@@ -698,7 +698,7 @@ Canvas {
                 onTriggered: {
                     var maxYDiplayed = Graphing.maxYDisplayedValue(yFactor, minY, maxY, scale);
                     do {
-                        zoomY(2);
+                        zoomY(3);
                     } while(maxYDiplayed === Graphing.maxYDisplayedValue(yFactor, minY, maxYDiplayed, scale))
 
                     rePaint();
@@ -711,7 +711,7 @@ Canvas {
                 onTriggered: {
                     var maxYDiplayed = Graphing.maxYDisplayedValue(yFactor, minY, maxY, scale);
                     do {
-                        zoomY(-2);
+                        zoomY(-3);
                     } while(maxYDiplayed === Graphing.maxYDisplayedValue(yFactor, minY, maxYDiplayed, scale))
 
                     rePaint();
@@ -772,17 +772,33 @@ Canvas {
 
     Dialog {
         id: dateDialog
-        modality: Qt.WindowModale
+        title: "Go to date"
 
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        standardButtons: StandardButton.NoButton
 
-        DatePicker {
-            id: datePicker
-            anchors.centerIn: parent
-        }
+        ColumnLayout {
+            DatePicker {
+                id: datePicker
+            }
 
-        onAccepted: {
-            interpretationController.goToDate(datePicker.date)
+            RowLayout {
+                Button {
+                    text: "OK"
+
+                    onClicked: {
+                        interpretationController.goToDate(datePicker.date)
+                        dateDialog.close()
+                    }
+                }
+
+                Button {
+                    text: "Cancel"
+
+                    onClicked: {
+                        dateDialog.close()
+                    }
+                }
+            }
         }
     }
 

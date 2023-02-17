@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.3
 
 import guiutils.qml.styles 1.0
 import guiutils.qml.controls 1.0
@@ -128,10 +129,15 @@ Canvas {
     property var adjpercsP: chartData.adjPred.predictive.percentilePairs
     property var revP: chartData.revPred.adjustments
 
+    // The maximum Y value of data (predictions, percentiles, targets)
+    property real maxYData: 0
 
     property real maxX: 0
     property real minX: 0
+
+    // The maximum Y value that will be displayed
     property real maxY: 0
+
     property real minY: 0
     property real xRatio: 0
     property real yRatio: 0
@@ -645,10 +651,7 @@ Canvas {
 
         onPressed: {
             if (mouse.button  == Qt.RightButton) {
-                // Open a dialog to select the objects to show on the graph
-                graphSettingsDialog.init()
-                graphSettingsDialog.open(true)
-
+                contextMenu.popup()
             }
             else {
                 pressX = mouse.x;
@@ -686,6 +689,120 @@ Canvas {
                 // For most mice, 120 equals one step of the wheel.
                 zoom(wheel.angleDelta.y/120);
                 tooltipX = -1; // Clear tooltip
+            }
+        }
+
+        Menu {
+            id: contextMenu
+
+            width: 300
+
+            MenuItem {
+                text: "Vertical Zoom In <b>[shift + wheel up]</b>"
+
+                onTriggered: {
+                    var origMaxY = maxY;
+                    do {
+                        zoomY(1);
+                    } while (origMaxY === Graphing.maxYDisplayedValue(yFactor, minX, maxYData));
+
+                    rePaint();
+                }
+            }
+
+            MenuItem {
+                text: "Vertical Zoom Out <b>[shift + wheel down]</b>"
+
+                onTriggered: {
+                    var origMaxY = maxY;
+                    do {
+                        zoomY(-1);
+                    } while (origMaxY === Graphing.maxYDisplayedValue(yFactor, minX, maxYData));
+
+                    rePaint();
+                }
+            }
+
+            MenuItem {
+                text: "Horizontal Zoom In <b>[wheel up]</b>"
+
+                onTriggered: {
+                    zoom(1);
+                }
+            }
+
+            MenuItem {
+                text: "Horizontal Zoom Out <b>[wheel down]</b>"
+
+                onTriggered: {
+                    zoom(-1);
+                }
+            }
+
+            MenuItem {
+                text: "Goto next event"
+
+                onTriggered: {
+                    interpretationController.goToNextEvent();
+                }
+            }
+
+            MenuItem {
+                text: "Goto previous event"
+
+                onTriggered: {
+                    interpretationController.goToPreviousEvent();
+                }
+            }
+
+            MenuItem {
+                text: "Goto date"
+
+                onTriggered: {
+                    dateDialog.open()
+                }
+            }
+
+            MenuItem {
+                text: "Graph settings"
+
+                onTriggered: {
+                    // Open a dialog to select the objects to show on the graph
+                    graphSettingsDialog.init()
+                    graphSettingsDialog.open(true)
+                }
+            }
+        }
+    }
+
+    Dialog {
+        id: dateDialog
+        title: "Go to date"
+
+        standardButtons: StandardButton.NoButton
+
+        ColumnLayout {
+            DatePicker {
+                id: datePicker
+            }
+
+            RowLayout {
+                Button {
+                    text: "OK"
+
+                    onClicked: {
+                        interpretationController.goToDate(datePicker.date)
+                        dateDialog.close()
+                    }
+                }
+
+                Button {
+                    text: "Cancel"
+
+                    onClicked: {
+                        dateDialog.close()
+                    }
+                }
             }
         }
     }

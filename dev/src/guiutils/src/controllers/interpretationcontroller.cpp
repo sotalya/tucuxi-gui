@@ -1523,6 +1523,13 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::goToPreviousEvent()
     }
 }
 
+void Tucuxi::Gui::GuiUtils::InterpretationController::goToDate(const QDateTime &date)
+{
+    if (date.isValid()) {
+        setDateViewRange(date);
+    }
+}
+
 QList<QDateTime> Tucuxi::Gui::GuiUtils::InterpretationController::buildEventsList()
 {
     // We build the list of all events: dosage changes, covariate changes, measures, adjustment time
@@ -1578,8 +1585,6 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setDateViewRange(const QDa
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::setViewRange(const QDateTime &minX, const QDateTime &maxX)
 {
-    std::cout << "in setViewRange()";
-
     _userRequestedMinX = minX;
     _userRequestedMaxX = maxX;
 
@@ -1598,7 +1603,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setViewRange(const QDateTi
         _chartDataController->viewRangeUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed);
     }
     else {
-        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "requestPaint"));
+        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "rePaint"));
     }
 }
 

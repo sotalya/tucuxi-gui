@@ -547,7 +547,8 @@ Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
                 loadingDoseOption,
                 restPeriodOption,
                 steadyStateOption,
-                Tucuxi::Core::TargetExtractionOption::DefinitionIfNoIndividualTarget,
+                Tucuxi::Core::TargetExtractionOption::IndividualTargets,
+//                Tucuxi::Core::TargetExtractionOption::DefinitionIfNoIndividualTarget,
                 Tucuxi::Core::FormulationAndRouteSelectionOption::LastFormulationAndRoute);
     // std::cout << "Adjustment time" << std::endl;
     // std::cout << adjustmentTime << std::endl;

@@ -226,6 +226,7 @@ public:
     Q_INVOKABLE void setViewRange(const QDateTime &minX, const QDateTime &maxX);
     Q_INVOKABLE void goToNextEvent();
     Q_INVOKABLE void goToPreviousEvent();
+    Q_INVOKABLE void goToDate(const QDateTime &date);
     QList<QDateTime> buildEventsList();
 
     Q_INVOKABLE void updateSexAndAgeCovariates();

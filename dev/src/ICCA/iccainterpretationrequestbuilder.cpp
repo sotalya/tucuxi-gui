@@ -215,7 +215,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             measures->append(measure);
 
-        } else if (dataType == "Dosage Residuel cefepime") {
+        } else if (dataType == "Dosage cefepime" || dataType == "Dosage Residuel cefepime") {
 
             Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 
@@ -228,7 +228,9 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
             QString valueString = detailElement.attribute("valeur");
+            valueString.replace(',', '.');
             QString unit = detailElement.attribute("unite", "mg/l");
+            unit = unit.toLower();
             double value = valueString.toDouble();
             amt->setValue(value);
             amt->setUnit(Tucuxi::Gui::Core::Unit(unit));

@@ -323,10 +323,12 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
             dosage->setApplied(appl);
 
-            QDateTime end = appl.addSecs(10800);
-            dosage->setEndTime(end);
+            //QDateTime end = appl.addSecs(10800);
+            //dosage->setEndTime(end);
+            dosage->setEndTime(appl);
 
             QString valueString = detailElement.attribute("valeur");
+            valueString.replace(',', '.');
             QString unit = detailElement.attribute("unite", "g");
             double value = valueString.toDouble();
             dosage->getQuantity()->setValue(value);
@@ -334,10 +336,10 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             //TODO (JRP) : interval and duration should be deducted from the XML
             if (activeSubstanceStr == "cefepime fulldata") {
-                dosage->setInterval(Tucuxi::Gui::Core::Duration(8));
+                //dosage->setInterval(Tucuxi::Gui::Core::Duration(8));
                 dosage->setTinf(Tucuxi::Gui::Core::Duration(0,180));
             } else if (activeSubstanceStr == "voriconazole fulldata") {
-                dosage->setInterval(Tucuxi::Gui::Core::Duration(12));
+                //dosage->setInterval(Tucuxi::Gui::Core::Duration(12));
                 dosage->setTinf(Tucuxi::Gui::Core::Duration(0,120));
             }
 

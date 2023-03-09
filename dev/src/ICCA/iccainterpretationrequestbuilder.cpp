@@ -51,6 +51,11 @@ ICCAInterpretationRequestBuilder::~ICCAInterpretationRequestBuilder()
 
 }
 
+bool ICCAInterpretationRequestBuilder::compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
+{
+    return (a->getApplied() < b->getApplied());
+}
+
 InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequest()
 {
     InterpretationRequest* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
@@ -366,6 +371,27 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 //    }
 
     treatment->setActiveSubstanceId(activeSubstanceId);
+
+    //Sort the dosages by applied date
+    dosages->sort(compareDosage);
+    //Iterate the dosages to corectly set interval time and end date
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator next;
+    qint64 interval_sec = -1;
+    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
+        next = it + 1;
+        //The end time and interval is computed using next dosage applied time, if any
+        if(next != dosages->getList().end()) {
+            (*it)->setEndTime((*next)->getApplied());
+            interval_sec = (*it)->getEndTime().toSecsSinceEpoch() - (*it)->getApplied().toSecsSinceEpoch();
+            (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+        //If there is no next dosage, check if there is one previous interval
+        } else if(interval_sec != -1) {
+            //Use last interval to compute end time
+            (*it)->setEndTime((*it)->getApplied().addSecs(interval_sec));
+            (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+        }
+        //else { TODO (JRP) : What to do if only one dosage ?
+    }
 
     //Prediction dosage
     treatment->setDosages(dosages);

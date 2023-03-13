@@ -12,6 +12,7 @@
 #include "admin/src/stdadminrepository.h"
 #include "rest/model/replylistxmlmessage.h"
 #include "rest/builders/replylistmessagebuilder.h"
+#include "qmessagebox.h"
 
 #include "cli/rlutil.h"
 #include "core/dal/drugtreatment.h"
@@ -77,6 +78,13 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 
             substance = nullptr;
             APPUTILSREPO->getActiveSubstanceOfId(substanceID, substance);
+
+            //If no substance found, certainly mean that the drug modes is missing
+            if(substance == nullptr) {
+                QMessageBox::warning(nullptr, "Error while loading file", "The active substance cannot be found, drug model is certainly missing");
+                return 0;
+            }
+
             request->drug(substance);
 
             // Init measure default, useful if no measure found

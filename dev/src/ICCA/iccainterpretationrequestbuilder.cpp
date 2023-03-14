@@ -382,7 +382,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
         //The end time and interval is computed using next dosage applied time, if any
         if(next != dosages->getList().end()) {
             (*it)->setEndTime((*next)->getApplied());
-            interval_sec = (*it)->getEndTime().toSecsSinceEpoch() - (*it)->getApplied().toSecsSinceEpoch();
+            interval_sec = (*it)->getApplied().secsTo((*it)->getEndTime());
             (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
         //If there is no next dosage, check if there is one previous interval
         } else if(interval_sec != -1) {

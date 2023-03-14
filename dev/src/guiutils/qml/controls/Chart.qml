@@ -651,7 +651,12 @@ Canvas {
 
         onPressed: {
             if (mouse.button  == Qt.RightButton) {
-                contextMenu.popup()
+                // TODO (JRP) : The popup() call won't work on current Windows version
+                // can be enabled again in future when ok, to replace the popup manual positioning
+                //contextMenu.popup()
+                contextMenu.x = mouse.x
+                contextMenu.y = mouse.y
+                contextMenu.open()
             }
             else {
                 pressX = mouse.x;

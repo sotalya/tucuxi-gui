@@ -82,7 +82,7 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 
             //If no substance found, certainly mean that the drug modes is missing
             if(substance == nullptr) {
-                QMessageBox::warning(nullptr, "Error while loading file", "The active substance cannot be found, drug model is certainly missing");
+                QMessageBox::warning(nullptr, "Error while loading file", "The active substance (" + substanceID + ") cannot be found, drug model is certainly missing");
                 return 0;
             }
 

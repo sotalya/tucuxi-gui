@@ -13,7 +13,8 @@
 #include "admin/src/stdadminrepository.h"
 #include "rest/model/replylistxmlmessage.h"
 #include "rest/builders/replylistmessagebuilder.h"
-#include "qmessagebox.h"
+
+#include <qmessagebox.h>
 
 using namespace Tucuxi::Gui::Core;
 using namespace Tucuxi::Gui::ICCA;

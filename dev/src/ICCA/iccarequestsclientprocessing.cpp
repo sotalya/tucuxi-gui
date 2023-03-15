@@ -12,7 +12,8 @@
 #include "admin/src/stdadminrepository.h"
 #include "rest/model/replylistxmlmessage.h"
 #include "rest/builders/replylistmessagebuilder.h"
-#include "qmessagebox.h"
+
+#include <qmessagebox.h>
 
 #include "cli/rlutil.h"
 #include "core/dal/drugtreatment.h"

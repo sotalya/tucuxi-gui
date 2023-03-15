@@ -13,6 +13,8 @@
 #include "rest/model/replylistxmlmessage.h"
 #include "rest/builders/replylistmessagebuilder.h"
 
+#include <qmessagebox.h>
+
 #include "cli/rlutil.h"
 #include "core/dal/drugtreatment.h"
 
@@ -48,7 +50,7 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
         measureTagName = "Dosage vanco";
     } else if (substanceStr == "cefepime fulldata") {
         substanceID = "cefepime";
-        measureTagName = "Dosage Residuel cefepime";
+        measureTagName = "Dosage cefepime"; //"Dosage Residuel cefepime";
     } else if (substanceStr == "voriconazole fulldata") {
         substanceID = "voriconazole";
         measureTagName = "Tx Vorico";
@@ -77,6 +79,13 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 
             substance = nullptr;
             APPUTILSREPO->getActiveSubstanceOfId(substanceID, substance);
+
+            //If no substance found, certainly mean that the drug modes is missing
+            if(substance == nullptr) {
+                QMessageBox::warning(nullptr, "Error while loading file", "The active substance (" + substanceID + ") cannot be found, drug model is certainly missing");
+                return 0;
+            }
+
             request->drug(substance);
 
             // Init measure default, useful if no measure found
@@ -90,11 +99,13 @@ int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 
             // Find first concentration element for measure (if any)
             while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID/* && !sampleFound*/) {
-                if (detailElementCurrentPatient.attribute("donnees").startsWith(measureTagName)) {
+                if (detailElementCurrentPatient.attribute("donnees").startsWith(measureTagName) ||
+                    detailElementCurrentPatient.attribute("donnees").startsWith("Dosage Residuel cefepime")) {
                     QString valueString = detailElementCurrentPatient.attribute("valeur");
                     valueString.replace(',', '.');
                     concentration = valueString.toDouble();
                     unit = detailElementCurrentPatient.attribute("unite", "mg/l");
+                    unit = unit.toLower();
                     sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute("horaire"), Qt::ISODate);
                     sampleID = currentPatientID;
                     // sampleFound = true;

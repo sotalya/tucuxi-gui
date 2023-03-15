@@ -14,6 +14,8 @@
 #include "rest/model/replylistxmlmessage.h"
 #include "rest/builders/replylistmessagebuilder.h"
 
+#include <qmessagebox.h>
+
 using namespace Tucuxi::Gui::Core;
 using namespace Tucuxi::Gui::ICCA;
 
@@ -36,6 +38,7 @@ void ICCARequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 
     QFile source(m_listFileName);
     if (!source.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::warning(nullptr, "Error while loading file", "The xml file could not be loaded");
         return;
     }
 

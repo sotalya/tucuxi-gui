@@ -51,6 +51,11 @@ ICCAInterpretationRequestBuilder::~ICCAInterpretationRequestBuilder()
 
 }
 
+bool ICCAInterpretationRequestBuilder::compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
+{
+    return (a->getApplied() < b->getApplied());
+}
+
 InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequest()
 {
     InterpretationRequest* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
@@ -215,7 +220,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             measures->append(measure);
 
-        } else if (dataType == "Dosage Residuel cefepime") {
+        } else if (dataType == "Dosage cefepime" || dataType == "Dosage Residuel cefepime") {
 
             Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 
@@ -228,7 +233,9 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
             QString valueString = detailElement.attribute("valeur");
+            valueString.replace(',', '.');
             QString unit = detailElement.attribute("unite", "mg/l");
+            unit = unit.toLower();
             double value = valueString.toDouble();
             amt->setValue(value);
             amt->setUnit(Tucuxi::Gui::Core::Unit(unit));
@@ -321,10 +328,12 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
             dosage->setApplied(appl);
 
-            QDateTime end = appl.addSecs(10800);
-            dosage->setEndTime(end);
+            //QDateTime end = appl.addSecs(10800);
+            //dosage->setEndTime(end);
+            dosage->setEndTime(appl);
 
             QString valueString = detailElement.attribute("valeur");
+            valueString.replace(',', '.');
             QString unit = detailElement.attribute("unite", "g");
             double value = valueString.toDouble();
             dosage->getQuantity()->setValue(value);
@@ -332,10 +341,10 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             //TODO (JRP) : interval and duration should be deducted from the XML
             if (activeSubstanceStr == "cefepime fulldata") {
-                dosage->setInterval(Tucuxi::Gui::Core::Duration(8));
+                //dosage->setInterval(Tucuxi::Gui::Core::Duration(8));
                 dosage->setTinf(Tucuxi::Gui::Core::Duration(0,180));
             } else if (activeSubstanceStr == "voriconazole fulldata") {
-                dosage->setInterval(Tucuxi::Gui::Core::Duration(12));
+                //dosage->setInterval(Tucuxi::Gui::Core::Duration(12));
                 dosage->setTinf(Tucuxi::Gui::Core::Duration(0,120));
             }
 
@@ -362,6 +371,27 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 //    }
 
     treatment->setActiveSubstanceId(activeSubstanceId);
+
+    //Sort the dosages by applied date
+    dosages->sort(compareDosage);
+    //Iterate the dosages to corectly set interval time and end date
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator next;
+    qint64 interval_sec = -1;
+    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
+        next = it + 1;
+        //The end time and interval is computed using next dosage applied time, if any
+        if(next != dosages->getList().end()) {
+            (*it)->setEndTime((*next)->getApplied());
+            interval_sec = (*it)->getApplied().secsTo((*it)->getEndTime());
+            (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+        //If there is no next dosage, check if there is one previous interval
+        } else if(interval_sec != -1) {
+            //Use last interval to compute end time
+            (*it)->setEndTime((*it)->getApplied().addSecs(interval_sec));
+            (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+        }
+        //else { TODO (JRP) : What to do if only one dosage ?
+    }
 
     //Prediction dosage
     treatment->setDosages(dosages);

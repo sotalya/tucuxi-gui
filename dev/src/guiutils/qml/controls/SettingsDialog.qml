@@ -59,10 +59,12 @@ DialogBase {
                interpretationController.setRefreshButtonVisible(true)
             }
 
-            if (percentileCalculation.checkState == Qt.Checked)
+            if (percentileCalculation.checkState == Qt.Checked) {
                 appGlobals.setPercentileCalculation(true);
-            else
+                interpretationController.dosageUpdated(false);
+            } else {
                appGlobals.setPercentileCalculation(false);
+            }
         }
     }
 

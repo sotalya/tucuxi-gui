@@ -36,6 +36,10 @@ public:
 
     void setClient(Tucuxi::Gui::Admin::RequestsClient *client);
 
+    int nbRequests() const;
+    const Tucuxi::Gui::Admin::PartialRequest *getPartialRequest(int id);
+
+
 private:
     Tucuxi::Gui::Admin::RequestsClient *client;
 
@@ -52,8 +56,12 @@ public slots:
                            bool state = true);
     virtual void queryRequest(const QString &requestId, const QString &patientId, const QString &drugId);
 
+    void queryRequestById(int id);
+
 signals:
     void requestReady(Tucuxi::Gui::Admin::InterpretationRequest* ir);
+
+    void queryRequestByIdSignal(int id);
 
 };
 

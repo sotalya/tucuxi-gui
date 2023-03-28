@@ -35,6 +35,7 @@ private:
     QDomElement reportNode;
 
     static bool compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b);
+    void createUncastedIntervalValue(Tucuxi::Gui::Core::Dosage* dosage, int interval_sec);
 };
 
 }

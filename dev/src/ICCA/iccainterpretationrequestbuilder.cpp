@@ -57,6 +57,27 @@ bool ICCAInterpretationRequestBuilder::compareDosage(const Tucuxi::Gui::Core::Do
     return (a->getApplied() < b->getApplied());
 }
 
+void ICCAInterpretationRequestBuilder::createUncastedIntervalValue(Tucuxi::Gui::Core::Dosage *dosage, int interval_sec)
+{
+    UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+    uncasted->setField("Interval");
+    uncasted->setText(QString::number(interval_sec));
+    uncasted->setComment("Interval was computed to 0 and therefore replaced by default value");
+    dosage->getUncastedValues()->append(uncasted);
+
+    uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+    uncasted->setField("From");
+    uncasted->setText(dosage->getApplied().toString("dd/MM/yy hh:mm"));
+    uncasted->setComment("Verify if the date is not overlapping another dosage");
+    dosage->getUncastedValues()->append(uncasted);
+
+    uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+    uncasted->setField("To");
+    uncasted->setText(dosage->getEndTime().toString("dd/MM/yy hh:mm"));
+    uncasted->setComment("Verify if the date is not overlapping another dosage");
+    dosage->getUncastedValues()->append(uncasted);
+}
+
 InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequest()
 {
     InterpretationRequest* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
@@ -388,23 +409,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             if(interval_sec > 0) {
                 (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
             } else {
-                UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
-                uncasted->setField("Interval");
-                uncasted->setText(QString::number(interval_sec));
-                uncasted->setComment("Interval was computed to 0 and therefore replaced by default value");
-                (*it)->getUncastedValues()->append(uncasted);
-
-                uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
-                uncasted->setField("From");
-                uncasted->setText((*it)->getApplied().toString("dd/MM/yy hh:mm"));
-                uncasted->setComment("Verify if date is not overlapping another dosage");
-                (*it)->getUncastedValues()->append(uncasted);
-
-                uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
-                uncasted->setField("To");
-                uncasted->setText((*it)->getEndTime().toString("dd/MM/yy hh:mm"));
-                uncasted->setComment("Verify if date is not overlapping another dosage");
-                (*it)->getUncastedValues()->append(uncasted);
+                createUncastedIntervalValue(*it, interval_sec);
             }
 
         //If there is no next dosage, check if there is one previous interval
@@ -415,23 +420,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             if(interval_sec > 0) {
                 (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
             } else {
-                UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
-                uncasted->setField("Interval");
-                uncasted->setText(QString::number(interval_sec));
-                uncasted->setComment("Interval was computed to 0 and therefore replaced by default value");
-                (*it)->getUncastedValues()->append(uncasted);
-
-                uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
-                uncasted->setField("From");
-                uncasted->setText((*it)->getApplied().toString("dd/MM/yy hh:mm"));
-                uncasted->setComment("Verify if date is not overlapping another dosage");
-                (*it)->getUncastedValues()->append(uncasted);
-
-                uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
-                uncasted->setField("To");
-                uncasted->setText((*it)->getEndTime().toString("dd/MM/yy hh:mm"));
-                uncasted->setComment("Verify if date is not overlapping another dosage");
-                (*it)->getUncastedValues()->append(uncasted);
+                createUncastedIntervalValue(*it, interval_sec);
             }
         }
         //else { TODO (JRP) : What to do if only one dosage ?

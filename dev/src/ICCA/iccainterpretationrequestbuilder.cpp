@@ -391,6 +391,19 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
                 UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
                 uncasted->setField("Interval");
                 uncasted->setText(QString::number(interval_sec));
+                uncasted->setComment("Interval was computed to 0 and therefore replaced by default value");
+                (*it)->getUncastedValues()->append(uncasted);
+
+                uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
+                uncasted->setField("From");
+                uncasted->setText((*it)->getApplied().toString("dd/MM/yy hh:mm"));
+                uncasted->setComment("Verify if date is not overlapping another dosage");
+                (*it)->getUncastedValues()->append(uncasted);
+
+                uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
+                uncasted->setField("To");
+                uncasted->setText((*it)->getEndTime().toString("dd/MM/yy hh:mm"));
+                uncasted->setComment("Verify if date is not overlapping another dosage");
                 (*it)->getUncastedValues()->append(uncasted);
             }
 
@@ -405,6 +418,19 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
                 UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
                 uncasted->setField("Interval");
                 uncasted->setText(QString::number(interval_sec));
+                uncasted->setComment("Interval was computed to 0 and therefore replaced by default value");
+                (*it)->getUncastedValues()->append(uncasted);
+
+                uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
+                uncasted->setField("From");
+                uncasted->setText((*it)->getApplied().toString("dd/MM/yy hh:mm"));
+                uncasted->setComment("Verify if date is not overlapping another dosage");
+                (*it)->getUncastedValues()->append(uncasted);
+
+                uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
+                uncasted->setField("To");
+                uncasted->setText((*it)->getEndTime().toString("dd/MM/yy hh:mm"));
+                uncasted->setComment("Verify if date is not overlapping another dosage");
                 (*it)->getUncastedValues()->append(uncasted);
             }
         }

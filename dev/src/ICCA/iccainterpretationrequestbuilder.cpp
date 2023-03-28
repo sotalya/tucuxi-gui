@@ -25,6 +25,7 @@
 #include "core/dal/drug/target.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::Core;
 
 namespace Tucuxi {
 namespace Gui {
@@ -383,12 +384,29 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
         if(next != dosages->getList().end()) {
             (*it)->setEndTime((*next)->getApplied());
             interval_sec = (*it)->getApplied().secsTo((*it)->getEndTime());
-            (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+
+            if(interval_sec > 0) {
+                (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+            } else {
+                UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
+                uncasted->setField("Interval");
+                uncasted->setText(QString::number(interval_sec));
+                (*it)->getUncastedValues()->append(uncasted);
+            }
+
         //If there is no next dosage, check if there is one previous interval
         } else if(interval_sec != -1) {
             //Use last interval to compute end time
             (*it)->setEndTime((*it)->getApplied().addSecs(interval_sec));
-            (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+
+            if(interval_sec > 0) {
+                (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+            } else {
+                UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, (*it)->getUncastedValues());
+                uncasted->setField("Interval");
+                uncasted->setText(QString::number(interval_sec));
+                (*it)->getUncastedValues()->append(uncasted);
+            }
         }
         //else { TODO (JRP) : What to do if only one dosage ?
     }

@@ -78,6 +78,115 @@ void ICCAInterpretationRequestBuilder::createUncastedIntervalValue(Tucuxi::Gui::
     dosage->getUncastedValues()->append(uncasted);
 }
 
+void ICCAInterpretationRequestBuilder::concatenateDosages(Tucuxi::Gui::Core::DosageHistory *dosages)
+{
+    // Build a map of dosages, map key is the dosage applied time, (by default QMap are sorted by asc order)
+    QMap<QDateTime, QList<Tucuxi::Gui::Core::Dosage*>> dosagebyTime;
+
+    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
+        QDateTime applied = (*it)->getApplied();
+
+        QList<Tucuxi::Gui::Core::Dosage*> currentDosages;
+
+        if(dosagebyTime.contains(applied)) {
+            currentDosages = dosagebyTime.value(applied);
+        }
+
+        currentDosages.append(*it);
+        dosagebyTime.insert(applied, currentDosages);
+    }
+
+    // Reset the dosage history list
+    dosages->clear();
+    // Tucuxi::Gui::Core::DosageHistory* resultDosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO);
+
+    // Iterate throught the map by key order
+    for(const QDateTime key : dosagebyTime.keys()) {
+        QList<Tucuxi::Gui::Core::Dosage*> currentDosages = dosagebyTime.value(key);
+
+        // Cannot be empty for a given QDateTime (key)
+        Q_ASSERT(!currentDosages.isEmpty());
+
+        if(currentDosages.size() == 1) {
+            dosages->append(currentDosages.first());
+        } else {
+            bool okToAdd = true;
+            double totalDosageValue = 0.0;
+            Duration previousTinf = currentDosages.first()->getTinf();
+            QString previousUnit = currentDosages.first()->getQuantity()->getUnitstring();
+            Tucuxi::Gui::Core::Dosage* lastDosage = nullptr;
+
+            // Check if dosage in the list for the given time can be added to have only one dosage at the end
+            // Add dosages values
+            for(QList<Tucuxi::Gui::Core::Dosage*>::iterator it = currentDosages.begin(); it != currentDosages.end(); ++it) {
+                okToAdd = okToAdd && (previousTinf == (*it)->getTinf()) && (previousUnit == (*it)->getQuantity()->getUnitstring());
+                previousTinf = (*it)->getTinf();
+                previousUnit = (*it)->getQuantity()->getUnitstring();
+
+                totalDosageValue += (*it)->getQuantity()->getDbvalue();
+
+                lastDosage = (*it);
+            }
+
+            // If dosage can be added, create the resulting dosage
+            if(okToAdd) {
+                Q_ASSERT(lastDosage != nullptr);
+                lastDosage->getQuantity()->setValue(totalDosageValue);
+
+                UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, lastDosage->getUncastedValues());
+                uncasted->setField("Dose");
+                uncasted->setText(QString::number(totalDosageValue));
+                QString msg = "This dose was automatically computed from " + QString::number(currentDosages.size()) +
+                              " dosages given at " + lastDosage->getApplied().toString("dd/MM/yy hh:mm");
+                uncasted->setComment(msg);
+                lastDosage->getUncastedValues()->append(uncasted);
+
+                dosages->append(lastDosage);
+            } else {
+                // If dosage cannot be added then keep them as it is
+                for(QList<Tucuxi::Gui::Core::Dosage*>::iterator it = currentDosages.begin(); it != currentDosages.end(); ++it) {
+                    dosages->append(*it);
+                }
+            }
+        }
+    }
+}
+
+void ICCAInterpretationRequestBuilder::setDosageEndDateInterval(Tucuxi::Gui::Core::DosageHistory* dosages)
+{
+    //Sort the dosages by applied date
+    dosages->sort(compareDosage);
+    //Iterate the dosages to corectly set interval time and end date
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator next;
+    qint64 interval_sec = -1;
+    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
+        next = it + 1;
+        //The end time and interval is computed using next dosage applied time, if any
+        if(next != dosages->getList().end()) {
+            (*it)->setEndTime((*next)->getApplied());
+            interval_sec = (*it)->getApplied().secsTo((*it)->getEndTime());
+
+            if(interval_sec > 0) {
+                (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+            } else {
+                createUncastedIntervalValue(*it, interval_sec);
+            }
+
+        //If there is no next dosage, check if there is one previous interval
+        } else if(interval_sec != -1) {
+            //Use last interval to compute end time
+            (*it)->setEndTime((*it)->getApplied().addSecs(interval_sec));
+
+            if(interval_sec > 0) {
+                (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+            } else {
+                createUncastedIntervalValue(*it, interval_sec);
+            }
+        }
+        //else { TODO (JRP) : What to do if only one dosage ?
+    }
+}
+
 InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequest()
 {
     InterpretationRequest* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
@@ -393,144 +502,9 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 //    }
 
     treatment->setActiveSubstanceId(activeSubstanceId);
-#if 0
-    //Sort the dosages by applied date
-    dosages->sort(compareDosage);
-    //Iterate the dosages to corectly set interval time and end date
-    QList<Tucuxi::Gui::Core::Dosage*>::iterator next;
-    qint64 interval_sec = -1;
-    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
-        next = it + 1;
-        //The end time and interval is computed using next dosage applied time, if any
-        if(next != dosages->getList().end()) {
-            (*it)->setEndTime((*next)->getApplied());
-            interval_sec = (*it)->getApplied().secsTo((*it)->getEndTime());
 
-            if(interval_sec > 0) {
-                (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
-            } else {
-                createUncastedIntervalValue(*it, interval_sec);
-            }
-
-        //If there is no next dosage, check if there is one previous interval
-        } else if(interval_sec != -1) {
-            //Use last interval to compute end time
-            (*it)->setEndTime((*it)->getApplied().addSecs(interval_sec));
-
-            if(interval_sec > 0) {
-                (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
-            } else {
-                createUncastedIntervalValue(*it, interval_sec);
-            }
-        }
-        //else { TODO (JRP) : What to do if only one dosage ?
-    }
-#endif
-    // Build a map of dosages, map key is the dosage applied time, (by default QMap are sorted by asc order)
-    QMap<QDateTime, QList<Tucuxi::Gui::Core::Dosage*>> dosagebyTime;
-
-    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
-        QDateTime applied = (*it)->getApplied();
-
-        QList<Tucuxi::Gui::Core::Dosage*> currentDosages;
-
-        if(dosagebyTime.contains(applied)) {
-            currentDosages = dosagebyTime.value(applied);
-        }
-
-        currentDosages.append(*it);
-        dosagebyTime.insert(applied, currentDosages);
-    }
-
-    // Reset the dosage history list
-    dosages->clear();
-    // Tucuxi::Gui::Core::DosageHistory* resultDosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO);
-
-    // Iterate throught the map by key order
-    for(const QDateTime key : dosagebyTime.keys()) {
-        QList<Tucuxi::Gui::Core::Dosage*> currentDosages = dosagebyTime.value(key);
-
-        // Cannot be empty for a given QDateTime (key)
-        Q_ASSERT(!currentDosages.isEmpty());
-
-        if(currentDosages.size() == 1) {
-            dosages->append(currentDosages.first());
-        } else {
-            bool okToAdd = true;
-            double totalDosageValue = 0.0;
-            Duration previousTinf = currentDosages.first()->getTinf();
-            QString previousUnit = currentDosages.first()->getQuantity()->getUnitstring();
-            Tucuxi::Gui::Core::Dosage* lastDosage = nullptr;
-
-            // Check if dosage in the list for the given time can be added to have only one dosage at the end
-            // Add dosages values
-            for(QList<Tucuxi::Gui::Core::Dosage*>::iterator it = currentDosages.begin(); it != currentDosages.end(); ++it) {
-                okToAdd = okToAdd && (previousTinf == (*it)->getTinf()) && (previousUnit == (*it)->getQuantity()->getUnitstring());
-                previousTinf = (*it)->getTinf();
-                previousUnit = (*it)->getQuantity()->getUnitstring();
-
-                totalDosageValue += (*it)->getQuantity()->getDbvalue();
-
-                lastDosage = (*it);
-            }
-
-            // If dosage can be added, create the resulting dosage
-            if(okToAdd) {
-                Q_ASSERT(lastDosage != nullptr);
-                lastDosage->getQuantity()->setValue(totalDosageValue);
-
-                UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, lastDosage->getUncastedValues());
-                uncasted->setField("Dose");
-                uncasted->setText(QString::number(totalDosageValue));
-                QString msg = "This dose was automatically computer from " + QString::number(currentDosages.size()) +
-                              " dosages given at " + lastDosage->getApplied().toString("dd/MM/yy hh:mm");
-                uncasted->setComment(msg);
-                lastDosage->getUncastedValues()->append(uncasted);
-
-                dosages->append(lastDosage);
-            } else {
-                // If dosage cannot be added then keep them as it is
-                for(QList<Tucuxi::Gui::Core::Dosage*>::iterator it = currentDosages.begin(); it != currentDosages.end(); ++it) {
-                    dosages->append(*it);
-                }
-            }
-        }
-    }
-
-    // TODO (JRP to refactor a bit)
-    //--------------------------------------------------
-    //Sort the dosages by applied date
-    dosages->sort(compareDosage);
-    //Iterate the dosages to corectly set interval time and end date
-    QList<Tucuxi::Gui::Core::Dosage*>::iterator next;
-    qint64 interval_sec = -1;
-    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
-        next = it + 1;
-        //The end time and interval is computed using next dosage applied time, if any
-        if(next != dosages->getList().end()) {
-            (*it)->setEndTime((*next)->getApplied());
-            interval_sec = (*it)->getApplied().secsTo((*it)->getEndTime());
-
-            if(interval_sec > 0) {
-                (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
-            } else {
-                createUncastedIntervalValue(*it, interval_sec);
-            }
-
-        //If there is no next dosage, check if there is one previous interval
-        } else if(interval_sec != -1) {
-            //Use last interval to compute end time
-            (*it)->setEndTime((*it)->getApplied().addSecs(interval_sec));
-
-            if(interval_sec > 0) {
-                (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
-            } else {
-                createUncastedIntervalValue(*it, interval_sec);
-            }
-        }
-        //else { TODO (JRP) : What to do if only one dosage ?
-    }
-    //--------------------------------------------------
+    concatenateDosages(dosages);
+    setDosageEndDateInterval(dosages);
 
     //Prediction dosage
     treatment->setDosages(dosages);

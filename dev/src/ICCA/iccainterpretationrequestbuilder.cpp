@@ -154,28 +154,54 @@ void ICCAInterpretationRequestBuilder::concatenateDosages(Tucuxi::Gui::Core::Dos
 #endif
 void ICCAInterpretationRequestBuilder::concatenateDosages(Tucuxi::Gui::Core::DosageHistory *dosages)
 {
-    // Build a map of dosages, map key is the dosage applied time, (by default QMap are sorted by asc order)
-    QMap<QDateTime, QList<Tucuxi::Gui::Core::Dosage*>> dosagebyTime;
     // Build a list of list of Dosages that overlap
     QList<QList<Tucuxi::Gui::Core::Dosage*>> overlapingDosages;
 
-    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
+    // Sort the dosages by applied date
+    dosages->sort(compareDosage);
+
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin();
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator next;
+    while (it != dosages->getList().end()) {
         QDateTime applied = (*it)->getApplied();
+        QDateTime end = applied.addMSecs((*it)->getTinf().mSecs());
 
-        QList<Tucuxi::Gui::Core::Dosage*> currentDosages;
-
-        if(dosagebyTime.contains(applied)) {
-            currentDosages = dosagebyTime.value(applied);
+        // Check if next dosage exist and overlap
+        next = it + 1;
+        if((next != dosages->getList().end()) && ((*next)->getApplied() < end)) {
+            // The dosages ovelap so we add both to the map and skip
+            // the next as we just added it in the map
+            QList<Tucuxi::Gui::Core::Dosage*> multipleDosages;
+            multipleDosages.append(*it);
+            multipleDosages.append(*next);
+            overlapingDosages.append(multipleDosages);
+            it += 2;
+        } else {
+            QList<Tucuxi::Gui::Core::Dosage*> singleDosage;
+            singleDosage.append(*it);
+            overlapingDosages.append(singleDosage);
+            ++it;
         }
-
-        currentDosages.append(*it);
-        dosagebyTime.insert(applied, currentDosages);
     }
 
     // Reset the dosage history list
     dosages->clear();
-    // Tucuxi::Gui::Core::DosageHistory* resultDosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO);
 
+    // Iterate throught the list and treat overlaping dosage (if any)
+    for(QList<QList<Tucuxi::Gui::Core::Dosage*>>::iterator it = overlapingDosages.begin(); it != overlapingDosages.end(); ++it) {
+        // Cannot be empty and greater than 2
+        Q_ASSERT(!(*it).isEmpty() && ((*it).size() <= 2));
+
+        // Only single dosage
+        if((*it).size() == 1) {
+            dosages->append((*it).first());
+        } else {
+            // Multiple dosage overlapping
+
+        }
+    }
+
+#if 0
     // Iterate throught the map by key order
     for(const QDateTime key : dosagebyTime.keys()) {
         QList<Tucuxi::Gui::Core::Dosage*> currentDosages = dosagebyTime.value(key);
@@ -226,6 +252,7 @@ void ICCAInterpretationRequestBuilder::concatenateDosages(Tucuxi::Gui::Core::Dos
             }
         }
     }
+#endif
 }
 
 void ICCAInterpretationRequestBuilder::setDosageEndDateInterval(Tucuxi::Gui::Core::DosageHistory* dosages)

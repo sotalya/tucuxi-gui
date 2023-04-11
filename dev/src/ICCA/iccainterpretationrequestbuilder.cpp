@@ -152,7 +152,7 @@ void ICCAInterpretationRequestBuilder::concatenateDosages(Tucuxi::Gui::Core::Dos
     }
 }
 #endif
-void ICCAInterpretationRequestBuilder::concatenateDosages(Tucuxi::Gui::Core::DosageHistory *dosages)
+void ICCAInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core::DosageHistory *dosages)
 {
     // Build a list of list of Dosages that overlap
     QList<QList<Tucuxi::Gui::Core::Dosage*>> overlapingDosages;
@@ -197,62 +197,84 @@ void ICCAInterpretationRequestBuilder::concatenateDosages(Tucuxi::Gui::Core::Dos
             dosages->append((*it).first());
         } else {
             // Multiple dosage overlapping
+            // Get the start and end times of the both dosages
+            QDateTime applied1 = (*it).first()->getApplied();
+            QDateTime end1 = applied1.addMSecs((*it).first()->getTinf().mSecs());
+            QDateTime applied2 = (*it).last()->getApplied();
+            QDateTime end2 = applied2.addMSecs((*it).last()->getTinf().mSecs());
 
-        }
-    }
+            // Add the two dosage value for the ovelapping part
+            double totalDosageValue = (*it).first()->getQuantity()->getDbvalue() + (*it).last()->getQuantity()->getDbvalue();
 
-#if 0
-    // Iterate throught the map by key order
-    for(const QDateTime key : dosagebyTime.keys()) {
-        QList<Tucuxi::Gui::Core::Dosage*> currentDosages = dosagebyTime.value(key);
+            // Applied date are the same
+            if(applied1 == applied2) {
+                // Dosage are fully overlapping
+                if(end1 == end2) {
+                    (*it).first()->getQuantity()->setValue(totalDosageValue);
+                    dosages->append((*it).first());
+                } else {
+                    // Find the dosage that end the first
+                    Tucuxi::Gui::Core::Dosage* firstDosage;
+                    Tucuxi::Gui::Core::Dosage* secondDosage;
+                    QDateTime firstDosageEnd;
+                    QDateTime secondDosageEnd;
 
-        // Cannot be empty for a given QDateTime (key)
-        Q_ASSERT(!currentDosages.isEmpty());
 
-        if(currentDosages.size() == 1) {
-            dosages->append(currentDosages.first());
-        } else {
-            bool okToAdd = true;
-            double totalDosageValue = 0.0;
-            Duration previousTinf = currentDosages.first()->getTinf();
-            QString previousUnit = currentDosages.first()->getQuantity()->getUnitstring();
-            Tucuxi::Gui::Core::Dosage* lastDosage = nullptr;
+                    if(end1 < end2) {
+                        firstDosage = (*it).first();
+                        firstDosageEnd = end1;
+                        secondDosage = (*it).last();
+                        secondDosageEnd = end2;
+                    } else {
+                        firstDosage = (*it).last();
+                        firstDosageEnd = end2;
+                        secondDosage = (*it).first();
+                        secondDosageEnd = end1;
+                    }
 
-            // Check if dosage in the list for the given time can be added to have only one dosage at the end
-            // Add dosages values
-            for(QList<Tucuxi::Gui::Core::Dosage*>::iterator it = currentDosages.begin(); it != currentDosages.end(); ++it) {
-                okToAdd = okToAdd && (previousTinf == (*it)->getTinf()) && (previousUnit == (*it)->getQuantity()->getUnitstring());
-                previousTinf = (*it)->getTinf();
-                previousUnit = (*it)->getQuantity()->getUnitstring();
+                    // The overlapping part amount should be added in the first dosage
+                    firstDosage->getQuantity()->setValue(totalDosageValue);
 
-                totalDosageValue += (*it)->getQuantity()->getDbvalue();
+                    // The second dosage applied date and infusion time should be corrected
+                    secondDosage->setApplied(firstDosageEnd);
+                    secondDosage->setTinf(Duration(0, 0, 0, firstDosageEnd.msecsTo(secondDosageEnd)));
 
-                lastDosage = (*it);
-            }
-
-            // If dosage can be added, create the resulting dosage
-            if(okToAdd) {
-                Q_ASSERT(lastDosage != nullptr);
-                lastDosage->getQuantity()->setValue(totalDosageValue);
-
-                UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, lastDosage->getUncastedValues());
-                uncasted->setField("Dose");
-                uncasted->setText(QString::number(totalDosageValue));
-                QString msg = "This dose was automatically computed from " + QString::number(currentDosages.size()) +
-                              " dosages given at " + lastDosage->getApplied().toString("dd/MM/yy hh:mm");
-                uncasted->setComment(msg);
-                lastDosage->getUncastedValues()->append(uncasted);
-
-                dosages->append(lastDosage);
+                    dosages->append(firstDosage);
+                    dosages->append(secondDosage);
+                }
+            // Applied date are different
             } else {
-                // If dosage cannot be added then keep them as it is
-                for(QList<Tucuxi::Gui::Core::Dosage*>::iterator it = currentDosages.begin(); it != currentDosages.end(); ++it) {
-                    dosages->append(*it);
+                // The first dosage infusion time finish when second dosage begin (overlapping part)
+                (*it).first()->setTinf(Duration(0, 0, 0, applied1.msecsTo(applied2)));
+
+                // Keep the quantity of last ending dosage in case a third dosage must be added
+                double lastDosageValue = end1 > end2 ? (*it).first()->getQuantity()->getDbvalue() : (*it).last()->getQuantity()->getDbvalue();
+
+                // Correct the second dosage to be the fully overlapping part of both dosages
+                (*it).last()->getQuantity()->setValue(totalDosageValue);
+                (*it).last()->setTinf(Duration(0, 0, 0, applied2.msecsTo(end1 < end2 ? end1 : end2)));
+
+                dosages->append((*it).first());
+                dosages->append((*it).last());
+
+                // If end date are not the same a third dosage should be added
+                if(end1 != end2) {
+                    Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
+                    dosage->setRoute((*it).last()->getRoute());
+                    dosage->setIsAtSteadyState((*it).last()->getIsAtSteadyState());
+
+                    dosage->setApplied(end1 < end2 ? end1 : end2);
+                    // End date is currently the same as applied date because the end date is corrected later on the xml ICCA import processus
+                    dosage->setEndTime(dosage->getApplied());
+
+                    dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit((*it).last()->getQuantity()->getUnitstring()));
+                    dosage->getQuantity()->setValue(lastDosageValue);
+
+                    dosages->append(dosage);
                 }
             }
         }
     }
-#endif
 }
 
 void ICCAInterpretationRequestBuilder::setDosageEndDateInterval(Tucuxi::Gui::Core::DosageHistory* dosages)
@@ -606,7 +628,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
     treatment->setActiveSubstanceId(activeSubstanceId);
 
-    concatenateDosages(dosages);
+    splitOverlappingDosage(dosages);
     setDosageEndDateInterval(dosages);
 
     //Prediction dosage

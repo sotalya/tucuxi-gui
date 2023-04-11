@@ -36,7 +36,7 @@ private:
 
     static bool compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b);
     void createUncastedIntervalValue(Tucuxi::Gui::Core::Dosage* dosage, int interval_sec);
-    void concatenateDosages(Tucuxi::Gui::Core::DosageHistory* dosages);
+    void splitOverlappingDosage(Tucuxi::Gui::Core::DosageHistory* dosages);
     void setDosageEndDateInterval(Tucuxi::Gui::Core::DosageHistory* dosages);
 };
 

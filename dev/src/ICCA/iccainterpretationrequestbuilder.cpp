@@ -77,6 +77,15 @@ void ICCAInterpretationRequestBuilder::createUncastedIntervalValue(Tucuxi::Gui::
     uncasted->setComment("Verify if the date is not overlapping another dosage");
     dosage->getUncastedValues()->append(uncasted);
 }
+
+void ICCAInterpretationRequestBuilder::createUncastedDosageValue(Tucuxi::Gui::Core::Dosage *dosage, QString field, QString text, QString comment)
+{
+    UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+    uncasted->setField(field);
+    uncasted->setText(text);
+    uncasted->setComment(comment);
+    dosage->getUncastedValues()->append(uncasted);
+}
 #if 0
 void ICCAInterpretationRequestBuilder::concatenateDosages(Tucuxi::Gui::Core::DosageHistory *dosages)
 {
@@ -211,7 +220,14 @@ void ICCAInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core:
                 // Dosage are fully overlapping
                 if(end1 == end2) {
                     (*it).first()->getQuantity()->setValue(totalDosageValue);
+
+                    // Warning message
+                    QString msg = "This dose was automatically computed from 2 dosages given at " +
+                                  (*it).first()->getApplied().toString("dd/MM/yy hh:mm");
+                    createUncastedDosageValue((*it).first(), "Dose", QString::number(totalDosageValue), msg);
+
                     dosages->append((*it).first());
+                // End of dosage are not the same
                 } else {
                     // Find the dosage that end the first
                     Tucuxi::Gui::Core::Dosage* firstDosage;
@@ -239,6 +255,16 @@ void ICCAInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core:
                     secondDosage->setApplied(firstDosageEnd);
                     secondDosage->setTinf(Duration(0, 0, 0, firstDosageEnd.msecsTo(secondDosageEnd)));
 
+                    // First dosage warning message
+                    QString msg = "This dose was automatically computed from 2 dosages given at " +
+                                  (*it).first()->getApplied().toString("dd/MM/yy hh:mm");
+                    createUncastedDosageValue(firstDosage, "Dose", QString::number(totalDosageValue), msg);
+                    //Second dosage warning messag
+                    msg = "This applied time was automatically adjusted";
+                    createUncastedDosageValue(secondDosage, "From", secondDosage->getApplied().toString("dd/MM/yy hh:mm"), msg);
+                    msg = "This infusion time was automatically adjusted";
+                    createUncastedDosageValue(secondDosage, "Infusion", secondDosage->getTinf().toString(), msg);
+
                     dosages->append(firstDosage);
                     dosages->append(secondDosage);
                 }
@@ -253,6 +279,17 @@ void ICCAInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core:
                 // Correct the second dosage to be the fully overlapping part of both dosages
                 (*it).last()->getQuantity()->setValue(totalDosageValue);
                 (*it).last()->setTinf(Duration(0, 0, 0, applied2.msecsTo(end1 < end2 ? end1 : end2)));
+
+                // Warning messages
+                // First dosage
+                QString msg = "This infusion time was automatically adjusted";
+                createUncastedDosageValue((*it).first(), "Infusion", (*it).first()->getTinf().toString(), msg);
+                // Second dosage
+                msg = "This dose was automatically computed from 2 dosages given at " +
+                              (*it).last()->getApplied().toString("dd/MM/yy hh:mm");
+                createUncastedDosageValue((*it).last(), "Dose", QString::number(totalDosageValue), msg);
+                msg = "This infusion time was automatically adjusted";
+                createUncastedDosageValue((*it).last(), "Infusion", (*it).last()->getTinf().toString(), msg);
 
                 dosages->append((*it).first());
                 dosages->append((*it).last());
@@ -269,6 +306,12 @@ void ICCAInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core:
 
                     dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit((*it).last()->getQuantity()->getUnitstring()));
                     dosage->getQuantity()->setValue(lastDosageValue);
+
+                    //Warning
+                    msg = "This is an automaticaly created dosage representing the end of a previous dosage";
+                    createUncastedDosageValue(dosage, "Dose", QString::number(lastDosageValue), msg);
+                    createUncastedDosageValue(dosage, "From", dosage->getApplied().toString("dd/MM/yy hh:mm"), msg);
+                    createUncastedDosageValue(dosage, "Infusion", dosage->getTinf().toString(), msg);
 
                     dosages->append(dosage);
                 }

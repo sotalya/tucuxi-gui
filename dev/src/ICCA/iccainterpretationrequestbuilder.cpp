@@ -57,6 +57,30 @@ bool ICCAInterpretationRequestBuilder::compareDosage(const Tucuxi::Gui::Core::Do
     return (a->getApplied() < b->getApplied());
 }
 
+Tucuxi::Gui::Core::Duration ICCAInterpretationRequestBuilder::findDuration(const QDomElement &currentElement)
+{
+    QDomElement element = currentElement.nextSiblingElement("Détails");
+    Tucuxi::Gui::Core::Duration duration;
+
+    // Find the first "durée" element
+    while(!element.isNull()) {
+        if(element.attribute("donnees") == "durée") {
+            QString unit = element.attribute("unite");
+            QString duree = element.attribute("valeur");
+
+            // Currently only minutes are used as unit for duration
+            Q_ASSERT(unit == "min");
+
+            duration = Tucuxi::Gui::Core::Duration(0, duree.toLongLong());
+            break;
+        } else {
+            element = element.nextSiblingElement("Détails");
+        }
+    }
+
+    return duration;
+}
+
 void ICCAInterpretationRequestBuilder::createUncastedIntervalValue(Tucuxi::Gui::Core::Dosage *dosage, int interval_sec)
 {
     UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
@@ -638,14 +662,8 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             dosage->getQuantity()->setValue(value);
             dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(unit));
 
-            //TODO (JRP) : interval and duration should be deducted from the XML
-            if (activeSubstanceStr == "cefepime fulldata") {
-                //dosage->setInterval(Tucuxi::Gui::Core::Duration(8));
-                dosage->setTinf(Tucuxi::Gui::Core::Duration(0,180));
-            } else if (activeSubstanceStr == "voriconazole fulldata") {
-                //dosage->setInterval(Tucuxi::Gui::Core::Duration(12));
-                dosage->setTinf(Tucuxi::Gui::Core::Duration(0,120));
-            }
+            // Find duration (Tinf corresponding to dosage)
+            dosage->setTinf(findDuration(detailElement));
 
             //TODO (JRP) : Set at steady state or not ?
             //TODO : To be checked

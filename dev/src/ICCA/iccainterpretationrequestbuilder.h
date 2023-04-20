@@ -35,6 +35,7 @@ private:
     QDomElement reportNode;
 
     static bool compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b);
+    Tucuxi::Gui::Core::Duration findDuration(const QDomElement &currentElement);
     void createUncastedIntervalValue(Tucuxi::Gui::Core::Dosage* dosage, int interval_sec);
     void createUncastedDosageValue(Tucuxi::Gui::Core::Dosage *dosage, QString field, QString text, QString comment);
     void splitOverlappingDosage(Tucuxi::Gui::Core::DosageHistory* dosages);

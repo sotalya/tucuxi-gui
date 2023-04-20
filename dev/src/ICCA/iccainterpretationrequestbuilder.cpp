@@ -331,6 +331,8 @@ void ICCAInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core:
                     dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit((*it).last()->getQuantity()->getUnitstring()));
                     dosage->getQuantity()->setValue(lastDosageValue);
 
+                    dosage->setTinf(Duration(0, 0, 0, dosage->getApplied().msecsTo(end1 < end2 ? end2 : end1)));
+
                     //Warning
                     msg = "This is an automaticaly created dosage representing the end of a previous dosage";
                     createUncastedDosageValue(dosage, "Dose", QString::number(lastDosageValue), msg);

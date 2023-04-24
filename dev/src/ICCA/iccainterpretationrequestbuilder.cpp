@@ -110,81 +110,7 @@ void ICCAInterpretationRequestBuilder::createUncastedDosageValue(Tucuxi::Gui::Co
     uncasted->setComment(comment);
     dosage->getUncastedValues()->append(uncasted);
 }
-#if 0
-void ICCAInterpretationRequestBuilder::concatenateDosages(Tucuxi::Gui::Core::DosageHistory *dosages)
-{
-    // Build a map of dosages, map key is the dosage applied time, (by default QMap are sorted by asc order)
-    QMap<QDateTime, QList<Tucuxi::Gui::Core::Dosage*>> dosagebyTime;
 
-    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
-        QDateTime applied = (*it)->getApplied();
-
-        QList<Tucuxi::Gui::Core::Dosage*> currentDosages;
-
-        if(dosagebyTime.contains(applied)) {
-            currentDosages = dosagebyTime.value(applied);
-        }
-
-        currentDosages.append(*it);
-        dosagebyTime.insert(applied, currentDosages);
-    }
-
-    // Reset the dosage history list
-    dosages->clear();
-    // Tucuxi::Gui::Core::DosageHistory* resultDosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO);
-
-    // Iterate throught the map by key order
-    for(const QDateTime key : dosagebyTime.keys()) {
-        QList<Tucuxi::Gui::Core::Dosage*> currentDosages = dosagebyTime.value(key);
-
-        // Cannot be empty for a given QDateTime (key)
-        Q_ASSERT(!currentDosages.isEmpty());
-
-        if(currentDosages.size() == 1) {
-            dosages->append(currentDosages.first());
-        } else {
-            bool okToAdd = true;
-            double totalDosageValue = 0.0;
-            Duration previousTinf = currentDosages.first()->getTinf();
-            QString previousUnit = currentDosages.first()->getQuantity()->getUnitstring();
-            Tucuxi::Gui::Core::Dosage* lastDosage = nullptr;
-
-            // Check if dosage in the list for the given time can be added to have only one dosage at the end
-            // Add dosages values
-            for(QList<Tucuxi::Gui::Core::Dosage*>::iterator it = currentDosages.begin(); it != currentDosages.end(); ++it) {
-                okToAdd = okToAdd && (previousTinf == (*it)->getTinf()) && (previousUnit == (*it)->getQuantity()->getUnitstring());
-                previousTinf = (*it)->getTinf();
-                previousUnit = (*it)->getQuantity()->getUnitstring();
-
-                totalDosageValue += (*it)->getQuantity()->getDbvalue();
-
-                lastDosage = (*it);
-            }
-
-            // If dosage can be added, create the resulting dosage
-            if(okToAdd) {
-                Q_ASSERT(lastDosage != nullptr);
-                lastDosage->getQuantity()->setValue(totalDosageValue);
-
-                UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, lastDosage->getUncastedValues());
-                uncasted->setField("Dose");
-                uncasted->setText(QString::number(totalDosageValue));
-                QString msg = "This dose was automatically computed from " + QString::number(currentDosages.size()) +
-                              " dosages given at " + lastDosage->getApplied().toString("dd/MM/yy hh:mm");
-                uncasted->setComment(msg);
-                lastDosage->getUncastedValues()->append(uncasted);
-
-                dosages->append(lastDosage);
-            } else {
-                // If dosage cannot be added then keep them as it is
-                for(QList<Tucuxi::Gui::Core::Dosage*>::iterator it = currentDosages.begin(); it != currentDosages.end(); ++it) {
-                    dosages->append(*it);
-                }
-            }
-        }
-    }
-}
-#endif
 void ICCAInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core::DosageHistory *dosages)
 {
     // Build a list of list of Dosages that overlap
@@ -397,7 +323,6 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     QString activeSubstanceId = "";
 
     //Prediction drug
-    //TODO JRP : use a dictionary of config file
     if (activeSubstanceStr == "vanco fulldata") {
         activeSubstanceId = "vancomycin";
     } else if (activeSubstanceStr == "cefepime fulldata") {
@@ -436,7 +361,6 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QString dateString = detailElement.attribute("valeur");
             QDate date;
 
-            // TODO (JRP) : The date should have the same format for all XML files
             if (activeSubstanceStr == "vanco fulldata") {
                 date = QDateTime::fromString(dateString, "MMM dd yyyy").date();
             } else if (activeSubstanceStr == "cefepime fulldata" || activeSubstanceStr == "voriconazole fulldata") {
@@ -484,44 +408,6 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             covariate->setType(QMetaType::Double);
 
             covariates->append(covariate);
-
-//        } else if (dataType == "Dosage vanco") {
-
-//            Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
-
-//            Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-//            admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION); //TODO perfusion/infusion, use rate to compute dosage
-
-//            Tucuxi::Core::FormulationAndRoute formulationAndRoute(
-//                    Tucuxi::Core::Formulation::ParenteralSolution,
-//                    Tucuxi::Core::AdministrationRoute::IntravenousDrip,
-//                    Tucuxi::Core::AbsorptionModel::Infusion,
-//                    "");
-
-//            admin->setFormulationAndRoute(formulationAndRoute);
-
-//            dosage->setRoute(admin);
-
-//            QString dateString = detailElement.attribute("horaire");
-//            QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
-//            dosage->setApplied(appl);
-
-//            QString valueString = detailElement.attribute("valeur");
-//            valueString.replace(',', '.');
-//            double value = valueString.toDouble();
-//            dosage->getQuantity()->setValue(value);
-
-//            // TODO (JRP) : Set 60 minutes infusion and interval time for testing
-//            dosage->setInterval(Tucuxi::Gui::Core::Duration(0,60));
-//            dosage->setTinf(Tucuxi::Gui::Core::Duration(0,60));
-
-//            //TODO (JRP) : No dosage interval ? cf. perfusion
-
-//            //TODO (JRP) : Set at steady state or not ?
-//            //TODO : To be checked
-//            dosage->setIsAtSteadyState(false);
-
-//            dosages->append(dosage);
 
         } else if (dataType == "Dosage vanco") {
 
@@ -598,7 +484,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-            admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION); //TODO perfusion/infusion, use rate to compute dosage
+            admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
 
             Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,
@@ -667,8 +553,6 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             // Find duration (Tinf corresponding to dosage)
             dosage->setTinf(findDuration(detailElement));
 
-            //TODO (JRP) : Set at steady state or not ?
-            //TODO : To be checked
             dosage->setIsAtSteadyState(false);
 
             dosages->append(dosage);
@@ -681,13 +565,6 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     //Prediction patient
     treatment->setPatient(shpatient);
     treatment->getPatient()->setParent(treatment);
-
-    //TODO JRP : use a dictionary of config file
-//    if (activeSubstanceStr == "vanco fulldata") {
-//        treatment->setActiveSubstanceId("vancomycin");
-//    } else if (activeSubstanceStr == "cefepime fulldata") {
-//        treatment->setActiveSubstanceId("cefepime");
-//    }
 
     treatment->setActiveSubstanceId(activeSubstanceId);
 
@@ -704,10 +581,6 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
     //Prediction covariates
     treatment->setCovariates(covariates);
-
-    //interpretationRequest->setClinicals(buildClinical("clinicals"));
-
-    //targets
 
     return interpretationRequest;
 }

@@ -62,16 +62,16 @@ Tucuxi::Gui::Core::Duration ICCAInterpretationRequestBuilder::findDuration(const
     QDomElement element = currentElement.nextSiblingElement("Détails");
     Tucuxi::Gui::Core::Duration duration;
 
-    // Find the first "durée" element
+    // Find the first "durée" element, a duration of 0 will be rturned if no duration found
     while(!element.isNull()) {
         if(element.attribute("donnees") == "durée") {
             QString unit = element.attribute("unite");
             QString duree = element.attribute("valeur");
 
-            // Currently only minutes are used as unit for duration
-            Q_ASSERT(unit == "min");
-
-            duration = Tucuxi::Gui::Core::Duration(0, duree.toLongLong());
+            // Currently only minutes should be used as unit for duration
+            if(unit == "min") {
+                duration = Tucuxi::Gui::Core::Duration(0, duree.toLongLong());
+            }
             break;
         } else {
             element = element.nextSiblingElement("Détails");
@@ -551,7 +551,13 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(unit));
 
             // Find duration (Tinf corresponding to dosage)
-            dosage->setTinf(findDuration(detailElement));
+            Tucuxi::Gui::Core::Duration tinf = findDuration(detailElement);
+            dosage->setTinf(tinf);
+
+            // If no tinf found add a warning
+            if(tinf.isEmpty()) {
+                createUncastedDosageValue(dosage, "Infusion", dosage->getTinf().toString(), "No correct infusion time found");
+            }
 
             dosage->setIsAtSteadyState(false);
 

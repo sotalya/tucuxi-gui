@@ -1772,6 +1772,8 @@ function findClosestValue(cdata, ctx, predictive, predData, index, color)
         trough: prepareValueForDisplay(cdata, predData.troughAt(current)),
         peak: prepareValueForDisplay(cdata, predData.peakAt(current)),
         timeAfterDose: predData.timeAfterDose(current),
+        hoursAfterDose: predData.hoursAfterDose(current),
+        minutesAfterDose: predData.minutesAfterDose(current),
         cycleDuration: predData.cycleDuration(current),
         measurePredicted : pointAtMeasure,
         measureTime : timeAtMeasure
@@ -1907,7 +1909,8 @@ function drawTooltips(cdata, ctx)
                         ctx.fillText(cdata.currentPoints[i].time, x + labelsWidth, yText);
                         yText = yText + 14 * cdata.scale
                         ctx.fillText(timeAfterDoseText, xText, yText);
-                        ctx.fillText(cdata.currentPoints[i].timeAfterDose + "h", x + labelsWidth, yText);
+                        //ctx.fillText(cdata.currentPoints[i].timeAfterDose + "h", x + labelsWidth, yText);
+                        ctx.fillText(cdata.currentPoints[i].hoursAfterDose + "h" + ("0" + cdata.currentPoints[i].minutesAfterDose).slice(-2), x + labelsWidth, yText);
                         yText = yText + 14 * cdata.scale
                         ctx.fillText(valueText, xText, yText);
                         ctx.fillText(cdata.currentPoints[i].value + " " + cdata.unit, x + labelsWidth, yText);

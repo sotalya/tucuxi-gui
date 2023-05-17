@@ -94,9 +94,10 @@ Rectangle {
         onFocusChanged: if (activeFocus)
                             selectAll()
 
-        onHoveredChanged: {
-            opacityHandler()
-        }
+        // Not OK with Qt5.7 on Windows:
+        //onHoveredChanged: {
+        //    opacityHandler()
+        //}
 
 //        onTextChanged: {
 //            var theDate = Date.fromLocaleString(Qt.locale(), text, "dd/MM/yyyy");

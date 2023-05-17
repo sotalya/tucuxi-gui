@@ -291,7 +291,7 @@ signals:
 public slots:
 
     void goToSaveInterpretation();
-    void saveInterpretation(QString);
+    void saveInterpretation(const QString &);
 
     void publishReport(QImage);
     void resetReqState();

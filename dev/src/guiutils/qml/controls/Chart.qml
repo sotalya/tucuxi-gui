@@ -574,6 +574,7 @@ Canvas {
         if (graphInformationSelection.displayCurrentTime) {
             Clock.showClock(this);
         }
+        overlayAnnotations.requestPaint();
         //Graphing.drawAnnotations(this);
     }
 

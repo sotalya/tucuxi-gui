@@ -11,9 +11,6 @@ CONFIG(debug) {
 }
 
 QT += gui printsupport quick quickwidgets printsupport svg network webchannel websockets
-!win32 {
-#QT += webenginewidgets
-}
 
 config_externalreport {
     #Install the report files

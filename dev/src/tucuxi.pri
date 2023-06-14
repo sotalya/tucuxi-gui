@@ -113,7 +113,6 @@ static {
 #as well when building in static mode, since qmake prefixes the produced static libraries anyway)
 !win32 : LIBPRE=lib
 
-#TUCUXIROOTDIR = /Users/dulin/tucuxi-core
 TUCUXIROOTDIR = $$(TUCUXI_ROOT)
 TUCUXIDRUGSDIR = $$(TUCUXI_DRUGS_DIR)
 

@@ -16,7 +16,7 @@ DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 ICON        = ../guiutils/resources/icons/logo.ico
 
 QT += gui printsupport quick quickwidgets printsupport svg webchannel websockets
-QT += webenginecore webengine #webenginewidgets
+QT += webenginecore webengine
 
 CONFIG(debug) {
     CONFIG += qml_debug
@@ -127,21 +127,18 @@ INSTALLS    += def
 #    INSTALLS    += drugs2
 
 #Install the database plugins
-#dbs.path    =  $${DESTDIR}/dbs
-#dbs.files =  $${DESTDIR}/dbs/*.so
-#macx {
+!macx {
+    dbs.path    =  $${DESTDIR}/dbs
+    dbs.files =  $${DESTDIR}/dbs/*.so
+}
+macx {
     dbs.path = $${DESTDIR}/$${TARGET}.app/Contents/Resources/dbs
     dbs.files =  $${DESTDIR}/dbs/libephemeraldb.dylib
-    INSTALLS    += dbs
-#}
-
+}
 android {
     dbs.path = /assets/dbs
 }
-!unix {
 INSTALLS    += dbs
-}
-
 
 #Translation configuration
 include(../translation.pri)

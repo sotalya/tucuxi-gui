@@ -2376,9 +2376,9 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()
 {
     // Open a dialog window to choose where to save datas
     QString dirPath;
-    QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Datas"),
+    QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Data"),
                                                     dirPath,
-                                                    tr("XML File (*.xml)"));
+                                                    tr("tqf File (*.tqf)"));
     // Create exporter
     DataXmlExport exporter;
     QString xml = exporter.toXml(getInterpretation());
@@ -2389,8 +2389,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()
         return;
 
     // Check extension is correct
-    if (!fileName.endsWith(".xml"))
-        fileName += ".xml";
+    if (!fileName.endsWith(".tqf"))
+        fileName += ".tqf";
 
     // Create and save file
     QFile dataFile(fileName);

@@ -2383,7 +2383,6 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()
     DataXmlExport exporter;
     QString xml = exporter.toXml(getInterpretation());
 
-    // QString fileName = "/home/tucuxi/Desktop/test.xml";
     // Check a filename is given
     if (fileName.isEmpty())
         return;

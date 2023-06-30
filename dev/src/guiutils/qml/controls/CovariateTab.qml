@@ -168,7 +168,7 @@ Rectangle {
                                         default: return "Undefined"
                                         }
                                     }
-                                    return modelData.actualValue.dbvalue + " " + modelData.defaultValue.unitstring;
+                                    return modelData.actualValue.dbvalue + " " + modelData.actualValue.unitstring;
                                 }
                             }
                         ]

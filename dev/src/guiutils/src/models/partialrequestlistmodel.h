@@ -44,6 +44,9 @@ public:
     Q_INVOKABLE virtual bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
     Q_INVOKABLE virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
 
+    // For GUI tests
+    const QList<SharedPartialRequest>& requests() {return _requests;}
+
 signals:
     void updateStatus();
 

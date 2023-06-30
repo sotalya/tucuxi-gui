@@ -8,6 +8,8 @@
 #include "models/partialrequestlistmodel.h"
 #include "models/sortfilterentitylistproxymodel.h"
 
+#include "core/dal/drug/drug.h"
+
 using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::GuiUtils;
 
@@ -18,6 +20,7 @@ RequestsController::RequestsController(QObject *parent) :
     _proxyModel(new SortFilterEntityListProxyModel(this))
 {
     _proxyModel->setSourceModel(_requestModel);
+    CONNECT(this, &RequestsController::queryRequestByIdSignal, this, &RequestsController::queryRequestById);
 }
 
 RequestsController::~RequestsController()
@@ -64,3 +67,18 @@ void RequestsController::queryRequest(const QString &requestId, const QString &p
     client->queryRequest(requestId, patientId, drugId);
 }
 
+const PartialRequest *RequestsController::getPartialRequest(int id)
+{
+    return _requestModel->requests().at(id);
+}
+
+void RequestsController::queryRequestById(int id)
+{
+    auto request = _requestModel->requests().at(id);
+    client->queryRequest(request->requestId(), request->patient()->externalId(), request->drug()->getSubstanceId());
+}
+
+int RequestsController::nbRequests() const
+{
+    return _requestModel->requests().size();
+}

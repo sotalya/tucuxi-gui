@@ -168,12 +168,32 @@ public:
         return 0.0;
     }
 
-    Q_INVOKABLE double timeAfterDose(const int index) {
+    Q_INVOKABLE int timeAfterDose(const int index) {
         const CycleStatistics *pStats = getStats(index);
         if (nullptr != pStats) {
             double hours = (timeAt(index) - pStats->cycleStart) / 3600.0;
             hours = (hours*10)/10;
             return floor(hours*2+0.5)/2;
+        }
+        return 0.0;
+    }
+
+    Q_INVOKABLE int hoursAfterDose(const int index) {
+        const CycleStatistics *pStats = getStats(index);
+        if (nullptr != pStats) {
+            double hours = (timeAt(index) - pStats->cycleStart) / 3600.0;
+            int roundedHours = static_cast<int>(hours);
+            return roundedHours;
+        }
+        return 0;
+    }
+
+    Q_INVOKABLE int minutesAfterDose(const int index) {
+        const CycleStatistics *pStats = getStats(index);
+        if (nullptr != pStats) {
+            double minutes = (timeAt(index) - pStats->cycleStart) / 60.0;
+            int roundedMinutes = static_cast<int>(minutes);
+            return roundedMinutes % 60;
         }
         return 0.0;
     }

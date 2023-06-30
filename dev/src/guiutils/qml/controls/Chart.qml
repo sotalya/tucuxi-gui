@@ -1,7 +1,8 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
-import QtQuick.Layouts 1.12
+import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.2
 
 import guiutils.qml.styles 1.0
 import guiutils.qml.controls 1.0
@@ -128,10 +129,15 @@ Canvas {
     property var adjpercsP: chartData.adjPred.predictive.percentilePairs
     property var revP: chartData.revPred.adjustments
 
+    // The maximum Y value of data (predictions, percentiles, targets)
+    property real maxYData: 0
 
     property real maxX: 0
     property real minX: 0
+
+    // The maximum Y value that will be displayed
     property real maxY: 0
+
     property real minY: 0
     property real xRatio: 0
     property real yRatio: 0
@@ -282,6 +288,11 @@ Canvas {
         //ToDo: remove default unit
         unit = "ug/l";
         unitefforder = 1;
+
+        if (appGlobals.autoCalculation())
+            hideRefreshButton();
+        else
+            showRefreshButton();
     }
 
     function updateChartDimensions()
@@ -563,6 +574,7 @@ Canvas {
         if (graphInformationSelection.displayCurrentTime) {
             Clock.showClock(this);
         }
+        overlayAnnotations.requestPaint();
         //Graphing.drawAnnotations(this);
     }
 
@@ -640,10 +652,12 @@ Canvas {
 
         onPressed: {
             if (mouse.button  == Qt.RightButton) {
-                // Open a dialog to select the objects to show on the graph
-                graphSettingsDialog.init()
-                graphSettingsDialog.open(true)
-
+                // TODO (JRP) : The popup() call won't work on current Windows version
+                // can be enabled again in future when ok, to replace the popup manual positioning
+                //contextMenu.popup()
+                contextMenu.x = mouse.x
+                contextMenu.y = mouse.y
+                contextMenu.open()
             }
             else {
                 pressX = mouse.x;
@@ -683,6 +697,120 @@ Canvas {
                 tooltipX = -1; // Clear tooltip
             }
         }
+
+        Menu {
+            id: contextMenu
+
+            width: 300
+
+            MenuItem {
+                text: "Vertical Zoom In <b>[shift + wheel up]</b>"
+
+                onTriggered: {
+                    var origMaxY = maxY;
+                    do {
+                        zoomY(1);
+                    } while (origMaxY === Graphing.maxYDisplayedValue(yFactor, minX, maxYData));
+
+                    rePaint();
+                }
+            }
+
+            MenuItem {
+                text: "Vertical Zoom Out <b>[shift + wheel down]</b>"
+
+                onTriggered: {
+                    var origMaxY = maxY;
+                    do {
+                        zoomY(-1);
+                    } while (origMaxY === Graphing.maxYDisplayedValue(yFactor, minX, maxYData));
+
+                    rePaint();
+                }
+            }
+
+            MenuItem {
+                text: "Horizontal Zoom In <b>[wheel up]</b>"
+
+                onTriggered: {
+                    zoom(1);
+                }
+            }
+
+            MenuItem {
+                text: "Horizontal Zoom Out <b>[wheel down]</b>"
+
+                onTriggered: {
+                    zoom(-1);
+                }
+            }
+
+            MenuItem {
+                text: "Goto next event"
+
+                onTriggered: {
+                    interpretationController.goToNextEvent();
+                }
+            }
+
+            MenuItem {
+                text: "Goto previous event"
+
+                onTriggered: {
+                    interpretationController.goToPreviousEvent();
+                }
+            }
+
+            MenuItem {
+                text: "Goto date"
+
+                onTriggered: {
+                    dateDialog.open()
+                }
+            }
+
+            MenuItem {
+                text: "Graph settings"
+
+                onTriggered: {
+                    // Open a dialog to select the objects to show on the graph
+                    graphSettingsDialog.init()
+                    graphSettingsDialog.open(true)
+                }
+            }
+        }
+    }
+
+    Dialog {
+        id: dateDialog
+        title: "Go to date"
+
+        standardButtons: StandardButton.NoButton
+
+        ColumnLayout {
+            DatePicker {
+                id: datePicker
+            }
+
+            RowLayout {
+                Button {
+                    text: "OK"
+
+                    onClicked: {
+                        interpretationController.goToDate(datePicker.date)
+                        dateDialog.close()
+                    }
+                }
+
+                Button {
+                    text: "Cancel"
+
+                    onClicked: {
+                        dateDialog.close()
+                    }
+                }
+            }
+        }
     }
 
     function resume() {
@@ -695,6 +823,14 @@ Canvas {
         overlay.visible = true;
         Trails.setTargetSize(overlay, 1);
         waittima.start();
+    }
+
+    function hideRefreshButton() {
+        refreshButton.visible = false
+    }
+
+    function showRefreshButton() {
+        refreshButton.visible = true
     }
 
     RowLayout {
@@ -742,14 +878,10 @@ Canvas {
         }
 
         Button {
-            text: "Calculate"
+            id: refreshButton
             Layout.alignment: Qt.AlignTop
-            background: Rectangle {
-                        implicitWidth: 20
-                        implicitHeight: 10
-                        border.width: 1
-                        radius: 4
-                    }
+            text: "Refresh"
+            implicitWidth: 75
             onClicked: interpretationController.launchUpdate()
         }
     }

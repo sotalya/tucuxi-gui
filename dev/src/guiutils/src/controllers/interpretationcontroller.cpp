@@ -132,6 +132,7 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
     validationView(nullptr),
     reportView(nullptr),
     _webchannel(nullptr),
+    shouldPercentilesBeComputed(true),
     printer(),
     exportFileDialog()
 {
@@ -1289,32 +1290,43 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::switchActiveSubstance(int 
 //void InterpretationController::currentDrugChanged(int index)
 void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
 {
-    Tucuxi::Gui::Core::DrugModel* drug = ((index == -1) || (_drugModelsForCurrentSubstance == nullptr)) ? nullptr : _drugModelsForCurrentSubstance->at(index);//(drugListProxyModel->mapToSource(drugListProxyModel->index(index, 0)).row());
+    Tucuxi::Gui::Core::DrugModel* drugModel = ((index == -1) || (_drugModelsForCurrentSubstance == nullptr)) ? nullptr : _drugModelsForCurrentSubstance->at(index);//(drugListProxyModel->mapToSource(drugListProxyModel->index(index, 0)).row());
 
+    if (drugModel == nullptr) {
+        return;
+    }
 
     // If the new active substance is actually the current one, then no need to update anything
-    if (_currentDrugModel == drug)
+    if (_currentDrugModel == drugModel)
         return;
     // TODO I don't know why but the previous test could fail even with identical models.
     // We have to figure out why there are two pointers...
     if (_currentDrugModel != nullptr) {
-        if (_currentDrugModel->getDrugModelId() == drug->getDrugModelId()) {
+        if (_currentDrugModel->getDrugModelId() == drugModel->getDrugModelId()) {
             return;
         }
     }
 
-    if (drug == nullptr) {
-        return;
+    QString currentSubstanceId;
+    if (_currentDrugModel != nullptr) {
+        currentSubstanceId = _currentDrugModel->getActiveSubstance()->getSubstanceId();
     }
 
-    setCurrentDrugModel(drug);
+    // This boolean is used to know if the substance changed or not. If yes, then some fields are
+    // processed differently
+    bool changingSubstance = currentSubstanceId != drugModel->getActiveSubstance()->getSubstanceId();
 
-    drugTabController->setDrugModelInfo(drug);
+    setCurrentDrugModel(drugModel);
 
-    if (_interpretation->getInterpretationType() == Interpretation::InterpretationType::NoRequest) {
+    drugTabController->setDrugModelInfo(drugModel);
+
+    // In case of a standard interpretation, if we only change the drug model but not
+    // the active substance, then we keep the dosages, covariates and measures
+    if (_interpretation->getInterpretationType() == Interpretation::InterpretationType::NoRequest
+        && changingSubstance) {
         // TODO: This call makes trouble with the REST flow.
         DrugTreatment* treatment = _interpretation->getDrugResponseAnalysis()->getTreatment();
-        _interpretation->getDrugResponseAnalysis()->setDrugModel(drug);
+        _interpretation->getDrugResponseAnalysis()->setDrugModel(drugModel);
 
         _interpretation->getAnalysis()->setSuitability("");
         _interpretation->getAnalysis()->setExpectedness("");
@@ -1324,18 +1336,20 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
 
         if (true) {
 //        if (_drugs->size() != 1) {
-            treatment->getMeasures()->clear();
+            if (changingSubstance) {
+                treatment->getMeasures()->clear();
+            }
             treatment->getDosages()->clear();
             treatment->getCovariates()->clear();
             treatment->getAdjustments()->clear();
             _interpretation->getAnalysis()->getChartData()->setAdjPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
-            _interpretation->getDrugResponseAnalysis()->setDrugModel(drug);
+            _interpretation->getDrugResponseAnalysis()->setDrugModel(drugModel);
 
             /**************************************
              * TODO : This is wrong. It should act on the treatment targets by copying them
              **************************************/
             dosageTabController->reset();
-            covariateTabController->reset(drug->getCovariates());
+            covariateTabController->reset(drugModel->getCovariates());
             adjustmentTabController->reset();
 
             updateSexAndAgeCovariates();
@@ -1366,20 +1380,20 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
         // studies for the current domain, and update InterpretationController
         // ////////////////////////////////////////////////////////////////////////
 
-        if (drug) {
+        if (drugModel) {
             TargetList* targets = _interpretation->getDrugResponseAnalysis()->getTreatment()->getTargets();
-            TargetList* drugTargets            = drug->getTargets();
+            TargetList* drugTargets            = drugModel->getTargets();
 
             targets->clear();
             for (int i = 0; i < drugTargets->size(); ++i) {
-                Tucuxi::Gui::Core::Target* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
+                auto* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
                 target->copyFrom(drugTargets->at(i));
                 targets->append(target);
             }
 
             // TODO: To be checked: Do we really need that?
-            dosagesView->setProperty("routes", QVariant::fromValue(drug->getAdme()->getIntakes()));
-            adjustmentsView->setProperty("routes", QVariant::fromValue(drug->getAdme()->getIntakes()));
+            dosagesView->setProperty("routes", QVariant::fromValue(drugModel->getAdme()->getIntakes()));
+            adjustmentsView->setProperty("routes", QVariant::fromValue(drugModel->getAdme()->getIntakes()));
 
             adjustmentTabController->setAdjustmentDateFromMaster(QDateTime::currentDateTime());
         }
@@ -1394,28 +1408,28 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
     }
     else {
         // We are dealing with a request
-        Q_ASSERT(drug);
+        Q_ASSERT(drugModel);
 
-        _interpretation->getDrugResponseAnalysis()->setDrugModel(drug);
+        _interpretation->getDrugResponseAnalysis()->setDrugModel(drugModel);
         TargetList* targets = _interpretation->getDrugResponseAnalysis()->getTreatment()->getTargets();
-        TargetList* drugTargets            = drug->getTargets();
+        TargetList* drugTargets            = drugModel->getTargets();
 
         targets->clear();
         for (int i = 0; i < drugTargets->size(); ++i) {
-            Tucuxi::Gui::Core::Target* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
+            auto* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
             target->copyFrom(drugTargets->at(i));
             targets->append(target);
         }
 
-        covariateTabController->reset(drug->getCovariates());
+        covariateTabController->reset(drugModel->getCovariates());
 
         updateSexAndAgeCovariates();
 
-        associateFormulationToRoute(_interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages(), drug->getAdme()->getIntakes());
+        associateFormulationToRoute(_interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages(), drugModel->getAdme()->getIntakes());
 
         // TODO: To be checked: Do we really need that?
-        dosagesView->setProperty("routes", QVariant::fromValue(drug->getAdme()->getIntakes()));
-        adjustmentsView->setProperty("routes", QVariant::fromValue(drug->getAdme()->getIntakes()));
+        dosagesView->setProperty("routes", QVariant::fromValue(drugModel->getAdme()->getIntakes()));
+        adjustmentsView->setProperty("routes", QVariant::fromValue(drugModel->getAdme()->getIntakes()));
 
         Dosage *lastDosage = nullptr;
         if (_interpretation->getDrugResponseAnalysis()->getTreatment() != nullptr) {
@@ -1522,6 +1536,13 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::goToPreviousEvent()
     }
 }
 
+void Tucuxi::Gui::GuiUtils::InterpretationController::goToDate(const QDateTime &date)
+{
+    if (date.isValid()) {
+        setDateViewRange(date);
+    }
+}
+
 QList<QDateTime> Tucuxi::Gui::GuiUtils::InterpretationController::buildEventsList()
 {
     // We build the list of all events: dosage changes, covariate changes, measures, adjustment time
@@ -1577,8 +1598,6 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setDateViewRange(const QDa
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::setViewRange(const QDateTime &minX, const QDateTime &maxX)
 {
-    std::cout << "in setViewRange()";
-
     _userRequestedMinX = minX;
     _userRequestedMaxX = maxX;
 
@@ -1597,7 +1616,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setViewRange(const QDateTi
         _chartDataController->viewRangeUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed);
     }
     else {
-        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "requestPaint"));
+        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "rePaint"));
     }
 }
 
@@ -1886,10 +1905,6 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::goToSaveInterpretation()
     // Settings to keep track of the previous path
     dirPath = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI,"interpretationDirPath", "").toString();
 
-//    Patient* currentPatient = getCurrentPatient();
-
-//    dirPath +=
-
     QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Request File"),
                                                     dirPath,
                                                     tr("Tucuxi Interpretation File (*.tui)"));
@@ -1911,7 +1926,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::goToSaveInterpretation()
 #endif // CONFIG_DEMO
 }
 
-void Tucuxi::Gui::GuiUtils::InterpretationController::saveInterpretation(QString fileName)
+void Tucuxi::Gui::GuiUtils::InterpretationController::saveInterpretation(const QString& fileName)
     {
 
 #ifndef CONFIG_DEMO
@@ -2348,25 +2363,33 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchUpdate()
     _chartDataController->launchCompute();
 }
 
+void Tucuxi::Gui::GuiUtils::InterpretationController::setRefreshButtonVisible(bool visible)
+{
+    if (visible) {
+        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "showRefreshButton"));
+    } else {
+        CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "hideRefreshButton"));
+    }
+}
+
 void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()
 {
     // Open a dialog window to choose where to save datas
     QString dirPath;
-    QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Datas"),
+    QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Data"),
                                                     dirPath,
-                                                    tr("XML File (*.xml)"));
+                                                    tr("tqf File (*.tqf)"));
     // Create exporter
     DataXmlExport exporter;
     QString xml = exporter.toXml(getInterpretation());
 
-    // QString fileName = "/home/tucuxi/Desktop/test.xml";
     // Check a filename is given
     if (fileName.isEmpty())
         return;
 
     // Check extension is correct
-    if (!fileName.endsWith(".xml"))
-        fileName += ".xml";
+    if (!fileName.endsWith(".tqf"))
+        fileName += ".tqf";
 
     // Create and save file
     QFile dataFile(fileName);

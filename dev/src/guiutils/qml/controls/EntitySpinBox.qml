@@ -111,8 +111,8 @@ SpinBox {
             verticalAlignment: Qt.AlignVCenter
             readOnly: !root.editable
             maximumLength: 10
-            // validator: regExpValidator // (root.decimals === 0) ? root.intValidator : root.doubleValidator
-            validator: DoubleValidator { decimals: root.decimals } // (root.decimals === 0) ? root.intValidator : root.doubleValidator;
+            validator: regExpValidator // (root.decimals === 0) ? root.intValidator : root.doubleValidator
+            //validator: DoubleValidator { decimals: root.decimals } // (root.decimals === 0) ? root.intValidator : root.doubleValidator;
             inputMethodHints: Qt.ImhFormattedNumbersOnly
 
             onTextChanged: {
@@ -156,7 +156,8 @@ SpinBox {
     }
 
     property var regExpValidator: RegExpValidator{
-        regExp: /(\d+)([.,]\d+)?$/
+        regExp: /(\d+)([.]\d{1,2})?$/
+        //regExp: /(\d+)([.,]\d+)?$/
     }
 
     property var intValidator: IntValidator {

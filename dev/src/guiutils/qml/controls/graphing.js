@@ -488,12 +488,9 @@ function extents(cdata)
         }
     }
 
-    // Modify maxY with respect to the manual y factor
-    cdata.maxY = cdata.maxY * cdata.yFactor;
+    maxYData = cdata.maxY;
 
-    var lg10 = Math.pow(10, Math.ceil(Math.log(1.1 * cdata.maxY) / Math.LN10) - 1);
-    cdata.maxY = Math.ceil(1.1 / lg10 * cdata.maxY) * lg10;
-
+    cdata.maxY = maxYDisplayedValue(yFactor, minX, maxYData);
 
     cdata.xRatio = cdata.plotWidth  / (cdata.maxX - cdata.minX);
     cdata.yRatio = cdata.plotHeight / (cdata.maxY - cdata.minY);
@@ -864,6 +861,50 @@ function atime2screen(cdata, t)
 function ascreen2time(cdata, p)
 {
     return cdata.minX + ((p - cdata.bottomLeftX) / cdata.xRatio);
+}
+
+
+function maxYDisplayedValue(yFactor, minY, maxY)
+{
+    var maxY2 = maxY * yFactor;
+    var lg10 = Math.pow(10, Math.ceil(Math.log(1.1 * maxY2) / Math.LN10) - 1);
+    var maxY3 = Math.ceil(1.1 / lg10 * maxY2) * lg10;
+
+    return maxY3;
+
+//    var tickSpacingy = 0.2 * scale;
+//    var unitefforder = 1;
+
+//    var down = -1.0;
+//    var up = 1.0;
+//    var down_i = Math.ceil(down / tickSpacingy);
+//    var up_i = Math.floor(up / tickSpacingy);
+
+//    var nbTicksY = up_i - down_i + 1;
+//    if (nbTicksY > 21)
+//        nbTicksY = 21;
+
+//    var order = (2 - Math.log(maxY - minY) / Math.LN10);
+//    if (order >= 1 && order < 4) {
+//        unitefforder = 1e3;
+//    }
+//    if (order >= 4 && order < 7) {
+//        unitefforder = 1e6;
+//    }
+//    if (order > -5 && order < -2) {
+//        unitefforder = 1e-3;
+//    }
+//    if (order > -8 && order < -5) {
+//        unitefforder = 1e-6;
+//    }
+//    if (order < 1 && order >= -2) {
+//        unitefforder = 1;
+//    }
+
+//    var val = minY + (0.5 * (nbTicksY - 1) * tickSpacingy) * (maxY - minY);
+
+//    //Return max displayed tick value
+//    return Math.max(0,Math.round(unitefforder * val));
 }
 
 function drawAxisTicks(cdata, ctx)
@@ -1517,10 +1558,12 @@ function drawAnnotations(cdata)     //eslint-disable-line @typescript-eslint/no-
     }
 
     //    ctx.clearRect(0, 0, cdata.canvas.width, cdata.canvas.height);
+
     annotatePrediction(cdata, ctx, cdata.popP, cdata.pop, cdata.colors[1]);
     annotatePrediction(cdata, ctx, cdata.aprP, cdata.apr, cdata.colors[2]);
     annotatePrediction(cdata, ctx, cdata.apoP, cdata.apo, cdata.colors[4]);
     annotatePrediction(cdata, ctx, cdata.adjP, cdata.adj, cdata.adjcolors[1]);
+
 
     if (cdata.revP !== null && cdata.revP.isValid) {
         if (cdata.gInformationSelection.displayPossibleAdjustments) {
@@ -1729,6 +1772,8 @@ function findClosestValue(cdata, ctx, predictive, predData, index, color)
         trough: prepareValueForDisplay(cdata, predData.troughAt(current)),
         peak: prepareValueForDisplay(cdata, predData.peakAt(current)),
         timeAfterDose: predData.timeAfterDose(current),
+        hoursAfterDose: predData.hoursAfterDose(current),
+        minutesAfterDose: predData.minutesAfterDose(current),
         cycleDuration: predData.cycleDuration(current),
         measurePredicted : pointAtMeasure,
         measureTime : timeAtMeasure
@@ -1864,7 +1909,8 @@ function drawTooltips(cdata, ctx)
                         ctx.fillText(cdata.currentPoints[i].time, x + labelsWidth, yText);
                         yText = yText + 14 * cdata.scale
                         ctx.fillText(timeAfterDoseText, xText, yText);
-                        ctx.fillText(cdata.currentPoints[i].timeAfterDose + "h", x + labelsWidth, yText);
+                        //ctx.fillText(cdata.currentPoints[i].timeAfterDose + "h", x + labelsWidth, yText);
+                        ctx.fillText(cdata.currentPoints[i].hoursAfterDose + "h" + ("0" + cdata.currentPoints[i].minutesAfterDose).slice(-2), x + labelsWidth, yText);
                         yText = yText + 14 * cdata.scale
                         ctx.fillText(valueText, xText, yText);
                         ctx.fillText(cdata.currentPoints[i].value + " " + cdata.unit, x + labelsWidth, yText);

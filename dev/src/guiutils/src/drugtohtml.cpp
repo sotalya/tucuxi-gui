@@ -129,7 +129,7 @@ QString DrugToHtml::drugToHtml(const Tucuxi::Gui::Core::DrugModel *drug)
         //Organization: organization1
         //Locality: locality1, country1
 
-        if (signer.getName() != "" and signer.getOrganizationName() != "") {
+        if ((signer.getName() != "") && (signer.getOrganizationName() != "")) {
 
             desc += "<tr><td><b>Validation: </b></td><td><b>" + QString::fromStdString(signer.getName()) + "</b></td></tr>";
             desc += "<tr><td>Organization: </td><td>" + QString::fromStdString(signer.getOrganizationName()) + "</td></tr>";

@@ -233,9 +233,11 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::DosageHistory *history)
     writer.writeStartElement("treatment");
     writer.writeStartElement("dosageHistory");
     foreach(Tucuxi::Gui::Core::Dosage *dosage, history->getList()) {
+        writer.writeStartElement("dosageTimeRange");
         writer.writeTextElement("start", writeDate(dosage->getApplied()));
         writer.writeTextElement("end", writeDate(dosage->getEndTime()));
         save(dosage);
+        writer.writeEndElement(); // End of dosageTimeRange
     }
     writer.writeEndElement(); // End of dosageHistory
     writer.writeEndElement(); // End of treatment

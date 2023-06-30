@@ -226,6 +226,7 @@ public:
     Q_INVOKABLE void setViewRange(const QDateTime &minX, const QDateTime &maxX);
     Q_INVOKABLE void goToNextEvent();
     Q_INVOKABLE void goToPreviousEvent();
+    Q_INVOKABLE void goToDate(const QDateTime &date);
     QList<QDateTime> buildEventsList();
 
     Q_INVOKABLE void updateSexAndAgeCovariates();
@@ -272,6 +273,8 @@ public:
 
     Q_INVOKABLE void launchUpdate();
 
+    Q_INVOKABLE void setRefreshButtonVisible(bool visible);
+
 signals:
     void webchannelChanged(QQmlWebChannel&);
     void drugsChanged(Tucuxi::Gui::Core::DrugModelList*);
@@ -288,7 +291,7 @@ signals:
 public slots:
 
     void goToSaveInterpretation();
-    void saveInterpretation(QString);
+    void saveInterpretation(const QString &);
 
     void publishReport(QImage);
     void resetReqState();

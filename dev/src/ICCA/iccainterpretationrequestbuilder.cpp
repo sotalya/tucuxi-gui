@@ -25,6 +25,7 @@
 #include "core/dal/drug/target.h"
 
 using namespace Tucuxi::Gui::Admin;
+using namespace Tucuxi::Gui::Core;
 
 namespace Tucuxi {
 namespace Gui {
@@ -51,6 +52,261 @@ ICCAInterpretationRequestBuilder::~ICCAInterpretationRequestBuilder()
 
 }
 
+bool ICCAInterpretationRequestBuilder::compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
+{
+    return (a->getApplied() < b->getApplied());
+}
+
+Tucuxi::Gui::Core::Duration ICCAInterpretationRequestBuilder::findDuration(const QDomElement &currentElement)
+{
+    QDomElement element = currentElement.nextSiblingElement("Détails");
+    Tucuxi::Gui::Core::Duration duration;
+
+    // Find the first "durée" element, a duration of 0 will be rturned if no duration found
+    while(!element.isNull()) {
+        if(element.attribute("donnees") == "durée") {
+            QString unit = element.attribute("unite");
+            QString duree = element.attribute("valeur");
+
+            // Currently only minutes should be used as unit for duration
+            if(unit == "min") {
+                duration = Tucuxi::Gui::Core::Duration(0, duree.toLongLong());
+            }
+            break;
+        } else {
+            element = element.nextSiblingElement("Détails");
+        }
+    }
+
+    return duration;
+}
+
+void ICCAInterpretationRequestBuilder::createUncastedIntervalValue(Tucuxi::Gui::Core::Dosage *dosage, int interval_sec)
+{
+    UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+    uncasted->setField("Interval");
+    uncasted->setText(QString::number(interval_sec));
+    uncasted->setComment("Interval was computed to 0 and therefore replaced by default value");
+    dosage->getUncastedValues()->append(uncasted);
+
+    uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+    uncasted->setField("From");
+    uncasted->setText(dosage->getApplied().toString("dd/MM/yy hh:mm"));
+    uncasted->setComment("Verify if the date is not overlapping another dosage");
+    dosage->getUncastedValues()->append(uncasted);
+
+    uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+    uncasted->setField("To");
+    uncasted->setText(dosage->getEndTime().toString("dd/MM/yy hh:mm"));
+    uncasted->setComment("Verify if the date is not overlapping another dosage");
+    dosage->getUncastedValues()->append(uncasted);
+}
+
+void ICCAInterpretationRequestBuilder::createUncastedDosageValue(Tucuxi::Gui::Core::Dosage *dosage, QString field, QString text, QString comment)
+{
+    UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+    uncasted->setField(field);
+    uncasted->setText(text);
+    uncasted->setComment(comment);
+    dosage->getUncastedValues()->append(uncasted);
+}
+
+void ICCAInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core::DosageHistory *dosages)
+{
+    // Build a list of list of Dosages that overlap
+    QList<QList<Tucuxi::Gui::Core::Dosage*>> overlapingDosages;
+
+    // Sort the dosages by applied date
+    dosages->sort(compareDosage);
+
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin();
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator next;
+    while (it != dosages->getList().end()) {
+        QDateTime applied = (*it)->getApplied();
+        QDateTime end = applied.addMSecs((*it)->getTinf().mSecs());
+
+        // Check if next dosage exist and overlap
+        next = it + 1;
+        if((next != dosages->getList().end()) && ((*next)->getApplied() < end)) {
+            // The dosages ovelap so we add both to the map and skip
+            // the next as we just added it in the map
+            QList<Tucuxi::Gui::Core::Dosage*> multipleDosages;
+            multipleDosages.append(*it);
+            multipleDosages.append(*next);
+            overlapingDosages.append(multipleDosages);
+            it += 2;
+        } else {
+            QList<Tucuxi::Gui::Core::Dosage*> singleDosage;
+            singleDosage.append(*it);
+            overlapingDosages.append(singleDosage);
+            ++it;
+        }
+    }
+
+    // Reset the dosage history list
+    dosages->clear();
+
+    // Iterate throught the list and treat overlaping dosage (if any)
+    for(QList<QList<Tucuxi::Gui::Core::Dosage*>>::iterator it = overlapingDosages.begin(); it != overlapingDosages.end(); ++it) {
+        // Cannot be empty and greater than 2
+        Q_ASSERT(!(*it).isEmpty() && ((*it).size() <= 2));
+
+        // Only single dosage
+        if((*it).size() == 1) {
+            dosages->append((*it).first());
+        } else {
+            // Multiple dosage overlapping
+            // Get the start and end times of the both dosages
+            QDateTime applied1 = (*it).first()->getApplied();
+            QDateTime end1 = applied1.addMSecs((*it).first()->getTinf().mSecs());
+            QDateTime applied2 = (*it).last()->getApplied();
+            QDateTime end2 = applied2.addMSecs((*it).last()->getTinf().mSecs());
+
+            // Add the two dosage value for the ovelapping part
+            double totalDosageValue = (*it).first()->getQuantity()->getDbvalue() + (*it).last()->getQuantity()->getDbvalue();
+
+            // Applied date are the same
+            if(applied1 == applied2) {
+                // Dosage are fully overlapping
+                if(end1 == end2) {
+                    (*it).first()->getQuantity()->setValue(totalDosageValue);
+
+                    // Warning message
+                    QString msg = "This dose was automatically computed from 2 dosages given at " +
+                                  (*it).first()->getApplied().toString("dd/MM/yy hh:mm");
+                    createUncastedDosageValue((*it).first(), "Dose", QString::number(totalDosageValue), msg);
+
+                    dosages->append((*it).first());
+                // End of dosage are not the same
+                } else {
+                    // Find the dosage that end the first
+                    Tucuxi::Gui::Core::Dosage* firstDosage;
+                    Tucuxi::Gui::Core::Dosage* secondDosage;
+                    QDateTime firstDosageEnd;
+                    QDateTime secondDosageEnd;
+
+
+                    if(end1 < end2) {
+                        firstDosage = (*it).first();
+                        firstDosageEnd = end1;
+                        secondDosage = (*it).last();
+                        secondDosageEnd = end2;
+                    } else {
+                        firstDosage = (*it).last();
+                        firstDosageEnd = end2;
+                        secondDosage = (*it).first();
+                        secondDosageEnd = end1;
+                    }
+
+                    // The overlapping part amount should be added in the first dosage
+                    firstDosage->getQuantity()->setValue(totalDosageValue);
+
+                    // The second dosage applied date and infusion time should be corrected
+                    secondDosage->setApplied(firstDosageEnd);
+                    secondDosage->setTinf(Duration(0, 0, 0, firstDosageEnd.msecsTo(secondDosageEnd)));
+
+                    // First dosage warning message
+                    QString msg = "This dose was automatically computed from 2 dosages given at " +
+                                  (*it).first()->getApplied().toString("dd/MM/yy hh:mm");
+                    createUncastedDosageValue(firstDosage, "Dose", QString::number(totalDosageValue), msg);
+                    //Second dosage warning messag
+                    msg = "This applied time was automatically adjusted";
+                    createUncastedDosageValue(secondDosage, "From", secondDosage->getApplied().toString("dd/MM/yy hh:mm"), msg);
+                    msg = "This infusion time was automatically adjusted";
+                    createUncastedDosageValue(secondDosage, "Infusion", secondDosage->getTinf().toString(), msg);
+
+                    dosages->append(firstDosage);
+                    dosages->append(secondDosage);
+                }
+            // Applied date are different
+            } else {
+                // The first dosage infusion time finish when second dosage begin (overlapping part)
+                (*it).first()->setTinf(Duration(0, 0, 0, applied1.msecsTo(applied2)));
+
+                // Keep the quantity of last ending dosage in case a third dosage must be added
+                double lastDosageValue = end1 > end2 ? (*it).first()->getQuantity()->getDbvalue() : (*it).last()->getQuantity()->getDbvalue();
+
+                // Correct the second dosage to be the fully overlapping part of both dosages
+                (*it).last()->getQuantity()->setValue(totalDosageValue);
+                (*it).last()->setTinf(Duration(0, 0, 0, applied2.msecsTo(end1 < end2 ? end1 : end2)));
+
+                // Warning messages
+                // First dosage
+                QString msg = "This infusion time was automatically adjusted";
+                createUncastedDosageValue((*it).first(), "Infusion", (*it).first()->getTinf().toString(), msg);
+                // Second dosage
+                msg = "This dose was automatically computed from 2 dosages given at " +
+                              (*it).last()->getApplied().toString("dd/MM/yy hh:mm");
+                createUncastedDosageValue((*it).last(), "Dose", QString::number(totalDosageValue), msg);
+                msg = "This infusion time was automatically adjusted";
+                createUncastedDosageValue((*it).last(), "Infusion", (*it).last()->getTinf().toString(), msg);
+
+                dosages->append((*it).first());
+                dosages->append((*it).last());
+
+                // If end date are not the same a third dosage should be added
+                if(end1 != end2) {
+                    Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
+                    dosage->setRoute((*it).last()->getRoute());
+                    dosage->setIsAtSteadyState((*it).last()->getIsAtSteadyState());
+
+                    dosage->setApplied(end1 < end2 ? end1 : end2);
+                    // End date is currently the same as applied date because the end date is corrected later on the xml ICCA import processus
+                    dosage->setEndTime(dosage->getApplied());
+
+                    dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit((*it).last()->getQuantity()->getUnitstring()));
+                    dosage->getQuantity()->setValue(lastDosageValue);
+
+                    dosage->setTinf(Duration(0, 0, 0, dosage->getApplied().msecsTo(end1 < end2 ? end2 : end1)));
+
+                    //Warning
+                    msg = "This is an automaticaly created dosage representing the end of a previous dosage";
+                    createUncastedDosageValue(dosage, "Dose", QString::number(lastDosageValue), msg);
+                    createUncastedDosageValue(dosage, "From", dosage->getApplied().toString("dd/MM/yy hh:mm"), msg);
+                    createUncastedDosageValue(dosage, "Infusion", dosage->getTinf().toString(), msg);
+
+                    dosages->append(dosage);
+                }
+            }
+        }
+    }
+}
+
+void ICCAInterpretationRequestBuilder::setDosageEndDateInterval(Tucuxi::Gui::Core::DosageHistory* dosages)
+{
+    //Sort the dosages by applied date
+    dosages->sort(compareDosage);
+    //Iterate the dosages to corectly set interval time and end date
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator next;
+    qint64 interval_sec = -1;
+    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
+        next = it + 1;
+        //The end time and interval is computed using next dosage applied time, if any
+        if(next != dosages->getList().end()) {
+            (*it)->setEndTime((*next)->getApplied());
+            interval_sec = (*it)->getApplied().secsTo((*it)->getEndTime());
+
+            if(interval_sec > 0) {
+                (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+            } else {
+                createUncastedIntervalValue(*it, interval_sec);
+            }
+
+        //If there is no next dosage, check if there is one previous interval
+        } else if(interval_sec != -1) {
+            //Use last interval to compute end time
+            (*it)->setEndTime((*it)->getApplied().addSecs(interval_sec));
+
+            if(interval_sec > 0) {
+                (*it)->setInterval(Tucuxi::Gui::Core::Duration(0,0,interval_sec));
+            } else {
+                createUncastedIntervalValue(*it, interval_sec);
+            }
+        }
+        //else { TODO (JRP) : What to do if only one dosage ?
+    }
+}
+
 InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequest()
 {
     InterpretationRequest* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
@@ -67,7 +323,6 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     QString activeSubstanceId = "";
 
     //Prediction drug
-    //TODO JRP : use a dictionary of config file
     if (activeSubstanceStr == "vanco fulldata") {
         activeSubstanceId = "vancomycin";
     } else if (activeSubstanceStr == "cefepime fulldata") {
@@ -106,7 +361,6 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QString dateString = detailElement.attribute("valeur");
             QDate date;
 
-            // TODO (JRP) : The date should have the same format for all XML files
             if (activeSubstanceStr == "vanco fulldata") {
                 date = QDateTime::fromString(dateString, "MMM dd yyyy").date();
             } else if (activeSubstanceStr == "cefepime fulldata" || activeSubstanceStr == "voriconazole fulldata") {
@@ -155,44 +409,6 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             covariates->append(covariate);
 
-//        } else if (dataType == "Dosage vanco") {
-
-//            Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
-
-//            Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-//            admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION); //TODO perfusion/infusion, use rate to compute dosage
-
-//            Tucuxi::Core::FormulationAndRoute formulationAndRoute(
-//                    Tucuxi::Core::Formulation::ParenteralSolution,
-//                    Tucuxi::Core::AdministrationRoute::IntravenousDrip,
-//                    Tucuxi::Core::AbsorptionModel::Infusion,
-//                    "");
-
-//            admin->setFormulationAndRoute(formulationAndRoute);
-
-//            dosage->setRoute(admin);
-
-//            QString dateString = detailElement.attribute("horaire");
-//            QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
-//            dosage->setApplied(appl);
-
-//            QString valueString = detailElement.attribute("valeur");
-//            valueString.replace(',', '.');
-//            double value = valueString.toDouble();
-//            dosage->getQuantity()->setValue(value);
-
-//            // TODO (JRP) : Set 60 minutes infusion and interval time for testing
-//            dosage->setInterval(Tucuxi::Gui::Core::Duration(0,60));
-//            dosage->setTinf(Tucuxi::Gui::Core::Duration(0,60));
-
-//            //TODO (JRP) : No dosage interval ? cf. perfusion
-
-//            //TODO (JRP) : Set at steady state or not ?
-//            //TODO : To be checked
-//            dosage->setIsAtSteadyState(false);
-
-//            dosages->append(dosage);
-
         } else if (dataType == "Dosage vanco") {
 
             Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
@@ -215,7 +431,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             measures->append(measure);
 
-        } else if (dataType == "Dosage Residuel cefepime") {
+        } else if (dataType == "Dosage cefepime" || dataType == "Dosage Residuel cefepime") {
 
             Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 
@@ -228,7 +444,9 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
             Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
             QString valueString = detailElement.attribute("valeur");
+            valueString.replace(',', '.');
             QString unit = detailElement.attribute("unite", "mg/l");
+            unit = unit.toLower();
             double value = valueString.toDouble();
             amt->setValue(value);
             amt->setUnit(Tucuxi::Gui::Core::Unit(unit));
@@ -266,7 +484,7 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-            admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION); //TODO perfusion/infusion, use rate to compute dosage
+            admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
 
             Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,
@@ -321,26 +539,26 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
             QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
             dosage->setApplied(appl);
 
-            QDateTime end = appl.addSecs(10800);
-            dosage->setEndTime(end);
+            //QDateTime end = appl.addSecs(10800);
+            //dosage->setEndTime(end);
+            dosage->setEndTime(appl);
 
             QString valueString = detailElement.attribute("valeur");
+            valueString.replace(',', '.');
             QString unit = detailElement.attribute("unite", "g");
             double value = valueString.toDouble();
             dosage->getQuantity()->setValue(value);
             dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(unit));
 
-            //TODO (JRP) : interval and duration should be deducted from the XML
-            if (activeSubstanceStr == "cefepime fulldata") {
-                dosage->setInterval(Tucuxi::Gui::Core::Duration(8));
-                dosage->setTinf(Tucuxi::Gui::Core::Duration(0,180));
-            } else if (activeSubstanceStr == "voriconazole fulldata") {
-                dosage->setInterval(Tucuxi::Gui::Core::Duration(12));
-                dosage->setTinf(Tucuxi::Gui::Core::Duration(0,120));
+            // Find duration (Tinf corresponding to dosage)
+            Tucuxi::Gui::Core::Duration tinf = findDuration(detailElement);
+            dosage->setTinf(tinf);
+
+            // If no tinf found add a warning
+            if(tinf.isEmpty()) {
+                createUncastedDosageValue(dosage, "Infusion", dosage->getTinf().toString(), "No correct infusion time found");
             }
 
-            //TODO (JRP) : Set at steady state or not ?
-            //TODO : To be checked
             dosage->setIsAtSteadyState(false);
 
             dosages->append(dosage);
@@ -354,14 +572,10 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
     treatment->setPatient(shpatient);
     treatment->getPatient()->setParent(treatment);
 
-    //TODO JRP : use a dictionary of config file
-//    if (activeSubstanceStr == "vanco fulldata") {
-//        treatment->setActiveSubstanceId("vancomycin");
-//    } else if (activeSubstanceStr == "cefepime fulldata") {
-//        treatment->setActiveSubstanceId("cefepime");
-//    }
-
     treatment->setActiveSubstanceId(activeSubstanceId);
+
+    splitOverlappingDosage(dosages);
+    setDosageEndDateInterval(dosages);
 
     //Prediction dosage
     treatment->setDosages(dosages);
@@ -373,10 +587,6 @@ InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequ
 
     //Prediction covariates
     treatment->setCovariates(covariates);
-
-    //interpretationRequest->setClinicals(buildClinical("clinicals"));
-
-    //targets
 
     return interpretationRequest;
 }

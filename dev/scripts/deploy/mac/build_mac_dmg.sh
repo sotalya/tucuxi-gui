@@ -38,7 +38,7 @@ export TARGET_BINARY=${BUNDLE}/Contents/MacOS/tucuxi
 # Execute macdeployqt with args to get the right qml files, make a dmg installer
 macdeployqt ${BUNDLE} -verbose=3 -always-overwrite -executable=${TARGET_BINARY} -qmldir=${TUCUXI_SRC_DIR}/guiutils/qml
 
-cp -r ${TUCUXI_DRUGS_DIR} ${BUNDLE}/Contents/Resources/drugfiles
+# cp -r ${TUCUXI_DRUGS_DIR} ${BUNDLE}/Contents/Resources/drugfiles
 cp -r ${TUCUXI_BUILD_DIR}/dist/dbs ${BUNDLE}/Contents/Resources
 # cp ${BOTAN_LIB} ${BUNDLE}/Contents/Frameworks
 

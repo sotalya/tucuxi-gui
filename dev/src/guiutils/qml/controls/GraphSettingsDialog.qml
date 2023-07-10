@@ -10,9 +10,8 @@ import ezechiel 1.0
 
 DialogBase {
     title: "Graph settings parameter"
-    width: 600
-    height: 450
-    minimumHeight: 550
+    minimumWidth: 600
+    minimumHeight: 600
     property var self
 
     //Constants

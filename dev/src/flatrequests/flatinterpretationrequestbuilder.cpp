@@ -1,11 +1,11 @@
-#include "flatimportinterpretationrequestbuilder.h"
+#include "flatinterpretationrequestbuilder.h"
 
 
 //@@license@@
 
 #include <QMessageBox>
 
-#include "flatimportinterpretationrequestbuilder.h"
+#include "flatinterpretationrequestbuilder.h"
 #include "rest/builders/drugidtranslator.h"
 #include "rest/builders/routetranslator.h"
 #include "rest/builders/formulationandroutetranslator.h"
@@ -251,7 +251,7 @@ void FlatInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core:
                     dosage->setIsAtSteadyState((*it).last()->getIsAtSteadyState());
 
                     dosage->setApplied(end1 < end2 ? end1 : end2);
-                    // End date is currently the same as applied date because the end date is corrected later on the xml ICCA import processus
+                    // End date is currently the same as applied date because the end date is corrected later on the xml flat import processus
                     dosage->setEndTime(dosage->getApplied());
 
                     dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit((*it).last()->getQuantity()->getUnitstring()));

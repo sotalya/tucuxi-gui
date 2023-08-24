@@ -1,6 +1,6 @@
 //@@license@@s
 
-#include "flatimportrequestfileclient.h"
+#include "flatrequestfileclient.h"
 #include "rest/builders/interpretationrequestbuilder.h"
 #include "core/dal/drugresponseanalysis.h"
 #include "core/core.h"

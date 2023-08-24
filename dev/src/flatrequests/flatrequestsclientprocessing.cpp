@@ -1,7 +1,7 @@
 //@@license@@
 
-#include "flatimportrequestsclientprocessing.h"
-#include "flatimportinterpretationrequestbuilder.h"
+#include "flatrequestsclientprocessing.h"
+#include "flatinterpretationrequestbuilder.h"
 #include "core/dal/drugresponseanalysis.h"
 #include "core/core.h"
 #include "core/corefactory.h"

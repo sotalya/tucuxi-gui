@@ -3,7 +3,7 @@ include(tucuxi.pri)
 
 TEMPLATE    =	subdirs
 SUBDIRS     +=	 core admin apputils databases guiutils gui \
-    flatimport
+    flatrequests
 
 SUBDIRS += processingtucucore
 	processingtucucore.depends  = core
@@ -37,10 +37,10 @@ cliutils.depends             = core apputils admin rest
 }
 !config_rest {
 guiutils.depends             = core apputils admin
-gui.depends                  = core apputils admin guiutils flatimport
+gui.depends                  = core apputils admin guiutils flatrequests
 }
 drugeditor.depends	     = core guiutils
-ICCA.depends                 = core admin apputils rest
+flatrequests.depends                 = core admin apputils rest
 
 guiutils.depends             += processingtucucore
 gui.depends += processingtucucore

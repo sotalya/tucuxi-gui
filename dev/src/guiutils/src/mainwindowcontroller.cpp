@@ -31,7 +31,7 @@
 #endif
 
 // TODO JRP : Is conditional include needed ?
-#include "flatimport/flatimportrequestfileclient.h"
+#include "flatrequests/flatrequestfileclient.h"
 
 #include "guiutils/src/widgets/validatedrugdialog.h"
 #include "admin/src/interpretationxmlimport.h"

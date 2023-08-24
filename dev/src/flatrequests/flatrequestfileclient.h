@@ -1,9 +1,9 @@
 //@@license@@s
 
-#ifndef FLATIMPORTREQUESTFILECLIENT_H
-#define FLATIMPORTREQUESTFILECLIENT_H
+#ifndef FLATREQUESTFILECLIENT_H
+#define FLATREQUESTFILECLIENT_H
 
-#include "flatimportrequestsclientprocessing.h"
+#include "flatrequestsclientprocessing.h"
 
 namespace Tucuxi {
 namespace Gui {
@@ -36,4 +36,4 @@ private:
 }
 }
 
-#endif // FLATIMPORTREQUESTFILECLIENT_H
+#endif // FLATREQUESTFILECLIENT_H

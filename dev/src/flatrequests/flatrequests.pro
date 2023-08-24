@@ -1,6 +1,6 @@
 include (../tucuxi.pri)
 
-TARGET      = tucuxi-gui-flatimport
+TARGET      = tucuxi-gui-flatrequests
 TEMPLATE    = lib
 DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 
@@ -11,9 +11,9 @@ QT -= gui
 INCLUDEPATH += ..
 
 HEADERS	+= \
-    flatimportinterpretationrequestbuilder.h \
-    flatimportrequestfileclient.h \
-    flatimportrequestsclientprocessing.h
+    flatinterpretationrequestbuilder.h \
+    flatrequestfileclient.h \
+    flatrequestsclientprocessing.h
 
 CODECFORTR      += UTF-8
 #TRANSLATIONS    += $${TRANS_DIR}/admin_fr.ts
@@ -22,9 +22,9 @@ CODECFORTR      += UTF-8
 include(../translation.pri)
 
 SOURCES += \
-    flatimportinterpretationrequestbuilder.cpp \
-    flatimportrequestfileclient.cpp \
-    flatimportrequestsclientprocessing.cpp
+    flatinterpretationrequestbuilder.cpp \
+    flatrequestfileclient.cpp \
+    flatrequestsclientprocessing.cpp
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
 DEPENDENCIES = tucuxi-gui-core tucuxi-gui-admin tucuxi-gui-apputils tucuxi-giu-rest

@@ -179,6 +179,6 @@ unix{
 
     !macx {
         LIBS += \
-            /usr/lib/x86_64-linux-gnu/libdl.so
+            #/usr/lib/x86_64-linux-gnu/libdl.so
     }
 }

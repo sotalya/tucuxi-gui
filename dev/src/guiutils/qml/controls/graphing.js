@@ -593,8 +593,10 @@ function drawMeasures(cdata, ctx)
             var x = atime2screen(cdata, cdata.measures[i].moment.getTime() / 1000);
             var y = acxn2screen(cdata, cdata.measures[i].concentration.dbvalue * cdata.measures[i].concentration.multiplier);
 
-            //console.log("measurex: " + x)
-            //console.log("measurey: " + y)
+            // console.log("concentration: " + cdata.measures[i].concentration.dbvalue)
+            // console.log("multiplier: " + cdata.measures[i].concentration.multiplier)
+            // console.log("measurex: " + x)
+            // console.log("measurey: " + y)
             ctx.beginPath();
             ctx.arc(x, y, 5 * cdata.scale, 0, 2 * Math.PI, true);
             ctx.fill();

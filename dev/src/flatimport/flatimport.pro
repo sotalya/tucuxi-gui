@@ -1,6 +1,6 @@
 include (../tucuxi.pri)
 
-TARGET      = tucuxi-gui-ICCA
+TARGET      = tucuxi-gui-flatimport
 TEMPLATE    = lib
 DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 
@@ -11,9 +11,9 @@ QT -= gui
 INCLUDEPATH += ..
 
 HEADERS	+= \
-    iccainterpretationrequestbuilder.h \
-    iccarequestfileclient.h \
-    iccarequestsclientprocessing.h
+    flatimportinterpretationrequestbuilder.h \
+    flatimportrequestfileclient.h \
+    flatimportrequestsclientprocessing.h
 
 CODECFORTR      += UTF-8
 #TRANSLATIONS    += $${TRANS_DIR}/admin_fr.ts
@@ -22,9 +22,9 @@ CODECFORTR      += UTF-8
 include(../translation.pri)
 
 SOURCES += \
-    iccainterpretationrequestbuilder.cpp \
-    iccarequestfileclient.cpp \
-    iccarequestsclientprocessing.cpp
+    flatimportinterpretationrequestbuilder.cpp \
+    flatimportrequestfileclient.cpp \
+    flatimportrequestsclientprocessing.cpp
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
 DEPENDENCIES = tucuxi-gui-core tucuxi-gui-admin tucuxi-gui-apputils tucuxi-giu-rest

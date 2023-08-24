@@ -1,11 +1,11 @@
-#include "iccainterpretationrequestbuilder.h"
+#include "flatimportinterpretationrequestbuilder.h"
 
 
 //@@license@@
 
 #include <QMessageBox>
 
-#include "iccainterpretationrequestbuilder.h"
+#include "flatimportinterpretationrequestbuilder.h"
 #include "rest/builders/drugidtranslator.h"
 #include "rest/builders/routetranslator.h"
 #include "rest/builders/formulationandroutetranslator.h"
@@ -29,11 +29,11 @@ using namespace Tucuxi::Gui::Core;
 
 namespace Tucuxi {
 namespace Gui {
-namespace ICCA {
+namespace FlatRequest {
 
 
 //InterpretationRequestBuilder::InterpretationRequestBuilder(const MessageContent &content) :
-ICCAInterpretationRequestBuilder::ICCAInterpretationRequestBuilder(const QDomDocument &content) :
+FlatInterpretationRequestBuilder::FlatInterpretationRequestBuilder(const QDomDocument &content) :
     content(content)
 {
     //Get the control ID
@@ -47,17 +47,17 @@ ICCAInterpretationRequestBuilder::ICCAInterpretationRequestBuilder(const QDomDoc
 }
 
 
-ICCAInterpretationRequestBuilder::~ICCAInterpretationRequestBuilder()
+FlatInterpretationRequestBuilder::~FlatInterpretationRequestBuilder()
 {
 
 }
 
-bool ICCAInterpretationRequestBuilder::compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
+bool FlatInterpretationRequestBuilder::compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b)
 {
     return (a->getApplied() < b->getApplied());
 }
 
-Tucuxi::Gui::Core::Duration ICCAInterpretationRequestBuilder::findDuration(const QDomElement &currentElement)
+Tucuxi::Gui::Core::Duration FlatInterpretationRequestBuilder::findDuration(const QDomElement &currentElement)
 {
     QDomElement element = currentElement.nextSiblingElement("Détails");
     Tucuxi::Gui::Core::Duration duration;
@@ -81,7 +81,7 @@ Tucuxi::Gui::Core::Duration ICCAInterpretationRequestBuilder::findDuration(const
     return duration;
 }
 
-void ICCAInterpretationRequestBuilder::createUncastedIntervalValue(Tucuxi::Gui::Core::Dosage *dosage, int interval_sec)
+void FlatInterpretationRequestBuilder::createUncastedIntervalValue(Tucuxi::Gui::Core::Dosage *dosage, int interval_sec)
 {
     UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
     uncasted->setField("Interval");
@@ -102,7 +102,7 @@ void ICCAInterpretationRequestBuilder::createUncastedIntervalValue(Tucuxi::Gui::
     dosage->getUncastedValues()->append(uncasted);
 }
 
-void ICCAInterpretationRequestBuilder::createUncastedDosageValue(Tucuxi::Gui::Core::Dosage *dosage, QString field, QString text, QString comment)
+void FlatInterpretationRequestBuilder::createUncastedDosageValue(Tucuxi::Gui::Core::Dosage *dosage, QString field, QString text, QString comment)
 {
     UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
     uncasted->setField(field);
@@ -111,7 +111,7 @@ void ICCAInterpretationRequestBuilder::createUncastedDosageValue(Tucuxi::Gui::Co
     dosage->getUncastedValues()->append(uncasted);
 }
 
-void ICCAInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core::DosageHistory *dosages)
+void FlatInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core::DosageHistory *dosages)
 {
     // Build a list of list of Dosages that overlap
     QList<QList<Tucuxi::Gui::Core::Dosage*>> overlapingDosages;
@@ -272,7 +272,7 @@ void ICCAInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core:
     }
 }
 
-void ICCAInterpretationRequestBuilder::setDosageEndDateInterval(Tucuxi::Gui::Core::DosageHistory* dosages)
+void FlatInterpretationRequestBuilder::setDosageEndDateInterval(Tucuxi::Gui::Core::DosageHistory* dosages)
 {
     //Sort the dosages by applied date
     dosages->sort(compareDosage);
@@ -307,7 +307,7 @@ void ICCAInterpretationRequestBuilder::setDosageEndDateInterval(Tucuxi::Gui::Cor
     }
 }
 
-InterpretationRequest* ICCAInterpretationRequestBuilder::buildInterpretationRequest()
+InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequest()
 {
     InterpretationRequest* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
     Tucuxi::Gui::Core::DrugTreatment *treatment = interpretationRequest->getTreatment();

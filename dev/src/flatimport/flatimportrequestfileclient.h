@@ -1,21 +1,21 @@
 //@@license@@s
 
-#ifndef ICCAREQUESTFILECLIENT_H
-#define ICCAREQUESTFILECLIENT_H
+#ifndef FLATIMPORTREQUESTFILECLIENT_H
+#define FLATIMPORTREQUESTFILECLIENT_H
 
-#include "iccarequestsclientprocessing.h"
+#include "flatimportrequestsclientprocessing.h"
 
 namespace Tucuxi {
 namespace Gui {
-namespace ICCA {
+namespace FlatRequest {
 
-class ICCARequestFileClient : public Tucuxi::Gui::ICCA::ICCARequestsClientProcessing
+class FlatRequestFileClient : public Tucuxi::Gui::FlatRequest::FlatRequestsClientProcessing
 {
     Q_OBJECT
 
     public:
-    explicit ICCARequestFileClient(QObject *parent = nullptr);
-    virtual ~ICCARequestFileClient() Q_DECL_OVERRIDE;
+    explicit FlatRequestFileClient(QObject *parent = nullptr);
+    virtual ~FlatRequestFileClient() Q_DECL_OVERRIDE;
 
     void setListFile(const QString &fileName);
 
@@ -36,4 +36,4 @@ private:
 }
 }
 
-#endif // ICCAREQUESTFILECLIENT_H
+#endif // FLATIMPORTREQUESTFILECLIENT_H

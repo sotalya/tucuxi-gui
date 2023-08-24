@@ -31,7 +31,7 @@
 #endif
 
 // TODO JRP : Is conditional include needed ?
-#include "ICCA/iccarequestfileclient.h"
+#include "flatimport/flatimportrequestfileclient.h"
 
 #include "guiutils/src/widgets/validatedrugdialog.h"
 #include "admin/src/interpretationxmlimport.h"
@@ -81,7 +81,7 @@ if (iccaFile.isEmpty()) {
 
     #endif
 } else {
-    Tucuxi::Gui::ICCA::ICCARequestFileClient *client = new Tucuxi::Gui::ICCA::ICCARequestFileClient(this);
+    Tucuxi::Gui::FlatRequest::FlatRequestFileClient *client = new Tucuxi::Gui::FlatRequest::FlatRequestFileClient(this);
     client->setListFile(iccaFile);
     requestsController->setClient(client);
 }

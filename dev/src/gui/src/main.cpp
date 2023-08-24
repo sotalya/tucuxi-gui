@@ -569,7 +569,7 @@ void parseOptions()
                                     "requestfile",
                                     "");
     const QCommandLineOption iccaFileOption(QStringList() << "i" << "iccafile",
-                                    QCoreApplication::translate("main", "Set the file containing ICCA request. This option allows to start the software with ICCA requests"),
+                                    QCoreApplication::translate("main", "Set the file containing flat request. This option allows to start the software with flat requests"),
                                     "iccafile",
                                     "");
     const QCommandLineOption portOption(QStringList() << "p" << "port",

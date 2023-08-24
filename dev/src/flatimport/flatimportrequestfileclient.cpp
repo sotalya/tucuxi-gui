@@ -1,6 +1,6 @@
 //@@license@@s
 
-#include "iccarequestfileclient.h"
+#include "flatimportrequestfileclient.h"
 #include "rest/builders/interpretationrequestbuilder.h"
 #include "core/dal/drugresponseanalysis.h"
 #include "core/core.h"
@@ -17,23 +17,23 @@
 #include <qmessagebox.h>
 
 using namespace Tucuxi::Gui::Core;
-using namespace Tucuxi::Gui::ICCA;
+using namespace Tucuxi::Gui::FlatRequest;
 
-ICCARequestFileClient::ICCARequestFileClient(QObject *parent) : ICCARequestsClientProcessing(parent)
+FlatRequestFileClient::FlatRequestFileClient(QObject *parent) : FlatRequestsClientProcessing(parent)
 {
 }
 
-ICCARequestFileClient::~ICCARequestFileClient()
+FlatRequestFileClient::~FlatRequestFileClient()
 {
 
 }
 
-void ICCARequestFileClient::setListFile(const QString &fileName)
+void FlatRequestFileClient::setListFile(const QString &fileName)
 {
     m_listFileName = fileName;
 }
 
-void ICCARequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
+void FlatRequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 {
 
     QFile source(m_listFileName);
@@ -52,7 +52,7 @@ void ICCARequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 #include <QDir>
 #include <iostream>
 
-void ICCARequestFileClient::queryRequest(const QString &requestId, const QString &patientId, const QString &drugId)
+void FlatRequestFileClient::queryRequest(const QString &requestId, const QString &patientId, const QString &drugId)
 {
 
     QFile reqFile(m_listFileName);

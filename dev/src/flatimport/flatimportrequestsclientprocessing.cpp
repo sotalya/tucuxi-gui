@@ -1,7 +1,7 @@
 //@@license@@
 
-#include "iccarequestsclientprocessing.h"
-#include "iccainterpretationrequestbuilder.h"
+#include "flatimportrequestsclientprocessing.h"
+#include "flatimportinterpretationrequestbuilder.h"
 #include "core/dal/drugresponseanalysis.h"
 #include "core/core.h"
 #include "core/corefactory.h"
@@ -21,16 +21,16 @@
 using namespace Tucuxi::Gui::Core;
 using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::Rest;
-using namespace Tucuxi::Gui::ICCA;
+using namespace Tucuxi::Gui::FlatRequest;
 
 
-ICCARequestsClientProcessing::ICCARequestsClientProcessing(QObject *parent) :
+FlatRequestsClientProcessing::FlatRequestsClientProcessing(QObject *parent) :
     RequestsClient(parent)
 {
 
 }
 
-int ICCARequestsClientProcessing::analyzeList(const QString &xmlList, QString &controlId)
+int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &controlId)
 {
     QDomDocument doc;
 
@@ -143,7 +143,7 @@ InterpretationRequest* SimpleBuilder::buildRequest(const QString &xmlRequest)
         return nullptr;
     }
 
-    ICCAInterpretationRequestBuilder irBuilder(doc);
+    FlatInterpretationRequestBuilder irBuilder(doc);
 
     InterpretationRequest* ir = irBuilder.buildInterpretationRequest();
     if (!ir) {
@@ -156,7 +156,7 @@ InterpretationRequest* SimpleBuilder::buildRequest(const QString &xmlRequest)
     return ir;
 }
 
-int ICCARequestsClientProcessing::analyzeRequest(const QString &xmlRequest)
+int FlatRequestsClientProcessing::analyzeRequest(const QString &xmlRequest)
 {
     SimpleBuilder builder;
     InterpretationRequest* ir = builder.buildRequest(xmlRequest);

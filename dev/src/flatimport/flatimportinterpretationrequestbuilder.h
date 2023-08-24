@@ -1,5 +1,5 @@
-#ifndef ICCAINTERPRETATIONREQUESTBUILDER_H
-#define ICCAINTERPRETATIONREQUESTBUILDER_H
+#ifndef FLATIMPORTINTERPRETATIONREQUESTBUILDER_H
+#define FLATIMPORTINTERPRETATIONREQUESTBUILDER_H
 
 
 #include <QDomDocument>
@@ -17,15 +17,15 @@
 
 namespace Tucuxi {
 namespace Gui {
-namespace ICCA {
+namespace FlatRequest {
 
-class ICCAInterpretationRequestBuilder
+class FlatInterpretationRequestBuilder
 {
 
 public:
 //    explicit InterpretationRequestBuilder(const MessageContent &content);
-    explicit ICCAInterpretationRequestBuilder(const QDomDocument &content);
-    ~ICCAInterpretationRequestBuilder();
+    explicit FlatInterpretationRequestBuilder(const QDomDocument &content);
+    ~FlatInterpretationRequestBuilder();
 
     Tucuxi::Gui::Admin::InterpretationRequest* buildInterpretationRequest();
 
@@ -47,4 +47,4 @@ private:
 }
 
 
-#endif // ICCAINTERPRETATIONREQUESTBUILDER_H
+#endif // FLATIMPORTINTERPRETATIONREQUESTBUILDER_H

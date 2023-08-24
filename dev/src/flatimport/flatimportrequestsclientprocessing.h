@@ -1,19 +1,19 @@
 //@@license@@
 
-#ifndef ICCAREQUESTSCLIENTPROCESSING_H
-#define ICCAREQUESTSCLIENTPROCESSING_H
+#ifndef FLATIMPORTREQUESTSCLIENTPROCESSING_H
+#define FLATIMPORTREQUESTSCLIENTPROCESSING_H
 
 #include "admin/src/requestsclient.h"
 #include <QDomDocument>
 
 namespace Tucuxi {
 namespace Gui {
-namespace ICCA {
+namespace FlatRequest {
 
-class ICCARequestsClientProcessing : public Tucuxi::Gui::Admin::RequestsClient
+class FlatRequestsClientProcessing : public Tucuxi::Gui::Admin::RequestsClient
 {
 public:
-    ICCARequestsClientProcessing(QObject *parent);
+    FlatRequestsClientProcessing(QObject *parent);
 
 protected:
 
@@ -36,4 +36,4 @@ public:
 }
 }
 
-#endif // ICCAREQUESTSCLIENTPROCESSING_H
+#endif // FLATIMPORTREQUESTSCLIENTPROCESSING_H

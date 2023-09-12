@@ -185,7 +185,7 @@ TRANSLATIONS    += $${TRANS_DIR}/guiutils_fr.ts
 QML_IMPORT_PATH += $$PWD/..
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
-DEPENDENCIES = tucuxi-gui-core tucuxi-gui-admin tucuxi-gui-apputils tucuxi-giu-rest
+DEPENDENCIES = tucuxi-gui-core tucuxi-gui-admin tucuxi-gui-apputils tucuxi-gui-rest
 
 for(dep, DEPENDENCIES) {
     LIBNAME = $${OUT_PWD}/../$${DIST_DIR}/$${LIBPRE}$${dep}.$${SONAME}

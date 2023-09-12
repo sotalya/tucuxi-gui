@@ -3,7 +3,7 @@ include (../tucuxi.pri)
 QT += core xml xmlpatterns network
 QT -= gui
 
-TARGET   = tucuxi-giu-rest
+TARGET   = tucuxi-gui-rest
 TEMPLATE = lib
 DESTDIR  = $${OUT_PWD}/../$${DIST_DIR}
 

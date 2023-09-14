@@ -7,8 +7,5 @@
         <file alias="notification.xsd">schemas/notification.xsd</file>
         <file alias="acks.xsd">schemas/acks.xsd</file>
     </qresource>
-    <qresource prefix="/certificates">
-        <file alias="mirth.hevs.ch.crt">certificates/mirth.hevs.ch.crt</file>
-        <file alias="mirth.chuv.ch.pem">certificates/mirth.chuv.ch.pem</file>
-    </qresource>
+    <qresource prefix="/certificates"/>
 </RCC>

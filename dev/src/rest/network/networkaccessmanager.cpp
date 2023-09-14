@@ -25,14 +25,16 @@ NetworkAccessManager &NetworkAccessManager::getInstance()
 NetworkAccessManager::NetworkAccessManager(QObject *parent) :
     QNetworkAccessManager(parent)
 {
+    /*
     if (sm_type == ManagerType::Default) {
-    QStringList certificates;
+        QStringList certificates;
     certificates << ":/certificates/mirth.hevs.ch.crt"
                  << ":/certificates/mirth.chuv.ch.pem";
 
     while (!certificates.isEmpty())
         addDefaultCaCertificate(certificates.takeFirst());
     }
+    */
 //    connect(&NetworkAccessManager::getInstance(), SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
 }
 

@@ -5,17 +5,17 @@ set "ARCH=%1%"
 REM Target is Debug or Release
 set "TARGET=%2%" 
 
-set PRJ_DIR=E:\docs\tucuxi\tucuxi-gui\dev
+set PRJ_DIR=%FolderPath%\tucuxi-gui\dev
 set SRC_DIR=%PRJ_DIR%\src
-set DIST_DIR=%PRJ_DIR%\build-ezechiel-tucucore-Desktop_Qt_5_7_1_MSVC2015_%ARCH%bit-%TARGET%\dist\
+set DIST_DIR=%PRJ_DIR%\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_%ARCH%bit-%TARGET%\dist\
 set DEPLOY_DIR=%PRJ_DIR%\Deploy
 set INSTALL_DIR=C:\Tucuxi
 
 set ZIP_EXE="c:\Program Files\7-Zip\7z.exe"
 
 set BOTANT_DIR=C:\botan\botan2-%ARCH%\lib
-set VISUAL_STUDIO_DIR=C:\Program Files (x86)\Microsoft Visual Studio 14.0
-set QT_DIR=C:\Qt\Qt5.7.1\5.7\msvc2015_%ARCH%
+set VISUAL_STUDIO_DIR=C:\Program Files\Microsoft Visual Studio\2022\Community
+set QT_DIR=C:\Qt\5.15.2\msvc2019_%ARCH%
 set NSIS_DIR=C:\Program Files (x86)\NSIS
 
 REM Create the deployment structure
@@ -54,9 +54,9 @@ copy %SRC_DIR%\guiutils\reports\*.* %DEPLOY_DIR%\%ARCH%\%TARGET%\reports\
 REM Copy Visual C++ librairies
 set VCREDISTSUBDIR=x64
 IF %ARCH%==32 set VCREDISTSUBDIR=x86
-copy "%VISUAL_STUDIO_DIR%\VC\redist\%VCREDISTSUBDIR%\Microsoft.VC140.CRT\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
-copy "%VISUAL_STUDIO_DIR%\VC\redist\%VCREDISTSUBDIR%\Microsoft.VC140.CXXAMP\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
-copy "%VISUAL_STUDIO_DIR%\VC\redist\%VCREDISTSUBDIR%\Microsoft.VC140.OpenMP\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
+copy "%VISUAL_STUDIO_DIR%\VC\Redist\MSVC\14.38.32919\%VCREDISTSUBDIR%\Microsoft.VC143.CRT\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
+copy "%VISUAL_STUDIO_DIR%\VC\Redist\MSVC\14.38.32919\%VCREDISTSUBDIR%\Microsoft.VC143.CXXAMP\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
+copy "%VISUAL_STUDIO_DIR%\VC\Redist\MSVC\14.38.32919\%VCREDISTSUBDIR%\Microsoft.VC143.OpenMP\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
 
 REM Copy external libraries
 copy %BOTANT_DIR%\botan.dll %DEPLOY_DIR%\%ARCH%\%TARGET%
@@ -68,7 +68,7 @@ REM Add QtWebEngine stuff which is missed by windeployqt!
 xcopy /s %QT_DIR%\qml\QtWebEngine %DEPLOY_DIR%\%ARCH%\%TARGET%\QtWebEngine\
 
 REM Create a zip file
-rm %DEPLOY_DIR%\Tucuxi-%ARCH%-%TARGET%.zip
+DEL %DEPLOY_DIR%\Tucuxi-%ARCH%-%TARGET%.zip
 %ZIP_EXE% a -r %PRJ_DIR%\Tucuxi-%ARCH%-%TARGET%.zip %DEPLOY_DIR%\%ARCH%\%TARGET%\*
 
 REM Create setup.exe

@@ -1,27 +1,60 @@
+@echo off
 
-REM "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall" amd64
+REM "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
 
-mkdir C:\Projects\Ezechiel\dev\build-ezechiel-tucucore-Desktop_Qt_5_7_1_MSVC2015_64bit-Release
-cd C:\Projects\Ezechiel\dev\build-ezechiel-tucucore-Desktop_Qt_5_7_1_MSVC2015_64bit-Release
+REM get current location to return to path where script got launched
+set mypath=%cd%
+
+REM Set default path for the Tucuxi repos
+set DefaultPath=%TUCUXI_ROOT%\..\
+
+REM Source -> https://stackoverflow.com/questions/8666225/how-to-test-if-a-path-is-a-file-or-directory-in-windows-batch-file
+REM Check if a path as been provided, if not use the base path
+for /f "tokens=1,2 delims=d" %%A in ("-%~a1") do if "%%B" neq "" (
+  echo %1 is a folder  
+  goto :set_path
+) else (
+  echo No input path specified or "%1" is either a file or does not exist
+  echo Default path %DefaultPath% will be used
+  goto :set_default
+)
+
+:set_default
+set FolderPath=%DefaultPath%
+goto :continue
+
+:set_path
+set FolderPath=%1
+goto :continue
+
+:continue
+REM Release
+mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release
+cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release
 DEL /S /Q *
-C:\Qt\Qt5.7.1\5.7\msvc2015_64\bin\qmake.exe C:\Projects\Ezechiel\dev\src\ezechiel.pro -spec win32-msvc2015 CONFIG+=config_tucucore_full DRUGSPATH=E:\docs\tucuxi\tucuxi-drugs\drugfiles && C:/Qt/Qt5.7.1/Tools/QtCreator/bin/jom.exe qmake_all
-C:/Qt/Qt5.7.1/Tools/QtCreator/bin/jom.exe
+C:\Qt\5.15.2\msvc2019_64\bin\qmake.exe %FolderPath%\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%FolderPath%\tucuxi-drugs\drugfiles DEFINES+=NOLICENSE && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+C:\Qt\Tools\QtCreator\bin\jom\jom.exe
 
-mkdir C:\Projects\Ezechiel\dev\build-ezechiel-tucucore-Desktop_Qt_5_7_1_MSVC2015_64bit-Release-Demo
-cd C:\Projects\Ezechiel\dev\build-ezechiel-tucucore-Desktop_Qt_5_7_1_MSVC2015_64bit-Release-Demo
+REM Release-Demo
+mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-Demo
+cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-Demo
 DEL /S /Q *
-C:\Qt\Qt5.7.1\5.7\msvc2015_64\bin\qmake.exe C:\Projects\Ezechiel\dev\src\ezechiel.pro -spec win32-msvc2015 CONFIG+=config_tucucore_full DRUGSPATH=D:\docs\tucuxi\tucuxi-drugs\drugfiles CONFIG+=config_demo && C:/Qt/Qt5.7.1/Tools/QtCreator/bin/jom.exe qmake_all
-C:/Qt/Qt5.7.1/Tools/QtCreator/bin/jom.exe
+C:\Qt\5.15.2\msvc2019_64\bin\qmake.exe E:\docs\tucuxi\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=D:\docs\tucuxi\tucuxi-drugs\drugfiles CONFIG+=config_demo DEFINES+=NOLICENSE && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+C:\Qt\Tools\QtCreator\bin\jom\jom.exe
 
-mkdir C:\Projects\Ezechiel\dev\build-ezechiel-tucucore-Desktop_Qt_5_7_1_MSVC2015_64bit-Release-extreport
-cd C:\Projects\Ezechiel\dev\build-ezechiel-tucucore-Desktop_Qt_5_7_1_MSVC2015_64bit-Release-extreport
+REM Release-extreport
+mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-extreport
+cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-extreport
 DEL /S /Q *
-C:\Qt\Qt5.7.1\5.7\msvc2015_64\bin\qmake.exe C:\Projects\Ezechiel\dev\src\ezechiel.pro -spec win32-msvc2015 CONFIG+=config_tucucore_full DRUGSPATH=E:\docs\tucuxi\tucuxi-drugs\drugfiles CONFIG+=config_externalreport && C:/Qt/Qt5.7.1/Tools/QtCreator/bin/jom.exe qmake_all
-C:/Qt/Qt5.7.1/Tools/QtCreator/bin/jom.exe
+C:\Qt\5.15.2\msvc2019_64\bin\qmake.exe E:\docs\tucuxi\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=E:\docs\tucuxi\tucuxi-drugs\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+C:\Qt\Tools\QtCreator\bin\jom\jom.exe
 
-
-mkdir C:\Projects\Ezechiel\dev\build-ezechiel-tucucore-Desktop_Qt_5_7_1_MSVC2015_64bit-Release-extreport-nolicense
-cd C:\Projects\Ezechiel\dev\build-ezechiel-tucucore-Desktop_Qt_5_7_1_MSVC2015_64bit-Release-extreport-nolicense
+REM Release-extreport-nolicense
+mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-extreport-nolicense
+cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-extreport-nolicense
 DEL /S /Q *
-C:\Qt\Qt5.7.1\5.7\msvc2015_64\bin\qmake.exe C:\Projects\Ezechiel\dev\src\ezechiel.pro -spec win32-msvc2015 CONFIG+=config_tucucore_full CONFIG+=NOLICENSE DRUGSPATH=E:\docs\tucuxi\tucuxi-drugs\drugfiles CONFIG+=config_externalreport && C:/Qt/Qt5.7.1/Tools/QtCreator/bin/jom.exe qmake_all
-C:/Qt/Qt5.7.1/Tools/QtCreator/bin/jom.exe
+C:\Qt\5.15.2\msvc2019_64\bin\qmake.exe %FolderPath%\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc DEFINES+=NOLICENSE CONFIG+=config_tucucore_full DRUGSPATH=%FolderPath%\tucuxi-drugs\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+C:\Qt\Tools\QtCreator\bin\jom\jom.exe
+
+REM Return to the folder where the script was executed
+cd %mypath%

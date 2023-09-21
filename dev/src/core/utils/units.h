@@ -9,6 +9,8 @@
 #include <QStringList>
 #include <QHash>
 
+#include "tucucommon/unit.h"
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
@@ -89,7 +91,9 @@ public:
     //! Simple comparison.
     bool operator!= (const Unit & other) const;
 
+    Tucuxi::Common::TucuUnit _unit;
 private:
+
     //ID of the unit base
     unit_id _base;
 

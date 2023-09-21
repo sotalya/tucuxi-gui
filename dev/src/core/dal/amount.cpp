@@ -37,6 +37,10 @@ Amount::Amount(const QString &str)
 //Convert the amount unit
 void Amount::convert(const Unit &unit)
 {
+    double newValue = Tucuxi::Common::UnitManager::convertToUnit(value(), this->unit()._unit, unit._unit);
+    this->setValue(newValue);
+    this->setUnit(unit);
+    return;
     Q_ASSERT(this->unit().base() == unit.base());
 
     //Check if the unit is different

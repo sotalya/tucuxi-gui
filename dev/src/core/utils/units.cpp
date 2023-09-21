@@ -20,7 +20,7 @@ Unit::Unit() : _base(invalid_unit_id), _multiplier(-1.0)
 }
 
 //Copy constructor
-Unit::Unit(const Unit &other) : _base(other._base), _multiplier(other._multiplier)
+Unit::Unit(const Unit &other) : _unit(other._unit), _base(other._base), _multiplier(other._multiplier)
 {
 
 }
@@ -34,6 +34,15 @@ Unit::Unit(QString str) : _base(invalid_unit_id), _multiplier(-1.0)
 //Sets the unit from a string
 bool Unit::fromString(QString str)
 {
+    QString unitStr = str;
+
+    //Clean the unit name
+    unitStr = unitStr.simplified();
+    unitStr.remove("[");
+    unitStr.remove("]");
+    unitStr = unitStr.toLower();
+
+    _unit = Tucuxi::Common::TucuUnit(unitStr.toStdString());
     return CORE->unitsRegister()->unitForName(str, _base, _multiplier);
 }
 
@@ -51,6 +60,7 @@ QString Unit::toString() const
 //Returns the unit as a string
 QString Unit::name () const
 {
+    return QString::fromStdString(_unit.toString());
     return CORE->unitsRegister()->nameForUnit(_base, _multiplier);
 }
 

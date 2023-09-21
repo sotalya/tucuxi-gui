@@ -42,7 +42,15 @@ public:
             emit dbvalueChanged(val);
         }
     }
-    double getMultiplier() { return unit().multiplier(Unit("ug/l")); }
+    double getMultiplier() {
+        if (Tucuxi::Common::UnitManager::isCompatible(unit()._unit, Tucuxi::Common::TucuUnit("ug/l"))) {
+            return Tucuxi::Common::UnitManager::convertToUnit(1.0, unit()._unit, Tucuxi::Common::TucuUnit("ug/l"));
+        }
+        else {
+            return 1.0;
+        }
+
+    } //.multiplier(Unit("ug/l")); }
 
 signals:
     void dbvalueChanged(double);

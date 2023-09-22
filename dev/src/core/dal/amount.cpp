@@ -37,24 +37,8 @@ Amount::Amount(const QString &str)
 //Convert the amount unit
 void Amount::convert(const Unit &unit)
 {
-    double newValue = Tucuxi::Common::UnitManager::convertToUnit(value(), this->unit()._unit, unit._unit);
+    double newValue = Unit::convertToUnit(value(), this->unit(), unit);
     this->setValue(newValue);
-    this->setUnit(unit);
-    return;
-    Q_ASSERT(this->unit().base() == unit.base());
-
-    //Check if the unit is different
-    if (this->unit() == unit)
-        return;
-
-    //Check the units multipliers
-    if (this->unit().multiplier() == unit.multiplier())
-        return;
-
-    //Convert the amount value
-    this->setValue(value() * this->unit().multiplier() / unit.multiplier());
-
-    //Replace the amount unit
     this->setUnit(unit);
 }
 
@@ -67,20 +51,7 @@ bool Amount::isValid()
 //Use the multiplier between these two units
 double Amount::valueIn(const Unit &unit) const
 {
-    // ToDo /////////////////////////////////////////////////////////////
-    // The calls to valueIn() in the computation classes (non-GUI classes
-    // must be replaced by value() in order to always compute data using
-    // the drug's default unit. When done, uncomment the line below and
-    // use this function to convert units in the GUI classes for ease of
-    // use and preferences management.
-    // //////////////////////////////////////////////////////////////////
-
-    Q_UNUSED(unit);
-
-    //if (unit != this->unit)
-    //    return this->unit.multiplier(unit) * value;
-    //else
-        return value();
+    return Unit::convertToUnit(value(), this->unit(), unit);
 }
 
 //If the unit is not here, only print the value
@@ -122,7 +93,6 @@ bool Amount::fromString(const QString &str)
 
     //Parse the unit
     return _unit.fromString(reg.cap(2));
-//    return this->unit().fromString(reg.cap(2));
 }
 
 bool Amount::operator ==(const Amount &other) const

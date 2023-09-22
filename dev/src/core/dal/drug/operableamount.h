@@ -19,20 +19,19 @@ class IdentifiableAmount : public Entity, public Amount
 
     ENTITY_UTILS(IdentifiableAmount)
     Q_PROPERTY(double dbvalue READ getDbvalue WRITE setDbvalue NOTIFY dbvalueChanged)
-    Q_PROPERTY(double multiplier READ getMultiplier NOTIFY multiplierChanged)
     Q_PROPERTY(QString unitstring READ getUnitstring WRITE setUnitstring NOTIFY unitstringChanged)
     AUTO_PROPERTY_DECL(QString, amountId, AmountId)
 public:
     QString getUnitstring() {
         return this->unit().name();
-    }//toString(); }
+    }
     void setUnitstring(const QString& unit) {
         Unit u;
         u.fromString("["+unit+"]");
         if (u != this->unit()) {
             _unit.fromString("["+unit+"]");
             emit unitstringChanged(unit);
-            emit multiplierChanged(getMultiplier());
+            emit dbvalueChanged(value());
         }
     }
     double getDbvalue() const { return this->value(); }
@@ -42,19 +41,18 @@ public:
             emit dbvalueChanged(val);
         }
     }
-    double getMultiplier() {
-        if (Tucuxi::Common::UnitManager::isCompatible(unit()._unit, Tucuxi::Common::TucuUnit("ug/l"))) {
-            return Tucuxi::Common::UnitManager::convertToUnit(1.0, unit()._unit, Tucuxi::Common::TucuUnit("ug/l"));
-        }
-        else {
-            return 1.0;
-        }
 
-    } //.multiplier(Unit("ug/l")); }
+    Q_INVOKABLE double valueInUnit(QString toUnit) {
+        if (Unit::isCompatible(unit(), Unit(toUnit))) {
+            return Unit::convertToUnit(value(), unit(), Unit(toUnit));
+        }
+        QString mess = QString("Error in unit conversion. Initial: %1. Final: %2").arg(unit().name()).arg(toUnit);
+        EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, mess);
+        return value();
+    }
 
 signals:
     void dbvalueChanged(double);
-    void multiplierChanged(double);
     void unitstringChanged(QString);
 
 protected:

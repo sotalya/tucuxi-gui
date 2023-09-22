@@ -483,7 +483,7 @@ function extents(cdata)
     // In case we have no other data, use target data to define the Y range...
     if (cdata.maxY == 0) {
         for (var targetIndex = 0; targetIndex < cdata.targets.length; ++targetIndex) {
-            var targetY = cdata.targets[targetIndex].cmax.dbvalue * cdata.targets[targetIndex].cmax.multiplier;
+            var targetY = cdata.targets[targetIndex].cmax.valueInUnit("ug/l");
             if (targetY > cdata.maxY) cdata.maxY = targetY;
         }
     }
@@ -591,7 +591,7 @@ function drawMeasures(cdata, ctx)
     for (var i = 0; i < cdata.measures.length; ++i) {//measures.length; ++i) {
         if (cdata.measures[i].enable) {
             var x = atime2screen(cdata, cdata.measures[i].moment.getTime() / 1000);
-            var y = acxn2screen(cdata, cdata.measures[i].concentration.dbvalue * cdata.measures[i].concentration.multiplier);
+            var y = acxn2screen(cdata, cdata.measures[i].concentration.valueInUnit("ug/l"));
 
             // console.log("concentration: " + cdata.measures[i].concentration.dbvalue)
             // console.log("multiplier: " + cdata.measures[i].concentration.multiplier)
@@ -633,9 +633,9 @@ function drawTargets(cdata, ctx, times, predData)
         
         var i, t, leftgrd, rightgrd, crossSize, gradientSize;
         var ttpe = targets[targetIndex].type.value;
-        var y_mean = acxn2screen(cdata, targets[targetIndex].cbest.dbvalue * targets[targetIndex].cbest.multiplier);
-        var y_max = acxn2screen(cdata, targets[targetIndex].cmax.dbvalue * targets[targetIndex].cmax.multiplier);
-        var y_min = acxn2screen(cdata, targets[targetIndex].cmin.dbvalue * targets[targetIndex].cmin.multiplier);
+        var y_mean = acxn2screen(cdata, targets[targetIndex].cbest.valueInUnit("ug/l"));
+        var y_max = acxn2screen(cdata, targets[targetIndex].cmax.valueInUnit("ug/l"));
+        var y_min = acxn2screen(cdata, targets[targetIndex].cmin.valueInUnit("ug/l"));
         var first = atime2screen(cdata, times[0]);
         var last = atime2screen(cdata, times[times.length - 1]);
 

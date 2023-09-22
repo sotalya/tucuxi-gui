@@ -14,7 +14,7 @@
 #include <gtest/gtest.h>
 
 #include <Spix/QtQmlBot.h>
-#include <Spix/Events/KeyCodes.h>
+#include <Spix/Events/Identifiers.h>
 
 #include "core/dal/drug/drug.h"
 #include "guitest.h"

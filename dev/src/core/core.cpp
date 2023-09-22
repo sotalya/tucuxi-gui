@@ -294,13 +294,6 @@ Distributor * Core::distributor()
     return _distributor;
 }
 
-UnitsRegister *Core::unitsRegister()
-{
-    if (!_unitsRegister)
-        _unitsRegister = new UnitsRegister();
-    return _unitsRegister;
-}
-
 XmlValidator *Core::xmlValidator()
 {
     if (!_xmlValidator)
@@ -344,7 +337,7 @@ bool Core::cpDir(const QString &srcPath, const QString &dstPath)
 //Constructor
 Core::Core() : _runningMode(Core::CLI), _messageHandler(nullptr), _definitionManager(nullptr),
     _pluginManager(nullptr), _repository(nullptr),  /*_database(nullptr), */_application(nullptr),
-    _distributor(nullptr), _unitsRegister(nullptr), _xmlValidator(nullptr),
+    _distributor(nullptr), _xmlValidator(nullptr),
     _processingInterface(nullptr)
 {
     //Initialize the instance

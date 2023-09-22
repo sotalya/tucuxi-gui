@@ -90,7 +90,7 @@ Rectangle {
 
     Connections {
         target: interpretationController
-        onInterpretationValidated: {
+        function onInterpretationValidated() {
             updateReport();
         }
     }

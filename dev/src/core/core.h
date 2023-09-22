@@ -71,7 +71,6 @@ class AbstractRepository;
 //class Database;
 class Version;
 class Distributor;
-class UnitsRegister;
 class XmlValidator;
 class Settings;
 class ProcessingInterface;
@@ -212,9 +211,6 @@ public:
     //! Get the distributor instance (channel already set).
     Distributor* distributor ();
 
-    //! Get the unit register instance.
-    UnitsRegister* unitsRegister ();
-
     //! Get the XML validator
     XmlValidator* xmlValidator();
 
@@ -307,7 +303,6 @@ private:
 //    Database *_database;
     QCoreApplication *_application;
     Distributor *_distributor;
-    UnitsRegister *_unitsRegister;
     XmlValidator *_xmlValidator;
     ProcessingInterface *_processingInterface;
 

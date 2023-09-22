@@ -167,7 +167,7 @@ TEST(GuidedStressTest, DosagesTab)
             std::cout << "Path OK : " << clickPath << std::endl;
             srv->mouseClick(spix::ItemPath(clickPath));
 
-            if ((clickPath.find("add") != std::string::npos) or (clickPath.find("edit") != std::string::npos))
+            if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod(waitTime1);
                 srv->findObjectAndSetValue("doseSpinBox", 4000+loopIndex);
@@ -231,7 +231,7 @@ TEST(GuidedStressTest, CovariatesTab)
             std::cout << "Path OK : " << clickPath << std::endl;
             srv->mouseClick(spix::ItemPath(clickPath));
 
-            if ((clickPath.find("add") != std::string::npos) or (clickPath.find("edit") != std::string::npos))
+            if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod(waitTime1);
                 srv->findObjectAndSetValue("valueDoubleControl", 4000+loopIndex);
@@ -298,7 +298,7 @@ TEST(GuidedStressTest, MeasuresTab)
             std::cout << "Path OK : " << clickPath << std::endl;
             srv->mouseClick(spix::ItemPath(clickPath));
 
-            if ((clickPath.find("add") != std::string::npos) or (clickPath.find("edit") != std::string::npos))
+            if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod();
                 srv->findObjectAndSetValue("measureValueInput", 4000+loopIndex);
@@ -364,7 +364,7 @@ TEST(GuidedStressTest, TargetsTab)
             std::cout << "Path OK : " << clickPath << std::endl;
             srv->mouseClick(spix::ItemPath(clickPath));
 
-            if ((clickPath.find("add") != std::string::npos) or (clickPath.find("edit") != std::string::npos))
+            if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod(waitTime1);
                 srv->findObjectAndSetValue("cMaxInput", 4000+loopIndex);

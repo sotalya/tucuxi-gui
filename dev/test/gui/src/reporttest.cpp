@@ -487,10 +487,10 @@ TEST_P(GenericReportTest, TestDrug)
     testReportDrugModel();
 }
 
+#ifdef  DRUGMODELTESTS
 INSTANTIATE_TEST_SUITE_P(
     ReportFullTest,
     GenericReportTest,
-#ifdef  DRUGMODELTESTS
     ::testing::Values(
         std::tuple<int, int, std::string>{0, 0, "Active moiety name"},
         std::tuple<int, int, std::string>{1, 0, "Active moiety name 2"},
@@ -526,6 +526,9 @@ INSTANTIATE_TEST_SUITE_P(
         //std::tuple<int, int, std::string>{24, 0, "test2analytes"}
         ));
 #else // DRUGMODELTESTS
+INSTANTIATE_TEST_SUITE_P(
+    ReportFullTest,
+    GenericReportTest,
     ::testing::Values(
         std::tuple<int, int, std::string>{0, 0, "Apixaban"},
         std::tuple<int, int, std::string>{1, 0, "Bictegravir"},

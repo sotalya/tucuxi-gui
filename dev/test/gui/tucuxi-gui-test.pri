@@ -25,4 +25,5 @@ LIBS += -lgtest
 
 win32 {
 INCLUDEPATH += "C:\Program Files\googletest-distribution\include"
+INCLUDEPATH += "C:\Program Files\Spix\include"
 }

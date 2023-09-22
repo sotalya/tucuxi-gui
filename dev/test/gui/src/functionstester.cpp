@@ -80,7 +80,7 @@ TEST(FunctionsTester, Test1)
 
     for (int minimumIndex = 0; minimumIndex <= 5; minimumIndex++)
     {
-        while (index < 10000 && !(fPoints->at(index)->getValue() <= fPoints->at(index-1)->getValue() and fPoints->at(index)->getValue() < fPoints->at(index+1)->getValue()))
+        while (index < 10000 && !(fPoints->at(index)->getValue() <= fPoints->at(index-1)->getValue() && fPoints->at(index)->getValue() < fPoints->at(index+1)->getValue()))
         {
             //        std::cout << "index : " << index << " || value : " << fPoints->at(index)->getValue() << std::endl;
             index++;

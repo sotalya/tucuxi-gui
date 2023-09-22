@@ -77,7 +77,7 @@ void SpixGTest::waitForSync()
 
     int tabIndex = getCurrentTabIndex();
 
-    if (tabIndex != 0 and tabIndex != 1)
+    if (tabIndex != 0 && tabIndex != 1)
     {
         auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("chartOverlayView");
 
@@ -916,13 +916,13 @@ void SpixGTest::deleteValidationComment(QString commentType, int globalSpecificI
 
     if (commentIndex == 0) {
 
-        if (globalSpecificIndex == (0) or globalSpecificIndex == (2)) {
+        if (globalSpecificIndex == (0) || globalSpecificIndex == (2)) {
             while (srv->existsAndVisible(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(0)))) {
                 srv->mouseClick(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(0)));
                 srv->waitPeriod();
             }
         }
-        if (globalSpecificIndex == (1) or globalSpecificIndex == (2)) {
+        if (globalSpecificIndex == (1) || globalSpecificIndex == (2)) {
             while (srv->existsAndVisible(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(0)))) {
                 srv->mouseClick(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(0)));
                 srv->waitPeriod();

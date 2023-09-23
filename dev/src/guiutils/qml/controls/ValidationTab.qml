@@ -514,7 +514,7 @@ Rectangle {
                                     Keys.onPressed: {
                                         if (event.modifiers) {
                                             var t = validationTabController.getShortCutText(0, event.key, event.modifiers);
-                                            if (t != "") {
+                                            if (t !== "") {
                                                 expectednessInput.text = t;
                                                 event.accepted = true;
                                             }

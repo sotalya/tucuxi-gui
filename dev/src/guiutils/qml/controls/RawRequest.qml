@@ -21,7 +21,7 @@ Item {
             textFormat: TextEdit.RichText
             font.family: "Arial"
             font.pointSize: 11
-            text: (interpretationController.clinicalsHtml != "") ? interpretationController.clinicalsHtml : "Weird. The request file seems empty. Well, if you are dealing with the demo version that's kind of normal :-)" ;
+            text: (interpretationController.clinicalsHtml !== "") ? interpretationController.clinicalsHtml : "Weird. The request file seems empty. Well, if you are dealing with the demo version that's kind of normal :-)" ;
         }
 
         Button {
@@ -45,7 +45,7 @@ Item {
                 textFormat: TextEdit.PlainText
                 font.family: "Courier"
                 font.pointSize: 11
-                text: (interpretationController.rawRequest != "") ? interpretationController.rawRequest : "Weird. The request file seems empty. Well, if you are dealing with the demo version that's kind of normal :-)" ;
+                text: (interpretationController.rawRequest !== "") ? interpretationController.rawRequest : "Weird. The request file seems empty. Well, if you are dealing with the demo version that's kind of normal :-)" ;
 
             }
 

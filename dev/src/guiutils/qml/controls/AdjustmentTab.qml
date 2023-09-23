@@ -153,24 +153,18 @@ Rectangle {
                                 */
                                 DatePicker {
                                     id: atDateSettingInput
-                                    // @disable-check M16
                                     objectName: "atDateSettingInput"
                                     Layout.preferredWidth: 150
-                                    // @disable-check M16
                                     date: adjustmentTabController.adjustmentDate
-                                    // @disable-check M16
                                     onEditingFinished: {
                                         adjustmentTabController.adjustmentDate = (new Date(atDateSettingInput.date.getFullYear(), atDateSettingInput.date.getMonth(), atDateSettingInput.date.getDate(), atMinutesSettingInput.date.getHours(), atMinutesSettingInput.date.getMinutes()));
                                     }
                                 }
                                 TimePicker {
                                     id: atMinutesSettingInput
-                                    // @disable-check M16
                                     objectName: "atMinutesSettingInput"
                                     Layout.fillWidth: true
-                                    // @disable-check M16
                                     date: adjustmentTabController.adjustmentDate
-                                    // @disable-check M16
                                     onEditingFinished: {
                                         adjustmentTabController.adjustmentDate = (new Date(atDateSettingInput.date.getFullYear(), atDateSettingInput.date.getMonth(), atDateSettingInput.date.getDate(), atMinutesSettingInput.date.getHours(), atMinutesSettingInput.date.getMinutes()));
                                     }

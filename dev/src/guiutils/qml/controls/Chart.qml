@@ -16,8 +16,8 @@ Canvas {
     id: canvas
     objectName: "chartView"
 
-    property var img_covariates_disabled_mini : "qrc:/icons/flow/covariates_disabled_mini.png";
-    property var img_dosages_disabled_mini : "qrc:/icons/flow/dosages_disabled_mini.png";
+    property string img_covariates_disabled_mini : "qrc:/icons/flow/covariates_disabled_mini.png";
+    property string img_dosages_disabled_mini : "qrc:/icons/flow/dosages_disabled_mini.png";
 
     property var canvas : this;
     property var annotationsCanvas : overlayAnnotations;

@@ -283,9 +283,7 @@ DialogBase {
                 }
                 DatePicker {
                     id: dateInput
-                    // @disable-check M16
                     objectName: "dateInputCovar"
-                    // @disable-check M16
                     onEditingFinished: { covariateDialog.validate() }
                 }
                 EntityLabel {
@@ -295,9 +293,7 @@ DialogBase {
                 }
                 TimePicker {
                     id: timeInput
-                    // @disable-check M16
                     objectName: "timeInputCovar"
-                    // @disable-check M16
                     onEditingFinished: { covariateDialog.validate() }
                 }
             }

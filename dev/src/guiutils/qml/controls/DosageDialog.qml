@@ -320,9 +320,7 @@ DialogBase {
                 }
                 DatePicker {
                     id: appliedDateInput
-                    // @disable-check M16
                     objectName: "LastDoseOrFromDateInput"
-                    // @disable-check M16
                     onEditingFinished: {
                         self.validate();
                         updateEndDate();
@@ -335,9 +333,7 @@ DialogBase {
                 }
                 TimePicker {
                     id: appliedTimeInput
-                    // @disable-check M16
                     objectName: "LastDoseOrFromTimeInput"
-                    // @disable-check M16
                     onEditingFinished: {
                         self.validate();
                         updateEndDate();
@@ -372,9 +368,7 @@ DialogBase {
 */
                         DatePicker {
                             id: stoppedDateInput
-                            // @disable-check M16
                             objectName: "stoppedDateInput"
-                            // @disable-check M16
                             onEditingFinished: { self.validate() }
                             //isEnabled: noEndDateRadio.checked === false
                         }
@@ -385,9 +379,7 @@ DialogBase {
                         }
                         TimePicker {
                             id: stoppedTimeInput
-                            // @disable-check M16
                             objectName: "stoppedTimeInput"
-                            // @disable-check M16
                             onEditingFinished: { self.validate() }
                             //isEnabled: noEndDateRadio.checked === false
                         }

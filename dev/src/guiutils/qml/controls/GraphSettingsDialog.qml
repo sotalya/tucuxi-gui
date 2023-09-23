@@ -15,19 +15,19 @@ DialogBase {
     property var self
 
     //Constants
-    property var populationText:    "Typical patient prediction";
-    property var popPercText:       "Typical patient percentiles"
-    property var aprioriText:       "A priori prediction";
-    property var aprPercText:       "A priori percentiles"
-    property var aposterioriText:   "A posteriori prediction";
-    property var apoPercText:       "A posteriori percentiles"
-    property var reverseText:       "Suggested adjustments";
-    property var adjustmentText:    "Adjustments";
-    property var targetText:        "Targets";
-    property var measureText:       "Measures";
-    property var currentTimeText:   "Current time";
-    property var covariateChangeText: "Covariate change";
-    property var liveAnnotationsText: "Live annotations";
+    property string populationText:    "Typical patient prediction";
+    property string popPercText:       "Typical patient percentiles"
+    property string aprioriText:       "A priori prediction";
+    property string aprPercText:       "A priori percentiles"
+    property string aposterioriText:   "A posteriori prediction";
+    property string apoPercText:       "A posteriori percentiles"
+    property string reverseText:       "Suggested adjustments";
+    property string adjustmentText:    "Adjustments";
+    property string targetText:        "Targets";
+    property string measureText:       "Measures";
+    property string currentTimeText:   "Current time";
+    property string covariateChangeText: "Covariate change";
+    property string liveAnnotationsText: "Live annotations";
 
     property var currentPopPred;
     property var currentPopPerc;

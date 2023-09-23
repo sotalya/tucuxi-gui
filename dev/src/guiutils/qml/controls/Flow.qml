@@ -470,7 +470,7 @@ ColumnLayout {
 
             RawRequest {
                 anchors.fill: parent
-                visible: patientButton.isCurrent && (interpretationController.rawRequest != "")
+                visible: patientButton.isCurrent && (interpretationController.rawRequest !== "")
             }
 
             DrugInfo {

@@ -11,7 +11,7 @@ import ezechiel 1.0
 ComboBox {
 //    Layout.fillWidth: true
 
-    property var isOk: true
+    property bool isOk: true
     property var doValidation: 0
     function validate()
     {

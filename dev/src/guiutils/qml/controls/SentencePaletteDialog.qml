@@ -17,7 +17,7 @@ DialogBase {
     property var self
     property var sectionText
     property var sectionNb
-    property var paletteChoice: true
+    property bool paletteChoice: true
     property var currentGlobalModel
     property var currentSpecificModel
     property var currentDrugId

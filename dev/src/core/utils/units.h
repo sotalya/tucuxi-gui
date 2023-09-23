@@ -82,8 +82,23 @@ public:
      */
     Tucuxi::Common::TucuUnit tucuUnit() const;
 
+    //! Converts a value from a unit to another one
+    /**
+     * @param value Value to be converted
+     * @param initialUnit Unit of the value to be converted
+     * @param finalUnit Unit into which the return value shall be
+     * @return The value in final unit
+     *
+     * The initialUnit and finalUnit shall be compatible.
+     */
     static double convertToUnit(double value, const Unit &initialUnit, const Unit &finalUnit);
 
+    //! Checks if two units are compatible
+    /**
+     * @param unit1 First unit
+     * @param unit2 Second unit
+     * @return true if the units are compatible, false else
+     */
     static bool isCompatible(const Unit &unit1, const Unit &unit2);
 
 private:

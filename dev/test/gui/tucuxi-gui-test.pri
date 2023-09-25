@@ -21,9 +21,12 @@ SOURCES += $$PWD/src/guitest.cpp \
     $$PWD/src/validationtest.cpp \
     $$PWD/src/voriconazoletest.cpp
 
-LIBS += -lgtest
 
 win32 {
+LIBS += "C:\Program Files\googletest-distribution\lib\gtest.lib"
 INCLUDEPATH += "C:\Program Files\googletest-distribution\include"
 INCLUDEPATH += "C:\Program Files\Spix\include"
+}
+else {
+LIBS += -lgtest
 }

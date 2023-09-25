@@ -34,7 +34,12 @@ INCLUDEPATH +=	..
 
 config_guitest {
     include($$PWD/../../test/gui/tucuxi-gui-test.pri)
+    win32 {
+    LIBS += "C:\Program Files\Spix\lib\Spix.lib"
+    }
+    else {
     LIBS += /usr/local/lib/libSpix.a
+    }
     QT += testlib
 }
 

@@ -11,8 +11,8 @@ macx {
 
 unix:!android {
 
-    exists($${TUCUXIROOTDIR}/libs/boost-1.63.0) {
-        INCLUDEPATH += $${TUCUXIROOTDIR}/libs/boost-1.63.0
+    exists($${TUCUXIROOTDIR}/libs/boost-1.83.0) {
+        INCLUDEPATH += $${TUCUXIROOTDIR}/libs/boost-1.83.0
     }
     else: {
         INCLUDEPATH += ../../../ezechiel-deps-boost/modular-boost/boost

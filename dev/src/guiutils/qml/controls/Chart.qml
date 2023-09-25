@@ -371,14 +371,16 @@ Canvas {
 
     Connections {
         target: graphInformationSelection
-        function onHasBeenModified() {
+        // function onHasBeenModified()
+        onHasBeenModified: {
             canvas.rePaint();
         }
     }
 
     Connections {
         target: flow
-        function onChangedTab(index) {
+        // function onChangedTab(index)
+        onChangedTab: {
             switch (flow.currentIndex)
             {
                 case 0: canvas.state = "patients"; break;
@@ -397,17 +399,20 @@ Canvas {
 
     Connections {
         target: reportTab
-        function onToggleShow(index, value) {
+        // function onToggleShow(index, value)
+        onToggleShow: {
             canvas.rePaint();
         }
-        function onPublishReport(output) {
+        // function onPublishReport(output)
+        onPublishReport: {
             canvas.save(appPath + "/graph.png");
         }
     }
 
     Connections {
         target: adjustmentTab
-        function onCurrentIndexChanged(index) {
+        // function onCurrentIndexChanged(index)
+        onCurrentIndexChanged: {
             if (index === -1) {return;}
             if (!revP.isValid || revP.isEmpty()) {return;}
             for (var i = 0; i < canvas.revP.size(); ++i) {
@@ -422,7 +427,8 @@ Canvas {
 
     Connections {
         target: dosageTab
-        function onCurrentIndexChanged(index) {
+        // function onCurrentIndexChanged(index)
+        onCurrentIndexChanged: {
             if (index === -1) {return;}
             for (var j = 0; j < dosages.length; j++) {
                 //    console.log(j);
@@ -436,7 +442,8 @@ Canvas {
 
     Connections {
         target: targetTab
-        function onCurrentIndexChanged(index) {
+        // function onCurrentIndexChanged(index)
+        onCurrentIndexChanged: {
             canvas.targetTabIndex = index;
             rePaint();
         }

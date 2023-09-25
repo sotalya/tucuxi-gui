@@ -219,7 +219,8 @@ Item {
 
                         Connections {
                             target: fromDatePicker.item
-                            function onEditingFinished() {
+                            // function onEditingFinished()
+                            onEditingFinished: {
                                 fromDate.text = Qt.formatDateTime(date, Qt.SystemLocaleShortDate)
                             }
                         }
@@ -250,7 +251,8 @@ Item {
 
                         Connections {
                             target: toDatePicker.item
-                            function onEditingFinished() {
+                            // function onEditingFinished()
+                            onEditingFinished: {
                                 toDate.text = Qt.formatDateTime(date, Qt.SystemLocaleShortDate)
                             }
                         }

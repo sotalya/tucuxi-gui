@@ -44,16 +44,16 @@ win32 {
     unix {
         exists($${TUCUXIROOTDIR}/bin/botan.a) {
             LIBS += $${TUCUXIROOTDIR}/bin/botan.a
-            INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan-2.1.0/build/include/
+            INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan-2.19.3/build/include/
         }
-        else:exists($${TUCUXIROOTDIR}/libs/botan-2.1.0) {
+        else:exists($${TUCUXIROOTDIR}/libs/botan-2.19.3) {
             macx {
-                LIBS += -L $${TUCUXIROOTDIR}/libs/botan-2.1.0 -lbotan
+                LIBS += -L $${TUCUXIROOTDIR}/libs/botan-2.19.3 -lbotan
             }
             else {
-                LIBS += $${TUCUXIROOTDIR}/libs/botan-2.1.0/objs/botan.a
+                LIBS += $${TUCUXIROOTDIR}/libs/botan-2.19.3/objs/botan.a
             }
-            INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan-2.1.0/build/include/
+            INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan-2.19.3/build/include/
         }
         else:exists(/usr/include/botan-1.10) {
             LIBS           += -L/usr/lib -lbotan-1.10

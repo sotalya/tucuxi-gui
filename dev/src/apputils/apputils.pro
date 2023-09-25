@@ -73,7 +73,7 @@ for(dep, DEPENDENCIES) {
 
 macx {
    botan.path = $${DESTDIR}/$${TARGET}.app/Contents/Frameworks
-   botan.files =  $${TUCUXIROOTDIR}/libs/botan-2.1.0/libbotan.dylib
+   botan.files =  $${TUCUXIROOTDIR}/libs/botan-2.19.3/libbotan.dylib
    INSTALLS    += botan
 }
 

@@ -1,8 +1,8 @@
 
 #version check qt
-!contains(QT_VERSION, ^5\\.*\\..*) {
+!contains(QT_VERSION, ^6\\.*\\..*) {
 message("Cannot build Quotations with Qt version $${QT_VERSION}.")
-error("Use at least Qt 5.0.")
+error("Use at least Qt 6.0.")
 }
 
 DEFINES += GIT_REVISION='\\"$$system(git rev-parse --short HEAD)\\"'

@@ -219,7 +219,10 @@ Item {
 
                         Connections {
                             target: fromDatePicker.item
-                            onEditingFinished: fromDate.text = Qt.formatDateTime(date, Qt.SystemLocaleShortDate)
+                            // function onEditingFinished()
+                            onEditingFinished: {
+                                fromDate.text = Qt.formatDateTime(date, Qt.SystemLocaleShortDate)
+                            }
                         }
 
                         MouseArea {
@@ -248,7 +251,10 @@ Item {
 
                         Connections {
                             target: toDatePicker.item
-                            onEditingFinished: toDate.text = Qt.formatDateTime(date, Qt.SystemLocaleShortDate)
+                            // function onEditingFinished()
+                            onEditingFinished: {
+                                toDate.text = Qt.formatDateTime(date, Qt.SystemLocaleShortDate)
+                            }
                         }
 
                         MouseArea {

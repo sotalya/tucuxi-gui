@@ -16,8 +16,8 @@ Canvas {
     id: canvas
     objectName: "chartView"
 
-    property var img_covariates_disabled_mini : "qrc:/icons/flow/covariates_disabled_mini.png";
-    property var img_dosages_disabled_mini : "qrc:/icons/flow/dosages_disabled_mini.png";
+    property string img_covariates_disabled_mini : "qrc:/icons/flow/covariates_disabled_mini.png";
+    property string img_dosages_disabled_mini : "qrc:/icons/flow/dosages_disabled_mini.png";
 
     property var canvas : this;
     property var annotationsCanvas : overlayAnnotations;
@@ -371,6 +371,7 @@ Canvas {
 
     Connections {
         target: graphInformationSelection
+        // function onHasBeenModified()
         onHasBeenModified: {
             canvas.rePaint();
         }
@@ -378,6 +379,7 @@ Canvas {
 
     Connections {
         target: flow
+        // function onChangedTab(index)
         onChangedTab: {
             switch (flow.currentIndex)
             {
@@ -397,9 +399,11 @@ Canvas {
 
     Connections {
         target: reportTab
+        // function onToggleShow(index, value)
         onToggleShow: {
             canvas.rePaint();
         }
+        // function onPublishReport(output)
         onPublishReport: {
             canvas.save(appPath + "/graph.png");
         }
@@ -407,6 +411,7 @@ Canvas {
 
     Connections {
         target: adjustmentTab
+        // function onCurrentIndexChanged(index)
         onCurrentIndexChanged: {
             if (index === -1) {return;}
             if (!revP.isValid || revP.isEmpty()) {return;}
@@ -422,6 +427,7 @@ Canvas {
 
     Connections {
         target: dosageTab
+        // function onCurrentIndexChanged(index)
         onCurrentIndexChanged: {
             if (index === -1) {return;}
             for (var j = 0; j < dosages.length; j++) {
@@ -436,6 +442,7 @@ Canvas {
 
     Connections {
         target: targetTab
+        // function onCurrentIndexChanged(index)
         onCurrentIndexChanged: {
             canvas.targetTabIndex = index;
             rePaint();

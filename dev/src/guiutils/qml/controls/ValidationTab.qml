@@ -52,6 +52,7 @@ Rectangle {
 
     Connections {
         target: interpretation.drugResponseAnalysis.treatment.adjustments
+        // function onObjListChanged(list)
         onObjListChanged: {
             var adjs = []
             var nextControl = 0;
@@ -90,6 +91,7 @@ Rectangle {
     
     Connections {
         target: flow.chart.mouseArea
+        // function onPositionChanged(mouse)
         onPositionChanged: {
             if (flow.chart.state !== "validation") {
                 return;
@@ -514,7 +516,7 @@ Rectangle {
                                     Keys.onPressed: {
                                         if (event.modifiers) {
                                             var t = validationTabController.getShortCutText(0, event.key, event.modifiers);
-                                            if (t != "") {
+                                            if (t !== "") {
                                                 expectednessInput.text = t;
                                                 event.accepted = true;
                                             }

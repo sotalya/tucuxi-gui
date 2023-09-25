@@ -190,13 +190,13 @@ int main(int argc, char *argv[])
     // YTA: Demo of a subclass outside core that uses the factory
 //    Tucuxi::Gui::Core::Bsv::getFactory()->registerCreator(new NewBsv::NewBsvCreator());
 
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, QString("Built from Gui Git revision %1").arg(GIT_REVISION));
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, QString("Built from Gui Git revision %1").arg(GIT_REVISION));
 #ifdef COMPILE_WITH_TUCUCORE
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, QString("Built from Tucucore Git revision %1").arg(QString::fromStdString(Tucuxi::Core::Version::getGitRevision())));
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, QString("Built from Tucucore Git revision %1").arg(QString::fromStdString(Tucuxi::Core::Version::getGitRevision())));
 #endif // COMPILE_WITH_TUCUCORE
 
 
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering DAL objects.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Registering DAL objects.");
 
     // Set settings info before CORE is called
     QCoreApplication::setOrganizationName("HEIG-VD");
@@ -376,7 +376,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::DrugTabController>("ezechiel", 1, 0, "DrugTabController", QObject::tr("Cannot instantiate type 'DrugTabController'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::MainWindowController>("ezechiel", 1, 0, "MainWindowController", QObject::tr("Cannot instantiate type 'MainWindowController'"));
 
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering model objects.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Registering model objects.");
     /*
     qmlRegisterUncreatableType<AdjustmentListModel>("ezechiel", 1, 0, "AdjustmentListModel", QObject::tr("Cannot instantiate type 'AdjustmentListModel'"));
     qmlRegisterUncreatableType<AdjustmentSettingsModel>("ezechiel", 1, 0, "AdjustmentSettingsModel", QObject::tr("Cannot instantiate type 'AdjustmentSettingsModel'"));
@@ -415,15 +415,15 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Tucuxi::Gui::Admin::ValidationStatus>("ezechiel", 1, 0, "Status", QObject::tr("Cannot instantiate type 'Status'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Admin::StepType>("ezechiel", 1, 0, "StepType", QObject::tr("Cannot instantiate type 'StepType'"));
 
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering other types.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Registering other types.");
     qmlRegisterType<Tucuxi::Gui::GuiUtils::ProxyModelFilter>("ezechiel", 1, 0, "ProxyModelFilter");
 
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering QML singletons.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Registering QML singletons.");
     qmlRegisterSingletonType(QUrl("qrc:/controls/Status.qml"), "guiutils.qml.controls", 1, 0, "Status");
     qmlRegisterSingletonType(QUrl("qrc:/controls/ToolTips.qml"), "guiutils.qml.controls", 1, 0, "ToolTips");
     qmlRegisterSingletonType(QUrl("qrc:/styles/Style.qml"), "guiutils.qml.styles", 1, 0, "Style");
 
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Registering QML components.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Registering QML components.");
     qmlRegisterType(QUrl("qrc:/windows/MainWindow.qml"), "guiutils.qml.windows", 1, 0, "MainWindow");
     qmlRegisterType(QUrl("qrc:/windows/StartupWindow.qml"), "guiutils.qml.windows", 1, 0, "StartupWindow");
     qmlRegisterType(QUrl("qrc:/controls/AdjustmentTab.qml"), "guiutils.qml.controls", 1, 0, "AdjustmentTab");
@@ -451,27 +451,27 @@ int main(int argc, char *argv[])
 
 
     Q_INIT_RESOURCE(core);
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Core.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Initialized Core.");
 //    Q_INIT_RESOURCE(report);
 //    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Report.");
     Q_INIT_RESOURCE(rest);
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Rest.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Initialized Rest.");
     Q_INIT_RESOURCE(qml);
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Qml.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Initialized Qml.");
     Q_INIT_RESOURCE(guiutils);
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Guiutils.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Initialized Guiutils.");
 //    Q_INIT_RESOURCE(report);
 //    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Report.");
 
     // Let's create CORE, to modify paths from the options
     Tucuxi::Gui::Core::Core::setInstance(new Tucuxi::Gui::AppUtils::AppCore());
     parseOptions();
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Options.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Initialized Options.");
     initResources();
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized Resources.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Initialized Resources.");
 #ifdef CONFIG_CONNECTED
     initRestConfig();
-    EXLOG(QtDebugMsg, Tucuxi::gui::NOEZERROR, "Initialized REST configuration.");
+    EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Initialized REST configuration.");
 #endif // CONFIG_CONNECTED
 
     //QtWebEngine::initialize();

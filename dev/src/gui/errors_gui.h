@@ -7,7 +7,7 @@
 #include "core/utils/logging.h"
 
 namespace Tucuxi {
-namespace gui {
+namespace Gui {
 
 EZERROR(GUI, NOEZERROR,"There is no error.")
 

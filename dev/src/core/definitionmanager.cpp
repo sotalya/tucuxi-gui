@@ -195,7 +195,7 @@ QString DefinitionManager::covariateDefaultValue(const QString &id) const
     // value parameter. We would then return a QString using the same algorithm as below.
     // ////////////////////////////////////////////////////////////////////////////////////////////
 
-    if (id.split(".", QString::SkipEmptyParts).last() == "sex")
+    if (id.split(".", Qt::SkipEmptyParts).last() == "sex")
         return tr("Undefined");
 
     //Get the covariate list of values
@@ -220,9 +220,9 @@ QStringList DefinitionManager::covariateValuesList(const QString &id) const
     // ////////////////////////////////////////////////////////////////////////////////////////////
 
     if (id != "") {
-        if (id.split(".", QString::SkipEmptyParts).last() == "sex")
+        if (id.split(".", Qt::SkipEmptyParts).last() == "sex")
             return values << tr("Female") << tr("Male");
-        if (id.split(".", QString::SkipEmptyParts).last() == "gist")
+        if (id.split(".", Qt::SkipEmptyParts).last() == "gist")
             return values << tr("No") << tr("Yes");
 
     }

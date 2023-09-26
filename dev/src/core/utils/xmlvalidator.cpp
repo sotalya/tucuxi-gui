@@ -7,8 +7,8 @@
 #include "core/utils/logging.h"
 #include "core/errors_core.h"
 
-#include <QXmlSchema>
-#include <QRegExp>
+//#include <QXmlSchema>
+// #include <QRegExp>
 #include <QFile>
 
 namespace Tucuxi {
@@ -30,121 +30,127 @@ const char *const XmlValidator::Reply_Request = ":/schemas/reply_request.xsd";
 const char *const XmlValidator::Notification  = ":/schemas/notification.xsd";
 const char *const XmlValidator::Acks          = ":/schemas/acks.xsd";
 
-XmlValidator::XmlValidator() :
-    _msgHandler(new ValidatorMessageHandler)
-{
+//XmlValidator::XmlValidator() :
+//    _msgHandler(new ValidatorMessageHandler)
+//{
 
-}
+//}
 
-XmlValidator::~XmlValidator()
-{
-    if (_msgHandler)
-        delete _msgHandler;
-}
+//XmlValidator::~XmlValidator()
+//{
+//    if (_msgHandler)
+//        delete _msgHandler;
+//}
 
 bool XmlValidator::validate(const QString &xmlFilename, const QString &xsdFilename)
 {
-    QXmlSchemaValidator validator;
-    validator.setSchema(initSchema(xsdFilename));
-    validator.setMessageHandler(_msgHandler);
+//    QXmlSchemaValidator validator;
+//    validator.setSchema(initSchema(xsdFilename));
+//    validator.setMessageHandler(_msgHandler);
 
-    QFile file(xmlFilename);
-    if (!file.open(QIODevice::ReadOnly)) {
-        LOG(QtWarningMsg, INVALIDFILEFORMAT, tr("Cannot open the XML file '%1'").arg(file.fileName()));
-        return false;
-    }
+//    QFile file(xmlFilename);
+//    if (!file.open(QIODevice::ReadOnly)) {
+//        LOG(QtWarningMsg, INVALIDFILEFORMAT, tr("Cannot open the XML file '%1'").arg(file.fileName()));
+//        return false;
+//    }
 
-    return validator.validate(&file, QUrl::fromLocalFile(file.fileName()));
+//    return validator.validate(&file, QUrl::fromLocalFile(file.fileName()));
+    LOG(QtWarningMsg, NOPOTATO, tr("Validator called"));
+    return false;
 }
 
 bool XmlValidator::validate(QIODevice *xmlDevice, const QString &xsdFilename)
 {
-    QXmlSchemaValidator validator;
-    validator.setSchema(initSchema(xsdFilename));
-    validator.setMessageHandler(_msgHandler);
+//    QXmlSchemaValidator validator;
+//    validator.setSchema(initSchema(xsdFilename));
+//    validator.setMessageHandler(_msgHandler);
 
-    return validator.validate(xmlDevice);
+//    return validator.validate(xmlDevice);
+    LOG(QtWarningMsg, NOPOTATO, tr("Validator called"));
+    return false;
 }
 
 bool XmlValidator::validate(const QByteArray &xmlData, const QString &xsdFilename)
 {
-    QXmlSchemaValidator validator;
-    validator.setSchema(initSchema(xsdFilename));
-    validator.setMessageHandler(_msgHandler);
+//    QXmlSchemaValidator validator;
+//    validator.setSchema(initSchema(xsdFilename));
+//    validator.setMessageHandler(_msgHandler);
 
-    return validator.validate(xmlData);
+//    return validator.validate(xmlData);
+    LOG(QtWarningMsg, NOPOTATO, tr("Validator called"));
+    return false;
 }
 
-QtMsgType XmlValidator::errorType() const
-{
-    return _msgHandler->type();
-}
+//QtMsgType XmlValidator::errorType() const
+//{
+//    return _msgHandler->type();
+//}
 
-QString XmlValidator::errorMessage() const
-{
-    QString message = _msgHandler->description();
-    return message.remove(QRegExp("<[^>]*>"));
-}
+//QString XmlValidator::errorMessage() const
+//{
+//    QString message = _msgHandler->description();
+//    return message.remove(QRegExp("<[^>]*>"));
+//}
 
-QString XmlValidator::errorHtmlMessage() const
-{
-    return _msgHandler->description();
-}
+//QString XmlValidator::errorHtmlMessage() const
+//{
+//    return _msgHandler->description();
+//}
 
-int XmlValidator::errorLine() const
-{
-    return _msgHandler->line();
-}
+//int XmlValidator::errorLine() const
+//{
+//    return _msgHandler->line();
+//}
 
-int XmlValidator::errorColumn() const
-{
-    return _msgHandler->column();
-}
+//int XmlValidator::errorColumn() const
+//{
+//    return _msgHandler->column();
+//}
 
-QXmlSchema XmlValidator::initSchema(const QString &path) const
-{
-    QXmlSchema schema;
-    schema.load(QUrl::fromLocalFile(path));
+//QXmlSchema XmlValidator::initSchema(const QString &path) const
+//{
+//    QXmlSchema schema;
+//    schema.load(QUrl::fromLocalFile(path));
 
-    if (!schema.isValid())
-        LOG(QtCriticalMsg, XSDERROR, QString(tr("Invalid XML Schema file '%1'")).arg(path));
+//    if (!schema.isValid())
+//        LOG(QtCriticalMsg, XSDERROR, QString(tr("Invalid XML Schema file '%1'")).arg(path));
 
-    return schema;
-}
+//    return schema;
+//}
 
-XmlValidator::ValidatorMessageHandler::ValidatorMessageHandler() : QAbstractMessageHandler(0)
-{
+//XmlValidator::ValidatorMessageHandler::ValidatorMessageHandler() : QAbstractMessageHandler(0)
+//{
 
-}
+//}
 
-QString XmlValidator::ValidatorMessageHandler::description() const
-{
-    return _description;
-}
+//QString XmlValidator::ValidatorMessageHandler::description() const
+//{
+//    return _description;
+//}
 
-QtMsgType XmlValidator::ValidatorMessageHandler::type() const
-{
-    return _type;
-}
+//QtMsgType XmlValidator::ValidatorMessageHandler::type() const
+//{
+//    return _type;
+//}
 
-int XmlValidator::ValidatorMessageHandler::line() const
-{
-    return _location.line();
-}
+//int XmlValidator::ValidatorMessageHandler::line() const
+//{
+//    return _location.line();
+//}
 
-int XmlValidator::ValidatorMessageHandler::column() const
-{
-    return _location.column();
-}
+//int XmlValidator::ValidatorMessageHandler::column() const
+//{
+//    return _location.column();
+//}
 
-void XmlValidator::ValidatorMessageHandler::handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation)
-{
-    Q_UNUSED(identifier);
+//void XmlValidator::ValidatorMessageHandler::handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation)
+//{
+//    Q_UNUSED(identifier);
 
-    _type = type;
-    _description = description;
-    _location = sourceLocation;
-}
+//    _type = type;
+//    _description = description;
+//    _location = sourceLocation;
+//}
 
 } // namespace Core
 } // namespace Gui

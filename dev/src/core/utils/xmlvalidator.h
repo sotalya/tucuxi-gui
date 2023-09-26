@@ -4,9 +4,9 @@
 #define XMLVALIDATOR_H
 
 #include <QCoreApplication>
-#include <QXmlSchemaValidator>
-#include <QAbstractMessageHandler>
-#include <QSourceLocation>
+//#include <QXmlSchemaValidator>
+//#include <QAbstractMessageHandler>
+//#include <QSourceLocation>
 
 namespace Tucuxi {
 namespace Gui {
@@ -48,31 +48,31 @@ public:
     int errorLine() const;
     int errorColumn() const;
 
-private:
-    class ValidatorMessageHandler : public QAbstractMessageHandler
-    {
+//private:
+//    class ValidatorMessageHandler : public QAbstractMessageHandler
+//    {
 
-    public:
-        ValidatorMessageHandler();
+//    public:
+//        ValidatorMessageHandler();
 
-        QString description() const;
-        QtMsgType type() const;
+//        QString description() const;
+//        QtMsgType type() const;
 
-        int line() const;
-        int column() const;
+//        int line() const;
+//        int column() const;
 
-    protected:
-        virtual void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation);
+//    protected:
+//        virtual void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation);
 
-    private:
-        QtMsgType _type;
-        QString _description;
-        QSourceLocation _location;
-    };
+//    private:
+//        QtMsgType _type;
+//        QString _description;
+//        QSourceLocation _location;
+//    };
 
-    QXmlSchema initSchema(const QString &path) const;
+//    QXmlSchema initSchema(const QString &path) const;
 
-    ValidatorMessageHandler *_msgHandler;
+//    ValidatorMessageHandler *_msgHandler;
 };
 
 } // namespace Core

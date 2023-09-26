@@ -55,7 +55,7 @@ DEFINES += QT_MESSAGELOGCONTEXT
 QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
 #QMAKE_CXXFLAGS_WARN_OFF += -Wunused-parameter
 #Qt modules required by the core and its dependencies
-QT += xml xmlpatterns network svg qml
+QT += xml network svg qml core5compat widgets
 
 #Depending on the patform, set the libs as static/shared
 win32 {

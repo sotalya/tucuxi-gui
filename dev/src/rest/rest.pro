@@ -1,6 +1,6 @@
 include (../tucuxi.pri)
 
-QT += core xml xmlpatterns network
+QT += core xml network
 QT -= gui
 
 TARGET   = tucuxi-gui-rest

@@ -16,7 +16,7 @@ DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 ICON        = ../guiutils/resources/icons/logo.ico
 
 QT += gui printsupport quick quickwidgets printsupport svg webchannel websockets
-QT += webenginecore webengine
+QT += webenginecore
 
 CONFIG(debug) {
     CONFIG += qml_debug

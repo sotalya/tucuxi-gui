@@ -8,6 +8,8 @@
 #include <QDate>
 #include <QDateTime>
 
+Q_MOC_INCLUDE("core/dal/uncastedvalue.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

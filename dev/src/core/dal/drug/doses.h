@@ -9,6 +9,8 @@
 #include "core/dal/entity.h"
 #include "core/dal/drug/adme.h"
 
+Q_MOC_INCLUDE("core/dal/drug/translatablestring.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

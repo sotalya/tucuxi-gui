@@ -3,6 +3,12 @@
 
 
 #include "core/dal/entity.h"
+
+Q_MOC_INCLUDE("admin/src/dal/clinical.h")
+Q_MOC_INCLUDE("core/dal/drugtreatment.h")
+Q_MOC_INCLUDE("admin/src/dal/patient.h")
+Q_MOC_INCLUDE("admin/src/dal/practician.h")
+
 namespace Tucuxi{
 namespace Gui {
 namespace Core {

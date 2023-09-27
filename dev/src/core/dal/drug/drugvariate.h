@@ -10,6 +10,9 @@
 #include "core/utils/units.h"
 #include "core/dal/drug/operableamount.h"
 
+//Q_MOC_INCLUDE("core/dal/drug/operation.h")
+Q_MOC_INCLUDE("core/dal/drug/translatablestring.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

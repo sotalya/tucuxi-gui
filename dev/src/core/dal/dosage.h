@@ -11,6 +11,8 @@
 #include "core/utils/duration.h"
 #include "core/utils/ezutils.h"
 
+Q_MOC_INCLUDE("core/dal/uncastedvalue.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

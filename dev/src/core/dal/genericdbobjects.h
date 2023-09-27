@@ -2236,7 +2236,6 @@ enum Gender {
 //Q_DECLARE_METATYPE(Tucuxi::Correlation*)
 //Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::Correlation, QObject*)
 
-
 //Q_DECLARE_METATYPE(Tucuxi::ValidDose*)
 //Q_SCRIPT_DECLARE_QMETAOBJECT(Tucuxi::ValidDose, QObject*)
 

@@ -9,6 +9,8 @@
 #include "core/utils/ezutils.h"
 #include "core/dal/entity.h"
 
+Q_MOC_INCLUDE("core/dal/uncastedvalue.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

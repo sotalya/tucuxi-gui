@@ -7,6 +7,21 @@
 #include "core/utils/ezutils.h"
 #include "core/dal/amount.h"
 
+Q_MOC_INCLUDE("core/dal/drug/adme.h")
+Q_MOC_INCLUDE("core/dal/drug/concentrations.h")
+Q_MOC_INCLUDE("core/dal/drug/doses.h")
+Q_MOC_INCLUDE("core/dal/drug/drugvariate.h")
+Q_MOC_INCLUDE("core/dal/drug/errormodel.h")
+Q_MOC_INCLUDE("core/dal/drug/halflife.h")
+Q_MOC_INCLUDE("core/dal/drug/infusions.h")
+Q_MOC_INCLUDE("core/dal/drug/intervals.h")
+Q_MOC_INCLUDE("core/dal/drug/metadata.h")
+Q_MOC_INCLUDE("core/dal/drug/parameters.h")
+Q_MOC_INCLUDE("core/dal/drug/results.h")
+Q_MOC_INCLUDE("core/dal/drug/standardtreatment.h")
+Q_MOC_INCLUDE("core/dal/drug/target.h")
+Q_MOC_INCLUDE("core/dal/drug/translatablestring.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
@@ -23,7 +38,6 @@ class Halflife;
 class Concentrations;
 class Results;
 class ValidDoses;
-class ValidIntervals;
 class Operation;
 class DrugVariate;
 class DrugVariateList;

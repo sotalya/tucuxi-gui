@@ -8,6 +8,12 @@
 #include "core/dal/entity.h"
 #include "core/utils/units.h"
 
+Q_MOC_INCLUDE("core/dal/coremeasure.h")
+Q_MOC_INCLUDE("core/dal/corepatient.h")
+Q_MOC_INCLUDE("core/dal/dosage.h")
+Q_MOC_INCLUDE("core/dal/covariate.h")
+Q_MOC_INCLUDE("core/dal/drug/target.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

@@ -128,8 +128,8 @@ void RestRequestsClient::queryRequest(const QString &requestId, const QString &p
 
     QTextStream informer(stdout);
     rlutil::setColor(rlutil::CYAN);
-    informer <<  "Sent query Request" << endl;
-    informer <<  "******************" << endl;
+    informer <<  "Sent query Request" << Qt::endl;
+    informer <<  "******************" << Qt::endl;
     rlutil::setColor(rlutil::GREEN);
     informer << "RequestId:\t"; informer.flush();
     rlutil::resetColor();
@@ -143,7 +143,7 @@ void RestRequestsClient::queryRequest(const QString &requestId, const QString &p
     rlutil::resetColor();
     informer << content.value("drug.drugId");
     rlutil::resetColor();
-    informer << endl;
+    informer << Qt::endl;
 
     connect(&NetworkAccessManager::getInstance(), SIGNAL(finished(QNetworkReply*)), this, SLOT(processQueryRequest(QNetworkReply*)));
 }

@@ -555,7 +555,7 @@ bool sortMeasureDate(const Measure * s1, const Measure * s2)
 
 Response EphemeralDB::getMeasuresByDate(const int &_id, QList<Measure *>& _in) {
     Response r = measures.getListByPatient(_id, _in);
-    qSort(_in.begin(),_in.end(),sortMeasureDate);
+    std::sort(_in.begin(),_in.end(),sortMeasureDate);
     return r;
 }
 

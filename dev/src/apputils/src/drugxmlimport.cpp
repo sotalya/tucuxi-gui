@@ -36,7 +36,7 @@
 
 //    QFile file(fileName);
 //    if(!file.open(QFile::ReadOnly)){
-//        out<<"can not open file"<<endl;
+//        out<<"can not open file"<<Qt::endl;
 //        return nullptr;
 //    }
     

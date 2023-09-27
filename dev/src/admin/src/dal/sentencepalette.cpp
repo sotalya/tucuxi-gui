@@ -318,7 +318,7 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
 }
 
 bool SentencesPalettes::SentencesPalettesImporter::isXMLSentenceExisting(QStringList _sentence, QString _xmlSentence){
-    for (auto const &sentence : _sentence.toStdList()){
+    for (auto const &sentence : std::list(_sentence.begin(), _sentence.end())){
         if(sentence == _xmlSentence){
             return 0;
         }

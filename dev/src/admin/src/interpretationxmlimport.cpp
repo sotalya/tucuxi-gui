@@ -47,7 +47,7 @@
 
 #include <iostream>
 
-#define WHILE_NOT_END_ELEM(elem)     while(isOk && !reader.hasError() && (!reader.isEndElement() || reader.name() != elem))
+#define WHILE_NOT_END_ELEM(elem)     while(isOk && !reader.hasError() && (!reader.isEndElement() || reader.name() != QString(elem)))
 
 using namespace Tucuxi::Gui::Admin;
 
@@ -1328,7 +1328,7 @@ Tucuxi::Gui::Core::ParameterSet *InterpretationXmlImport::loadParameters(const Q
                 QString param1, param2;
                 double value;
                 WHILE_NOT_END_ELEM("correlations"){
-                    if(isOk && reader.readNextStartElement()  && reader.name() == "correlation"){
+                    if(isOk && reader.readNextStartElement()  && reader.name() == QString("correlation")){
                         WHILE_NOT_END_ELEM("correlation"){
                             if(reader.readNextStartElement() ){
                                 QString name = reader.name().toString();

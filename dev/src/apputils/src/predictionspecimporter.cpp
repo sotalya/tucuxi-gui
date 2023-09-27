@@ -32,7 +32,7 @@
 
 #include <iostream>
 
-#define WHILE_NOT_END_ELEM(elem)     while(isOk && !reader.hasError() && (!reader.isEndElement() || reader.name() != elem))
+#define WHILE_NOT_END_ELEM(elem)     while(isOk && !reader.hasError() && (!reader.isEndElement() || reader.name() != QString(elem)))
 
 
 PredictionSpecImporter::PredictionSpecImporter()
@@ -463,10 +463,10 @@ Tucuxi::Gui::Core::StandardTreatment* PredictionSpecImporter::loadStandardTreatm
                 //parses the doses
                 WHILE_NOT_END_ELEM("duration"){
                     if(isConvertible && reader.readNextStartElement() ){
-                        if(reader.name() == "unit"){
+                        if(reader.name() == QString("unit")){
                             unit = extractor();
                         }
-                        else if (reader.name() == "value") {
+                        else if (reader.name() == QString("value")) {
                             value = extractor().toDouble(&isConvertible);
                         }
                     } else {
@@ -824,7 +824,7 @@ Tucuxi::Gui::Core::ParameterSet *PredictionSpecImporter::loadParameters(const QS
                 QString param1, param2;
                 double value;
                 WHILE_NOT_END_ELEM("correlations"){
-                    if(isOk && reader.readNextStartElement()  && reader.name() == "correlation"){
+                    if(isOk && reader.readNextStartElement()  && reader.name() == QString("correlation")){
                         WHILE_NOT_END_ELEM("correlation"){
                             if(reader.readNextStartElement() ){
                                 QString name = reader.name().toString();

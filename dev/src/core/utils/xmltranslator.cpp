@@ -66,7 +66,7 @@ QString XmlTranslator::translate(QXmlStreamReader &parser, const QString &langAt
         }
 
         //Else if the english translation is found, set the text and continue the search
-        else if (!found && parser.attributes().value(langAttribute).contains(QRegularExpression("^en$")))
+        else if (!found && parser.attributes().value(langAttribute) == QString("en"))
             translation = parser.readElementText();
 
         //Else if the translation is still empty, set it and continue the search

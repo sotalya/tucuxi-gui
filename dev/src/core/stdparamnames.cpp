@@ -7,7 +7,10 @@ namespace Tucuxi {
 namespace Gui {
 namespace Core {
 
+StdParamNames::StdParamNames()
+{
 
+}
 
 QList<AbstractStdParamNameHandler*> StdParamNames::handlersList;
 

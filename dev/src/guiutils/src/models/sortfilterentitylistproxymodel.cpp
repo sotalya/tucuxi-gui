@@ -5,6 +5,7 @@
 
 #include <QDateTime>
 #include <QQmlEngine>
+#include <QRegExp>
 
 using namespace Tucuxi::Gui::GuiUtils;
 
@@ -96,8 +97,8 @@ bool ProxyModelFilter::accept(const QModelIndex &index) const
 
     QVariant data = index.data(role());
 
-    if (value().type() == QVariant::RegExp)
-        return data.toString().contains(value().toRegExp());
+    if (value().type() == QMetaType::QRegularExpression)
+        return data.toString().contains(value().toRegularExpression());
     if (value().type() == QVariant::DateTime && value().toDateTime().isValid())
         return compare(data.toDateTime(), value().toDateTime());
     if (value().type() == QVariant::Double || value().type() == QVariant::Int)

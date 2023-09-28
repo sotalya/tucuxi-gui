@@ -48,7 +48,7 @@ public:
     int errorLine() const;
     int errorColumn() const;
 
-//private:
+private:
 //    class ValidatorMessageHandler : public QAbstractMessageHandler
 //    {
 

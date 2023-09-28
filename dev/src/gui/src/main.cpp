@@ -6,7 +6,7 @@
 #include <QQuickView>
 #include <QObject>
 #include <QtQml>
-#include <QtWebEngine/QtWebEngine>
+#include <QtWebEngineCore/QtWebEngineCore>
 #include <QSystemTrayIcon>
 
 #include "errors_gui.h"

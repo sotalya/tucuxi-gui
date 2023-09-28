@@ -47,7 +47,9 @@ config_externalreport {
 }
 
 # Common settings for the whole project
-CONFIG += qt thread rtti silent c++14 warn_off embed_manifest_dll embed_manifest_exe
+# TODO -> Check on other OS
+# qt taken out of the configs because otherwise it didnt compile on windows
+CONFIG += thread rtti silent c++14 warn_off embed_manifest_dll embed_manifest_exe
 
 CXXFLAGS += -Wwrite-strings -fexceptions -Wall
 CFLAGS += -fexceptions

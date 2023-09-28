@@ -12,7 +12,7 @@
 #include "core/dal/drug/drugvariate.h"
 #include "core/dal/covariate.h"
 
-Q_MOC_INCLUDE("operableamount.h")
+Q_MOC_INCLUDE("core/dal/drug/operableamount.h")
 
 namespace Tucuxi {
 namespace Gui {

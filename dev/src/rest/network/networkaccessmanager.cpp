@@ -4,6 +4,7 @@
 
 #include <QFile>
 #include <QNetworkReply>
+#include <QSslConfiguration>
 
 namespace Tucuxi {
 namespace Gui {
@@ -49,12 +50,16 @@ NetworkAccessManager::~NetworkAccessManager()
 
 void NetworkAccessManager::addDefaultCaCertificate(const QString &fileName)
 {
-    QFile certificationFile(fileName);
-    if (!certificationFile.open(QIODevice::ReadOnly))
-        qFatal(qPrintable(tr("Could not open the certificate '%1'").arg(fileName)));
+//    QFile certificationFile(fileName);
+//    if (!certificationFile.open(QIODevice::ReadOnly))
+//        qFatal(qPrintable(tr("Could not open the certificate '%1'").arg(fileName)));
 
-    QSslCertificate certificate(certificationFile.readAll());
-    QSslSocket::addDefaultCaCertificate(certificate);
+//    QSslCertificate certificate(certificationFile.readAll());
+//    QSslSocket::addDefaultCaCertificate(certificate);
+    // TODO -> Check if this works (it should)
+    QSslConfiguration QSslConfig = QSslConfiguration::defaultConfiguration();
+    QSslConfig.addCaCertificates(fileName);
+    QSslConfiguration::setDefaultConfiguration(QSslConfig);
 }
 
 void NetworkAccessManager::setUniqueDefaultCaCertificate(const QString &fileName)

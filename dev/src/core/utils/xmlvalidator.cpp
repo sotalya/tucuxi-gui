@@ -30,17 +30,17 @@ const char *const XmlValidator::Reply_Request = ":/schemas/reply_request.xsd";
 const char *const XmlValidator::Notification  = ":/schemas/notification.xsd";
 const char *const XmlValidator::Acks          = ":/schemas/acks.xsd";
 
-//XmlValidator::XmlValidator() :
-//    _msgHandler(new ValidatorMessageHandler)
-//{
+XmlValidator::XmlValidator() /*:
+    _msgHandler(new ValidatorMessageHandler)*/
+{
 
-//}
+}
 
-//XmlValidator::~XmlValidator()
-//{
+XmlValidator::~XmlValidator()
+{
 //    if (_msgHandler)
 //        delete _msgHandler;
-//}
+}
 
 bool XmlValidator::validate(const QString &xmlFilename, const QString &xsdFilename)
 {
@@ -55,7 +55,7 @@ bool XmlValidator::validate(const QString &xmlFilename, const QString &xsdFilena
 //    }
 
 //    return validator.validate(&file, QUrl::fromLocalFile(file.fileName()));
-    LOG(QtWarningMsg, NOPOTATO, tr("Validator called"));
+    LOG(QtWarningMsg, NOPOTATO, tr("XML Validator called"));
     return false;
 }
 
@@ -66,7 +66,7 @@ bool XmlValidator::validate(QIODevice *xmlDevice, const QString &xsdFilename)
 //    validator.setMessageHandler(_msgHandler);
 
 //    return validator.validate(xmlDevice);
-    LOG(QtWarningMsg, NOPOTATO, tr("Validator called"));
+    LOG(QtWarningMsg, NOPOTATO, tr("XML Validator called"));
     return false;
 }
 
@@ -77,7 +77,7 @@ bool XmlValidator::validate(const QByteArray &xmlData, const QString &xsdFilenam
 //    validator.setMessageHandler(_msgHandler);
 
 //    return validator.validate(xmlData);
-    LOG(QtWarningMsg, NOPOTATO, tr("Validator called"));
+    LOG(QtWarningMsg, NOPOTATO, tr("XML Validator called"));
     return false;
 }
 
@@ -86,21 +86,24 @@ bool XmlValidator::validate(const QByteArray &xmlData, const QString &xsdFilenam
 //    return _msgHandler->type();
 //}
 
-//QString XmlValidator::errorMessage() const
-//{
+QString XmlValidator::errorMessage() const
+{
 //    QString message = _msgHandler->description();
 //    return message.remove(QRegExp("<[^>]*>"));
-//}
+    return QString("XML Validator called");
+}
 
 //QString XmlValidator::errorHtmlMessage() const
 //{
 //    return _msgHandler->description();
 //}
 
-//int XmlValidator::errorLine() const
-//{
+int XmlValidator::errorLine() const
+{
 //    return _msgHandler->line();
-//}
+    return -9999;
+
+}
 
 //int XmlValidator::errorColumn() const
 //{

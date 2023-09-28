@@ -1876,7 +1876,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::updateSexAndAgeCovariates(
     covariateTabController->setSinglePatientVariate("sex", sex);
 
     QDate birthday = _currentPatient->person()->birthday();
-    QDateTime realBirthdate(birthday);
+    // TODO -> Check that this way of setting the date doesnt brake the core :S
+    QDateTime realBirthdate(birthday, QTime(0, 0), QTimeZone(QTimeZone::LocalTime));
     covariateTabController->setBirthdate(realBirthdate);
 //    covariateTabController->setSinglePatientVariate("birthdate", realBirthdate.toMSecsSinceEpoch() / (qint64)1000);
 
@@ -1940,7 +1941,6 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::saveInterpretation(const Q
     }
     QTextStream out(&interpretationFile);
     // Necessary for Windows, else wrong codec selected
-    out.setCodec("UTF-8");
     out << xml;
     interpretationFile.close();
 
@@ -2398,7 +2398,6 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()
     }
 
     QTextStream out(&dataFile);
-    out.setCodec("UTF-8");
     out << xml;
     dataFile.close();
 }

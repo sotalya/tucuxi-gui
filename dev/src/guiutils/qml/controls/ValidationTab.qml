@@ -53,7 +53,9 @@ Rectangle {
     Connections {
         target: interpretation.drugResponseAnalysis.treatment.adjustments
         // function onObjListChanged(list)
-        onObjListChanged: {
+        //TODO -> check if its still work as intended
+        //onObjListChanged: {
+        function onObjListChanged() {
             var adjs = []
             var nextControl = 0;
             var lst = interpretation.drugResponseAnalysis.treatment.adjustments;
@@ -92,7 +94,9 @@ Rectangle {
     Connections {
         target: flow.chart.mouseArea
         // function onPositionChanged(mouse)
-        onPositionChanged: {
+        //TODO -> check if its still work as intended
+        //onPositionChanged: {
+        function onPositionChanged(mouse) {
             if (flow.chart.state !== "validation") {
                 return;
             }

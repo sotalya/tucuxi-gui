@@ -93,7 +93,9 @@ Rectangle {
     Connections {
         target: interpretationController
         // function onInterpretationValidated()
-        onInterpretationValidated: {
+        //TODO -> check if its still work as intended
+        //onInterpretationValidated: {
+        function onInterpretationValidated() {
             updateReport();
         }
     }

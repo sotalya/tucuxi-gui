@@ -372,7 +372,9 @@ Canvas {
     Connections {
         target: graphInformationSelection
         // function onHasBeenModified()
-        onHasBeenModified: {
+        //TODO -> check if its still work as intended
+        //onHasBeenModified: {
+        function onHasBeenModified() {
             canvas.rePaint();
         }
     }
@@ -380,7 +382,9 @@ Canvas {
     Connections {
         target: flow
         // function onChangedTab(index)
-        onChangedTab: {
+        //TODO -> check if its still work as intended
+        //onChangedTab: {
+        function onChangedTab() {
             switch (flow.currentIndex)
             {
                 case 0: canvas.state = "patients"; break;
@@ -400,11 +404,15 @@ Canvas {
     Connections {
         target: reportTab
         // function onToggleShow(index, value)
-        onToggleShow: {
+        //TODO -> check if its still work as intended
+        //onToggleShow: {
+        function onToggleShow() {
             canvas.rePaint();
         }
         // function onPublishReport(output)
-        onPublishReport: {
+        //TODO -> check if its still work as intended
+        //onPublishReport: {
+        function onPublishReport() {
             canvas.save(appPath + "/graph.png");
         }
     }
@@ -412,7 +420,9 @@ Canvas {
     Connections {
         target: adjustmentTab
         // function onCurrentIndexChanged(index)
-        onCurrentIndexChanged: {
+        //TODO -> check if its still work as intended
+        //onCurrentIndexChanged: {
+        function onCurrentIndexChanged(index) {
             if (index === -1) {return;}
             if (!revP.isValid || revP.isEmpty()) {return;}
             for (var i = 0; i < canvas.revP.size(); ++i) {
@@ -428,7 +438,9 @@ Canvas {
     Connections {
         target: dosageTab
         // function onCurrentIndexChanged(index)
-        onCurrentIndexChanged: {
+        //TODO -> check if its still work as intended
+        //onCurrentIndexChanged: {
+        function onCurrentIndexChanged(index) {
             if (index === -1) {return;}
             for (var j = 0; j < dosages.length; j++) {
                 //    console.log(j);
@@ -443,7 +455,9 @@ Canvas {
     Connections {
         target: targetTab
         // function onCurrentIndexChanged(index)
-        onCurrentIndexChanged: {
+        //TODO -> check if its still work as intended
+        //onCurrentIndexChanged: {
+        function onCurrentIndexChanged(index) {
             canvas.targetTabIndex = index;
             rePaint();
         }

@@ -179,7 +179,7 @@ Rectangle {
     Component {
         id: borderlessStyle
 
-        TextFieldStyle {
+        TextField {
             background: Rectangle {
                 anchors.fill: parent
                 anchors.margins: 0
@@ -188,12 +188,12 @@ Rectangle {
         }
     }
 
-    TucuCalendar {
-        id: calendar
-        onAccepted: {
-            defaultStyle.date = date;
-            editingFinished();
-        }
-    }
+//    TucuCalendar {
+//        id: calendar
+//        onAccepted: {
+//            defaultStyle.date = date;
+//            editingFinished();
+//        }
+//    }
 }
 

@@ -792,7 +792,7 @@ Canvas {
         id: dateDialog
         title: "Go to date"
 
-        standardButtons: StandardButton.NoButton
+        standardButtons: Qt.NoButton
 
         ColumnLayout {
             DatePicker {

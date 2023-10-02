@@ -155,8 +155,8 @@ SpinBox {
         }
     }
 
-    property var regExpValidator: RegExpValidator{
-        regExp: /(\d+)([.]\d{1,2})?$/
+    property var regExpValidator: RegularExpressionValidator{
+        regularExpression: /(\d+)([.]\d{1,2})?$/
         //regExp: /(\d+)([.,]\d+)?$/
     }
 

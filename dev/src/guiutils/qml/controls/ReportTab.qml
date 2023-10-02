@@ -210,10 +210,8 @@ Rectangle {
         FileDialog {
             id: fileDialog
             title: "Generate pdf report..."
-            folder: shortcuts.home
+            folder : StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
             modality: Qt.WindowModal
-            selectExisting: false
-            selectMultiple: false
             onAccepted: {
                 // Idea from https://stackoverflow.com/questions/24927850/get-the-path-from-a-qml-url
                 var filename = interpretationController.handleFileChosen(fileDialog.fileUrl);

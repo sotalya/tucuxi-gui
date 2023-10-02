@@ -34,14 +34,14 @@ Rectangle {
         id: messageNoAgeDialog
         title: "Covariates"
         text: "The age is automatically calculated based on the birthdate."
-        standardButtons: StandardButton.Close
+        buttons: MessageDialog.Close
     }
 
     MessageDialog {
         id: messageNoSexDialog
         title: "Covariates"
         text: "The sex is based on patient's data."
-        standardButtons: StandardButton.Close
+        buttons: MessageDialog.Close
     }
 
     ColumnLayout {

@@ -347,7 +347,7 @@ Item {
                 model: requestListModel
 
                 //                onDoubleClicked: {        // easier to single click from Gui tests
-                onClicked: {
+                clicked: {
                     var requestId = requestListModel.data(requestListModel.index(row, 0), PartialRequestListModel.RequestIdRole);
                     var patientId = requestListModel.data(requestListModel.index(row, 0), PartialRequestListModel.PatientIdRole);
                     var drugId    = requestListModel.data(requestListModel.index(row, 0), PartialRequestListModel.DrugIdRole);

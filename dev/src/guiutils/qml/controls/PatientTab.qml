@@ -70,7 +70,7 @@ Rectangle {
         id: messageDialog
         title: "Demo version"
         text: "Adding or removing a new patient is not possible in the demo version"
-        standardButtons: StandardButton.Close
+        buttons: MessageDialog.Close
     }
 
     ColumnLayout {

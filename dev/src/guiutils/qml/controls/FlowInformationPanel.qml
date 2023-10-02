@@ -8,7 +8,7 @@ Item {
 
     height: 128
     property string drugName:         interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.name.value() : ""
-    property date patientBirthDate: interpretationController.currentPatient ? interpretationController.currentPatient.person.birthday : ""
+    property date patientBirthDate: interpretationController.currentPatient ? interpretationController.currentPatient.person.birthday : new Date()
     property string patientName:      interpretationController.currentPatient ?
                                           (interpretationController.currentPatient.person.firstname.length > 0 ? (interpretationController.currentPatient.person.firstname.charAt(0) +
                                                                                                                   ". " +

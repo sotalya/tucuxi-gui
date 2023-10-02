@@ -555,7 +555,7 @@ DialogBase {
                 id: messageDialog
                 title: "Warning"
                 text: "The path you want to use is already used. If you continue, the older file will be overwritten."
-                standardButtons: StandardButton.Abort | StandardButton.Yes
+                buttons: MessageDialog.Abort| MessageDialog.Yes
 
                 onAccepted: {
                     messageDialog.close()
@@ -580,11 +580,11 @@ DialogBase {
     FileDialog {
         id: fileDialog
         title: "Import"
-        folder: shortcuts.home
+        folder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
         modality: Qt.WindowModal
         nameFilters: "*.xml"
-        selectExisting: true
-        selectMultiple: false
+        //selectExisting: true
+        //selectMultiple: false
         onAccepted: {
             sentencesPalettes.manualImport(fileDialog.fileUrls.toString().replace(/^(file:\/{2})/,""))
             fileDialog.close();

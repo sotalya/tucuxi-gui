@@ -25,9 +25,12 @@ Window {
             id: qtCalendarControl
             Layout.fillWidth:  true
             Layout.fillHeight:  true
-            onDoubleClicked: {
-                accepted(selectedDate)
-                close()
+            MouseArea{
+                onDoubleClicked: {
+                    accepted(selectedDate)
+                    close()
+                }
+
             }
         }
 

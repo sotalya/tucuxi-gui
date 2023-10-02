@@ -101,15 +101,15 @@ Item {
                     Layout.fillHeight: true
                 }
 
-                RequestList {
-                    id: requests
-                    objectName: "requestsView"
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
+//                RequestList {
+//                    id: requests
+//                    objectName: "requestsView"
+//                    Layout.fillWidth: true
+//                    Layout.fillHeight: true
 
-                    onVisibleChanged: if (visible) requestListController.queryList()
-//                    onRequestSelected: flowButton.press()
-                }
+//                    onVisibleChanged: if (visible) requestListController.queryList()
+////                    onRequestSelected: flowButton.press()
+//                }
             }
         }
 

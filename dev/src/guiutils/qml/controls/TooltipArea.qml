@@ -19,11 +19,11 @@ MouseArea {
     propagateComposedEvents: true
 
 //   onClicked: mouse.accepted = false;
-   onPressed: mouse.accepted = false;
-   onReleased: mouse.accepted = false;
-   onDoubleClicked: mouse.accepted = false;
-   onPositionChanged: mouse.accepted = false;
-   onPressAndHold: mouse.accepted = false;
+    onPressed: mouse.accepted = false;
+    onReleased: mouse.accepted = false;
+    onDoubleClicked: mouse.accepted = false;
+    onPositionChanged: mouse.accepted = false;
+    onPressAndHold: mouse.accepted = false;
 
     onExited: Tooltip.hideText()
     onCanceled: Tooltip.hideText()

@@ -1,6 +1,6 @@
 pragma Singleton
 
-import QtQuick 2.5
+import QtQuick
 
 QtObject {
     readonly property int invalid:  0

@@ -1,11 +1,11 @@
-import QtQuick 2.5
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Window 2.2
-import QtQml 2.2
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+//import QtQuick.Controls.Styles
+import QtQuick.Window
+import QtQml
 
-import guiutils.qml.styles 1.0
+import guiutils.qml.styles
 
 //ToDo: fix the height (slightly above the a basic text field)
 

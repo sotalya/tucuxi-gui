@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls.Private 1.0
+import QtQuick
+//import QtQuick.Controls.Private
 
 // Taken from : https://gist.github.com/webmaster128/d32a278d4037a72dd47a
 // Thanks to : https://www.kullo.net/blog/tooltiparea-the-missing-tooltip-component-of-qt-quick/

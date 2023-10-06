@@ -46,6 +46,8 @@ private:
     PartialRequestListModel *_requestModel;
     SortFilterEntityListProxyModel *_proxyModel;
 
+    void updateModel();
+
 private slots:
     void processListReady(QList<Tucuxi::Gui::Admin::PartialRequest *> list);
 

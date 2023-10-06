@@ -392,7 +392,8 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<ValidationModel>("ezechiel", 1, 0, "ValidationModel", QObject::tr("Cannot instantiate type 'ValidationModel'"));
 */
 //#ifdef CONFIG_CONNECTED
-    qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::PartialRequestListModel>("ezechiel", 1, 0, "PartialRequestListModel", QObject::tr("Cannot instantiate type 'PartialRequestListModel'"));
+    //qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::PartialRequestListModel>("ezechiel", 1, 0, "PartialRequestListModel", QObject::tr("Cannot instantiate type 'PartialRequestListModel'"));
+    qmlRegisterType<Tucuxi::Gui::GuiUtils::PartialRequestListModel>("ezechiel", 1, 0, "PartialRequestListModel");
 //#endif // CONFIG_CONNECTED
 //    qmlRegisterUncreatableType<PracticianListModel>("ezechiel", 1, 0, "PracticianListModel", QObject::tr("Cannot instantiate type 'PracticianListModel'"));
 #ifdef CONFIG_CONNECTED

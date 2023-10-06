@@ -374,8 +374,6 @@ Item {
                             selectedRow: -1
 
                             color: {
-                                console.log(requestView.selectedRow)
-                                console.log(row)
                                 row === requestView.selectedRow ? "#5BBCDD" : "white"
                             }
 

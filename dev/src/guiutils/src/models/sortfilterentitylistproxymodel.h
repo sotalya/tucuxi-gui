@@ -3,6 +3,7 @@
 #ifndef SORTFILTERENTITYLISTPROXYMODEL_H
 #define SORTFILTERENTITYLISTPROXYMODEL_H
 
+#include "qqmlintegration.h"
 #include <QSortFilterProxyModel>
 
 namespace Tucuxi {
@@ -12,6 +13,7 @@ namespace GuiUtils {
 class ProxyModelFilter : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
 
     Q_PROPERTY(int role READ role WRITE setRole NOTIFY roleChanged)
     Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged)

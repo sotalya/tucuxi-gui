@@ -1,7 +1,7 @@
 //@@license@@
 
 #include "sortfilterentitylistproxymodel.h"
-#include "abstractentitylistmodel.h"
+#include <QAbstractTableModel>
 
 #include <QDateTime>
 #include <QQmlEngine>
@@ -120,8 +120,10 @@ SortFilterEntityListProxyModel::~SortFilterEntityListProxyModel()
 
 void SortFilterEntityListProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
-    Q_ASSERT(dynamic_cast<AbstractEntityListModel *>(sourceModel));
-    QSortFilterProxyModel::setSourceModel(sourceModel);
+    if (sourceModel != nullptr){
+        Q_ASSERT(dynamic_cast<QAbstractTableModel *>(sourceModel));
+        QSortFilterProxyModel::setSourceModel(sourceModel);
+    }
 }
 
 void SortFilterEntityListProxyModel::sort(int role, Qt::SortOrder order)

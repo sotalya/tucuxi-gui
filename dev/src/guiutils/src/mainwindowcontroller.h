@@ -28,6 +28,7 @@ namespace GuiUtils {
 class InterpretationController;
 class RequestsController;
 class ValidateDrugDialog;
+class PartialRequestListModel;
 
 class fromGuiTest: public QObject
 {

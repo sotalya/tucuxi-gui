@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import QtQml
 //import QtQuick.Controls.Styles
 
 import guiutils.qml.styles

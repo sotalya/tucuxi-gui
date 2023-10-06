@@ -1,7 +1,7 @@
 <RCC>
-		<qresource prefix="/">
-				<file>qtquickcontrols2.conf</file>
-		</qresource>
+    <qresource prefix="/">
+        <file>qtquickcontrols2.conf</file>
+    </qresource>
     <qresource prefix="/styles">
         <file alias="Style.qml">styles/Style.qml</file>
     </qresource>
@@ -84,5 +84,4 @@
         <file alias="StartupButton.qml">windows/StartupButton.qml</file>
         <file alias="MainWindowGuiTest.qml">windows/MainWindowGuiTest.qml</file>
     </qresource>
-    <qresource prefix="/"/>
 </RCC>

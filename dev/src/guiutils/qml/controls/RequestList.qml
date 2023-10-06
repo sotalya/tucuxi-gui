@@ -6,6 +6,8 @@ import guiutils.qml.controls
 
 import ezechiel 1.0
 
+//TODO -> Fix the request table, as Qt changed the table component
+
 Item {
     id: root
     width: 800

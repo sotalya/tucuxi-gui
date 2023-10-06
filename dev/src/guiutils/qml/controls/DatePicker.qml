@@ -6,6 +6,7 @@ import QtQuick.Window
 import QtQml
 
 import guiutils.qml.styles
+import guiutils.qml.controls
 
 //ToDo: fix the height (slightly above the a basic text field)
 
@@ -188,12 +189,16 @@ Rectangle {
         }
     }
 
-//    TucuCalendar {
-//        id: calendar
-//        onAccepted: {
-//            defaultStyle.date = date;
-//            editingFinished();
-//        }
-//    }
+    TucuCalendar {
+        id: calendar
+
+        month: date.getMonth()
+        year: date.getFullYear()
+
+        onAccepted: function(date){
+            defaultStyle.date = date;
+            editingFinished();
+        }
+    }
 }
 

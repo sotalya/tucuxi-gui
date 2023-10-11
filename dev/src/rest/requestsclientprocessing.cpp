@@ -44,10 +44,10 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
     ReplyListXmlMessage replyListMessage;
     replyListMessage.setData(xmlList.toUtf8());
 
-//    if (!replyListMessage.isValid()) {
-//        EXLOG(QtWarningMsg, NOEZERROR, tr("The content of the requests list is invalid (%1)").arg(replyListMessage.errorString()));
-//        return 0;
-//    }
+    if (!replyListMessage.isValid()) {
+        EXLOG(QtWarningMsg, NOEZERROR, tr("The content of the requests list is invalid (%1)").arg(replyListMessage.errorString()));
+        return 0;
+    }
 
     ReplyListMessageBuilder* _replyListBuilder = new ReplyListMessageBuilder(this);
     _replyListBuilder->setMessage(&replyListMessage);

@@ -7,8 +7,7 @@
 #include "core/utils/logging.h"
 #include "core/errors_core.h"
 
-//#include <QXmlSchema>
-// #include <QRegExp>
+#include <QRegularExpression>
 #include <QFile>
 
 namespace Tucuxi {
@@ -30,20 +29,45 @@ const char *const XmlValidator::Reply_Request = ":/schemas/reply_request.xsd";
 const char *const XmlValidator::Notification  = ":/schemas/notification.xsd";
 const char *const XmlValidator::Acks          = ":/schemas/acks.xsd";
 
-XmlValidator::XmlValidator() /*:
-    _msgHandler(new ValidatorMessageHandler)*/
+XmlValidator::XmlValidator() :
+    _msgHandler(new ValidatorMessageHandler)
 {
 
 }
 
 XmlValidator::~XmlValidator()
 {
-//    if (_msgHandler)
-//        delete _msgHandler;
+    if (_msgHandler)
+        delete _msgHandler;
 }
 
 bool XmlValidator::validate(const QString &xmlFilename, const QString &xsdFilename)
 {
+    XercesDOMParser validator;
+
+    validator.setValidationScheme(XercesDOMParser::Val_Always);
+    validator.setDoNamespaces(true);
+    validator.setDoSchema(true);
+
+    QByteArray ba = xsdFilename.toLocal8Bit();
+    const char *xsdFilenameChar = ba.data();
+
+    validator.setExternalNoNamespaceSchemaLocation(xsdFilenameChar);
+
+    validator.setErrorHandler(_msgHandler);
+
+    ba = xmlFilename.toLocal8Bit();
+    const char *xmlFilenameChar = ba.data();
+
+    try {
+        validator.parse(xmlFilenameChar);
+    }
+    catch (const SAXException& toCatch) {
+        return false;
+    }
+
+    return true;
+
 //    QXmlSchemaValidator validator;
 //    validator.setSchema(initSchema(xsdFilename));
 //    validator.setMessageHandler(_msgHandler);
@@ -55,8 +79,8 @@ bool XmlValidator::validate(const QString &xmlFilename, const QString &xsdFilena
 //    }
 
 //    return validator.validate(&file, QUrl::fromLocalFile(file.fileName()));
-    LOG(QtWarningMsg, NOPOTATO, tr("XML Validator called"));
-    return false;
+//    LOG(QtWarningMsg, NOPOTATO, tr("XML Validator called"));
+//    return false;
 }
 
 bool XmlValidator::validate(QIODevice *xmlDevice, const QString &xsdFilename)
@@ -66,7 +90,7 @@ bool XmlValidator::validate(QIODevice *xmlDevice, const QString &xsdFilename)
 //    validator.setMessageHandler(_msgHandler);
 
 //    return validator.validate(xmlDevice);
-    LOG(QtWarningMsg, NOPOTATO, tr("XML Validator called"));
+    LOG(QtWarningMsg, NOPOTATO, tr("XML QIODevice Validator called"));
     return false;
 }
 
@@ -81,34 +105,31 @@ bool XmlValidator::validate(const QByteArray &xmlData, const QString &xsdFilenam
     return false;
 }
 
-//QtMsgType XmlValidator::errorType() const
-//{
-//    return _msgHandler->type();
-//}
+QtMsgType XmlValidator::errorType() const
+{
+    return _msgHandler->type();
+}
 
 QString XmlValidator::errorMessage() const
 {
-//    QString message = _msgHandler->description();
-//    return message.remove(QRegExp("<[^>]*>"));
-    return QString("XML Validator called");
+    QString message = _msgHandler->description();
+    return message.remove(QRegularExpression("<[^>]*>"));
 }
 
-//QString XmlValidator::errorHtmlMessage() const
-//{
-//    return _msgHandler->description();
-//}
+QString XmlValidator::errorHtmlMessage() const
+{
+    return _msgHandler->description();
+}
 
 int XmlValidator::errorLine() const
 {
-//    return _msgHandler->line();
-    return -9999;
-
+    return _msgHandler->line();
 }
 
-//int XmlValidator::errorColumn() const
-//{
-//    return _msgHandler->column();
-//}
+int XmlValidator::errorColumn() const
+{
+    return _msgHandler->column();
+}
 
 //QXmlSchema XmlValidator::initSchema(const QString &path) const
 //{
@@ -121,39 +142,69 @@ int XmlValidator::errorLine() const
 //    return schema;
 //}
 
-//XmlValidator::ValidatorMessageHandler::ValidatorMessageHandler() : QAbstractMessageHandler(0)
-//{
+XmlValidator::ValidatorMessageHandler::ValidatorMessageHandler():
+    _exeption((const XMLCh *const)"", (const XMLCh *const)"", (const XMLCh *const)"",0,0)
+{
 
-//}
+}
 
-//QString XmlValidator::ValidatorMessageHandler::description() const
-//{
-//    return _description;
-//}
+void XmlValidator::ValidatorMessageHandler::warning(const SAXParseException &exc)
+{
+    _type = QtWarningMsg;
+    _description = QString(XMLString::transcode(exc.getMessage()));
+    _exeption = exc;
 
-//QtMsgType XmlValidator::ValidatorMessageHandler::type() const
-//{
-//    return _type;
-//}
+}
 
-//int XmlValidator::ValidatorMessageHandler::line() const
-//{
-//    return _location.line();
-//}
+void XmlValidator::ValidatorMessageHandler::error(const SAXParseException &exc)
+{
+    _type = QtCriticalMsg;
+    _description = QString(XMLString::transcode(exc.getMessage()));
+    _exeption = exc;
+    throw SAXException(exc);
+}
 
-//int XmlValidator::ValidatorMessageHandler::column() const
-//{
-//    return _location.column();
-//}
+void XmlValidator::ValidatorMessageHandler::fatalError(const SAXParseException &exc)
+{
+    _type = QtFatalMsg;
+    _description = QString(XMLString::transcode(exc.getMessage()));
+    _exeption = exc;
+    throw SAXException(exc);
+}
 
-//void XmlValidator::ValidatorMessageHandler::handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation)
-//{
-//    Q_UNUSED(identifier);
+void XmlValidator::ValidatorMessageHandler::resetErrors()
+{
 
-//    _type = type;
-//    _description = description;
-//    _location = sourceLocation;
-//}
+}
+
+QString XmlValidator::ValidatorMessageHandler::description() const
+{
+    return _description;
+}
+
+QtMsgType XmlValidator::ValidatorMessageHandler::type() const
+{
+    return _type;
+}
+
+int XmlValidator::ValidatorMessageHandler::line() const
+{
+    return _exeption.getLineNumber();
+}
+
+int XmlValidator::ValidatorMessageHandler::column() const
+{
+    return _exeption.getColumnNumber();
+}
+
+void XmlValidator::ValidatorMessageHandler::handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const SAXParseException &sourceExeption)
+{
+    Q_UNUSED(identifier);
+
+    _type = type;
+    _description = description;
+    _exeption = sourceExeption;
+}
 
 } // namespace Core
 } // namespace Gui

@@ -8,10 +8,17 @@
 //#include <QAbstractMessageHandler>
 //#include <QSourceLocation>
 
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/sax/HandlerBase.hpp>
+#include <xercesc/sax/SAXParseException.hpp>
+#include <xercesc/util/PlatformUtils.hpp>
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
 
+using namespace xercesc;
 
 
 class XmlValidator
@@ -49,30 +56,35 @@ public:
     int errorColumn() const;
 
 private:
-//    class ValidatorMessageHandler : public QAbstractMessageHandler
-//    {
+    class ValidatorMessageHandler : public ErrorHandler
+    {
 
-//    public:
-//        ValidatorMessageHandler();
+    public:
+        ValidatorMessageHandler();
 
-//        QString description() const;
-//        QtMsgType type() const;
+        virtual void warning(const SAXParseException& exc) override;
+        virtual void error(const SAXParseException& exc) override;
+        virtual void fatalError(const SAXParseException& exc) override;
+        virtual void resetErrors() override;
 
-//        int line() const;
-//        int column() const;
+        QString description() const;
+        QtMsgType type() const;
 
-//    protected:
-//        virtual void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation);
+        int line() const;
+        int column() const;
 
-//    private:
-//        QtMsgType _type;
-//        QString _description;
-//        QSourceLocation _location;
-//    };
+    protected:
+        virtual void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const SAXParseException &sourceExeption);
 
-//    QXmlSchema initSchema(const QString &path) const;
+    private:
+        QtMsgType _type;
+        QString _description;
+        SAXParseException _exeption;
+    };
 
-//    ValidatorMessageHandler *_msgHandler;
+    //QXmlSchema initSchema(const QString &path) const;
+
+    ValidatorMessageHandler *_msgHandler;
 };
 
 } // namespace Core

@@ -26,6 +26,8 @@ for(dep, DEPENDENCIES) {
     PRE_TARGETDEPS += $${LIBNAME}
 }
 
+LIBS += C:\xerces-c\lib\xerces-c_3D.lib
+
 #Translation configuration
 include(../../translation.pri)
 

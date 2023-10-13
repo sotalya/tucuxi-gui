@@ -187,3 +187,10 @@ unix{
             #/usr/lib/x86_64-linux-gnu/libdl.so
     }
 }
+
+win32{
+    LIBS += C:\xerces-c\lib\xerces-c_3D.lib
+}
+unix{
+    LIBS+=/home/ythoma/Documents/xerces-c-3.2.4/src/.libs/libxerces-c.a
+}

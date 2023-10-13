@@ -4,15 +4,14 @@
 #define XMLVALIDATOR_H
 
 #include <QCoreApplication>
-//#include <QXmlSchemaValidator>
-//#include <QAbstractMessageHandler>
-//#include <QSourceLocation>
+#include <QtXml>
 
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/sax/SAXParseException.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/framework/MemBufInputSource.hpp>
 
 namespace Tucuxi {
 namespace Gui {
@@ -45,7 +44,6 @@ public:
     ~XmlValidator();
 
     bool validate(const QString &xmlFilename, const QString &xsdFilename);
-    bool validate(QIODevice *xmlDevice, const QString &xsdFilename);
     bool validate(const QByteArray &xmlData, const QString &xsdFilename);
 
     QtMsgType errorType() const;
@@ -82,7 +80,7 @@ private:
         SAXParseException _exeption;
     };
 
-    //QXmlSchema initSchema(const QString &path) const;
+    void initTempSchemaFolder(const QString &path, const QTemporaryDir &tmpDir) const;
 
     ValidatorMessageHandler *_msgHandler;
 };

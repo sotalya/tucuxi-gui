@@ -189,7 +189,12 @@ unix{
 }
 
 win32{
-    LIBS += C:\xerces-c\lib\xerces-c_3D.lib
+    CONFIG(debug, debug|release) {
+        LIBS += C:\xerces-c\lib\xerces-c_3D.lib
+    }
+    CONFIG(release, debug|release) {
+        LIBS += C:\xerces-c\lib\xerces-c_3.lib
+    }
 }
 unix{
     LIBS+=/home/ythoma/Documents/xerces-c-3.2.4/src/.libs/libxerces-c.a

@@ -1,4 +1,4 @@
-
+@echo off
 REM Architecture is 32 or 64 bits
 set "ARCH=%1%"
 
@@ -7,7 +7,7 @@ set "TARGET=%2%"
 
 set PRJ_DIR=%FolderPath%\tucuxi-gui\dev
 set SRC_DIR=%PRJ_DIR%\src
-set DIST_DIR=%PRJ_DIR%\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_%ARCH%bit-%TARGET%\dist\
+set DIST_DIR=%PRJ_DIR%\build-ezechiel-tucucore-Desktop_Qt_6_5_2_MSVC2019_%ARCH%bit-%TARGET%\dist\
 set DEPLOY_DIR=%PRJ_DIR%\Deploy
 set INSTALL_DIR=C:\Tucuxi
 
@@ -15,7 +15,7 @@ set ZIP_EXE="c:\Program Files\7-Zip\7z.exe"
 
 set BOTANT_DIR=C:\botan\botan2-%ARCH%\lib
 set VISUAL_STUDIO_DIR=C:\Program Files\Microsoft Visual Studio\2022\Community
-set QT_DIR=C:\Qt\5.15.2\msvc2019_%ARCH%
+set QT_DIR=C:\Qt\6.5.2\msvc2019_%ARCH%
 set NSIS_DIR=C:\Program Files (x86)\NSIS
 
 REM Create the deployment structure
@@ -54,9 +54,9 @@ copy %SRC_DIR%\guiutils\reports\*.* %DEPLOY_DIR%\%ARCH%\%TARGET%\reports\
 REM Copy Visual C++ librairies
 set VCREDISTSUBDIR=x64
 IF %ARCH%==32 set VCREDISTSUBDIR=x86
-copy "%VISUAL_STUDIO_DIR%\VC\Redist\MSVC\14.38.32919\%VCREDISTSUBDIR%\Microsoft.VC143.CRT\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
-copy "%VISUAL_STUDIO_DIR%\VC\Redist\MSVC\14.38.32919\%VCREDISTSUBDIR%\Microsoft.VC143.CXXAMP\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
-copy "%VISUAL_STUDIO_DIR%\VC\Redist\MSVC\14.38.32919\%VCREDISTSUBDIR%\Microsoft.VC143.OpenMP\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
+copy "%VISUAL_STUDIO_DIR%\VC\Redist\MSVC\14.36.32532\%VCREDISTSUBDIR%\Microsoft.VC143.CRT\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
+copy "%VISUAL_STUDIO_DIR%\VC\Redist\MSVC\14.36.32532\%VCREDISTSUBDIR%\Microsoft.VC143.CXXAMP\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
+copy "%VISUAL_STUDIO_DIR%\VC\Redist\MSVC\14.36.32532\%VCREDISTSUBDIR%\Microsoft.VC143.OpenMP\*.dll" %DEPLOY_DIR%\%ARCH%\%TARGET%
 
 REM Copy external libraries
 copy %BOTANT_DIR%\botan.dll %DEPLOY_DIR%\%ARCH%\%TARGET%

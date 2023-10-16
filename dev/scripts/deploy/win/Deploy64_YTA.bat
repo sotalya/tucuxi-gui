@@ -24,7 +24,7 @@ goto :continue
 @echo on
 
 call Deploy64.bat
-call Deploy64-Demo
+call Deploy64-Demo.bat
 call deploy.bat 64 Release-extreport
 call deploy.bat 64 Release-extreport-nolicense
 copy %FolderPath%\tucuxi-gui\dev\Setup-Release64.exe %FolderPath%\tucuxi-gui\build\Setup-Release64.exe

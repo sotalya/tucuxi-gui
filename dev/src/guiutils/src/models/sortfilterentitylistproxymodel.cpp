@@ -125,7 +125,7 @@ SortFilterEntityListProxyModel::~SortFilterEntityListProxyModel()
 void SortFilterEntityListProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     if (sourceModel != nullptr){
-        Q_ASSERT(dynamic_cast<QAbstractTableModel *>(sourceModel));
+        Q_ASSERT(dynamic_cast<QAbstractItemModel *>(sourceModel));
         QSortFilterProxyModel::setSourceModel(sourceModel);
     }
 }
@@ -188,10 +188,12 @@ void SortFilterEntityListProxyModel::setFilter(ProxyModelFilter *filter)
 
 bool SortFilterEntityListProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-    Q_UNUSED(source_parent);
+    //Q_UNUSED(source_parent);
+
+
 
     Q_ASSERT(!source_parent.isValid());
-    Q_ASSERT(sourceModel()->columnCount() == 1);
+    Q_ASSERT(sourceModel()->columnCount() == 7);
 
     QModelIndex index = sourceModel()->index(source_row, 0);
     Q_ASSERT(index.isValid());

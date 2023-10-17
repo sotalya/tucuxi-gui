@@ -101,7 +101,7 @@ Item {
                             anchors.fill: parent
                             onClicked: {
                                 requestListController.queryList()
-                                requestView.model = requestListModel
+                                requestView.model = requestListController.model()
                             }
                         }
                     }
@@ -355,7 +355,7 @@ Item {
                 property real cellSize: (requestView.width / 14)
                 property var columnWidths: [cellSize, cellSize*3, cellSize*2, cellSize*2, cellSize*2, cellSize*3, cellSize-7]
 
-                model: PartialRequestListModel {}
+                model: requestListController.model()
 
                 columnWidthProvider : function (column) { return columnWidths[column] }
 

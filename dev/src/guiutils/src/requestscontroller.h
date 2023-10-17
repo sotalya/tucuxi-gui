@@ -32,7 +32,7 @@ public:
     explicit RequestsController(QObject *parent = nullptr);
     virtual ~RequestsController() Q_DECL_OVERRIDE;
 
-    virtual QAbstractItemModel *model() const;
+    Q_INVOKABLE virtual QAbstractItemModel *model();
 
     void setClient(Tucuxi::Gui::Admin::RequestsClient *client);
 

@@ -59,8 +59,9 @@ void RequestsController::queryList(QDateTime from,
 }
 
 
-QAbstractItemModel *RequestsController::model() const
+QAbstractItemModel *RequestsController::model()
 {
+    _requestModel = PartialRequestListModel::currentModel();
     _proxyModel->setSourceModel(_requestModel);
     return _proxyModel;
 }

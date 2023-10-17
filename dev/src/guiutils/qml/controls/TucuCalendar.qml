@@ -25,7 +25,7 @@ Window {
     signal accepted(var date)
 
     function open(date) {
-        console.log(date)
+        //console.log(date)
         datePicker.selectedTime = date.getTime()
         showNormal()
     }

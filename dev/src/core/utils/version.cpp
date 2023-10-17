@@ -2,7 +2,7 @@
 
 #include "core/utils/version.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringList>
 
 namespace Tucuxi {
@@ -47,16 +47,16 @@ bool Version::fromString(QString str)
    QString s = str.simplified();
 
    //Create the regex
-   QRegExp reg ("^([0-9]+)\\.([0-9]+)\\.?([0-9]*)$");
+   QRegularExpression reg ("^([0-9]+)\\.([0-9]+)\\.?([0-9]*)$");
 
    //Check the string
-   if ( ! reg.exactMatch(s))
+   if ( ! reg.match(s).hasMatch())
       return false;
 
    //Retrieve the numbers
-   reg.indexIn(s);
+   QRegularExpressionMatch match = reg.match(s);
    int cnt = -1; //Avoid the first string (entire match)
-   foreach(QString value, reg.capturedTexts()) {
+   foreach(QString value, match.capturedTexts()) {
       if (cnt >= 0)
          _versions[cnt] = value.toUInt();
       cnt++;

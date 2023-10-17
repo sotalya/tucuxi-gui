@@ -46,9 +46,9 @@ public:
     Q_INVOKABLE void setOperation(Operation operation);
 
 public slots:
-    void setFixedString(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    //void setFixedString(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive);
     void setRegExp(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive);
-    void setWildcard(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    //void setWildcard(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 
 signals:
     void roleChanged(int role);

@@ -5,14 +5,14 @@
 
 #include <QDateTime>
 #include <QQmlEngine>
-#include <QRegExp>
+#include <QRegularExpression>
 
 using namespace Tucuxi::Gui::GuiUtils;
 
 ProxyModelFilter::ProxyModelFilter(QObject *parent) :
     QObject(parent),
     _role(-1),
-    _value(QRegExp()),
+    _value(QRegularExpression()),
     _operation(Equal)
 {
 
@@ -73,20 +73,24 @@ void ProxyModelFilter::setOperation(Operation operation)
     emit operationChanged(operation);
 }
 
-void ProxyModelFilter::setFixedString(const QString &pattern, Qt::CaseSensitivity cs)
-{
-    setValue(QRegExp(pattern, cs, QRegExp::FixedString));
-}
+//void ProxyModelFilter::setFixedString(const QString &pattern, Qt::CaseSensitivity cs)
+//{
+//    setValue(QRegExp(pattern, cs, QRegExp::FixedString));
+//}
 
 void ProxyModelFilter::setRegExp(const QString &pattern, Qt::CaseSensitivity cs)
 {
-    setValue(QRegExp(pattern, cs, QRegExp::RegExp));
+    QRegularExpression reg;
+    reg.setPattern(pattern);
+    if (cs == Qt::CaseInsensitive)
+        reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+    setValue(reg);
 }
 
-void ProxyModelFilter::setWildcard(const QString &pattern, Qt::CaseSensitivity cs)
-{
-    setValue(QRegExp(pattern, cs, QRegExp::Wildcard));
-}
+//void ProxyModelFilter::setWildcard(const QString &pattern, Qt::CaseSensitivity cs)
+//{
+//    setValue(QRegExp(pattern, cs, QRegExp::Wildcard));
+//}
 
 bool ProxyModelFilter::accept(const QModelIndex &index) const
 {

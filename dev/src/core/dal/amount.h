@@ -4,7 +4,7 @@
 #define AMOUNT_H
 
 #include "core/utils/units.h"
-#include <QRegExp>
+#include <QRegularExpression>
 
 namespace Tucuxi {
 namespace Gui {

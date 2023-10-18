@@ -72,7 +72,7 @@ DEL %DEPLOY_DIR%\Tucuxi-%ARCH%-%TARGET%.zip
 %ZIP_EXE% a -r %PRJ_DIR%\Tucuxi-%ARCH%-%TARGET%.zip %DEPLOY_DIR%\%ARCH%\%TARGET%\*
 
 REM Create setup.exe
-"%NSIS_DIR%\makensis.exe" /DARCH=%ARCH% /DTARGET=%TARGET% %PRJ_DIR%\Tucuxi.nsi 
+"%NSIS_DIR%\makensis.exe" /DARCH=%ARCH% /DTARGET=%TARGET% Tucuxi.nsi 
 
 REM Run setup.exe!
 REM rd /s /q %INSTALL_DIR%

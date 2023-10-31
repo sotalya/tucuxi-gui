@@ -40,7 +40,7 @@ TEST(ReportTest, TestCefepime1)
     srv->waitPeriod(5);
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
-    srv->waitPeriod();
+    srv->waitPeriod(20);
 /*
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
@@ -70,6 +70,7 @@ TEST(ReportTest, TestCefepime1)
 
     srv->waitPeriod(5);
     */
+
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
 
 
@@ -139,8 +140,6 @@ TEST(ReportTest, TestImatinib1)
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
 
-
-
     srv->waitPeriod(10);
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
@@ -175,6 +174,7 @@ TEST(ReportTest, TestImatinibMeasures)
     srv->waitPeriod(5);
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
+    srv->waitPeriod();
     srv->mouseClick(spix::ItemPath("mainWindow/measuresView/addMeasure"));
     srv->waitPeriod();
 
@@ -183,8 +183,10 @@ TEST(ReportTest, TestImatinibMeasures)
 //    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
 
     srv->synchronize();
-    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueInput");
-    item->setProperty("value", 100000.0);
+    auto idItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleIdField");
+    idItem->setProperty("text", "Sample 1");
+    auto valueItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueEntry");
+    valueItem->setProperty("text", 100000.0);
     srv->waitPeriod(5);
 
     srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
@@ -200,15 +202,17 @@ TEST(ReportTest, TestImatinibMeasures)
 
     srv->synchronize();
     {
-        auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueInput");
-        item->setProperty("value", 10000.0);
+        auto idItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleIdField");
+        idItem->setProperty("text", "Sample 1");
+        auto valueItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueEntry");
+        valueItem->setProperty("text", 100000.0);
     }
     srv->waitPeriod(5);
 
     srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
-    srv->waitPeriod();
+    srv->waitPeriod(20);
 /*
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
@@ -238,9 +242,8 @@ TEST(ReportTest, TestImatinibMeasures)
 
     srv->waitPeriod(5);
     */
+
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
-
-
 
     srv->waitPeriod(10);
 
@@ -300,7 +303,7 @@ void testReportDrugModel(std::string drugName)
     srv->waitPeriod(5);
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
-    srv->waitPeriod();
+    srv->waitPeriod(20);
     /*
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
@@ -331,8 +334,6 @@ void testReportDrugModel(std::string drugName)
     srv->waitPeriod(5);
     */
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
-
-
 
     srv->waitPeriod(10);
 
@@ -421,7 +422,7 @@ protected:
 //        srv->waitPeriod(5);
 
         srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
-        srv->waitPeriod();
+        srv->waitPeriod(10);
         /*
         srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
         for(int i = 0; i < 10; i++) {

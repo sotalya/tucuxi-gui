@@ -13,7 +13,12 @@ QT -= gui
 
 DEPENDPATH  += ./ interfaces utils parsers dal
 
-INCLUDEPATH += ..
+INCLUDEPATH +=	.. \
+                C:\xerces-c\include
+
+!win32 {
+    QMAKE_CXXFLAGS += -isystem C:\xerces-c\include
+}
 
 HEADERS	+= \
     ../current_version.h \

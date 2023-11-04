@@ -5,7 +5,6 @@
 
 #include <QObject>
 #include <QtWebSockets/QtWebSockets>
-#include <QtWebEngineCore/QtWebEngineCoreVersion.h>
 #include <QtWebChannel/QWebChannelAbstractTransport>
 
 namespace Tucuxi {

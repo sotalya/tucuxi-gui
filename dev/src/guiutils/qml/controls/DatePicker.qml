@@ -19,11 +19,20 @@ Rectangle {
     Layout.minimumWidth: 150
 
     property bool isOk: true
+    property bool dateFormatOk: true
     property var doValidation: function() {return true;}
     function validate()
     {
-        isOk = doValidation();
+        isOk = doValidation() && dateFormatOk;
         return isOk;
+    }
+
+    function setDate(theDate)
+    {
+        date = theDate;
+        dateFormatOk = true;
+        isOk = true;
+        wholeDate.color = "black";
     }
 
     property var date: new Date()
@@ -116,9 +125,11 @@ Rectangle {
                 parent.date = theDate;
                 parent.editingFinished();
                 color = "black";
+                dateFormatOk = true;
             }
             else {
                 color = "#FF0000";
+                dateFormatOk = false;
             }
         }
 

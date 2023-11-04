@@ -43,8 +43,8 @@ DialogBase {
 
         // Set basic info
         nameText.text = name
-        dateInput.date = date
-        timeInput.date = date
+        dateInput.setDate(date)
+        timeInput.setDate(date)
         descriptionText.text = description === "" ? "N/A" : description
 
         // Handle different types of values

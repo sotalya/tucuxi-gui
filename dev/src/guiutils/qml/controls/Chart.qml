@@ -659,7 +659,7 @@ Canvas {
 
         }
 
-        onReleased: {
+        onReleased: (mouse)=> {
             if (mouse.button  == Qt.LeftButton) {
                 closestPred.selected = !closestPred.selected && closestPred.highlight;
                 overlayAnnotations.requestPaint();
@@ -671,7 +671,7 @@ Canvas {
             objectName: "graphSettingsDialog"
         }
 
-        onPressed: {
+        onPressed: (mouse)=> {
             if (mouse.button  == Qt.RightButton) {
                 // TODO (JRP) : The popup() call won't work on current Windows version
                 // can be enabled again in future when ok, to replace the popup manual positioning
@@ -691,7 +691,7 @@ Canvas {
 //            canvas.requestPaint();
         }
 
-        onPositionChanged: {
+        onPositionChanged: (mouse)=> {
             if (pressed && containsMouse) {
                 var dx = mouse.x - pressX
                 canvas.isOffsetXEnabled ? shift(dx) : 0;
@@ -707,7 +707,7 @@ Canvas {
             }
         }
 
-        onWheel: {
+        onWheel: (wheel)=> {
             if (wheel.modifiers & Qt.ShiftModifier) {
                 zoomY(wheel.angleDelta.y/120);
                 rePaint();

@@ -92,13 +92,13 @@ DialogBase {
         appliedTimeInput.setDate(appliedDate)
         appliedTimeInput.doValidation = validateDates
 
-        appliedDateInput.date = appliedDate
+        appliedDateInput.setDate(appliedDate)
         appliedDateInput.doValidation = validateDates
 
         stoppedTimeInput.setDate(endDate)
         stoppedTimeInput.doValidation = validateDates
 
-        stoppedDateInput.date = endDate
+        stoppedDateInput.setDate(endDate)
         stoppedDateInput.doValidation = validateDates
 
         if (disableAtSteadyState) {
@@ -146,7 +146,7 @@ DialogBase {
     function updateEndDate() {
         if (stdTreatment.isFixedDuration) {
             var newEndDate = calculateEndDate();
-            stoppedDateInput.date = newEndDate;
+            stoppedDateInput.setDate(newEndDate);
             stoppedTimeInput.setDate(newEndDate);
         }
     }

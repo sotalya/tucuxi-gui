@@ -53,9 +53,9 @@ DialogBase {
         }
 
         appliedTimeInput.setDate(appliedDate)
-        appliedDateInput.date = appliedDate
+        appliedDateInput.setDate(appliedDate)
         stoppedTimeInput.setDate(endDate)
-        stoppedDateInput.date = endDate
+        stoppedDateInput.setDate(endDate)
 
         appliedTimeInput.doValidation = validateStartDate
         appliedDateInput.doValidation = validateStartDate

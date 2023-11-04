@@ -49,13 +49,13 @@ DialogBase {
             return true;
         }
 
-        sampleDateInput.date = sampleDate
+        sampleDateInput.setDate(sampleDate)
         sampleDateInput.doValidation = validateDates
 
         sampleTimeInput.setDate(sampleDate)
         sampleTimeInput.doValidation = validateDates
 
-        arrivalDateInput.date = arrivalDate
+        arrivalDateInput.setDate(arrivalDate)
         arrivalDateInput.doValidation = validateDates
 
         arrivalTimeInput.setDate(arrivalDate)

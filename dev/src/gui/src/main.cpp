@@ -101,6 +101,7 @@
 #include "guiutils/src/startupscreen.h"
 #include "guiutils/src/startupwindow.h"
 
+#include "processingtucucore/src/tqflogger.h"
 
 #include "core/utils/logging.h"
 
@@ -590,7 +591,7 @@ void parseOptions()
                                     "logrest",
                                     QApplication::applicationDirPath());
     const QCommandLineOption logMessagesInFileOption("logfile",
-                                    QCoreApplication::translate("main", "Save applicaiotn's log messages into a file"));
+                                    QCoreApplication::translate("main", "Save application's log messages into a file"));
     const QCommandLineOption certificateFileOption(QStringList() << "certificate",
                                     QCoreApplication::translate("main", "Set the file containing the SSL certificate."),
                                     "certificate",
@@ -599,6 +600,10 @@ void parseOptions()
                                              QCoreApplication::translate("main", "Drug files path."),
                                              "drugspath",
                                              CORE->path(Tucuxi::Gui::Core::Core::Drugs2));
+    const QCommandLineOption tqfLoggerOption(QStringList() << "logtqf",
+                                    QCoreApplication::translate("main", "Sets a folder to log the computing requests files."),
+                                    "logtqf",
+                                    "log");
 
     parser.addOption(basePathOption);
     const QCommandLineOption helpOption = parser.addHelpOption();
@@ -612,6 +617,7 @@ void parseOptions()
     parser.addOption(logMessagesInFileOption);
     parser.addOption(certificateFileOption);
     parser.addOption(drugsPathOption);
+    parser.addOption(tqfLoggerOption);
     const QCommandLineOption versionOption = parser.addVersionOption();
 
     parser.parse(QCoreApplication::arguments());
@@ -631,6 +637,10 @@ void parseOptions()
 #ifndef CONFIG_DEMO
         CORE->setPath(Tucuxi::Gui::Core::Core::Drugs2, parser.value(drugsPathOption));
 #endif // CONFIG_DEMO
+    }
+    if (parser.isSet(tqfLoggerOption)) {
+        TqfLogger::getInstance()->setEnable(true);
+        TqfLogger::getInstance()->setPath(parser.value(tqfLoggerOption));
     }
 
     //ToDo: set the standalone option in the settings, and disable request list

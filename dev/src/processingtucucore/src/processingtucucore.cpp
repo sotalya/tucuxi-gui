@@ -7,6 +7,7 @@
 
 #include "guitotucucoretranslator.h"
 #include "tucucoretoguitranslator.h"
+#include "tqflogger.h"
 
 // #include "errors_processing.h"
 #include "core/core.h"
@@ -106,7 +107,6 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
         )
 {
 
-
     GuiToTucucoreTranslator translator;
 
     Tucuxi::Core::DrugModel *drugModel = translator.buildDrugModel(analysis->getDrugModel());
@@ -190,10 +190,12 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
         Tucuxi::Core::ComputingRequest request1(std::to_string(m_requestID), *drugModel, *drugTreatment, std::move(computingTraitAtMeasure));
         std::unique_ptr<Tucuxi::Core::ComputingResponse> response1 = std::make_unique<Tucuxi::Core::ComputingResponse>(std::to_string(m_requestID));
 
+        TqfLogger::getInstance()->log(request);
         Tucuxi::Core::ComputingStatus res = iCore->compute(request, response);
 
         checkCovariate(startDate, *drugTreatment, *drugModel, prediction, endDate);
 
+        TqfLogger::getInstance()->log(request1);
         Tucuxi::Core::ComputingStatus res1 = iCore->compute(request1, response1);
         if ((res == Tucuxi::Core::ComputingStatus::Ok) && (res1 == Tucuxi::Core::ComputingStatus::Ok)) {
 
@@ -403,6 +405,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
         if (traits.clearCache) {
             cache->clear();
         }
+        TqfLogger::getInstance()->log(request);
         Tucuxi::Core::ComputingStatus res = cache->compute(request, response);
 //        Tucuxi::Core::ComputingStatus res = iCore->compute(request, response);
 
@@ -560,6 +563,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
     std::unique_ptr<Tucuxi::Core::ComputingResponse> response = std::make_unique<Tucuxi::Core::ComputingResponse>(requestResponseId);
 
     Tucuxi::Core::ComputingStatus result;
+    TqfLogger::getInstance()->log(request);
     result = iCore->compute(request, response);
 
     checkCovariate(start, *drugTreatment, *drugModel, prediction, end);

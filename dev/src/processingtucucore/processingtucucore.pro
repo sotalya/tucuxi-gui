@@ -46,6 +46,7 @@ HEADERS	+= \
     src/guitotucucoretranslator.h \
     src/processingtucucore.h \
     src/drugs2manager.h \
+    src/tqflogger.h \
     src/tucucoretoguitranslator.h
 
 #CODECFORTR      += UTF-8
@@ -58,6 +59,7 @@ SOURCES += \
     src/guitotucucoretranslator.cpp \
     src/processingtucucore.cpp \
     src/drugs2manager.cpp \
+    src/tqflogger.cpp \
     src/tucucoretoguitranslator.cpp
 
 SOURCES += $${TUCUXIROOTDIR}/libs/spdlog-master-20170622/include/spdlog/fmt/bundled/format.cc

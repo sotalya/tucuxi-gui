@@ -121,7 +121,7 @@ static {
 #as well when building in static mode, since qmake prefixes the produced static libraries anyway)
 !win32 : LIBPRE=lib
 
-TUCUXIROOTDIR = $$(TUCUXI_ROOT)
+TUCUXIROOTDIR = $$PWD/../libs/tucuxi-core
 TUCUXIDRUGSDIR = $$(TUCUXI_DRUGS_DIR)
 
 include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)

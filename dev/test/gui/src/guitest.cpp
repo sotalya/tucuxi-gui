@@ -192,6 +192,7 @@ void SpixGTest::mouseClickIfPathOk(std::string clickPath)
 void SpixGTest::findObjectAndSetValue(QString objectName, int propertyInput)
 {
     // retrieves object by name and puts it into an item to set or get its properties (value)
+    srv->synchronize();
     auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>(objectName);
     if (item != (0x0))
         item->setProperty("value", propertyInput);
@@ -374,9 +375,11 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
     srv->waitPeriod(waitTime1);
 
     findObjectAndSetValue("doseSpinBox", dosageData1.dosage);
+    srv->waitPeriod(waitTime1);
 
     // fills in Interval value, in [h / 100]
     findObjectAndSetValue("intervalSpinBox", dosageData1.interval);
+    srv->waitPeriod(waitTime1);
 
     //srv->synchronize();
     auto routeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("routeText");
@@ -398,25 +401,28 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
 
     QVariant steadyStateValue = getSteadyStateDosage();
 
+    srv->waitPeriod(waitTime1);
+    srv->synchronize();
     auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("LastDoseOrFromDateInput");
-    dateItem->setProperty("date", dosageData1.dateTimeDos1.date());
-
-    auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("LastDoseOrFromTimeInput");
-    timeItem->setProperty("date", dosageData1.dateTimeDos1.time());
+    dateItem->setProperty("date", dosageData1.dateTimeDos1);
 
     srv->waitPeriod(waitTime1);
+    srv->synchronize();
+    auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("LastDoseOrFromTimeInput");
+    timeItem->setProperty("date", dosageData1.dateTimeDos1);
 
     if (steadyStateValue == false)
     {
 //        qInfo() << "At steady state? NO";
-
+        srv->waitPeriod(waitTime1);
+        srv->synchronize();
         auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("stoppedDateInput");
-        dateItem->setProperty("date", dosageData1.dateTimeDos2.date());
-
-        auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("stoppedTimeInput");
-        timeItem->setProperty("date", dosageData1.dateTimeDos2.time());
+        dateItem->setProperty("date", dosageData1.dateTimeDos2);
 
         srv->waitPeriod(waitTime1);
+        srv->synchronize();
+        auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("stoppedTimeInput");
+        timeItem->setProperty("date", dosageData1.dateTimeDos2);
     }
 
 //    else qInfo() << "At steady state? YES";

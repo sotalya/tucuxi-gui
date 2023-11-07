@@ -46,6 +46,12 @@ config_externalreport {
     DEFINES += CONFIG_EXTERNALREPORT
 }
 
+INCLUDEPATH +=	C:\xerces-c\include
+
+!win32 {
+    QMAKE_CXXFLAGS += -isystem C:\xerces-c\include
+}
+
 # Common settings for the whole project
 # TODO -> Check on other OS
 # qt taken out of the configs because otherwise it didnt compile on windows

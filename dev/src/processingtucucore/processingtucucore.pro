@@ -62,8 +62,6 @@ SOURCES += \
     src/tqflogger.cpp \
     src/tucucoretoguitranslator.cpp
 
-SOURCES += $${TUCUXIROOTDIR}/libs/spdlog-master-20170622/include/spdlog/fmt/bundled/format.cc
-
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
 DEPENDENCIES = tucuxi-gui-core
 for(dep, DEPENDENCIES) {

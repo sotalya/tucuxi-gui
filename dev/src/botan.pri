@@ -46,7 +46,11 @@ win32 {
 #Paths and linker flags for Linux/MacOS
 !android {
     unix {
-        exists($${TUCUXIROOTDIR}/bin/botan.a) {
+        exists($${TUCUXIROOTDIR}/libs/botan) {
+            LIBS += $${TUCUXIROOTDIR}/libs/botan/libbotan-2.a
+            INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan/build/include/
+        }
+        else:exists($${TUCUXIROOTDIR}/bin/botan.a) {
             LIBS += $${TUCUXIROOTDIR}/bin/botan.a
             INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan/build/include/
         }

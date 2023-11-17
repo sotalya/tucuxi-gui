@@ -46,7 +46,12 @@ config_externalreport {
     DEFINES += CONFIG_EXTERNALREPORT
 }
 
+win32 {
 INCLUDEPATH +=	C:\xerces-c\include
+}
+unix {
+INCLUDEPATH+=$$PWD/../libs/xerces-c/src
+}
 
 !win32 {
     QMAKE_CXXFLAGS += -isystem C:\xerces-c\include

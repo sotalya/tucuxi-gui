@@ -1,5 +1,7 @@
 #include "apputils/src/appcore.h"
+#ifndef CONFIG_NOBOTAN
 #include "apputils/src/securitymanager.h"
+#endif // CONFIG_NOBOTAN
 #include "apputils/src/drugmanager.h"
 
 #include <QCoreApplication>

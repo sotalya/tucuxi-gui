@@ -10,7 +10,6 @@ win32 {
     include ($${TUCUXIROOTDIR}/make/qtcreator/tucucore.pri)
     include ($${TUCUXIROOTDIR}/make/qtcreator/tucucrypto.pri)
     include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
-    include ($${TUCUXIROOTDIR}/make/qtcreator/tinyjs.pri)
     config_sign {
         include ($${TUCUXIROOTDIR}/make/qtcreator/tucusign.pri)
     }

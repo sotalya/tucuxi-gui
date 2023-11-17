@@ -197,5 +197,5 @@ win32{
     }
 }
 unix{
-    LIBS+=/home/ythoma/Documents/xerces-c-3.2.4/src/.libs/libxerces-c.a
+    LIBS+=$$PWD/../../libs/xerces-c/src/.libs/libxerces-c.a
 }

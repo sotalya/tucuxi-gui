@@ -4,19 +4,8 @@ TARGET      = tucuxi-gui-admin
 TEMPLATE    = lib
 DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 
-!config_tucucore_lib {
-unix {
-#    include($${TUCUXIROOTDIR}/make/qtcreator/general.pri)
-}
-win32 {
-    include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
-}
-    include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
-    include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
-}
-else {
-    include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
-}
+include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
+include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
 
 # To solve issues with namespaces
 # QMAKE_CXXFLAGS += -fpermissive

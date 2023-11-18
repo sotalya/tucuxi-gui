@@ -12,6 +12,8 @@ namespace FlatRequest {
 
 class FlatRequestsClientProcessing : public Tucuxi::Gui::Admin::RequestsClient
 {
+    Q_OBJECT
+
 public:
     FlatRequestsClientProcessing(QObject *parent);
 
@@ -25,6 +27,8 @@ protected:
 
 class SimpleBuilder : QObject
 {
+    Q_OBJECT
+
 public:
 
     Tucuxi::Gui::Admin::InterpretationRequest* buildRequest(const QString &xmlRequest);

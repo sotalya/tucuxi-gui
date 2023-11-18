@@ -165,22 +165,10 @@ FORMS += \
     src/restconfigdialog.ui
 
 win32{
-LIBS += Iphlpapi.lib
-
-    config_tucucore_lib {
-       LIBS += $${TUCUXIROOTDIR}\make\visualstudio\tucucommon\x64\Debug\TucuCommon\TucuCommon.lib \
-        $${TUCUXIROOTDIR}\make\visualstudio\tucucore\x64\Debug\TucuCore\TucuCore.lib
-    }
-
+    LIBS += Iphlpapi.lib
 }
 
 unix{
-    config_tucucore_lib {
-        LIBS += $${TUCUXIROOTDIR}/bin/tucucore.a \
-                $${TUCUXIROOTDIR}/bin/tucucommon.a
-        LIBS += \
-            $${TUCUXIROOTDIR}/bin/tinyjs.a
-    }
 
     !macx {
         LIBS += \

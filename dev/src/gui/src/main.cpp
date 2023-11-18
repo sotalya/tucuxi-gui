@@ -96,7 +96,6 @@
 #include "guiutils/src/appglobals.h"
 
 #include "rest/restlogger.h"
-#include "rest/restrequestsclient.h"
 
 #include "guiutils/src/startupscreen.h"
 #include "guiutils/src/startupwindow.h"

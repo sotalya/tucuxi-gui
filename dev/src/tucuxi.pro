@@ -35,7 +35,7 @@ gui.depends                  = core apputils admin rest guiutils
 cli.depends                  = core apputils admin cliutils rest
 cliutils.depends             = core apputils admin rest
 }
-!config_rest {
+else {
 guiutils.depends             = core apputils admin
 gui.depends                  = core apputils admin guiutils flatrequests
 }

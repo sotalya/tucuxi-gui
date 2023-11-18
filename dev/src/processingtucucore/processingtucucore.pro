@@ -1,21 +1,16 @@
 include (../tucuxi.pri)
 
-!config_tucucore_lib {
 unix {
     include($${TUCUXIROOTDIR}/make/qtcreator/general.pri)
 }
 win32 {
     include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
 }
-    include ($${TUCUXIROOTDIR}/make/qtcreator/tucucore.pri)
-    include ($${TUCUXIROOTDIR}/make/qtcreator/tucucrypto.pri)
-    include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
-    config_sign {
-        include ($${TUCUXIROOTDIR}/make/qtcreator/tucusign.pri)
-    }
-}
-else {
-    include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
+include ($${TUCUXIROOTDIR}/make/qtcreator/tucucore.pri)
+include ($${TUCUXIROOTDIR}/make/qtcreator/tucucrypto.pri)
+include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
+config_sign {
+    include ($${TUCUXIROOTDIR}/make/qtcreator/tucusign.pri)
 }
 
 

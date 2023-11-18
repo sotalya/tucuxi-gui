@@ -28,7 +28,7 @@ config_view_preproc {
 }
 
 config_disablepercs {
-   DEFINES += DISABLEPERCS
+   DEFINES += CONFIG_DISABLEPERCS
 }
 # Customized project configurations
 config_demo {

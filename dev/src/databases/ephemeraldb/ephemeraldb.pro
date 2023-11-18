@@ -35,8 +35,8 @@ win32{
     }
 }
 unix{
-    #LIBS+=../../../libs/xerces-c/build/src/libxerces-c.a
-    LIBS+=$$PWD/../../../libs/xerces-c/src/.libs/libxerces-c.a
+    LIBS+=$$PWD/../../../libs/xerces-c/build/src/libxerces-c.a
+    #LIBS+=$$PWD/../../../libs/xerces-c/src/.libs/libxerces-c.a
 #    INCLUDEPATH+=../../../libs/xerces-c/build/src
 }
 

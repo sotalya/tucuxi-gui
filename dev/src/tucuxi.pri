@@ -51,6 +51,7 @@ INCLUDEPATH +=	C:\xerces-c\include
 }
 unix {
 INCLUDEPATH+=$$PWD/../libs/xerces-c/src
+INCLUDEPATH+=$$PWD/../libs/xerces-c/build/src
 }
 
 !win32 {

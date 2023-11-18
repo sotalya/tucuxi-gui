@@ -185,5 +185,6 @@ win32{
     }
 }
 unix{
-    LIBS+=$$PWD/../../libs/xerces-c/src/.libs/libxerces-c.a
+    LIBS+=$$PWD/../../libs/xerces-c/build/src/libxerces-c.a
+    #LIBS+=$$PWD/../../libs/xerces-c/src/.libs/libxerces-c.a
 }

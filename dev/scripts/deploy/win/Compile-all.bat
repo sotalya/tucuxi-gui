@@ -29,31 +29,31 @@ goto :continue
 
 :continue
 REM Release
-mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release
-cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release
-DEL /S /Q *
-C:\Qt\5.15.2\msvc2019_64\bin\qmake.exe %FolderPath%\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%FolderPath%\tucuxi-drugs\drugfiles DEFINES+=NOLICENSE && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_6_5_2_MSVC2019_64bit-Release
+cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_6_5_2_MSVC2019_64bit-Release
+DEL /S /Q *s
+C:\Qt\6.5.2\msvc2019_64\bin\qmake.exe %FolderPath%\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%FolderPath%\tucuxi-drugs\drugfiles DEFINES+=NOLICENSE && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
 C:\Qt\Tools\QtCreator\bin\jom\jom.exe
 
 REM Release-Demo
-mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-Demo
-cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-Demo
+mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_6_5_2_MSVC2019_64bit-Release-Demo
+cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_6_5_2_MSVC2019_64bit-Release-Demo
 DEL /S /Q *
-C:\Qt\5.15.2\msvc2019_64\bin\qmake.exe %FolderPath%\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%FolderPath%\tucuxi-drugs\drugfiles CONFIG+=config_demo DEFINES+=NOLICENSE && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+C:\Qt\6.5.2\msvc2019_64\bin\qmake.exe %FolderPath%\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%FolderPath%\tucuxi-drugs\drugfiles CONFIG+=config_demo DEFINES+=NOLICENSE && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
 C:\Qt\Tools\QtCreator\bin\jom\jom.exe
 
 REM Release-extreport
-mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-extreport
-cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-extreport
+mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_6_5_2_MSVC2019_64bit-Release-extreport
+cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_6_5_2_MSVC2019_64bit-Release-extreport
 DEL /S /Q *
-C:\Qt\5.15.2\msvc2019_64\bin\qmake.exe %FolderPath%\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%FolderPath%\tucuxi-drugs\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+C:\Qt\6.5.2\msvc2019_64\bin\qmake.exe %FolderPath%\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%FolderPath%\tucuxi-drugs\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
 C:\Qt\Tools\QtCreator\bin\jom\jom.exe
 
 REM Release-extreport-nolicense
-mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-extreport-nolicense
-cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_64bit-Release-extreport-nolicense
+mkdir %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_6_5_2_MSVC2019_64bit-Release-extreport-nolicense
+cd %FolderPath%\tucuxi-gui\dev\build-ezechiel-tucucore-Desktop_Qt_6_5_2_MSVC2019_64bit-Release-extreport-nolicense
 DEL /S /Q *
-C:\Qt\5.15.2\msvc2019_64\bin\qmake.exe %FolderPath%\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc DEFINES+=NOLICENSE CONFIG+=config_tucucore_full DRUGSPATH=%FolderPath%\tucuxi-drugs\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+C:\Qt\6.5.2\msvc2019_64\bin\qmake.exe %FolderPath%\tucuxi-gui\dev\src\tucuxi.pro -spec win32-msvc DEFINES+=NOLICENSE CONFIG+=config_tucucore_full DRUGSPATH=%FolderPath%\tucuxi-drugs\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
 C:\Qt\Tools\QtCreator\bin\jom\jom.exe
 
 REM Return to the folder where the script was executed

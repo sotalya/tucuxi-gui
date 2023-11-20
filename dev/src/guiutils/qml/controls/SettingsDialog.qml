@@ -1,13 +1,15 @@
-import QtQuick 2.5
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+//import QtQuick.Controls.Styles
+import QtQuick.Dialogs
 
-import guiutils.qml.styles 1.0
-import guiutils.qml.controls 1.0
+import Qt.labs.platform
 
-import ezechiel 1.0
+import guiutils.qml.styles
+import guiutils.qml.controls
+
+import ezechiel
 
 DialogBase {
     id: root
@@ -553,7 +555,7 @@ DialogBase {
                 id: messageDialog
                 title: "Warning"
                 text: "The path you want to use is already used. If you continue, the older file will be overwritten."
-                standardButtons: StandardButton.Abort | StandardButton.Yes
+                buttons: MessageDialog.Abort| MessageDialog.Yes
 
                 onAccepted: {
                     messageDialog.close()
@@ -578,11 +580,11 @@ DialogBase {
     FileDialog {
         id: fileDialog
         title: "Import"
-        folder: shortcuts.home
+        folder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
         modality: Qt.WindowModal
         nameFilters: "*.xml"
-        selectExisting: true
-        selectMultiple: false
+        //selectExisting: true
+        //selectMultiple: false
         onAccepted: {
             sentencesPalettes.manualImport(fileDialog.fileUrls.toString().replace(/^(file:\/{2})/,""))
             fileDialog.close();

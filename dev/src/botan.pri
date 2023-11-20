@@ -11,10 +11,12 @@ win32 {
     32bit {
         exists(C:/Botan/Botan2-32) {
             CONFIG(debug, debug|release) {
-                LIBS += -LC:\Botan\botan2-32\lib -lbotand
+                LIBS += -LC:\Botan\botan2-32\lib -lbotand \
+                        -luser32
             }
             CONFIG(release, debug|release) {
-                LIBS += -LC:\Botan\botan2-32\lib -lbotan
+                LIBS += -LC:\Botan\botan2-32\lib -lbotan \
+                        -luser32
             }
             INCLUDEPATH += C:\Botan\botan2-32\include\botan-2
         }
@@ -25,10 +27,12 @@ win32 {
     else {
         exists(C:/Botan/Botan2-64) {
             CONFIG(debug, debug|release) {
-                LIBS += -LC:\Botan\botan2-64\lib -lbotan
+                LIBS += -LC:\Botan\botan2-64\lib -lbotan \
+                        -luser32
             }
             CONFIG(release, debug|release) {
-                LIBS += -LC:\Botan\botan2-64\lib -lbotan
+                LIBS += -LC:\Botan\botan2-64\lib -lbotan \
+                        -luser32
             }
             INCLUDEPATH += C:\Botan\botan2-64\include\botan-2
         }
@@ -42,18 +46,22 @@ win32 {
 #Paths and linker flags for Linux/MacOS
 !android {
     unix {
-        exists($${TUCUXIROOTDIR}/bin/botan.a) {
-            LIBS += $${TUCUXIROOTDIR}/bin/botan.a
-            INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan-2.19.3/build/include/
+        exists($${TUCUXIROOTDIR}/libs/botan) {
+            LIBS += $${TUCUXIROOTDIR}/libs/botan/libbotan-2.a
+            INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan/build/include/
         }
-        else:exists($${TUCUXIROOTDIR}/libs/botan-2.19.3) {
+        else:exists($${TUCUXIROOTDIR}/bin/botan.a) {
+            LIBS += $${TUCUXIROOTDIR}/bin/botan.a
+            INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan/build/include/
+        }
+        else:exists($${TUCUXIROOTDIR}/libs/botan) {
             macx {
-                LIBS += -L $${TUCUXIROOTDIR}/libs/botan-2.19.3 -lbotan
+                LIBS += -L $${TUCUXIROOTDIR}/libs/botan -lbotan
             }
             else {
-                LIBS += $${TUCUXIROOTDIR}/libs/botan-2.19.3/objs/botan.a
+                LIBS += $${TUCUXIROOTDIR}/libs/botan/objs/botan.a
             }
-            INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan-2.19.3/build/include/
+            INCLUDEPATH += $${TUCUXIROOTDIR}/libs/botan/build/include/
         }
         else:exists(/usr/include/botan-1.10) {
             LIBS           += -L/usr/lib -lbotan-1.10

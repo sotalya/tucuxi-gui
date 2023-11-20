@@ -1,11 +1,11 @@
-import QtQuick 2.5
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.3
+import QtQuick
+import Qt5Compat.GraphicalEffects
+import QtQuick.Layouts
 
-import QtQuick.Controls 2.0
+import QtQuick.Controls
 
-import ezechiel 1.0
-import guiutils.qml.styles 1.0
+import ezechiel
+import guiutils.qml.styles
 
 Item
 {

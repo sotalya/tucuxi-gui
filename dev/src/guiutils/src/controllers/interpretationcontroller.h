@@ -21,7 +21,10 @@
 #include "guiutils/src/calculationcontroller.h"
 #include "admin/src/dal/sentencepalette.h"
 
-
+Q_MOC_INCLUDE("core/dal/corepatient.h")
+Q_MOC_INCLUDE("core/dal/drug/drug.h")
+Q_MOC_INCLUDE("admin/src/dal/interpretation.h")
+Q_MOC_INCLUDE("admin/src/dal/patient.h")
 
 namespace Tucuxi {
 namespace Gui {

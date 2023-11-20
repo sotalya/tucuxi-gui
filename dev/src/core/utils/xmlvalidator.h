@@ -4,14 +4,20 @@
 #define XMLVALIDATOR_H
 
 #include <QCoreApplication>
-#include <QXmlSchemaValidator>
-#include <QAbstractMessageHandler>
-#include <QSourceLocation>
+#include <QtXml>
+
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/sax/HandlerBase.hpp>
+#include <xercesc/sax/SAXParseException.hpp>
+#include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/framework/MemBufInputSource.hpp>
 
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
 
+using namespace xercesc;
 
 
 class XmlValidator
@@ -38,7 +44,6 @@ public:
     ~XmlValidator();
 
     bool validate(const QString &xmlFilename, const QString &xsdFilename);
-    bool validate(QIODevice *xmlDevice, const QString &xsdFilename);
     bool validate(const QByteArray &xmlData, const QString &xsdFilename);
 
     QtMsgType errorType() const;
@@ -49,11 +54,16 @@ public:
     int errorColumn() const;
 
 private:
-    class ValidatorMessageHandler : public QAbstractMessageHandler
+    class ValidatorMessageHandler : public ErrorHandler
     {
 
     public:
         ValidatorMessageHandler();
+
+        virtual void warning(const SAXParseException& exc) override;
+        virtual void error(const SAXParseException& exc) override;
+        virtual void fatalError(const SAXParseException& exc) override;
+        virtual void resetErrors() override;
 
         QString description() const;
         QtMsgType type() const;
@@ -62,15 +72,15 @@ private:
         int column() const;
 
     protected:
-        virtual void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation);
+        virtual void handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const SAXParseException &sourceExeption);
 
     private:
         QtMsgType _type;
         QString _description;
-        QSourceLocation _location;
+        SAXParseException _exeption;
     };
 
-    QXmlSchema initSchema(const QString &path) const;
+    void initTempSchemaFolder(const QString &path, const QTemporaryDir &tmpDir) const;
 
     ValidatorMessageHandler *_msgHandler;
 };

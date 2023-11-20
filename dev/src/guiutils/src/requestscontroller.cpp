@@ -16,9 +16,11 @@ using namespace Tucuxi::Gui::GuiUtils;
 RequestsController::RequestsController(QObject *parent) :
     QObject(parent),
     client(0),
-    _requestModel(new PartialRequestListModel(this)),
+    //_requestModel(new PartialRequestListModel(this)),
+    _requestModel(nullptr),
     _proxyModel(new SortFilterEntityListProxyModel(this))
 {
+    _requestModel = PartialRequestListModel::currentModel();
     _proxyModel->setSourceModel(_requestModel);
     CONNECT(this, &RequestsController::queryRequestByIdSignal, this, &RequestsController::queryRequestById);
 }
@@ -40,6 +42,7 @@ void RequestsController::setClient(RequestsClient *client)
 
 void RequestsController::processListReady(QList<PartialRequest*> list)
 {
+    _requestModel = PartialRequestListModel::currentModel();
     _requestModel->setModelData(list);
 }
 
@@ -49,14 +52,17 @@ void RequestsController::queryList(QDateTime from,
 {
     Q_ASSERT(client);
 
+    _requestModel = PartialRequestListModel::currentModel();
     _requestModel->clearModel();
 
     client->queryList(from, to, state);
 }
 
 
-QAbstractItemModel *RequestsController::model() const
+QAbstractItemModel *RequestsController::model()
 {
+    _requestModel = PartialRequestListModel::currentModel();
+    _proxyModel->setSourceModel(_requestModel);
     return _proxyModel;
 }
 
@@ -69,6 +75,7 @@ void RequestsController::queryRequest(const QString &requestId, const QString &p
 
 const PartialRequest *RequestsController::getPartialRequest(int id)
 {
+    _requestModel = PartialRequestListModel::currentModel();
     return _requestModel->requests().at(id);
 }
 

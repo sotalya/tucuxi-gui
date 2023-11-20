@@ -31,6 +31,7 @@ class PredictionResult : public Entity
 }
 }
 }
+
 Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PredictionResult*)
 Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::PredictionResult*>)
 #endif // PREDICTIONRESULT_H

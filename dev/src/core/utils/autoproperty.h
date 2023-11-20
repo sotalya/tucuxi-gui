@@ -64,7 +64,7 @@
     } \
     void NAME::clearWithoutDeletion() { _list.clear(); setModified(true); update(); } \
     void NAME::sort(NAME::comparator_t compFunc) { \
-       qSort(_list.begin(), _list.end(), compFunc); \
+       std::sort(_list.begin(), _list.end(), compFunc); \
     } \
     int NAME::size() const { return _list.size();} \
     bool NAME::isEmpty() const { return _list.isEmpty(); } \

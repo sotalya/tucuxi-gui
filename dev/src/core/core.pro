@@ -13,7 +13,8 @@ QT -= gui
 
 DEPENDPATH  += ./ interfaces utils parsers dal
 
-INCLUDEPATH += ..
+INCLUDEPATH +=	..
+
 
 HEADERS	+= \
     ../current_version.h \

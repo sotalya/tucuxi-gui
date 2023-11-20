@@ -151,7 +151,7 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
         rlutil::resetColor();
         if (!request->drug()) {
             rlutil::setColor(rlutil::RED);
-            informer << "DRUG NOT FOUND: " << content.value("drug.id") << endl;
+            informer << "DRUG NOT FOUND: " << content.value("drug.id") << Qt::endl;
             EXLOG(QtWarningMsg, Tucuxi::Gui::Core::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. Aborting this request."));
             rlutil::resetColor();
             continue;
@@ -159,7 +159,7 @@ int RequestsClientProcessing::analyzeList(const QString &xmlList, QString &contr
             informer << request->drug()->getSubstanceId();
         }
         rlutil::resetColor();
-        informer << endl;
+        informer << Qt::endl;
 
         if (!request->drug()) {
             EXLOG(QtWarningMsg, Tucuxi::Gui::Core::NOEZERROR, tr("Cannot build interpretationRequest from Pending Request. Aborting."));
@@ -209,8 +209,8 @@ int RequestsClientProcessing::analyzeRequest(const QString &xmlRequest)
 
     QTextStream informer(stdout);
     rlutil::setColor(rlutil::CYAN);
-    informer <<  "Received Pending Request from Remote Server" << endl;
-    informer <<  "*******************************************" << endl;
+    informer <<  "Received Pending Request from Remote Server" << Qt::endl;
+    informer <<  "*******************************************" << Qt::endl;
     rlutil::setColor(rlutil::GREEN);
     informer << "PatientId:\t"; informer.flush();
     rlutil::resetColor();
@@ -220,7 +220,7 @@ int RequestsClientProcessing::analyzeRequest(const QString &xmlRequest)
     rlutil::resetColor();
     informer << ir->getTreatment()->getActiveSubstanceId();
     rlutil::resetColor();
-    informer << endl;
+    informer << Qt::endl;
 
     emit requestReady(ir);
 

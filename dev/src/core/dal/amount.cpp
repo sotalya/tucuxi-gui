@@ -83,16 +83,16 @@ bool Amount::fromString(const QString &str)
     full = full.remove(" ");
 
     //Create the regex and apply it
-    QRegExp reg("^([\\-]?[0-9\\.]+)(.*)");
-    reg.indexIn(full);
+    QRegularExpression reg("^([\\-]?[0-9\\.]+)(.*)");
+    QRegularExpressionMatch match = reg.match(full);
 
     //Fetch the number
-    this->setValue(reg.cap(1).toDouble(&ok));
+    this->setValue(match.captured(1).toDouble(&ok));
     if (!ok)
         return false;
 
     //Parse the unit
-    return _unit.fromString(reg.cap(2));
+    return _unit.fromString(match.captured(2));
 }
 
 bool Amount::operator ==(const Amount &other) const

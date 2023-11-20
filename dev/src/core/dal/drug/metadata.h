@@ -5,6 +5,9 @@
 
 #include "core/dal/entity.h"
 
+Q_MOC_INCLUDE("core/dal/drug/editors.h")
+Q_MOC_INCLUDE("core/dal/drug/references.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

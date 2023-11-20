@@ -9,6 +9,8 @@
 #include "core/utils/autoproperty.h"
 #include "abstractviewcontroller.h"
 
+Q_MOC_INCLUDE("core/dal/dosage.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

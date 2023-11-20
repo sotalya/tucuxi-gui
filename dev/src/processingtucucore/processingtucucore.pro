@@ -1,22 +1,16 @@
 include (../tucuxi.pri)
 
-!config_tucucore_lib {
 unix {
     include($${TUCUXIROOTDIR}/make/qtcreator/general.pri)
 }
 win32 {
     include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
 }
-    include ($${TUCUXIROOTDIR}/make/qtcreator/tucucore.pri)
-    include ($${TUCUXIROOTDIR}/make/qtcreator/tucucrypto.pri)
-    include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
-    include ($${TUCUXIROOTDIR}/make/qtcreator/tinyjs.pri)
-    config_sign {
-        include ($${TUCUXIROOTDIR}/make/qtcreator/tucusign.pri)
-    }
-}
-else {
-    include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
+include ($${TUCUXIROOTDIR}/make/qtcreator/tucucore.pri)
+include ($${TUCUXIROOTDIR}/make/qtcreator/tucucrypto.pri)
+include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
+config_sign {
+    include ($${TUCUXIROOTDIR}/make/qtcreator/tucusign.pri)
 }
 
 
@@ -46,6 +40,7 @@ HEADERS	+= \
     src/guitotucucoretranslator.h \
     src/processingtucucore.h \
     src/drugs2manager.h \
+    src/tqflogger.h \
     src/tucucoretoguitranslator.h
 
 #CODECFORTR      += UTF-8
@@ -58,9 +53,8 @@ SOURCES += \
     src/guitotucucoretranslator.cpp \
     src/processingtucucore.cpp \
     src/drugs2manager.cpp \
+    src/tqflogger.cpp \
     src/tucucoretoguitranslator.cpp
-
-SOURCES += $${TUCUXIROOTDIR}/libs/spdlog-master-20170622/include/spdlog/fmt/bundled/format.cc
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)
 DEPENDENCIES = tucuxi-gui-core

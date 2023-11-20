@@ -214,19 +214,7 @@ Settings::Settings(QObject *parent) : QSettings("Sotalya", "Tucuxi", parent)
     _modules.insert(Module::Report,   "report");
 }
 
-Settings::~Settings()
-{
-
-}
-
-//ParameterGraphSettings::ParameterGraphSettings()
-//{}
-
-//SingleGraphSettings::SingleGraphSettings()
-//{}
-
-//GraphDisplaySettings::GraphDisplaySettings()
-//{}
+Settings::~Settings() = default;
 
 } // namespace Core
 } // namespace Gui

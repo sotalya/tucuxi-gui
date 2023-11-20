@@ -1,12 +1,12 @@
-import QtQuick 2.5
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Styles 1.4
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+//import QtQuick.Controls.Styles
 
-import guiutils.qml.styles 1.0
-import guiutils.qml.controls 1.0
+import guiutils.qml.styles
+import guiutils.qml.controls
 
-import ezechiel 1.0
+import ezechiel
 
 DialogBase {
     title: sectionName ? sectionName : ""

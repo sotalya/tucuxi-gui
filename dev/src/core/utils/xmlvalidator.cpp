@@ -7,14 +7,13 @@
 #include "core/utils/logging.h"
 #include "core/errors_core.h"
 
-#include <QXmlSchema>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QFile>
+#include <QTemporaryDir>
 
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
-
 
 //Drug XML schemas
 const char *const XmlValidator::Drug = ":/schemas/drug.xsd";
@@ -30,10 +29,18 @@ const char *const XmlValidator::Reply_Request = ":/schemas/reply_request.xsd";
 const char *const XmlValidator::Notification  = ":/schemas/notification.xsd";
 const char *const XmlValidator::Acks          = ":/schemas/acks.xsd";
 
-XmlValidator::XmlValidator() :
-    _msgHandler(new ValidatorMessageHandler)
+XmlValidator::XmlValidator()
 {
+    try {
+        XMLPlatformUtils::Initialize();
+    }
+    catch (const XMLException& toCatch) {
+        char* message = XMLString::transcode(toCatch.getMessage());
+        LOG(QtCriticalMsg, OBJECTISINVALID, tr("Error during initialization of xerces-c '%1'").arg(message));
+        XMLString::release(&message);
+    }
 
+    _msgHandler = new ValidatorMessageHandler;
 }
 
 XmlValidator::~XmlValidator()
@@ -44,35 +51,67 @@ XmlValidator::~XmlValidator()
 
 bool XmlValidator::validate(const QString &xmlFilename, const QString &xsdFilename)
 {
-    QXmlSchemaValidator validator;
-    validator.setSchema(initSchema(xsdFilename));
-    validator.setMessageHandler(_msgHandler);
+    QTemporaryDir tmpDir;
+    initTempSchemaFolder(xsdFilename, tmpDir);
+    QString xsdFilePath = tmpDir.path()+"/"+ QFileInfo(xsdFilename).fileName();
 
-    QFile file(xmlFilename);
-    if (!file.open(QIODevice::ReadOnly)) {
-        LOG(QtWarningMsg, INVALIDFILEFORMAT, tr("Cannot open the XML file '%1'").arg(file.fileName()));
+    QByteArray ba = QUrl::fromLocalFile(xsdFilePath).toString().toLocal8Bit();
+    const char *xsdFilePathChar = ba.data();
+
+    XercesDOMParser validator;
+    validator.setValidationScheme(XercesDOMParser::Val_Always);
+    validator.setDoNamespaces(true);
+    validator.setDoSchema(true);
+    validator.setLoadSchema(false);
+    validator.setExternalNoNamespaceSchemaLocation(xsdFilePathChar);
+
+    validator.setErrorHandler(_msgHandler);
+
+    ba = xmlFilename.toLocal8Bit();
+    const char *xmlFilenameChar = ba.data();
+
+    try {
+        validator.parse(xmlFilenameChar);
+    }
+    catch (const SAXException& toCatch) {
         return false;
     }
 
-    return validator.validate(&file, QUrl::fromLocalFile(file.fileName()));
-}
-
-bool XmlValidator::validate(QIODevice *xmlDevice, const QString &xsdFilename)
-{
-    QXmlSchemaValidator validator;
-    validator.setSchema(initSchema(xsdFilename));
-    validator.setMessageHandler(_msgHandler);
-
-    return validator.validate(xmlDevice);
+    return true;
 }
 
 bool XmlValidator::validate(const QByteArray &xmlData, const QString &xsdFilename)
 {
-    QXmlSchemaValidator validator;
-    validator.setSchema(initSchema(xsdFilename));
-    validator.setMessageHandler(_msgHandler);
+    QTemporaryDir tmpDir;
+    initTempSchemaFolder(xsdFilename, tmpDir);
+    QString xsdFilePath = tmpDir.path()+"/"+ QFileInfo(xsdFilename).fileName();
 
-    return validator.validate(xmlData);
+    QByteArray ba = xsdFilePath.toLocal8Bit();
+    const char *xsdFilePathChar = ba.data();
+
+    XercesDOMParser validator;
+
+    validator.setValidationScheme(XercesDOMParser::Val_Always);
+    validator.setDoNamespaces(true);
+    validator.setDoSchema(true);
+    validator.setLoadSchema(false);
+    validator.setExternalNoNamespaceSchemaLocation(xsdFilePathChar);
+
+    validator.setErrorHandler(_msgHandler);
+
+    std::string tmp(xmlData.constData(), xmlData.length());
+    const char* inSrc = tmp.c_str();
+
+    MemBufInputSource src((const XMLByte*)inSrc, strlen(inSrc), "dummy", false);
+
+    try {
+        validator.parse(src);
+    }
+    catch (const SAXException& toCatch) {
+        return false;
+    }
+
+    return true;
 }
 
 QtMsgType XmlValidator::errorType() const
@@ -83,7 +122,7 @@ QtMsgType XmlValidator::errorType() const
 QString XmlValidator::errorMessage() const
 {
     QString message = _msgHandler->description();
-    return message.remove(QRegExp("<[^>]*>"));
+    return message.remove(QRegularExpression("<[^>]*>"));
 }
 
 QString XmlValidator::errorHtmlMessage() const
@@ -101,18 +140,48 @@ int XmlValidator::errorColumn() const
     return _msgHandler->column();
 }
 
-QXmlSchema XmlValidator::initSchema(const QString &path) const
+void XmlValidator::initTempSchemaFolder(const QString &path, const QTemporaryDir &tmpDir) const
 {
-    QXmlSchema schema;
-    schema.load(QUrl::fromLocalFile(path));
+    // get current dir and copy all files into the temp folder
+    QDir dir = QFileInfo(path).absoluteDir();
+    //QString pathName = QFileInfo(path).fileName();
 
-    if (!schema.isValid())
-        LOG(QtCriticalMsg, XSDERROR, QString(tr("Invalid XML Schema file '%1'")).arg(path));
-
-    return schema;
+    for (const QString &filename : dir.entryList(QDir::Files)){
+        QFile::copy(dir.path()+"/"+filename, tmpDir.path()+"/"+filename);
+    }
 }
 
-XmlValidator::ValidatorMessageHandler::ValidatorMessageHandler() : QAbstractMessageHandler(0)
+XmlValidator::ValidatorMessageHandler::ValidatorMessageHandler():
+    _exeption(XMLString::transcode(""), XMLString::transcode(""), XMLString::transcode(""),0,0)
+{
+
+}
+
+void XmlValidator::ValidatorMessageHandler::warning(const SAXParseException &exc)
+{
+    _type = QtWarningMsg;
+    _description = QString(XMLString::transcode(exc.getMessage()));
+    _exeption = exc;
+
+}
+
+void XmlValidator::ValidatorMessageHandler::error(const SAXParseException &exc)
+{
+    _type = QtCriticalMsg;
+    _description = QString(XMLString::transcode(exc.getMessage()));
+    _exeption = exc;
+    //throw SAXException(exc);
+}
+
+void XmlValidator::ValidatorMessageHandler::fatalError(const SAXParseException &exc)
+{
+    _type = QtFatalMsg;
+    _description = QString(XMLString::transcode(exc.getMessage()));
+    _exeption = exc;
+    //throw SAXException(exc);
+}
+
+void XmlValidator::ValidatorMessageHandler::resetErrors()
 {
 
 }
@@ -129,21 +198,21 @@ QtMsgType XmlValidator::ValidatorMessageHandler::type() const
 
 int XmlValidator::ValidatorMessageHandler::line() const
 {
-    return _location.line();
+    return _exeption.getLineNumber();
 }
 
 int XmlValidator::ValidatorMessageHandler::column() const
 {
-    return _location.column();
+    return _exeption.getColumnNumber();
 }
 
-void XmlValidator::ValidatorMessageHandler::handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const QSourceLocation &sourceLocation)
+void XmlValidator::ValidatorMessageHandler::handleMessage(QtMsgType type, const QString &description, const QUrl &identifier, const SAXParseException &sourceExeption)
 {
     Q_UNUSED(identifier);
 
     _type = type;
     _description = description;
-    _location = sourceLocation;
+    _exeption = sourceExeption;
 }
 
 } // namespace Core

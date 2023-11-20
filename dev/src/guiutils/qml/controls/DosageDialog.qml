@@ -1,12 +1,13 @@
-import QtQuick 2.5
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Styles 1.4
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import QtQml
+//import QtQuick.Controls.Styles
 
-import guiutils.qml.styles 1.0
-import guiutils.qml.controls 1.0
+import guiutils.qml.styles
+import guiutils.qml.controls
 
-import ezechiel 1.0
+import ezechiel
 
 DialogBase {
     id: root
@@ -91,13 +92,13 @@ DialogBase {
         appliedTimeInput.setDate(appliedDate)
         appliedTimeInput.doValidation = validateDates
 
-        appliedDateInput.date = appliedDate
+        appliedDateInput.setDate(appliedDate)
         appliedDateInput.doValidation = validateDates
 
         stoppedTimeInput.setDate(endDate)
         stoppedTimeInput.doValidation = validateDates
 
-        stoppedDateInput.date = endDate
+        stoppedDateInput.setDate(endDate)
         stoppedDateInput.doValidation = validateDates
 
         if (disableAtSteadyState) {
@@ -145,7 +146,7 @@ DialogBase {
     function updateEndDate() {
         if (stdTreatment.isFixedDuration) {
             var newEndDate = calculateEndDate();
-            stoppedDateInput.date = newEndDate;
+            stoppedDateInput.setDate(newEndDate);
             stoppedTimeInput.setDate(newEndDate);
         }
     }

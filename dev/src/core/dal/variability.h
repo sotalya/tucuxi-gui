@@ -7,6 +7,9 @@
 #include "core/dal/amount.h"
 #include "core/utils/ezutils.h"
 
+Q_MOC_INCLUDE("core/dal/drug/operation.h")
+Q_MOC_INCLUDE("core/dal/drug/translatablestring.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

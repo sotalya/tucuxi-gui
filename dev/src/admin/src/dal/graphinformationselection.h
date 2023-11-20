@@ -4,7 +4,6 @@
 #include "core/dal/entity.h"
 #include "steptypes.h"
 #include "curvetypes.h"
-#include "core/settings.h"
 
 namespace Tucuxi {
 namespace Gui {
@@ -86,7 +85,7 @@ class GraphInformationSelection : public Tucuxi::Gui::Core::Entity
         void loadDisplayParametersSettings();
 
 	private:
-        GraphInfo _graphInfo[StepType::size][CurveType::size];
+        std::array<std::array<GraphInfo, CurveType::size>, StepType::size> _graphInfo;
         StepType::Enum _currentStep;
         QMap<QString, QVariant> _parametersSettingsMap;
 };

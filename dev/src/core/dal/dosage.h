@@ -11,6 +11,8 @@
 #include "core/utils/duration.h"
 #include "core/utils/ezutils.h"
 
+Q_MOC_INCLUDE("core/dal/uncastedvalue.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
@@ -129,7 +131,7 @@ public :
     Q_INVOKABLE Dosage* last() const;
     Q_INVOKABLE void append(Dosage* target);
     Q_INVOKABLE void sort(comparator_t cmpFunc) {
-        qSort(_list.begin(), _list.end(), cmpFunc);
+        std::sort(_list.begin(), _list.end(), cmpFunc);
         emit objListChanged(&getObjList());
     }
     Q_INVOKABLE int size() const;

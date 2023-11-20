@@ -89,7 +89,7 @@ void FlatRequestFileClient::queryRequest(const QString &requestId, const QString
 
     // TODO JRP : For debug, to be removed
     informer << filtredDoc.toString();
-    informer << endl;
+    informer << Qt::endl;
     informer.flush();
 
     analyzeRequest(filtredDoc.toString());

@@ -7,6 +7,8 @@
 #include "admin/src/dal/measure.h"
 #include "institute.h"
 
+Q_MOC_INCLUDE("core/dal/drug/drug.h")
+
 
 namespace Tucuxi {
 namespace Gui {

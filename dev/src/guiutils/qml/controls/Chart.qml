@@ -1,13 +1,13 @@
-import QtQuick 2.5
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.2
+import QtQuick
+import QtQuick.Controls
+//import QtQuick.Controls.Styles
+import QtQuick.Layouts
+import QtQuick.Dialogs
 
-import guiutils.qml.styles 1.0
-import guiutils.qml.controls 1.0
+import guiutils.qml.styles
+import guiutils.qml.controls
 
-import ezechiel 1.0
+import ezechiel
 import "graphing.js" as Graphing
 import "trails.js" as Trails
 import "clock.js" as Clock
@@ -372,7 +372,9 @@ Canvas {
     Connections {
         target: graphInformationSelection
         // function onHasBeenModified()
-        onHasBeenModified: {
+        //TODO -> check if its still work as intended
+        //onHasBeenModified: {
+        function onHasBeenModified() {
             canvas.rePaint();
         }
     }
@@ -380,7 +382,9 @@ Canvas {
     Connections {
         target: flow
         // function onChangedTab(index)
-        onChangedTab: {
+        //TODO -> check if its still work as intended
+        //onChangedTab: {
+        function onChangedTab() {
             switch (flow.currentIndex)
             {
                 case 0: canvas.state = "patients"; break;
@@ -400,11 +404,15 @@ Canvas {
     Connections {
         target: reportTab
         // function onToggleShow(index, value)
-        onToggleShow: {
+        //TODO -> check if its still work as intended
+        //onToggleShow: {
+        function onToggleShow() {
             canvas.rePaint();
         }
         // function onPublishReport(output)
-        onPublishReport: {
+        //TODO -> check if its still work as intended
+        //onPublishReport: {
+        function onPublishReport() {
             canvas.save(appPath + "/graph.png");
         }
     }
@@ -412,7 +420,9 @@ Canvas {
     Connections {
         target: adjustmentTab
         // function onCurrentIndexChanged(index)
-        onCurrentIndexChanged: {
+        //TODO -> check if its still work as intended
+        //onCurrentIndexChanged: {
+        function onCurrentIndexChanged(index) {
             if (index === -1) {return;}
             if (!revP.isValid || revP.isEmpty()) {return;}
             for (var i = 0; i < canvas.revP.size(); ++i) {
@@ -428,7 +438,9 @@ Canvas {
     Connections {
         target: dosageTab
         // function onCurrentIndexChanged(index)
-        onCurrentIndexChanged: {
+        //TODO -> check if its still work as intended
+        //onCurrentIndexChanged: {
+        function onCurrentIndexChanged(index) {
             if (index === -1) {return;}
             for (var j = 0; j < dosages.length; j++) {
                 //    console.log(j);
@@ -443,7 +455,9 @@ Canvas {
     Connections {
         target: targetTab
         // function onCurrentIndexChanged(index)
-        onCurrentIndexChanged: {
+        //TODO -> check if its still work as intended
+        //onCurrentIndexChanged: {
+        function onCurrentIndexChanged(index) {
             canvas.targetTabIndex = index;
             rePaint();
         }
@@ -645,7 +659,7 @@ Canvas {
 
         }
 
-        onReleased: {
+        onReleased: (mouse)=> {
             if (mouse.button  == Qt.LeftButton) {
                 closestPred.selected = !closestPred.selected && closestPred.highlight;
                 overlayAnnotations.requestPaint();
@@ -657,7 +671,7 @@ Canvas {
             objectName: "graphSettingsDialog"
         }
 
-        onPressed: {
+        onPressed: (mouse)=> {
             if (mouse.button  == Qt.RightButton) {
                 // TODO (JRP) : The popup() call won't work on current Windows version
                 // can be enabled again in future when ok, to replace the popup manual positioning
@@ -677,7 +691,7 @@ Canvas {
 //            canvas.requestPaint();
         }
 
-        onPositionChanged: {
+        onPositionChanged: (mouse)=> {
             if (pressed && containsMouse) {
                 var dx = mouse.x - pressX
                 canvas.isOffsetXEnabled ? shift(dx) : 0;
@@ -693,7 +707,7 @@ Canvas {
             }
         }
 
-        onWheel: {
+        onWheel: (wheel)=> {
             if (wheel.modifiers & Qt.ShiftModifier) {
                 zoomY(wheel.angleDelta.y/120);
                 rePaint();
@@ -792,7 +806,7 @@ Canvas {
         id: dateDialog
         title: "Go to date"
 
-        standardButtons: StandardButton.NoButton
+        standardButtons: Qt.NoButton
 
         ColumnLayout {
             DatePicker {

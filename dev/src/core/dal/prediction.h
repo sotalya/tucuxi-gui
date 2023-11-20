@@ -10,6 +10,9 @@
 #include "core/errors_core.h"
 #include "core/dal/drug/parameters.h"
 
+Q_MOC_INCLUDE("core/dal/drugresponseanalysis.h")
+Q_MOC_INCLUDE("core/dal/predictionspec.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

@@ -1,9 +1,10 @@
-import QtQuick 2.5
-import QtQuick.Controls 2.0
-import QtQuick.Window 2.2
-import QtQuick.Layouts 1.3
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Window
+import QtQuick.Layouts
+import QtQml
 
-import guiutils.qml.controls 1.0
+import guiutils.qml.controls
 
 // Changed to Window instead of Item for Gui tests
 Item {

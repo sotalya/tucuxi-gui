@@ -11,7 +11,7 @@
 //    // To be implemented with QXmlStreamWriter
 //    QFile file(fileName);
 //    if(!file.open(QFile::WriteOnly)){
-//        out<<"can not open file"<<endl;
+//        out<<"can not open file"<<Qt::endl;
 //        return false;
 //    }
 //    bool isOk = true;

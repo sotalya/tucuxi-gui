@@ -9,6 +9,8 @@
 
 #include "tucucore/drugmodel/formulationandroute.h"
 
+Q_MOC_INCLUDE("core/dal/drug/translatablestring.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

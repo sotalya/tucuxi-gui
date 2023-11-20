@@ -1,10 +1,10 @@
 
-import QtQuick 2.7
-import QtQuick.Controls 1.4
+import QtQuick
+import QtQuick.Controls
 
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts
 
-import guiutils.qml.controls 1.0
+import guiutils.qml.controls
 
 Item {
 

@@ -57,9 +57,9 @@ DEPENDPATH += .$${OUT_PWD}/../$${DIST_DIR}
 INCLUDEPATH +=	.. \
     $${TUCUXIROOTDIR}/src \
     $${TUCUXIROOTDIR}/test \
-    $${TUCUXIROOTDIR}/libs/date-master-20170711 \
-    $${TUCUXIROOTDIR}/libs/eigen-3.3.2 \
-    $${TUCUXIROOTDIR}/libs/spdlog-master-20170622/include
+    $${TUCUXIROOTDIR}/libs/date \
+    $${TUCUXIROOTDIR}/libs/eigen \
+    $${TUCUXIROOTDIR}/libs/spdlog/include
 
 SOURCES += \
 #    src/ezchart.cpp \

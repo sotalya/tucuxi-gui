@@ -6,7 +6,7 @@
 
 #include <QCoreApplication>
 
-class QRegExpValidator;
+class QRegularExpressionValidator;
 namespace Tucuxi {
 namespace Gui {
 namespace Core {
@@ -111,7 +111,7 @@ public:
     /** \brief Returns a regular expression validator for usernames.
      * @return The regular expression validator.
      */
-    static QRegExpValidator *usernameValidator();
+    static QRegularExpressionValidator *usernameValidator();
 
     /** \brief Authenticate a user.
      * @param username The user name.

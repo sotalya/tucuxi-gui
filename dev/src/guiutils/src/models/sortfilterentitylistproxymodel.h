@@ -3,6 +3,7 @@
 #ifndef SORTFILTERENTITYLISTPROXYMODEL_H
 #define SORTFILTERENTITYLISTPROXYMODEL_H
 
+#include "qqmlintegration.h"
 #include <QSortFilterProxyModel>
 
 namespace Tucuxi {
@@ -12,6 +13,7 @@ namespace GuiUtils {
 class ProxyModelFilter : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
 
     Q_PROPERTY(int role READ role WRITE setRole NOTIFY roleChanged)
     Q_PROPERTY(QVariant value READ value WRITE setValue NOTIFY valueChanged)
@@ -44,9 +46,9 @@ public:
     Q_INVOKABLE void setOperation(Operation operation);
 
 public slots:
-    void setFixedString(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    //void setFixedString(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive);
     void setRegExp(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive);
-    void setWildcard(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    //void setWildcard(const QString &pattern, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 
 signals:
     void roleChanged(int role);

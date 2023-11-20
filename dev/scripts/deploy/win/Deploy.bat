@@ -1,4 +1,4 @@
-
+@echo off
 REM Architecture is 32 or 64 bits
 set "ARCH=%1%"
 
@@ -7,7 +7,7 @@ set "TARGET=%2%"
 
 set PRJ_DIR=%FolderPath%\tucuxi-gui\dev
 set SRC_DIR=%PRJ_DIR%\src
-set DIST_DIR=%PRJ_DIR%\build-ezechiel-tucucore-Desktop_Qt_5_15_2_MSVC2019_%ARCH%bit-%TARGET%\dist\
+set DIST_DIR=%PRJ_DIR%\build-ezechiel-tucucore-Desktop_Qt_6_5_2_MSVC2019_%ARCH%bit-%TARGET%\dist\
 set DEPLOY_DIR=%PRJ_DIR%\Deploy
 set INSTALL_DIR=C:\Tucuxi
 
@@ -15,7 +15,7 @@ set ZIP_EXE="c:\Program Files\7-Zip\7z.exe"
 
 set BOTANT_DIR=C:\botan\botan2-%ARCH%\lib
 set VISUAL_STUDIO_DIR=C:\Program Files\Microsoft Visual Studio\2022\Community
-set QT_DIR=C:\Qt\5.15.2\msvc2019_%ARCH%
+set QT_DIR=C:\Qt\6.5.2\msvc2019_%ARCH%
 set NSIS_DIR=C:\Program Files (x86)\NSIS
 
 REM Create the deployment structure
@@ -72,7 +72,7 @@ DEL %DEPLOY_DIR%\Tucuxi-%ARCH%-%TARGET%.zip
 %ZIP_EXE% a -r %PRJ_DIR%\Tucuxi-%ARCH%-%TARGET%.zip %DEPLOY_DIR%\%ARCH%\%TARGET%\*
 
 REM Create setup.exe
-"%NSIS_DIR%\makensis.exe" /DARCH=%ARCH% /DTARGET=%TARGET% %PRJ_DIR%\Tucuxi.nsi 
+"%NSIS_DIR%\makensis.exe" /DARCH=%ARCH% /DTARGET=%TARGET% Tucuxi.nsi 
 
 REM Run setup.exe!
 REM rd /s /q %INSTALL_DIR%

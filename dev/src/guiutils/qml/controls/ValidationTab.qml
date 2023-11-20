@@ -1,11 +1,11 @@
-import QtQuick 2.5
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.0
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 
-import guiutils.qml.styles 1.0
-import guiutils.qml.controls 1.0
+import guiutils.qml.styles
+import guiutils.qml.controls
 
-import ezechiel 1.0
+import ezechiel
 
 Rectangle {
     id: validationPanel
@@ -53,7 +53,9 @@ Rectangle {
     Connections {
         target: interpretation.drugResponseAnalysis.treatment.adjustments
         // function onObjListChanged(list)
-        onObjListChanged: {
+        //TODO -> check if its still work as intended
+        //onObjListChanged: {
+        function onObjListChanged() {
             var adjs = []
             var nextControl = 0;
             var lst = interpretation.drugResponseAnalysis.treatment.adjustments;
@@ -92,7 +94,9 @@ Rectangle {
     Connections {
         target: flow.chart.mouseArea
         // function onPositionChanged(mouse)
-        onPositionChanged: {
+        //TODO -> check if its still work as intended
+        //onPositionChanged: {
+        function onPositionChanged(mouse) {
             if (flow.chart.state !== "validation") {
                 return;
             }

@@ -1,12 +1,12 @@
-import QtQuick 2.5
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+//import QtQuick.Controls.Styles
+import QtQuick.Dialogs
 
 
-import guiutils.qml.styles 1.0
-import guiutils.qml.controls 1.0
+import guiutils.qml.styles
+import guiutils.qml.controls
 
 import ezechiel 1.0
 
@@ -34,14 +34,14 @@ Rectangle {
         id: messageNoAgeDialog
         title: "Covariates"
         text: "The age is automatically calculated based on the birthdate."
-        standardButtons: StandardButton.Close
+        buttons: MessageDialog.Close
     }
 
     MessageDialog {
         id: messageNoSexDialog
         title: "Covariates"
         text: "The sex is based on patient's data."
-        standardButtons: StandardButton.Close
+        buttons: MessageDialog.Close
     }
 
     ColumnLayout {

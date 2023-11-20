@@ -1,8 +1,8 @@
 
 #version check qt
-!contains(QT_VERSION, ^5\\.*\\..*) {
+!contains(QT_VERSION, ^6\\.*\\..*) {
 message("Cannot build Quotations with Qt version $${QT_VERSION}.")
-error("Use at least Qt 5.0.")
+error("Use at least Qt 6.0.")
 }
 
 DEFINES += GIT_REVISION='\\"$$system(git rev-parse --short HEAD)\\"'
@@ -28,7 +28,7 @@ config_view_preproc {
 }
 
 config_disablepercs {
-   DEFINES += DISABLEPERCS
+   DEFINES += CONFIG_DISABLEPERCS
 }
 # Customized project configurations
 config_demo {
@@ -46,8 +46,22 @@ config_externalreport {
     DEFINES += CONFIG_EXTERNALREPORT
 }
 
+win32 {
+INCLUDEPATH +=	C:\xerces-c\include
+}
+unix {
+INCLUDEPATH+=$$PWD/../libs/xerces-c/src
+INCLUDEPATH+=$$PWD/../libs/xerces-c/build/src
+}
+
+!win32 {
+    QMAKE_CXXFLAGS += -isystem C:\xerces-c\include
+}
+
 # Common settings for the whole project
-CONFIG += qt thread rtti silent c++14 warn_off embed_manifest_dll embed_manifest_exe
+# TODO -> Check on other OS
+# qt taken out of the configs because otherwise it didnt compile on windows
+CONFIG += thread rtti silent c++14 warn_off embed_manifest_dll embed_manifest_exe
 
 CXXFLAGS += -Wwrite-strings -fexceptions -Wall
 CFLAGS += -fexceptions
@@ -55,7 +69,7 @@ DEFINES += QT_MESSAGELOGCONTEXT
 QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
 #QMAKE_CXXFLAGS_WARN_OFF += -Wunused-parameter
 #Qt modules required by the core and its dependencies
-QT += xml xmlpatterns network svg qml
+QT += xml network svg qml core5compat widgets
 
 #Depending on the patform, set the libs as static/shared
 win32 {
@@ -113,7 +127,7 @@ static {
 #as well when building in static mode, since qmake prefixes the produced static libraries anyway)
 !win32 : LIBPRE=lib
 
-TUCUXIROOTDIR = $$(TUCUXI_ROOT)
+TUCUXIROOTDIR = $$PWD/../libs/tucuxi-core
 TUCUXIDRUGSDIR = $$(TUCUXI_DRUGS_DIR)
 
 include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)

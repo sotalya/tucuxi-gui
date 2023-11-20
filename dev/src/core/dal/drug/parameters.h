@@ -13,6 +13,10 @@
 #include "core/utils/duration.h"
 #include "core/dal/drug/operableamount.h"
 
+Q_MOC_INCLUDE("core/dal/drug/bsv.h")
+Q_MOC_INCLUDE("core/dal/drug/operation.h")
+Q_MOC_INCLUDE("core/dal/drug/translatablestring.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

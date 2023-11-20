@@ -1,17 +1,18 @@
 //@@license@@
 
 #include "sortfilterentitylistproxymodel.h"
-#include "abstractentitylistmodel.h"
+#include <QAbstractTableModel>
 
 #include <QDateTime>
 #include <QQmlEngine>
+#include <QRegularExpression>
 
 using namespace Tucuxi::Gui::GuiUtils;
 
 ProxyModelFilter::ProxyModelFilter(QObject *parent) :
     QObject(parent),
     _role(-1),
-    _value(QRegExp()),
+    _value(QRegularExpression()),
     _operation(Equal)
 {
 
@@ -72,20 +73,24 @@ void ProxyModelFilter::setOperation(Operation operation)
     emit operationChanged(operation);
 }
 
-void ProxyModelFilter::setFixedString(const QString &pattern, Qt::CaseSensitivity cs)
-{
-    setValue(QRegExp(pattern, cs, QRegExp::FixedString));
-}
+//void ProxyModelFilter::setFixedString(const QString &pattern, Qt::CaseSensitivity cs)
+//{
+//    setValue(QRegExp(pattern, cs, QRegExp::FixedString));
+//}
 
 void ProxyModelFilter::setRegExp(const QString &pattern, Qt::CaseSensitivity cs)
 {
-    setValue(QRegExp(pattern, cs, QRegExp::RegExp));
+    QRegularExpression reg;
+    reg.setPattern(pattern);
+    if (cs == Qt::CaseInsensitive)
+        reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+    setValue(reg);
 }
 
-void ProxyModelFilter::setWildcard(const QString &pattern, Qt::CaseSensitivity cs)
-{
-    setValue(QRegExp(pattern, cs, QRegExp::Wildcard));
-}
+//void ProxyModelFilter::setWildcard(const QString &pattern, Qt::CaseSensitivity cs)
+//{
+//    setValue(QRegExp(pattern, cs, QRegExp::Wildcard));
+//}
 
 bool ProxyModelFilter::accept(const QModelIndex &index) const
 {
@@ -96,8 +101,8 @@ bool ProxyModelFilter::accept(const QModelIndex &index) const
 
     QVariant data = index.data(role());
 
-    if (value().type() == QVariant::RegExp)
-        return data.toString().contains(value().toRegExp());
+    if (value().type() == QMetaType::QRegularExpression)
+        return data.toString().contains(value().toRegularExpression());
     if (value().type() == QVariant::DateTime && value().toDateTime().isValid())
         return compare(data.toDateTime(), value().toDateTime());
     if (value().type() == QVariant::Double || value().type() == QVariant::Int)
@@ -119,8 +124,10 @@ SortFilterEntityListProxyModel::~SortFilterEntityListProxyModel()
 
 void SortFilterEntityListProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
-    Q_ASSERT(dynamic_cast<AbstractEntityListModel *>(sourceModel));
-    QSortFilterProxyModel::setSourceModel(sourceModel);
+    if (sourceModel != nullptr){
+        Q_ASSERT(dynamic_cast<QAbstractItemModel *>(sourceModel));
+        QSortFilterProxyModel::setSourceModel(sourceModel);
+    }
 }
 
 void SortFilterEntityListProxyModel::sort(int role, Qt::SortOrder order)
@@ -181,10 +188,12 @@ void SortFilterEntityListProxyModel::setFilter(ProxyModelFilter *filter)
 
 bool SortFilterEntityListProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-    Q_UNUSED(source_parent);
+    //Q_UNUSED(source_parent);
+
+
 
     Q_ASSERT(!source_parent.isValid());
-    Q_ASSERT(sourceModel()->columnCount() == 1);
+    Q_ASSERT(sourceModel()->columnCount() == 7);
 
     QModelIndex index = sourceModel()->index(source_row, 0);
     Q_ASSERT(index.isValid());

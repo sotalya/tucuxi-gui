@@ -3,7 +3,7 @@
 #include "core/utils/duration.h"
 
 #include <QDate>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringList>
 #include <QObject>
 #include <QDebug>
@@ -54,17 +54,17 @@ bool Duration::fromString(QString str)
    //Remove spaces
    QString s = str.simplified();
    //Create the regex
-   QRegExp reg("^([0-9]+)h?([0-9]*)$");
+   QRegularExpression reg("^([0-9]+)h?([0-9]*)$");
    //Check the string
-   if ( ! reg.exactMatch(s)) {
-      qDebug() << "Matched="+QString::number(reg.matchedLength())+" in "+str.toLatin1();
+   if ( !reg.match(s).hasMatch()) {
+      qDebug() << "Matched="+QString::number(reg.match(s).capturedLength())+" in "+str.toLatin1();
       return false;
    }
    //Clear ourselves
    this->clear();
    //Retrieve the numbers
-   reg.indexIn(s);
-   QStringList list = reg.capturedTexts();
+   QRegularExpressionMatch match = reg.match(s);
+   QStringList list = match.capturedTexts();
    //Get the hours
    this->addHours(list.at(1).toInt());
    //If the minutes are here, get them

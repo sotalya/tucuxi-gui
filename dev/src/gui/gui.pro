@@ -16,7 +16,7 @@ DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 ICON        = ../guiutils/resources/icons/logo.ico
 
 QT += gui printsupport quick quickwidgets printsupport svg webchannel websockets
-QT += webenginecore webengine
+QT += webenginecore
 
 CONFIG(debug) {
     CONFIG += qml_debug
@@ -165,25 +165,26 @@ FORMS += \
     src/restconfigdialog.ui
 
 win32{
-LIBS += Iphlpapi.lib
-
-    config_tucucore_lib {
-       LIBS += $${TUCUXIROOTDIR}\make\visualstudio\tucucommon\x64\Debug\TucuCommon\TucuCommon.lib \
-        $${TUCUXIROOTDIR}\make\visualstudio\tucucore\x64\Debug\TucuCore\TucuCore.lib
-    }
-
+    LIBS += Iphlpapi.lib
 }
 
 unix{
-    config_tucucore_lib {
-        LIBS += $${TUCUXIROOTDIR}/bin/tucucore.a \
-                $${TUCUXIROOTDIR}/bin/tucucommon.a
-        LIBS += \
-            $${TUCUXIROOTDIR}/bin/tinyjs.a
-    }
 
     !macx {
         LIBS += \
             #/usr/lib/x86_64-linux-gnu/libdl.so
     }
+}
+
+win32{
+    CONFIG(debug, debug|release) {
+        LIBS += C:\xerces-c\lib\xerces-c_3D.lib
+    }
+    CONFIG(release, debug|release) {
+        LIBS += C:\xerces-c\lib\xerces-c_3.lib
+    }
+}
+unix{
+    LIBS+=$$PWD/../../libs/xerces-c/build/src/libxerces-c.a
+    #LIBS+=$$PWD/../../libs/xerces-c/src/.libs/libxerces-c.a
 }

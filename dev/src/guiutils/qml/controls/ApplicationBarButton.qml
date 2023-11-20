@@ -1,8 +1,8 @@
-import QtQuick 2.5
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.2
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
-import guiutils.qml.styles 1.0
+import guiutils.qml.styles
 
 Rectangle {
     width:  64

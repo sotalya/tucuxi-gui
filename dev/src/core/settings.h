@@ -227,47 +227,6 @@ private:
     QMap<Module, QString> _modules;
 };
 
-//class ParameterGraphSettings : public QObject
-//{
-//    Q_OBJECT
-
-//public:
-//    ParameterGraphSettings();
-
-//    bool showPrediction;
-//    bool showPerc5_95;
-//    bool showPerc10_90;
-//    bool showPerc25_75;
-//    bool showPerc50;
-//};
-
-//class SingleGraphSettings : public QObject
-//{
-//    Q_OBJECT
-
-//public:
-//    SingleGraphSettings();
-
-//    bool showTarget;
-//    bool showCovariatesChange;
-//    ParameterGraphSettings populationCurves;
-//    ParameterGraphSettings aprioriCurves;
-//    ParameterGraphSettings aposterioriCurves;
-//    ParameterGraphSettings adjustmentCurves;
-//};
-
-//class GraphDisplaySettings : public QObject
-//{
-//    Q_OBJECT
-
-//public:
-//    GraphDisplaySettings();
-
-//    SingleGraphSettings tabSettings[8];
-//};
-
-
-
 } // namespace Core
 } // namespace Gui
 } // namespace Tucuxi

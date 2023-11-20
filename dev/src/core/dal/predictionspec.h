@@ -79,7 +79,6 @@ protected:
 } // namespace Gui
 } // namespace Tucuxi
 
-
 Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PredictionSpec*)
 Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::PredictionSpec*>)
 

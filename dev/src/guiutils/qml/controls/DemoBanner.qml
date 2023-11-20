@@ -1,8 +1,8 @@
-import QtQuick 2.5
-import QtQuick.Controls 1.4
+import QtQuick
+import QtQuick.Controls
 
-//import QtWebKit 3.0
-import QtWebEngine 1.0
+//import QtWebKit
+import QtWebEngine
 
 Item {
     id: root

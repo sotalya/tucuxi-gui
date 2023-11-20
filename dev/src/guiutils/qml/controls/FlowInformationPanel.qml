@@ -1,14 +1,14 @@
-import QtQuick 2.5
-import QtQuick.Controls 1.4
+import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts 1.2
 
-import guiutils.qml.styles 1.0
+import guiutils.qml.styles
 
 Item {
 
     height: 128
     property string drugName:         interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.name.value() : ""
-    property date patientBirthDate: interpretationController.currentPatient ? interpretationController.currentPatient.person.birthday : ""
+    property date patientBirthDate: interpretationController.currentPatient ? interpretationController.currentPatient.person.birthday : new Date()
     property string patientName:      interpretationController.currentPatient ?
                                           (interpretationController.currentPatient.person.firstname.length > 0 ? (interpretationController.currentPatient.person.firstname.charAt(0) +
                                                                                                                   ". " +

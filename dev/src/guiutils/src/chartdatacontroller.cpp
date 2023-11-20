@@ -126,7 +126,7 @@ void ChartDataController::receiveResultsPopPred(Tucuxi::Gui::Core::PredictionRes
 }
 
 void ChartDataController::initiateUpdatePopPerc() {
-#ifdef DISABLEPERCS
+#ifdef CONFIG_DISABLEPERCS
     return;
 #endif
     if (!isPopulationValid()) {
@@ -164,7 +164,7 @@ void ChartDataController::receiveResultsApoPred(Tucuxi::Gui::Core::PredictionRes
 }
 
 void ChartDataController::initiateUpdateApoPerc() {
-#ifdef DISABLEPERCS
+#ifdef CONFIG_DISABLEPERCS
     return;
 #endif
     if (!isAPosterioriValid()) {
@@ -203,7 +203,7 @@ void ChartDataController::receiveResultsAprPred(Tucuxi::Gui::Core::PredictionRes
 }
 
 void ChartDataController::initiateUpdateAprPerc() {
-#ifdef DISABLEPERCS
+#ifdef CONFIG_DISABLEPERCS
     return;
 #endif
     if (!isAPrioriValid()) {

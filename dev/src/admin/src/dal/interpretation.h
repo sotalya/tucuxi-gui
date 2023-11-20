@@ -5,6 +5,13 @@
 
 #include "core/dal/entity.h"
 
+Q_MOC_INCLUDE("core/dal/dosage.h")
+Q_MOC_INCLUDE("core/dal/drugresponseanalysis.h")
+Q_MOC_INCLUDE("admin/src/dal/interpretationanalysis.h")
+Q_MOC_INCLUDE("admin/src/dal/interpretationrequest.h")
+Q_MOC_INCLUDE("admin/src/dal/practician.h")
+Q_MOC_INCLUDE("admin/src/dal/validationstatus.h")
+
 namespace Tucuxi {
 namespace Gui {
 namespace Core {

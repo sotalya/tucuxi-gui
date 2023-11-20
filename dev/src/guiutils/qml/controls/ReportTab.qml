@@ -1,14 +1,16 @@
-import QtQuick 2.5
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 1.4
-import QtWebEngine 1.1
-import QtWebChannel 1.0
-import QtQuick.Dialogs 1.0
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import QtWebEngine
+import QtWebChannel
+import QtQuick.Dialogs
 
-import guiutils.qml.styles 1.0
-import guiutils.qml.controls 1.0
+import Qt.labs.platform
 
-import ezechiel 1.0
+import guiutils.qml.styles
+import guiutils.qml.controls
+
+import ezechiel
 
 Rectangle {
     id:reportPanel
@@ -91,7 +93,9 @@ Rectangle {
     Connections {
         target: interpretationController
         // function onInterpretationValidated()
-        onInterpretationValidated: {
+        //TODO -> check if its still work as intended
+        //onInterpretationValidated: {
+        function onInterpretationValidated() {
             updateReport();
         }
     }
@@ -208,10 +212,8 @@ Rectangle {
         FileDialog {
             id: fileDialog
             title: "Generate pdf report..."
-            folder: shortcuts.home
+            folder : StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
             modality: Qt.WindowModal
-            selectExisting: false
-            selectMultiple: false
             onAccepted: {
                 // Idea from https://stackoverflow.com/questions/24927850/get-the-path-from-a-qml-url
                 var filename = interpretationController.handleFileChosen(fileDialog.fileUrl);

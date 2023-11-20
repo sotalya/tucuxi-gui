@@ -27,6 +27,7 @@ QML_POINTERLIST_CLASS_DECL(PercentileDataList, PercentileData)
 }
 }
 }
+
 Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PercentileData*)
 Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::PercentileData*>)
 Q_DECLARE_METATYPE(Tucuxi::Gui::Core::PercentileDataList*)

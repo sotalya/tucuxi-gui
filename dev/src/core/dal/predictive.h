@@ -39,6 +39,7 @@ public slots:
 }
 }
 }
+
 Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Predictive*)
 Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Predictive*>)
 #endif // PREDICTIVE_H

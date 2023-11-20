@@ -26,6 +26,20 @@ for(dep, DEPENDENCIES) {
     PRE_TARGETDEPS += $${LIBNAME}
 }
 
+win32{
+    CONFIG(debug, debug|release) {
+        LIBS += C:\xerces-c\lib\xerces-c_3D.lib
+    }
+    CONFIG(release, debug|release) {
+        LIBS += C:\xerces-c\lib\xerces-c_3.lib
+    }
+}
+unix{
+    LIBS+=$$PWD/../../../libs/xerces-c/build/src/libxerces-c.a
+    #LIBS+=$$PWD/../../../libs/xerces-c/src/.libs/libxerces-c.a
+#    INCLUDEPATH+=../../../libs/xerces-c/build/src
+}
+
 #Translation configuration
 include(../../translation.pri)
 

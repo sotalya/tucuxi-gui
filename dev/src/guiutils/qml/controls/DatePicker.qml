@@ -1,11 +1,12 @@
-import QtQuick 2.5
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Window 2.2
-import QtQml 2.2
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+//import QtQuick.Controls.Styles
+import QtQuick.Window
+import QtQml
 
-import guiutils.qml.styles 1.0
+import guiutils.qml.styles
+import guiutils.qml.controls
 
 //ToDo: fix the height (slightly above the a basic text field)
 
@@ -18,11 +19,20 @@ Rectangle {
     Layout.minimumWidth: 150
 
     property bool isOk: true
+    property bool dateFormatOk: true
     property var doValidation: function() {return true;}
     function validate()
     {
-        isOk = doValidation();
+        isOk = doValidation() && dateFormatOk;
         return isOk;
+    }
+
+    function setDate(theDate)
+    {
+        date = theDate;
+        dateFormatOk = true;
+        isOk = true;
+        wholeDate.color = "black";
     }
 
     property var date: new Date()
@@ -115,9 +125,11 @@ Rectangle {
                 parent.date = theDate;
                 parent.editingFinished();
                 color = "black";
+                dateFormatOk = true;
             }
             else {
                 color = "#FF0000";
+                dateFormatOk = false;
             }
         }
 
@@ -179,7 +191,7 @@ Rectangle {
     Component {
         id: borderlessStyle
 
-        TextFieldStyle {
+        TextField {
             background: Rectangle {
                 anchors.fill: parent
                 anchors.margins: 0
@@ -190,7 +202,11 @@ Rectangle {
 
     TucuCalendar {
         id: calendar
-        onAccepted: {
+
+        month: date.getMonth()
+        year: date.getFullYear()
+
+        onAccepted: function(date){
             defaultStyle.date = date;
             editingFinished();
         }

@@ -10,7 +10,7 @@
 
 #include <QVariant>
 #include <QRegularExpression>
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 
 namespace Tucuxi {
 namespace Gui {
@@ -155,9 +155,9 @@ bool SecurityManager::isUnique(const QString &username)
 }
 
 //Returns a username reg exp validator
-QRegExpValidator *SecurityManager::usernameValidator()
+QRegularExpressionValidator *SecurityManager::usernameValidator()
 {
-    return new QRegExpValidator(QRegExp(_USERNAME_REG_EXP));
+    return new QRegularExpressionValidator(QRegularExpression(_USERNAME_REG_EXP));
 }
 
 //Authenticates a user

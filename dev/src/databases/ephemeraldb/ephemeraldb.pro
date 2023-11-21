@@ -28,10 +28,10 @@ for(dep, DEPENDENCIES) {
 
 win32{
     CONFIG(debug, debug|release) {
-        LIBS += C:\xerces-c\lib\xerces-c_3D.lib
+        LIBS += $$PWD/../../../libs/xerces-c/build/lib/xerces-c_3D.lib
     }
     CONFIG(release, debug|release) {
-        LIBS += C:\xerces-c\lib\xerces-c_3.lib
+        LIBS += $$PWD/../../../libs/xerces-c/build/lib/xerces-c_3.lib
     }
 }
 unix{

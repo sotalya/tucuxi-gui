@@ -354,7 +354,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
         if (dataType == "Sexe") {
 
-            patient->person()->gender(detailElement.attribute("valeur") == "Masculin" ? Person::Male : Person::Female);
+            patient->person()->gender(detailElement.attribute("valeur").toLower() == "masculin" ? Person::Male : Person::Female);
 
         } else if (dataType == "DDN") {
 

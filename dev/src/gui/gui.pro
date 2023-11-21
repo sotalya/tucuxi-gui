@@ -35,10 +35,10 @@ INCLUDEPATH +=	..
 config_guitest {
     include($$PWD/../../test/gui/tucuxi-gui-test.pri)
     win32 {
-    LIBS += "C:\Program Files\Spix\lib\Spix.lib"
+        LIBS += "C:\Program Files\Spix\lib\Spix.lib"
     }
     else {
-    LIBS += /usr/local/lib/libSpix.a
+        LIBS += /usr/local/lib/libSpix.a
     }
     QT += testlib
 }
@@ -178,10 +178,10 @@ unix{
 
 win32{
     CONFIG(debug, debug|release) {
-        LIBS += C:\xerces-c\lib\xerces-c_3D.lib
+        LIBS += $$PWD/../../libs/xerces-c/build/lib/xerces-c_3D.lib
     }
     CONFIG(release, debug|release) {
-        LIBS += C:\xerces-c\lib\xerces-c_3.lib
+        LIBS += $$PWD/../../libs/xerces-c/build/lib/xerces-c_3.lib
     }
 }
 unix{

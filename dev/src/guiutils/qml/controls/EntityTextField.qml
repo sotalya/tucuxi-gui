@@ -9,6 +9,11 @@ import guiutils.qml.controls
 import ezechiel
 
 TextField {
+    // For testing
+    function setText(string){
+        text = string
+    }
+
 //    Layout.fillWidth:  true
     font.family: Style.form.font.input
     font.pixelSize: Style.form.size.input

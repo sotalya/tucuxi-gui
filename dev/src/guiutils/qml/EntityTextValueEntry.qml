@@ -54,6 +54,10 @@ Item {
         }
     }
 
+    function setText (text){
+        textInput.insert(0, text)
+    }
+
     Rectangle {
         id: textInputFrame
         Layout.preferredWidth: 200

@@ -146,6 +146,8 @@ public:
 
     void findObjectAndSetValue(QString objectName, int inputProperty);
 
+    void findDateObjectAndSetValue(QString dateObjectName, QString timeObjectName, QDateTime date);
+
     void mouseClickIfPathOk(std::string clickPath);
 
     void selectDrugInList(int drugIndex, int modelIndex);

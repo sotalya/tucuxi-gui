@@ -85,10 +85,11 @@ void SpixGTest::waitForSync()
         srv->synchronize();
 
         do {
-            srv->waitPeriod();
+            srv->waitPeriod(waitTime1);
             srv->synchronize();
-
-            waitStatus = item->property("waitStatus");
+            QMetaObject::invokeMethod(item, "getWaitStatus",
+                                      Qt::BlockingQueuedConnection,
+                                      Q_RETURN_ARG(QVariant, waitStatus));
             isRunning = waitStatus.toBool();
             std::cout << "Sync : Is still running ..." << std::endl;
 
@@ -193,12 +194,18 @@ void SpixGTest::findObjectAndSetValue(QString objectName, int propertyInput)
 {
     // retrieves object by name and puts it into an item to set or get its properties (value)
     srv->synchronize();
-    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>(objectName);
-    if (item != (0x0))
-        item->setProperty("value", propertyInput);
-    else std::cout << "Item not found !" << std::endl;
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(objectName), "setRealValue",
+                              Q_ARG(QVariant, QVariant::fromValue(propertyInput)));
 
     srv->waitPeriod(waitTime1);
+}
+
+void SpixGTest::findDateObjectAndSetValue(QString dateObjectName, QString timeObjectName, QDateTime date){
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(dateObjectName), "setDate",
+                              Q_ARG(QVariant, QVariant::fromValue(date)));
+    srv->waitPeriod(waitTime1);
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(timeObjectName), "setDate",
+                              Q_ARG(QVariant, QVariant::fromValue(date)));
 }
 
 void SpixGTest::removeFromList(std::string removeFrom, int removeIndex = 0)      // default index = 0, will remove any existing inputs
@@ -348,8 +355,8 @@ void SpixGTest::editDosage(DosageData dosageData1, int editIndex)
 void SpixGTest::setSteadyStateDosage(bool value)
 {
     srv->synchronize();
-    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("atSteadyState");
-    item->setProperty("checked", value);
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("atSteadyState"), "setSteadyState",
+                              Q_ARG(QVariant, QVariant::fromValue(value)));
     srv->waitPeriod(waitTime1);
 }
 
@@ -403,26 +410,14 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
 
     srv->waitPeriod(waitTime1);
     srv->synchronize();
-    auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("LastDoseOrFromDateInput");
-    dateItem->setProperty("date", dosageData1.dateTimeDos1);
-
-    srv->waitPeriod(waitTime1);
-    srv->synchronize();
-    auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("LastDoseOrFromTimeInput");
-    timeItem->setProperty("date", dosageData1.dateTimeDos1);
+    findDateObjectAndSetValue("LastDoseOrFromDateInput", "LastDoseOrFromTimeInput", dosageData1.dateTimeDos1);
 
     if (steadyStateValue == false)
     {
 //        qInfo() << "At steady state? NO";
         srv->waitPeriod(waitTime1);
         srv->synchronize();
-        auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("stoppedDateInput");
-        dateItem->setProperty("date", dosageData1.dateTimeDos2);
-
-        srv->waitPeriod(waitTime1);
-        srv->synchronize();
-        auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("stoppedTimeInput");
-        timeItem->setProperty("date", dosageData1.dateTimeDos2);
+        findDateObjectAndSetValue("stoppedDateInput", "stoppedTimeInput", dosageData1.dateTimeDos2);
     }
 
 //    else qInfo() << "At steady state? YES";
@@ -488,29 +483,21 @@ void SpixGTest::fillInCovariatesData(CovariatesData covariatesData1, int covaria
 {
     srv->synchronize();
 
-//    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("valueDoubleControl");  // old spinbox
-    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("covarValueEntry");        // new textEntry
-    //    qInfo() << item;
-
-
     if (covariateType == 0)                             // if covariateType == Total Body Weight
     {
-        item->setProperty("text", covariatesData1.weight);
+        QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("covarValueEntry"), "setText",
+                                  Q_ARG(QVariant, QVariant::fromValue(covariatesData1.scc + QTime::currentTime().second())));
     }
     else if (covariateType == 3)
     {
-        item->setProperty("text", covariatesData1.scc + QTime::currentTime().second());
+        QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("covarValueEntry"), "setText",
+                                  Q_ARG(QVariant, QVariant::fromValue(covariatesData1.weight)));
     }
-
-
-
-    srv->synchronize();
     srv->waitPeriod(waitTime1);
 
-    auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("dateInputCovar");
-    dateItem->setProperty("date", covariatesData1.dateTimeCovar.date());
-    auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("timeInputCovar");
-    timeItem->setProperty("date", covariatesData1.dateTimeCovar.time());
+    srv->synchronize();
+    findDateObjectAndSetValue("dateInputCovar", "timeInputCovar", covariatesData1.dateTimeCovar);
+
     srv->synchronize();
     srv->waitPeriod(waitTime1);
 
@@ -609,18 +596,13 @@ void SpixGTest::fillInCovariatesDataByDrug(CovariatesData covariatesData1, int c
         else if (covariateType == 6)
             item->setProperty("value", covariatesData1.heamatologicalMalignacy);
     }
-
-
-    srv->synchronize();
     srv->waitPeriod(waitTime1);
 
-    auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("dateInputCovar");
-    dateItem->setProperty("date", covariatesData1.dateTimeCovar.date());
-    auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("timeInputCovar");
-    timeItem->setProperty("date", covariatesData1.dateTimeCovar.time());
     srv->synchronize();
+    findDateObjectAndSetValue("dateInputCovar", "timeInputCovar", covariatesData1.dateTimeCovar);
     srv->waitPeriod(waitTime1);
 
+    srv->synchronize();
     srv->mouseClick(spix::ItemPath("covariateDialog/okCovariate"));
 
     srv->waitPeriod(waitTime1);
@@ -664,20 +646,19 @@ void SpixGTest::fillInMeasureData(MeasureData measureData1)
     srv->synchronize();
 //    auto idItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleIdField");
 //    idItem->setProperty("text", measureData1.name);
-    srv->mouseClick(spix::ItemPath("measureDialog/sampleIdField"));
-    srv->inputText(spix::ItemPath("measureDialog/sampleIdField"), measureData1.name.toStdString());
-
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleIdField"), "setText",
+                              Q_ARG(QVariant, QVariant::fromValue(measureData1.name)));
     srv->waitPeriod(waitTime1);
 
-    auto valueItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueEntry");
-    valueItem->setProperty("text", measureData1.value * 100.0);
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueEntry"), "setText",
+                              Q_ARG(QVariant, QVariant::fromValue(measureData1.value)));
     srv->waitPeriod(waitTime1);
 
-    auto dateItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleDateInput");
-    dateItem->setProperty("date", measureData1.dateTimeMeas.date());
-    auto timeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleTimeInput");
-    timeItem->setProperty("time", measureData1.dateTimeMeas.time());
+    srv->synchronize();
+    findDateObjectAndSetValue("sampleDateInput", "sampleTimeInput", measureData1.dateTimeMeas);
+    srv->waitPeriod(waitTime1);
 
+    srv->synchronize();
     srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
 
     srv->waitPeriod(waitTime1);
@@ -846,14 +827,12 @@ void SpixGTest::fillInValidationData(ValidationData validationData1)
     srv->synchronize();
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
     srv->waitPeriod(waitTime1);
+
     srv->synchronize();
+    findDateObjectAndSetValue("nextControlDate", "nextControlTime", validationData1.dateTimeVal);
+    srv->waitPeriod(waitTime1);
 
-    auto validItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("nextControlDate");
-    validItem->setProperty("date", validationData1.dateTimeVal.date());
-
-    validItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("nextControlTime");
-    validItem->setProperty("date", validationData1.dateTimeVal.time());
-
+    srv->synchronize();
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->validationView, "extTextInputs",
                               Q_ARG(QVariant, QVariant::fromValue(validationData1.expectedness)),
                               Q_ARG(QVariant, QVariant::fromValue(validationData1.suitability)),

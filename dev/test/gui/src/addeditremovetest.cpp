@@ -92,7 +92,7 @@ TEST(AddEditRemoveTest, Test1)
 
         //_____Add covariates___________________________________________
 
-        int covarTypeIndex = 0;                                         // covariable type index 0 = weight
+        int covarTypeIndex = 2;                                         // covariable type index 2 = weight
 
         covariatesData1.weight = 4000 + n*400 + n*30 + n*1;             // same as Dosage (see above)
         covariatesData1.dateTimeCovar.setDate(QDate(2022, n, n));

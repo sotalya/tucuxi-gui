@@ -877,6 +877,11 @@ Canvas {
             property bool fadeout: false
             property bool waitStatus : isRunning
 
+            // For Testing
+            function getWaitStatus(){
+                return waitStatus
+            }
+
             Timer {
                 id: waittima
                 interval: 100/60; running: false; repeat: true

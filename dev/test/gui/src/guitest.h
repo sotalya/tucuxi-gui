@@ -116,8 +116,6 @@ struct AnalystData {
 
 };
 
-
-
 class SpixGTest : public spix::TestServer {
 public:
     SpixGTest(Tucuxi::Gui::GuiUtils::MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[]);
@@ -146,9 +144,15 @@ public:
 
     void findObjectAndSetValue(QString objectName, int inputProperty);
 
+    void findDateObjectAndSetValue(QString dateObjectName, QString timeObjectName, QDateTime date);
+
+    void findEntityTextFieldAndSetValue(QString objectName, QString textString);
+
+    void findEntityTextValueFieldAndSetValue(QString objectName, double value);
+
     void mouseClickIfPathOk(std::string clickPath);
 
-    void selectDrugInList(int drugIndex, int modelIndex);
+    void selectDrugInList(QString drugName, int modelIndex);
 
     void fillInPatientData(struct PatientData);
 
@@ -162,8 +166,8 @@ public:
     void editCovariates(struct CovariatesData, int covariateType, int editIndex);
     void fillInCovariatesData(struct CovariatesData, int covariateType);
 
-    void addCovariatesByDrug(CovariatesData covariatesData1, int covariateType, int drugIndex);
-    void fillInCovariatesDataByDrug(struct CovariatesData, int covariateType, int drugIndex);
+    void addCovariatesByDrug(CovariatesData covariatesData1, int covariateType, QString drugName);
+    void fillInCovariatesDataByDrug(struct CovariatesData, int covariateType, QString drugName);
 
     void addMeasure(struct MeasureData);
     void editMeasure(struct MeasureData, int editIndex);

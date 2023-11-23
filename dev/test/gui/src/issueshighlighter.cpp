@@ -52,10 +52,10 @@ TEST(IssuesHighlighter, Test1)
 
     //_____Select drug____________________________________________________________________________________________________________________________
 
-    int drugIndex   = 6;                            // drug index : 6 = Cefepime, 13 = Imatinib, ...
+    int drugName    = "Cefepime";                            // drug index : 6 = Cefepime, 13 = Imatinib, ...
     int modelIndex  = 0;                            // model index: domain & study
 
-    srv->selectDrugInList(drugIndex, modelIndex);
+    srv->selectDrugInList(drugName, modelIndex);
     srv->waitPeriod(waitTimeLong);
 
     //_____Adding dosage, covariates, measure & target (n times)___________________________________________________________________________________

@@ -56,7 +56,7 @@ TEST(FunctionsTester, Test1)
     srv->fillInPatientData(patientData1);
     srv->waitPeriod(waitTime1);
 
-    srv->selectDrugInList(13, 0);
+    srv->selectDrugInList("Cefepime", 0);
     srv->waitPeriod(waitTime1);
 
     DosageData dosageData1;

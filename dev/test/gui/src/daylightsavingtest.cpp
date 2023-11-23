@@ -49,7 +49,7 @@ TEST(DaylightSavingTest, Test1)
     srv->startNewPatient();
     srv->waitPeriod(waitTime1);
 
-    srv->selectDrugInList(13, 0);       // drugModel index = 13 : Cefepime
+    srv->selectDrugInList("Cefepime", 0);       // drugModel index = 13 : Cefepime
     srv->waitPeriod(waitTime1);
 
     DosageData dosageData1;

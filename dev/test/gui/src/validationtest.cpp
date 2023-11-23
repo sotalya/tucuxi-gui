@@ -108,10 +108,9 @@ TEST(ValidationTest, Test1)
 
     srv->fillInPatientData(patientData1);
 
-
-    int drugIndex = 15;                                                 // drugIndex : 6 = Cefepime
+    QString drugName = "Cefepime";  // index 15 previously (not sure what drug it is)
     int modelIndex = 0;                                                 // domain & study
-    srv->selectDrugInList(drugIndex, modelIndex);
+    srv->selectDrugInList(drugName, modelIndex);
 
     srv->addDosage(dosageData1);
 

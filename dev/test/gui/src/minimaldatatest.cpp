@@ -52,7 +52,7 @@ TEST(MinimalDataTest, Test1)
     srv->fillInPatientData(patientData1);
     srv->waitPeriod(waitTime1);
 
-    srv->selectDrugInList(6, 0);
+    srv->selectDrugInList("Cefepime", 0);
     srv->waitPeriod(waitTime1);
 
     srv->addDosage(dosageData1);

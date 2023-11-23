@@ -51,7 +51,6 @@ TEST(GuidedStressTest, DrugsTab)
 
     for (drugIndex = 0; drugIndex <= 20; drugIndex++)
     {
-//        srv->selectDrugInList(n, 0);
 
         std::cout << "Drug index : " << drugIndex << std::endl;
         srv->waitPeriod(waitTime1);
@@ -67,7 +66,6 @@ TEST(GuidedStressTest, DrugsTab)
 
     for (modelIndex = 0; modelIndex <= 7; modelIndex++)
     {
-//        srv->selectDrugInList(20, n);
 
         std::cout << "Model index : " << drugIndex << std::endl;
         srv->waitPeriod(waitTime1);
@@ -131,7 +129,7 @@ TEST(GuidedStressTest, DosagesTab)
 
     srv->startNewPatient();
     srv->waitPeriod(waitTime1);
-    srv->selectDrugInList(13, 0);
+    srv->selectDrugInList("Imatinib", 0);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
 
     //_____Dosage tab____________________________________________________________________________________________________________________
@@ -192,7 +190,7 @@ TEST(GuidedStressTest, CovariatesTab)
 
     srv->startNewPatient();
     srv->waitPeriod();
-    srv->selectDrugInList(13, 0);
+    srv->selectDrugInList("Imatinib", 0);
     srv->waitPeriod();
     DosageData dosageData1;
     srv->addDosage(dosageData1);
@@ -257,7 +255,7 @@ TEST(GuidedStressTest, MeasuresTab)
 
     srv->startNewPatient();
     srv->waitPeriod();
-    srv->selectDrugInList(13, 0);
+    srv->selectDrugInList("Imatinib", 0);
     srv->waitPeriod();
     DosageData dosageData1;
     srv->addDosage(dosageData1);
@@ -323,7 +321,7 @@ TEST(GuidedStressTest, TargetsTab)
 
     srv->startNewPatient();
     srv->waitPeriod();
-    srv->selectDrugInList(13, 0);
+    srv->selectDrugInList("Imatinib", 0);
     srv->waitPeriod();
     DosageData dosageData1;
     srv->addDosage(dosageData1);
@@ -388,7 +386,7 @@ TEST(GuidedStressTest, AdjustmentsTab)
 
     srv->startNewPatient();
     srv->waitPeriod();
-    srv->selectDrugInList(6, 0);
+    srv->selectDrugInList("Cefepime", 0);
     srv->waitPeriod();
     DosageData dosageData1;
     srv->addDosage(dosageData1);

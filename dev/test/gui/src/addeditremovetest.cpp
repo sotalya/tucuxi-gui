@@ -55,10 +55,9 @@ TEST(AddEditRemoveTest, Test1)
 
     //_____Select drug____________________________________________________________________________________________________________________________
 
-    int drugIndex   = 13;                                               // drug index : 6 = Cefepime, 13 = Imatinib, ...
     int modelIndex  = 0;                                                // model index: domain & study
     srv->getCurrentTabIndex();
-    srv->selectDrugInList(drugIndex, modelIndex);
+    srv->selectDrugInList("Cefepime", modelIndex);
     srv->getCurrentTabIndex();
     srv->waitPeriod(waitTimeLong);
 

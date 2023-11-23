@@ -397,6 +397,12 @@ function initContext(cdata, ctx)
     ctx.fillStyle   = "black";
 }
 
+function isTargetDrawable(target)
+{
+    // Only residual and peak targets are currently displayed
+    var ttype = target.type.value;
+    return ((ttype === 0) || (ttype === 1));
+}
 
 function extents(cdata)
 {
@@ -483,8 +489,10 @@ function extents(cdata)
     // In case we have no other data, use target data to define the Y range...
     if (cdata.maxY == 0) {
         for (var targetIndex = 0; targetIndex < cdata.targets.length; ++targetIndex) {
-            var targetY = cdata.targets[targetIndex].cmax.valueInUnit("ug/l");
-            if (targetY > cdata.maxY) cdata.maxY = targetY;
+            if (isTargetDrawable(cdata.targets[targetIndex])) {
+                var targetY = cdata.targets[targetIndex].cmax.valueInUnit("ug/l");
+                if (targetY > cdata.maxY) cdata.maxY = targetY;
+            }
         }
     }
 
@@ -627,60 +635,121 @@ function drawTargets(cdata, ctx, times, predData)
 
     for (var targetIndex = 0; targetIndex < targets.length; ++targetIndex)
     {
-        // Settings
-        ctx.fillStyle = "blue";
-        ctx.lineWidth = 1 * cdata.scale;
-        
-        var i, t, leftgrd, rightgrd, crossSize, gradientSize;
-        var ttpe = targets[targetIndex].type.value;
-        var y_mean = acxn2screen(cdata, targets[targetIndex].cbest.valueInUnit("ug/l"));
-        var y_max = acxn2screen(cdata, targets[targetIndex].cmax.valueInUnit("ug/l"));
-        var y_min = acxn2screen(cdata, targets[targetIndex].cmin.valueInUnit("ug/l"));
-        var first = atime2screen(cdata, times[0]);
-        var last = atime2screen(cdata, times[times.length - 1]);
+        if (isTargetDrawable(targets[targetIndex])) {
+            // Settings
+            ctx.fillStyle = "blue";
+            ctx.lineWidth = 1 * cdata.scale;
+
+            var i, t, leftgrd, rightgrd, crossSize, gradientSize;
+            var ttpe = targets[targetIndex].type.value;
+            var y_mean = acxn2screen(cdata, targets[targetIndex].cbest.valueInUnit("ug/l"));
+            var y_max = acxn2screen(cdata, targets[targetIndex].cmax.valueInUnit("ug/l"));
+            var y_min = acxn2screen(cdata, targets[targetIndex].cmin.valueInUnit("ug/l"));
+            var first = atime2screen(cdata, times[0]);
+            var last = atime2screen(cdata, times[times.length - 1]);
 
 
-        if (ttpe < 3) {
-            ctx.globalAlpha = 0.05;
-            if (cdata.targetTabIndex === targetIndex) {
-                ctx.globalAlpha = 0.1;
-            }
-            ctx.beginPath();
-            ctx.moveTo(first, y_mean);
-            ctx.lineTo(last, y_mean);
-            ctx.stroke();
-            //        var highgrd = ctx.createLinearGradient(0, y_mean, 0, y_max);
-            //        highgrd.addColorStop(0,"black");
-            //        highgrd.addColorStop(1,"white");
-            //        var lowgrd = ctx.createLinearGradient(0, y_mean, 0, y_min);
-            //        lowgrd.addColorStop(0,"black");
-            //        lowgrd.addColorStop(1,"white");
-            //        ctx.fillStyle = highgrd
-            ctx.fillRect(first, y_mean, last - first, y_max - y_mean);
-            //        ctx.fillStyle = lowgrd
-            ctx.fillRect(first, y_min, last - first, y_mean - y_min);
-            ctx.stroke();
-        }
-        ctx.globalAlpha = 0.2;
-
-        if (ttpe === 0 && predData !== null) {
-            var troughs = predData.troughs;
-            for (i = 0; i < troughs.length; ++i) {
+            if (ttpe < 3) {
+                ctx.globalAlpha = 0.05;
+                if (cdata.targetTabIndex === targetIndex) {
+                    ctx.globalAlpha = 0.1;
+                }
                 ctx.beginPath();
-                t = atime2screen(cdata, predData.timeAt(troughs[i]));
-                if (isFinite(t) && !isNaN(t) && !isNaN(y_mean)) {
+                ctx.moveTo(first, y_mean);
+                ctx.lineTo(last, y_mean);
+                ctx.stroke();
+                //        var highgrd = ctx.createLinearGradient(0, y_mean, 0, y_max);
+                //        highgrd.addColorStop(0,"black");
+                //        highgrd.addColorStop(1,"white");
+                //        var lowgrd = ctx.createLinearGradient(0, y_mean, 0, y_min);
+                //        lowgrd.addColorStop(0,"black");
+                //        lowgrd.addColorStop(1,"white");
+                //        ctx.fillStyle = highgrd
+                ctx.fillRect(first, y_mean, last - first, y_max - y_mean);
+                //        ctx.fillStyle = lowgrd
+                ctx.fillRect(first, y_min, last - first, y_mean - y_min);
+                ctx.stroke();
+            }
+            ctx.globalAlpha = 0.2;
+
+            if (ttpe === 0 && predData !== null) {
+                var troughs = predData.troughs;
+                for (i = 0; i < troughs.length; ++i) {
+                    ctx.beginPath();
+                    t = atime2screen(cdata, predData.timeAt(troughs[i]));
+                    if (isFinite(t) && !isNaN(t) && !isNaN(y_mean)) {
+                        gradientSize = 20 * cdata.scale;
+                        leftgrd = ctx.createLinearGradient(t, y_mean, t - gradientSize, y_mean);
+                        leftgrd.addColorStop(0,"black");
+                        //leftgrd.addColorStop(1,"white");
+                        //leftgrd.addColorStop(1,"#DEE2F1");
+                        leftgrd.addColorStop(1,"#F2F2FF");
+                        rightgrd = ctx.createLinearGradient(t, y_mean, t + gradientSize, y_mean);
+                        rightgrd.addColorStop(0,"black");
+                        //rightgrd.addColorStop(1,"white");
+                        //rightgrd.addColorStop(1,"#DEE2F1");
+                        rightgrd.addColorStop(1,"#F2F2FF");
+                        ctx.fillStyle = leftgrd
+                        ctx.fillRect(t - gradientSize, y_min, gradientSize, y_max - y_min);
+                        ctx.fillStyle = rightgrd
+                        ctx.fillRect(t, y_min, gradientSize, y_max - y_min);
+                        ctx.stroke();
+
+                        ctx.globalAlpha = 1;
+                        ctx.beginPath();
+                        // Bottom arrow
+                        /*
+                        var arrowWidth = 3 * cdata.scale;
+                        var arrowHeight = 4 * cdata.scale;
+                        var diamondWidth = 4 * cdata.scale;
+                        var diamondHeight = 5 * cdata.scale;
+                        */
+                        crossSize = 6 * cdata.scale;
+                        ctx.moveTo(t, y_mean + crossSize);
+                        ctx.lineTo(t, y_mean - crossSize);
+                        ctx.moveTo(t - crossSize, y_mean);
+                        ctx.lineTo(t + crossSize, y_mean);
+                        /*
+                        ctx.moveTo(t,y_min);
+                        ctx.lineTo(t-arrowWidth,y_min-arrowHeight);
+                        ctx.lineTo(t+arrowWidth,y_min-arrowHeight);
+                        ctx.lineTo(t,y_min);
+                        // Middle square
+                        ctx.moveTo(t,y_min-arrowHeight);
+                        ctx.lineTo(t,y_mean+diamondHeight);
+                        ctx.lineTo(t-diamondWidth,y_mean);
+                        ctx.lineTo(t,y_mean-diamondHeight);
+                        ctx.lineTo(t+diamondWidth,y_mean);
+                        ctx.lineTo(t,y_mean+diamondHeight);
+                        // Top arrow
+                        ctx.moveTo(t,y_mean-diamondHeight);
+                        ctx.lineTo(t,y_max+arrowHeight);
+                        ctx.lineTo(t-arrowWidth,y_max+arrowHeight);
+                        ctx.lineTo(t,y_max);
+                        ctx.lineTo(t+arrowWidth,y_max+arrowHeight);
+                        ctx.lineTo(t,y_max+arrowHeight);
+                        */
+                 //       ctx.drawImage("qrc:/icons/flow/targets_disabled_mini.png", t - 16, v - 16, 32, 32);
+                        ctx.stroke();
+                        ctx.globalAlpha = 0.2;
+                    }
+                }
+                // console.log("target is residual");
+            }
+
+            if (ttpe === 1 && predData !== null) {
+                var peaks = predData.peaks;
+                for (i = 0; i < peaks.length; ++i) {
                     gradientSize = 20 * cdata.scale;
+                    ctx.beginPath();
+                    t = atime2screen(cdata, predData.timeAt(peaks[i]));
                     leftgrd = ctx.createLinearGradient(t, y_mean, t - gradientSize, y_mean);
                     leftgrd.addColorStop(0,"black");
-                    //leftgrd.addColorStop(1,"white");
-                    //leftgrd.addColorStop(1,"#DEE2F1");
-                    leftgrd.addColorStop(1,"#F2F2FF");
+                    leftgrd.addColorStop(1,"white");
                     rightgrd = ctx.createLinearGradient(t, y_mean, t + gradientSize, y_mean);
                     rightgrd.addColorStop(0,"black");
-                    //rightgrd.addColorStop(1,"white");
-                    //rightgrd.addColorStop(1,"#DEE2F1");
-                    rightgrd.addColorStop(1,"#F2F2FF");
-                    ctx.fillStyle = leftgrd
+                    rightgrd.addColorStop(1,"white");
+                    ctx.fillStyle = leftgrd;
                     ctx.fillRect(t - gradientSize, y_min, gradientSize, y_max - y_min);
                     ctx.fillStyle = rightgrd
                     ctx.fillRect(t, y_min, gradientSize, y_max - y_min);
@@ -695,6 +764,7 @@ function drawTargets(cdata, ctx, times, predData)
                     var diamondWidth = 4 * cdata.scale;
                     var diamondHeight = 5 * cdata.scale;
                     */
+
                     crossSize = 6 * cdata.scale;
                     ctx.moveTo(t, y_mean + crossSize);
                     ctx.lineTo(t, y_mean - crossSize);
@@ -720,78 +790,18 @@ function drawTargets(cdata, ctx, times, predData)
                     ctx.lineTo(t+arrowWidth,y_max+arrowHeight);
                     ctx.lineTo(t,y_max+arrowHeight);
                     */
-             //       ctx.drawImage("qrc:/icons/flow/targets_disabled_mini.png", t - 16, v - 16, 32, 32);
+    //                ctx.drawImage("qrc:/icons/flow/targets_disabled_mini.png", t - 16, v - 16, 32, 32);
                     ctx.stroke();
                     ctx.globalAlpha = 0.2;
                 }
+                // console.log("target is peak");
             }
-            // console.log("target is residual");
-        }
 
-        if (ttpe === 1 && predData !== null) {
-            var peaks = predData.peaks;
-            for (i = 0; i < peaks.length; ++i) {
-                gradientSize = 20 * cdata.scale;
-                ctx.beginPath();
-                t = atime2screen(cdata, predData.timeAt(peaks[i]));
-                leftgrd = ctx.createLinearGradient(t, y_mean, t - gradientSize, y_mean);
-                leftgrd.addColorStop(0,"black");
-                leftgrd.addColorStop(1,"white");
-                rightgrd = ctx.createLinearGradient(t, y_mean, t + gradientSize, y_mean);
-                rightgrd.addColorStop(0,"black");
-                rightgrd.addColorStop(1,"white");
-                ctx.fillStyle = leftgrd;
-                ctx.fillRect(t - gradientSize, y_min, gradientSize, y_max - y_min);
-                ctx.fillStyle = rightgrd
-                ctx.fillRect(t, y_min, gradientSize, y_max - y_min);
-                ctx.stroke();
-
-                ctx.globalAlpha = 1;
-                ctx.beginPath();
-                // Bottom arrow
-                /*
-                var arrowWidth = 3 * cdata.scale;
-                var arrowHeight = 4 * cdata.scale;
-                var diamondWidth = 4 * cdata.scale;
-                var diamondHeight = 5 * cdata.scale;
-                */
-
-                crossSize = 6 * cdata.scale;
-                ctx.moveTo(t, y_mean + crossSize);
-                ctx.lineTo(t, y_mean - crossSize);
-                ctx.moveTo(t - crossSize, y_mean);
-                ctx.lineTo(t + crossSize, y_mean);
-                /*
-                ctx.moveTo(t,y_min);
-                ctx.lineTo(t-arrowWidth,y_min-arrowHeight);
-                ctx.lineTo(t+arrowWidth,y_min-arrowHeight);
-                ctx.lineTo(t,y_min);
-                // Middle square
-                ctx.moveTo(t,y_min-arrowHeight);
-                ctx.lineTo(t,y_mean+diamondHeight);
-                ctx.lineTo(t-diamondWidth,y_mean);
-                ctx.lineTo(t,y_mean-diamondHeight);
-                ctx.lineTo(t+diamondWidth,y_mean);
-                ctx.lineTo(t,y_mean+diamondHeight);
-                // Top arrow
-                ctx.moveTo(t,y_mean-diamondHeight);
-                ctx.lineTo(t,y_max+arrowHeight);
-                ctx.lineTo(t-arrowWidth,y_max+arrowHeight);
-                ctx.lineTo(t,y_max);
-                ctx.lineTo(t+arrowWidth,y_max+arrowHeight);
-                ctx.lineTo(t,y_max+arrowHeight);
-                */
-//                ctx.drawImage("qrc:/icons/flow/targets_disabled_mini.png", t - 16, v - 16, 32, 32);
-                ctx.stroke();
-                ctx.globalAlpha = 0.2;
+            if (ttpe === 2) {
+                // Mean/AUC
+                // Do not draw something else
+                // console.log("target is mean/AUX");
             }
-            // console.log("target is peak");
-        }
-
-        if (ttpe === 2) {
-            // Mean/AUC
-            // Do not draw something else
-            // console.log("target is mean/AUX");
         }
     }
 }

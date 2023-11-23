@@ -29,6 +29,10 @@ ColumnLayout {
     signal validateTab(int step);
     signal toggleValidation(int step);
 
+    // For testing
+    function getCurrentIndex() {
+        return currentIndex;
+    }
 
     function reset() {
         currentIndex = 0;

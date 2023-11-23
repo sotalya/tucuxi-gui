@@ -27,6 +27,11 @@ Item {
     // output singnals
     signal editingFinished
 
+    // For testing
+    function setEntityValueText(string){
+        text = string
+    }
+
     function textInputControl()
     {
         var minValue = 0.0

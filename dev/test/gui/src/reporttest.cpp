@@ -392,9 +392,12 @@ protected:
 
         srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
         srv->waitPeriod();
+        srv->synchronize();
         srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
         srv->waitPeriod();
+        srv->synchronize();
         srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+        srv->waitPeriod();
 
         QDateTime dateTime;
         dateTime.setDate(QDate(2021,07,27));

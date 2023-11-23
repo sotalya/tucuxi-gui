@@ -10,7 +10,7 @@ import ezechiel
 
 TextField {
     // For testing
-    function setText(string){
+    function setEntityText(string){
         text = string
     }
 

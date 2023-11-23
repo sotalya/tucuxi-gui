@@ -102,17 +102,17 @@ void SpixGTest::waitForSync()
 
 int SpixGTest::getCurrentTabIndex()
 {
-    int currentTabIndex = 666;
+    QVariant currentTabIndex = QVariant(666);
 
-//    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->flowView, "extGetTabIndex",
-//                              Q_RETURN_ARG(QVariant, currentTabIndex));
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->flowView, "getCurrentIndex",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, currentTabIndex));
 
-    currentTabIndex = srv->m_mainWindowController->getInterpretationController()->flowView->property("currentIndex").toInt();
-    std::cout << "Current tab index : " << currentTabIndex << std::endl;
+    std::cout << "Current tab index : " << currentTabIndex.toString().toInt() << std::endl;
 
     srv->waitPeriod(waitTime1);
 
-    return currentTabIndex;
+    return currentTabIndex.toString().toInt();
 }
 
 QObject *SpixGTest::getObjectByName(QObject *root, std::string name)
@@ -201,12 +201,32 @@ void SpixGTest::findObjectAndSetValue(QString objectName, int propertyInput)
 }
 
 void SpixGTest::findDateObjectAndSetValue(QString dateObjectName, QString timeObjectName, QDateTime date){
+    srv->synchronize();
     QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(dateObjectName), "setDate",
                               Q_ARG(QVariant, QVariant::fromValue(date)));
     srv->waitPeriod(waitTime1);
     QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(timeObjectName), "setDate",
                               Q_ARG(QVariant, QVariant::fromValue(date)));
+    srv->waitPeriod(waitTime1);
 }
+
+void SpixGTest::findEntityTextFieldAndSetValue(QString objectName, QString textString){
+    srv->synchronize();
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(objectName),
+                              "setEntityText",
+                              Q_ARG(QVariant, QVariant::fromValue(textString)));
+    srv->waitPeriod(waitTime1);
+}
+
+void SpixGTest::findEntityTextValueFieldAndSetValue(QString objectName, double value){
+    srv->synchronize();
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(objectName),
+                              "setEntityValueText",
+                              Q_ARG(QVariant, QVariant::fromValue(value)));
+    srv->waitPeriod(waitTime1);
+}
+
+
 
 void SpixGTest::removeFromList(std::string removeFrom, int removeIndex = 0)      // default index = 0, will remove any existing inputs
 {
@@ -242,17 +262,19 @@ void SpixGTest::removeFromList(std::string removeFrom, int removeIndex = 0)     
     // Runs ok
 }
 
-void SpixGTest::selectDrugInList(int drugIndex, int modelIndex)
+void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
 {
     srv->synchronize();
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod(waitTime1);
 
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentActiveSubstance",
-                              Q_ARG(QVariant, QVariant::fromValue(drugIndex)));
-//    srv->waitPeriod();
+    srv->synchronize();
+    auto drugListItem = "mainWindow/flowView/drugList_" + drugName;
+    srv->mouseClick(spix::ItemPath(drugListItem.toStdString()));
+    srv->waitPeriod(waitTime1);
 
     // model = DOMAIN & STUDY
+    srv->synchronize();
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentDrugModel",
                               Q_ARG(QVariant, QVariant::fromValue(modelIndex)));
     srv->waitPeriod(waitTime1);
@@ -407,16 +429,13 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
     }
 
     QVariant steadyStateValue = getSteadyStateDosage();
-
     srv->waitPeriod(waitTime1);
-    srv->synchronize();
+
     findDateObjectAndSetValue("LastDoseOrFromDateInput", "LastDoseOrFromTimeInput", dosageData1.dateTimeDos1);
 
     if (steadyStateValue == false)
     {
 //        qInfo() << "At steady state? NO";
-        srv->waitPeriod(waitTime1);
-        srv->synchronize();
         findDateObjectAndSetValue("stoppedDateInput", "stoppedTimeInput", dosageData1.dateTimeDos2);
     }
 
@@ -483,33 +502,27 @@ void SpixGTest::fillInCovariatesData(CovariatesData covariatesData1, int covaria
 {
     srv->synchronize();
 
-    if (covariateType == 0)                             // if covariateType == Total Body Weight
+    if (covariateType == 0)
     {
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("covarValueEntry"), "setText",
-                                  Q_ARG(QVariant, QVariant::fromValue(covariatesData1.scc + QTime::currentTime().second())));
+        findEntityTextValueFieldAndSetValue("covarValueEntry", (covariatesData1.scc + QTime::currentTime().second()));
     }
-    else if (covariateType == 3)
+    else if (covariateType == 2)                             // if covariateType == Total Body Weight
     {
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("covarValueEntry"), "setText",
-                                  Q_ARG(QVariant, QVariant::fromValue(covariatesData1.weight)));
+        findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.weight);
     }
     srv->waitPeriod(waitTime1);
 
-    srv->synchronize();
     findDateObjectAndSetValue("dateInputCovar", "timeInputCovar", covariatesData1.dateTimeCovar);
 
     srv->synchronize();
-    srv->waitPeriod(waitTime1);
-
     srv->mouseClick(spix::ItemPath("covariateDialog/okCovariate"));
-
     srv->waitPeriod(waitTime1);
 
 
     // Runs ok
 }
 
-void SpixGTest::addCovariatesByDrug(CovariatesData covariatesData1, int covariateType, int drugIndex)
+void SpixGTest::addCovariatesByDrug(CovariatesData covariatesData1, int covariateType, QString drugName)
 {
     srv->synchronize();
     srv->waitPeriod(waitTime1);
@@ -524,83 +537,79 @@ void SpixGTest::addCovariatesByDrug(CovariatesData covariatesData1, int covariat
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/addCovariate"));
     srv->waitPeriod(waitTime1*4);
 
-    fillInCovariatesDataByDrug(covariatesData1, covariateType, drugIndex);
+    fillInCovariatesDataByDrug(covariatesData1, covariateType, drugName);
 }
 
-void SpixGTest::fillInCovariatesDataByDrug(CovariatesData covariatesData1, int covariateType, int drugIndex)
+void SpixGTest::fillInCovariatesDataByDrug(CovariatesData covariatesData1, int covariateType, QString drugName)
 {
     srv->synchronize();
 
-    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("valueDoubleControl");
-
-    if(drugIndex == 2) // Apixaban
+    if (drugName == "Cefepime")
     {
-        if (covariateType == 2)
-            item->setProperty("value", covariatesData1.dayNightDosing);
+        if (covariateType == 0)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.weight);
         else if (covariateType == 3)
-            item->setProperty("value", covariatesData1.weight);
-        else if (covariateType == 4)
-            item->setProperty("value", covariatesData1.asian);
-        else if (covariateType == 5)
-            item->setProperty("value", covariatesData1.nonValvularAtrialFibriliation);
-        else if (covariateType == 6)
-            item->setProperty("value", covariatesData1.acuteCoronarySyndrome);
-        else if (covariateType == 7)
-            item->setProperty("value", covariatesData1.strongModerateCytochromeInhibitors);
-        else if (covariateType == 8)
-            item->setProperty("value", covariatesData1.dose);
-        else if (covariateType == 9)
-            item->setProperty("value", covariatesData1.glomerularFiltrationRate);
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.scc);
     }
 
-    else if(drugIndex == 4) // Busulfan
+    else if (drugName == "Imanitib")
+    {
+        if (covariateType == 0)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.weight);
+    }
+
+    else if (drugName == "Vancomycin")
+    {
+        if (covariateType == 0)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.weight);
+        else if (covariateType == 3)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.scc);
+        else if (covariateType == 4)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.gestionalAge);
+        else if (covariateType == 6)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.heamatologicalMalignacy);
+    }
+
+    else if(drugName == "Apixaban")
+    {
+        if (covariateType == 2)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.dayNightDosing);
+        else if (covariateType == 3)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.weight);
+        else if (covariateType == 4)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.asian);
+        else if (covariateType == 5)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.nonValvularAtrialFibriliation);
+        else if (covariateType == 6)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.acuteCoronarySyndrome);
+        else if (covariateType == 7)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.strongModerateCytochromeInhibitors);
+        else if (covariateType == 8)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.dose);
+        else if (covariateType == 9)
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.glomerularFiltrationRate);
+    }
+
+    else if(drugName == "Busulfan")
     {
         if (covariateType == 1)
-            item->setProperty("value", covariatesData1.weight);
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.weight);
     }
 
-    else if (drugIndex == 6) // Cefepime
-    {
-        if (covariateType == 0)
-            item->setProperty("value", covariatesData1.weight);
-        else if (covariateType == 3)
-            item->setProperty("value", covariatesData1.scc);
-    }
-
-    else if(drugIndex == 9) // Dolutegravir
+    else if(drugName == "Dolutegravir")
     {
         if (covariateType == 2)
-            item->setProperty("value", covariatesData1.atazanavirWithWithoutBooster);
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.atazanavirWithWithoutBooster);
         else if (covariateType == 3)
-            item->setProperty("value", covariatesData1.darunavir);
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.darunavir);
         else if (covariateType == 4)
-            item->setProperty("value", covariatesData1.rifampicin);
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.rifampicin);
         else if (covariateType == 5)
-            item->setProperty("value", covariatesData1.currentSmoking);
-    }
-
-    else if (drugIndex == 13) // Imanitib
-    {
-        if (covariateType == 0)
-            item->setProperty("value", covariatesData1.weight);
-    }
-
-    else if (drugIndex == 20) // Vancomycin
-    {
-        if (covariateType == 0)
-            item->setProperty("value", covariatesData1.weight);
-        else if (covariateType == 3)
-            item->setProperty("value", covariatesData1.scc);
-        else if (covariateType == 4)
-            item->setProperty("value", covariatesData1.gestionalAge);
-        else if (covariateType == 6)
-            item->setProperty("value", covariatesData1.heamatologicalMalignacy);
+            findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.currentSmoking);
     }
     srv->waitPeriod(waitTime1);
 
-    srv->synchronize();
     findDateObjectAndSetValue("dateInputCovar", "timeInputCovar", covariatesData1.dateTimeCovar);
-    srv->waitPeriod(waitTime1);
 
     srv->synchronize();
     srv->mouseClick(spix::ItemPath("covariateDialog/okCovariate"));
@@ -643,20 +652,12 @@ void SpixGTest::editMeasure(MeasureData measureData1, int editIndex)
 
 void SpixGTest::fillInMeasureData(MeasureData measureData1)
 {
-    srv->synchronize();
-//    auto idItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleIdField");
-//    idItem->setProperty("text", measureData1.name);
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sampleIdField"), "setText",
-                              Q_ARG(QVariant, QVariant::fromValue(measureData1.name)));
-    srv->waitPeriod(waitTime1);
 
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("measureValueEntry"), "setText",
-                              Q_ARG(QVariant, QVariant::fromValue(measureData1.value)));
-    srv->waitPeriod(waitTime1);
+    findEntityTextFieldAndSetValue("sampleIdField", measureData1.name);
 
-    srv->synchronize();
+    findEntityTextValueFieldAndSetValue("measureValueEntry", measureData1.value);
+
     findDateObjectAndSetValue("sampleDateInput", "sampleTimeInput", measureData1.dateTimeMeas);
-    srv->waitPeriod(waitTime1);
 
     srv->synchronize();
     srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
@@ -710,7 +711,7 @@ void SpixGTest::fillInTargetData(TargetData targetData1)
 
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->targetDialog, "setActiveType",
                               Q_ARG(QVariant, QVariant::fromValue(targetData1.targetType)));
-    srv->synchronize();
+    srv->waitPeriod(waitTime1);
 
     // cMax & tMax values are filled in first to avoir red font color warning due to value inconsistency : cMin > cMax (which = 0 before edition)
 
@@ -730,8 +731,7 @@ void SpixGTest::fillInTargetData(TargetData targetData1)
          findObjectAndSetValue("micInput",   targetData1.micInput);
     }
 
-    srv->waitPeriod(waitTime1);
-
+    srv->synchronize();
     srv->mouseClick(spix::ItemPath("targetDialog/okTarget"));
 
     srv->waitPeriod(waitTime1);
@@ -828,9 +828,7 @@ void SpixGTest::fillInValidationData(ValidationData validationData1)
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
     srv->waitPeriod(waitTime1);
 
-    srv->synchronize();
     findDateObjectAndSetValue("nextControlDate", "nextControlTime", validationData1.dateTimeVal);
-    srv->waitPeriod(waitTime1);
 
     srv->synchronize();
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->validationView, "extTextInputs",
@@ -1231,28 +1229,17 @@ void SpixGTest::fillInAnalystData(AnalystData analystData1)
     srv->mouseClick(spix::ItemPath("mainWindow/applicationBarView/settingsAction"));
     srv->waitPeriod(waitTime1);
 
-    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystTitle");
-    item->setProperty("text", analystData1.analystTitle);
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystFirstname");
-    item->setProperty("text", analystData1.analystFirstName);
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystLastname");
-    item->setProperty("text", analystData1.analystLastName);
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystRole");
-    item->setProperty("text", analystData1.analystRole);
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystPhone");
-    item->setProperty("text", analystData1.analystPhoneNumber);
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystAffiliation");
-    item->setProperty("text", analystData1.analystAffiliation);
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystAddress");
-    item->setProperty("text", analystData1.analystAddress);
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystCity");
-    item->setProperty("text", analystData1.analystCity);
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystPostcode");
-    item->setProperty("text", analystData1.analystPostcode);
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystState");
-    item->setProperty("text", analystData1.analystState);
-    item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("analystCountry");
-    item->setProperty("text", analystData1.analystCountry);
+    findEntityTextFieldAndSetValue("analystTitle", analystData1.analystTitle);
+    findEntityTextFieldAndSetValue("analystFirstname", analystData1.analystFirstName);
+    findEntityTextFieldAndSetValue("analystLastname", analystData1.analystLastName);
+    findEntityTextFieldAndSetValue("analystRole", analystData1.analystRole);
+    findEntityTextFieldAndSetValue("analystPhone", analystData1.analystPhoneNumber);
+    findEntityTextFieldAndSetValue("analystAffiliation", analystData1.analystAffiliation);
+    findEntityTextFieldAndSetValue("analystAddress", analystData1.analystAddress);
+    findEntityTextFieldAndSetValue("analystCity", analystData1.analystCity);
+    findEntityTextFieldAndSetValue("analystPostcode", analystData1.analystPostcode);
+    findEntityTextFieldAndSetValue("analystState", analystData1.analystState);
+    findEntityTextFieldAndSetValue("analystCountry", analystData1.analystCountry);
 
     srv->synchronize();
     srv->mouseClick(spix::ItemPath("settingsDialog/applySettings"));

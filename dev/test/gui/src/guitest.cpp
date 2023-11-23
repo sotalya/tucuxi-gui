@@ -269,8 +269,24 @@ void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
     srv->waitPeriod(waitTime1);
 
     srv->synchronize();
-    auto drugListItem = "mainWindow/flowView/drugList_" + drugName;
-    srv->mouseClick(spix::ItemPath(drugListItem.toStdString()));
+
+    auto drugItemName = "drugList_" + drugName;
+    auto listViewItem = srv->m_mainWindowController->getInterpretationController()->drugsView;
+    int listViewIndex = 0;
+    QVariant currentItem;
+    // Parse the drug list until the wanted one is found
+    do{
+        QMetaObject::invokeMethod(listViewItem,
+                                  "setExtCurrentActiveSubstance",
+                                  Q_ARG(QVariant, QVariant::fromValue(listViewIndex)));
+        QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("drugListView"),
+                                  "getCurrentItemName",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(QVariant, currentItem));
+        listViewIndex++;
+    }while (currentItem.toString() != drugItemName);
+
+    srv->mouseClick("mainWindow/flowView/" + drugItemName.toStdString());
     srv->waitPeriod(waitTime1);
 
     // model = DOMAIN & STUDY

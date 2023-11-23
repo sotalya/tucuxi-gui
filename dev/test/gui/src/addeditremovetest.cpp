@@ -57,7 +57,7 @@ TEST(AddEditRemoveTest, Test1)
 
     int modelIndex  = 0;                                                // model index: domain & study
     srv->getCurrentTabIndex();
-    srv->selectDrugInList("Cefepime", modelIndex);
+    srv->selectDrugInList("Imatinib", modelIndex);
     srv->getCurrentTabIndex();
     srv->waitPeriod(waitTimeLong);
 

@@ -9,6 +9,10 @@ import guiutils.qml.controls
 import ezechiel
 
 ListView {
+    function getCurrentItemName(){
+        return currentItem.objectName
+    }
+
     Layout.fillWidth:  true
     Layout.fillHeight: true
     highlightFollowsCurrentItem: true

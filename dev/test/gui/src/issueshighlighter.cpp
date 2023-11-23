@@ -52,7 +52,7 @@ TEST(IssuesHighlighter, Test1)
 
     //_____Select drug____________________________________________________________________________________________________________________________
 
-    int drugName    = "Cefepime";                            // drug index : 6 = Cefepime, 13 = Imatinib, ...
+    QString drugName    = "Cefepime";                            // drug index : 6 = Cefepime, 13 = Imatinib, ...
     int modelIndex  = 0;                            // model index: domain & study
 
     srv->selectDrugInList(drugName, modelIndex);

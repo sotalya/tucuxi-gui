@@ -327,7 +327,7 @@ Rectangle {
                             EntityListDelegateItem {
                                 Layout.preferredWidth: 115
                                 color: adjustmentListDelegate.mousearea.hovered ? adjustmentList.rowBackgroundHover : (adjustmentListDelegate.ListView.isCurrentItem ? adjustmentList.rowBackgroundSelected : adjustmentList.rowBackground)
-                                label.text: Qt.formatDateTime(dosage.applied)
+                                label.text: Qt.formatDateTime(dosage.applied, "dd/MM/yyyy hh:mm")
                                 label.color: adjustmentListDelegate.mousearea.hovered ? adjustmentList.rowForegroundHover : (adjustmentListDelegate.ListView.isCurrentItem ? adjustmentList.rowForegroundSelected : adjustmentList.rowForeground)
 
                             },
@@ -335,7 +335,7 @@ Rectangle {
                                 Layout.preferredWidth: 115
                                 Layout.fillWidth: true
                                 color: adjustmentListDelegate.mousearea.hovered ? adjustmentList.rowBackgroundHover : (adjustmentListDelegate.ListView.isCurrentItem ? adjustmentList.rowBackgroundSelected : adjustmentList.rowBackground)
-                                label.text: Qt.formatDateTime(dosage.endtime)
+                                label.text: Qt.formatDateTime(dosage.endtime, "dd/MM/yyyy hh:mm")
                                 label.color: adjustmentListDelegate.mousearea.hovered ? adjustmentList.rowForegroundHover : (adjustmentListDelegate.ListView.isCurrentItem ? adjustmentList.rowForegroundSelected : adjustmentList.rowForeground)
                             },
                             EntityListDelegateItem {
@@ -459,7 +459,7 @@ Rectangle {
                     spacing: 2
                     EntityListHeaderItem { Layout.preferredWidth: 80; label.text: "Type"; tooltipText: ToolTips.adjustmentTab.type }
                     EntityListHeaderItem { Layout.preferredWidth: 115; label.text: "From"; tooltipText: ToolTips.adjustmentTab.from }
-                    EntityListHeaderItem { Layout.preferredWidth: 65; label.text: "To"; tooltipText: ToolTips.adjustmentTab.to }
+                    EntityListHeaderItem { Layout.preferredWidth: 115; Layout.fillWidth: true; label.text: "To"; tooltipText: ToolTips.adjustmentTab.to }
                     EntityListHeaderItem { Layout.preferredWidth: 60; label.text: "Dose"; tooltipText: ToolTips.adjustmentTab.dose }
                     EntityListHeaderItem { Layout.preferredWidth: 80; label.text: "Interval"; tooltipText: ToolTips.adjustmentTab.interval }
                     EntityListHeaderItem { Layout.preferredWidth: 80; label.text: "Duration"; tooltipText: ToolTips.adjustmentTab.infusion }
@@ -506,13 +506,14 @@ Rectangle {
                             EntityListDelegateItem {
                                 Layout.preferredWidth: 115
                                 color: manualAdjustmentListDelegate.mousearea.hovered ? manualAdjustmentList.rowBackgroundHover : (manualAdjustmentListDelegate.ListView.isCurrentItem ? manualAdjustmentList.rowBackgroundSelected : manualAdjustmentList.rowBackground)
-                                label.text: Qt.formatDateTime(modelData.applied)
+                                label.text: Qt.formatDateTime(modelData.applied, "dd/MM/yyyy hh:mm")
                                 label.color: manualAdjustmentListDelegate.mousearea.hovered ? manualAdjustmentList.rowForegroundHover : (manualAdjustmentListDelegate.ListView.isCurrentItem ? manualAdjustmentList.rowForegroundSelected : manualAdjustmentList.rowForeground)
                             },
                             EntityListDelegateItem {
-                                Layout.preferredWidth: 65
+                                Layout.preferredWidth: 115;
+                                Layout.fillWidth: true
                                 color: manualAdjustmentListDelegate.mousearea.hovered ? manualAdjustmentList.rowBackgroundHover : (manualAdjustmentListDelegate.ListView.isCurrentItem ? manualAdjustmentList.rowBackgroundSelected : manualAdjustmentList.rowBackground)
-                                label.text: Qt.formatDateTime(modelData.endtime)
+                                label.text: Qt.formatDateTime(modelData.endtime, "dd/MM/yyyy hh:mm")
                                 label.color: manualAdjustmentListDelegate.mousearea.hovered ? manualAdjustmentList.rowForegroundHover : (manualAdjustmentListDelegate.ListView.isCurrentItem ? manualAdjustmentList.rowForegroundSelected : manualAdjustmentList.rowForeground)
                             },
                             EntityListDelegateItem {

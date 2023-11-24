@@ -1,4 +1,5 @@
 include (../tucuxi.pri)
+include(../botan.pri)
 
 unix {
     include($${TUCUXIROOTDIR}/make/qtcreator/general.pri)

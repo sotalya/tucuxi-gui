@@ -178,7 +178,7 @@ Rectangle {
                             EntityListDelegateItem {
                                 Layout.fillWidth: true
                                 color: root.mousearea.hovered ? patientList.rowBackgroundHover : (root.ListView.isCurrentItem ? patientList.rowBackgroundSelected : patientList.rowBackground)
-                                label.text: Qt.formatDate(modelData.person.birthday)
+                                label.text: Qt.formatDate(modelData.person.birthday, "dd/MM/yyyy hh:mm")
                                 label.color: root.mousearea.hovered ? patientList.rowForegroundHover : (root.ListView.isCurrentItem ? patientList.rowForegroundSelected : patientList.rowForeground)
                             },
                             EntityListImage {

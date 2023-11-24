@@ -105,7 +105,7 @@ TEST(AddEditRemoveTest, Test1)
         //_____Add measure______________________________________________
 
         measureData1.name   = "Sample_1234_b" + QString::number(n);
-        measureData1.value  = 150 + n*50 + n*5;
+        measureData1.value  = 200 + n*100 + n*15;
         measureData1.dateTimeMeas.setDate(QDate(2022, n+1, n+2));
         measureData1.dateTimeMeas.setTime(QTime(n+1, n+2));
 
@@ -151,6 +151,7 @@ TEST(AddEditRemoveTest, Test1)
         int editDosageIndex     = 1;
 
         srv->editDosage(dosageData1, editDosageIndex);
+        srv->waitPeriod(waitTime1);
         srv->waitForSync();
 
         dosageData1.dosage = 543;

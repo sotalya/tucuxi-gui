@@ -47,33 +47,49 @@ TEST(GuidedStressTest, DrugsTab)
     int modelIndex  = 0;
 
     //_____DrugModel selection : in order_____
+    // Find total number of drugs present
+    QVariant returnValue;
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("drugListView"),
+                              "getItemsCount",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, returnValue));
+    auto totalItems = returnValue.toInt();
 
-
-    for (drugIndex = 0; drugIndex <= 20; drugIndex++)
+    for (drugIndex = 0; drugIndex <= (totalItems-1); drugIndex++)
     {
 
         std::cout << "Drug index : " << drugIndex << std::endl;
         srv->waitPeriod(waitTime1);
 
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentActiveSubstance",
+        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
+                                  "setExtCurrentActiveSubstance",
                                   Q_ARG(QVariant, QVariant::fromValue(drugIndex)));
         // model = DOMAIN & STUDY
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentDrugModel",
+        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
+                                  "setExtCurrentDrugModel",
                                   Q_ARG(QVariant, QVariant::fromValue(modelIndex)));
     }
 
     drugIndex = 20;                                                 // drugIndex : 20 = Vancomycin
 
-    for (modelIndex = 0; modelIndex <= 7; modelIndex++)
+    // Get number of model available for the current drug
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("domainListView"),
+                              "getItemsCount",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, returnValue));
+    auto drugTotalModels = returnValue.toInt();
+    for (modelIndex = 0; modelIndex <= (drugTotalModels-1); modelIndex++)
     {
 
         std::cout << "Model index : " << drugIndex << std::endl;
         srv->waitPeriod(waitTime1);
 
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentActiveSubstance",
+        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
+                                  "setExtCurrentActiveSubstance",
                                   Q_ARG(QVariant, QVariant::fromValue(drugIndex)));
         // model = DOMAIN & STUDY
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentDrugModel",
+        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
+                                  "setExtCurrentDrugModel",
                                   Q_ARG(QVariant, QVariant::fromValue(modelIndex)));
     }
 
@@ -89,7 +105,7 @@ TEST(GuidedStressTest, DrugsTab)
     {
         srv->waitPeriod(waitTime1);
 
-        drugIndex = rand() % 20;                                    // generates random index between 1 and 20
+        drugIndex = rand() % (totalItems-1);                              // generates random index between 1 and 20
         std::cout << "DrugIndex : " << drugIndex << std::endl;
 
         QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentActiveSubstance",
@@ -101,17 +117,24 @@ TEST(GuidedStressTest, DrugsTab)
 
     drugIndex = 20;                                                 // drugIndex : 20 = Vancomycin
 
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("domainListView"),
+                              "getItemsCount",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, returnValue));
+    drugTotalModels = returnValue.toInt();
     for (int loopIndex = 1; loopIndex <= 30; loopIndex++)
     {
         srv->waitPeriod(waitTime1);
 
-        modelIndex = rand() % 7 + 0;                                // generates random index between 1 and 7
+        modelIndex = rand() % (drugTotalModels-1);                                // generates random index between 1 and 7
         std::cout << "ModelIndex : " << modelIndex << std::endl;
 
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentActiveSubstance",
+        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
+                                  "setExtCurrentActiveSubstance",
                                   Q_ARG(QVariant, QVariant::fromValue(drugIndex)));
         // model = DOMAIN & STUDY
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentDrugModel",
+        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
+                                  "setExtCurrentDrugModel",
                                   Q_ARG(QVariant, QVariant::fromValue(modelIndex)));
 
     }

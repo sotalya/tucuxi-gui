@@ -45,6 +45,10 @@ SpixGTest* srv;
 int waitTime1 = 1;
 int waitTimeLong = 10;
 
+QMap<int, QString> flowViewMap = {std::pair{0,"Patient"}, {1,"Drugs"}, {2,"Dosages"},
+                                 {3,"Covariates"}, {4,"Measures"}, {5,"Targets"},
+                                 {5,"Adjustments"}, {5,"Validation"}, {5,"Reports"}};
+
 SpixGTest::SpixGTest(Tucuxi::Gui::GuiUtils::MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[])
 {
     m_mainWindowController = mainWindowController;
@@ -92,7 +96,7 @@ void SpixGTest::waitForSync()
 
         while(isRunning == true){
             std::cout << "Sync : Is still running ..." << std::endl;
-            srv->waitPeriod(waitTimeLong);
+            srv->waitPeriod(waitTimeLong*2);
             srv->synchronize();
             QMetaObject::invokeMethod(item,
                                       "getWaitStatus",
@@ -114,11 +118,11 @@ int SpixGTest::getCurrentTabIndex()
                               Qt::BlockingQueuedConnection,
                               Q_RETURN_ARG(QVariant, currentTabIndex));
 
-    std::cout << "Current tab index : " << currentTabIndex.toString().toInt() << std::endl;
+    std::cout << "Current tab : " << flowViewMap[currentTabIndex.toInt()].toStdString() << std::endl;
 
     srv->waitPeriod(waitTime1);
 
-    return currentTabIndex.toString().toInt();
+    return currentTabIndex.toInt();
 }
 
 QObject *SpixGTest::getObjectByName(QObject *root, std::string name)

@@ -81,20 +81,23 @@ void SpixGTest::waitForSync()
     {
         auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("chartOverlayView");
 
-        srv->waitPeriod();
+        srv->waitPeriod(waitTime1);
         srv->synchronize();
 
-        do {
+        QMetaObject::invokeMethod(item, "getWaitStatus",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(QVariant, waitStatus));
+        isRunning = waitStatus.toBool();
+
+        while(isRunning == true){
+            std::cout << "Sync : Is still running ..." << std::endl;
             srv->waitPeriod(waitTimeLong);
             srv->synchronize();
             QMetaObject::invokeMethod(item, "getWaitStatus",
                                       Qt::BlockingQueuedConnection,
                                       Q_RETURN_ARG(QVariant, waitStatus));
             isRunning = waitStatus.toBool();
-            std::cout << "Sync : Is still running ..." << std::endl;
-
-        } while (isRunning == true);
-
+        }
     }
     //else std::cout << "Tab index 0 or 1";
     std::cout << "Sync : OK" << std::endl;

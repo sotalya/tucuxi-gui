@@ -60,6 +60,7 @@ TEST(FunctionsTester, Test1)
     srv->waitPeriod(waitTime1);
 
     DosageData dosageData1;
+    dosageData1.dosage = 2500;
     dosageData1.steadyState = false;
     dosageData1.dateTimeDos1.setDate(QDate(2022, 03, 25));
     dosageData1.dateTimeDos1.setTime(QTime(8, 00));
@@ -89,11 +90,11 @@ TEST(FunctionsTester, Test1)
         double fPointMin = fPoints->at(index)->getValue();
         QDateTime fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(index)->getTime()*1000));
 
-        std::cout << "Minimum n°" << minimumIndex;
-        std::cout << "  || value : " << fPoints->at(index)->getValue();
+        std::cout << "Minimum nbr" << minimumIndex;
+        std::cout << "  || value : " << fPointMin;
         std::cout << "  || date : " << fDateMin.toString("yyyy/MM/dd hh:mm:ss").toStdString() << std::endl;
 
-        index++;
+        index++;    // skip a point because the last 2 points before new take have the same value
     }
 
 //    double fPointMin = fPoints->at(index)->getValue();

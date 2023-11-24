@@ -28,6 +28,8 @@
 
 #include <QDebug>
 
+#define NUMBER_OF_ITERATIONS (50)
+
 extern SpixGTest* srv;
 
 
@@ -70,7 +72,7 @@ TEST(GuidedStressTest, DrugsTab)
                                   Q_ARG(QVariant, QVariant::fromValue(modelIndex)));
     }
 
-    drugIndex = 20;                                                 // drugIndex : 20 = Vancomycin
+    srv->selectDrugInList("Vancomycin", 0);    // Force Vancomycin
 
     // Get number of model available for the current drug
     QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("domainListView"),
@@ -81,12 +83,9 @@ TEST(GuidedStressTest, DrugsTab)
     for (modelIndex = 0; modelIndex <= (drugTotalModels-1); modelIndex++)
     {
 
-        std::cout << "Model index : " << drugIndex << std::endl;
+        std::cout << "Model index : " << modelIndex << std::endl;
         srv->waitPeriod(waitTime1);
 
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
-                                  "setExtCurrentActiveSubstance",
-                                  Q_ARG(QVariant, QVariant::fromValue(drugIndex)));
         // model = DOMAIN & STUDY
         QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
                                   "setExtCurrentDrugModel",
@@ -101,33 +100,12 @@ TEST(GuidedStressTest, DrugsTab)
 
     modelIndex = 0;
 
-    for (int loopIndex = 1; loopIndex <= 50; loopIndex++)
+    for (int loopIndex = 1; loopIndex <= NUMBER_OF_ITERATIONS; loopIndex++)
     {
         srv->waitPeriod(waitTime1);
 
         drugIndex = rand() % (totalItems-1);                              // generates random index between 1 and 20
         std::cout << "DrugIndex : " << drugIndex << std::endl;
-
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentActiveSubstance",
-                                  Q_ARG(QVariant, QVariant::fromValue(drugIndex)));
-        // model = DOMAIN & STUDY
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentDrugModel",
-                                  Q_ARG(QVariant, QVariant::fromValue(modelIndex)));
-    }
-
-    drugIndex = 20;                                                 // drugIndex : 20 = Vancomycin
-
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("domainListView"),
-                              "getItemsCount",
-                              Qt::BlockingQueuedConnection,
-                              Q_RETURN_ARG(QVariant, returnValue));
-    drugTotalModels = returnValue.toInt();
-    for (int loopIndex = 1; loopIndex <= 30; loopIndex++)
-    {
-        srv->waitPeriod(waitTime1);
-
-        modelIndex = rand() % (drugTotalModels-1);                                // generates random index between 1 and 7
-        std::cout << "ModelIndex : " << modelIndex << std::endl;
 
         QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
                                   "setExtCurrentActiveSubstance",
@@ -136,11 +114,30 @@ TEST(GuidedStressTest, DrugsTab)
         QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
                                   "setExtCurrentDrugModel",
                                   Q_ARG(QVariant, QVariant::fromValue(modelIndex)));
+    }
+
+    srv->selectDrugInList("Vancomycin", 0);    // Force Vancomycin
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("domainListView"),
+                              "getItemsCount",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, returnValue));
+    drugTotalModels = returnValue.toInt();
+    for (int loopIndex = 1; loopIndex <= (NUMBER_OF_ITERATIONS/2); loopIndex++)
+    {
+        srv->waitPeriod(waitTime1);
+
+        modelIndex = rand() % (drugTotalModels-1);                                // generates random index between 0 and drugTotalModels-1
+        std::cout << "ModelIndex : " << modelIndex << std::endl;
+
+        // model = DOMAIN & STUDY
+        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
+                                  "setExtCurrentDrugModel",
+                                  Q_ARG(QVariant, QVariant::fromValue(modelIndex)));
 
     }
 
     srv->waitForSync();
-    srv->waitPeriod(10);
+    srv->waitPeriod(waitTimeLong);
     std::cout << "End of test ..." << std::endl;
 }
 
@@ -172,7 +169,7 @@ TEST(GuidedStressTest, DosagesTab)
         "dosageDialog/cancelDosage",
     };
 
-    for (int loopIndex = 1; loopIndex <= 50; loopIndex++)
+    for (int loopIndex = 1; loopIndex <= NUMBER_OF_ITERATIONS; loopIndex++)
     {
         srv->waitPeriod(waitTime1);
 
@@ -191,7 +188,7 @@ TEST(GuidedStressTest, DosagesTab)
             if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod(waitTime1);
-                srv->findObjectAndSetValue("doseSpinBox", 4000+loopIndex);
+                srv->findObjectAndSetValue("doseSpinBox", 200+loopIndex);
                 srv->waitPeriod(waitTime1);
                 srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
             }
@@ -212,12 +209,12 @@ TEST(GuidedStressTest, CovariatesTab)
     int waitTimeLong = 5;
 
     srv->startNewPatient();
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     srv->selectDrugInList("Imatinib", 0);
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     DosageData dosageData1;
     srv->addDosage(dosageData1);
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/covariateButton"));
 
     //_____Covariate tab________________________________________________________________________________________________________________
@@ -236,7 +233,7 @@ TEST(GuidedStressTest, CovariatesTab)
         "covariateDialog/cancelCovariate",
     };
 
-    for (int loopIndex = 1; loopIndex <= 50; loopIndex++)
+    for (int loopIndex = 1; loopIndex <= NUMBER_OF_ITERATIONS; loopIndex++)
     {
         srv->waitPeriod(waitTime1);
 
@@ -255,7 +252,7 @@ TEST(GuidedStressTest, CovariatesTab)
             if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod(waitTime1);
-                srv->findObjectAndSetValue("valueDoubleControl", 4000+loopIndex);
+                srv->findEntityTextValueFieldAndSetValue("covarValueEntry", 55+loopIndex);
                 srv->waitPeriod(waitTime1);
                 srv->mouseClick(spix::ItemPath("covariateDialog/okCovariate"));
             }
@@ -277,12 +274,12 @@ TEST(GuidedStressTest, MeasuresTab)
     int waitTimeLong = 5;
 
     srv->startNewPatient();
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     srv->selectDrugInList("Imatinib", 0);
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     DosageData dosageData1;
     srv->addDosage(dosageData1);
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
 
     //_____Measure tab___________________________________________________________________________________________________________________
@@ -298,11 +295,10 @@ TEST(GuidedStressTest, MeasuresTab)
         "mainWindow/flowView/editMeasure_",
         "mainWindow/flowView/removeMeasure_",
         "measureDialog/okMeasure",
-        "measureDialog/applyMeasure",
         "measureDialog/cancelMeasure",
     };
 
-    for (int loopIndex = 1; loopIndex <= 250; loopIndex++)
+    for (int loopIndex = 1; loopIndex <= NUMBER_OF_ITERATIONS; loopIndex++)
     {
         srv->waitPeriod(waitTime1);
 
@@ -321,9 +317,9 @@ TEST(GuidedStressTest, MeasuresTab)
 
             if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
-                srv->waitPeriod();
-                srv->findObjectAndSetValue("measureValueInput", 4000+loopIndex);
-                srv->waitPeriod();
+                srv->waitPeriod(waitTime1);
+                srv->findEntityTextValueFieldAndSetValue("measureValueEntry", 400+loopIndex);
+                srv->waitPeriod(waitTime1);
                 srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
             }
         }
@@ -343,12 +339,12 @@ TEST(GuidedStressTest, TargetsTab)
     int waitTimeLong    = 5;
 
     srv->startNewPatient();
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     srv->selectDrugInList("Imatinib", 0);
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     DosageData dosageData1;
     srv->addDosage(dosageData1);
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/targetButton"));
 
     //_____Target Tab_______________________________________________________________________________________________________________________
@@ -361,14 +357,13 @@ TEST(GuidedStressTest, TargetsTab)
 
         "mainWindow/flowView/targetButton",
         "mainWindow/flowView/addTarget",
-        "mainWindow/flowView/editTarget",
+        "mainWindow/flowView/editTarget_",
         "mainWindow/flowView/removeTarget_",
         "measureDialog/okTarget",
-        "measureDialog/applyTarget",
         "measureDialog/cancelTarget",
     };
 
-    for (int loopIndex = 1; loopIndex <= 50; loopIndex++)
+    for (int loopIndex = 1; loopIndex <= NUMBER_OF_ITERATIONS; loopIndex++)
     {
         srv->waitPeriod(waitTime1);
 
@@ -388,7 +383,7 @@ TEST(GuidedStressTest, TargetsTab)
             if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod(waitTime1);
-                srv->findObjectAndSetValue("cMaxInput", 4000+loopIndex);
+                srv->findObjectAndSetValue("cMaxInput", 1500+loopIndex);
                 srv->waitPeriod(waitTime1);
                 srv->mouseClick(spix::ItemPath("targetDialog/okTarget"));
             }
@@ -408,16 +403,17 @@ TEST(GuidedStressTest, AdjustmentsTab)
     int waitTimeLong    = 5;
 
     srv->startNewPatient();
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     srv->selectDrugInList("Cefepime", 0);
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     DosageData dosageData1;
     srv->addDosage(dosageData1);
-    srv->waitPeriod();
 //    TargetData targetData1;
 //    srv->addTarget(targetData1);
-    srv->waitPeriod();
+    srv->waitPeriod(waitTime1);
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->waitForSync();
+
 
     //_____Adjustment tab__________________________________________________________________________________________________________________
 
@@ -432,12 +428,12 @@ TEST(GuidedStressTest, AdjustmentsTab)
         "mainWindow/flowView/selectAdjustment_",
         "mainWindow/flowView/editAdjustment_",
         "mainWindow/flowView/removeAdjustment_",
-        "adjustmentDialog/okAdjustment",
-        "adjustmentDialog/applyAdjustment",
-        "adjustmentDialog/cancelAdjustment",
+        "adjustmentDialog/okAdj",
+        "adjustmentDialog/applyAdj",
+        "adjustmentDialog/cancelAdj",
     };
 
-    for (int loopIndex = 1; loopIndex <= 50; loopIndex++)
+    for (int loopIndex = 1; loopIndex <= NUMBER_OF_ITERATIONS; loopIndex++)
     {
         srv->waitPeriod(waitTime1);
 

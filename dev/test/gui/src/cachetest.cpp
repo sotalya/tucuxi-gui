@@ -30,7 +30,7 @@ TEST(CacheTest, Test1)
         srv->waitPeriod();
         srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugList_Cefepime"));
+        srv->selectDrugInList("Cefepime", 0);
         srv->waitPeriod();
 
         srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
@@ -64,7 +64,7 @@ TEST(CacheTest, TestFarAway)
     srv->waitPeriod();
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugList_Cefepime"));
+    srv->selectDrugInList("Cefepime", 0);
     srv->waitPeriod();
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));

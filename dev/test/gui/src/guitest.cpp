@@ -295,6 +295,7 @@ void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
     // First check outside while to speed up search
     QVariant currentItem;
     srv->mouseClick("mainWindow/flowView/" + drugItemName.toStdString());
+    srv->waitPeriod(waitTime1);
     QMetaObject::invokeMethod(drugListView,
                               "getCurrentItemName",
                               Qt::BlockingQueuedConnection,
@@ -306,6 +307,7 @@ void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
                                   Q_ARG(QVariant, QVariant::fromValue(listViewIndex)));
         srv->waitPeriod(waitTime1);
         srv->mouseClick("mainWindow/flowView/" + drugItemName.toStdString());
+        srv->waitPeriod(waitTime1);
         QMetaObject::invokeMethod(drugListView,
                                   "getCurrentItemName",
                                   Qt::BlockingQueuedConnection,
@@ -313,7 +315,7 @@ void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
         listViewIndex += 5;
     }
 
-    if (listViewIndex > totalItems) GTEST_FATAL_FAILURE_("Failed to find the drug or drug specified non present inside the list");
+    if (listViewIndex > totalItems && currentItem.toString() != drugItemName) GTEST_FATAL_FAILURE_("Failed to find the drug or drug specified not present inside the list");
 
     srv->waitPeriod(waitTime1);
 

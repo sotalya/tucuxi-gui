@@ -146,12 +146,11 @@ TEST(AddEditRemoveTest, Test1)
         dosageData1.interval    = 24;
         dosageData1.steadyState = true;
         dosageData1.dateTimeDos1.setDate(QDate(2022, 6, 6));
-        dosageData1.dateTimeDos1.setTime(QTime(5, 6));
+        dosageData1.dateTimeDos1.setTime(QTime(5, 30));
 
         int editDosageIndex     = 1;
 
         srv->editDosage(dosageData1, editDosageIndex);
-        srv->waitPeriod(10);
         srv->waitForSync();
 
         dosageData1.dosage = 543;
@@ -164,7 +163,6 @@ TEST(AddEditRemoveTest, Test1)
         editDosageIndex = 1;
 
         srv->editDosage(dosageData1, editDosageIndex);
-        srv->waitPeriod(20);
         srv->waitForSync();
 
     //_____Edit covariate_______________________________________________
@@ -184,7 +182,7 @@ TEST(AddEditRemoveTest, Test1)
     //_____Edit measure_________________________________________________
 
         measureData1.name = "Sample_2345_Edit";
-        measureData1.value = 888;
+        measureData1.value = 454;
         measureData1.dateTimeMeas.setDate(QDate(2022, 4, 5));
         measureData1.dateTimeMeas.setTime(QTime(2, 3));
 
@@ -210,15 +208,13 @@ TEST(AddEditRemoveTest, Test1)
 
         srv->editTarget(targetData1, editTargetIndex);
 
-        srv->waitPeriod(waitTime1);
-
         srv->waitPeriod(waitTimeLong);
 
 
     //_____Removing dosage, covariate, measure & target___________________________________________________________________
 
         std::cout << "It's ***DELETION*** time lads !" << std::endl;
-        srv->waitPeriod(waitTimeLong);
+        srv->waitPeriod(waitTime1);
 
         srv->removeFromList("target",       1);                             // if removeIndex > 0, only chosen input will be removed
         srv->waitPeriod(waitTimeLong);

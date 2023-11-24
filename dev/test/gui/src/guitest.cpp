@@ -85,7 +85,7 @@ void SpixGTest::waitForSync()
         srv->synchronize();
 
         do {
-            srv->waitPeriod(waitTime1);
+            srv->waitPeriod(waitTimeLong);
             srv->synchronize();
             QMetaObject::invokeMethod(item, "getWaitStatus",
                                       Qt::BlockingQueuedConnection,
@@ -264,29 +264,44 @@ void SpixGTest::removeFromList(std::string removeFrom, int removeIndex = 0)     
 
 void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
 {
+    auto drugItemName = "drugList_" + drugName;
     srv->synchronize();
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod(waitTime1);
 
     srv->synchronize();
+    auto drugListView = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("drugListView");
+    QVariant returnValue;
+    QMetaObject::invokeMethod(drugListView,
+                              "getItemsCount",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, returnValue));
+    auto totalItems = returnValue.toInt();
 
-    auto drugItemName = "drugList_" + drugName;
-    auto listViewItem = srv->m_mainWindowController->getInterpretationController()->drugsView;
-    int listViewIndex = 0;
-    QVariant currentItem;
     // Parse the drug list until the wanted one is found
-    do{
-        QMetaObject::invokeMethod(listViewItem,
-                                  "setExtCurrentActiveSubstance",
+    // First check outside while to speed up search
+    QVariant currentItem;
+    srv->mouseClick("mainWindow/flowView/" + drugItemName.toStdString());
+    QMetaObject::invokeMethod(drugListView,
+                              "getCurrentItemName",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, currentItem));
+    int listViewIndex = 5;
+    while(currentItem.toString() != drugItemName && !(listViewIndex > totalItems)){
+        QMetaObject::invokeMethod(drugListView,
+                                  "setPositionAtIndex",
                                   Q_ARG(QVariant, QVariant::fromValue(listViewIndex)));
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("drugListView"),
+        srv->waitPeriod(waitTime1);
+        srv->mouseClick("mainWindow/flowView/" + drugItemName.toStdString());
+        QMetaObject::invokeMethod(drugListView,
                                   "getCurrentItemName",
                                   Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(QVariant, currentItem));
-        listViewIndex++;
-    }while (currentItem.toString() != drugItemName);
+        listViewIndex += 5;
+    }
 
-    srv->mouseClick("mainWindow/flowView/" + drugItemName.toStdString());
+    if (listViewIndex > totalItems) GTEST_FATAL_FAILURE_("Failed to find the drug or drug specified non present inside the list");
+
     srv->waitPeriod(waitTime1);
 
     // model = DOMAIN & STUDY
@@ -379,7 +394,6 @@ void SpixGTest::editDosage(DosageData dosageData1, int editIndex)
     if (srv->existsAndVisible(spix::ItemPath(editPath)))
     {
         srv->synchronize();
-//        srv->mouseClick(spix::ItemPath("mainWindow/flowView/editDosage_0"));
         srv->mouseClick(spix::ItemPath(editPath));
         srv->waitPeriod(waitTime1);
 
@@ -418,13 +432,10 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
 
     // fills in Dose value, in [µg]
     srv->waitPeriod(waitTime1);
-
     findObjectAndSetValue("doseSpinBox", dosageData1.dosage);
-    srv->waitPeriod(waitTime1);
 
-    // fills in Interval value, in [h / 100]
+    // fills in Interval value, in [h]
     findObjectAndSetValue("intervalSpinBox", dosageData1.interval);
-    srv->waitPeriod(waitTime1);
 
     //srv->synchronize();
     auto routeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("routeText");
@@ -518,13 +529,13 @@ void SpixGTest::fillInCovariatesData(CovariatesData covariatesData1, int covaria
 {
     srv->synchronize();
 
-    if (covariateType == 0)
-    {
-        findEntityTextValueFieldAndSetValue("covarValueEntry", (covariatesData1.scc + QTime::currentTime().second()));
-    }
-    else if (covariateType == 2)                             // if covariateType == Total Body Weight
+    if (covariateType == 0) // if covariateType == Total Body Weight
     {
         findEntityTextValueFieldAndSetValue("covarValueEntry", covariatesData1.weight);
+    }
+    else if (covariateType == 2)
+    {
+        findEntityTextValueFieldAndSetValue("covarValueEntry", (covariatesData1.scc + QTime::currentTime().second()));
     }
     srv->waitPeriod(waitTime1);
 

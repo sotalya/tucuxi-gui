@@ -35,12 +35,6 @@ Rectangle {
         drugListView.currentIndex = substanceIndex;
     }
 
-    // This function is used for automated tests, called from the C++ of GuiTests
-    function setExtCurrentActiveSubstance(substanceIndex) {
-        drugListView.currentIndex = substanceIndex;
-        switchActiveSubstance(substanceIndex);
-
-    }
 
     function setCurrentDrugModel(drugModelIndex) {
         domainListView.currentIndex = drugModelIndex;

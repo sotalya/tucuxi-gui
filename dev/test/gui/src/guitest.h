@@ -34,7 +34,7 @@ struct PatientData {
 
 
 struct DosageData {
-    double dosage           = 556677;               // 5566.77 [mg]
+    double dosage           = 5566.77;               // 5566.77 [mg]
     double interval         = 24;                   // 24 [h]
     double infusion         = 60;                   // 60 [min]
     bool steadyState        = true;

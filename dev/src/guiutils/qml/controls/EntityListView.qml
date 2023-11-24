@@ -9,8 +9,23 @@ import guiutils.qml.controls
 import ezechiel
 
 ListView {
+    // Used for testing
     function getCurrentItemName(){
-        return currentItem.objectName
+        try{
+            return currentItem.objectName
+        }
+        catch(typeError){
+            //console.log(typeError);
+            return "noValidItemFound"
+        }
+    }
+    // Used for testing
+    function getItemsCount(){
+        return count
+    }
+    // Used for testing
+    function setPositionAtIndex(myIndex){
+        positionViewAtIndex(myIndex, ListView.Beginning)
     }
 
     Layout.fillWidth:  true

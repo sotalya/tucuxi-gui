@@ -13,6 +13,9 @@ TextField {
     function setEntityText(string){
         text = string
     }
+    function getEntityText(){
+        return text
+    }
 
 //    Layout.fillWidth:  true
     font.family: Style.form.font.input

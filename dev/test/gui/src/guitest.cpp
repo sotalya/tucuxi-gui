@@ -84,7 +84,8 @@ void SpixGTest::waitForSync()
         srv->waitPeriod(waitTime1);
         srv->synchronize();
 
-        QMetaObject::invokeMethod(item, "getWaitStatus",
+        QMetaObject::invokeMethod(item,
+                                  "getWaitStatus",
                                   Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(QVariant, waitStatus));
         isRunning = waitStatus.toBool();
@@ -93,7 +94,8 @@ void SpixGTest::waitForSync()
             std::cout << "Sync : Is still running ..." << std::endl;
             srv->waitPeriod(waitTimeLong);
             srv->synchronize();
-            QMetaObject::invokeMethod(item, "getWaitStatus",
+            QMetaObject::invokeMethod(item,
+                                      "getWaitStatus",
                                       Qt::BlockingQueuedConnection,
                                       Q_RETURN_ARG(QVariant, waitStatus));
             isRunning = waitStatus.toBool();
@@ -107,7 +109,8 @@ int SpixGTest::getCurrentTabIndex()
 {
     QVariant currentTabIndex = QVariant(666);
 
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->flowView, "getCurrentIndex",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->flowView,
+                              "getCurrentIndex",
                               Qt::BlockingQueuedConnection,
                               Q_RETURN_ARG(QVariant, currentTabIndex));
 
@@ -197,7 +200,8 @@ void SpixGTest::findObjectAndSetValue(QString objectName, int propertyInput)
 {
     // retrieves object by name and puts it into an item to set or get its properties (value)
     srv->synchronize();
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(objectName), "setRealValue",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(objectName),
+                              "setRealValue",
                               Q_ARG(QVariant, QVariant::fromValue(propertyInput)));
 
     srv->waitPeriod(waitTime1);
@@ -205,10 +209,12 @@ void SpixGTest::findObjectAndSetValue(QString objectName, int propertyInput)
 
 void SpixGTest::findDateObjectAndSetValue(QString dateObjectName, QString timeObjectName, QDateTime date){
     srv->synchronize();
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(dateObjectName), "setDate",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(dateObjectName),
+                              "setDate",
                               Q_ARG(QVariant, QVariant::fromValue(date)));
     srv->waitPeriod(waitTime1);
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(timeObjectName), "setDate",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>(timeObjectName),
+                              "setDate",
                               Q_ARG(QVariant, QVariant::fromValue(date)));
     srv->waitPeriod(waitTime1);
 }
@@ -309,7 +315,8 @@ void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
 
     // model = DOMAIN & STUDY
     srv->synchronize();
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView, "setExtCurrentDrugModel",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
+                              "setExtCurrentDrugModel",
                               Q_ARG(QVariant, QVariant::fromValue(modelIndex)));
     srv->waitPeriod(waitTime1);
     // Runs ok
@@ -335,7 +342,8 @@ void SpixGTest::fillInPatientData(PatientData patientData1)
     srv->synchronize();
 
     // invoke method to expand Patient and Physician tabs and then fill in data
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->patientsView, "extPatientData",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->patientsView,
+                              "extPatientData",
                               Q_ARG(QVariant, QVariant::fromValue(yearPat)),
                               Q_ARG(QVariant, QVariant::fromValue(monthPat)),
                               Q_ARG(QVariant, QVariant::fromValue(dayPat)),
@@ -345,14 +353,16 @@ void SpixGTest::fillInPatientData(PatientData patientData1)
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.identifier)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.stayNumber)));
 
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->patientsView, "extPatientContactData",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->patientsView,
+                              "extPatientContactData",
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.address)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.city)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.state)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.postcode)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.country)));
 
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->patientsView, "extPhysicianData",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->patientsView,
+                              "extPhysicianData",
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.titlePhy)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.firstNamePhy)),
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.lastNamePhy)),
@@ -410,7 +420,8 @@ void SpixGTest::editDosage(DosageData dosageData1, int editIndex)
 void SpixGTest::setSteadyStateDosage(bool value)
 {
     srv->synchronize();
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("atSteadyState"), "setSteadyState",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("atSteadyState"),
+                              "setSteadyState",
                               Q_ARG(QVariant, QVariant::fromValue(value)));
     srv->waitPeriod(waitTime1);
 }
@@ -419,11 +430,14 @@ QVariant SpixGTest::getSteadyStateDosage()
 {
     // QVariant type can be tested as a bool type (in if loop for example)
     srv->synchronize();
-    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("atSteadyState");
-    auto steadyStateDosage = item->property("checked");
+    QVariant steadyStateDosage;
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("atSteadyState"),
+                              "getSteadyState",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, steadyStateDosage));
 //    qInfo() << "SteadyStateDosage value : " << steadyStateDosage;
     srv->waitPeriod(waitTime1);
-    return steadyStateDosage;
+    return steadyStateDosage.toBool();
 }
 
 void SpixGTest::fillInDosageData(DosageData dosageData1)
@@ -441,18 +455,21 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
     findObjectAndSetValue("intervalSpinBox", dosageData1.interval);
 
     //srv->synchronize();
-    auto routeItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("routeText");
-    QString routeText = routeItem->property("text").toString();
+    QVariant routeText;
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getRootObject()->findChild<QObject*>("routeText"),
+                              "getEntityText",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, routeText));
 //    qInfo() << "Route : " << routeText;
 
-    if (routeText == "Intravenous drip")
+    if (routeText.toString() == "Intravenous drip")
     {
         // Infusion parameter only to be filled if Route = Intravenous drip != Oral
 //        qInfo() << "Infusion value to be filled in";
         findObjectAndSetValue("infusionSpinBox", dosageData1.infusion);
 
     }
-    else if (routeText == "Oral")
+    else if (routeText.toString() == "Oral")
     {
         // do nothing ..?
 //        qInfo() << "No infusion to be done";
@@ -492,7 +509,8 @@ void SpixGTest::addCovariates(CovariatesData covariatesData1, int covariateType)
     srv->synchronize();
 
     // selects covariate (index) to edit {Sex, Weight, ...}
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->covariatesView, "setCovariateType",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->covariatesView,
+                              "setCovariateType",
                               Q_ARG(QVariant, QVariant::fromValue(covariateType)));
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/addCovariate"));      // will open Covariate dialog
@@ -513,7 +531,8 @@ void SpixGTest::editCovariates(CovariatesData covariatesData1, int covariateType
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/covariateButton"));
 
     // selects covariate (index) to edit {Sex, Weight, ...}
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->covariatesView, "setCovariateType",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->covariatesView,
+                              "setCovariateType",
                               Q_ARG(QVariant, QVariant::fromValue(covariateType)));
 
     srv->synchronize();
@@ -561,7 +580,8 @@ void SpixGTest::addCovariatesByDrug(CovariatesData covariatesData1, int covariat
     srv->synchronize();
 
     // selects covariate (index) to edit {Sex, Weight, ...}
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->covariatesView, "setCovariateType",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->covariatesView,
+                              "setCovariateType",
                               Q_ARG(QVariant, QVariant::fromValue(covariateType)));
 
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/addCovariate"));
@@ -739,7 +759,8 @@ void SpixGTest::fillInTargetData(TargetData targetData1)
 //    srv->mouseClick(spix::ItemPath("targetDialog/typeInput"));        // to click on combobox, not used anymore
 //    srv->waitPeriod(waitTime1);
 
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->targetDialog, "setActiveType",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->targetDialog,
+                              "setActiveType",
                               Q_ARG(QVariant, QVariant::fromValue(targetData1.targetType)));
     srv->waitPeriod(waitTime1);
 
@@ -784,7 +805,8 @@ void SpixGTest::addAdjustments(AdjustmentsData adjustmentsData1)
     srv->waitPeriod(waitTime1);
 
     // can't pass arg type QDate to QML function, string type also allows to segregate years, months, ...
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->adjustmentsView, "extAdjDate",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->adjustmentsView,
+                              "extAdjDate",
                               Q_ARG(QVariant, QVariant::fromValue(yearAdj)),
                               Q_ARG(QVariant, QVariant::fromValue(monthAdj)),
                               Q_ARG(QVariant, QVariant::fromValue(dayAdj)),
@@ -861,7 +883,8 @@ void SpixGTest::fillInValidationData(ValidationData validationData1)
     findDateObjectAndSetValue("nextControlDate", "nextControlTime", validationData1.dateTimeVal);
 
     srv->synchronize();
-    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->validationView, "extTextInputs",
+    QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->validationView,
+                              "extTextInputs",
                               Q_ARG(QVariant, QVariant::fromValue(validationData1.expectedness)),
                               Q_ARG(QVariant, QVariant::fromValue(validationData1.suitability)),
                               Q_ARG(QVariant, QVariant::fromValue(validationData1.prediction)),

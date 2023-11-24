@@ -1021,7 +1021,7 @@ void SpixGTest::printReport(QString reportFileName)
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
     srv->waitPeriod();
     srv->synchronize();
-    std::cout << "Printing report" << std::endl;
+    std::cout << "Printing report: " << reportFileName.toStdString() << std::endl;
 
     srv->m_mainWindowController->getInterpretationController()->setReportFileName(reportFileName);
     srv->mouseClick(spix::ItemPath("mainWindow/reportView/printButton"));

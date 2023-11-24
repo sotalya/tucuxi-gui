@@ -397,7 +397,7 @@ protected:
         srv->waitPeriod();
         srv->synchronize();
         srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
-        srv->waitPeriod();
+        srv->waitForSync();
 
         QDateTime dateTime;
         dateTime.setDate(QDate(2021,07,27));
@@ -464,11 +464,9 @@ protected:
             srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
         }
         else {
-            srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/addAdjustment"));
+            srv->mouseClick(spix::ItemPath("mainWindow/flowView/addAdjustment"));
         }
-
-
-        srv->waitPeriod(10);
+        srv->waitForSync();
 
         srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
         srv->waitPeriod();

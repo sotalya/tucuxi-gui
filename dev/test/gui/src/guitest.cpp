@@ -47,7 +47,7 @@ int waitTimeLong = 10;
 
 QMap<int, QString> flowViewMap = {std::pair{0,"Patient"}, {1,"Drugs"}, {2,"Dosages"},
                                  {3,"Covariates"}, {4,"Measures"}, {5,"Targets"},
-                                 {5,"Adjustments"}, {5,"Validation"}, {5,"Reports"}};
+                                 {6,"Adjustments"}, {7,"Validation"}, {8,"Reports"}};
 
 SpixGTest::SpixGTest(Tucuxi::Gui::GuiUtils::MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[])
 {
@@ -277,6 +277,7 @@ void SpixGTest::removeFromList(std::string removeFrom, int removeIndex = 0)     
 
 void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
 {
+
     auto drugItemName = "drugList_" + drugName;
     srv->synchronize();
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));

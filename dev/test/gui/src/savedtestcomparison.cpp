@@ -99,22 +99,22 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;            // modelIndex : 0  = only model available
         srv->selectDrugInList(drugName, modelIndex);
 
-        dosageData.dosage = 225000;
+        dosageData.dosage = 2250;
         srv->addDosage(dosageData);
 
-        covariatesData.scc = 7660;
+        covariatesData.scc = 85;
         for(int covariateType = 0; covariateType <= 3; covariateType++)
         {
             if (!(covariateType == 1 || covariateType == 2))
                 srv->addCovariatesByDrug(covariatesData, covariateType, drugName);
         }
 
-        measureData.value = 290;
+        measureData.value = 125;
         srv->addMeasure(measureData);
 
-        targetData.cMinInput  = 30000;
-        targetData.cBestInput = 45000;
-        targetData.cMaxInput  = 60000;
+        targetData.cMinInput  = 85;
+        targetData.cBestInput = 135;
+        targetData.cMaxInput  = 225;
         srv->removeFromList("target", 0);
         srv->waitPeriod(waitTimeLong);
 

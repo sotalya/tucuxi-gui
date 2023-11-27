@@ -84,9 +84,7 @@ TEST(AddEditRemoveTest, Test1)
         dosageData1.dateTimeDos2.setDate(QDate(2022, n+1, n+1));        // end date(n)
         dosageData1.dateTimeDos2.setTime(QTime(n+1, n+1));              // end time(n)
 
-        srv->waitForSync();
         srv->addDosage(dosageData1);
-
         srv->waitPeriod(waitTime1);
 
         //_____Add covariates___________________________________________
@@ -97,9 +95,7 @@ TEST(AddEditRemoveTest, Test1)
         covariatesData1.dateTimeCovar.setDate(QDate(2022, n, n));
         covariatesData1.dateTimeCovar.setTime(QTime(n, n));
 
-        srv->waitForSync();
         srv->addCovariates(covariatesData1, covarTypeIndex);
-
         srv->waitPeriod(waitTime1);
 
         //_____Add measure______________________________________________
@@ -109,9 +105,7 @@ TEST(AddEditRemoveTest, Test1)
         measureData1.dateTimeMeas.setDate(QDate(2022, n+1, n+2));
         measureData1.dateTimeMeas.setTime(QTime(n+1, n+2));
 
-        srv->waitForSync();
         srv->addMeasure(measureData1);
-
         srv->waitPeriod(waitTime1);
 
         //_____Add target_______________________________________________
@@ -125,7 +119,6 @@ TEST(AddEditRemoveTest, Test1)
         targetData1.tMaxInput   = (n+2)*10;
         targetData1.micInput    = (n*100) + 1000;
 
-        srv->waitForSync();
         srv->addTarget(targetData1);
 
         srv->waitPeriod(waitTimeLong);
@@ -152,7 +145,6 @@ TEST(AddEditRemoveTest, Test1)
 
         srv->editDosage(dosageData1, editDosageIndex);
         srv->waitPeriod(waitTime1);
-        srv->waitForSync();
 
         dosageData1.dosage = 543;
         dosageData1.steadyState = false;
@@ -164,7 +156,7 @@ TEST(AddEditRemoveTest, Test1)
         editDosageIndex = 1;
 
         srv->editDosage(dosageData1, editDosageIndex);
-        srv->waitForSync();
+        srv->waitPeriod(waitTime1);
 
     //_____Edit covariate_______________________________________________
 
@@ -176,7 +168,6 @@ TEST(AddEditRemoveTest, Test1)
         int editCovariateIndex = 0;
 
         srv->editCovariates(covariatesData1, covarTypeIndex, editCovariateIndex);
-
         srv->waitPeriod(waitTime1);
 
 
@@ -190,7 +181,6 @@ TEST(AddEditRemoveTest, Test1)
         int editMeasureIndex = 0;
 
         srv->editMeasure(measureData1, editMeasureIndex);
-
         srv->waitPeriod(waitTime1);
 
 
@@ -208,7 +198,6 @@ TEST(AddEditRemoveTest, Test1)
         int editTargetIndex = 0;
 
         srv->editTarget(targetData1, editTargetIndex);
-
         srv->waitPeriod(waitTimeLong);
 
 

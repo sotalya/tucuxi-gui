@@ -359,8 +359,8 @@ TEST(GuidedStressTest, TargetsTab)
         "mainWindow/flowView/addTarget",
         "mainWindow/flowView/editTarget_",
         "mainWindow/flowView/removeTarget_",
-        "measureDialog/okTarget",
-        "measureDialog/cancelTarget",
+        "targetDialog/okTarget",
+        "targetDialog/cancelTarget",
     };
 
     for (int loopIndex = 1; loopIndex <= NUMBER_OF_ITERATIONS; loopIndex++)

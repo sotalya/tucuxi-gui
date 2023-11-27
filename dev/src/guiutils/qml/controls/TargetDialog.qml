@@ -143,8 +143,8 @@ DialogBase {
         ColumnLayout {
             Layout.row: 1
             Layout.column:1
-            width: parent.parent.width - 100
-            height: parent.parent.width - 50
+            width: parent.width - 100
+            height: parent.height - 50
 
             RowLayout {
                 spacing: 2
@@ -256,7 +256,7 @@ DialogBase {
                     id: tMinInput
                     objectName: "tMinInput"
                     Layout.preferredWidth: 200
-                    enabled: typeInput.currentIndex === 1
+                    enabled: typeInput.currentText === "Peak";
                     onTextChangedSignal: { checkValues() }
                     onEditingFinished: { root.validate() }
                 }
@@ -275,7 +275,7 @@ DialogBase {
                     id: tBestInput
                     objectName: "tBestInput"
                     Layout.preferredWidth: 200
-                    enabled: typeInput.currentIndex === 1
+                    enabled: typeInput.currentText === "Peak";
                     onTextChangedSignal: { checkValues() }
                     onEditingFinished: { root.validate() }
                 }
@@ -294,7 +294,7 @@ DialogBase {
                     id: tMaxInput
                     objectName: "tMaxInput"
                     Layout.preferredWidth: 200
-                    enabled: typeInput.currentIndex === 1
+                    enabled: typeInput.currentText === "Peak";
                     onTextChangedSignal: { checkValues() }
                     onEditingFinished: { root.validate() }
                 }
@@ -314,7 +314,6 @@ DialogBase {
                     id: micInput
                     objectName: "micInput"
                     Layout.preferredWidth: 200
-                    enabled: typeInput.currentIndex > 5
                     onEditingFinished: { root.validate() }
                 }
             }

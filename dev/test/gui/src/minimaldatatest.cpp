@@ -55,6 +55,8 @@ TEST(MinimalDataTest, Test1)
     srv->selectDrugInList("Cefepime", 0);
     srv->waitPeriod(waitTime1);
 
+    dosageData1.dosage = 2345;
+
     srv->addDosage(dosageData1);
     srv->waitPeriod(waitTime1);
 
@@ -74,13 +76,7 @@ TEST(MinimalDataTest, Test1)
     srv->waitPeriod(waitTime1);
 
     srv->fillInValidationData(validationData1);
-    srv->waitPeriod(waitTime1);
-
-    srv->deleteValidationComment("warning", 2, 0);
-    srv->waitPeriod(waitTime1);
-
-    srv->saveValidationComment("warning", 2);
-    srv->waitPeriod(waitTime1);
+    srv->waitForSync();
 
     srv->validateInterpretation();
     srv->waitPeriod(waitTime1);

@@ -47,7 +47,7 @@ TEST(ValidationLoadFile, Test1)
 
     // LOADING interpretation from Xml file
 
-    QString loadName = "scenario2"; // "save_1.tui";
+    QString loadName = "scenario8"; // "save_1.tui";
 
     srv->loadInterpretation(loadName);
 
@@ -72,6 +72,6 @@ TEST(ValidationLoadFile, Test1)
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
-    srv->waitPeriod(waitTimeLong*100);
+    srv->waitPeriod(waitTimeLong);
     std::cout << "End of program ..." << std::endl;
 }

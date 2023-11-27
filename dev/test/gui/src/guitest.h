@@ -67,7 +67,7 @@ struct CovariatesData {
 
 struct MeasureData {
     QString name = "Sample_a_124";
-    double value = 1589;
+    double value = 120;
     QDateTime dateTimeMeas = QDateTime::currentDateTime();
 };
 

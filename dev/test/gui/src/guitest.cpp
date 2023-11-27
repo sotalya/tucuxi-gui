@@ -100,7 +100,7 @@ void SpixGTest::waitForSync()
             srv->synchronize();
             QMetaObject::invokeMethod(item,
                                       "getWaitStatus",
-                                      Qt::BlockingQueuedConnection,
+                                      Qt::SingleShotConnection,
                                       Q_RETURN_ARG(QVariant, waitStatus));
             isRunning = waitStatus.toBool();
         }

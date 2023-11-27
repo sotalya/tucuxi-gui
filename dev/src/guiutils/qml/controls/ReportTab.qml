@@ -212,11 +212,12 @@ Rectangle {
         FileDialog {
             id: fileDialog
             title: "Generate pdf report..."
+            fileMode: FileDialog.SaveFile
             folder : StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
             modality: Qt.WindowModal
             onAccepted: {
                 // Idea from https://stackoverflow.com/questions/24927850/get-the-path-from-a-qml-url
-                var filename = interpretationController.handleFileChosen(fileDialog.fileUrl);
+                var filename = interpretationController.handleFileChosen(fileDialog.file);
 
                 daweb.printToPdf(filename);
                 fileDialog.close();

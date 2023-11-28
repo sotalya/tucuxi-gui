@@ -1,5 +1,8 @@
 //@@license@@
 
+#ifndef GUITEST_H
+#define GUITEST_H
+
 #include <QTest>
 
 #include <Spix/QtQmlBot.h>
@@ -220,3 +223,5 @@ EXPECT_EQ(spixErrors.size(), 0); \
 for (const auto &spixError : spixErrors) { \
     EXPECT_EQ(spixError, ""); \
 }} \
+
+#endif //GUITEST_H

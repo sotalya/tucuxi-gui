@@ -30,3 +30,7 @@ INCLUDEPATH += "C:\Program Files\Spix\include"
 else {
 LIBS += -lgtest
 }
+
+HEADERS += \
+    $$PWD/src/defaultdrugconfig.h \
+    $$PWD/src/guitest.h

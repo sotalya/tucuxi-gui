@@ -20,6 +20,44 @@ namespace Core {
 class OperationList;
 class TranslatableString;
 
+/// \brief Define the covariate types.
+enum class CovariateType
+{
+
+    /// \brief Standard, no particular treatment of the value
+    /// - if no patient variate exist -> use operation in drug model to generate a new value each time one or more
+    ///                                  inputs of the operation are modified
+    ///   if cannot apply operation   -> use default value
+    ///   if >= 1 variate exists      -> if only one value -> use for the entire period
+    ///                                  else              -> interpolate with function defined in
+    ///                                                       CovariateDefinition, using first observed value for
+    ///                                                       the interval between start and the first observation
+    ///   \warning Look also at values outside the given period! The period itself limits the range of measures we are
+    ///            interested in, but does not affect the available variates.
+    Standard = 0,
+
+    /// Age in years. Automatic calculation based on birth date, use default if not available, unit = years.
+    AgeInYears,
+
+    /// Age in days. Automatic calculation based on birth date, use default if not available, unit = days.
+    AgeInDays,
+
+    /// Age in weeks. Automatic calculation based on birth date, use default if not available, unit = weeks.
+    AgeInWeeks,
+
+    /// Age in months. Automatic calculation based on birth date, use default if not available, unit = months.
+    AgeInMonths,
+
+    /// \brief Sex of the person, based on his administrative data. 1 for male, 0 for female.
+    /// Strangely, if Sex is at the second position, the test_covariateextractor.h tests will fail.
+    Sex,
+
+    /// \brief Automatic calculation of the dose, based on the intakes.
+    /// The unit of the covariate will be used to convert the actual dose to the covariate.
+    Dose
+};
+
+
 class DrugVariate : public Entity {
 
     Q_OBJECT
@@ -37,6 +75,7 @@ class DrugVariate : public Entity {
     AUTO_PROPERTY_DECL(QString, description, Description)
     AUTO_PROPERTY_DECL(QMetaType::Type, type, Type)
     AUTO_PROPERTY_DECL(bool, automatic, Automatic)
+    AUTO_PROPERTY_DECL(CovariateType, covariateType, CovariateType)
 
     //TODO change two next lines to #translatable
     AUTO_PROPERTY_DECL(TranslatableString*,visualNameTranslation,VisualNameTranslation)

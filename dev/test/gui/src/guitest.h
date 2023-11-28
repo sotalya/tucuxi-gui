@@ -50,11 +50,11 @@ struct CovariatesData {
 
     double dayNightDosing                     = 100;
     double asian                              = 100;
-    double nonValvularAtrialFibriliation       = 0;
+    double nonValvularAtrialFibriliation      = 0;
     double acuteCoronarySyndrome              = 0;
     double strongModerateCytochromeInhibitors = 100;
-    double dose                               = 410;
-    double glomerularFiltrationRate           = 9500;
+    double dose                               = 8.2;
+    double glomerularFiltrationRate           = 95;
 
     double atazanavirWithWithoutBooster = 0;
     double darunavir                    = 1;

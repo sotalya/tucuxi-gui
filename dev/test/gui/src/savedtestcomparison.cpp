@@ -75,13 +75,21 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;            // modelIndex : 0 = only model available
         srv->selectDrugInList(drugName, modelIndex);
 
+        dosageData.dosage = 12.5;
+        dosageData.interval = 8;
+        dosageData.infusion = 100;
         srv->addDosage(dosageData);
 
         int covariateType = 1; // Weight
         srv->addCovariatesByDrug(covariatesData, covariateType, drugName);
 
+        measureData.value = 0.985; //[mg]
         srv->addMeasure(measureData);
 
+        targetData.targetType = Tucuxi::Gui::Core::TargetMethod::CumulativeAUCTarget;
+        targetData.cMinInput = 55;
+        targetData.cBestInput = 75;
+        targetData.cMaxInput = 101;
         srv->addTarget(targetData);
 
         srv->addAdjustments(adjustmentsData);
@@ -209,6 +217,9 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;            // modelIndex : 0
         srv->selectDrugInList(drugName, modelIndex);
 
+        dosageData.dosage       = 2.5;
+        dosageData.interval     = 12;
+        dosageData.steadyState  = true;
         srv->addDosage(dosageData);
 
         for(int covariateType = 2; covariateType <= 9; covariateType++)
@@ -225,6 +236,9 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;                // modelIndex : 0
         srv->selectDrugInList(drugName, modelIndex);
 
+        dosageData.dosage       = 62.0;
+        dosageData.interval     = 16;
+        dosageData.steadyState  = true;
         srv->addDosage(dosageData);
 
         for(int covariateType = 2; covariateType <= 5; covariateType++)
@@ -241,9 +255,12 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;              // modelIndex : 0
         srv->selectDrugInList(drugName, modelIndex);
 
+        dosageData.dosage       = 1122.0;
+        dosageData.interval     = 8;
+        dosageData.infusion     = 100;
         srv->addDosage(dosageData);
 
-        covariatesData.scc = 7660;
+        covariatesData.scc = 76.60;
         for(int covariateType = 0; covariateType <= 6; covariateType++)
         {
             if (!(covariateType == 1 || covariateType == 2 || covariateType == 5))
@@ -263,9 +280,8 @@ TEST(SavedTestComparison, Test1)
         {
 
             //_____Add dosage_______________________________________________
-            dosageData.dosage      = n*1000 + n*200 + n*30 + n*1;          // dosage(n) = {1234, 2345, 3456, 4567, ...}
-            dosageData.infusion    = n*1000;                               // infusion(n) = {100, 200, 300, 400, ...}
-            dosageData.interval    = n*1200;                               // interval(n) = {1200, 2400, 3600, 4800, ...}
+            dosageData.dosage      = n*0.5 + n*0.1;
+            dosageData.interval    = n*8;                                  // interval(n) = {1200, 2400, 3600, 4800, ...}
             dosageData.steadyState = false;                                // if steadyState = false -> start date & end date needed
             dosageData.dateTimeDos1.setDate(QDate(2022, 05, 18+n));            // start date(n)
             dosageData.dateTimeDos1.setTime(QTime(n, n));                  // start time(n)
@@ -289,7 +305,7 @@ TEST(SavedTestComparison, Test1)
             //_____Add measure______________________________________________
 
             measureData.name   = "Sample_" + QString::number(n);
-            measureData.value  = 500 + n*100 + n*100 + n*10 + n*1;
+            measureData.value  = 50 + n*1;
             measureData.dateTimeMeas.setDate(QDate(2022, 05, 24+n));
             measureData.dateTimeMeas.setTime(QTime(n, n));
 
@@ -303,13 +319,13 @@ TEST(SavedTestComparison, Test1)
             //_____Add target_______________________________________________
 
             targetData.targetType  = rand() % 14;
-            targetData.cMinInput   = n*100 + n*10 + n;
-            targetData.cBestInput  = (n+1)*100 + (n+1)*10 + (n+1);
-            targetData.cMaxInput   = (n+2)*100 + (n+2)*10 + (n+2);
+            targetData.cMinInput   = n*50 + n*10 + n;
+            targetData.cBestInput  = (n+1)*50 + (n+1)*10 + (n+1);
+            targetData.cMaxInput   = (n+2)*50 + (n+2)*10 + (n+2);
             targetData.tMinInput   = n*10;
             targetData.tBestInput  = (n+1)*10;
             targetData.tMaxInput   = (n+2)*10;
-            targetData.micInput    = (n*100) + 1000;
+            targetData.micInput    = (n*10);
 
             srv->waitForSync();
             srv->addTarget(targetData);

@@ -825,11 +825,11 @@ void SpixGTest::addAdjustments(AdjustmentsData adjustmentsData1)
     srv->mouseClick(spix::ItemPath("mainWindow/flowView/addAdjustment"));
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/editAdjustments_0"));
-    srv->waitPeriod(waitTime1);
+//    srv->mouseClick(spix::ItemPath("mainWindow/flowView/editAdjustments_0"));
+//    srv->waitPeriod(waitTime1);
 
 //    srv->mouseClick(spix::ItemPath("mainWindow/flowView/selectAdjustment_3"));    // Runs ok
-    srv->waitPeriod(waitTime1*10);
+    srv->waitPeriod(waitTime1);
     srv->synchronize();
 
 }

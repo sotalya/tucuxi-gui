@@ -223,7 +223,6 @@ TEST(AddEditRemoveTest, Test1)
 
     //_______________________________________________________
 
-    srv->waitForSync();
     srv->waitPeriod(waitTimeLong);
     //    srv->synchronize();
 

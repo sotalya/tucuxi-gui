@@ -128,7 +128,7 @@ protected:
 private:
     static bool compareVariate(const Tucuxi::Gui::Core::PatientVariate* a, const Tucuxi::Gui::Core::PatientVariate* b);
     Core::CovariateType findCovariateTypeFromPatientVariate(const Core::PatientVariate* patientVariate);
-    double computeTimeBasedOnCovarianteType(const QDate date, const Core::CovariateType covarType);
+    double computeTimeBasedOnCovariateType(const QDate date, const Core::CovariateType covarType);
 };
 
 }

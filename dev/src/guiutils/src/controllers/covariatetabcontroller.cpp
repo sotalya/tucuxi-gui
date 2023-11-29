@@ -157,7 +157,7 @@ void Tucuxi::Gui::GuiUtils::CovariateTabController::setBirthdate(QDateTime date)
             pv->setCovariateId(drugVariate->getCovariateId());
             pv->setName(drugVariate->getName());
             pv->setType(drugVariate->getType());
-            pv->getQuantity()->setDbvalue(computeTimeBasedOnCovarianteType(birthday, covarType));
+            pv->getQuantity()->setDbvalue(computeTimeBasedOnCovariateType(birthday, covarType));
             pv->getQuantity()->setUnit(drugVariate->getDefaultValue()->unit());
 
             _patientVariates->append(pv);
@@ -179,25 +179,15 @@ void Tucuxi::Gui::GuiUtils::CovariateTabController::setBirthdate(QDateTime date)
 void Tucuxi::Gui::GuiUtils::CovariateTabController::setSinglePatientVariate(QString id, double value)
 {
     bool specialSet = false;
-    // Remove the AgeInYears, AgeInMonths, AgeInWeeks, and AgeInDays
+    // Remove the AgeInYears, AgeInMonths, AgeInWeeks, AgeInDays, and sex
     for(int i = 0; i < _patientVariates->size() ; i++) {
         auto covarType = findCovariateTypeFromPatientVariate(_patientVariates->at(i));
         if (covarType == Core::CovariateType::AgeInYears || covarType == Core::CovariateType::AgeInDays ||
-            covarType == Core::CovariateType::AgeInWeeks || covarType == Core::CovariateType::AgeInMonths)
+            covarType == Core::CovariateType::AgeInWeeks || covarType == Core::CovariateType::AgeInMonths ||
+            covarType == Core::CovariateType::Sex)
         {
             _patientVariates->remove(i);
             specialSet = true;
-        }
-    }
-
-    if (id == "sex") {
-        // Remove the sex if it exists
-        for(int i = 0; i < _patientVariates->size() ; i++) {
-            if (_patientVariates->at(i)->getCovariateId() == "sex") {
-                _patientVariates->remove(i);
-                i = _patientVariates->size() + 1;
-                specialSet = true;
-            }
         }
     }
 
@@ -392,7 +382,7 @@ Tucuxi::Gui::Core::CovariateType Tucuxi::Gui::GuiUtils::CovariateTabController::
     return Tucuxi::Gui::Core::CovariateType::Standard;
 }
 
-double Tucuxi::Gui::GuiUtils::CovariateTabController::computeTimeBasedOnCovarianteType(const QDate date, const Tucuxi::Gui::Core::CovariateType covarType){
+double Tucuxi::Gui::GuiUtils::CovariateTabController::computeTimeBasedOnCovariateType(const QDate date, const Tucuxi::Gui::Core::CovariateType covarType){
     if (covarType == Tucuxi::Gui::Core::CovariateType::AgeInYears){
         return date.daysTo(QDate::currentDate()) / 365;
     }
@@ -405,5 +395,5 @@ double Tucuxi::Gui::GuiUtils::CovariateTabController::computeTimeBasedOnCovarian
     else if (covarType == Tucuxi::Gui::Core::CovariateType::AgeInMonths){
         return date.daysTo(QDate::currentDate()) / 30;
     }
-    return NULL;
+    return 0;
 }

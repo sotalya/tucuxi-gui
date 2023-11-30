@@ -83,7 +83,7 @@ TEST(SavedTestComparison, Test1)
         int covariateType = 1; // Weight
         srv->addCovariatesByDrug(covariatesData, covariateType, drugName);
 
-        measureData.value = 0.985; //[mg]
+        measureData.measure = 0.985; //[mg]
         srv->addMeasure(measureData);
 
         targetData.targetType = Tucuxi::Gui::Core::TargetMethod::CumulativeAUCTarget;
@@ -117,7 +117,7 @@ TEST(SavedTestComparison, Test1)
                 srv->addCovariatesByDrug(covariatesData, covariateType, drugName);
         }
 
-        measureData.value = 125;
+        measureData.measure = 125;
         srv->addMeasure(measureData);
 
         targetData.cMinInput  = 85;
@@ -198,11 +198,11 @@ TEST(SavedTestComparison, Test1)
         adjustmentsData.dateTimeAdj     = QDateTime::currentDateTime();
         adjustmentsData.loadingDose     = 0;
         adjustmentsData.restPeriod      = 0;
-        adjustmentsData.suggestAdjNum   = 0;
+        adjustmentsData.suggestAdjIndex = 0;
         adjustmentsData.dose            = 0;
         adjustmentsData.interval        = 0;
 
-        QString drugName = "Cefepime"; //0???
+        QString drugName = "Cefepime";
         int modelIndex  = 0;
         srv->selectDrugInList(drugName, modelIndex);
 
@@ -305,7 +305,7 @@ TEST(SavedTestComparison, Test1)
             //_____Add measure______________________________________________
 
             measureData.name   = "Sample_" + QString::number(n);
-            measureData.value  = 50 + n*1;
+            measureData.measure  = 50 + n*1;
             measureData.dateTimeMeas.setDate(QDate(2022, 05, 24+n));
             measureData.dateTimeMeas.setTime(QTime(n, n));
 

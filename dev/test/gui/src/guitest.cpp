@@ -33,7 +33,6 @@
 #include "admin/src/dal/phone.h"
 #include "admin/src/interpretationxmlexport.h"
 
-
 #include <QMessageBox>
 
 using namespace Tucuxi::Gui::Admin;
@@ -712,7 +711,7 @@ void SpixGTest::fillInMeasureData(MeasureData measureData1)
 
     findEntityTextFieldAndSetValue("sampleIdField", measureData1.name);
 
-    findEntityTextValueFieldAndSetValue("measureValueEntry", measureData1.value);
+    findEntityTextValueFieldAndSetValue("measureValueEntry", measureData1.measure);
 
     findDateObjectAndSetValue("sampleDateInput", "sampleTimeInput", measureData1.dateTimeMeas);
 

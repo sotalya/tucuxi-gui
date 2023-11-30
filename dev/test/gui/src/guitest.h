@@ -8,6 +8,7 @@
 #include <Spix/QtQmlBot.h>
 
 #include "guiutils/src/mainwindowcontroller.h"
+#include "defaultdrugconfig.h"
 
 class QQuickWindow;
 

@@ -195,27 +195,29 @@ void Tucuxi::Gui::GuiUtils::CovariateTabController::setSinglePatientVariate(QStr
     QString variateName = id;
     foreach (DrugVariateInfo* drugVariate, _drugVariateInfos->getList())
     {
-        Tucuxi::Gui::Core::PatientVariate* pv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, _patientVariates);
-        pv->setDate(QDateTime::currentDateTime());
-        pv->setCovariateId(variateName);
-        pv->setName(drugVariate->getName());
-        pv->setType(drugVariate->getType());
-        pv->getQuantity()->setDbvalue(value);
-        pv->getQuantity()->setUnit(drugVariate->getDefaultValue()->unit());
+        if (drugVariate->getCovariateId() == id) {
+            Tucuxi::Gui::Core::PatientVariate* pv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, _patientVariates);
+            pv->setDate(QDateTime::currentDateTime());
+            pv->setCovariateId(variateName);
+            pv->setName(drugVariate->getName());
+            pv->setType(drugVariate->getType());
+            pv->getQuantity()->setDbvalue(value);
+            pv->getQuantity()->setUnit(drugVariate->getDefaultValue()->unit());
 
-        _patientVariates->append(pv);
-        if (!specialSet) {
-            _fileredVariates->append(pv);
+            _patientVariates->append(pv);
+            if (!specialSet) {
+                _fileredVariates->append(pv);
+            }
+            updateActualValue(variateName);
+
+            if (!specialSet) {
+                emit fileredVariatesChanged(_fileredVariates);
+            }
+            emit patientVariatesChanged(_patientVariates);
+
+            selectDrugVariate(0);
+            return;
         }
-        updateActualValue(variateName);
-
-        if (!specialSet) {
-            emit fileredVariatesChanged(_fileredVariates);
-        }
-        emit patientVariatesChanged(_patientVariates);
-
-        selectDrugVariate(0);
-        return;
     }
 /*
     if (id == "birthdate") {

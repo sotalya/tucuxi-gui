@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 //import QtQuick.Controls.Styles
-import QtQuick.Dialogs
+import Qt.labs.platform
 
 import guiutils.qml.styles
 import guiutils.qml.controls

@@ -97,7 +97,7 @@ Rectangle {
         implicitWidth: 150
         inputMask: "00/00/0000"
         inputMethodHints : Qt.ImhDate
-        text: parent.date.toLocaleString(Qt.locale(),"dd/MM/yyyy")
+        text: parent.date.toLocaleString(Qt.locale(), "dd/MM/yyyy")
         color: isOk ? "black" : "red"
         enabled: isEnabled
 

@@ -2,7 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 //import QtQuick.Controls.Styles
-import QtQuick.Dialogs
+
+import Qt.labs.platform
 
 
 import guiutils.qml.styles
@@ -316,7 +317,7 @@ Rectangle {
                             EntityListDelegateItem {
                                 Layout.fillWidth: true
                                 color: patientVariateListDelegate.mousearea.hovered ? patientVariateList.rowBackgroundHover : (patientVariateListDelegate.ListView.isCurrentItem ? patientVariateList.rowBackgroundSelected : patientVariateList.rowBackground)
-                                label.text: Qt.formatDateTime(modelData.date)
+                                label.text: Qt.formatDateTime(modelData.date, "dd/MM/yyyy hh:mm")
                                 label.color: patientVariateListDelegate.mousearea.hovered ? patientVariateList.rowForegroundHover : (patientVariateListDelegate.ListView.isCurrentItem ? patientVariateList.rowForegroundSelected : (/* hided ? patientVariateList.rowForegroundGray : */patientVariateList.rowForeground))
                             },
                             EntityListImage {

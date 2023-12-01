@@ -122,17 +122,17 @@ Rectangle {
                             EntityListDelegateItem {
                                 Layout.preferredWidth:115
                                 color: dosageListDelegate.mousearea.hovered ? dosageList.rowBackgroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowBackgroundSelected : dosageList.rowBackground)
-                                label.text: modelData.isAtSteadyState ? "steady state" : Qt.formatDateTime(modelData.applied)
+                                label.text: modelData.isAtSteadyState ? "steady state" : Qt.formatDateTime(modelData.applied, "dd/MM/yyyy hh:mm")
+                                label.color: dosageListDelegate.mousearea.hovered ? dosageList.rowForegroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowForegroundSelected : dosageList.rowForeground)
+                            },
+                            EntityListDelegateItem {
+                                Layout.preferredWidth:115
+                                color: dosageListDelegate.mousearea.hovered ? dosageList.rowBackgroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowBackgroundSelected : dosageList.rowBackground)
+                                label.text: modelData.isAtSteadyState ? "steady state" : Qt.formatDateTime(modelData.endtime, "dd/MM/yyyy hh:mm")
                                 label.color: dosageListDelegate.mousearea.hovered ? dosageList.rowForegroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowForegroundSelected : dosageList.rowForeground)
                             },
                             EntityListDelegateItem {
                                 Layout.fillWidth: true
-                                color: dosageListDelegate.mousearea.hovered ? dosageList.rowBackgroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowBackgroundSelected : dosageList.rowBackground)
-                                label.text: modelData.isAtSteadyState ? "steady state" : Qt.formatDateTime(modelData.endtime)
-                                label.color: dosageListDelegate.mousearea.hovered ? dosageList.rowForegroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowForegroundSelected : dosageList.rowForeground)
-                            },
-                            EntityListDelegateItem {
-                                Layout.preferredWidth:85
                                 color: dosageListDelegate.mousearea.hovered ? dosageList.rowBackgroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowBackgroundSelected : dosageList.rowBackground)
                                 label.text: modelData.quantity.dbvalue + " " + modelData.quantity.unitstring
                                 label.color: dosageListDelegate.mousearea.hovered ? dosageList.rowForegroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowForegroundSelected : dosageList.rowForeground)

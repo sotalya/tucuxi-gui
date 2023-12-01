@@ -13,7 +13,7 @@ set INSTALL_DIR=C:\Tucuxi
 
 set ZIP_EXE="c:\Program Files\7-Zip\7z.exe"
 
-set BOTANT_DIR=C:\botan\botan2-%ARCH%\lib
+set BOTANT_DIR=PRJ_DIR\libs\tucuxi-core\libs\botan
 set VISUAL_STUDIO_DIR=C:\Program Files\Microsoft Visual Studio\2022\Community
 set QT_DIR=C:\Qt\6.5.2\msvc2019_%ARCH%
 set NSIS_DIR=C:\Program Files (x86)\NSIS

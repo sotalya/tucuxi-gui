@@ -294,14 +294,14 @@ Item {
             ProxyModelFilter {
                 id: fromDateFilter
                 role: PartialRequestListModel.DateRole
-                value: Qt.formatDateTime(Date())
+                value: Qt.formatDateTime(Date(), "dd/MM/yyyy hh:mm")
                 operation: ProxyModelFilter.GreaterOrEqual
             }
 
             ProxyModelFilter {
                 id: toDateFilter
                 role: PartialRequestListModel.DateRole
-                value: Qt.formatDateTime(Date())
+                value: Qt.formatDateTime(Date(), "dd/MM/yyyy hh:mm")
                 operation: ProxyModelFilter.LessOrEqual
             }
 

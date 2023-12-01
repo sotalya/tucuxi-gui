@@ -44,6 +44,7 @@ class DrugVariateInfo : public Tucuxi::Gui::Core::Entity
     AUTO_PROPERTY_DECL(Tucuxi::Gui::Core::OperableAmount*, defaultValue, DefaultValue)
     AUTO_PROPERTY_DECL(QMetaType::Type, type, Type)
     AUTO_PROPERTY_DECL(bool, automatic, Automatic)
+    AUTO_PROPERTY_DECL(Core::CovariateType, covariateType, CovariateType)
 
 public:
     Q_INVOKABLE DrugVariateInfo(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr);
@@ -103,7 +104,7 @@ public:
     STD_PROPERTY_DECL(Tucuxi::Gui::Core::PatientVariateList*, patientVariates, PatientVariates)
 
 public:
-    void reset(Tucuxi::Gui::Core::DrugVariateList* drugVaraites);
+    void reset(Tucuxi::Gui::Core::DrugVariateList* drugVariates);
 
     Q_INVOKABLE void selectDrugVariate(int drugVariateFromIndex);
     Q_INVOKABLE void addPatientVariate(int drugVariateFromIndex);
@@ -126,6 +127,8 @@ protected:
 
 private:
     static bool compareVariate(const Tucuxi::Gui::Core::PatientVariate* a, const Tucuxi::Gui::Core::PatientVariate* b);
+    Core::CovariateType findCovariateTypeFromPatientVariate(const Core::PatientVariate* patientVariate);
+    double computeTimeBasedOnCovariateType(const QDate date, const Core::CovariateType covarType);
 };
 
 }

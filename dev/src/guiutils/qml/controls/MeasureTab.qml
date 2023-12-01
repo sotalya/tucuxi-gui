@@ -136,13 +136,13 @@ Rectangle {
                             EntityListDelegateItem {
                                 Layout.preferredWidth: 115
                                 color: root.mousearea.hovered ? measureList.rowBackgroundHover : (root.ListView.isCurrentItem ? measureList.rowBackgroundSelected : measureList.rowBackground)
-                                label.text: Qt.formatDateTime(modelData.moment)
+                                label.text: Qt.formatDateTime(modelData.moment, "dd/MM/yyyy hh:mm")
                                 label.color: root.mousearea.hovered ? measureList.rowForegroundHover : (root.ListView.isCurrentItem ? measureList.rowForegroundSelected : measureList.rowForeground)
                             },
                             EntityListDelegateItem {
                                 Layout.fillWidth: true
                                 color: root.mousearea.hovered ? measureList.rowBackgroundHover : (root.ListView.isCurrentItem ? measureList.rowBackgroundSelected : measureList.rowBackground)
-                                label.text: Qt.formatDateTime(modelData.arrivalDate)
+                                label.text: Qt.formatDateTime(modelData.arrivalDate, "dd/MM/yyyy hh:mm")
                                 label.color: root.mousearea.hovered ? measureList.rowForegroundHover : (root.ListView.isCurrentItem ? measureList.rowForegroundSelected : measureList.rowForeground)
                             },
                             EntityListImage {

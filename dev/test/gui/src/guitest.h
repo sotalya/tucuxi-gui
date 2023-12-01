@@ -12,6 +12,18 @@
 
 class QQuickWindow;
 
+enum tabIndex{
+    patientTab = 0,
+    drugsTab = 1,
+    dosagesTab = 2,
+    covariatesTab = 3,
+    measuresTab = 4,
+    targetsTab = 5,
+    adjustementsTab = 6,
+    validationTab = 7,
+    reportsTab = 8
+};
+
 class SpixGTest : public spix::TestServer {
 public:
     SpixGTest(Tucuxi::Gui::GuiUtils::MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[]);

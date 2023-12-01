@@ -6,6 +6,7 @@ SOURCES += $$PWD/src/guitest.cpp \
     $$PWD/src/adjustmenttest.cpp \
     $$PWD/src/cachetest.cpp \
     $$PWD/src/daylightsavingtest.cpp \
+    $$PWD/src/flatrequeststest.cpp \
     $$PWD/src/functionstester.cpp \
     $$PWD/src/guidedstresstest.cpp \
     $$PWD/src/issueshighlighter.cpp \
@@ -21,16 +22,15 @@ SOURCES += $$PWD/src/guitest.cpp \
     $$PWD/src/validationtest.cpp \
     $$PWD/src/voriconazoletest.cpp
 
-
-win32 {
-LIBS += "C:\Program Files\googletest-distribution\lib\gtest.lib"
-INCLUDEPATH += "C:\Program Files\googletest-distribution\include"
-INCLUDEPATH += "C:\Program Files\Spix\include"
-}
-else {
-LIBS += -lgtest
-}
-
 HEADERS += \
     $$PWD/src/defaultdrugconfig.h \
     $$PWD/src/guitest.h
+
+win32 {
+    LIBS += "C:\Program Files\googletest-distribution\lib\gtest.lib"
+    INCLUDEPATH += "C:\Program Files\googletest-distribution\include"
+    INCLUDEPATH += "C:\Program Files\Spix\include"
+}
+else {
+    LIBS += -lgtest
+}

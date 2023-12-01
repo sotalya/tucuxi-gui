@@ -71,17 +71,25 @@ TEST(SavedTestComparison, Test1)
         srv->fillInAnalystData(analystData);
         srv->waitPeriod(waitTime1);
 
-        int drugIndex   = 4;            // drugIndex  : 4 = Busulfan
+        QString drugName = "Busulfan";
         int modelIndex  = 0;            // modelIndex : 0 = only model available
-        srv->selectDrugInList(drugIndex, modelIndex);
+        srv->selectDrugInList(drugName, modelIndex);
 
+        dosageData.dosage = 12.5;
+        dosageData.interval = 8;
+        dosageData.infusion = 100;
         srv->addDosage(dosageData);
 
         int covariateType = 1; // Weight
-        srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+        srv->addCovariatesByDrug(covariatesData, covariateType, drugName);
 
+        measureData.value = 0.985; //[mg]
         srv->addMeasure(measureData);
 
+        targetData.targetType = Tucuxi::Gui::Core::TargetMethod::CumulativeAUCTarget;
+        targetData.cMinInput = 55;
+        targetData.cBestInput = 75;
+        targetData.cMaxInput = 101;
         srv->addTarget(targetData);
 
         srv->addAdjustments(adjustmentsData);
@@ -95,26 +103,26 @@ TEST(SavedTestComparison, Test1)
         srv->fillInAnalystData(analystData);
         srv->waitPeriod(waitTime1);
 
-        int drugIndex   = 6;            // drugIndex  : 6  = Cefepime
+        QString drugName = "Cefepime";
         int modelIndex  = 0;            // modelIndex : 0  = only model available
-        srv->selectDrugInList(drugIndex, modelIndex);
+        srv->selectDrugInList(drugName, modelIndex);
 
-        dosageData.dosage = 225000;
+        dosageData.dosage = 2250;
         srv->addDosage(dosageData);
 
-        covariatesData.scc = 7660;
+        covariatesData.scc = 85;
         for(int covariateType = 0; covariateType <= 3; covariateType++)
         {
             if (!(covariateType == 1 || covariateType == 2))
-                srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+                srv->addCovariatesByDrug(covariatesData, covariateType, drugName);
         }
 
-        measureData.value = 290;
+        measureData.value = 125;
         srv->addMeasure(measureData);
 
-        targetData.cMinInput  = 30000;
-        targetData.cBestInput = 45000;
-        targetData.cMaxInput  = 60000;
+        targetData.cMinInput  = 85;
+        targetData.cBestInput = 135;
+        targetData.cMaxInput  = 225;
         srv->removeFromList("target", 0);
         srv->waitPeriod(waitTimeLong);
 
@@ -133,9 +141,9 @@ TEST(SavedTestComparison, Test1)
 
     else if (scenario == 3)
     {
-        int drugIndex   = 20;               // drugIndex  : 20 = Vancomycin
+        QString drugName = "Vancomycin";
         int modelIndex  = (rand() % 8);     // modelIndex : model 0:7 --> random num between 0 to 7
-        srv->selectDrugInList(drugIndex, modelIndex);
+        srv->selectDrugInList(drugName, modelIndex);
 
         srv->addDosage(dosageData);
 
@@ -194,9 +202,9 @@ TEST(SavedTestComparison, Test1)
         adjustmentsData.dose            = 0;
         adjustmentsData.interval        = 0;
 
-        int drugIndex   = 0;
+        QString drugName = "Cefepime"; //0???
         int modelIndex  = 0;
-        srv->selectDrugInList(drugIndex, modelIndex);
+        srv->selectDrugInList(drugName, modelIndex);
 
         srv->addDosage(dosageData);
 
@@ -205,15 +213,18 @@ TEST(SavedTestComparison, Test1)
 
     else if (scenario == 5)
     {
-        int drugIndex   = 2;     // drugIndex  : 2 = Apixaban
-        int modelIndex  = 0;     // modelIndex : 0
-        srv->selectDrugInList(drugIndex, modelIndex);
+        QString drugName = "Apixaban";
+        int modelIndex  = 0;            // modelIndex : 0
+        srv->selectDrugInList(drugName, modelIndex);
 
+        dosageData.dosage       = 2.5;
+        dosageData.interval     = 12;
+        dosageData.steadyState  = true;
         srv->addDosage(dosageData);
 
         for(int covariateType = 2; covariateType <= 9; covariateType++)
         {
-            srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+            srv->addCovariatesByDrug(covariatesData, covariateType, drugName);
         }
 
         srv->addAdjustments(adjustmentsData);
@@ -221,15 +232,18 @@ TEST(SavedTestComparison, Test1)
 
     else if (scenario == 6)
     {
-        int drugIndex   = 9;     // drugIndex  : 9 = Dolutegravir
-        int modelIndex  = 0;     // modelIndex : 0
-        srv->selectDrugInList(drugIndex, modelIndex);
+        QString drugName = "Dolutegravir";
+        int modelIndex  = 0;                // modelIndex : 0
+        srv->selectDrugInList(drugName, modelIndex);
 
+        dosageData.dosage       = 62.0;
+        dosageData.interval     = 16;
+        dosageData.steadyState  = true;
         srv->addDosage(dosageData);
 
         for(int covariateType = 2; covariateType <= 5; covariateType++)
         {
-            srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+            srv->addCovariatesByDrug(covariatesData, covariateType, drugName);
         }
 
         srv->addAdjustments(adjustmentsData);
@@ -237,17 +251,20 @@ TEST(SavedTestComparison, Test1)
 
     else if (scenario == 7)
     {
-        int drugIndex   = 20;     // drugIndex  : 20 = Vancomycin
-        int modelIndex  = 0;      // modelIndex : 0
-        srv->selectDrugInList(drugIndex, modelIndex);
+        QString drugName = "Vancomycin";
+        int modelIndex  = 0;              // modelIndex : 0
+        srv->selectDrugInList(drugName, modelIndex);
 
+        dosageData.dosage       = 1122.0;
+        dosageData.interval     = 8;
+        dosageData.infusion     = 100;
         srv->addDosage(dosageData);
 
-        covariatesData.scc = 7660;
+        covariatesData.scc = 76.60;
         for(int covariateType = 0; covariateType <= 6; covariateType++)
         {
             if (!(covariateType == 1 || covariateType == 2 || covariateType == 5))
-                srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+                srv->addCovariatesByDrug(covariatesData, covariateType, drugName);
         }
 
         srv->addAdjustments(adjustmentsData);
@@ -255,17 +272,16 @@ TEST(SavedTestComparison, Test1)
 
     else if (scenario == 8)
     {
-        int drugIndex   = 2;      // drugIndex  : 2 = Apixaban
-        int modelIndex  = 0;      // modelIndex : 0
-        srv->selectDrugInList(drugIndex, modelIndex);
+        QString drugName = "Apixaban";
+        int modelIndex  = 0;            // modelIndex : 0
+        srv->selectDrugInList(drugName, modelIndex);
 
         for (int n = 1; n <= 3; n++)        // index of loop is used to modify variables to avoid having to do it manually for each iteration
         {
 
             //_____Add dosage_______________________________________________
-            dosageData.dosage      = n*1000 + n*200 + n*30 + n*1;          // dosage(n) = {1234, 2345, 3456, 4567, ...}
-            dosageData.infusion    = n*1000;                               // infusion(n) = {100, 200, 300, 400, ...}
-            dosageData.interval    = n*1200;                               // interval(n) = {1200, 2400, 3600, 4800, ...}
+            dosageData.dosage      = n*0.5 + n*0.1;
+            dosageData.interval    = n*8;                                  // interval(n) = {1200, 2400, 3600, 4800, ...}
             dosageData.steadyState = false;                                // if steadyState = false -> start date & end date needed
             dosageData.dateTimeDos1.setDate(QDate(2022, 05, 18+n));            // start date(n)
             dosageData.dateTimeDos1.setTime(QTime(n, n));                  // start time(n)
@@ -281,7 +297,7 @@ TEST(SavedTestComparison, Test1)
 
         for(int covariateType = 2; covariateType <= 9; covariateType++)
         {
-            srv->addCovariatesByDrug(covariatesData, covariateType, drugIndex);
+            srv->addCovariatesByDrug(covariatesData, covariateType, drugName);
         }
 
         for (int n = 1; n <= 3; n++)        // index of loop is used to modify variables to avoid having to do it manually for each iteration
@@ -289,7 +305,7 @@ TEST(SavedTestComparison, Test1)
             //_____Add measure______________________________________________
 
             measureData.name   = "Sample_" + QString::number(n);
-            measureData.value  = 500 + n*100 + n*100 + n*10 + n*1;
+            measureData.value  = 50 + n*1;
             measureData.dateTimeMeas.setDate(QDate(2022, 05, 24+n));
             measureData.dateTimeMeas.setTime(QTime(n, n));
 
@@ -303,13 +319,13 @@ TEST(SavedTestComparison, Test1)
             //_____Add target_______________________________________________
 
             targetData.targetType  = rand() % 14;
-            targetData.cMinInput   = n*100 + n*10 + n;
-            targetData.cBestInput  = (n+1)*100 + (n+1)*10 + (n+1);
-            targetData.cMaxInput   = (n+2)*100 + (n+2)*10 + (n+2);
+            targetData.cMinInput   = n*50 + n*10 + n;
+            targetData.cBestInput  = (n+1)*50 + (n+1)*10 + (n+1);
+            targetData.cMaxInput   = (n+2)*50 + (n+2)*10 + (n+2);
             targetData.tMinInput   = n*10;
             targetData.tBestInput  = (n+1)*10;
             targetData.tMaxInput   = (n+2)*10;
-            targetData.micInput    = (n*100) + 1000;
+            targetData.micInput    = (n*10);
 
             srv->waitForSync();
             srv->addTarget(targetData);
@@ -346,10 +362,9 @@ TEST(SavedTestComparison, Test1)
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
     // Get to Startup window
-
-    int drugIndex = 20;                     // drugIndex : 20 = Vancomycin
+    QString drugName = "Vancomycin";
     int modelIndex = 3;
-    srv->selectDrugInList(drugIndex, modelIndex);
+    srv->selectDrugInList(drugName, modelIndex);
     srv->waitPeriod(waitTime1);
 
 //    srv->addDosage(dosageData);

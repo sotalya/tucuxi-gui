@@ -97,8 +97,7 @@ TEST(PendingRequestTest, Test1)
         srv->waitPeriod(waitTimeLong);
 
         //--------------------------------------------------------------------------------------------------------------------
-
-        srv->selectDrugInList(0, 0);        // select 1st drugModel
+        srv->selectDrugInList("Voriconazole", 0);        // select 1st drugModel
         srv->waitPeriod(waitTime1);
 
         srv->mouseClickIfPathOk("mainWindow/flowView/drugButton");  // click on drug tab button to validate tab

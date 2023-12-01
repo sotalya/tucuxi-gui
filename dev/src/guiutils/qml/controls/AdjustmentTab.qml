@@ -8,7 +8,7 @@ import guiutils.qml.controls
 
 import ezechiel
 
-import QtQuick.Dialogs
+import Qt.labs.platform
 
 
 Rectangle {

@@ -18,6 +18,7 @@ AUTO_PROPERTY_IMPL(DrugVariate, Descriptor, descriptor, Descriptor)
 AUTO_PROPERTY_IMPL(DrugVariate, QString, description, Description)
 AUTO_PROPERTY_IMPL(DrugVariate, QMetaType::Type, type, Type)
 AUTO_PROPERTY_IMPL(DrugVariate, bool, automatic, Automatic)
+AUTO_PROPERTY_IMPL(DrugVariate, CovariateType, covariateType, CovariateType)
 
 AUTO_PROPERTY_IMPL(DrugVariate, TranslatableString*, visualNameTranslation, VisualNameTranslation)
 AUTO_PROPERTY_IMPL(DrugVariate, TranslatableString*, descriptionTranslation, DescriptionTranslation)

@@ -55,10 +55,9 @@ TEST(AddEditRemoveTest, Test1)
 
     //_____Select drug____________________________________________________________________________________________________________________________
 
-    int drugIndex   = 13;                                               // drug index : 6 = Cefepime, 13 = Imatinib, ...
     int modelIndex  = 0;                                                // model index: domain & study
     srv->getCurrentTabIndex();
-    srv->selectDrugInList(drugIndex, modelIndex);
+    srv->selectDrugInList("Imatinib", modelIndex);
     srv->getCurrentTabIndex();
     srv->waitPeriod(waitTimeLong);
 
@@ -76,57 +75,50 @@ TEST(AddEditRemoveTest, Test1)
 
         //_____Add dosage_______________________________________________
 
-        dosageData1.dosage      = n*1000 + n*200 + n*30 + n*1;          // dosage(n) = {1234, 2345, 3456, 4567, ...}
-        dosageData1.infusion    = n*1000;                               // infusion(n) = {100, 200, 300, 400, ...}
-        dosageData1.interval    = n*1200;                               // interval(n) = {1200, 2400, 3600, 4800, ...}
+        dosageData1.dosage      = n*200 + n*10;                         // dosage(n) = {210, 420, 630, 840, ...}
+        dosageData1.infusion    = n*100;                                // infusion(n) = {100, 200, 300, 400, ...}
+        dosageData1.interval    = n*12;                                 // interval(n) = {12, 24, 36, 48, ...}
         dosageData1.steadyState = false;                                // if steadyState = false -> start date & end date needed
         dosageData1.dateTimeDos1.setDate(QDate(2022, n, n));            // start date(n)
         dosageData1.dateTimeDos1.setTime(QTime(n, n));                  // start time(n)
         dosageData1.dateTimeDos2.setDate(QDate(2022, n+1, n+1));        // end date(n)
         dosageData1.dateTimeDos2.setTime(QTime(n+1, n+1));              // end time(n)
 
-        srv->waitForSync();
         srv->addDosage(dosageData1);
-
         srv->waitPeriod(waitTime1);
 
         //_____Add covariates___________________________________________
 
         int covarTypeIndex = 0;                                         // covariable type index 0 = weight
 
-        covariatesData1.weight = 4000 + n*400 + n*30 + n*1;             // same as Dosage (see above)
+        covariatesData1.weight = 63 + n*5;
         covariatesData1.dateTimeCovar.setDate(QDate(2022, n, n));
         covariatesData1.dateTimeCovar.setTime(QTime(n, n));
 
-        srv->waitForSync();
         srv->addCovariates(covariatesData1, covarTypeIndex);
-
         srv->waitPeriod(waitTime1);
 
         //_____Add measure______________________________________________
 
         measureData1.name   = "Sample_1234_b" + QString::number(n);
-        measureData1.value  = 5000 + n*100 + n*100 + n*10 + n*1;
-        measureData1.dateTimeMeas.setDate(QDate(2022, 2, 3));
-        measureData1.dateTimeMeas.setTime(QTime(2, 3));
+        measureData1.value  = 200 + n*100 + n*15;
+        measureData1.dateTimeMeas.setDate(QDate(2022, n+1, n+2));
+        measureData1.dateTimeMeas.setTime(QTime(n+1, n+2));
 
-        srv->waitForSync();
         srv->addMeasure(measureData1);
-
         srv->waitPeriod(waitTime1);
 
         //_____Add target_______________________________________________
 
-        targetData1.targetType  = 8;
-        targetData1.cMinInput   = n*100 + n*10 + n;
-        targetData1.cBestInput  = (n+1)*100 + (n+1)*10 + (n+1);
-        targetData1.cMaxInput   = (n+2)*100 + (n+2)*10 + (n+2);
+        targetData1.targetType  = 0;
+        targetData1.cMinInput   = 500 + n*50 + n;
+        targetData1.cBestInput  = (n+1)*500 + (n+1)*50 + (n+1);
+        targetData1.cMaxInput   = (n+2)*500 + (n+2)*50 + (n+2);
         targetData1.tMinInput   = n*10;
         targetData1.tBestInput  = (n+1)*10;
         targetData1.tMaxInput   = (n+2)*10;
         targetData1.micInput    = (n*100) + 1000;
 
-        srv->waitForSync();
         srv->addTarget(targetData1);
 
         srv->waitPeriod(waitTimeLong);
@@ -142,84 +134,77 @@ TEST(AddEditRemoveTest, Test1)
     //_____Edit dosage__________________________________________________
 
 
-    //    dosageData1.dosage      = 6666;
-    //    dosageData1.infusion    = 6666;
-    //    dosageData1.interval    = 6666;
-    //    dosageData1.steadyState = true;
-    //    dosageData1.dateTimeDos1.setDate(QDate(2022, 06, 06));
-    //    dosageData1.dateTimeDos1.setTime(QTime(05, 06));
+        dosageData1.dosage      = 432;
+        dosageData1.infusion    = 18;
+        dosageData1.interval    = 24;
+        dosageData1.steadyState = true;
+        dosageData1.dateTimeDos1.setDate(QDate(2022, 6, 6));
+        dosageData1.dateTimeDos1.setTime(QTime(5, 30));
 
-    //    int editDosageIndex     = 1;
+        int editDosageIndex     = 1;
 
-    //    srv->editDosage(dosageData1, editDosageIndex);
-    //    srv->waitPeriod(10);
-    //    srv->waitForSync();
+        srv->editDosage(dosageData1, editDosageIndex);
+        srv->waitPeriod(waitTime1);
 
-    //    dosageData1.dosage = 5656;
-    //    dosageData1.steadyState = false;
-    //    dosageData1.dateTimeDos1.setDate(QDate(2023, 07, 9));
-    //    dosageData1.dateTimeDos1.setTime(QTime(6, 7));
-    //    dosageData1.dateTimeDos2.setDate(QDate(2023, 07, 10));
-    //    dosageData1.dateTimeDos2.setTime(QTime(5, 8));
+        dosageData1.dosage = 543;
+        dosageData1.steadyState = false;
+        dosageData1.dateTimeDos1.setDate(QDate(2023, 7, 8));
+        dosageData1.dateTimeDos1.setTime(QTime(7, 8));
+        dosageData1.dateTimeDos2.setDate(QDate(2023, 7, 10));
+        dosageData1.dateTimeDos2.setTime(QTime(5, 8));
 
-    //    editDosageIndex = 1;
+        editDosageIndex = 1;
 
-    //    srv->editDosage(dosageData1, editDosageIndex);
-    //    srv->waitPeriod(20);
-    //    srv->waitForSync();
+        srv->editDosage(dosageData1, editDosageIndex);
+        srv->waitPeriod(waitTime1);
 
     //_____Edit covariate_______________________________________________
 
-    //    covariatesData1.weight = 4628;
-    //    covariatesData1.dateTimeCovar.setDate(QDate(2022, 02, 03));
-    //    covariatesData1.dateTimeCovar.setTime(QTime(02, 03));
+        covariatesData1.weight = 52;
+        covariatesData1.dateTimeCovar.setDate(QDate(2022, 2, 3));
+        covariatesData1.dateTimeCovar.setTime(QTime(2, 3));
 
-    //    int covarTypeIndex = 0;                                             // covariate type index 0 = weight
-    //    int editCovariateIndex = 0;
+        int covarTypeIndex = 0;                                             // covariate type index 0 = weight
+        int editCovariateIndex = 0;
 
-    //    srv->editCovariates(covariatesData1, covarTypeIndex, editCovariateIndex);
-
-    //    srv->waitPeriod(waitTime1);
+        srv->editCovariates(covariatesData1, covarTypeIndex, editCovariateIndex);
+        srv->waitPeriod(waitTime1);
 
 
     //_____Edit measure_________________________________________________
 
-    //    measureData1.name = "Sample_2345_c";
-    //    measureData1.value = 9876;
-    //    measureData1.dateTimeMeas.setDate(QDate(2022, 04, 05));
-    //    measureData1.dateTimeMeas.setTime(QTime(02, 03));
+        measureData1.name = "Sample_2345_Edit";
+        measureData1.value = 454;
+        measureData1.dateTimeMeas.setDate(QDate(2022, 4, 5));
+        measureData1.dateTimeMeas.setTime(QTime(2, 3));
 
-    //    int editMeasureIndex = 0;
+        int editMeasureIndex = 0;
 
-    //    srv->editMeasure(measureData1, editMeasureIndex);
-
-    //    srv->waitPeriod(waitTime1);
+        srv->editMeasure(measureData1, editMeasureIndex);
+        srv->waitPeriod(waitTime1);
 
 
     //_____Edit target__________________________________________________
 
-    //    targetData1.targetType  = 8;
-    //    targetData1.cMinInput   = 1111;
-    //    targetData1.cBestInput  = 4444;
-    //    targetData1.cMaxInput   = 9999;
-    //    targetData1.tMinInput   = 14;
-    //    targetData1.tBestInput  = 36;
-    //    targetData1.tMaxInput   = 72;
-    //    targetData1.micInput    = 1291;
+        targetData1.targetType  = 8;
+        targetData1.cMinInput   = 1000;
+        targetData1.cBestInput  = 1500;
+        targetData1.cMaxInput   = 2000;
+        targetData1.tMinInput   = 14;
+        targetData1.tBestInput  = 36;
+        targetData1.tMaxInput   = 72;
+        targetData1.micInput    = 1234;
 
-    //    int editTargetIndex = 0;
+        int editTargetIndex = 0;
 
-    //    srv->editTarget(targetData1, editTargetIndex);
-
-    //    srv->waitPeriod(waitTime1);
-
-    //    srv->waitPeriod(waitTimeLong);
+        srv->editTarget(targetData1, editTargetIndex);
+        srv->waitPeriod(waitTimeLong);
 
 
     //_____Removing dosage, covariate, measure & target___________________________________________________________________
 
         std::cout << "It's ***DELETION*** time lads !" << std::endl;
-        srv->waitPeriod(waitTimeLong);
+        srv->waitPeriod(waitTime1);
 
         srv->removeFromList("target",       1);                             // if removeIndex > 0, only chosen input will be removed
         srv->waitPeriod(waitTimeLong);
@@ -238,7 +223,6 @@ TEST(AddEditRemoveTest, Test1)
 
     //_______________________________________________________
 
-    srv->waitForSync();
     srv->waitPeriod(waitTimeLong);
     //    srv->synchronize();
 

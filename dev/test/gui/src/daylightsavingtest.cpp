@@ -49,15 +49,17 @@ TEST(DaylightSavingTest, Test1)
     srv->startNewPatient();
     srv->waitPeriod(waitTime1);
 
-    srv->selectDrugInList(13, 0);       // drugModel index = 13 : Cefepime
+    srv->selectDrugInList("Cefepime", 0);
     srv->waitPeriod(waitTime1);
+    srv->waitForSync();
 
     DosageData dosageData1;
-    dosageData1.steadyState = true;
-    dosageData1.dateTimeDos1.setDate(QDate(2022, 03, 24));
-    dosageData1.dateTimeDos1.setTime(QTime(8, 00));
-    dosageData1.dateTimeDos2.setDate(QDate(2022, 04, 15));
-    dosageData1.dateTimeDos2.setTime(QTime(9, 00));
+    dosageData1.dosage = 2500;
+    dosageData1.steadyState = false;
+    dosageData1.dateTimeDos1.setDate(QDate(2022, 3, 24));
+    dosageData1.dateTimeDos1.setTime(QTime(8, 0));
+    dosageData1.dateTimeDos2.setDate(QDate(2022, 4, 15));
+    dosageData1.dateTimeDos2.setTime(QTime(9, 0));
     dosageData1.interval = 24;
     srv->addDosage(dosageData1);
     srv->waitForSync();
@@ -86,7 +88,7 @@ TEST(DaylightSavingTest, Test1)
     }
 
     srv->extSetView(dosageData1.dateTimeDos1, dosageData1.dateTimeDos1.addDays(daysToGo));
-    srv->waitPeriod(8);     // wait plenty to make sure new view has been set
+    srv->waitForSync();
 
     // Fancy points are only visible points on screen !
     Tucuxi::Gui::Core::FancyPoints* fPoints = srv->m_mainWindowController->getInterpretationController()->chartData->getPopPred()->getPredictive()->getPredictionData()->getPoints();
@@ -105,20 +107,14 @@ TEST(DaylightSavingTest, Test1)
         fValueMin = fPoints->at(pIndex)->getValue();
         fDateMin = QDateTime::fromMSecsSinceEpoch((fPoints->at(pIndex)->getTime()*1000));
 
-        std::cout << "\nMinimum n°" << minimumIndex;
+        std::cout << "\nMinimum nbr " << minimumIndex;
         std::cout << " :\t value : " << fValueMin;
-        std::cout << "\t||\t date : " << fDateMin.toString("yyyy/MM/dd hh:mm.ss").toStdString() << "\n" << std::endl;
+        std::cout << "\t||\t date : " << fDateMin.toString("dd/MM/yyyy hh:mm.ss").toStdString() << "\n" << std::endl;
 
         pIndex++;       // skip a point because the last 2 points before new take have the same value
     }
 
-    srv->waitPeriod(40);
-
     //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-
-    srv->waitForSync();
-    srv->waitPeriod(waitTimeLong);
-    srv->synchronize();
 
     std::cout << "End of test..." << std::endl;
 

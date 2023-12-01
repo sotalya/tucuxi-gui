@@ -34,9 +34,9 @@ struct PatientData {
 
 
 struct DosageData {
-    double dosage           = 556677;               // 5566.77 [mg]
-    double interval         = 24;                   // 24 [h]
-    double infusion         = 60;                   // 60 [min]
+    double dosage           = 567.8;                // [mg]
+    double interval         = 24;                   // [h]
+    double infusion         = 60;                   // [min]
     bool steadyState        = true;
     QDateTime dateTimeDos1  = QDateTime::currentDateTime().addDays(0);
     QDateTime dateTimeDos2  = QDateTime::currentDateTime().addDays(7);
@@ -50,11 +50,11 @@ struct CovariatesData {
 
     double dayNightDosing                     = 100;
     double asian                              = 100;
-    double nonValvularAtrialFibriliation       = 0;
+    double nonValvularAtrialFibriliation      = 0;
     double acuteCoronarySyndrome              = 0;
     double strongModerateCytochromeInhibitors = 100;
-    double dose                               = 410;
-    double glomerularFiltrationRate           = 9500;
+    double dose                               = 8.2;
+    double glomerularFiltrationRate           = 95;
 
     double atazanavirWithWithoutBooster = 0;
     double darunavir                    = 1;
@@ -67,7 +67,7 @@ struct CovariatesData {
 
 struct MeasureData {
     QString name = "Sample_a_124";
-    double value = 1589;
+    double value = 120;
     QDateTime dateTimeMeas = QDateTime::currentDateTime();
 };
 
@@ -116,8 +116,6 @@ struct AnalystData {
 
 };
 
-
-
 class SpixGTest : public spix::TestServer {
 public:
     SpixGTest(Tucuxi::Gui::GuiUtils::MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[]);
@@ -146,9 +144,15 @@ public:
 
     void findObjectAndSetValue(QString objectName, int inputProperty);
 
+    void findDateObjectAndSetValue(QString dateObjectName, QString timeObjectName, QDateTime date);
+
+    void findEntityTextFieldAndSetValue(QString objectName, QString textString);
+
+    void findEntityTextValueFieldAndSetValue(QString objectName, double value);
+
     void mouseClickIfPathOk(std::string clickPath);
 
-    void selectDrugInList(int drugIndex, int modelIndex);
+    void selectDrugInList(QString drugName, int modelIndex);
 
     void fillInPatientData(struct PatientData);
 
@@ -162,8 +166,8 @@ public:
     void editCovariates(struct CovariatesData, int covariateType, int editIndex);
     void fillInCovariatesData(struct CovariatesData, int covariateType);
 
-    void addCovariatesByDrug(CovariatesData covariatesData1, int covariateType, int drugIndex);
-    void fillInCovariatesDataByDrug(struct CovariatesData, int covariateType, int drugIndex);
+    void addCovariatesByDrug(CovariatesData covariatesData1, int covariateType, QString drugName);
+    void fillInCovariatesDataByDrug(struct CovariatesData, int covariateType, QString drugName);
 
     void addMeasure(struct MeasureData);
     void editMeasure(struct MeasureData, int editIndex);

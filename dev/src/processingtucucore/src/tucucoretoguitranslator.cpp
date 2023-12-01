@@ -368,6 +368,19 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         QString uString = QString::fromStdString(covariate->getUnit().toString());
         amount->setUnit(Tucuxi::Gui::Core::Unit(uString));
         variate->setQuantity(amount);
+
+        Tucuxi::Gui::Core::CovariateType cType;
+        switch (covariate->getType()) {
+        case Tucuxi::Core::CovariateType::Standard: cType = Tucuxi::Gui::Core::CovariateType::Standard; break;
+        case Tucuxi::Core::CovariateType::AgeInYears: cType = Tucuxi::Gui::Core::CovariateType::AgeInYears; break;
+        case Tucuxi::Core::CovariateType::AgeInDays: cType = Tucuxi::Gui::Core::CovariateType::AgeInDays; break;
+        case Tucuxi::Core::CovariateType::AgeInWeeks: cType = Tucuxi::Gui::Core::CovariateType::AgeInWeeks; break;
+        case Tucuxi::Core::CovariateType::AgeInMonths: cType = Tucuxi::Gui::Core::CovariateType::AgeInMonths; break;
+        case Tucuxi::Core::CovariateType::Sex: cType = Tucuxi::Gui::Core::CovariateType::Sex; break;
+        case Tucuxi::Core::CovariateType::Dose: cType = Tucuxi::Gui::Core::CovariateType::Dose; break;
+        }
+        variate->setCovariateType(cType);
+
         QMetaType::Type newType;
         switch (covariate->getDataType()) {
         case Tucuxi::Core::DataType::Bool : newType = QMetaType::Type::Bool; break;

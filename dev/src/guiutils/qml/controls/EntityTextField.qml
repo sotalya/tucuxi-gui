@@ -9,6 +9,14 @@ import guiutils.qml.controls
 import ezechiel
 
 TextField {
+    // For testing
+    function setEntityText(string){
+        text = string
+    }
+    function getEntityText(){
+        return text
+    }
+
 //    Layout.fillWidth:  true
     font.family: Style.form.font.input
     font.pixelSize: Style.form.size.input

@@ -60,10 +60,10 @@ TEST(VoriconazoleTest, Test1)
     //_____Select drug____________________________________________________________________________________________________________________________
 
     // Assume a single model: Voriconazole
-    int drugIndex   = 0;
+    QString drugName = "Voriconazole";
     int modelIndex  = 0;
     srv->getCurrentTabIndex();
-    srv->selectDrugInList(drugIndex, modelIndex);
+    srv->selectDrugInList(drugName, modelIndex);
     srv->getCurrentTabIndex();
     srv->waitPeriod(waitTimeLong);
 

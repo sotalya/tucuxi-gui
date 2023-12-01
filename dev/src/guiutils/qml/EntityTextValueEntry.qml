@@ -27,6 +27,11 @@ Item {
     // output singnals
     signal editingFinished
 
+    // For testing
+    function setEntityValueText(string){
+        text = string
+    }
+
     function textInputControl()
     {
         var minValue = 0.0
@@ -52,6 +57,10 @@ Item {
 //            console.log(parseFloat(textInput.text));
             textIsOk = true;
         }
+    }
+
+    function setText (text){
+        textInput.insert(0, text)
     }
 
     Rectangle {

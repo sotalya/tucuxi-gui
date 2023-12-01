@@ -35,12 +35,6 @@ Rectangle {
         drugListView.currentIndex = substanceIndex;
     }
 
-    // This function is used for automated tests, called from the C++ of GuiTests
-    function setExtCurrentActiveSubstance(substanceIndex) {
-        drugListView.currentIndex = substanceIndex;
-        switchActiveSubstance(substanceIndex);
-
-    }
 
     function setCurrentDrugModel(drugModelIndex) {
         domainListView.currentIndex = drugModelIndex;
@@ -49,6 +43,11 @@ Rectangle {
     }
 
     // This function is used for automated tests, called from the C++ of GuiTests
+    function setExtCurrentActiveSubstance(substanceIndex) {
+        drugListView.currentIndex = substanceIndex;
+        switchActiveSubstance(substanceIndex);
+
+    }
     function setExtCurrentDrugModel(drugModelIndex) {
         domainListView.currentIndex = drugModelIndex;
         // Maybe not totally correct, but Ok considering the current implementation
@@ -160,6 +159,7 @@ Rectangle {
                 //DomainList view
                 EntityListView {
                     id: domainListView
+                    objectName: "domainListView"
                     Layout.fillWidth:  true
                     property var drugModels : interpretationController.drugModels;
 

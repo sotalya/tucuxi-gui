@@ -298,6 +298,14 @@ DialogBase {
                     text: "At steady state?"
                     checked: true
 
+                    // For testing
+                    function setSteadyState (state) {
+                        atSteadyState.checked = state
+                    }
+                    function getSteadyState () {
+                        return atSteadyState.checked
+                    }
+
                     ToolTip.visible: (show_tooltip) ? steadyStateMousearea.containsMouse : false
                     ToolTip.text: ToolTips.dosageDialog.steadyState
 

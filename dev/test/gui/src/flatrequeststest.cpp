@@ -12,7 +12,6 @@
 #include "admin/src/dal/partialrequest.h"
 #include "core/dal/drug/drug.h"
 #include "guitest.h"
-#include "guiutils/src/appglobals.h"
 #include "guiutils/src/requestscontroller.h"
 #include "flatrequests/flatrequestfileclient.h"
 
@@ -27,12 +26,9 @@ TEST(FlatRequestsTest, Test1)
     int waitTime1       = 2;
     int waitTimeLong    = 6;
 
-    int requestIndex = 1;
-
-    Tucuxi::Gui::GuiUtils::AppGlobals *appGlobals = Tucuxi::Gui::GuiUtils::AppGlobals::getInstance();
     QString iccaFile = "test1_cefepime.xml"; //"test2_cefepime.xml";
 
-    std::cout << "Test name : FlatRequestsTest.Test1" << std::endl;
+    std::cout << "\033[1;36m" << "Test name : FlatRequestsTest.Test1" << "\033[0m" << std::endl;
 
     srv->waitPeriod(waitTimeLong);
 
@@ -41,9 +37,11 @@ TEST(FlatRequestsTest, Test1)
     srv->m_mainWindowController->getRequestController()->setClient(client);
 
     srv->mouseClickIfPathOk("mainWindow/launchView/pendingRequests/mouseArea");
-    srv->waitPeriod(waitTimeLong*10);
+    srv->waitPeriod(waitTimeLong);
 
     int nbRequests = srv->m_mainWindowController->getRequestController()->nbRequests();
+
+    int requestIndex = 1;
 
     auto request = srv->m_mainWindowController->getRequestController()->getPartialRequest(requestIndex);
 
@@ -58,8 +56,8 @@ TEST(FlatRequestsTest, Test1)
     // Patient tab :
 
     srv->mouseClickIfPathOk("mainWindow/flowView/patientButton");   // click on patient tab button to validate tab
-    srv->waitPeriod(waitTimeLong);
     srv->synchronize();
+    srv->waitPeriod(waitTimeLong);
 
     ASSERT_EQ(srv->getCurrentTabIndex(), patientTab);
 
@@ -67,19 +65,23 @@ TEST(FlatRequestsTest, Test1)
 
     // Drug tab :
 
-    srv->mouseClickIfPathOk("mainWindow/flowView/drugButton");  // click on drug tab button to validate tab
-    srv->waitPeriod(waitTimeLong);
+    srv->mouseClickIfPathOk("mainWindow/flowView/drugButton");
     srv->synchronize();
+    srv->waitPeriod(waitTimeLong);
 
     ASSERT_EQ(srv->getCurrentTabIndex(), drugsTab);
+
+    srv->mouseClickIfPathOk("mainWindow/flowView/drugButton");   // click on drug tab button again to validate tab
+    srv->synchronize();
+    srv->waitPeriod(waitTime1);
 
     //--------------------------------------------------------------------------------------------------------------------
 
     // Dosage tab :
 
     srv->mouseClickIfPathOk("mainWindow/flowView/dosageButton");
-    srv->waitPeriod(waitTimeLong);
     srv->synchronize();
+    srv->waitPeriod(waitTimeLong);
 
     ASSERT_EQ(srv->getCurrentTabIndex(), dosagesTab);
 
@@ -93,52 +95,51 @@ TEST(FlatRequestsTest, Test1)
     }
 
     srv->mouseClickIfPathOk("mainWindow/flowView/dosageButton");
-    srv->waitPeriod(waitTime1);
     srv->synchronize();
+    srv->waitPeriod(waitTime1);
 
     //--------------------------------------------------------------------------------------------------------------------
 
     // Covariate tab :
 
     srv->mouseClickIfPathOk("mainWindow/flowView/covariateButton");
-    srv->waitPeriod(waitTimeLong);
     srv->synchronize();
+    srv->waitPeriod(waitTimeLong);
 
     ASSERT_EQ(srv->getCurrentTabIndex(), covariatesTab);
 
     srv->mouseClickIfPathOk("mainWindow/flowView/covariateButton");     // clicking once more to validate tab (no change made)
-    srv->waitPeriod(waitTime1);
     srv->synchronize();
+    srv->waitPeriod(waitTime1);
 
     //--------------------------------------------------------------------------------------------------------------------
 
     // Measure tab :
 
     srv->mouseClickIfPathOk("mainWindow/flowView/measureButton");
-    srv->waitPeriod(waitTimeLong);
     srv->synchronize();
+    srv->waitPeriod(waitTimeLong);
 
     ASSERT_EQ(srv->getCurrentTabIndex(), measuresTab);
 
     srv->mouseClickIfPathOk("mainWindow/flowView/measureButton");
-    srv->waitPeriod(waitTime1);
     srv->synchronize();
-
+    srv->waitPeriod(waitTime1);
 
     //--------------------------------------------------------------------------------------------------------------------
 
     // Target tab :
 
     srv->mouseClickIfPathOk("mainWindow/flowView/targetButton");
-    srv->waitPeriod(waitTimeLong);
     srv->synchronize();
+    srv->waitPeriod(waitTimeLong);
 
     ASSERT_EQ(srv->getCurrentTabIndex(), targetsTab);
 
 
     srv->mouseClickIfPathOk("mainWindow/flowView/targetButton");
-    srv->waitPeriod(waitTime1);
     srv->synchronize();
+    srv->waitPeriod(waitTime1);
 
     //--------------------------------------------------------------------------------------------------------------------
 
@@ -147,14 +148,14 @@ TEST(FlatRequestsTest, Test1)
     AdjustmentsData adjustmentsData1;
 
     srv->mouseClickIfPathOk("mainWindow/flowView/adjustmentButton");
-    srv->waitPeriod(waitTime1);
     srv->synchronize();
+    srv->waitPeriod(waitTime1);
 
     ASSERT_EQ(srv->getCurrentTabIndex(), adjustementsTab);
 
     srv->addAdjustments(adjustmentsData1);
-    srv->waitPeriod(waitTime1);
     srv->synchronize();
+    srv->waitPeriod(waitTime1);
 
     //--------------------------------------------------------------------------------------------------------------------
 
@@ -163,8 +164,8 @@ TEST(FlatRequestsTest, Test1)
     srv->waitForSync();
 
     srv->validateInterpretation();
-    srv->waitPeriod(waitTimeLong);
     srv->synchronize();
+    srv->waitPeriod(waitTimeLong);
 
     ASSERT_EQ(srv->getCurrentTabIndex(), validationTab);
 
@@ -173,8 +174,16 @@ TEST(FlatRequestsTest, Test1)
     //Print report :
 
     srv->mouseClickIfPathOk("mainWindow/flowView/reportButton");
-    //    srv->printReport("Report_1234_b");
+    srv->synchronize();
+    srv->waitPeriod(waitTime1);
+
+    srv->printReport("Report_1234_b");
+    srv->synchronize();
+    srv->waitPeriod(waitTimeLong);
 
     //--------------------------------------------------------------------------------------------------------------------
 
+    #define PRINT_SUCCESS(x) (std::cout << "\033[1;32m" << x << "\033[0m" << std::endl)
+    std::cout << "\033[1;36m" << "End of program ..." << "\033[0m" << std::endl;
+    srv->waitPeriod(waitTimeLong*3);
 }

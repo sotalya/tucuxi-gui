@@ -68,7 +68,7 @@ public:
 
     void addSentenceToDrugSentences(QString _drugId, QString _sentence);
 
-    QString getSentencePerKey(int key);
+    QString getSentencePerKey(int key, int modifiers);
 };
 
 QML_POINTERLIST_CLASS_DECL(SectionList, Section)

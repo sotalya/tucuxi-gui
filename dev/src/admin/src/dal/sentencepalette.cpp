@@ -95,23 +95,26 @@ void Section::addSentenceToDrugSentences(QString _drugId, QString _sentence){
 }
 
 
-QString Section::getSentencePerKey(int key)
+QString Section::getSentencePerKey(int key, int modifiers)
 {
-    std::cout << key << std::endl;
     int index = 0;
-    for(const auto &sentencesList : _specificSentences){
-        for (const auto &sentence: sentencesList->getSentences()) {
-            if (key - Qt::Key_0 == index) {
+    if(modifiers & Qt::AltModifier){
+        for(const auto &sentencesList : _specificSentences){
+            for (const auto &sentence: sentencesList->getSentences()) {
+                if (key - Qt::Key_0 == index) {
+                    return sentence;
+                }
+                index ++;
+            }
+        }
+    }
+    else if(modifiers & Qt::ControlModifier){
+        for(const auto &sentence : _globalSentences){
+                if (key - Qt::Key_0 == index) {
                 return sentence;
             }
             index ++;
         }
-    }
-    for(const auto &sentence : _globalSentences){
-        if (key - Qt::Key_0 == index) {
-            return sentence;
-        }
-        index ++;
     }
     return "";
 }

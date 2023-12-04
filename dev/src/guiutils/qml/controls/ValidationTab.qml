@@ -517,23 +517,16 @@ Rectangle {
                                     verticalAlignment:   analysis.inputVAlign
                                     horizontalAlignment: analysis.inputHAlign
 
-                                    Keys.onPressed: {
-                                        if (event.modifiers) {
-                                            var t = validationTabController.getShortCutText(0, event.key, event.modifiers);
+                                    Keys.onPressed: function(event) {
+                                        var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
+                                        if ((modifiers === Qt.ControlModifier || modifiers === Qt.AltModifier) &&
+                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt) {
+                                            var t = validationTabController.getShortCutText(0, event.key, modifiers);
                                             if (t !== "") {
                                                 expectednessInput.text = t;
                                                 event.accepted = true;
                                             }
-
                                         }
-
-                                        console.log(event.key);
-                                        console.log(event.modifiers);
-                                    }
-
-                                    Shortcut {
-                                        sequence: "Ctrl+E,Ctrl+W"
-                                        onActivated: expectednessInput.text = "new text"
                                     }
 
                                     EntityToolTip {
@@ -624,10 +617,22 @@ Rectangle {
                                     verticalAlignment:   analysis.inputVAlign
                                     horizontalAlignment: analysis.inputHAlign
 
-                                EntityToolTip {
-                                    tooltipText: ToolTips.validationTab.suitability
+                                    Keys.onPressed: function(event) {
+                                        var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
+                                        if ((modifiers === Qt.ControlModifier || modifiers === Qt.AltModifier) &&
+                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt) {
+                                            var t = validationTabController.getShortCutText(1, event.key, modifiers);
+                                            if (t !== "") {
+                                                suitabilityInput.text = t;
+                                                event.accepted = true;
+                                            }
+                                        }
+                                    }
+
+                                    EntityToolTip {
+                                        tooltipText: ToolTips.validationTab.suitability
+                                    }
                                 }
-                            }
 
                                 ScrollBar.vertical: ScrollBar {}
                             }
@@ -698,22 +703,34 @@ Rectangle {
                                 anchors.fill: parent
 
                                 TextArea.flickable: TextArea {
-                                id: predictionInput
-                                placeholderText: "Please fill in"
-                                anchors.margins: 1
-                                clip: true
-                                wrapMode: TextEdit.WordWrap
-                                text: analysisFrame.model.prediction
-                                onTextChanged: analysisFrame.model.prediction = text
-                                font.family:    analysis.inputFontFamily
-                                font.pixelSize: analysis.inputFontSize
-                                verticalAlignment:   analysis.inputVAlign
-                                horizontalAlignment: analysis.inputHAlign
+                                    id: predictionInput
+                                    placeholderText: "Please fill in"
+                                    anchors.margins: 1
+                                    clip: true
+                                    wrapMode: TextEdit.WordWrap
+                                    text: analysisFrame.model.prediction
+                                    onTextChanged: analysisFrame.model.prediction = text
+                                    font.family:    analysis.inputFontFamily
+                                    font.pixelSize: analysis.inputFontSize
+                                    verticalAlignment:   analysis.inputVAlign
+                                    horizontalAlignment: analysis.inputHAlign
 
-                                EntityToolTip {
-                                    tooltipText: ToolTips.validationTab.prediction
+                                    Keys.onPressed: function(event) {
+                                        var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
+                                        if ((modifiers === Qt.ControlModifier || modifiers === Qt.AltModifier) &&
+                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt) {
+                                            var t = validationTabController.getShortCutText(2, event.key, modifiers);
+                                            if (t !== "") {
+                                                predictionInput.text = t;
+                                                event.accepted = true;
+                                            }
+                                        }
+                                    }
+
+                                    EntityToolTip {
+                                        tooltipText: ToolTips.validationTab.prediction
+                                    }
                                 }
-                            }
                                 ScrollBar.vertical: ScrollBar {}
                             }
                         }
@@ -782,24 +799,36 @@ Rectangle {
                                 anchors.fill: parent
 
                                 TextArea.flickable: TextArea {
-                                id: remonitoringInput
-                                placeholderText: "Please fill in"
-                                anchors.margins: 1
-                                clip: true
-                                wrapMode: TextEdit.WordWrap
-                                text: analysisFrame.model.remonitoring
-                                onTextChanged: analysisFrame.model.remonitoring = text
-                                font.family:    analysis.inputFontFamily
-                                font.pixelSize: analysis.inputFontSize
-                                verticalAlignment:   analysis.inputVAlign
-                                horizontalAlignment: analysis.inputHAlign
+                                    id: remonitoringInput
+                                    placeholderText: "Please fill in"
+                                    anchors.margins: 1
+                                    clip: true
+                                    wrapMode: TextEdit.WordWrap
+                                    text: analysisFrame.model.remonitoring
+                                    onTextChanged: analysisFrame.model.remonitoring = text
+                                    font.family:    analysis.inputFontFamily
+                                    font.pixelSize: analysis.inputFontSize
+                                    verticalAlignment:   analysis.inputVAlign
+                                    horizontalAlignment: analysis.inputHAlign
 
-                                EntityToolTip {
-                                    tooltipText: ToolTips.validationTab.remonitoring
+                                    Keys.onPressed: function(event) {
+                                        var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
+                                        if ((modifiers === Qt.ControlModifier || modifiers === Qt.AltModifier) &&
+                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt) {
+                                            var t = validationTabController.getShortCutText(3, event.key, modifiers);
+                                            if (t !== "") {
+                                                remonitoringInput.text = t;
+                                                event.accepted = true;
+                                            }
+                                        }
+                                    }
+
+                                    EntityToolTip {
+                                        tooltipText: ToolTips.validationTab.remonitoring
+                                    }
                                 }
+                                ScrollBar.vertical: ScrollBar {}
                             }
-                            ScrollBar.vertical: ScrollBar {}
-                        }
                         }
                         Button{
                             spacing: 1
@@ -866,34 +895,36 @@ Rectangle {
                                 anchors.fill: parent
 
                                 TextArea.flickable: TextArea {
-                                id: warningInput
-                                placeholderText: "Please fill in"
-                                anchors.margins: 1
-                                clip: true
-                                wrapMode: TextEdit.WordWrap
-                                text: analysisFrame.model.warning
-                                onTextChanged: analysisFrame.model.warning = text
-                                font.family:    analysis.inputFontFamily
-                                font.pixelSize: analysis.inputFontSize
-                                verticalAlignment:   analysis.inputVAlign
-                                horizontalAlignment: analysis.inputHAlign
+                                    id: warningInput
+                                    placeholderText: "Please fill in"
+                                    anchors.margins: 1
+                                    clip: true
+                                    wrapMode: TextEdit.WordWrap
+                                    text: analysisFrame.model.warning
+                                    onTextChanged: analysisFrame.model.warning = text
+                                    font.family:    analysis.inputFontFamily
+                                    font.pixelSize: analysis.inputFontSize
+                                    verticalAlignment:   analysis.inputVAlign
+                                    horizontalAlignment: analysis.inputHAlign
 
-                                EntityToolTip {
-                                    tooltipText : ToolTips.validationTab.warning
-                                }
-/*
-                                ToolTip {
-                                    visible: (show_tooltip) ? parent.hovered : false
-                                    text: (show_tooltip) ? ToolTips.validationTab.warning : ""
-                                    background: Rectangle {
-                                        color: Style.tooltip.color
-                                        border.color: Style.tooltip.border_color
+                                    Keys.onPressed: function(event) {
+                                        var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
+                                        if ((modifiers === Qt.ControlModifier || modifiers === Qt.AltModifier) &&
+                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt) {
+                                            var t = validationTabController.getShortCutText(4, event.key, modifiers);
+                                            if (t !== "") {
+                                                warningInput.text = t;
+                                                event.accepted = true;
+                                            }
+                                        }
+                                    }
+
+                                    EntityToolTip {
+                                        tooltipText : ToolTips.validationTab.warning
                                     }
                                 }
-*/
+                                ScrollBar.vertical: ScrollBar {}
                             }
-                            ScrollBar.vertical: ScrollBar {}
-                        }
                         }
                         Button{
                             spacing: 1

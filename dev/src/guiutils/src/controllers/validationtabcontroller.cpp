@@ -16,11 +16,9 @@ ValidationTabController::ValidationTabController(QObject *parent)
 
 QString ValidationTabController::getShortCutText(int section, int key, int modifiers)
 {
-    if ((modifiers & Qt::AltModifier) && (modifiers & Qt::CTRL)) {
-        if (key != Qt::AltModifier) {
-            QString s = _sentencesPalettes->getSection(section)->getSentencePerKey(key);
+    if ((modifiers & Qt::AltModifier) || (modifiers & Qt::ControlModifier)) {
+            QString s = _sentencesPalettes->getSection(section)->getSentencePerKey(key, modifiers);
             return s;
-        }
     }
     return "";
 }

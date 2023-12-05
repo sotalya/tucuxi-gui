@@ -660,7 +660,7 @@ Rectangle {
                             }
                             onClicked: {
                                 suitablePalette.init(suitabilityInput.text, 1, suitabilityInput, suitabilityLabel.text, true)
-                                suitablePalette.open(true)
+                                testing.open(true)
                             }
                             Image {
                                 anchors.verticalCenter: suitablePaletteBTN.verticalCenter
@@ -1019,5 +1019,9 @@ Rectangle {
     SentencePaletteDialog{
         id: suitablePalette
         objectName: "suitabilityPalette"
+    }
+
+    SentenceShortcutDialog{
+        id: testing
     }
 }

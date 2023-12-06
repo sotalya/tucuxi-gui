@@ -66,7 +66,7 @@ ColumnLayout {
     }
 
     Keys.onPressed: function(event) {
-        if(event.modifier === Qt.NoModifier || event.modifier === Qt.KeypadModifier){
+        if(event.modifiers === Qt.NoModifier || event.modifiers === Qt.KeypadModifier){
             if (event.key === Qt.Key_Right) {
                 interpretationController.goToNextEvent();
             }

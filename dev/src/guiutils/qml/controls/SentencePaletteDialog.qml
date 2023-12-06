@@ -70,14 +70,14 @@ DialogBase {
         Rectangle {
             Layout.row: 0
             Layout.column: 0
-            Layout.fillWidth:  true
-            Layout.fillHeight:  true
+            width: 50
+            height: 25
         }
         Rectangle {
             Layout.row: 2
             Layout.column: 2
-            Layout.fillWidth:  true
-            Layout.fillHeight:  true
+            width: 50
+            height: 25
         }
 
         ColumnLayout {
@@ -141,6 +141,8 @@ DialogBase {
                                     rowlayout.children: [
 
                                         EntityListDelegateItem {
+                                            id: globalText
+                                            objectName: "globalText_" + index
                                             Layout.fillWidth: true
                                             Layout.fillHeight: true
                                             color: paletteChoice ? (globalSentencesdelegate.mousearea.hovered ? globalSentences.rowBackgroundHover : globalSentences.rowBackground) : "white"
@@ -156,6 +158,36 @@ DialogBase {
                                                         }
                                                     }
                                                 }
+                                            }
+                                        },
+
+                                        Button{
+                                            id: globalEditBtn
+                                            objectName: "globalEditButton_" + index
+                                            spacing: 2
+                                            visible: paletteChoice
+                                            enabled: paletteChoice
+                                            Layout.preferredHeight: parent.height
+                                            Layout.preferredWidth: 32
+                                            background: Rectangle{
+                                                color: "white"
+                                            }
+                                            onClicked: {
+                                                sentenceShortcutDialog.init(0, 0, globalText.label.text)
+                                                sentenceShortcutDialog.open(true)
+                                                //sectionData.removeSentenceFromGlobal(globalListIndex)
+                                                //root.update()
+                                            }
+                                            Image {
+                                                anchors.verticalCenter: globalEditBtn.verticalCenter
+                                                anchors.right: globalEditBtn.right
+                                                anchors.left: globalEditBtn.left
+                                                width:  32
+                                                height: 32
+                                                source: "qrc:/icons/buttons/edit.png";
+                                                antialiasing: true
+                                                mipmap:       true
+                                                fillMode: Image.PreserveAspectFit
                                             }
                                         },
 
@@ -202,8 +234,10 @@ DialogBase {
                                 }
                                 onClicked: {
                                     if (sectionText !== ""){
-                                        sectionData.addSentenceToGlobal(sectionText)
-                                        root.update()
+                                        sentenceShortcutDialog.init(0, 0, sectionText)
+                                        sentenceShortcutDialog.open(true)
+                                        // sectionData.addSentenceToGlobal(sectionText)
+                                        // root.update()
                                     }
                                 }
                                 Image {
@@ -254,6 +288,8 @@ DialogBase {
                                     rowlayout.children: [
 
                                         EntityListDelegateItem{
+                                            id: specificText
+                                            objectName: "specificText_" + index
                                             Layout.fillWidth: true
                                             Layout.fillHeight: true
                                             label.text: modelData
@@ -269,6 +305,36 @@ DialogBase {
                                                         }
                                                     }
                                                 }
+                                            }
+                                        },
+
+                                        Button{
+                                            id: specificEditBtn
+                                            objectName: "specificEditButton_" + index
+                                            spacing: 2
+                                            visible: paletteChoice
+                                            enabled: paletteChoice
+                                            Layout.preferredHeight: parent.height
+                                            Layout.preferredWidth: 32
+                                            background: Rectangle{
+                                                color: "white"
+                                            }
+                                            onClicked: {
+                                                sentenceShortcutDialog.init(Qt.ControlModifier|Qt.ShiftModifier, Qt.Key_A, specificText.label.text)
+                                                sentenceShortcutDialog.open(true)
+                                                //sectionData.removeSentenceFromGlobal(globalListIndex)
+                                                //root.update()
+                                            }
+                                            Image {
+                                                anchors.verticalCenter: specificEditBtn.verticalCenter
+                                                anchors.right: specificEditBtn.right
+                                                anchors.left: specificEditBtn.left
+                                                width:  32
+                                                height: 32
+                                                source: "qrc:/icons/buttons/edit.png";
+                                                antialiasing: true
+                                                mipmap:       true
+                                                fillMode: Image.PreserveAspectFit
                                             }
                                         },
 
@@ -316,8 +382,11 @@ DialogBase {
                                 onClicked: {
                                     if (sectionText !== ""){
                                         var sec = sentencesPalettes.getSection(sectionNb)
-                                        sec.addSentenceToDrugSentencesList(currentDrugId, sectionText)
-                                        root.update()
+
+                                        sentenceShortcutDialog.init(0, 0, sectionText)
+                                        sentenceShortcutDialog.open(true)
+                                        //sec.addSentenceToDrugSentencesList(currentDrugId, sectionText)
+                                        //root.update()
                                     }
                                 }
                                 Image {
@@ -365,5 +434,9 @@ DialogBase {
                 }
             }
         }
+    }
+
+    SentenceShortcutDialog{
+        id: sentenceShortcutDialog
     }
 }

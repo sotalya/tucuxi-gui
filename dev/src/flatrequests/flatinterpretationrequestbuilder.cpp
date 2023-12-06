@@ -307,6 +307,48 @@ void FlatInterpretationRequestBuilder::setDosageEndDateInterval(Tucuxi::Gui::Cor
     }
 }
 
+void FlatInterpretationRequestBuilder::groupDosage(Tucuxi::Gui::Core::DosageHistory* dosages)
+{
+    if(dosages->isEmpty()) {
+        return;
+    }
+
+    //Build a list for groupped Dosages
+    QList<Tucuxi::Gui::Core::Dosage*> groupedDosages;
+    QList<Tucuxi::Gui::Core::Dosage*>::iterator next;
+
+    //Sort the dosages by applies date
+    dosages->sort(compareDosage);
+
+    //Iterate the dosages to group dosages that follows each otherwith same interval and infusion time
+    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = dosages->getList().begin(); it != dosages->getList().end(); ++it) {
+        //Initiate the groupedDosage with the first dosage
+        if(it == dosages->getList().begin()) {
+            groupedDosages.append(*it);
+        }
+
+        next = it + 1;
+        if(next != dosages->getList().end()) {
+            //Check if next dosage begin when current dosage end and have the same quantity, interval and infusion time
+            if(groupedDosages.last()->getEndTime() == (*next)->getApplied() &&
+                groupedDosages.last()->getQuantity()->getDbvalue() == (*next)->getQuantity()->getDbvalue() &&
+                groupedDosages.last()->getInterval() == (*next)->getInterval() &&
+                groupedDosages.last()->getTinf() == (*next)->getTinf()) {
+
+                groupedDosages.last()->setEndTime((*next)->getEndTime());
+            } else {
+                groupedDosages.append(*next);
+            }
+        }
+    }
+
+    //Clear and update the dosages list
+    dosages->clear();
+    for (QList<Tucuxi::Gui::Core::Dosage*>::iterator it = groupedDosages.begin(); it != groupedDosages.end(); ++it) {
+        dosages->append(*it);
+    }
+}
+
 InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequest()
 {
     InterpretationRequest* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
@@ -576,6 +618,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
     splitOverlappingDosage(dosages);
     setDosageEndDateInterval(dosages);
+    groupDosage(dosages);
 
     //Prediction dosage
     treatment->setDosages(dosages);

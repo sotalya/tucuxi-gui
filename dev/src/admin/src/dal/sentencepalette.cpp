@@ -1,5 +1,7 @@
 #include "sentencepalette.h"
+#include "core/corerepository.h"
 #include "core/settings.h"
+#include "qkeysequence.h"
 #include "tucucommon/xmlnode.h"
 #include "tucucommon/xmliterator.h"
 #include <sstream>
@@ -19,11 +21,27 @@ using namespace Tucuxi::Gui::Admin;
 
 QML_POINTERLIST_CLASS_IMPL(SectionList, Section)
 
+Sentence::Sentence(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent)
+{
+}
+
+Sentence::Sentence(int key, int modifier, QString text) :
+    _key(key),
+    _modifier(modifier),
+    _text(text)
+{
+}
+
+bool Sentence::operator==(const Sentence& _other) const
+{
+    return (this->getText() == _other.getText());
+}
+
 void DrugSentences::removeSentence(int _listIndex){
     _sentences.removeAt(_listIndex);
 }
 
-void DrugSentences::addSentence(QString _sentence){
+void DrugSentences::addSentence(Sentence* _sentence){
     _sentences.append(_sentence);
 }
 
@@ -31,7 +49,11 @@ Section::Section(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *par
     _repository = repository;
 }
 
-void Section::addSentenceToGlobal(QString _sentence){
+void Section::addSentenceToGlobal(int key, int modifier, QString text){
+    auto _sentence = Tucuxi::Gui::Core::CoreFactory::createEntity<Sentence>(_repository);
+    _sentence->setKey(key);
+    _sentence->setModifier(modifier);
+    _sentence->setText(text);
     _globalSentences.push_back(_sentence);
 }
 
@@ -42,17 +64,48 @@ void Section::removeSentenceFromGlobal(int _listIndex){
 
 QStringList Section::getSpecificSentencesList(QString _drugId){
 
+    QStringList ret;
+
     for(const auto &sentencesList : _specificSentences){
         if(sentencesList->getDrugId() == _drugId){
-            return sentencesList->getSentences();
+            for(const auto &sentence : sentencesList->getSentences()){
+                ret.append(sentence->getText());
+            }
+            return ret;
         }
     }
     addDrugSentences(_drugId);
-    return _specificSentences.last()->getSentences();
+    for(const auto &sentence : _specificSentences.last()->getSentences()){
+        ret.append(sentence->getText());
+    }
+    return ret;
 }
 
-void Section::addSentenceToDrugSentencesList(QString _drugId, QString _sentence){
-    for(const auto &sentencesList : _specificSentences){
+QList<Sentence*> Section::getSentenceFromDrugId(QString _drugId){
+
+    for(const auto &DrugSentences : _specificSentences){
+        if(DrugSentences->getDrugId() == _drugId){
+            return DrugSentences->getSentences();
+        }
+    }
+}
+
+QStringList Section::getGlobalSentencesTextsList(){
+    QStringList ret;
+
+    for(auto sentence : _globalSentences){
+        auto a = sentence->getText();
+        ret.append(sentence->getText());
+    }
+    return ret;
+}
+
+void Section::addSentenceToDrugSentencesList(QString _drugId, int key, int modifier, QString text){
+    auto _sentence = Tucuxi::Gui::Core::CoreFactory::createEntity<Sentence>(_repository);
+    _sentence->setKey(key);
+    _sentence->setModifier(modifier);
+    _sentence->setText(text);
+        for(const auto &sentencesList : _specificSentences){
         if(sentencesList->getDrugId() == _drugId){
             sentencesList->addSentence(_sentence);
             return;
@@ -79,7 +132,7 @@ void Section::addDrugSentences(QString _drugId){
     _specificSentences.push_back(newSentence);
 }
 
-void Section::addSentenceToDrugSentences(QString _drugId, QString _sentence){
+void Section::addSentenceToDrugSentences(QString _drugId, Sentence* _sentence){
     bool same = false;
     for (const auto &sentence : getSpecificSentences()){
         if (_drugId == sentence->getDrugId()){
@@ -94,26 +147,24 @@ void Section::addSentenceToDrugSentences(QString _drugId, QString _sentence){
 
 }
 
-
-QString Section::getSentencePerKey(int key, int modifiers)
+QString Section::getSentencePerKey(int key, int modifiers, QString drugId)
 {
-    int index = 0;
-    if(modifiers & Qt::AltModifier){
-        for(const auto &sentencesList : _specificSentences){
-            for (const auto &sentence: sentencesList->getSentences()) {
-                if (key - Qt::Key_0 == index) {
-                    return sentence;
-                }
-                index ++;
-            }
+    // Global Sentences
+    for(auto const &sentences : _globalSentences){
+        if(modifiers == sentences->getModifier() && key == sentences->getKey()){
+            return sentences->getText();
         }
     }
-    else if(modifiers & Qt::ControlModifier){
-        for(const auto &sentence : _globalSentences){
-                if (key - Qt::Key_0 == index) {
-                return sentence;
+    // Specific Sentences
+    if(drugId != ""){
+        for(auto const &drug : _specificSentences){
+            if(drugId == drug->getDrugId()){
+                for(auto const &sentences : drug->getSentences()){
+                    if(modifiers == sentences->getModifier() && key == sentences->getKey()){
+                        return sentences->getText();
+                    }
+                }
             }
-            index ++;
         }
     }
     return "";
@@ -136,15 +187,6 @@ void SentencesPalettes::manualImport(QString _filename) {
     m_sentencesPalettesImporter->importXml(this, _filename);
 }
 
-
-void SentencesPalettes::addSentenceToGlobal(QString _sentence){
-    _globalSentences.push_back(_sentence);
-}
-
-void SentencesPalettes::removeSentenceFromGlobal(int _listIndex){
-    _globalSentences.removeAt(_listIndex);
-}
-
 void SentencesPalettes::exportToXml(){
 
 
@@ -163,25 +205,33 @@ void SentencesPalettes::exportToXml(){
             root.addChild(palette);
 
             Tucuxi::Common::XmlNode sectionId = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
-                                                               "sectionId", section->getSectionId().toStdString());
+                                                                 "sectionId", section->getSectionId().toStdString());
             palette.addChild(sectionId);
 
             Tucuxi::Common::XmlNode drugId = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
-                                                               "drugId", "all");
+                                                              "drugId", "all");
             palette.addChild(drugId);
 
-            Tucuxi::Common::XmlNode trigger = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
-                                                               "trigger", "trigger");
-            palette.addChild(trigger);
-
             Tucuxi::Common::XmlNode sentences = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
-                                                               "sentences", "sentences");
+                                                                 "sentences", "sentences");
             palette.addChild(sentences);
 
             for (const auto &sentence : section->getGlobalSentences()){
                 Tucuxi::Common::XmlNode sentenceNode = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
-                                                                        "sentence", sentence.toStdString());
+                                                                        "sentence", "sentence");
                 sentences.addChild(sentenceNode);
+
+                Tucuxi::Common::XmlNode modifierNode = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
+                                                                        "modifier", modifierToString(sentence->getModifier()));
+                sentenceNode.addChild(modifierNode);
+
+                Tucuxi::Common::XmlNode keyNode = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
+                                                                   "key", keyToString(sentence->getKey()));
+                sentenceNode.addChild(keyNode);
+
+                Tucuxi::Common::XmlNode textNode = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
+                                                                    "text", sentence->getText().toStdString());
+                sentenceNode.addChild(textNode);
             }
         }
 
@@ -194,26 +244,33 @@ void SentencesPalettes::exportToXml(){
                 root.addChild(palette);
 
                 Tucuxi::Common::XmlNode sectionId = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
-                                                                   "sectionId", section->getSectionId().toStdString());
+                                                                     "sectionId", section->getSectionId().toStdString());
                 palette.addChild(sectionId);
 
                 Tucuxi::Common::XmlNode drugId = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
-                                                                   "drugId", drug->getDrugId().toStdString());
+                                                                  "drugId", drug->getDrugId().toStdString());
                 palette.addChild(drugId);
 
-                Tucuxi::Common::XmlNode trigger = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
-                                                                   "trigger", "trigger");
-                palette.addChild(trigger);
-
                 Tucuxi::Common::XmlNode sentences = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
-                                                                   "sentences", "sentences");
+                                                                     "sentences", "sentences");
                 palette.addChild(sentences);
 
                 for (const auto &sentence : drug->getSentences()){
-
                     Tucuxi::Common::XmlNode sentenceNode = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
-                                                                       "sentence", sentence.toStdString());
+                                                                            "sentence", "sentence");
                     sentences.addChild(sentenceNode);
+
+                    Tucuxi::Common::XmlNode modifierNode = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
+                                                                            "modifier", modifierToString(sentence->getModifier()));
+                    sentenceNode.addChild(modifierNode);
+
+                    Tucuxi::Common::XmlNode keyNode = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
+                                                                       "key", keyToString(sentence->getKey()));
+                    sentenceNode.addChild(keyNode);
+
+                    Tucuxi::Common::XmlNode textNode = m_doc.createNode(Tucuxi::Common::EXmlNodeType::Element,
+                                                                        "text", sentence->getText().toStdString());
+                    sentenceNode.addChild(textNode);
                 }
             }
         }
@@ -248,8 +305,53 @@ QString SentencesPalettes::getDefaultPath(){
 }
 
 bool SentencesPalettes::isPathExisting(QString _name){
-      struct stat buffer;
-      return (stat (_name.toStdString().c_str(), &buffer) == 0);
+    struct stat buffer;
+    return (stat (_name.toStdString().c_str(), &buffer) == 0);
+}
+
+std::string SentencesPalettes::modifierToString(int modifier){
+    std::string ret = "";
+
+    if(modifier & Qt::ControlModifier){
+        ret = "CTRL";
+    }
+    if (modifier & Qt::ShiftModifier){
+        if(ret == ""){
+            ret = "SHIFT";
+        }
+        else{
+            ret = ret + " + SHIFT";
+        }
+    }
+#ifdef MACOS
+    if (modifier & Qt::MetaModifier){
+        if(ret == ""){
+            ret = "ALT";
+        }
+        else{
+            ret = ret + " + ALT";
+        }
+    }
+#else
+    if (modifier & Qt::AltModifier){
+        if(ret == ""){
+            ret = "ALT";
+        }
+        else{
+            ret = ret + " + ALT";
+        }
+    }
+#endif
+
+    if (modifier & Qt::NoModifier){
+        ret = "";
+    }
+
+    return ret;
+}
+
+std::string SentencesPalettes::keyToString(int key){
+    return QKeySequence(key).toString().toStdString();
 }
 
 void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *_sentencesPalettes, QString _filename){
@@ -262,9 +364,11 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
     static const std::string SENTENCES_PALETTE_NODE         = "sentencesPalette";
     static const std::string SECTION_ID_NODE                = "sectionId";
     static const std::string DRUG_ID_NODE                   = "drugId";
-    static const std::string TRIGGER_NODE                   = "trigger";
     static const std::string SENTENCES_NODE                 = "sentences";
     static const std::string SENTENCE_NODE                  = "sentence";
+    static const std::string MODIFIER_NODE                  = "modifier";
+    static const std::string KEY_NODE                       = "key";
+    static const std::string TEXT_NODE                      = "text";
 
     bool foundDrugInSpecificList = false;
 
@@ -275,11 +379,9 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
     while(sentencesPaletteIterator != Tucuxi::Common::XmlNodeIterator::none()){
         QString sectionId = QString::fromStdString(getChildString(sentencesPaletteIterator, SECTION_ID_NODE));
         QString drugId = QString::fromStdString(getChildString(sentencesPaletteIterator, DRUG_ID_NODE));
-        QString trigger = QString::fromStdString(getChildString(sentencesPaletteIterator, TRIGGER_NODE));
 
         Tucuxi::Common::XmlNodeIterator sentencesIterator = sentencesPaletteIterator->getChildren(SENTENCES_NODE);
         Tucuxi::Common::XmlNodeIterator sentenceIterator = sentencesIterator->getChildren(SENTENCE_NODE);
-
 
         for(int i = 0; i< _sentencesPalettes->getSectionsList()->size(); i++) {
             auto section = _sentencesPalettes->getSectionsList()->at(i);
@@ -287,7 +389,13 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
                 for(const auto &sentences : section->getSpecificSentences()){
                     if (sentences->getDrugId() == drugId){
                         while(sentenceIterator != Tucuxi::Common::XmlNodeIterator::none()){
-                            QString xmlSentence = QString::fromStdString(sentenceIterator->getValue());
+                            QString modifier = QString::fromStdString(getChildString(sentenceIterator, MODIFIER_NODE));
+                            QString key = QString::fromStdString(getChildString(sentenceIterator, KEY_NODE));
+                            QString text = QString::fromStdString(getChildString(sentenceIterator, TEXT_NODE));
+                            auto xmlSentence = Tucuxi::Gui::Core::CoreFactory::createEntity<Sentence>(REPO);
+                            xmlSentence->setKey(stringToKey(key));
+                            xmlSentence->setModifier(stringToModifier(modifier));
+                            xmlSentence->setText(text);
                             if (isXMLSentenceExisting(sentences->getSentences(), xmlSentence)){
                                 sentences->addSentence(xmlSentence);
                             }
@@ -298,9 +406,12 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
                 }
                 if(drugId == "all"){
                     while(sentenceIterator != Tucuxi::Common::XmlNodeIterator::none()){
-                        QString xmlSentence = QString::fromStdString(sentenceIterator->getValue());
-                        if (isXMLSentenceExisting(section->getGlobalSentences(), xmlSentence)){
-                            section->addSentenceToGlobal(xmlSentence);
+                        QString modifier = QString::fromStdString(getChildString(sentenceIterator, MODIFIER_NODE));
+                        QString key = QString::fromStdString(getChildString(sentenceIterator, KEY_NODE));
+                        QString text = QString::fromStdString(getChildString(sentenceIterator, TEXT_NODE));
+                        Sentence xmlSentence(stringToKey(key), stringToModifier(modifier), text);
+                        if (isXMLSentenceExisting(section->getGlobalSentences(), &xmlSentence)){
+                            section->addSentenceToGlobal(stringToKey(key), stringToModifier(modifier), text);
                         }
                         sentenceIterator++;
                     }
@@ -308,8 +419,14 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
                 // Drug not yet registered
                 else if (!foundDrugInSpecificList){
                     while(sentenceIterator != Tucuxi::Common::XmlNodeIterator::none()){
-                        QString sentence = QString::fromStdString(sentenceIterator->getValue());
-                        section->addSentenceToDrugSentences(drugId, sentence);
+                        QString modifier = QString::fromStdString(getChildString(sentenceIterator, MODIFIER_NODE));
+                        QString key = QString::fromStdString(getChildString(sentenceIterator, KEY_NODE));
+                        QString text = QString::fromStdString(getChildString(sentenceIterator, TEXT_NODE));
+                        auto xmlSentence = Tucuxi::Gui::Core::CoreFactory::createEntity<Sentence>(REPO);
+                        xmlSentence->setKey(stringToKey(key));
+                        xmlSentence->setModifier(stringToModifier(modifier));
+                        xmlSentence->setText(text);
+                        section->addSentenceToDrugSentences(drugId, xmlSentence);
                         sentenceIterator++;
                     }
                 }
@@ -320,7 +437,7 @@ void SentencesPalettes::SentencesPalettesImporter::importXml(SentencesPalettes *
     }
 }
 
-bool SentencesPalettes::SentencesPalettesImporter::isXMLSentenceExisting(QStringList _sentence, QString _xmlSentence){
+bool SentencesPalettes::SentencesPalettesImporter::isXMLSentenceExisting(QList<Sentence*> _sentence, Sentence* _xmlSentence){
     for (auto const &sentence : std::list(_sentence.begin(), _sentence.end())){
         if(sentence == _xmlSentence){
             return 0;
@@ -329,12 +446,44 @@ bool SentencesPalettes::SentencesPalettesImporter::isXMLSentenceExisting(QString
     return 1;
 }
 
+int SentencesPalettes::SentencesPalettesImporter::stringToModifier(QString modifierString){
+    int ret = Qt::NoModifier;
+
+    if(modifierString.contains("CTRL", Qt::CaseInsensitive)){
+        ret = ret | Qt::ControlModifier;
+    }
+    if(modifierString.contains("SHIFT", Qt::CaseInsensitive)){
+        ret = ret | Qt::ShiftModifier;
+    }
+#ifdef MACOS
+    if(modifierString.contains("ALT", Qt::CaseInsensitive)){
+        ret = ret | Qt::MetaModifier;
+    }
+#else
+    if(modifierString.contains("ALT", Qt::CaseInsensitive)){
+        ret = ret | Qt::AltModifier;
+    }
+#endif
+    if (modifierString == ""){
+        ret = Qt::NoModifier;
+    }
+
+    return ret;
+}
+
+int SentencesPalettes::SentencesPalettesImporter::stringToKey(QString keyString){
+    return QKeySequence(keyString)[0];
+}
+
 AUTO_PROPERTY_IMPL(DrugSentences, QString, drugId, DrugId)
-AUTO_PROPERTY_IMPL(DrugSentences, QStringList, sentences, Sentences)
+AUTO_PROPERTY_IMPL(DrugSentences, QList<Sentence*>, sentences, Sentences)
 AUTO_PROPERTY_IMPL(Section, QString, sectionId, SectionId)
-AUTO_PROPERTY_IMPL(Section, QStringList, globalSentences, GlobalSentences)
+AUTO_PROPERTY_IMPL(Section, QList<Sentence*>, globalSentences, GlobalSentences)
 AUTO_PROPERTY_IMPL(Section, QList<DrugSentences*>, specificSentences, SpecificSentences)
-AUTO_PROPERTY_IMPL(SentencesPalettes, QStringList, globalSentences, GlobalSentences)
+AUTO_PROPERTY_IMPL(SentencesPalettes, QList<Sentence*>, globalSentences, GlobalSentences)
 AUTO_PROPERTY_IMPL(SentencesPalettes, SectionList*, sectionsList, SectionsList)
 AUTO_PROPERTY_IMPL(SentencesPalettes, QString, filename, Filename)
 
+AUTO_PROPERTY_IMPL(Sentence, int, modifier, Modifier)
+AUTO_PROPERTY_IMPL(Sentence, int, key, Key)
+AUTO_PROPERTY_IMPL(Sentence, QString, text, Text)

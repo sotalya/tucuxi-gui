@@ -519,10 +519,12 @@ Rectangle {
 
                                     Keys.onPressed: function(event) {
                                         var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
-                                        if ((modifiers === Qt.ControlModifier || modifiers === Qt.AltModifier) &&
-                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt) {
-                                            var t = validationTabController.getShortCutText(0, event.key, modifiers);
-                                            if (t !== "") {
+                                        var drugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId : ""
+
+                                        if ((modifiers & Qt.ControlModifier || modifiers & Qt.AltModifier || modifiers & Qt.ShiftModifier || modifiers & Qt.MetaModifier) &&
+                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt && event.key !== Qt.Key_Shift && event.key !== Qt.Key_Meta){
+                                            var t = validationTabController.getShortCutText(0, event.key, modifiers, drugId);
+                                            if (t !== ""){
                                                 expectednessInput.text = t;
                                                 event.accepted = true;
                                             }
@@ -537,19 +539,6 @@ Rectangle {
                                 ScrollBar.vertical: ScrollBar {}
                             }
                         }
-
-                        Button{
-                            spacing: 1
-                            Layout.preferredHeight: parent.height
-                            Layout.preferredWidth: 50
-                            id: expectSaveButton
-                            objectName: "expectednessSaveButton"
-                            text: "Save"
-                            onClicked: {
-                                expectednessPalette.init(expectednessInput.text, 0, expectednessInput, expectednessLabel.text, false)
-                                expectednessPalette.open(true)
-                            }
-                        }
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
@@ -561,7 +550,7 @@ Rectangle {
                             }
 
                             onClicked: {
-                                expectednessPalette.init(expectednessInput.text, 0, expectednessInput, expectednessLabel.text, true)
+                                expectednessPalette.init(expectednessInput.text, 0, expectednessInput, expectednessLabel.text)
                                 expectednessPalette.open(true)
                             }
                             Image {
@@ -619,9 +608,11 @@ Rectangle {
 
                                     Keys.onPressed: function(event) {
                                         var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
-                                        if ((modifiers === Qt.ControlModifier || modifiers === Qt.AltModifier) &&
-                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt) {
-                                            var t = validationTabController.getShortCutText(1, event.key, modifiers);
+                                        var drugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId : ""
+
+                                        if ((modifiers & Qt.ControlModifier || modifiers & Qt.AltModifier || modifiers & Qt.ShiftModifier || modifiers & Qt.MetaModifier) &&
+                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt && event.key !== Qt.Key_Shift && event.key !== Qt.Key_Meta){
+                                            var t = validationTabController.getShortCutText(1, event.key, modifiers, drugId);
                                             if (t !== "") {
                                                 suitabilityInput.text = t;
                                                 event.accepted = true;
@@ -641,17 +632,6 @@ Rectangle {
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
-                            Layout.preferredWidth: 50
-                            objectName: "suitabilitySaveButton"
-                            text: "Save"
-                            onClicked: {
-                                suitablePalette.init(suitabilityInput.text, 1, suitabilityInput, suitabilityLabel.text, false)
-                                suitablePalette.open(true)
-                            }
-                        }
-                        Button{//    srv->mouseClick(spix::ItemPath("mainWindow/flowView/expectSaveButton"));
-                            spacing: 1
-                            Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 40
                             id: suitablePaletteBTN
                             objectName: "suitablePaletteButton"
@@ -659,8 +639,8 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                suitablePalette.init(suitabilityInput.text, 1, suitabilityInput, suitabilityLabel.text, true)
-                                testing.open(true)
+                                suitablePalette.init(suitabilityInput.text, 1, suitabilityInput, suitabilityLabel.text)
+                                suitablePalette.open(true)
                             }
                             Image {
                                 anchors.verticalCenter: suitablePaletteBTN.verticalCenter
@@ -717,9 +697,11 @@ Rectangle {
 
                                     Keys.onPressed: function(event) {
                                         var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
-                                        if ((modifiers === Qt.ControlModifier || modifiers === Qt.AltModifier) &&
-                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt) {
-                                            var t = validationTabController.getShortCutText(2, event.key, modifiers);
+                                        var drugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId : ""
+
+                                        if ((modifiers & Qt.ControlModifier || modifiers & Qt.AltModifier || modifiers & Qt.ShiftModifier || modifiers & Qt.MetaModifier) &&
+                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt && event.key !== Qt.Key_Shift && event.key !== Qt.Key_Meta){
+                                            var t = validationTabController.getShortCutText(2, event.key, modifiers, drugId);
                                             if (t !== "") {
                                                 predictionInput.text = t;
                                                 event.accepted = true;
@@ -737,17 +719,6 @@ Rectangle {
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
-                            Layout.preferredWidth: 50
-                            objectName: "predictionSaveButton"
-                            text: "Save"
-                            onClicked: {
-                                predictionPalette.init(predictionInput.text, 2, predictionInput, predictionLabel.text, false)
-                                predictionPalette.open(true)
-                            }
-                        }
-                        Button{
-                            spacing: 1
-                            Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 40
                             id: predictionPaletteBTN
                             objectName: "predictionPaletteButton"
@@ -755,7 +726,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                predictionPalette.init(predictionInput.text, 2, predictionInput, predictionLabel.text, true)
+                                predictionPalette.init(predictionInput.text, 2, predictionInput, predictionLabel.text)
                                 predictionPalette.open(true)
                             }
                             Image {
@@ -813,9 +784,11 @@ Rectangle {
 
                                     Keys.onPressed: function(event) {
                                         var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
-                                        if ((modifiers === Qt.ControlModifier || modifiers === Qt.AltModifier) &&
-                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt) {
-                                            var t = validationTabController.getShortCutText(3, event.key, modifiers);
+                                        var drugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId : ""
+
+                                        if ((modifiers & Qt.ControlModifier || modifiers & Qt.AltModifier || modifiers & Qt.ShiftModifier || modifiers & Qt.MetaModifier) &&
+                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt && event.key !== Qt.Key_Shift && event.key !== Qt.Key_Meta){
+                                            var t = validationTabController.getShortCutText(3, event.key, modifiers, drugId);
                                             if (t !== "") {
                                                 remonitoringInput.text = t;
                                                 event.accepted = true;
@@ -833,17 +806,6 @@ Rectangle {
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
-                            Layout.preferredWidth: 50
-                            objectName: "remonitoringSaveButton"
-                            text: "Save"
-                            onClicked: {
-                                remonitoringPalette.init(remonitoringInput.text, 3, remonitoringInput, remonitoringLabel.text, false)
-                                remonitoringPalette.open(true)
-                            }
-                        }
-                        Button{
-                            spacing: 1
-                            Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 40
                             background: Rectangle{
                                 color: "white"
@@ -851,7 +813,7 @@ Rectangle {
                             id: remonitoringPaletteBTN
                             objectName: "remonitoringPaletteButton"
                             onClicked: {
-                                remonitoringPalette.init(remonitoringInput.text, 3, remonitoringInput, remonitoringLabel.text, true)
+                                remonitoringPalette.init(remonitoringInput.text, 3, remonitoringInput, remonitoringLabel.text)
                                 remonitoringPalette.open(true)
                             }
                             Image {
@@ -909,9 +871,11 @@ Rectangle {
 
                                     Keys.onPressed: function(event) {
                                         var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
-                                        if ((modifiers === Qt.ControlModifier || modifiers === Qt.AltModifier) &&
-                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt) {
-                                            var t = validationTabController.getShortCutText(4, event.key, modifiers);
+                                        var drugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId : ""
+
+                                        if ((modifiers & Qt.ControlModifier || modifiers & Qt.AltModifier || modifiers & Qt.ShiftModifier || modifiers & Qt.MetaModifier) &&
+                                              event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt && event.key !== Qt.Key_Shift && event.key !== Qt.Key_Meta){
+                                            var t = validationTabController.getShortCutText(4, event.key, modifiers, drugId);
                                             if (t !== "") {
                                                 warningInput.text = t;
                                                 event.accepted = true;
@@ -929,18 +893,6 @@ Rectangle {
                         Button{
                             spacing: 1
                             Layout.preferredHeight: parent.height
-                            Layout.preferredWidth: 50
-                            objectName: "warningSaveButton"
-                            text: "Save"
-
-                            onClicked: {
-                                warningPalette.init(warningInput.text, 4, warningInput, warningLabel.text, false)
-                                warningPalette.open(true)
-                            }
-                        }
-                        Button{
-                            spacing: 1
-                            Layout.preferredHeight: parent.height
                             Layout.preferredWidth: 40
                             id: warningPaletteBTN
                             objectName: "warningPaletteButton"
@@ -948,7 +900,7 @@ Rectangle {
                                 color: "white"
                             }
                             onClicked: {
-                                warningPalette.init(warningInput.text, 4, warningInput, warningLabel.text, true)
+                                warningPalette.init(warningInput.text, 4, warningInput, warningLabel.text)
                                 warningPalette.open(true)
                             }
                             Image {
@@ -1019,9 +971,5 @@ Rectangle {
     SentencePaletteDialog{
         id: suitablePalette
         objectName: "suitabilityPalette"
-    }
-
-    SentenceShortcutDialog{
-        id: testing
     }
 }

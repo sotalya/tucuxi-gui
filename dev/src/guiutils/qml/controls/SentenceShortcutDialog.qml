@@ -1,13 +1,11 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-//import QtQuick.Controls.Styles
-import QtQuick.Window
+
+import Qt.labs.platform
 
 import guiutils.qml.styles
 import guiutils.qml.controls
-
-import ezechiel
 
 DialogBase {
     id: root
@@ -16,21 +14,39 @@ DialogBase {
     height: 350
 
     property int m_modifiers: 0x0
-    property int m_key: 0x0
+    property int m_key:       0x0
 
-    function toggleModifier(_checkState, _modifier){
-        if(_checkState){
-            m_modifiers = m_modifiers | _modifier
-        }
-        else{
-            m_modifiers = m_modifiers & (~_modifier)
-        }
-        validateKeyCombination()
+    property int m_oldModifiers: 0x0
+    property int m_oldKey:       0x0
+    property string m_oldText:   ""
+
+
+    property int m_sectionNb: 0
+    property string m_drugId: ""
+
+    property bool saveIsEnabled: true
+
+    property alias sentenceText: sentenceInput.text
+
+    signal exited()
+
+    function reset(){
+        m_modifiers = 0x0
+        m_key = 0x0
+        controlCheckBox.checked = false
+        shiftCheckBox.checked = false
+        altCheckBox.checked = false
+        sentenceText = ""
+        keyShortcut.text = ""
+        shortcutIsGlobalInfo.visible = false
+        shortcutIsLocalInfo.visible = false
     }
 
-    function init(_modifier, _key, _sentence){
+    function init(_key, _modifier, _text, _sectionNb, _drugId, _isEdit){
         m_modifiers = _modifier
         m_key = _key
+        m_sectionNb = _sectionNb
+        m_drugId = _drugId
 
         // Reset all CheckBoxes
         controlCheckBox.checked = false
@@ -41,84 +57,169 @@ DialogBase {
         if(_modifier & Qt.ShiftModifier) shiftCheckBox.checked = true
         if(_modifier & Qt.AltModifier) altCheckBox.checked = true
 
-        sentenceInput.text = _sentence
-        keyShortcut.text = String.fromCharCode(_key)
-    }
-
-    function reset(){
-        m_modifiers = 0x0
-        m_key = 0x0
-        controlCheckBox.checked = false
-        shiftCheckBox.checked = false
-        altCheckBox.checked = false
-        sentenceInput.text = ""
-        keyShortcut.text = ""
-        shortcutIsGlobalInfo.visible = false
-    }
-
-    function validateKeyCombination() {
-        var bOk = true
-        // Check if the keys combination used is already in use
-        if(m_modifiers === (Qt.ControlModifier|Qt.ShiftModifier)){
-            switch (m_key) {
-                case Qt.Key_F2:
-                    bOk = false
-                    break
-                case Qt.Key_T:
-                    bOk = false
-                    break
-                case Qt.Key_O:
-                    bOk = false
-                    break
-                case Qt.Key_E:
-                    bOk = false
-                    break
-                case Qt.Key_A:
-                    bOk = false
-                    break
-                case Qt.Key_S:
-                    bOk = false
-                    break
-                case Qt.Key_D:
-                    bOk = false
-                    break
-                case Qt.Key_F:
-                    bOk = false
-                    break
-                case Qt.Key_G:
-                    bOk = false
-                    break
-                case Qt.Key_X:
-                    bOk = false
-                    break
-                default:
-                    break
-            }
+        if(_text === ""){
+            saveIsEnabled = false
         }
-        // Check if only a number was used (already in use to switch tabs)
-        else if(m_modifiers === Qt.NoModifier){
-            if((m_key - Qt.Key_0) <= 9){
-                bOk = false
+
+        sentenceText = _text
+        keyShortcut.text = String.fromCharCode(_key)
+
+        if(validateKeyCombination_global()) validateKeyCombination_local()
+
+        if(_isEdit){
+            m_oldKey = m_key
+            m_oldModifiers = m_modifiers
+            m_oldText = sentenceText
+            saveIsEnabled = false
+        }
+        else{
+            m_oldKey = 0x0
+            m_oldModifiers = 0x0
+            m_oldText = 0x0
+        }
+    }
+
+    function setClearModifier(_checkState, _modifier){
+        if(_checkState){
+            m_modifiers = m_modifiers | _modifier
+        }
+        else{
+            m_modifiers = m_modifiers & (~_modifier)
+        }
+
+        validateShortcut()
+    }
+
+    function setShortcutValidColor(_isValid){
+        if(_isValid){
+            keyShortcut.color = "black"
+            if (m_oldKey === m_key && m_oldModifiers === m_modifiers && m_oldText === sentenceText){
+                saveIsEnabled = false
+            }
+            else{
+                saveIsEnabled = true
+            }
+
+        }
+        else{
+            keyShortcut.color = "red"
+            saveIsEnabled = false
+        }
+
+        controlCheckBox.setErrorColor(!_isValid)
+        shiftCheckBox.setErrorColor(!_isValid)
+        altCheckBox.setErrorColor(!_isValid)
+    }
+
+    function validateText() {
+        var bValid = true
+
+        if (m_oldKey !== m_key || m_oldModifiers !== m_modifiers || m_oldText !== sentenceText){
+            bValid = validationTabController.validateText(m_sectionNb, sentenceText, m_drugId)
+        }
+
+        setShortcutValidColor(bValid)
+
+        if(shortcutIsGlobalInfo.visible) textAlreadyExist.visible = false
+        else if (shortcutIsLocalInfo.visible) textAlreadyExist.visible = false
+        else if (bValid) textAlreadyExist.visible = false
+        else textAlreadyExist.visible = true
+
+        return bValid
+    }
+
+    function validateKeyCombination_local() {
+        var bValid = true
+
+        if (m_oldKey !== m_key || m_oldModifiers !== m_modifiers || m_oldText !== sentenceText){
+            bValid = validationTabController.validateSentenceShortcut(m_sectionNb, m_key, m_modifiers, sentenceText, m_drugId)
+        }
+
+        setShortcutValidColor(bValid)
+
+        if(bValid || shortcutIsGlobalInfo.visible) shortcutIsLocalInfo.visible = false
+        else {
+            textAlreadyExist.visible = false
+            shortcutIsLocalInfo.visible = true
+        }
+        return bValid
+    }
+
+    function validateKeyCombination_global() {
+        var bOk = true
+
+        if (m_oldKey !== m_key || m_oldModifiers !== m_modifiers || m_oldText !== sentenceText){
+            // Check if the keys combination used is already in use
+            if(m_modifiers === (Qt.ControlModifier|Qt.ShiftModifier)){
+                switch (m_key) {
+                    case Qt.Key_F2:
+                        bOk = false
+                        break
+                    case Qt.Key_T:
+                        bOk = false
+                        break
+                    case Qt.Key_O:
+                        bOk = false
+                        break
+                    case Qt.Key_E:
+                        bOk = false
+                        break
+                    case Qt.Key_A:
+                        bOk = false
+                        break
+                    case Qt.Key_S:
+                        bOk = false
+                        break
+                    case Qt.Key_D:
+                        bOk = false
+                        break
+                    case Qt.Key_F:
+                        bOk = false
+                        break
+                    case Qt.Key_G:
+                        bOk = false
+                        break
+                    case Qt.Key_X:
+                        bOk = false
+                        break
+                    default:
+                        break
+                }
+            }
+            // Check if only a number was used (already in use to switch tabs)
+            else if(m_modifiers === Qt.NoModifier){
+                if(0 <= (m_key - Qt.Key_0) && (m_key - Qt.Key_0) <= 9){
+                    bOk = false
+                }
             }
         }
 
         // Change text color if combination not ok
-        if(bOk){
-            keyShortcut.color = "black"
-            controlCheckBox.setErrorColor(!bOk)
-            shiftCheckBox.setErrorColor(!bOk)
-            altCheckBox.setErrorColor(!bOk)
-            shortcutIsGlobalInfo.visible = false
-        }
+        setShortcutValidColor(bOk)
+
+        if(bOk) shortcutIsGlobalInfo.visible = false
         else{
-            keyShortcut.color = "red"
-            controlCheckBox.setErrorColor(!bOk)
-            shiftCheckBox.setErrorColor(!bOk)
-            altCheckBox.setErrorColor(!bOk)
+            textAlreadyExist.visible = false
+            shortcutIsLocalInfo.visible = false
             shortcutIsGlobalInfo.visible = true
         }
 
+
         return bOk
+    }
+
+    function validateShortcut(){
+        if(validateKeyCombination_global()){
+            if(validateKeyCombination_local()){
+                return validateText()
+            }
+            else{
+                return false
+            }
+        }
+        else{
+            return false
+        }
     }
 
 
@@ -173,13 +274,20 @@ DialogBase {
                             placeholderText: "Please fill in"
                             clip: true
                             anchors.margins:1
-                            wrapMode: TextArea.Wrap
+                            wrapMode: TextInput.Wrap
                             font.family: Style.form.font.input
                             font.pixelSize: Style.form.size.input
                             verticalAlignment: Text.AlignVCenter
                             horizontalAlignment: Text.AlignLeft
 
                             rightPadding: 15
+
+                            Keys.onReleased: {
+                                if(sentenceText === "") saveIsEnabled = false
+                                else{
+                                    validateShortcut()
+                                }
+                            }
                         }
 
                         ScrollBar.vertical: ScrollBar {
@@ -196,8 +304,9 @@ DialogBase {
                     Layout.fillWidth: true
                     Layout.fillHeight:  true
                     text: "Select a keys combination for the shortcut"
-                    font.family: Style.form.font.input
-                    font.pixelSize: Style.form.size.input
+                    font.family: Style.form.font.label
+                    font.pixelSize: Style.form.size.label
+                    color: Style.form.foreground.label
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -210,10 +319,10 @@ DialogBase {
                 EntityCheckBox {
                     id: controlCheckBox
                     objectName: "controlCheckBox"
-                    checkBoxtext: "CTRL"
+                    checkBoxtext: macos ? "COMMAND" : "CTRL"
 
                     onCheckStateChanged: {
-                        toggleModifier(checked, Qt.ControlModifier)
+                        setClearModifier(checked, Qt.ControlModifier)
                     }
                 }
 
@@ -223,17 +332,17 @@ DialogBase {
                     checkBoxtext: "SHIFT"
 
                     onCheckStateChanged: {
-                        toggleModifier(checked, Qt.ShiftModifier)
+                        setClearModifier(checked, Qt.ShiftModifier)
                     }
                 }
 
                 EntityCheckBox{
                     id: altCheckBox
                     objectName: "altCheckBox"
-                    checkBoxtext: "ALT"
+                    checkBoxtext: macos ? "CONTROL" : "ALT"
 
                     onCheckStateChanged: {
-                        toggleModifier(checked, Qt.AltModifier)
+                        setClearModifier(checked, macos ? Qt.MetaModifier : Qt.AltModifier)
                     }
                 }
             }
@@ -245,8 +354,9 @@ DialogBase {
                     Layout.fillWidth: true
                     Layout.fillHeight:  true
                     text: "+"
-                    font.family: Style.form.font.input
-                    font.pixelSize: Style.form.size.input
+                    font.family: Style.form.font.label
+                    font.pixelSize: Style.form.size.label
+                    color: Style.form.foreground.label
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -295,7 +405,8 @@ DialogBase {
 
                                 m_key = event.key
                                 event.accepted = true
-                                validateKeyCombination()
+
+                                validateShortcut()
                             }
                         }
                     }
@@ -329,6 +440,34 @@ DialogBase {
 
                         visible: false
                     }
+
+                    Text {
+                        id: shortcutIsLocalInfo
+                        anchors.fill: parent
+                        text: "The selected key combination is already used for another sentence in this section"
+                        color: "red"
+                        font.bold: true
+                        font.pixelSize: Style.form.size.input
+
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+
+                        visible: false
+                    }
+
+                    Text {
+                        id: textAlreadyExist
+                        anchors.fill: parent
+                        text: "The choosen text already exist"
+                        color: "red"
+                        font.bold: true
+                        font.pixelSize: Style.form.size.input
+
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+
+                        visible: false
+                    }
                 }
             }
 
@@ -341,9 +480,22 @@ DialogBase {
                     objectName: "sentencesSaveButton"
                     text: "Save"
                     Layout.preferredWidth: 125
+
+                    enabled: saveIsEnabled
+
+                    opacity: saveIsEnabled ? 1 : 0.5
+
                     onClicked: function() {
-                        if(validateKeyCombination(m_key, m_modifiers)){
-                            root.exit(false);
+                        if(validateShortcut()){
+                            var sec = sentencesPalettes.getSection(m_sectionNb)
+                            if(m_drugId === "") sec.addSentenceToGlobal(m_key, m_modifiers, sentenceText)
+                            else sec.addSentenceToDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText)
+                            root.exited()
+                            root.exit(true);
+                        }
+                        else{
+                            // This should never appear, however it might still be possible to save even with unavailable shortcuts selected
+                            messageNoValidShortcut.open()
                         }
                     }
                 }
@@ -355,10 +507,18 @@ DialogBase {
                     Layout.preferredWidth: 125
                     onClicked: function() {
                         reset()
-                        root.exit(false);
+                        root.exited()
+                        root.exit(false)
                     }
                 }
             }
         }
+    }
+
+    MessageDialog {
+        id: messageNoValidShortcut
+        title: "Shortcut"
+        text: "The shortcut choosen is not available as it's already in use"
+        buttons: MessageDialog.Close
     }
 }

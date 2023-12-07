@@ -12,6 +12,27 @@ namespace Gui {
 namespace Admin {
 
 ///
+/// \brief The Sentence class
+/// \brief This object contains the sentence text, modifier and key
+class Sentence : public Tucuxi::Gui::Core::Entity
+{
+    Q_OBJECT
+
+    ENTITY_UTILS(Sentence)
+
+public:
+    AUTO_PROPERTY_DECL(int, modifier, Modifier)
+    AUTO_PROPERTY_DECL(int, key, Key)
+    AUTO_PROPERTY_DECL(QString, text, Text)
+
+public:
+    Q_INVOKABLE explicit Sentence(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr);
+    Q_INVOKABLE Sentence(int key, int modifier, QString text);
+
+    bool operator==(const Sentence& _other) const;
+};
+
+///
 /// \brief The DrugSentences class
 /// \brief This object contains the drug specific sentences list and the drug id
 class DrugSentences : public Tucuxi::Gui::Core::Entity
@@ -21,14 +42,13 @@ class DrugSentences : public Tucuxi::Gui::Core::Entity
     ENTITY_UTILS(DrugSentences)
 
     AUTO_PROPERTY_DECL(QString, drugId, DrugId)
-    AUTO_PROPERTY_DECL(QStringList, sentences, Sentences)
+    AUTO_PROPERTY_DECL(QList<Sentence*>, sentences, Sentences)
 
 public:
 
     Q_INVOKABLE explicit DrugSentences(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr){}
-    Q_INVOKABLE void addSentence(QString _sentence);
-    Q_INVOKABLE void removeSentence(int _listIndex);
-
+    void addSentence(Sentence* _sentence);
+    void removeSentence(int _listIndex);
 };
 
 ///
@@ -41,7 +61,7 @@ class Section : public Tucuxi::Gui::Core::Entity
     ENTITY_UTILS(Section)
 
     AUTO_PROPERTY_DECL(QString, sectionId, SectionId)
-    AUTO_PROPERTY_DECL(QStringList, globalSentences, GlobalSentences)
+    AUTO_PROPERTY_DECL(QList<Sentence*>, globalSentences, GlobalSentences)
     AUTO_PROPERTY_DECL(QList<DrugSentences*>, specificSentences, SpecificSentences)
 
     Q_INVOKABLE explicit Section(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr);
@@ -52,23 +72,31 @@ class Section : public Tucuxi::Gui::Core::Entity
 
 public:
 
-    Q_INVOKABLE void addSentenceToGlobal(QString _sentence);
+    Q_INVOKABLE void addSentenceToGlobal(int key, int modifier, QString text);
     Q_INVOKABLE void removeSentenceFromGlobal(int _listIndex);
 
-    Q_INVOKABLE void addSentenceToDrugSentencesList(QString _drugId, QString _sentence);
+    Q_INVOKABLE void addSentenceToDrugSentencesList(QString drugId, int key, int modifier, QString text);
     Q_INVOKABLE void removeSentenceFromDrugSentencesList(QString _drugId, int _listIndex);
 
     ///
-    /// \brief getSpecificSentencesList : return the list of sentences according to the drugId
-    /// \brief Used in SentencePaletteDialog.qml to display the content
-    /// \param _drugId : the drug ident
+    /// \brief getSpecificSentencesList : return the list of sentences texts according to the drugId
+    /// \param _drugId : the drug id
     /// \return QStringList :
     ///
     Q_INVOKABLE QStringList getSpecificSentencesList(QString _drugId);
 
-    void addSentenceToDrugSentences(QString _drugId, QString _sentence);
+    Q_INVOKABLE QList<Sentence*> getSentenceFromDrugId(QString _drugId);
 
-    QString getSentencePerKey(int key, int modifiers);
+    ///
+    /// \brief getGlobalSentencesTextsList : return the list of sentences texts
+    /// \brief Used in SentencePaletteDialog.qml to display the content
+    /// \return QStringList :
+    ///
+    Q_INVOKABLE QStringList getGlobalSentencesTextsList();
+
+    void addSentenceToDrugSentences(QString _drugId, Sentence* _sentence);
+
+    QString getSentencePerKey(int key, int modifiers, QString drugId);
 };
 
 QML_POINTERLIST_CLASS_DECL(SectionList, Section)
@@ -89,17 +117,20 @@ class SentencesPalettes : public Tucuxi::Gui::Core::Entity
             return ignored;
         }
 
-        bool isXMLSentenceExisting(QStringList _sentence, QString _xmlSentence);
+        bool isXMLSentenceExisting(QList<Sentence*> _sentence, Sentence* _xmlSentence);
 
-        public:
+    public:
         void importXml(SentencesPalettes *_sentencesPalettes, QString _fileName);
+
+        int stringToKey(QString keyString);
+        int stringToModifier(QString modifierString);
     };
 
     Q_OBJECT
 
     ENTITY_UTILS(SentencesPalettes)
-
-    AUTO_PROPERTY_DECL(QStringList, globalSentences, GlobalSentences)
+public:
+    AUTO_PROPERTY_DECL(QList<Sentence*>, globalSentences, GlobalSentences)
     AUTO_PROPERTY_DECL(SectionList*, sectionsList, SectionsList)
     AUTO_PROPERTY_DECL(QString, filename, Filename)
 
@@ -117,9 +148,6 @@ public:
     // Especially used to write the sentence from list to the TextArea
     Q_INVOKABLE Section* getSection(int i) { return _sectionsList->at(i);}
 
-    Q_INVOKABLE void addSentenceToGlobal(QString _sentence);
-    Q_INVOKABLE void removeSentenceFromGlobal(int _listIndex);
-
     Q_INVOKABLE void exportToXml();
     Q_INVOKABLE void saveXMLPath();
     Q_INVOKABLE QString loadXMLPath();
@@ -130,6 +158,9 @@ public:
     // Check if the saving path already exist.
     Q_INVOKABLE bool isPathExisting(QString _name);
 
+    // Convert modifier and key to string and vice versa
+    std::string modifierToString(int modifier);
+    std::string keyToString(int key);
 };
 
 }

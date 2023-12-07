@@ -17,7 +17,6 @@ DialogBase {
     property var self
     property var sectionText
     property var sectionNb
-    property bool paletteChoice: true
     property var currentGlobalModel
     property var currentSpecificModel
     property var currentDrugId
@@ -42,13 +41,12 @@ DialogBase {
         }
     }
 
-    function init(_sectionText, _sectionNb, _inputText, _sectionName, _paletteBtn)
+    function init(_sectionText, _sectionNb, _inputText, _sectionName)
     {
         sectionName = _sectionName
         inputText = _inputText
         sectionText = _sectionText
         sectionNb = _sectionNb
-        paletteChoice = _paletteBtn
         self = this
         currentDrugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId : ""
         update()
@@ -58,7 +56,7 @@ DialogBase {
     function update()
     {
         sectionData = sentencesPalettes.sectionsList.objat(sectionNb)
-        globalSectionData = sentencesPalettes.sectionsList.objat(sectionNb).globalSentences
+        globalSectionData = sentencesPalettes.sectionsList.objat(sectionNb).getGlobalSentencesTextsList()
         specificSectionData = sentencesPalettes.sectionsList.objat(sectionNb).getSpecificSentencesList(currentDrugId)
     }
 
@@ -145,18 +143,16 @@ DialogBase {
                                             objectName: "globalText_" + index
                                             Layout.fillWidth: true
                                             Layout.fillHeight: true
-                                            color: paletteChoice ? (globalSentencesdelegate.mousearea.hovered ? globalSentences.rowBackgroundHover : globalSentences.rowBackground) : "white"
-                                            label.color: paletteChoice ? (globalSentencesdelegate.mousearea.hovered ? globalSentences.rowForegroundHover : globalSentences.rowForeground) : "black"
+                                            color: globalSentencesdelegate.mousearea.hovered ? globalSentences.rowBackgroundHover : globalSentences.rowBackground
+                                            label.color: globalSentencesdelegate.mousearea.hovered ? globalSentences.rowForegroundHover : globalSentences.rowForeground
                                             label.text: modelData
 
                                             MouseArea{
                                                 anchors.fill: parent
                                                 onClicked: {
-                                                    if (paletteChoice){
                                                         if (inputText) {
                                                             inputText.text = modelData
                                                         }
-                                                    }
                                                 }
                                             }
                                         },
@@ -165,18 +161,18 @@ DialogBase {
                                             id: globalEditBtn
                                             objectName: "globalEditButton_" + index
                                             spacing: 2
-                                            visible: paletteChoice
-                                            enabled: paletteChoice
                                             Layout.preferredHeight: parent.height
                                             Layout.preferredWidth: 32
                                             background: Rectangle{
                                                 color: "white"
                                             }
                                             onClicked: {
-                                                sentenceShortcutDialog.init(0, 0, globalText.label.text)
+                                                var key = sectionData.globalSentences[index].key
+                                                var modifier = sectionData.globalSentences[index].modifier
+
+                                                sentenceShortcutDialog.init(key, modifier, globalText.label.text, sectionNb, "", true)
                                                 sentenceShortcutDialog.open(true)
-                                                //sectionData.removeSentenceFromGlobal(globalListIndex)
-                                                //root.update()
+                                                root.update()
                                             }
                                             Image {
                                                 anchors.verticalCenter: globalEditBtn.verticalCenter
@@ -195,8 +191,6 @@ DialogBase {
                                             id: globalDeleteBtn
                                             objectName: "globalDeleteButton_" + index
                                             spacing: 2
-                                            visible: paletteChoice
-                                            enabled: paletteChoice
                                             Layout.preferredHeight: parent.height
                                             Layout.preferredWidth: 32
                                             background: Rectangle{
@@ -222,10 +216,9 @@ DialogBase {
                                     ]
                                 }
                             },
+
                             Button{
                                 Layout.alignment: Qt.AlignHCenter
-                                visible: !paletteChoice
-                                enabled: !paletteChoice
                                 id :addgloballistbtn
                                 objectName: "addGlobalListButton"
                                 Layout.preferredWidth: 45
@@ -233,12 +226,9 @@ DialogBase {
                                     color: "white"
                                 }
                                 onClicked: {
-                                    if (sectionText !== ""){
-                                        sentenceShortcutDialog.init(0, 0, sectionText)
-                                        sentenceShortcutDialog.open(true)
-                                        // sectionData.addSentenceToGlobal(sectionText)
-                                        // root.update()
-                                    }
+                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, "", false)
+                                    sentenceShortcutDialog.open(true)
+                                    root.update()
                                 }
                                 Image {
                                     anchors.verticalCenter: addgloballistbtn.verticalCenter
@@ -293,16 +283,15 @@ DialogBase {
                                             Layout.fillWidth: true
                                             Layout.fillHeight: true
                                             label.text: modelData
-                                            color: paletteChoice ? (specificSentenceListDelegate.mousearea.hovered ? specificSentence.rowBackgroundHover : specificSentence.rowBackground) : "white"
-                                            label.color: paletteChoice ? (specificSentenceListDelegate.mousearea.hovered ? specificSentence.rowForegroundHover : specificSentence.rowForeground) : "black"
+                                            color: specificSentenceListDelegate.mousearea.hovered ? specificSentence.rowBackgroundHover : specificSentence.rowBackground
+                                            label.color: specificSentenceListDelegate.mousearea.hovered ? specificSentence.rowForegroundHover : specificSentence.rowForeground
 
                                             MouseArea{
                                                 anchors.fill: parent
                                                 onClicked: {
-                                                    if (paletteChoice){
-                                                        if (inputText) {
-                                                            inputText.text = modelData
-                                                        }
+
+                                                    if (inputText) {
+                                                        inputText.text = modelData
                                                     }
                                                 }
                                             }
@@ -312,18 +301,18 @@ DialogBase {
                                             id: specificEditBtn
                                             objectName: "specificEditButton_" + index
                                             spacing: 2
-                                            visible: paletteChoice
-                                            enabled: paletteChoice
                                             Layout.preferredHeight: parent.height
                                             Layout.preferredWidth: 32
                                             background: Rectangle{
                                                 color: "white"
                                             }
                                             onClicked: {
-                                                sentenceShortcutDialog.init(Qt.ControlModifier|Qt.ShiftModifier, Qt.Key_A, specificText.label.text)
+                                                var key = sectionData.getSentenceFromDrugId(currentDrugId)[index].key
+                                                var modifier = sectionData.getSentenceFromDrugId(currentDrugId)[index].modifier
+
+                                                sentenceShortcutDialog.init(key, modifier, specificText.label.text, sectionNb, currentDrugId, true)
                                                 sentenceShortcutDialog.open(true)
-                                                //sectionData.removeSentenceFromGlobal(globalListIndex)
-                                                //root.update()
+                                                root.update()
                                             }
                                             Image {
                                                 anchors.verticalCenter: specificEditBtn.verticalCenter
@@ -342,8 +331,6 @@ DialogBase {
                                             id: specificDeleteBtn
                                             objectName: "specificDeleteButton_" + index
                                             spacing: 2
-                                            visible: paletteChoice
-                                            enabled: paletteChoice
                                             Layout.preferredHeight: parent.height
                                             Layout.preferredWidth: 32
                                             background: Rectangle{
@@ -373,21 +360,14 @@ DialogBase {
                                 id: addspecificlistbtn
                                 objectName: "addSpecificListButton"
                                 Layout.alignment: Qt.AlignHCenter
-                                visible: !paletteChoice
-                                enabled: !paletteChoice
                                 Layout.preferredWidth: 45
                                 background: Rectangle{
                                     color: "white"
                                 }
                                 onClicked: {
-                                    if (sectionText !== ""){
-                                        var sec = sentencesPalettes.getSection(sectionNb)
-
-                                        sentenceShortcutDialog.init(0, 0, sectionText)
-                                        sentenceShortcutDialog.open(true)
-                                        //sec.addSentenceToDrugSentencesList(currentDrugId, sectionText)
-                                        //root.update()
-                                    }
+                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, currentDrugId, false)
+                                    sentenceShortcutDialog.open(true)
+                                    root.update()
                                 }
                                 Image {
                                     anchors.verticalCenter: addspecificlistbtn.verticalCenter
@@ -406,8 +386,15 @@ DialogBase {
 
                }
 
+            Item {
+                // spacer
+                Layout.preferredHeight: 10
+                Layout.fillWidth: true
+            }
+
             RowLayout{
                 Layout.alignment: Qt.AlignHCenter
+                spacing: 50
                 Button {
                     id: closeBtn
                     objectName: "validationCloseButton"
@@ -422,8 +409,6 @@ DialogBase {
                 Button {
                     id: cancelBtn
                     text: "Cancel"
-                    visible: paletteChoice
-                    enabled: paletteChoice
                     Layout.preferredWidth: 125
                     onClicked: function() {
                         if (inputText) {
@@ -438,5 +423,9 @@ DialogBase {
 
     SentenceShortcutDialog{
         id: sentenceShortcutDialog
+
+        onExited: {
+            root.update()
+        }
     }
 }

@@ -15,7 +15,8 @@ AppGlobals::AppGlobals() :
     m_listFile(),
     m_requestFile(),
     m_iccaFile(),
-    m_analyst(nullptr)
+    m_analyst(nullptr),
+    m_groupIntake(true)
 {
 
     m_showProcessingTime = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "showProcessingTime" ,true).toBool();
@@ -75,6 +76,10 @@ const QString AppGlobals::getIccaFile(){
     return m_iccaFile;
 }
 
+bool AppGlobals::getGroupIntake(){
+    return m_groupIntake;
+}
+
 void AppGlobals::setListFile(QString _listFile){
     m_listFile = _listFile;
 }
@@ -85,6 +90,10 @@ void AppGlobals::setRequestFile(QString _requestFile){
 
 void AppGlobals::setIccaFile(QString _iccaFile){
     m_iccaFile = _iccaFile;
+}
+
+void AppGlobals::setGroupIntake(bool enable){
+    m_groupIntake = enable;
 }
 
 Practician* AppGlobals::getAnalyst()

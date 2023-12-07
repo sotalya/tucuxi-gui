@@ -23,6 +23,7 @@
 #include "core/dal/uncastedvalue.h"
 #include "rest/builders/covariateidtranslator.h"
 #include "core/dal/drug/target.h"
+#include "guiutils/src/appglobals.h"
 
 using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::Core;
@@ -618,7 +619,10 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
     splitOverlappingDosage(dosages);
     setDosageEndDateInterval(dosages);
-    groupDosage(dosages);
+
+    if(GuiUtils::AppGlobals::getInstance()->getGroupIntake()) {
+        groupDosage(dosages);
+    }
 
     //Prediction dosage
     treatment->setDosages(dosages);

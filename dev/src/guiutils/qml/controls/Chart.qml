@@ -671,6 +671,11 @@ Canvas {
             objectName: "graphSettingsDialog"
         }
 
+        SampleTimePredictionDialog {
+            id: sampleTimePredictionDialog
+            objectName: "sampleTimePredictionDialog"
+        }
+
         onPressed: (mouse)=> {
             if (mouse.button  == Qt.RightButton) {
                 // TODO (JRP) : The popup() call won't work on current Windows version
@@ -797,6 +802,16 @@ Canvas {
                     // Open a dialog to select the objects to show on the graph
                     graphSettingsDialog.init()
                     graphSettingsDialog.open(true)
+                }
+            }
+
+            MenuItem {
+                text: "Sample time prediction"
+
+                onTriggered: {
+                    // Open a dialog
+                    sampleTimePredictionDialog.init()
+                    sampleTimePredictionDialog.open(true)
                 }
             }
         }

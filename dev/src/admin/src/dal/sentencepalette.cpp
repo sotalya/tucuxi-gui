@@ -41,6 +41,11 @@ void DrugSentences::removeSentence(int _listIndex){
     _sentences.removeAt(_listIndex);
 }
 
+void DrugSentences::editSentence(int _listIndex, Sentence* _sentence){
+    _sentences.removeAt(_listIndex);
+    _sentences.insert(_listIndex, _sentence);
+}
+
 void DrugSentences::addSentence(Sentence* _sentence){
     _sentences.append(_sentence);
 }
@@ -55,6 +60,15 @@ void Section::addSentenceToGlobal(int key, int modifier, QString text){
     _sentence->setModifier(modifier);
     _sentence->setText(text);
     _globalSentences.push_back(_sentence);
+}
+
+void Section::editSentenceOfGlobal(int key, int modifier, QString text, int _listIndex){
+    auto _sentence = Tucuxi::Gui::Core::CoreFactory::createEntity<Sentence>(_repository);
+    _sentence->setKey(key);
+    _sentence->setModifier(modifier);
+    _sentence->setText(text);
+    _globalSentences.removeAt(_listIndex);
+    _globalSentences.insert(_listIndex, _sentence);
 }
 
 void Section::removeSentenceFromGlobal(int _listIndex){
@@ -108,6 +122,21 @@ void Section::addSentenceToDrugSentencesList(QString _drugId, int key, int modif
         for(const auto &sentencesList : _specificSentences){
         if(sentencesList->getDrugId() == _drugId){
             sentencesList->addSentence(_sentence);
+            return;
+        }
+    }
+    //SHOULD NOT GO THERE
+    addDrugSentences(_drugId);
+}
+
+void Section::editSentenceOfDrugSentencesList(QString _drugId, int key, int modifier, QString text, int _listIndex){
+    auto _sentence = Tucuxi::Gui::Core::CoreFactory::createEntity<Sentence>(_repository);
+    _sentence->setKey(key);
+    _sentence->setModifier(modifier);
+    _sentence->setText(text);
+    for(const auto &sentencesList : _specificSentences){
+        if(sentencesList->getDrugId() == _drugId){
+            sentencesList->editSentence(_listIndex, _sentence);
             return;
         }
     }

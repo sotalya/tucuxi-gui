@@ -25,6 +25,8 @@ DialogBase {
     property string m_drugId: ""
 
     property bool saveIsEnabled: true
+    property bool isEditing: false
+    property int  m_index: 0
 
     property alias sentenceText: sentenceInput.text
 
@@ -42,11 +44,12 @@ DialogBase {
         shortcutIsLocalInfo.visible = false
     }
 
-    function init(_key, _modifier, _text, _sectionNb, _drugId, _isEdit){
+    function init(_key, _modifier, _text, _sectionNb, _drugId, _isEdit, _index){
         m_modifiers = _modifier
         m_key = _key
         m_sectionNb = _sectionNb
         m_drugId = _drugId
+        m_index = _index
 
         // Reset all CheckBoxes
         controlCheckBox.checked = false
@@ -77,6 +80,8 @@ DialogBase {
             m_oldModifiers = 0x0
             m_oldText = 0x0
         }
+
+        isEditing = _isEdit
     }
 
     function setClearModifier(_checkState, _modifier){
@@ -115,7 +120,7 @@ DialogBase {
         var bValid = true
 
         if (m_oldKey !== m_key || m_oldModifiers !== m_modifiers || m_oldText !== sentenceText){
-            bValid = validationTabController.validateText(m_sectionNb, sentenceText, m_drugId)
+            bValid = validationTabController.validateText(m_sectionNb, sentenceText, m_drugId, isEditing, m_index)
         }
 
         setShortcutValidColor(bValid)
@@ -132,7 +137,7 @@ DialogBase {
         var bValid = true
 
         if (m_oldKey !== m_key || m_oldModifiers !== m_modifiers || m_oldText !== sentenceText){
-            bValid = validationTabController.validateSentenceShortcut(m_sectionNb, m_key, m_modifiers, sentenceText, m_drugId)
+            bValid = validationTabController.validateSentenceShortcut(m_sectionNb, m_key, m_modifiers, sentenceText, m_drugId, isEditing, m_index)
         }
 
         setShortcutValidColor(bValid)
@@ -488,8 +493,17 @@ DialogBase {
                     onClicked: function() {
                         if(validateShortcut()){
                             var sec = sentencesPalettes.getSection(m_sectionNb)
-                            if(m_drugId === "") sec.addSentenceToGlobal(m_key, m_modifiers, sentenceText)
-                            else sec.addSentenceToDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText)
+
+                            if(m_drugId === ""){
+                                if(isEditing) sec.editSentenceOfGlobal(m_key, m_modifiers, sentenceText, m_index)
+                                else sec.addSentenceToGlobal(m_key, m_modifiers, sentenceText)
+
+                            }
+                            else {
+                                if(isEditing) sec.addSentenceOfDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText, m_index)
+                                else sec.addSentenceToDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText)
+                            }
+                                sec.addSentenceToDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText)
                             root.exited()
                             root.exit(true);
                         }

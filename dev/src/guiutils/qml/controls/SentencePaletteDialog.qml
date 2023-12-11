@@ -170,7 +170,7 @@ DialogBase {
                                                 var key = sectionData.globalSentences[index].key
                                                 var modifier = sectionData.globalSentences[index].modifier
 
-                                                sentenceShortcutDialog.init(key, modifier, globalText.label.text, sectionNb, "", true)
+                                                sentenceShortcutDialog.init(key, modifier, globalText.label.text, sectionNb, "", true, globalSentencesdelegate.globalListIndex)
                                                 sentenceShortcutDialog.open(true)
                                                 root.update()
                                             }
@@ -226,7 +226,7 @@ DialogBase {
                                     color: "white"
                                 }
                                 onClicked: {
-                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, "", false)
+                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, "", false, globalSentencesdelegate.globalListIndex)
                                     sentenceShortcutDialog.open(true)
                                     root.update()
                                 }
@@ -310,7 +310,7 @@ DialogBase {
                                                 var key = sectionData.getSentenceFromDrugId(currentDrugId)[index].key
                                                 var modifier = sectionData.getSentenceFromDrugId(currentDrugId)[index].modifier
 
-                                                sentenceShortcutDialog.init(key, modifier, specificText.label.text, sectionNb, currentDrugId, true)
+                                                sentenceShortcutDialog.init(key, modifier, specificText.label.text, sectionNb, currentDrugId, true, specificSentenceListDelegate.specificListIndex)
                                                 sentenceShortcutDialog.open(true)
                                                 root.update()
                                             }
@@ -365,7 +365,7 @@ DialogBase {
                                     color: "white"
                                 }
                                 onClicked: {
-                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, currentDrugId, false)
+                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, currentDrugId, false, specificSentenceListDelegate.specificListIndex)
                                     sentenceShortcutDialog.open(true)
                                     root.update()
                                 }

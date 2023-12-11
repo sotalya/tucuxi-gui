@@ -23,23 +23,38 @@ QString ValidationTabController::getShortCutText(int section, int key, int modif
     return "";
 }
 
-bool ValidationTabController::validateSentenceShortcut(int sectionId, int key, int modifiers, QString text, QString drugId){
+bool ValidationTabController::validateSentenceShortcut(int sectionId, int key, int modifiers, QString text, QString drugId, bool isEditing, int _index){
     auto _section = _sentencesPalettes->getSection(sectionId);
+    uint i = 0;
+
 
     // Global Sentences
     for(auto const &sentences : _section->getGlobalSentences()){
-        if(modifiers == sentences->getModifier() && key == sentences->getKey() && text != sentences->getText()){
-            return false;
+        if(modifiers == sentences->getModifier() && key == sentences->getKey() && (text != sentences->getText() || !isEditing)){
+            if(isEditing && _index != i){
+                return false;
+            }
+            else if(!isEditing){
+                return false;
+            }
         }
+        i++;
     }
     // Specific Sentences
     if(drugId != ""){
         for(auto const &drug : _section->getSpecificSentences()){
             if(drugId == drug->getDrugId()){
+                i = 0;
                 for(auto const &sentences : drug->getSentences()){
-                    if(modifiers == sentences->getModifier() && key == sentences->getKey() && text != sentences->getText()){
-                        return false;
+                    if(modifiers == sentences->getModifier() && key == sentences->getKey() && (text != sentences->getText() || !isEditing)){
+                        if(isEditing && _index != i){
+                            return false;
+                        }
+                        else if(!isEditing){
+                            return false;
+                        }
                     }
+                    i++;
                 }
             }
         }
@@ -47,12 +62,12 @@ bool ValidationTabController::validateSentenceShortcut(int sectionId, int key, i
     return true;
 }
 
-bool ValidationTabController::validateText(int sectionId, QString text, QString drugId){
+bool ValidationTabController::validateText(int sectionId, QString text, QString drugId, bool isEditing, int _index){
     auto _section = _sentencesPalettes->getSection(sectionId);
 
     // Global Sentences
     for(auto const &sentences : _section->getGlobalSentences()){
-        if(text == sentences->getText()){
+        if(text == sentences->getText() && !isEditing){
             return false;
         }
     }
@@ -61,7 +76,7 @@ bool ValidationTabController::validateText(int sectionId, QString text, QString 
         for(auto const &drug : _section->getSpecificSentences()){
             if(drugId == drug->getDrugId()){
                 for(auto const &sentences : drug->getSentences()){
-                    if(text == sentences->getText()){
+                    if(text == sentences->getText() && !isEditing){
                         return false;
                     }
                 }

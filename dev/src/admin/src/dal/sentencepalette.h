@@ -48,6 +48,7 @@ public:
 
     Q_INVOKABLE explicit DrugSentences(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr){}
     void addSentence(Sentence* _sentence);
+    void editSentence(int _listIndex, Sentence* _sentence);
     void removeSentence(int _listIndex);
 };
 
@@ -73,9 +74,11 @@ class Section : public Tucuxi::Gui::Core::Entity
 public:
 
     Q_INVOKABLE void addSentenceToGlobal(int key, int modifier, QString text);
+    Q_INVOKABLE void editSentenceOfGlobal(int key, int modifier, QString text, int _listIndex);
     Q_INVOKABLE void removeSentenceFromGlobal(int _listIndex);
 
     Q_INVOKABLE void addSentenceToDrugSentencesList(QString drugId, int key, int modifier, QString text);
+    Q_INVOKABLE void editSentenceOfDrugSentencesList(QString _drugId, int key, int modifier, QString text, int _listIndex);
     Q_INVOKABLE void removeSentenceFromDrugSentencesList(QString _drugId, int _listIndex);
 
     ///

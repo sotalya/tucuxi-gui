@@ -69,7 +69,7 @@ TEST(ValidationTest, Test1)
 
     MeasureData measureData1;
     measureData1.name   = ("Sample_123_b");
-    measureData1.value  = 4567;
+    measureData1.measure  = 4567;
     measureData1.dateTimeMeas.setDate(QDate(2022, 02, 05));
     measureData1.dateTimeMeas.setTime(QTime(02, 03));
 
@@ -88,7 +88,7 @@ TEST(ValidationTest, Test1)
     adjustmentsData1.dateTimeAdj.setTime(QTime(11, 12));
     adjustmentsData1.loadingDose    = true;
     adjustmentsData1.restPeriod     = true;
-    adjustmentsData1.suggestAdjNum  = 3;
+    adjustmentsData1.suggestAdjIndex  = 3;
 
     ValidationData validationData1;
     validationData1.dateTimeVal.setDate(QDate(2022, 01, 02));

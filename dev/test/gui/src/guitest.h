@@ -1,119 +1,27 @@
 //@@license@@
 
+#ifndef GUITEST_H
+#define GUITEST_H
+
 #include <QTest>
 
 #include <Spix/QtQmlBot.h>
 
 #include "guiutils/src/mainwindowcontroller.h"
+#include "defaultdrugconfig.h"
 
 class QQuickWindow;
 
-struct PatientData {
-    QString firstName       = "Joan";
-    QString lastName        = "Of Arc";
-    QDate birthDate         = QDate(1960, 11, 10);
-    int gender              = 0;                    // gender : 1 = male, 0 = female
-    QString identifier      = "Patient_0";
-    QString stayNumber      = "Private Drive 4";
-    QString address         = "Rue du Flon 1";
-    QString city            = "Lausanne";
-    QString state           = "VD";
-    QString postcode        = "1003";
-    QString country         = "Switzerland";
-
-    QString titlePhy       = "Dr.";
-    QString firstNamePhy   = "Doo";
-    QString lastNamePhy    = "Little";
-    QString affiliationPhy = "Aff";
-    QString addressPhy     = "Rte de Cheseaux 1";
-    QString cityPhy        = "Yverdon-les-Bains";
-    QString statePhy       = "VD";
-    QString postcodePhy    = "1400";
-    QString countryPhy     = "Switzerland";
-};
-
-
-struct DosageData {
-    double dosage           = 567.8;                // [mg]
-    double interval         = 24;                   // [h]
-    double infusion         = 60;                   // [min]
-    bool steadyState        = true;
-    QDateTime dateTimeDos1  = QDateTime::currentDateTime().addDays(0);
-    QDateTime dateTimeDos2  = QDateTime::currentDateTime().addDays(7);
-};
-
-struct CovariatesData {
-    QString sex;
-    double weight           = 67.87;
-    double scc              = 80;
-    QDateTime dateTimeCovar = QDateTime::currentDateTime();
-
-    double dayNightDosing                     = 100;
-    double asian                              = 100;
-    double nonValvularAtrialFibriliation      = 0;
-    double acuteCoronarySyndrome              = 0;
-    double strongModerateCytochromeInhibitors = 100;
-    double dose                               = 8.2;
-    double glomerularFiltrationRate           = 95;
-
-    double atazanavirWithWithoutBooster = 0;
-    double darunavir                    = 1;
-    double rifampicin                   = 0;
-    double currentSmoking               = 1;
-
-    double gestionalAge             = 2600;
-    double heamatologicalMalignacy  = 100;
-};
-
-struct MeasureData {
-    QString name = "Sample_a_124";
-    double value = 120;
-    QDateTime dateTimeMeas = QDateTime::currentDateTime();
-};
-
-struct TargetData {
-    int targetType          = 0;
-    double cMinInput        = 3000;
-    double cBestInput       = 3500;
-    double cMaxInput        = 4000;
-    double tMinInput;
-    double tBestInput;
-    double tMaxInput;
-    double micInput;
-};
-
-struct AdjustmentsData {
-    QDateTime dateTimeAdj   = QDateTime::currentDateTime().addDays(2);
-    bool loadingDose        = true;
-    bool restPeriod         = false;
-    int suggestAdjNum       = 1;
-    int dose                = 666;
-    int interval            = 36;
-};
-
-struct ValidationData {
-    QDateTime dateTimeVal   = QDateTime::currentDateTime().addDays(7);
-    QString expectedness    = "Full rehabilitation";
-    QString suitability     = "Any";
-    QString prediction      = "Sunny but windy this afternoon";
-    QString remonitoring    = "None";
-    QString warning         = "Don't invest in Bitcoin";
-};
-
-struct AnalystData {
-    QString analystTitle       = "Dre";
-    QString analystFirstName   = "Jane";
-    QString analystLastName    = "Doe";
-    QString analystRole        = "Analyst";
-    QString analystPhoneNumber = "123456789";
-    QString analystAffiliation = "AffiliationName";
-    QString analystAddress     = "Rue du Bugnon 46";
-    QString analystCity        = "Lausanne";
-    QString analystPostcode    = "1011";
-    QString analystState       = "VD";
-    QString analystCountry     = "Switzerland";
-
-
+enum tabIndex{
+    patientTab = 0,
+    drugsTab = 1,
+    dosagesTab = 2,
+    covariatesTab = 3,
+    measuresTab = 4,
+    targetsTab = 5,
+    adjustementsTab = 6,
+    validationTab = 7,
+    reportsTab = 8
 };
 
 class SpixGTest : public spix::TestServer {
@@ -220,3 +128,5 @@ EXPECT_EQ(spixErrors.size(), 0); \
 for (const auto &spixError : spixErrors) { \
     EXPECT_EQ(spixError, ""); \
 }} \
+
+#endif //GUITEST_H

@@ -11,10 +11,10 @@
 Name "Tucuxi"
 
 ; The file to write
-OutFile "../../../Setup-${TARGET}${ARCH}.exe"
+OutFile "../../../deploy/setups/Setup-${TARGET}.exe"
 
 ; The default installation directory
-InstallDir c:\Tucuxi
+InstallDir C:\Tucuxi
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel user
@@ -30,6 +30,6 @@ Section "Tucuxi"
 
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
-  File /r ../../../Deploy\${ARCH}\${TARGET}\*
+  File /r ../../../deploy\${TARGET}\*
   
 SectionEnd ; end the section

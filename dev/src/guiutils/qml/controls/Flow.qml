@@ -66,82 +66,83 @@ ColumnLayout {
     }
 
     Keys.onPressed: function(event) {
+        if(event.modifiers === Qt.NoModifier || event.modifiers === Qt.KeypadModifier){
+            if (event.key === Qt.Key_Right) {
+                interpretationController.goToNextEvent();
+            }
 
-        if (event.key === Qt.Key_Right) {
-            interpretationController.goToNextEvent();
-        }
+            if (event.key === Qt.Key_Left) {
+                interpretationController.goToPreviousEvent();
+            }
 
-        if (event.key === Qt.Key_Left) {
-            interpretationController.goToPreviousEvent();
-        }
-
-        if (event.key === Qt.Key_0) {
-            validateTab(flow.currentIndex);
-            event.accepted = true;
-            return;
-        }
-        if (event.key === Qt.Key_1) {
-            if (patientTab.enabled) {
-                flow.currentIndex = 0;
+            if (event.key === Qt.Key_0) {
+                validateTab(flow.currentIndex);
                 event.accepted = true;
+                return;
             }
-            return;
-        }
-        if (event.key === Qt.Key_2) {
-            if (drugTab.enabled) {
-                flow.currentIndex = 1;
-                event.accepted = true;
+            if (event.key === Qt.Key_1) {
+                if (patientTab.enabled) {
+                    flow.currentIndex = 0;
+                    event.accepted = true;
+                }
+                return;
             }
-            return;
-        }
-        if (event.key === Qt.Key_3) {
-            if (dosageTab.enabled) {
-                flow.currentIndex = 2;
-                event.accepted = true;
+            if (event.key === Qt.Key_2) {
+                if (drugTab.enabled) {
+                    flow.currentIndex = 1;
+                    event.accepted = true;
+                }
+                return;
             }
-            return;
-        }
-        if (event.key === Qt.Key_4) {
-            if (covariateTab.enabled) {
-                flow.currentIndex = 3;
-                event.accepted = true;
+            if (event.key === Qt.Key_3) {
+                if (dosageTab.enabled) {
+                    flow.currentIndex = 2;
+                    event.accepted = true;
+                }
+                return;
             }
-            return;
-        }
-        if (event.key === Qt.Key_5) {
-            if (measureTab.enabled) {
-                flow.currentIndex = 4;
-                event.accepted = true;
+            if (event.key === Qt.Key_4) {
+                if (covariateTab.enabled) {
+                    flow.currentIndex = 3;
+                    event.accepted = true;
+                }
+                return;
             }
-            return;
-        }
-        if (event.key === Qt.Key_6) {
-            if (targetTab.enabled) {
-                flow.currentIndex = 5;
-                event.accepted = true;
+            if (event.key === Qt.Key_5) {
+                if (measureTab.enabled) {
+                    flow.currentIndex = 4;
+                    event.accepted = true;
+                }
+                return;
             }
-            return;
-        }
-        if (event.key === Qt.Key_7) {
-            if (adjustmentTab.enabled) {
-                flow.currentIndex = 6;
-                event.accepted = true;
+            if (event.key === Qt.Key_6) {
+                if (targetTab.enabled) {
+                    flow.currentIndex = 5;
+                    event.accepted = true;
+                }
+                return;
             }
-            return;
-        }
-        if (event.key === Qt.Key_8) {
-            if (reportTab.enabled) {
-                flow.currentIndex = 7;
-                event.accepted = true;
+            if (event.key === Qt.Key_7) {
+                if (adjustmentTab.enabled) {
+                    flow.currentIndex = 6;
+                    event.accepted = true;
+                }
+                return;
             }
-            return;
-        }
-        if (event.key === Qt.Key_9) {
-            if (validationTab.enabled) {
-                flow.currentIndex = 8;
-                event.accepted = true;
+            if (event.key === Qt.Key_8) {
+                if (validationTab.enabled) {
+                    flow.currentIndex = 7;
+                    event.accepted = true;
+                }
+                return;
             }
-            return;
+            if (event.key === Qt.Key_9) {
+                if (reportTab.enabled) {
+                    flow.currentIndex = 8;
+                    event.accepted = true;
+                }
+                return;
+            }
         }
     }
 

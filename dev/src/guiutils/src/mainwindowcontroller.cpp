@@ -103,6 +103,12 @@ if (iccaFile.isEmpty()) {
     getRootContext()->setContextProperty("CONFIG_DEMO", false);
 #endif // CONFIG_DEMO
 
+#ifdef MACOS
+    getRootContext()->setContextProperty("macos", true);
+#else
+    getRootContext()->setContextProperty("macos", false);
+#endif
+
 
     // The constructor does a lot of initialization
     interpretationController = new InterpretationController(this);

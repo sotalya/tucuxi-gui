@@ -40,6 +40,7 @@ private:
     void createUncastedDosageValue(Tucuxi::Gui::Core::Dosage *dosage, QString field, QString text, QString comment);
     void splitOverlappingDosage(Tucuxi::Gui::Core::DosageHistory* dosages);
     void setDosageEndDateInterval(Tucuxi::Gui::Core::DosageHistory* dosages);
+    void groupDosage(Tucuxi::Gui::Core::DosageHistory* dosages);
 };
 
 }

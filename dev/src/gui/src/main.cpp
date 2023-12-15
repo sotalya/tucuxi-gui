@@ -603,6 +603,8 @@ void parseOptions()
                                     QCoreApplication::translate("main", "Sets a folder to log the computing requests files."),
                                     "logtqf",
                                     "log");
+    const QCommandLineOption noGroupIntakeOption(QStringList() << "nogroupintake",
+                                                 QCoreApplication::translate("main", "Do not group intake when imported from flat request file"));
 
     parser.addOption(basePathOption);
     const QCommandLineOption helpOption = parser.addHelpOption();
@@ -617,6 +619,7 @@ void parseOptions()
     parser.addOption(certificateFileOption);
     parser.addOption(drugsPathOption);
     parser.addOption(tqfLoggerOption);
+    parser.addOption(noGroupIntakeOption);
     const QCommandLineOption versionOption = parser.addVersionOption();
 
     parser.parse(QCoreApplication::arguments());
@@ -651,6 +654,10 @@ void parseOptions()
     appGlobals->setListFile(parser.value(listFileOption));
     appGlobals->setRequestFile(parser.value(requestFileOption));
     appGlobals->setIccaFile(parser.value(iccaFileOption));
+
+    if (parser.isSet(noGroupIntakeOption)) {
+        appGlobals->setGroupIntake(false);
+    }
 
 
 #ifdef CONFIG_CONNECTED

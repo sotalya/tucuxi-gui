@@ -503,7 +503,6 @@ DialogBase {
                                 if(isEditing) sec.addSentenceOfDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText, m_index)
                                 else sec.addSentenceToDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText)
                             }
-                                sec.addSentenceToDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText)
                             root.exited()
                             root.exit(true);
                         }

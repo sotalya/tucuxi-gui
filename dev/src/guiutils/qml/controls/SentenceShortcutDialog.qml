@@ -500,7 +500,7 @@ DialogBase {
 
                             }
                             else {
-                                if(isEditing) sec.addSentenceOfDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText, m_index)
+                                if(isEditing) sec.editSentenceOfDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText, m_index)
                                 else sec.addSentenceToDrugSentencesList(m_drugId, m_key, m_modifiers, sentenceText)
                             }
                             root.exited()

@@ -131,7 +131,6 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
     targetsView(nullptr),
     validationView(nullptr),
     reportView(nullptr),
-    _webchannel(nullptr),
     shouldPercentilesBeComputed(true),
     printer(),
     exportFileDialog()
@@ -141,8 +140,6 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
     _activeSubstances = CoreFactory::createEntity<LightActiveSubstanceList>(ABSTRACTREPO, this);
     _privateActiveSubstances = CoreFactory::createEntity<LightActiveSubstanceList>(ABSTRACTREPO, this);
     _patients = CoreFactory::createEntity<CorePatientList>(ABSTRACTREPO, this);
-
-    _webchannel = new QQmlWebChannel(this);
 
     // It seems there is no need for this server
 

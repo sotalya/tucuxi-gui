@@ -124,9 +124,9 @@ DialogBase {
                             },
 
                             EntityListView {
+                                id: globalSentencesList
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
-                                id: globalSentencesList
                                 objectName: "parametersListView"
 
                                 model: globalSectionData
@@ -170,7 +170,7 @@ DialogBase {
                                                 var key = sectionData.globalSentences[index].key
                                                 var modifier = sectionData.globalSentences[index].modifier
 
-                                                sentenceShortcutDialog.init(key, modifier, globalText.label.text, sectionNb, "", true, globalSentencesdelegate.globalListIndex)
+                                                sentenceShortcutDialog.init(key, modifier, globalText.label.text, sectionNb, "", true, globalSentencesList.currentIndex)
                                                 sentenceShortcutDialog.open(true)
                                                 root.update()
                                             }
@@ -226,7 +226,7 @@ DialogBase {
                                     color: "white"
                                 }
                                 onClicked: {
-                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, "", false, globalSentencesdelegate.globalListIndex)
+                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, "", false, globalSentencesList.currentIndex)
                                     sentenceShortcutDialog.open(true)
                                     root.update()
                                 }
@@ -263,9 +263,9 @@ DialogBase {
                             },
 
                             EntityListView {
+                                id: specificSentenceList
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
-                                id: specificSentenceList
                                 objectName: "parametersListView"
 
                                 model: specificSectionData
@@ -310,7 +310,7 @@ DialogBase {
                                                 var key = sectionData.getSentenceFromDrugId(currentDrugId)[index].key
                                                 var modifier = sectionData.getSentenceFromDrugId(currentDrugId)[index].modifier
 
-                                                sentenceShortcutDialog.init(key, modifier, specificText.label.text, sectionNb, currentDrugId, true, specificSentenceListDelegate.specificListIndex)
+                                                sentenceShortcutDialog.init(key, modifier, specificText.label.text, sectionNb, currentDrugId, true, specificSentenceList.currentIndex)
                                                 sentenceShortcutDialog.open(true)
                                                 root.update()
                                             }
@@ -365,7 +365,7 @@ DialogBase {
                                     color: "white"
                                 }
                                 onClicked: {
-                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, currentDrugId, false, specificSentenceListDelegate.specificListIndex)
+                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, currentDrugId, false, specificSentenceList.currentIndex)
                                     sentenceShortcutDialog.open(true)
                                     root.update()
                                 }

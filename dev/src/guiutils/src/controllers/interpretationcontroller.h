@@ -11,6 +11,7 @@
 #include <QWebChannel>
 #include <QtWebSockets/QtWebSockets>
 #include <QtWebSockets/QWebSocketServer>
+#include <QQmlWebChannel>
 
 #include "core/utils/autoproperty.h"
 
@@ -156,6 +157,8 @@ class InterpretationController : public QObject
 
     Q_PROPERTY(QString defaultUnit READ getDefaultUnit WRITE setDefaultUnit NOTIFY defaultUnitChanged)
     Q_PROPERTY(double chartscale READ getChartscale WRITE setChartscale NOTIFY chartscaleChanged)
+    Q_PROPERTY(QQmlWebChannel* webchannel READ getWebchannel NOTIFY webchannelChanged)
+
 
 
 //    Q_PROPERTY(std::vector<double> percv READ getPoppv WRITE setPoppv NOTIFY percvChanged)
@@ -176,6 +179,8 @@ public:
     // ToDo-MVC ///////////////////////////////////////////////////////////////
     // Probably better in a report controler, along with all the report stuff
     // ////////////////////////////////////////////////////////////////////////
+
+    QQmlWebChannel* getWebchannel() { return static_cast<QQmlWebChannel*>(_webchannel);}
 
     enum PublicationType {
         Pdf,
@@ -275,6 +280,7 @@ public:
     Q_INVOKABLE void setRefreshButtonVisible(bool visible);
 
 signals:
+    void webchannelChanged(QQmlWebChannel&);
     void drugsChanged(Tucuxi::Gui::Core::DrugModelList*);
     void drugModelsChanged(Tucuxi::Gui::Core::DrugModelList*);
     void activeSubstancesChanged(Tucuxi::Gui::Core::LightActiveSubstanceList*);
@@ -463,6 +469,7 @@ private:
 
     QObject *reportView;
     QObject *webengineView;
+    QQmlWebChannel *_webchannel;
 
     MeasureTabController *measureTabController;
     DosageTabController *dosageTabController;

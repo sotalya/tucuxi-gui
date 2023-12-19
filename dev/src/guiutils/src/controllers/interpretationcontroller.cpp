@@ -52,13 +52,14 @@
 
 #include "guiutils/src/flowcontroller.h"
 #include "guiutils/src/drugtohtml.h"
-#include "guiutils/src/startupwindow.h"
 #include "guiutils/src/fakepatientscreator.h"
 #include "guiutils/src/calculationcontroller.h"
 #include "guiutils/src/multithreadedcalculationcontroller.h"
 #include "guiutils/src/chartdatacontroller.h"
 #include "guiutils/src/widgets/persistentfiledialog.h"
+#ifdef CONFIG_DEMO
 #include "guiutils/src/unavailablefunctionality.h"
+#endif // CONFIG_DEMO
 #include "guiutils/src/appmode.h"
 #include "guiutils/src/appglobals.h"
 
@@ -144,23 +145,6 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
 
     _webchannel = new QQmlWebChannel(this);
 
-    // It seems there is no need for this server
-
-    /*
-    QWebSocketServer* server = new QWebSocketServer(QStringLiteral("QWebChannel Standalone Example Server"), QWebSocketServer::NonSecureMode);
-    if (!server->listen(QHostAddress::LocalHost, 12345)) {
-        qFatal("Failed to open web socket server.");
-    }
-
-    // wrap WebSocket clients in QWebChannelAbstractTransport objects
-    WebSocketClientWrapper* clientWrapper = new WebSocketClientWrapper(server);
-
-    // setup the channel
-    CONNECT(clientWrapper, &WebSocketClientWrapper::clientConnected,
-                     _webchannel, &QWebChannel::connectTo);
-//    QObject::CONNECT(&clientWrapper, clientConnected(WebSocketTransport*)), _webchannel, SLOT(connectTo(QWebChannelAbstractTransport*)));
-*/
-
 
     flowController = new FlowController(this);
 
@@ -222,8 +206,6 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
     _chartDataController->chartData = chartData;
     _chartDataController->predictionspec = predictionspec;
     adjustmentTabController->setChartData(chartData);
-
-//    _webchannel->registerObject("interpretation", _interpretation);
 }
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::setNewInterpretation(Tucuxi::Gui::Admin::Interpretation *interpretation, bool newInterpretation)

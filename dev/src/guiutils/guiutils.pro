@@ -63,27 +63,11 @@ INCLUDEPATH +=	.. \
 
 SOURCES += \
 #    src/ezchart.cpp \
-    src/models/measurelistmodel.cpp \
     src/startupwindow.cpp \
-    src/models/covariatelistmodel.cpp \
     src/models/sortfilterentitylistproxymodel.cpp \
-    src/models/patientlistmodel.cpp \
-    src/models/practicianlistmodel.cpp \
-    src/models/institutelistmodel.cpp \
-    src/models/dosagelistmodel.cpp \
-    src/models/druglistmodel.cpp \
-    src/models/drugvariatelistmodel.cpp \
-    src/models/targetlistmodel.cpp \
-    src/models/adjustmentlistmodel.cpp \
     src/models/abstractentitylistmodel.cpp \
     src/models/abstractentitymodel.cpp \
     src/controllers/interpretationcontroller.cpp \
-    src/models/covariatemodel.cpp \
-    src/models/reversemodel.cpp \
-    src/models/domainlistmodel.cpp \
-    src/models/studylistmodel.cpp \
-    src/models/validationmodel.cpp \
-    src/models/adjustmentsettingsmodel.cpp \
     src/models/partialrequestlistmodel.cpp \
     src/startupscreen.cpp \
     src/widgets/persistentfiledialog.cpp \
@@ -118,28 +102,12 @@ config_connected {
 }
 
 HEADERS +=  \
-    src/models/measurelistmodel.h \
     src/startupwindow.h \
-    src/models/covariatelistmodel.h \
     src/models/sortfilterentitylistproxymodel.h \
-    src/models/patientlistmodel.h \
-    src/models/practicianlistmodel.h \
-    src/models/institutelistmodel.h \
     errors_guiutils.h \
-    src/models/dosagelistmodel.h \
-    src/models/druglistmodel.h \
-    src/models/drugvariatelistmodel.h \
-    src/models/targetlistmodel.h \
-    src/models/adjustmentlistmodel.h \
     src/models/abstractentitylistmodel.h \
     src/models/abstractentitymodel.h \
     src/controllers/interpretationcontroller.h \
-    src/models/covariatemodel.h \
-    src/models/reversemodel.h \
-    src/models/domainlistmodel.h \
-    src/models/studylistmodel.h \
-    src/models/validationmodel.h \
-    src/models/adjustmentsettingsmodel.h \
     src/models/partialrequestlistmodel.h \
     src/startupscreen.h \
     src/widgets/persistentfiledialog.h \

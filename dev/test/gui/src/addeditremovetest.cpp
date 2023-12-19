@@ -25,6 +25,8 @@
 #include "core/dal/drugtreatment.h"
 #include "core/dal/drug/target.h"
 
+#include "defaultdrugconfig.h"
+
 #include <QDebug>                       // allows to print text in console : qInfo() << "text", or qDebug()"
 
 extern SpixGTest* srv;
@@ -101,7 +103,7 @@ TEST(AddEditRemoveTest, Test1)
         //_____Add measure______________________________________________
 
         measureData1.name   = "Sample_1234_b" + QString::number(n);
-        measureData1.value  = 200 + n*100 + n*15;
+        measureData1.measure  = 200 + n*100 + n*15;
         measureData1.dateTimeMeas.setDate(QDate(2022, n+1, n+2));
         measureData1.dateTimeMeas.setTime(QTime(n+1, n+2));
 
@@ -174,7 +176,7 @@ TEST(AddEditRemoveTest, Test1)
     //_____Edit measure_________________________________________________
 
         measureData1.name = "Sample_2345_Edit";
-        measureData1.value = 454;
+        measureData1.measure = 454;
         measureData1.dateTimeMeas.setDate(QDate(2022, 4, 5));
         measureData1.dateTimeMeas.setTime(QTime(2, 3));
 

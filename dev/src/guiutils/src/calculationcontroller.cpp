@@ -19,8 +19,6 @@
 #include "core/dal/predictionspec.h"
 #include "core/dal/dosage.h"
 #include "core/dal/drug/drug.h"
-#include "core/dal/drug/doses.h"
-#include "core/dal/drug/adme.h"
 #include "core/utils/logging.h"
 #include "core/utils/connect.h"
 #include "errors_guiutils.h"
@@ -29,10 +27,10 @@
 #include "core/dal/drug/standardtreatment.h"
 
 
-#define APRTIMEOUT 20000
-#define APOTIMEOUT 35000
-#define POPTIMEOUT 20000
-#define ADJTIMEOUT 35000
+constexpr int APRTIMEOUT = 20000;
+constexpr int APOTIMEOUT = 35000;
+constexpr int POPTIMEOUT = 20000;
+constexpr int ADJTIMEOUT = 35000;
 
 using namespace Tucuxi;
 using namespace Gui::Core;
@@ -112,12 +110,10 @@ void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
     emit disengage();
     EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running typical patient percentiles.");
 
-//    std::vector<double> percentiles = {10, 25, 75, 90};
     QMap<double, DataSet> percsDataSets;
 
     PopulationTraits parametersTraits;
     PercentilesTraits percentilesTraits(prediction->getNbPoints(),
-//                                        percentiles,
                                         prediction->getPercentileList(),
                                         prediction->getStartDate(),
                                         prediction->getEndDate(),
@@ -527,7 +523,7 @@ void CalculationThread::run()
     
     setPriority(QThread::LowPriority); // So the GUI can be more responsive
 
-    while (1) {
+    while (true) {
         Tucuxi::Gui::Core::PredictionSpec *spec;
 
         CalculationBuffer::calculationType what;

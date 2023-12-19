@@ -160,6 +160,7 @@ class InterpretationController : public QObject
     Q_PROPERTY(QQmlWebChannel* webchannel READ getWebchannel NOTIFY webchannelChanged)
 
 
+
 //    Q_PROPERTY(std::vector<double> percv READ getPoppv WRITE setPoppv NOTIFY percvChanged)
 //    Q_PROPERTY(std::vector<double> aprpv READ getAprpv WRITE setAprpv NOTIFY aprpvChanged)
 //    Q_PROPERTY(std::vector<double> apopv READ getApopv WRITE setApopv NOTIFY apopvChanged)

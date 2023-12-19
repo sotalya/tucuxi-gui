@@ -1,1 +1,0 @@
-call deploy.bat 64 Release-Demo

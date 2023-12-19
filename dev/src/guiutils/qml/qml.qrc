@@ -76,6 +76,7 @@
         <file alias="SettingsDialog.qml">controls/SettingsDialog.qml</file>
         <file alias="SentencePaletteDialog.qml">controls/SentencePaletteDialog.qml</file>
         <file>EntityTextValueEntry.qml</file>
+        <file>SampleTimePredictionDialog.qml</file>
         <file alias="SentenceShortcutDialog.qml">controls/SentenceShortcutDialog.qml</file>
         <file alias="EntityCheckBox.qml">controls/EntityCheckBox.qml</file>
     </qresource>

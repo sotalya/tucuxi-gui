@@ -180,14 +180,12 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
 
 #include "core/dal/drug/drug.h"
 #include "core/dal/drug/translatablestring.h"
-#include "core/dal/amount.h"
 #include "core/dal/drug/doses.h"
 #include "core/dal/drug/intervals.h"
 #include "core/dal/drug/infusions.h"
 #include "core/dal/drug/drugvariate.h"
 
 #include "tucucore/drugmodel/drugmodel.h"
-#include "tucucore/drugmodel/activesubstance.h"
 #include "tucucommon/translatablestring.h"
 #include "tucucore/drugmodel/covariatedefinition.h"
 

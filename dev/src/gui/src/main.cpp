@@ -15,6 +15,7 @@
 #include "rest/network/networkaccessmanager.h"
 
 #include "core/settings.h"
+#include "core/dal/chartdata.h"
 #include "core/dal/drug/drug.h"
 #include "core/dal/drugtreatment.h"
 #include "core/dal/dosage.h"
@@ -48,11 +49,13 @@
 
 #include "admin/src/adminfactory.h"
 #include "admin/src/dal/patient.h"
+#include "admin/src/dal/practician.h"
 #include "admin/src/dal/measure.h"
 #include "admin/src/dal/interpretationrequest.h"
 #include "admin/src/dal/steptypes.h"
 #include "admin/src/dal/clinical.h"
 #include "admin/src/requestsclient.h"
+#include "admin/src/dal/interpretationanalysis.h"
 
 #include "guiutils/src/requestscontroller.h"
 
@@ -74,41 +77,31 @@
 #include "guiutils/src/controllers/adjustmenttabcontroller.h"
 #include "guiutils/src/controllers/drugtabcontroller.h"
 
-#include "guiutils/src/models/adjustmentlistmodel.h"
-#include "guiutils/src/models/adjustmentsettingsmodel.h"
-#include "guiutils/src/models/covariatelistmodel.h"
-#include "guiutils/src/models/covariatemodel.h"
-#include "guiutils/src/models/domainlistmodel.h"
-#include "guiutils/src/models/dosagelistmodel.h"
-#include "guiutils/src/models/druglistmodel.h"
-#include "guiutils/src/models/drugvariatelistmodel.h"
-#include "guiutils/src/models/institutelistmodel.h"
-#include "guiutils/src/models/measurelistmodel.h"
 #include "guiutils/src/models/partialrequestlistmodel.h"
-#include "guiutils/src/models/patientlistmodel.h"
-#include "guiutils/src/models/practicianlistmodel.h"
-#include "guiutils/src/models/reversemodel.h"
 #include "guiutils/src/models/sortfilterentitylistproxymodel.h"
-#include "guiutils/src/models/studylistmodel.h"
-#include "guiutils/src/models/targetlistmodel.h"
-#include "guiutils/src/models/validationmodel.h"
+
 #include "guiutils/src/appmode.h"
 #include "guiutils/src/appglobals.h"
 
 #include "rest/restlogger.h"
 
+#ifndef NOSTARTUPSCREEN
 #include "guiutils/src/startupscreen.h"
+#endif // NOSTARTUPSCREEN
+
 #include "guiutils/src/startupwindow.h"
 
 #include "processingtucucore/src/tqflogger.h"
 
 #include "core/utils/logging.h"
 
+#ifndef NOLICENSE
 #ifdef COMPILE_WITH_TUCUCORE
 #include "tucucrypto/licensemanager.h"
 #else
 #include "src/fromtucuxi/licensemanager.h"
 #endif // COMPILE_WITH_TUCUCORE
+#endif // NOLICENSE
 
 #ifdef COMPILE_WITH_TUCUCORE
 #include "tucucore/version.h"
@@ -122,8 +115,6 @@ void initResources();
 #ifdef CONFIG_CONNECTED
 void initRestConfig();
 #endif // CONFIG_CONNECTED
-
-#include <iostream>
 
 #ifdef CONFIG_GUITEST
 #include "../test/gui/src/guitest.h"
@@ -377,21 +368,8 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::MainWindowController>("ezechiel", 1, 0, "MainWindowController", QObject::tr("Cannot instantiate type 'MainWindowController'"));
 
     EXLOG(QtDebugMsg, Tucuxi::Gui::NOEZERROR, "Registering model objects.");
-    /*
-    qmlRegisterUncreatableType<AdjustmentListModel>("ezechiel", 1, 0, "AdjustmentListModel", QObject::tr("Cannot instantiate type 'AdjustmentListModel'"));
-    qmlRegisterUncreatableType<AdjustmentSettingsModel>("ezechiel", 1, 0, "AdjustmentSettingsModel", QObject::tr("Cannot instantiate type 'AdjustmentSettingsModel'"));
-    qmlRegisterUncreatableType<CovariateListModel>("ezechiel", 1, 0, "CovariateListModel", QObject::tr("Cannot instantiate type 'CovariateListModel'"));
-    qmlRegisterUncreatableType<CovariateModel>("ezechiel", 1, 0, "CovariateModel", QObject::tr("Cannot instantiate type 'CovariateModel'"));
-    qmlRegisterUncreatableType<DomainListModel>("ezechiel", 1, 0, "DomainListModel", QObject::tr("Cannot instantiate type 'DomainListModel'"));
-    qmlRegisterUncreatableType<DosageListModel>("ezechiel", 1, 0, "DosageListModel", QObject::tr("Cannot instantiate type 'DosageListModel'"));
-    qmlRegisterUncreatableType<DrugListModel>("ezechiel", 1, 0, "DrugListModel", QObject::tr("Cannot instantiate type 'DrugListModel'"));
-    qmlRegisterUncreatableType<DrugVariateListModel>("ezechiel", 1, 0, "DrugVariateListModel", QObject::tr("Cannot instantiate type 'DrugVariateListModel'"));
-    qmlRegisterUncreatableType<InstituteListModel>("ezechiel", 1, 0, "InstituteListModel", QObject::tr("Cannot instantiate type 'InstituteListModel'"));
-    qmlRegisterUncreatableType<MeasureListModel>("ezechiel", 1, 0, "MeasureListModel", QObject::tr("Cannot instantiate type 'MeasureListModel'"));
-    qmlRegisterUncreatableType<PatientListModel>("ezechiel", 1, 0, "PatientListModel", QObject::tr("Cannot instantiate type 'PatientListModel'"));
-    qmlRegisterUncreatableType<ValidationModel>("ezechiel", 1, 0, "ValidationModel", QObject::tr("Cannot instantiate type 'ValidationModel'"));
-*/
-//#ifdef CONFIG_CONNECTED
+
+    //#ifdef CONFIG_CONNECTED
     //qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::PartialRequestListModel>("ezechiel", 1, 0, "PartialRequestListModel", QObject::tr("Cannot instantiate type 'PartialRequestListModel'"));
     qmlRegisterType<Tucuxi::Gui::GuiUtils::PartialRequestListModel>("ezechiel", 1, 0, "PartialRequestListModel");
 //#endif // CONFIG_CONNECTED
@@ -603,6 +581,8 @@ void parseOptions()
                                     QCoreApplication::translate("main", "Sets a folder to log the computing requests files."),
                                     "logtqf",
                                     "log");
+    const QCommandLineOption noGroupIntakeOption(QStringList() << "nogroupintake",
+                                                 QCoreApplication::translate("main", "Do not group intake when imported from flat request file"));
 
     parser.addOption(basePathOption);
     const QCommandLineOption helpOption = parser.addHelpOption();
@@ -617,6 +597,7 @@ void parseOptions()
     parser.addOption(certificateFileOption);
     parser.addOption(drugsPathOption);
     parser.addOption(tqfLoggerOption);
+    parser.addOption(noGroupIntakeOption);
     const QCommandLineOption versionOption = parser.addVersionOption();
 
     parser.parse(QCoreApplication::arguments());
@@ -651,6 +632,10 @@ void parseOptions()
     appGlobals->setListFile(parser.value(listFileOption));
     appGlobals->setRequestFile(parser.value(requestFileOption));
     appGlobals->setIccaFile(parser.value(iccaFileOption));
+
+    if (parser.isSet(noGroupIntakeOption)) {
+        appGlobals->setGroupIntake(false);
+    }
 
 
 #ifdef CONFIG_CONNECTED

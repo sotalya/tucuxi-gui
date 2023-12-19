@@ -33,11 +33,15 @@ public:
 
     void setIccaFile(QString _iccaFile);
 
+    void setGroupIntake(bool enable);
+
     const QString getListFile();
 
     const QString getRequestFile();
 
     const QString getIccaFile();
+
+    bool getGroupIntake();
 
     Q_INVOKABLE Tucuxi::Gui::Admin::Practician *getAnalyst();
 
@@ -70,6 +74,8 @@ private:
     bool m_showProcessingTime;
     bool m_autoCalculation;
     bool m_percentileCalculation;
+
+    bool m_groupIntake;
 };
 
 }

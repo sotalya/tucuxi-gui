@@ -86,7 +86,7 @@ TEST(IssuesHighlighter, Test1)
         //_____Add measure______________________________________________
 
         measureData1.name   = "Sample_1234_b" + QString::number(n);
-        measureData1.value  = 100 + n*10 + n*1;
+        measureData1.measure  = 100 + n*10 + n*1;
         measureData1.dateTimeMeas.setDate(QDate(2022, m, m+n));
         measureData1.dateTimeMeas.setTime(QTime(m, m));
 

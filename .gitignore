@@ -60,6 +60,14 @@ dev/Tucuxi-64-Release.zip
 dev/setup-Release32.exe
 dev/setup-Release64.exe
 dev/Deploy
+dev/Tucuxi-64-Release.zip
+dev/Setup-Release64.exe
+dev/Tucuxi-64-Release-Demo.zip
+dev/Setup-Release-Demo64.exe
+dev/Tucuxi-64-Release-extreport.zip
+dev/Setup-Release-extreport64.exe
+dev/Tucuxi-64-Release-extreport-nolicense.zip
+dev/Setup-Release-extreport-nolicense64.exe
 
 #xml sentences files
 *.xml

@@ -33,7 +33,6 @@
 #include "admin/src/dal/phone.h"
 #include "admin/src/interpretationxmlexport.h"
 
-
 #include <QMessageBox>
 
 using namespace Tucuxi::Gui::Admin;
@@ -45,9 +44,9 @@ SpixGTest* srv;
 int waitTime1 = 1;
 int waitTimeLong = 10;
 
-QMap<int, QString> flowViewTabMap = {std::pair{0,"Patient"}, {1,"Drugs"}, {2,"Dosages"},
-                                 {3,"Covariates"}, {4,"Measures"}, {5,"Targets"},
-                                 {6,"Adjustments"}, {7,"Validation"}, {8,"Reports"}};
+QMap<int, QString> flowViewMap = {std::pair{patientTab,"Patient"}, {drugsTab,"Drugs"}, {dosagesTab,"Dosages"},
+                                 {covariatesTab,"Covariates"}, {measuresTab,"Measures"}, {targetsTab,"Targets"},
+                                 {adjustementsTab,"Adjustments"}, {validationTab,"Validation"}, {reportsTab,"Reports"}};
 
 SpixGTest::SpixGTest(Tucuxi::Gui::GuiUtils::MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[])
 {
@@ -118,7 +117,7 @@ int SpixGTest::getCurrentTabIndex()
                               Qt::BlockingQueuedConnection,
                               Q_RETURN_ARG(QVariant, currentTabIndex));
 
-    std::cout << "Current tab : " << flowViewTabMap[currentTabIndex.toInt()].toStdString() << std::endl;
+    std::cout << "Current tab : " << flowViewMap[currentTabIndex.toInt()].toStdString() << std::endl;
 
     srv->waitPeriod(waitTime1);
 
@@ -712,7 +711,7 @@ void SpixGTest::fillInMeasureData(MeasureData measureData1)
 
     findEntityTextFieldAndSetValue("sampleIdField", measureData1.name);
 
-    findEntityTextValueFieldAndSetValue("measureValueEntry", measureData1.value);
+    findEntityTextValueFieldAndSetValue("measureValueEntry", measureData1.measure);
 
     findDateObjectAndSetValue("sampleDateInput", "sampleTimeInput", measureData1.dateTimeMeas);
 

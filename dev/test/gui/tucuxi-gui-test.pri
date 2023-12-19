@@ -14,6 +14,7 @@ SOURCES += $$PWD/src/guitest.cpp \
     $$PWD/src/randomtest.cpp \
     $$PWD/src/reporttest.cpp \
     $$PWD/src/savedtestcomparison.cpp \
+    $$PWD/src/sentencesshortcutstest.cpp \
     $$PWD/src/signaturetest.cpp \
     $$PWD/src/stresstest.cpp \
     $$PWD/src/targettest.cpp \

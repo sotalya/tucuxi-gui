@@ -41,6 +41,15 @@ DialogBase {
         }
     }
 
+    // For testing
+    function getGlobalSentencesCount(){
+        return globalSentencesList.count
+    }
+    // For testing
+    function getSpecificSentencesCount(){
+        return specificSentenceList.count
+    }
+
     function init(_sectionText, _sectionNb, _inputText, _sectionName)
     {
         sectionName = _sectionName
@@ -58,6 +67,30 @@ DialogBase {
         sectionData = sentencesPalettes.sectionsList.objat(sectionNb)
         globalSectionData = sentencesPalettes.sectionsList.objat(sectionNb).getGlobalSentencesTextsList()
         specificSectionData = sentencesPalettes.sectionsList.objat(sectionNb).getSpecificSentencesList(currentDrugId)
+    }
+
+    function openshortcutDialog(_key, _modifier, _text, _sectionNb, _drugId, _isEdit, _index){
+        if(_sectionNb === 0){
+            expectednessSentenceShortcutDialog.init(_key, _modifier, _text, _sectionNb, _drugId, _isEdit, _index)
+            expectednessSentenceShortcutDialog.open(true)
+        }
+        else if(_sectionNb === 1){
+            suitabilitySentenceShortcutDialog.init(_key, _modifier, _text, _sectionNb, _drugId, _isEdit, _index)
+            suitabilitySentenceShortcutDialog.open(true)
+        }
+        else if(_sectionNb === 2){
+            predictionSentenceShortcutDialog.init(_key, _modifier, _text, _sectionNb, _drugId, _isEdit, _index)
+            predictionSentenceShortcutDialog.open(true)
+        }
+        else if(_sectionNb === 3){
+            remonitoringSentenceShortcutDialog.init(_key, _modifier, _text, _sectionNb, _drugId, _isEdit, _index)
+            remonitoringSentenceShortcutDialog.open(true)
+        }
+        else if(_sectionNb === 4){
+            warningSentenceShortcutDialog.init(_key, _modifier, _text, _sectionNb, _drugId, _isEdit, _index)
+            warningSentenceShortcutDialog.open(true)
+        }
+        root.update()
     }
 
     GridLayout {
@@ -170,9 +203,7 @@ DialogBase {
                                                 var key = sectionData.globalSentences[index].key
                                                 var modifier = sectionData.globalSentences[index].modifier
 
-                                                sentenceShortcutDialog.init(key, modifier, globalText.label.text, sectionNb, "", true, globalSentencesList.currentIndex)
-                                                sentenceShortcutDialog.open(true)
-                                                root.update()
+                                                root.openshortcutDialog(key, modifier, globalText.label.text, sectionNb, "", true, globalSentencesList.currentIndex)
                                             }
                                             Image {
                                                 anchors.verticalCenter: globalEditBtn.verticalCenter
@@ -226,9 +257,7 @@ DialogBase {
                                     color: "white"
                                 }
                                 onClicked: {
-                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, "", false, globalSentencesList.currentIndex)
-                                    sentenceShortcutDialog.open(true)
-                                    root.update()
+                                    root.openshortcutDialog(0, 0, sectionText, sectionNb, "", false, globalSentencesList.currentIndex)
                                 }
                                 Image {
                                     anchors.verticalCenter: addgloballistbtn.verticalCenter
@@ -310,9 +339,7 @@ DialogBase {
                                                 var key = sectionData.getSentenceFromDrugId(currentDrugId)[index].key
                                                 var modifier = sectionData.getSentenceFromDrugId(currentDrugId)[index].modifier
 
-                                                sentenceShortcutDialog.init(key, modifier, specificText.label.text, sectionNb, currentDrugId, true, specificSentenceList.currentIndex)
-                                                sentenceShortcutDialog.open(true)
-                                                root.update()
+                                                root.openshortcutDialog(key, modifier, specificText.label.text, sectionNb, currentDrugId, true, specificSentenceList.currentIndex)
                                             }
                                             Image {
                                                 anchors.verticalCenter: specificEditBtn.verticalCenter
@@ -365,9 +392,7 @@ DialogBase {
                                     color: "white"
                                 }
                                 onClicked: {
-                                    sentenceShortcutDialog.init(0, 0, sectionText, sectionNb, currentDrugId, false, specificSentenceList.currentIndex)
-                                    sentenceShortcutDialog.open(true)
-                                    root.update()
+                                    root.openshortcutDialog(0, 0, sectionText, sectionNb, currentDrugId, false, specificSentenceList.currentIndex)
                                 }
                                 Image {
                                     anchors.verticalCenter: addspecificlistbtn.verticalCenter
@@ -422,7 +447,44 @@ DialogBase {
     }
 
     SentenceShortcutDialog{
-        id: sentenceShortcutDialog
+        id: expectednessSentenceShortcutDialog
+        objectName: "expectednessSentenceShortcutDialog"
+
+        onExited: {
+            root.update()
+        }
+    }
+
+    SentenceShortcutDialog{
+        id: suitabilitySentenceShortcutDialog
+        objectName: "suitabilitySentenceShortcutDialog"
+
+        onExited: {
+            root.update()
+        }
+    }
+
+    SentenceShortcutDialog{
+        id: predictionSentenceShortcutDialog
+        objectName: "predictionSentenceShortcutDialog"
+
+        onExited: {
+            root.update()
+        }
+    }
+
+    SentenceShortcutDialog{
+        id: remonitoringSentenceShortcutDialog
+        objectName: "remonitoringSentenceShortcutDialog"
+
+        onExited: {
+            root.update()
+        }
+    }
+
+    SentenceShortcutDialog{
+        id: warningSentenceShortcutDialog
+        objectName: "warningSentenceShortcutDialog"
 
         onExited: {
             root.update()

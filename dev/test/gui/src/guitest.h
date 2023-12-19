@@ -182,6 +182,9 @@ public:
     void selectAdjustments(int editIndex);
     void editAdjustments(AdjustmentsData adjustmentsData1, int editIndex);
 
+    bool addGlobalSentencePalette(QString sentence, QString shortcutModifier, QString shortcutKey, QString section);
+    bool addSpecificSentencePalette(QString sentence, QString shortcutModifier, QString shortcutKey, QString section);
+    void removeAllSentences();
 
     void fillInValidationData(struct ValidationData);
     void saveValidationComment(QString commentType, int globalSpecificIndex);

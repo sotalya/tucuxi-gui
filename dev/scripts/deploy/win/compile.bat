@@ -103,8 +103,8 @@ IF /i "%1" EQU "release" (
   ECHO =============================================================================
   ECHO ======================= Compiling Extreport noLicense =======================
   ECHO =============================================================================
-  MKDIR %tucuxi_gui_path%\dev\%_extreport-nolicense_name%
-  CD %tucuxi_gui_path%\dev\%_extreport-nolicense_name%
+  MKDIR %tucuxi_gui_path%\dev\%_extreport_nolicense_name%
+  CD %tucuxi_gui_path%\dev\%_extreport_nolicense_name%
   DEL /S /Q *
   C:\Qt\6.5.2\msvc2019_64\bin\qmake.exe %tucuxi_gui_path%\dev\src\tucuxi.pro -spec win32-msvc DEFINES+=NOLICENSE CONFIG+=config_tucucore_full DRUGSPATH=%tucuxi_drugs_path%\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
   C:\Qt\Tools\QtCreator\bin\jom\jom.exe

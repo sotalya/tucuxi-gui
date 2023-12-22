@@ -19,7 +19,7 @@ enum tabIndex{
     covariatesTab = 3,
     measuresTab = 4,
     targetsTab = 5,
-    adjustementsTab = 6,
+    adjustmentsTab = 6,
     validationTab = 7,
     reportsTab = 8
 };

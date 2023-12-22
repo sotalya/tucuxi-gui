@@ -151,7 +151,7 @@ TEST(FlatRequestsTest, Test1)
     srv->synchronize();
     srv->waitPeriod(waitTime1);
 
-    ASSERT_EQ(srv->getCurrentTabIndex(), adjustementsTab);
+    ASSERT_EQ(srv->getCurrentTabIndex(), adjustmentsTab);
 
     srv->addAdjustments(adjustmentsData1);
     srv->synchronize();

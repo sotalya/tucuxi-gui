@@ -1,3 +1,4 @@
 [submodule "dev/libs/tucuxi-core"]
 	path = dev/libs/tucuxi-core
 	url = ../tucuxi-core.git
+	branch = from-qmake-to-cmake

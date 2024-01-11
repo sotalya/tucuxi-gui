@@ -15,6 +15,7 @@
 #include "rest/builders/replylistmessagebuilder.h"
 
 #include <qmessagebox.h>
+#include <QProcess>
 
 using namespace Tucuxi::Gui::Core;
 using namespace Tucuxi::Gui::FlatRequest;
@@ -28,6 +29,26 @@ FlatRequestFileClient::~FlatRequestFileClient()
 
 }
 
+void FlatRequestFileClient::constructFileFromDB()
+{
+    QProcess process;
+    QString scriptFile =  QCoreApplication::applicationDirPath() + "dbconnect/main.py";
+    QString pythonCommand = "python " + scriptFile +
+                            " -o import.xml" +
+                            " -d cefepime" +
+                            " -r";
+
+    process.start (pythonCommand);
+    process.waitForFinished();
+
+    QTextStream informer(stdout);
+
+    informer << process.readAll();
+    informer.flush();
+
+    m_listFileName = "dbconnect/import.xml";
+}
+
 void FlatRequestFileClient::setListFile(const QString &fileName)
 {
     m_listFileName = fileName;
@@ -35,6 +56,8 @@ void FlatRequestFileClient::setListFile(const QString &fileName)
 
 void FlatRequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 {
+
+    constructFileFromDB();
 
     QFile source(m_listFileName);
     if (!source.open(QIODevice::ReadOnly | QIODevice::Text)) {

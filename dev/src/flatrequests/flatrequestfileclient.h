@@ -30,6 +30,8 @@ private:
 
     QString m_listFileName;
 
+    void constructFileFromDB();
+
 };
 
 }

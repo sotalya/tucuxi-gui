@@ -211,7 +211,7 @@ target_link_libraries(core
 
 # Install rules
 include(GNUInstallDirs)
-install(TARGETS admin
+install(TARGETS core
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )

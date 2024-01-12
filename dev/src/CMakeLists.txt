@@ -26,8 +26,8 @@ get_target_property(DATABASES_INCLUDES databases INTERFACE_INCLUDE_DIRECTORIES)
 add_subdirectory(flatrequests/)
 get_target_property(FLATREQUESTS_INCLUDES flatrequests INTERFACE_INCLUDE_DIRECTORIES)
 
-# add_subdirectory(guiutils/)
-# get_target_property(GUIUTILS_INCLUDES guiutils INTERFACE_INCLUDE_DIRECTORIES)
+add_subdirectory(guiutils/)
+get_target_property(GUIUTILS_INCLUDES guiutils INTERFACE_INCLUDE_DIRECTORIES)
 
 add_subdirectory(processingtucucore/)
 get_target_property(PROCESSINGTUCUCORE_INCLUDES processingtucucore INTERFACE_INCLUDE_DIRECTORIES)
@@ -111,7 +111,7 @@ target_link_libraries(tucuxi
         core
         databases
         flatrequests
-        # guiutils
+        guiutils
         processingtucucore
         rest
         ${QT_COMPONENTS}
@@ -125,9 +125,11 @@ target_include_directories(tucuxi
         ${DATABASES_INCLUDES}
         ${FLATREQUESTS_INCLUDES}
         ${GUI_INCLUDES_DIRS}
-        # ${GUIUTILS_INCLUDES}
+        ${GUIUTILS_INCLUDES}
         ${PROCESSINGTUCUCORE_INCLUDES}
         ${REST_INCLUDES}
+
+        ${TUCUXI_BASE_DIR_INCLUDE}
 )
 
 ## Set compiler and linker flags

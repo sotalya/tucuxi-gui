@@ -5,6 +5,8 @@ to do so, under projects, there are the Cmake configurations. you need to add
     DRUGPATH -> String <Path_to_your_drug_folder>
     NOLICENSE -> Boolean ON
     NOSTARTUPSCREEN -> Boolean ON
+    config_externalreport  -> Boolean ON
 
 in the initial configurations
 
+-DDRUGPATH:STRING="C:\Users\admin\Documents\Tucuxi\tucuxi-drugs\drugfiles" -DNOLICENSE:BOOL=TRUE -DNOSTARTUPSCREEN:BOOL=TRUE -Dconfig_externalreport:BOOL=TRUE

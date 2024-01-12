@@ -170,11 +170,16 @@ set(CORE_OTHER_FILES
     models/tucuxi_core.qmodel
 )
 
+set(CORE_RESOURCES_FILES
+    resources/core.qrc
+)
+
 add_library(core 
                 STATIC
                     ${CORE_HEADER_FILES}
                     ${CORE_SOURCE_FILES}
                     ${CORE_OTHER_FILES}
+                    ${CORE_RESOURCES_FILES}
 )
 
 target_include_directories(core
@@ -210,7 +215,3 @@ install(TARGETS admin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-
-#### TODO manage resources
-# Add resources to TUCUXI_GUI_RESOURCES variable
-set(TUCUXI_GUI_RESOURCES ${TUCUXI_GUI_RESOURCES} resources/core.qrc)

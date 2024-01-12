@@ -20,7 +20,7 @@ set(XercesC_VERSION 3.2.4)
 find_package(XercesC REQUIRED)
 
 add_library(xerces INTERFACE)
-target_link_libraries(xerces INTERFACE XercesC::XercesC)
+target_link_libraries(xerces INTERFACE XercesC)
 
 # Set locally and for parent scope
 set(LIBS_INCLUDES 

@@ -32,8 +32,8 @@ get_target_property(FLATREQUESTS_INCLUDES flatrequests INTERFACE_INCLUDE_DIRECTO
 add_subdirectory(processingtucucore/)
 get_target_property(PROCESSINGTUCUCORE_INCLUDES processingtucucore INTERFACE_INCLUDE_DIRECTORIES)
 
-# add_subdirectory(rest/)
-# get_target_property(REST_INCLUDES rest INTERFACE_INCLUDE_DIRECTORIES)
+add_subdirectory(rest/)
+get_target_property(REST_INCLUDES rest INTERFACE_INCLUDE_DIRECTORIES)
 
 
 ### Get GUI stuff
@@ -113,7 +113,7 @@ target_link_libraries(tucuxi
         flatrequests
         # guiutils
         processingtucucore
-        # rest
+        rest
         ${QT_COMPONENTS}
 )
 
@@ -127,7 +127,7 @@ target_include_directories(tucuxi
         ${GUI_INCLUDES_DIRS}
         # ${GUIUTILS_INCLUDES}
         ${PROCESSINGTUCUCORE_INCLUDES}
-        # ${REST_INCLUDES}
+        ${REST_INCLUDES}
 )
 
 ## Set compiler and linker flags

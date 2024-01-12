@@ -1,95 +1,139 @@
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 ### Build
-set(ADMIN_HEADER_FILES
-    src/dal/clinical.h
-    src/dal/curvetypes.h
-    src/dal/email.h
-    src/dal/graphinformationselection.h
-    src/dal/institute.h
-    src/dal/interpretation.h
-    src/dal/interpretationanalysis.h
-    src/dal/interpretationrequest.h
-    src/dal/location.h
-    src/dal/measure.h
-    src/dal/partialrequest.h
-    src/dal/patient.h
-    src/dal/person.h
-    src/dal/phone.h
-    src/dal/practician.h
-    src/dal/sentencepalette.h
-    src/dal/steptypes.h
-    src/dal/validationstatus.h
-    
-    src/adminfactory.h
-    src/dataxmlexport.h
-    src/interpretationtorequestxmlexport.h
-    src/interpretationxmlexport.h
-    src/interpretationxmlimport.h
-    src/requestsclient.h
-    src/stdadminrepository.h
-    
-    errors_admin.h
+set(REST_HEADER_FILES
+    builders/acklistmessagebuilder.h
+    builders/ackrequestmessagebuilder.h
+    builders/covariateidtranslator.h
+    builders/drugidtranslator.h
+    builders/formulationandroutetranslator.h
+    builders/interpretationrequestbuilder.h
+    builders/messagebuilder.h
+    builders/messagecontent.h
+    builders/querylistmessagebuilder.h
+    builders/queryrequestmessagebuilder.h
+    builders/replylistmessagebuilder.h
+    builders/replyrequestmessagebuilder.h
+    builders/routetranslator.h
+    builders/xmlmessagebuilder.h
+
+    importexport/interpretationrequesttoxmlrest.h
+    importexport/xmlresttointerpretationrequest.h
+
+    model/acklistxmlmessage.h
+    model/acknotificationxmlmessage.h
+    model/ackrequestxmlmessage.h
+    model/ingoingxmlmessage.h
+    model/message.h
+    model/notificationxmlmessage.h
+    model/outgoingxmlmessage.h
+    model/querylistxmlmessage.h
+    model/queryrequestxmlmessage.h
+    model/replylistxmlmessage.h
+    model/replyrequestxmlmessage.h
+    model/xmlmessage.h
+
+    network/acklistrequest.h
+    network/ackrequestrequest.h
+    network/mirthrequest.h
+    network/networkaccessmanager.h
+    network/notificationrequest.h
+    network/querylistrequest.h
+    network/queryrequestrequest.h
+
+    utils/controlid.h
+
+    errors_rest.h
+    requestsclientprocessing.h
+    resterrors.h
+    restlogger.h
+    restrequestsclient.h
 )
 
-set(ADMIN_SOURCE_FILES
-    src/dal/clinical.cpp
-    src/dal/email.cpp
-    src/dal/graphinformationselection.cpp
-    src/dal/institute.cpp
-    src/dal/interpretation.cpp
-    src/dal/interpretationanalysis.cpp
-    src/dal/interpretationrequest.cpp
-    src/dal/location.cpp
-    src/dal/measure.cpp
-    src/dal/partialrequest.cpp
-    src/dal/patient.cpp
-    src/dal/person.cpp
-    src/dal/phone.cpp
-    src/dal/practician.cpp
-    src/dal/sentencepalette.cpp
-    src/dal/validationstatus.cpp
-    
-    src/dataxmlexport.cpp
-    src/interpretationtorequestxmlexport.cpp
-    src/interpretationxmlexport.cpp
-    src/interpretationxmlimport.cpp
-    src/requestsclient.cpp
+set(REST_SOURCE_FILES
+    builders/acklistmessagebuilder.cpp
+    builders/ackrequestmessagebuilder.cpp
+    builders/covariateidtranslator.cpp
+    builders/drugidtranslator.cpp
+    builders/formulationandroutetranslator.cpp
+    builders/interpretationrequestbuilder.cpp
+    builders/messagebuilder.cpp
+    builders/messagecontent.cpp
+    builders/querylistmessagebuilder.cpp
+    builders/queryrequestmessagebuilder.cpp
+    builders/replylistmessagebuilder.cpp
+    builders/replyrequestmessagebuilder.cpp
+    builders/routetranslator.cpp
+    builders/xmlmessagebuilder.cpp
+
+    importexport/interpretationrequesttoxmlrest.cpp
+    importexport/xmlresttointerpretationrequest.cpp
+
+    model/acklistxmlmessage.cpp
+    model/acknotificationxmlmessage.cpp
+    model/ackrequestxmlmessage.cpp
+    model/ingoingxmlmessage.cpp
+    model/message.cpp
+    model/notificationxmlmessage.cpp
+    model/outgoingxmlmessage.cpp
+    model/querylistxmlmessage.cpp
+    model/queryrequestxmlmessage.cpp
+    model/replylistxmlmessage.cpp
+    model/replyrequestxmlmessage.cpp
+    model/xmlmessage.cpp
+
+    network/acklistrequest.cpp
+    network/ackrequestrequest.cpp
+    network/mirthrequest.cpp
+    network/networkaccessmanager.cpp
+    network/notificationrequest.cpp
+    network/querylistrequest.cpp
+    network/queryrequestrequest.cpp
+
+    utils/controlid.cpp
+
+    requestsclientprocessing.cpp
+    restlogger.cpp
+    restrequestsclient.cpp
 )
 
-add_library(admin 
+set(REST_RESOURCES_FILES
+    resources/rest.qrc
+)
+
+add_library(rest
                 STATIC
-                    ${ADMIN_HEADER_FILES}
-                    ${ADMIN_SOURCE_FILES}
+                    ${REST_HEADER_FILES}
+                    ${REST_SOURCE_FILES}
+                    ${REST_RESOURCES_FILES}
 )
 
-target_include_directories(admin
+target_include_directories(rest
                 PUBLIC
                     ${CMAKE_CURRENT_SOURCE_DIR}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/src/
-                    ${CMAKE_CURRENT_SOURCE_DIR}/src/dal
+                    ${CMAKE_CURRENT_SOURCE_DIR}/builders/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/importexport/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/model/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/network/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/resources/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/utils/
                 PRIVATE
+                    ${ADMIN_INCLUDES}
                     ${CORE_INCLUDES}
                     ${TUCUXI_BASE_DIR_INCLUDE}
                     ${LIBS_INCLUDES}
 )
 
-
-# Translations
-set(translation_files
-      trans/admin_fr.ts
-)
-qt_add_translations(admin TS_FILES ${translation_files})
-
-target_link_libraries(admin
+target_link_libraries(rest
                 PRIVATE
                     core
+                    admin
                     ${QT_COMPONENTS}
 )
 
 # Install rules
 include(GNUInstallDirs)
-install(TARGETS admin
+install(TARGETS rest
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )

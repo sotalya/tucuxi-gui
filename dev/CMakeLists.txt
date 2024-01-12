@@ -19,6 +19,7 @@ add_definitions(-D_UNICODE)
 
 ### Configuration
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 # Config flags default OFF, If is already set as a normal or cache variable then this command does nothing
 option(config_demo OFF)
 option(config_guitest OFF)

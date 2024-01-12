@@ -1,0 +1,10 @@
+Once opened in Qt creator a few variable need to be set manually.
+
+to do so, under projects, there are the Cmake configurations. you need to add
+
+    DRUGPATH -> String <Path_to_your_drug_folder>
+    NOLICENSE -> Boolean ON
+    NOSTARTUPSCREEN -> Boolean ON
+
+in the initial configurations
+

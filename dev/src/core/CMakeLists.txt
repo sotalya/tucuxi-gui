@@ -1,204 +1,216 @@
-#Use of Qt plugins
-ADD_DEFINITIONS(${QT_DEFINITIONS})
-ADD_DEFINITIONS(-DQT_PLUGIN)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-#Please, no GUI
-set(QT_DONT_USE_QTGUI 1)
+### Build
+set(CORE_HEADER_FILES
+    ../current_version.h
 
-#Please, use QtXmlPatterns
-SET(QT_USE_QTXMLPATTERNS TRUE)
-
-#Qt part
-include(${LOCAL_QT_USE_FILE})
-
-#Source dirs
-include_directories(${CMAKE_CURRENT_BINARY_DIR} ./ ../ utils interfaces parsers)
-
-#Sources
-set(CORE_HDRS
-   stdparamnames.h
-   definitionmanager.h
-   pluginmanager.h
-   drugmanager.h
-   druglister.h
-   drugxmldescriptor.h
-   drugxmltree.h
-   config.h
-   core_errors.h
-   dbplugin.h
-   security.h
-   curvemodel.h
-   distributor.h
-   database.h
-   core.h
-   ../current_version.h
-   interfaces/modelfactory.h
-   interfaces/postenginefactory.h
-   interfaces/postengine.h
-   interfaces/reverseenginefactory.h
-   interfaces/reverseengine.h
-   interfaces/dbinterface.h
-   interfaces/percentileengine.h
-   interfaces/model.h
-   interfaces/optionable.h
-   interfaces/percentileenginefactory.h
-   interfaces/coremessagehandler.h
-   utils/version.h
-   utils/ezxmlreader.h
-   utils/duration.h
-   utils/ezutils.h
-   utils/medical.h
-   utils/dataset.h
-   utils/units.h
-   utils/ezchoice.h
-   utils/parameters.h
-   utils/distribution.h
-   utils/convert.h
-   utils/dbobjects.h
-   utils/drug.h
-   utils/tag.h
-   utils/xmlvalidator.h
-   utils/xmltranslator.h
-   utils/clinical.h
-   parsers/domparser.h
-   parsers/drugheadparser.h
-   parsers/dispositionheadparser.h
-   parsers/intakeheadparser.h
-   parsers/comethheadparser.h
-   parsers/drugparser.h
-   parsers/dispositionparser.h
-   parsers/comethparser.h
-   parsers/intakeparser.h
-   parsers/dosagesparser.h
-   parsers/dosageparser.h
-   parsers/intervalsparser.h
-   parsers/targetparser.h
-   parsers/targetsparser.h
-   parsers/covariateparser.h
-   parsers/covariatesparser.h
-   parsers/errormodelparser.h
-   parsers/parametersparser.h
-   parsers/parameterparser.h
-   parsers/correlationparser.h
-   parsers/correlationsparser.h
-   parsers/operationparser.h
-   parsers/operationsparser.h
-   parsers/commentparser.h
-   parsers/historyparser.h
-   parsers/authorparser.h
-   parsers/revisionsparser.h
-   parsers/dispositionsparser.h
-   parsers/intakesparser.h
-   parsers/comethsparser.h
-   parsers/abstractmodelparser.h
-   parsers/abstractheadparser.h
-   parsers/modelparser.h
-   parsers/headparser.h
-)
-set(CORE_SRCS 
-   stdparamnames.cpp
-   distributor.cpp
-   core.cpp
-   database.cpp
-   dbplugin.cpp
-   curvemodel.cpp
-   config.cpp
-   definitionmanager.cpp
-   pluginmanager.cpp
-   drugmanager.cpp
-   druglister.cpp
-   drugxmldescriptor.cpp
-   drugxmltree.cpp
-   interfaces/optionable.cpp
-   utils/covariate.cpp
-   utils/units.cpp
-   utils/duration.cpp
-   utils/dataset.cpp
-   utils/convert.cpp
-   utils/ezxmlreader.cpp
-   utils/ezchoice.cpp
-   utils/version.cpp
-   utils/parameters.cpp
-   utils/distribution.cpp
-   utils/medical.cpp
-   utils/ezutils.cpp
-   utils/dbobjects.cpp
-   utils/drug.cpp
-   utils/xmlvalidator.cpp
-   utils/xmltranslator.cpp
-   utils/clinical.cpp
-   parsers/domparser.cpp
-   parsers/drugheadparser.cpp
-   parsers/dispositionheadparser.cpp
-   parsers/intakeheadparser.cpp
-   parsers/comethheadparser.cpp
-   parsers/drugparser.cpp
-   parsers/dispositionparser.cpp
-   parsers/comethparser.cpp
-   parsers/intakeparser.cpp
-   parsers/dosagesparser.cpp
-   parsers/dosageparser.cpp
-   parsers/intervalsparser.cpp
-   parsers/targetparser.cpp
-   parsers/targetsparser.cpp
-   parsers/covariateparser.cpp
-   parsers/covariatesparser.cpp
-   parsers/errormodelparser.cpp
-   parsers/parametersparser.cpp
-   parsers/parameterparser.cpp
-   parsers/correlationparser.cpp
-   parsers/correlationsparser.cpp
-   parsers/operationparser.cpp
-   parsers/operationsparser.cpp
-   parsers/commentparser.cpp
-   parsers/historyparser.cpp
-   parsers/authorparser.cpp
-   parsers/revisionsparser.cpp
-   parsers/dispositionsparser.cpp
-   parsers/intakesparser.cpp
-   parsers/comethsparser.cpp
-   parsers/abstractmodelparser.cpp
-   parsers/abstractheadparser.cpp
-   parsers/modelparser.cpp
-   parsers/headparser.cpp
+    dal/drug/adme.h
+    dal/drug/bsv.h
+    dal/drug/concentrations.h
+    dal/drug/doses.h
+    dal/drug/drug.h
+    dal/drug/drugvariate.h
+    dal/drug/editors.h
+    dal/drug/errormodel.h
+    dal/drug/halflife.h
+    dal/drug/infusions.h
+    dal/drug/intervals.h
+    dal/drug/metadata.h
+    dal/drug/operableamount.h
+    dal/drug/operation.h
+    dal/drug/parameters.h
+    dal/drug/references.h
+    dal/drug/results.h
+    dal/drug/standardtreatment.h
+    dal/drug/target.h
+    dal/drug/translatablestring.h
+    
+    dal/adjustment.h
+    dal/amount.h
+    dal/chartdata.h
+    dal/coremeasure.h
+    dal/corepatient.h
+    dal/covariate.h
+    dal/dosage.h
+    dal/drugresponseanalysis.h
+    dal/drugtreatment.h
+    dal/entity.h
+    dal/factory.h
+    dal/genericdbobjects.h
+    dal/percentile.h
+    dal/percentilepair.h
+    dal/prediction.h
+    dal/predictiondata.h
+    dal/predictionresult.h
+    dal/predictionspec.h
+    dal/predictive.h
+    dal/residual.h
+    dal/uncastedvalue.h
+    dal/variability.h
+    
+    dao/genericdao.h
+    
+    interfaces/abstractrepository.h
+    interfaces/database.h
+    interfaces/drugmodelengine.h
+    interfaces/genericdatabase.h
+    interfaces/optionable.h
+    interfaces/plugin.h
+    interfaces/pluginfactory.h
+    interfaces/processinginterface.h
+    interfaces/processingtraits.h
+    
+    utils/autoproperty.h
+    utils/connect.h
+    utils/convert.h
+    utils/dataset.h
+    utils/dbobjects.h
+    utils/distribution.h
+    utils/duration.h
+    utils/errorenums.h
+    utils/ezchoice.h
+    utils/ezutils.h
+    utils/ezxmlreader.h
+    utils/genericuser.h
+    utils/logging.h
+    utils/tag.h
+    utils/units.h
+    utils/version.h
+    utils/xmltranslator.h
+    utils/xmlvalidator.h
+    
+    core.h
+    corefactory.h
+    corerepository.h
+    definitionmanager.h
+    distributor.h
+    drugxmldescriptor.h
+    errors_core.h
+    errors_processing.h
+    pluginmanager.h
+    processingfactory.h
+    settings.h
+    stdparamnames.h
 )
 
-#Find the commit version in GIT
-find_program(GIT git)
-if (GIT)
-   execute_process (	COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_SOURCE_DIR} git rev-parse HEAD
-                     OUTPUT_VARIABLE GIT_COMMIT
-                     OUTPUT_STRIP_TRAILING_WHITESPACE )
-else (GIT)
-   set(GIT_COMMIT ${PROJECT_VERSION})
-   message(WARNING "No GIT program found, using the version instead")
-endif (GIT)
+set(CORE_SOURCE_FILES
+    dal/drug/adme.cpp
+    dal/drug/bsv.cpp
+    dal/drug/concentrations.cpp
+    dal/drug/doses.cpp
+    dal/drug/drug.cpp
+    dal/drug/drugvariate.cpp
+    dal/drug/editors.cpp
+    dal/drug/errormodel.cpp
+    dal/drug/halflife.cpp
+    dal/drug/infusions.cpp
+    dal/drug/intervals.cpp
+    dal/drug/metadata.cpp
+    dal/drug/operableamount.cpp
+    dal/drug/operation.cpp
+    dal/drug/parameters.cpp
+    dal/drug/references.cpp
+    dal/drug/results.cpp
+    dal/drug/standardtreatment.cpp
+    dal/drug/target.cpp
+    dal/drug/translatablestring.cpp
+    
+    dal/adjustment.cpp
+    dal/amount.cpp
+    dal/chartdata.cpp
+    dal/coremeasure.cpp
+    dal/corepatient.cpp
+    dal/covariate.cpp
+    dal/dosage.cpp
+    dal/drugresponseanalysis.cpp
+    dal/drugtreatment.cpp
+    dal/entity.cpp
+    dal/percentile.cpp
+    dal/percentilepair.cpp
+    dal/prediction.cpp
+    dal/predictiondata.cpp
+    dal/predictionresult.cpp
+    dal/predictionspec.cpp
+    dal/predictive.cpp
+    dal/residual.cpp
+    dal/uncastedvalue.cpp
+    dal/variability.cpp
+    
+    interfaces/optionable.cpp
+    
+    utils/convert.cpp
+    utils/dataset.cpp
+    utils/dbobjects.cpp
+    utils/distribution.cpp
+    utils/duration.cpp
+#    utils/drugattributes.cpp
+#    utils/drugtags.cpp
+    utils/ezchoice.cpp
+    utils/ezutils.cpp
+    utils/ezxmlreader.cpp
+    utils/logging.cpp
+    utils/units.cpp
+    utils/version.cpp
+    utils/xmltranslator.cpp
+    utils/xmlvalidator.cpp
+    
+    core.cpp
+    corefactory.cpp
+#    core_errors.cpp
+    definitionmanager.cpp
+    distributor.cpp
+    drugxmldescriptor.cpp
+    pluginmanager.cpp
+    processingfactory.cpp
+    settings.cpp
+    stdparamnames.cpp
+)
 
-#Modifying the core.h file to add definitions
-set(APPDATA \"${INSTALL_PREFIX}${APPDATA_INSTALL}\")
-set(BUILD_ID \"${GIT_COMMIT}\")
-configure_file(core-cmake.h.in core-cmake.h)
+set(CORE_OTHER_FILES
+    models/tucuxi_core.qmodel
+)
 
-#Preprocess the core_errors.h file to find the real tr()
-add_custom_command(	OUTPUT ${CMAKE_BINARY_DIR}/core_errors.h
- 							COMMAND gcc -E -CC -D PREPROC_ONLY ${CMAKE_CURRENT_LIST_DIR}/core_errors.h -o ${CMAKE_BINARY_DIR}/core_errors.h
-							)
-#Translations
-file(GLOB CORE_TS ${CMAKE_CURRENT_LIST_DIR}/trans/*.ts)
-declare_translation(CORE_QM core ${CMAKE_BINARY_DIR}/core_errors.h ${CORE_SRCS} ${CORE_TS})
-#Moc precompiler
-QT4_WRAP_CPP(CORE_MOC ${CORE_HDRS})
-#Library creation
-add_library(ezechiel-core ${CORE_SRCS} ${CORE_MOC} ${CORE_QM})
-target_link_libraries(ezechiel-core ${QT_LIBRARIES})
-#Install
-if (${BUILD_SHARED_LIBS})
-	install(TARGETS ezechiel-core DESTINATION ${LIBS_INSTALL})
-endif (${BUILD_SHARED_LIBS})
+add_library(core 
+                STATIC
+                    ${CORE_HEADER_FILES}
+                    ${CORE_SOURCE_FILES}
+                    ${CORE_OTHER_FILES}
+)
 
-#Definition XML file
-install(FILES xml/definitions.xml DESTINATION ${APPDATA_INSTALL})
+target_include_directories(core
+                PUBLIC
+                    ${CMAKE_CURRENT_SOURCE_DIR}
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dal
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dal/drugs
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dao
+                    ${CMAKE_CURRENT_SOURCE_DIR}/interfaces
+                    ${CMAKE_CURRENT_SOURCE_DIR}/models
+                    ${CMAKE_CURRENT_SOURCE_DIR}/resources
+                    ${CMAKE_CURRENT_SOURCE_DIR}/utils
+                    ${CMAKE_CURRENT_SOURCE_DIR}/xml
+                PRIVATE
+                    ${TUCUXI_BASE_DIR_INCLUDE}
+                    ${LIBS_INCLUDES}
+)
 
-# Resources
-QT4_ADD_RESOURCES(CORE_RCC resources/core.qrc)
+# Translations
+set(translation_files
+      trans/core_fr.ts
+)
+qt_add_translations(core TS_FILES ${translation_files})
 
+target_link_libraries(core
+                PRIVATE
+                    ${QT_COMPONENTS}
+)
+
+# Install rules
+include(GNUInstallDirs)
+install(TARGETS admin
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+#### TODO manage resources
+# Add resources to TUCUXI_GUI_RESOURCES variable
+set(TUCUXI_GUI_RESOURCES ${TUCUXI_GUI_RESOURCES} resources/core.qrc)

@@ -76,6 +76,7 @@ android {
 def.files   =  ../core/xml/definitions.xml
 INSTALLS    += def
 
+# TODO add in the src/cmakelists.txt as is only partially done
 !config_demo {
     #Install the definition tdd file
     drugs2path    =  $${DESTDIR}/drugfiles

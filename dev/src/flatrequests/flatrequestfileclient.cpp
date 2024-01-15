@@ -32,18 +32,20 @@ FlatRequestFileClient::~FlatRequestFileClient()
 void FlatRequestFileClient::constructFileFromDB()
 {
     QProcess process;
-    QString scriptFile =  QCoreApplication::applicationDirPath() + "dbconnect/main.py";
+    QString scriptFile =  QCoreApplication::applicationDirPath() + "/dbconnect/main.py";
     QString pythonCommand = "python " + scriptFile +
                             " -o import.xml" +
-                            " -d cefepime" +
-                            " -r";
+                            " -d cefepime";
+                            //" -r";
 
-    process.start (pythonCommand);
+    //TODO (JRP): to test with process.start() when launch python stanalone executable in windows....
+    process.startCommand(pythonCommand);
     process.waitForFinished();
 
     QTextStream informer(stdout);
 
-    informer << process.readAll();
+    informer << "Python script output: " << process.readAllStandardOutput();
+    informer << Qt::endl;
     informer.flush();
 
     m_listFileName = "dbconnect/import.xml";

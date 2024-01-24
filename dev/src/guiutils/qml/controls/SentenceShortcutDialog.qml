@@ -32,6 +32,32 @@ DialogBase {
 
     signal exited()
 
+    // For testing
+    function getSaveButtonStatus(){
+        return saveIsEnabled
+    }
+    function setText(_text){
+        sentenceText = _text
+        validateShortcut()
+    }
+    function setModifier(_modifier){
+        if(_modifier === "CTRL"){
+            controlCheckBox.checked = true
+        }
+        else if(_modifier === "SHIFT"){
+            shiftCheckBox.checked = true
+        }
+        else if(_modifier === "ALT"){
+            altCheckBox.checked = true
+        }
+        validateShortcut()
+    }
+    function setKey(_key){
+        m_key = _key.charCodeAt(0)
+        keyShortcut.text = _key.toUpperCase()
+        validateShortcut()
+    }
+
     function reset(){
         m_modifiers = 0x0
         m_key = 0x0
@@ -271,6 +297,7 @@ DialogBase {
 
                     Flickable{
                         id: sentenceFlick
+                        objectName: "sentenceFlick"
                         anchors.fill: parent
 
                         TextArea.flickable: TextArea {
@@ -481,8 +508,8 @@ DialogBase {
                 spacing: 50
                 Button {
                     id: saveBtn
-                    Layout.alignment: Qt.AlignLeft
                     objectName: "sentencesSaveButton"
+                    Layout.alignment: Qt.AlignLeft
                     text: "Save"
                     Layout.preferredWidth: 125
 
@@ -515,6 +542,7 @@ DialogBase {
 
                 Button {
                     id: cancelBtn
+                    objectName: "sentencesCancelButton"
                     Layout.alignment: Qt.AlignRight
                     text: "Cancel"
                     Layout.preferredWidth: 125

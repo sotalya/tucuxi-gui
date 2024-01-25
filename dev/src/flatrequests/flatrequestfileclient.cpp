@@ -32,11 +32,18 @@ FlatRequestFileClient::~FlatRequestFileClient()
 void FlatRequestFileClient::constructFileFromDB()
 {
     QProcess process;
+#if 0
     QString scriptFile =  QCoreApplication::applicationDirPath() + "/dbconnect/main.py";
+
+
     QString pythonCommand = "python " + scriptFile +
                             " -o import.xml" +
                             " -d cefepime";
                             //" -r";
+#else
+    QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime";
+                            //" -r";
+#endif
 
     //TODO (JRP): to test with process.start() when launch python stanalone executable in windows....
     process.startCommand(pythonCommand);

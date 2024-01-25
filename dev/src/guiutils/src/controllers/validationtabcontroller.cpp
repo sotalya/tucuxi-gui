@@ -59,6 +59,22 @@ bool ValidationTabController::validateSentenceShortcut(int sectionId, int key, i
             }
         }
     }
+    else{
+        for(auto const &drug : _section->getSpecificSentences()){
+            i = 0;
+            for(auto const &sentences : drug->getSentences()){
+                if(modifiers == sentences->getModifier() && key == sentences->getKey() && (text != sentences->getText() || !isEditing)){
+                    if(isEditing && _index != i){
+                        return false;
+                    }
+                    else if(!isEditing){
+                        return false;
+                    }
+                }
+                i++;
+            }
+        }
+    }
     return true;
 }
 
@@ -79,6 +95,15 @@ bool ValidationTabController::validateText(int sectionId, QString text, QString 
                     if(text == sentences->getText() && !isEditing){
                         return false;
                     }
+                }
+            }
+        }
+    }
+    else{
+        for(auto const &drug : _section->getSpecificSentences()){
+            for(auto const &sentences : drug->getSentences()){
+                if(text == sentences->getText() && !isEditing){
+                    return false;
                 }
             }
         }

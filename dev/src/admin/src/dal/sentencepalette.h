@@ -132,7 +132,7 @@ class SentencesPalettes : public Tucuxi::Gui::Core::Entity
     Q_OBJECT
 
     ENTITY_UTILS(SentencesPalettes)
-public:
+
     AUTO_PROPERTY_DECL(QList<Sentence*>, globalSentences, GlobalSentences)
     AUTO_PROPERTY_DECL(SectionList*, sectionsList, SectionsList)
     AUTO_PROPERTY_DECL(QString, filename, Filename)

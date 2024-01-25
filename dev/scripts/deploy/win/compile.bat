@@ -1,14 +1,15 @@
 @ECHO off
 SETLOCAL
-SET _release_name=build-Tucuxi-Desktop_Qt_6_5_2_MSVC2019-Release
-SET _demo_name=build-Tucuxi-Desktop_Qt_6_5_2_MSVC2019-Release-demo
-SET _extreport_name=build-Tucuxi-Desktop_Qt_6_5_2_MSVC2019-Release-extreport
-SET _extreport_nolicense_name=build-Tucuxi-Desktop_Qt_6_5_2_MSVC2019-Release-extreport-nolicense
+SET _release_name=build-Tucuxi-Desktop_Qt_6_5_3_MSVC2019-Release
+SET _demo_name=build-Tucuxi-Desktop_Qt_6_5_3_MSVC2019-Release-demo
+SET _extreport_name=build-Tucuxi-Desktop_Qt_6_5_3_MSVC2019-Release-extreport
+SET _extreport_nolicense_name=build-Tucuxi-Desktop_Qt_6_5_3_MSVC2019-Release-extreport-nolicense
 
 SET script_path=%~dp0
+REM ECHO %script_path%
 
 REM Set tucuxi GUI path
-SET tucuxi_gui_path=%script_path%\..\..\..\..\
+SET tucuxi_gui_path=%script_path%..\..\..\..
 REM Set tucuxi drug path
 SET tucuxi_drugs_path=%tucuxi_gui_path%\..\tucuxi-drugs
 
@@ -52,10 +53,15 @@ IF /i "%1" EQU "release" (
   ECHO =============================================================================
   ECHO ============================= Compiling Release =============================
   ECHO =============================================================================
-  MKDIR %tucuxi_gui_path%\dev\%_release_name%
-  CD %tucuxi_gui_path%\dev\%_release_name%
-  DEL /S /Q *
-  C:\Qt\6.5.2\msvc2019_64\bin\qmake.exe %tucuxi_gui_path%\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%tucuxi_drugs_path%\drugfiles DEFINES+=NOLICENSE && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+  IF EXIST "%tucuxi_gui_path%\dev\%_release_name%" (
+    CD /d %tucuxi_gui_path%\dev\%_release_name%
+    DEL /S /Q *
+  ) ELSE (
+    MKDIR %tucuxi_gui_path%\dev\%_release_name%
+    CD %tucuxi_gui_path%\dev\%_release_name%
+  )
+  
+  C:\Qt\6.5.3\msvc2019_64\bin\qmake.exe %tucuxi_gui_path%\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%tucuxi_drugs_path%\drugfiles DEFINES+=NOLICENSE && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
   C:\Qt\Tools\QtCreator\bin\jom\jom.exe
   ECHO =============================================================================
   ECHO ============================= Release Compiled! =============================
@@ -69,10 +75,14 @@ IF /i "%1" EQU "release" (
   ECHO =============================================================================
   ECHO =============================== Compiling Demo ==============================
   ECHO =============================================================================
-  MKDIR %tucuxi_gui_path%\dev\%_demo_name%
-  CD %tucuxi_gui_path%\dev\%_demo_name%
-  DEL /S /Q *
-  C:\Qt\6.5.2\msvc2019_64\bin\qmake.exe %tucuxi_gui_path%\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%tucuxi_drugs_path%\drugfiles CONFIG+=config_demo DEFINES+=NOLICENSE && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+  IF EXIST "%tucuxi_gui_path%\dev\%_demo_name%" (
+    CD /D %tucuxi_gui_path%\dev\%_demo_name%
+    DEL /S /Q *
+  ) ELSE (
+    MKDIR %tucuxi_gui_path%\dev\%_demo_name%
+    CD /D %tucuxi_gui_path%\dev\%_demo_name%
+  )
+  C:\Qt\6.5.3\msvc2019_64\bin\qmake.exe %tucuxi_gui_path%\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%tucuxi_drugs_path%\drugfiles CONFIG+=config_demo DEFINES+=NOLICENSE && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
   C:\Qt\Tools\QtCreator\bin\jom\jom.exe
   ECHO =============================================================================
   ECHO =============================== Demo Compiled! ==============================
@@ -86,10 +96,14 @@ IF /i "%1" EQU "release" (
   ECHO =============================================================================
   ECHO ============================ Compiling Extreport ============================
   ECHO =============================================================================
-  MKDIR %tucuxi_gui_path%\dev\%_extreport_name%
-  CD %tucuxi_gui_path%\dev\%_extreport_name%
-  DEL /S /Q *
-  C:\Qt\6.5.2\msvc2019_64\bin\qmake.exe %tucuxi_gui_path%\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%tucuxi_drugs_path%\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+  IF EXIST "%tucuxi_gui_path%\dev\%_extreport_name%" (
+    CD %tucuxi_gui_path%\dev\%_extreport_name%
+    DEL /S /Q *
+  ) ELSE (
+    MKDIR %tucuxi_gui_path%\dev\%_extreport_name%
+    CD %tucuxi_gui_path%\dev\%_extreport_name%
+  )
+  C:\Qt\6.5.3\msvc2019_64\bin\qmake.exe %tucuxi_gui_path%\dev\src\tucuxi.pro -spec win32-msvc CONFIG+=config_tucucore_full DRUGSPATH=%tucuxi_drugs_path%\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
   C:\Qt\Tools\QtCreator\bin\jom\jom.exe
   ECHO =============================================================================
   ECHO ============================ Extreport Compiled! ============================
@@ -103,10 +117,14 @@ IF /i "%1" EQU "release" (
   ECHO =============================================================================
   ECHO ======================= Compiling Extreport noLicense =======================
   ECHO =============================================================================
-  MKDIR %tucuxi_gui_path%\dev\%_extreport-nolicense_name%
-  CD %tucuxi_gui_path%\dev\%_extreport-nolicense_name%
-  DEL /S /Q *
-  C:\Qt\6.5.2\msvc2019_64\bin\qmake.exe %tucuxi_gui_path%\dev\src\tucuxi.pro -spec win32-msvc DEFINES+=NOLICENSE CONFIG+=config_tucucore_full DRUGSPATH=%tucuxi_drugs_path%\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
+  IF EXIST "%tucuxi_gui_path%\dev\%_extreport_nolicense_name%" (
+    CD /D %tucuxi_gui_path%\dev\%_extreport_nolicense_name%
+    DEL /S /Q *
+  ) ELSE (
+    MKDIR %tucuxi_gui_path%\dev\%_extreport_nolicense_name%
+    CD /D %tucuxi_gui_path%\dev\%_extreport_nolicense_name%
+  )
+  C:\Qt\6.5.3\msvc2019_64\bin\qmake.exe %tucuxi_gui_path%\dev\src\tucuxi.pro -spec win32-msvc DEFINES+=NOLICENSE CONFIG+=config_tucucore_full DRUGSPATH=%tucuxi_drugs_path%\drugfiles CONFIG+=config_externalreport && C:\Qt\Tools\QtCreator\bin\jom\jom.exe qmake_all
   C:\Qt\Tools\QtCreator\bin\jom\jom.exe
   ECHO =============================================================================
   ECHO ======================= Extreport noLicense Compiled! =======================

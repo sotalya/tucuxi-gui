@@ -187,8 +187,8 @@ private:
 } // namespace Gui
 } // namespace Tucuxi
 
-Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Dosage*)
-Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Dosage*>)
+//Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Dosage*)
+//Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Dosage*>)
 Q_DECLARE_METATYPE(Tucuxi::Gui::Core::DosageHistory*)
 //Q_DECLARE_METATYPE(QList<QObject*>)
 

@@ -1,5 +1,9 @@
 //@@license@@s
 
+
+#include <QDir>
+#include <iostream>
+
 #include "flatrequestfileclient.h"
 #include "rest/builders/interpretationrequestbuilder.h"
 #include "core/dal/drugresponseanalysis.h"
@@ -16,8 +20,11 @@
 
 #include <qmessagebox.h>
 
-using namespace Tucuxi::Gui::Core;
-using namespace Tucuxi::Gui::FlatRequest;
+
+namespace Tucuxi {
+namespace Gui {
+namespace FlatRequest {
+
 
 FlatRequestFileClient::FlatRequestFileClient(QObject *parent) : FlatRequestsClientProcessing(parent)
 {
@@ -48,9 +55,6 @@ void FlatRequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
     QString controlId;
     analyzeList(response, controlId);
 }
-
-#include <QDir>
-#include <iostream>
 
 void FlatRequestFileClient::queryRequest(const QString &requestId, const QString &patientId, const QString &drugId)
 {
@@ -93,4 +97,8 @@ void FlatRequestFileClient::queryRequest(const QString &requestId, const QString
     informer.flush();
 
     analyzeRequest(filtredDoc.toString());
+}
+
+}
+}
 }

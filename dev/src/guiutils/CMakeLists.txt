@@ -120,6 +120,7 @@ target_include_directories(guiutils
                     ${ADMIN_INCLUDES}
                     ${APPUTILS_INCLUDES}
                     ${REST_INCLUDES}
+                    ${FLATREQUESTS_INCLUDES}
                     ${TUCUXI_BASE_DIR_INCLUDE}
                     ${LIBS_INCLUDES}
 )

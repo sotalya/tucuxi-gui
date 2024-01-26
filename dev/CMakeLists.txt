@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(tucuxi LANGUAGES CXX)
 
+# set(CMAKE_BUILD_TYPE Debug)
+
 ### Set output directory
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_BINARY_DIR}")
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_BINARY_DIR}")
@@ -33,8 +35,8 @@ add_definitions(-DDRUGSPATH=${DRUGSPATH})
 add_definitions(-DNOLICENSE=${NOLICENSE})
 add_definitions(-DNOSTARTUPSCREEN=${NOSTARTUPSCREEN})
 
-### Qt set configs and find components 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Xml Network svg Qml Core5compat Widgets LinguistTools Gui Printsupport Quick QuickWidgets PrintSupport WebChannel WebSockets WebEngineCore)
+### Qt set configs and find components
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Xml Network Svg Qml Core5Compat Widgets LinguistTools Gui PrintSupport Quick QuickWidgets PrintSupport WebChannel WebSockets WebEngineCore)
 
 set(QT_COMPONENTS Qt::Core
                   Qt::Core5Compat
@@ -62,7 +64,11 @@ set(TUCUXI_CXXFLAGS ${TUCUXI_CXXFLAGS})
 # To solve issues with namespaces
 #set(TUCUXI_CXXFLAGS ${TUCUXI_CXXFLAGS} -fpermissive)
 
+if(WIN32)
 set(TUCUXI_LFLAGS ${TUCUXI_LFLAGS} -Wl --no-as-needed -ldl)
+elseif(UNIX)
+set(TUCUXI_LFLAGS ${TUCUXI_LFLAGS} -ldl)
+endif(WIN32)
 
 ### Add specific CXX or Linker flags
 if(WIN32)
@@ -142,4 +148,3 @@ if(config_guitest)
     ## TODO Add test libraries
     add_subdirectory(tests/)
 endif(config_guitest)
-

@@ -52,8 +52,8 @@ qt_add_translations(processingtucucore TS_FILES ${translation_files})
 target_link_libraries(processingtucucore
                 PRIVATE
                     core
-                    tucucommon
                     tucucore
+                    tucucommon
                     ${QT_COMPONENTS}
 )
 

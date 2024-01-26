@@ -20,15 +20,19 @@ set(XercesC_VERSION 3.2.4)
 find_package(XercesC REQUIRED)
 
 add_library(xerces INTERFACE)
-target_link_libraries(xerces INTERFACE XercesC)
+if(WIN32)
+	target_link_libraries(xerces INTERFACE XercesC)
+else()
+	# target_link_libraries(xerces INTERFACE libxerces-c.a)
+endif(WIN32)
 
 # Set locally and for parent scope
-set(LIBS_INCLUDES 
+set(LIBS_INCLUDES
         ${LIBS_INCLUDES}
         ${XercesC_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/tucuxi-core/src
 )
-set(LIBS_INCLUDES 
+set(LIBS_INCLUDES
         ${LIBS_INCLUDES}
         ${XercesC_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/tucuxi-core/src

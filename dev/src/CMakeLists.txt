@@ -128,6 +128,18 @@ target_include_directories(tucuxi
         ${GUIUTILS_INCLUDES}
         ${PROCESSINGTUCUCORE_INCLUDES}
         ${REST_INCLUDES}
+        
+	${CMAKE_CURRENT_LIST_DIR}/../libs/tucuxi-core/src
+	
+	${CMAKE_CURRENT_LIST_DIR}/../libs/tucuxi-core/libs/boost
+                    ${CMAKE_CURRENT_LIST_DIR}/../libs/tucuxi-core/libs/spdlog/include
+                    ${CMAKE_CURRENT_LIST_DIR}/../libs/tucuxi-core/libs/eigen
+                    ${CMAKE_CURRENT_LIST_DIR}/../libs/tucuxi-core/libs/date/include
+                    ${CMAKE_CURRENT_LIST_DIR}/../libs/tucuxi-core/libs/rapidxml
+                    ${CMAKE_CURRENT_LIST_DIR}/../libs/tucuxi-core/libs/rapidjson/include
+                    ${CMAKE_CURRENT_LIST_DIR}/../libs/tucuxi-core/libs/botan/build/include
+                    ${CMAKE_CURRENT_LIST_DIR}/../libs/tucuxi-core/libs/cxxopts/include
+                    ${CMAKE_CURRENT_LIST_DIR}/../libs/tucuxi-core/libs/tiny-js
 
         ${TUCUXI_BASE_DIR_INCLUDE}
 )

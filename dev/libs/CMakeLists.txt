@@ -23,7 +23,7 @@ add_library(xerces INTERFACE)
 if(WIN32)
 	target_link_libraries(xerces INTERFACE XercesC)
 else()
-	# target_link_libraries(xerces INTERFACE libxerces-c.a)
+    target_link_libraries(xerces INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/xerces-c/build/src/libxerces-c.a)
 endif(WIN32)
 
 # Set locally and for parent scope

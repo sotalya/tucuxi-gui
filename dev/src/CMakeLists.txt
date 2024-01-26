@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ### Check if drugpath is specified
 if(NOT DEFINED DRUGSPATH)
-    message(FATAL_ERROR "The variable DRUGSPATH should be set when invoking qmake. Like : cmake -DDRUGSPATH=<somepath>/tucuxi-drugs/drugfiles")
+    message(FATAL_ERROR "The variable DRUGSPATH should be set when invoking cmake. Like : cmake -DDRUGSPATH=<somepath>/tucuxi-drugs/drugfiles")
 endif(NOT DEFINED DRUGSPATH)
 
 

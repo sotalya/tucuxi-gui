@@ -137,6 +137,7 @@ target_link_libraries(guiutils
                     admin
                     apputils
                     rest
+                    flatrequests
                     ${QT_COMPONENTS}
 )
 

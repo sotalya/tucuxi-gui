@@ -41,7 +41,7 @@ void FlatRequestFileClient::constructFileFromDB()
                             " -d cefepime";
                             //" -r";
 #else
-    QString pythonCommand = "dbconnect/dbConnect.exe -o import.xml -d cefepime";
+    QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime";
                             //" -r";
 #endif
 
@@ -55,7 +55,7 @@ void FlatRequestFileClient::constructFileFromDB()
     informer << Qt::endl;
     informer.flush();
 
-    m_listFileName = "dbconnect/import.xml";
+    m_listFileName = "import.xml";
 }
 
 void FlatRequestFileClient::setListFile(const QString &fileName)

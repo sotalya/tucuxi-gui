@@ -41,7 +41,7 @@ void FlatRequestFileClient::constructFileFromDB()
                             " -d cefepime";
                             //" -r";
 #else
-    QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime";
+    QString pythonCommand = "dbconnect/dbConnect.exe -o import.xml -d cefepime";
                             //" -r";
 #endif
 

@@ -57,8 +57,7 @@ MainWindowController::MainWindowController(QObject *parent) :
 
 AppGlobals* appGlobals = AppGlobals::getInstance();
 
-QString iccaFile = appGlobals->getIccaFile();
-if (iccaFile.isEmpty()) {
+if (!appGlobals->getIccaImport()) {
     #ifdef CONFIG_CONNECTED
         QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
         QString listFile = appGlobals->getListFile();
@@ -81,6 +80,7 @@ if (iccaFile.isEmpty()) {
 
     #endif
 } else {
+    QString iccaFile = appGlobals->getIccaFile();
     Tucuxi::Gui::FlatRequest::FlatRequestFileClient *client = new Tucuxi::Gui::FlatRequest::FlatRequestFileClient(this);
     client->setListFile(iccaFile);
     requestsController->setClient(client);

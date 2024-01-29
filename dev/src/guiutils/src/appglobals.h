@@ -32,6 +32,7 @@ public:
     void setRequestFile(QString _requestFile);
 
     void setIccaFile(QString _iccaFile);
+    void setIccaImport(bool enable);
 
     void setGroupIntake(bool enable);
 
@@ -40,6 +41,7 @@ public:
     const QString getRequestFile();
 
     const QString getIccaFile();
+    bool getIccaImport();
 
     bool getGroupIntake();
 
@@ -76,6 +78,7 @@ private:
     bool m_percentileCalculation;
 
     bool m_groupIntake;
+    bool m_iccaImport;
 };
 
 }

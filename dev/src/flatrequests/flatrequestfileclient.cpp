@@ -33,7 +33,7 @@ void FlatRequestFileClient::constructFileFromDB()
 {
     QProcess process;
 #if 0
-    QString scriptFile =  QCoreApplication::applicationDirPath() + "/dbconnect/main.py";
+    QString scriptFile =  QCoreApplication::applicationDirPath() + "/main.py";
 
 
     QString pythonCommand = "python " + scriptFile +
@@ -42,10 +42,8 @@ void FlatRequestFileClient::constructFileFromDB()
                             //" -r";
 #else
     QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime";
-                            //" -r";
 #endif
 
-    //TODO (JRP): to test with process.start() when launch python stanalone executable in windows....
     process.startCommand(pythonCommand);
     process.waitForFinished();
 
@@ -66,7 +64,10 @@ void FlatRequestFileClient::setListFile(const QString &fileName)
 void FlatRequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 {
 
-    constructFileFromDB();
+    // If no file is already set then construc a file from a DB request
+    if(m_listFileName.isEmpty()) {
+        constructFileFromDB();
+    }
 
     QFile source(m_listFileName);
     if (!source.open(QIODevice::ReadOnly | QIODevice::Text)) {

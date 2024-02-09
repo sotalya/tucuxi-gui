@@ -1,6 +1,7 @@
 //@@license@@s
 
 #include "flatrequestfileclient.h"
+#include "LoginDialog.h"
 #include "rest/builders/interpretationrequestbuilder.h"
 #include "core/dal/drugresponseanalysis.h"
 #include "core/core.h"
@@ -32,6 +33,22 @@ FlatRequestFileClient::~FlatRequestFileClient()
 void FlatRequestFileClient::constructFileFromDB()
 {
     QProcess process;
+    LoginDialog dialog;
+    QString username;
+    QString password;
+
+    if (dialog.exec() == QDialog::Accepted) {
+        username = dialog.getUsername();
+        password = dialog.getPassword();
+
+        QTextStream informer(stdout);
+
+        // TODO JRP : For debug, to be removed
+        informer << username << Qt::endl;
+        informer << password << Qt::endl;
+        informer.flush();
+    }
+
 #if 0
     QString scriptFile =  QCoreApplication::applicationDirPath() + "/main.py";
 
@@ -41,7 +58,7 @@ void FlatRequestFileClient::constructFileFromDB()
                             " -d cefepime";
                             //" -r";
 #else
-    QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime";
+    QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime -u " + username + " -p " + password;
 #endif
 
     process.startCommand(pythonCommand);

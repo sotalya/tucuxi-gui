@@ -11,6 +11,7 @@ QT -= gui
 INCLUDEPATH += ..
 
 HEADERS	+= \
+    LoginDialog.h \
     flatinterpretationrequestbuilder.h \
     flatrequestfileclient.h \
     flatrequestsclientprocessing.h
@@ -22,6 +23,7 @@ CODECFORTR      += UTF-8
 include(../translation.pri)
 
 SOURCES += \
+    LoginDialog.cpp \
     flatinterpretationrequestbuilder.cpp \
     flatrequestfileclient.cpp \
     flatrequestsclientprocessing.cpp

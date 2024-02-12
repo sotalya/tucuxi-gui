@@ -40,26 +40,10 @@ void FlatRequestFileClient::constructFileFromDB()
     if (dialog.exec() == QDialog::Accepted) {
         username = dialog.getUsername();
         password = dialog.getPassword();
-
-        QTextStream informer(stdout);
-
-        // TODO JRP : For debug, to be removed
-        informer << username << Qt::endl;
-        informer << password << Qt::endl;
-        informer.flush();
     }
 
-#if 0
-    QString scriptFile =  QCoreApplication::applicationDirPath() + "/main.py";
-
-
-    QString pythonCommand = "python " + scriptFile +
-                            " -o import.xml" +
-                            " -d cefepime";
-                            //" -r";
-#else
     QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime -u " + username + " -p " + password;
-#endif
+    // QString pythonCommand = "python main.py -r -o import.xml -d cefepime -u " + username + " -p " + password;
 
     process.startCommand(pythonCommand);
     process.waitForFinished();

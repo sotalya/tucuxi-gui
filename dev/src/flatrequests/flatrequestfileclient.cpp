@@ -33,14 +33,17 @@ FlatRequestFileClient::~FlatRequestFileClient()
 void FlatRequestFileClient::constructFileFromDB()
 {
     QProcess process;
-    LoginDialog dialog;
     QString username;
     QString password;
 
+    // TODO (JRP) : Currently deactivated, to be removed when we can assert that will be never needed
+#if 0
+    LoginDialog dialog;
     if (dialog.exec() == QDialog::Accepted) {
         username = dialog.getUsername();
         password = dialog.getPassword();
     }
+#endif
 
     QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime -u " + username + " -p " + password;
     // QString pythonCommand = "python main.py -r -o import.xml -d cefepime -u " + username + " -p " + password;

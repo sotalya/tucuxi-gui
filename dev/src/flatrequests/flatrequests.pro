@@ -14,6 +14,7 @@ HEADERS	+= \
     LoginDialog.h \
     flatinterpretationrequestbuilder.h \
     flatrequestfileclient.h \
+    flatrequestparameters.h \
     flatrequestsclientprocessing.h
 
 CODECFORTR      += UTF-8
@@ -26,6 +27,7 @@ SOURCES += \
     LoginDialog.cpp \
     flatinterpretationrequestbuilder.cpp \
     flatrequestfileclient.cpp \
+    flatrequestparameters.cpp \
     flatrequestsclientprocessing.cpp
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)

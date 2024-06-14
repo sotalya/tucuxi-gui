@@ -6,7 +6,6 @@ SET _extreport_name=build-Tucuxi-Desktop_Qt_6_5_3_MSVC2019-Release-extreport
 SET _extreport_nolicense_name=build-Tucuxi-Desktop_Qt_6_5_3_MSVC2019-Release-extreport-nolicense
 
 SET script_path=%~dp0
-REM ECHO %script_path%
 
 REM Set tucuxi GUI path
 SET tucuxi_gui_path=%script_path%..\..\..\..

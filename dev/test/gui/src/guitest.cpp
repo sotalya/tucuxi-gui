@@ -46,7 +46,7 @@ int waitTimeLong = 10;
 
 QMap<int, QString> flowViewMap = {std::pair{patientTab,"Patient"}, {drugsTab,"Drugs"}, {dosagesTab,"Dosages"},
                                  {covariatesTab,"Covariates"}, {measuresTab,"Measures"}, {targetsTab,"Targets"},
-                                 {adjustementsTab,"Adjustments"}, {validationTab,"Validation"}, {reportsTab,"Reports"}};
+                                 {adjustmentsTab,"Adjustments"}, {validationTab,"Validation"}, {reportsTab,"Reports"}};
 
 SpixGTest::SpixGTest(Tucuxi::Gui::GuiUtils::MainWindowController *mainWindowController, QQuickWindow *window, int argc, char* argv[])
 {

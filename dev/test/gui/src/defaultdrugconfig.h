@@ -161,7 +161,7 @@ public:
     CovarTypeIndex covarTypeIndex;
     MeasureData measureData;
     TargetData targetData;
-    AdjustmentsData adjustementData;
+    AdjustmentsData adjustmentData;
     ValidationData validationData;
     AnalystData analystData;
 };
@@ -396,7 +396,7 @@ public:
         targetData.tMaxInput  = 0.0;
         targetData.micInput   = 0.0;
 
-        adjustementData;
+        adjustmentData;
         validationData;
         analystData;
     }

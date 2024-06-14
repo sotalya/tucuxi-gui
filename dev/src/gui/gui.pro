@@ -27,7 +27,7 @@ config_demo {
 }
 
 # For chrono
-CONFIG += c++14
+CONFIG += c++20
 
 DEPENDPATH += .$${DESTDIR}
 INCLUDEPATH +=	..

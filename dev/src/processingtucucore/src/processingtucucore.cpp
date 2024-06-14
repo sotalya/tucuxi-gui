@@ -1,4 +1,24 @@
-//@@license@@
+/* 
+ * Tucuxi - Tucuxi-core library and command line tool. 
+ * This code allows to perform prediction of drug concentration in blood 
+ * and to propose dosage adaptations.
+ * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU Affero General Public License as 
+ * published by the Free Software Foundation, either version 3 of the 
+ * License, or any later version. 
+ * 
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * GNU Affero General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License 
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 
 #include <iostream>
 
@@ -242,7 +262,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
                         // This complex next translation is required because of the epoch being different for QDateTime and DateTime, one being local and the other no
                         // fpt time is in seconds since epoch
                         fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                                                                        std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
+                                                                        std::chrono::milliseconds(static_cast<int64_t>(cycleData.m_times[0][i] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
                         // The following requires at least Qt 5.8
                         //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
                         //                                          std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toSecsSinceEpoch());

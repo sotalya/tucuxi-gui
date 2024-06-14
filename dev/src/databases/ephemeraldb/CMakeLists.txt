@@ -9,13 +9,13 @@ set(EPHEMERALDB_SOURCE_FILES
     ephemeraldb.cpp
 )
 
-add_library(db_lib
-                STATIC
+add_library(ephemeraldb
+                SHARED
                     ${EPHEMERALDB_HEADER_FILES}
                     ${EPHEMERALDB_SOURCE_FILES}
 )
 
-target_include_directories(db_lib
+target_include_directories(ephemeraldb
                 PUBLIC
                     ${CMAKE_CURRENT_SOURCE_DIR}
                 PRIVATE
@@ -30,9 +30,9 @@ target_include_directories(db_lib
 set(translation_files
       trans/ephemeraldb_fr.ts
 )
-qt_add_translations(db_lib TS_FILES ${translation_files})
+qt_add_translations(ephemeraldb TS_FILES ${translation_files})
 
-target_link_libraries(db_lib
+target_link_libraries(ephemeraldb
                 PRIVATE
                     xerces
                     apputils
@@ -43,7 +43,7 @@ target_link_libraries(db_lib
 
 # Install rules
 include(GNUInstallDirs)
-install(TARGETS db_lib
+install(TARGETS ephemeraldb
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )

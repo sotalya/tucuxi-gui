@@ -6,7 +6,7 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_subdirectory(ephemeraldb/)
 # add_subdirectory(mysqldb/)
 
-get_target_property(DB_INCLUDES db_lib INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(DB_INCLUDES ephemeraldb INTERFACE_INCLUDE_DIRECTORIES)
 
 add_library(databases INTERFACE)
 target_include_directories(databases
@@ -15,4 +15,4 @@ target_include_directories(databases
                     ${DB_INCLUDES}
 )
 
-target_link_libraries(databases INTERFACE db_lib)
+target_link_libraries(databases INTERFACE ephemeraldb)

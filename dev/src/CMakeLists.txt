@@ -88,8 +88,12 @@ if(NOT config_demo)
     endif(ANDROID)
 
     # Copy command (TODO -> Not the whole command from gui.pro was translated here)
-    # file(COPY ${DRUGSPATH} DESTINATION ${DRUGS_TO_PATH}
+    # It copies to the root of build directory, not where tucuxi is generated
+    file(COPY ${DRUGSPATH} DESTINATION ${CMAKE_BINARY_DIR})
+    #file(COPY ${DRUGSPATH} DESTINATION ${DRUGS_TO_PATH})
 endif(NOT config_demo)
+
+#add_custom_command(tucuxi ephemeraldb POST_BUILD COMMAND copy ${ephemeraldbdll} ${ephemeraldb})
 
 ### Building
 qt_add_executable(tucuxi

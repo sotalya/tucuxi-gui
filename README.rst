@@ -204,7 +204,7 @@ Except small improvements added when required, Tucuxi does not accept multi-anal
 Contributing
 ------------
 
-Until now, the development has been managed and done by the REDS institute, at HEIG-VD. As a now Open Source project, we are now happy to welcome contributors.
+Until now, the development has been managed and done by the REDS institute, at HEIG-VD, in close collaboration with CHUV. As a now Open Source project, we are now happy to welcome contributors.
 
 
 Authors and acknowledgment

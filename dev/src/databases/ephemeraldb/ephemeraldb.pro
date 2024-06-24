@@ -1,5 +1,9 @@
 include (../../tucuxi.pri)
 
+win32 {
+    include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
+}
+
 #Normally included in the pluging option, the dll option must be specified if the static option was specified
 CONFIG += plugin dll
 

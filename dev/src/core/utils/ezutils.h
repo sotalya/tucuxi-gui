@@ -47,7 +47,7 @@ public:
      * Only the non-empty fields are compared.
      * If all the fields are empty in one but not on both, returns false.
      */
-    bool operator== (const Descriptor& other);
+    bool operator== (const Descriptor& other) const;
 };
 
 /** Descriptor for a model.
@@ -71,7 +71,7 @@ public:
     QString toString();
 
     //! Same as Descriptor.
-    bool operator== (const ModelDescriptor& other);
+    bool operator== (const ModelDescriptor& other) const;
 };
 
 // YTA: Hack

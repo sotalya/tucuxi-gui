@@ -125,11 +125,11 @@ void FlatRequestFileClient::queryRequest(const QString &requestId, const QString
     QDomElement filtredTabElement;
     if(flatRequestParam->getIsFrenchTag()) {
         filtredTabElement = filtredDoc.createElement("Tablix1");
+        filtredRootElement.appendChild(filtredTabElement);
     } else {
         filtredTabElement = filtredRootElement;
     }
 
-    filtredRootElement.appendChild(filtredTabElement);
     QDomElement filtredDetailCollectionElement = filtredDoc.createElement(flatRequestParam->detailsListNameXml());
     filtredTabElement.appendChild(filtredDetailCollectionElement);
 

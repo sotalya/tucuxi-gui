@@ -13,6 +13,7 @@
 #include "admin/src/dal/patient.h"
 #include "admin/src/dal/measure.h"
 #include "admin/src/dal/interpretationrequest.h"
+#include "flatrequestparameters.h"
 
 
 namespace Tucuxi {
@@ -33,6 +34,8 @@ private:
 //    MessageContent content;
     QDomDocument content;
     QDomElement reportNode;
+
+    FlatRequestParameters* flatRequestParameters;
 
     static bool compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b);
     Tucuxi::Gui::Core::Duration findDuration(const QDomElement &currentElement);

@@ -45,7 +45,7 @@ QString Descriptor::toString()
 }
 
 //Check only the non-empty fields
-bool Descriptor::operator ==(const Descriptor &other)
+bool Descriptor::operator ==(const Descriptor &other) const
 {
     bool allEmpty = id.isEmpty() && name.isEmpty() && description.isEmpty();
     bool allOtherEmpty = other.id.isEmpty() && other.name.isEmpty() && other.description.isEmpty();
@@ -71,7 +71,7 @@ QString ModelDescriptor::toString()
     return QString("%1, Known Model Id: %2, Intake : %3").arg(Descriptor::toString(), modelId, intake);
 }
 
-bool ModelDescriptor::operator ==(const ModelDescriptor &other)
+bool ModelDescriptor::operator ==(const ModelDescriptor &other) const
 {
     bool allEmpty = id.isEmpty() && modelId.isEmpty() && name.isEmpty() && description.isEmpty() && intake.isEmpty();
     bool allOtherEmpty = other.id.isEmpty() && other.modelId.isEmpty() && other.name.isEmpty() && other.description.isEmpty() && intake.isEmpty();

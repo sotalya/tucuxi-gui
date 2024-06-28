@@ -11,7 +11,7 @@ SET tucuxi_gui_path = %script_path%\..\..\..\..\
 
 SET prj_dir=%tucuxi_gui_path%\dev
 SET src_dir=%prj_dir%\src
-SET dist_dir=%prj_dir%\build-Tucuxi-Desktop_Qt_6_5_2_MSVC2019-%target%\dist\
+SET dist_dir=%prj_dir%\build-Tucuxi-Desktop_Qt_6_5_3_MSVC2019-%target%\dist\
 SET deploy_dir=%prj_dir%\deploy
 SET zip_dir=%deploy_dir%\zips
 SET setup_dir=%deploy_dir%\setups
@@ -20,7 +20,7 @@ SET ZIP_EXE="C:\Program Files\7-Zip\7z.exe"
 
 SET BOTANT_DIR=%prj_dir%\libs\tucuxi-core\libs\botan
 SET VISUAL_STUDIO_DIR=C:\Program Files\Microsoft Visual Studio\2022\Community
-SET QT_DIR=C:\Qt\6.5.2\msvc2019_64
+SET QT_DIR=C:\Qt\6.5.3\msvc2019_64
 SET NSIS_DIR=C:\Program Files (x86)\NSIS
 
 REM Create the deployment structure

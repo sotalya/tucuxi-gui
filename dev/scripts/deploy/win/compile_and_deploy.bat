@@ -41,10 +41,18 @@ ECHO ===========================================================================
 
 :no_answer
   echo Deleting the compiled files!
-  DEL %tucuxi_gui_path%\dev\%_release_name%
-  DEL %tucuxi_gui_path%\dev\%_demo_name%
-  DEL %tucuxi_gui_path%\dev\%_extreport_name%
-  DEL %tucuxi_gui_path%\dev\%_extreport-nolicense_name%
+  IF /i "%1" EQU "release" (
+    RMDIR /S /Q %tucuxi_gui_path%\dev\%_release_name%
+  )
+  IF /i "%1" EQU "demo" (
+    RMDIR /S /Q %tucuxi_gui_path%\dev\%_demo_name%
+  ) 
+  IF "%1" EQU "extreport" (
+    RMDIR /S /Q %tucuxi_gui_path%\dev\%_extreport_name%
+  ) 
+  IF "%1" EQU "extreport-nolicense" (
+    RMDIR /S /Q %tucuxi_gui_path%\dev\%_extreport_nolicense_name%
+  )
   GOTO exit
 
 :help

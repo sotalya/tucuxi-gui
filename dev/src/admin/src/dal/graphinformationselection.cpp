@@ -48,7 +48,7 @@ QString GraphInformationSelection::getCurrentTab() const{
         {StepType::Enum::Covariate, "Covariate"},
         {StepType::Enum::Measure, "Measure"},
         {StepType::Enum::Target, "Target"},
-        {StepType::Enum::Adjustment, "Adjustement"},
+        {StepType::Enum::Adjustment, "Adjustment"},
         {StepType::Enum::Validation, "Validation"},
         {StepType::Enum::Report, "Report"}
     };

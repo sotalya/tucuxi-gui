@@ -631,6 +631,7 @@ void parseOptions()
 
     appGlobals->setListFile(parser.value(listFileOption));
     appGlobals->setRequestFile(parser.value(requestFileOption));
+    appGlobals->setIccaImport(parser.isSet(iccaFileOption));
     appGlobals->setIccaFile(parser.value(iccaFileOption));
 
     if (parser.isSet(noGroupIntakeOption)) {

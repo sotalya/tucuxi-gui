@@ -1,4 +1,4 @@
-//@@license@@s
+//@@license@@
 
 #ifndef FLATREQUESTFILECLIENT_H
 #define FLATREQUESTFILECLIENT_H
@@ -29,6 +29,8 @@ class FlatRequestFileClient : public Tucuxi::Gui::FlatRequest::FlatRequestsClien
 private:
 
     QString m_listFileName;
+
+    void constructFileFromDB();
 
 };
 

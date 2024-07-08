@@ -1,7 +1,6 @@
-#include "flatinterpretationrequestbuilder.h"
-
-
 //@@license@@
+
+#include "flatinterpretationrequestbuilder.h"
 
 #include <QMessageBox>
 

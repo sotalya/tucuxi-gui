@@ -1,3 +1,5 @@
+//@@license@@
+
 #include <QDialog>
 #include <QVBoxLayout>
 #include <QHBoxLayout>

@@ -1,4 +1,4 @@
-//@@license@@s
+//@@license@@
 
 #ifndef FLATREQUESTFILECLIENT_H
 #define FLATREQUESTFILECLIENT_H

@@ -1,3 +1,5 @@
+//@@license@@
+
 #ifndef FLATREQUESTPARAMETERS_H
 #define FLATREQUESTPARAMETERS_H
 

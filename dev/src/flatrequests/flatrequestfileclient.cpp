@@ -1,4 +1,4 @@
-//@@license@@s
+//@@license@@
 
 #include "flatrequestfileclient.h"
 #include "flatrequestparameters.h"

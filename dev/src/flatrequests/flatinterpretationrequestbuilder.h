@@ -6,14 +6,7 @@
 
 #include <QDomDocument>
 
-#include "core/dal/drug/drug.h"
-#include "core/dal/covariate.h"
 #include "core/dal/dosage.h"
-#include "admin/src/dal/institute.h"
-#include "admin/src/dal/practician.h"
-#include "admin/src/dal/clinical.h"
-#include "admin/src/dal/patient.h"
-#include "admin/src/dal/measure.h"
 #include "admin/src/dal/interpretationrequest.h"
 #include "flatrequestparameters.h"
 

@@ -1,27 +1,20 @@
 //@@license@@
 
-#include "flatinterpretationrequestbuilder.h"
-
 #include <QMessageBox>
 
 #include "flatinterpretationrequestbuilder.h"
-#include "rest/builders/drugidtranslator.h"
-#include "rest/builders/routetranslator.h"
-#include "rest/builders/formulationandroutetranslator.h"
-
 
 #include "admin/src/adminfactory.h"
-
-#include "apputils/src/apputilsfactory.h"
-#include "apputils/src/apputilsrepository.h"
+#include "admin/src/dal/patient.h"
+#include "admin/src/dal/measure.h"
 
 
 #include "core/core.h"
 #include "core/corefactory.h"
+#include "core/dal/covariate.h"
 #include "core/dal/drugtreatment.h"
 #include "core/dal/uncastedvalue.h"
-#include "rest/builders/covariateidtranslator.h"
-#include "core/dal/drug/target.h"
+
 #include "guiutils/src/appglobals.h"
 
 using namespace Tucuxi::Gui::Admin;

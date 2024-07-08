@@ -1,27 +1,22 @@
 //@@license@@
 
+#include <qmessagebox.h>
+
 #include "flatrequestsclientprocessing.h"
 #include "flatinterpretationrequestbuilder.h"
 #include "flatrequestparameters.h"
-#include "core/dal/drugresponseanalysis.h"
 #include "core/core.h"
 #include "core/corefactory.h"
 #include "admin/src/dal/partialrequest.h"
 #include "admin/src/adminfactory.h"
-#include "rest/builders/drugidtranslator.h"
 #include "apputils/src/apputilsrepository.h"
 #include "admin/src/stdadminrepository.h"
-#include "rest/model/replylistxmlmessage.h"
-#include "rest/builders/replylistmessagebuilder.h"
 
-#include <qmessagebox.h>
 
-#include "cli/rlutil.h"
 #include "core/dal/drugtreatment.h"
 
 using namespace Tucuxi::Gui::Core;
 using namespace Tucuxi::Gui::Admin;
-using namespace Tucuxi::Gui::Rest;
 using namespace Tucuxi::Gui::FlatRequest;
 
 
@@ -126,7 +121,7 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
                     currentPatientID = detailElementCurrentPatient.attribute(flatRequestParam->encounteridNameXml());
             }
 
-            Measure* measure = static_cast<Measure*>(request->sample());
+            auto measure = static_cast<Measure*>(request->sample());
             measure->sampleID(sampleID);
             measure->setMoment(sampleDate);
             measure->arrivalDate(sampleDate);

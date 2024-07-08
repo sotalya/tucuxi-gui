@@ -13,21 +13,21 @@ using namespace Tucuxi::Gui::FlatRequest;
 LoginDialog::LoginDialog(QWidget *parent): QDialog(parent)
 {
     // Create the username label and edit
-    QLabel *usernameLabel = new QLabel("Username:");
+    auto *usernameLabel = new QLabel("Username:");
     usernameEdit = new QLineEdit;
 
     // Create the password label and edit
-    QLabel *passwordLabel = new QLabel("Password:");
+    auto passwordLabel = new QLabel("Password:");
     passwordEdit = new QLineEdit;
     passwordEdit->setEchoMode(QLineEdit::Password);
 
     // Create the OK and Cancel buttons
-    QPushButton *okButton = new QPushButton("OK");
-    QPushButton *cancelButton = new QPushButton("Cancel");
+    auto okButton = new QPushButton("OK");
+    auto cancelButton = new QPushButton("Cancel");
 
     // Create the layout and add the widgets
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    auto mainLayout = new QVBoxLayout;
+    auto buttonLayout = new QHBoxLayout;
     mainLayout->addWidget(usernameLabel);
     mainLayout->addWidget(usernameEdit);
     mainLayout->addWidget(passwordLabel);

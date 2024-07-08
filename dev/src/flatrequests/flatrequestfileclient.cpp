@@ -1,35 +1,20 @@
 //@@license@@
 
+#include <qmessagebox.h>
+#include <QProcess>
+#include <QDir>
+
 #include "flatrequestfileclient.h"
 #include "flatrequestparameters.h"
 #include "LoginDialog.h"
-#include "rest/builders/interpretationrequestbuilder.h"
-#include "core/dal/drugresponseanalysis.h"
-#include "core/core.h"
-#include "core/corefactory.h"
-#include "apputils/src/appcore.h"
-#include "admin/src/dal/partialrequest.h"
-#include "admin/src/adminfactory.h"
-#include "rest/builders/drugidtranslator.h"
-#include "apputils/src/apputilsrepository.h"
-#include "admin/src/stdadminrepository.h"
-#include "rest/model/replylistxmlmessage.h"
-#include "rest/builders/replylistmessagebuilder.h"
 
-#include <qmessagebox.h>
-#include <QProcess>
-
-using namespace Tucuxi::Gui::Core;
 using namespace Tucuxi::Gui::FlatRequest;
 
 FlatRequestFileClient::FlatRequestFileClient(QObject *parent) : FlatRequestsClientProcessing(parent)
 {
 }
 
-FlatRequestFileClient::~FlatRequestFileClient()
-{
-
-}
+FlatRequestFileClient::~FlatRequestFileClient() = default;
 
 void FlatRequestFileClient::constructFileFromDB()
 {
@@ -90,9 +75,6 @@ void FlatRequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
     QString controlId;
     analyzeList(response, controlId);
 }
-
-#include <QDir>
-#include <iostream>
 
 void FlatRequestFileClient::queryRequest(const QString &requestId, const QString &patientId, const QString &drugId)
 {

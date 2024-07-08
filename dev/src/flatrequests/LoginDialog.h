@@ -16,8 +16,8 @@ class LoginDialog : public QDialog
 public:
     explicit LoginDialog(QWidget *parent = nullptr);
 
-    QString getUsername() const;
-    QString getPassword() const;
+    [[nodiscard]] QString getUsername() const;
+    [[nodiscard]] QString getPassword() const;
 
 private:
     QLineEdit *usernameEdit;

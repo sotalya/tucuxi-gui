@@ -42,8 +42,8 @@ config_demo {
     DEFINES += CONFIG_CONNECTED
 }
 
-config_externalreport {
-    DEFINES += CONFIG_EXTERNALREPORT
+config_internalreport {
+    DEFINES += CONFIG_INTERNALREPORT
 }
 
 win32 {

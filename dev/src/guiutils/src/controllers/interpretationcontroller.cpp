@@ -101,10 +101,10 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
     _currentActiveSubstance(nullptr),
     _interpretation(nullptr),
     _rawRequest(""),
-    #ifdef CONFIG_EXTERNALREPORT
-    _isDemo(false),
-    #else
+    #ifdef CONFIG_INTERNALREPORT
     _isDemo(true),
+    #else
+    _isDemo(false),
     #endif // CONFIG_DEMO
     _currentPatient(nullptr),
     root(nullptr),

@@ -95,13 +95,13 @@
 
 #include "core/utils/logging.h"
 
-#ifndef NOLICENSE
+#ifdef WITHLICENSE
 #ifdef COMPILE_WITH_TUCUCORE
 #include "tucucrypto/licensemanager.h"
 #else
 #include "src/fromtucuxi/licensemanager.h"
 #endif // COMPILE_WITH_TUCUCORE
-#endif // NOLICENSE
+#endif // WITHLICENSE
 
 #ifdef COMPILE_WITH_TUCUCORE
 #include "tucucore/version.h"
@@ -456,7 +456,7 @@ int main(int argc, char *argv[])
     //QtWebEngine::initialize();
 
     std::string path = QCoreApplication::applicationDirPath().toLatin1().data();
-#ifndef NOLICENSE
+#ifdef WITHLICENSE
     path += "/license.txt";
     Tucuxi::Common::LicenseError licResult = Tucuxi::Common::LicenseManager::checkLicenseFile(path);
     if (licResult != Tucuxi::Common::LicenseError::VALID_LICENSE) {

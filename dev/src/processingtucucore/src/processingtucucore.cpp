@@ -242,10 +242,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
                         // This complex next translation is required because of the epoch being different for QDateTime and DateTime, one being local and the other no
                         // fpt time is in seconds since epoch
                         fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                                                                        std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
-                        // The following requires at least Qt 5.8
-                        //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                        //                                          std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toSecsSinceEpoch());
+                                                                        std::chrono::milliseconds(static_cast<int64>(cycleData.m_times[0][i] * 3600000.0)))).toSecsSinceEpoch());
                         fpt->setValue(cycleData.m_concentrations[0][i]);
                         fpts->append(fpt);
                     }
@@ -272,7 +269,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
                     }
 
                     prediction.getPredictive()->getPredictionData()->addStats(
-                                tuToEzTranslator.buildDateTime(cycleData.m_start).toMSecsSinceEpoch() / 1000,
+                                tuToEzTranslator.buildDateTime(cycleData.m_start).toSecsSinceEpoch(),
                                 Tucuxi::Gui::Core::Duration(0,0,0,
                                                          (cycleData.m_end - cycleData.m_start).toMilliseconds()).toHours(),
                                 mean, auc, cumulativeAuc, residual, peak
@@ -436,10 +433,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::generalCalculatePercentiles(
                         for (size_t pointIndex=0; pointIndex<cycleData.m_concentrations[0].size(); pointIndex++) {
                             Tucuxi::Gui::Core::FancyPoint* fpt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::FancyPoint>(ABSTRACTREPO, fpts);
                             fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                                                                            std::chrono::milliseconds(static_cast<int64>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
-                            // The following requires at least Qt 5.8
-                            //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                            //                                          std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toSecsSinceEpoch());
+                                                                            std::chrono::milliseconds(static_cast<int64>(cycleData.m_times[0][pointIndex] * 3600000.0)))).toSecsSinceEpoch());
 
                             //fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][pointIndex]*3600.0);
                             fpt->setValue(cycleData.m_concentrations[0][pointIndex]);
@@ -613,10 +607,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::computeSuggestedAdjustments(
                 //fpt->setTime(cycleData.m_start.toSeconds()+cycleData.m_times[0][i]*3600.0);// This complex next translation is required because of the epoch being different for QDateTime and DateTime, one being local and the other no
                 // fpt time is in seconds since epoch
                 fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                                                                std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toMSecsSinceEpoch() / 1000.0);
-                // The following requires Qt 5.8
-                //fpt->setTime(tuToEzTranslator.buildDateTime(cycleData.m_start+Tucuxi::Common::Duration(
-                //                                                std::chrono::milliseconds(static_cast<int>(cycleData.m_times[0][i] * 3600000.0)))).toSecsSinceEpoch());
+                                                                std::chrono::milliseconds(static_cast<int64>(cycleData.m_times[0][i] * 3600000.0)))).toSecsSinceEpoch());
 
                 fpt->setValue(cycleData.m_concentrations[0][i]);
                 fpts->append(fpt);

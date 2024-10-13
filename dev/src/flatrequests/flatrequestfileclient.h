@@ -1,6 +1,6 @@
 /* 
- * Tucuxi - Tucuxi-core library and command line tool. 
- * This code allows to perform prediction of drug concentration in blood 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
  * and to propose dosage adaptations.
  * It has been developed by HEIG-VD, in close collaboration with CHUV. 
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
@@ -34,20 +34,22 @@ class FlatRequestFileClient : public Tucuxi::Gui::FlatRequest::FlatRequestsClien
 
     public:
     explicit FlatRequestFileClient(QObject *parent = nullptr);
-    virtual ~FlatRequestFileClient() Q_DECL_OVERRIDE;
+    ~FlatRequestFileClient() Q_DECL_OVERRIDE;
 
     void setListFile(const QString &fileName);
 
     public slots:
-    virtual void queryList(QDateTime from = QDateTime::currentDateTime().addYears(-10),
+    void queryList(QDateTime from = QDateTime::currentDateTime().addYears(-10),
                            QDateTime to = QDateTime::currentDateTime().addYears(10),
                            bool state = true) Q_DECL_OVERRIDE;
-    virtual void queryRequest(const QString &requestId, const QString &patientId, const QString &drugId) Q_DECL_OVERRIDE;
+    void queryRequest(const QString &requestId, const QString &patientId, const QString &drugId) Q_DECL_OVERRIDE;
 
 
 private:
 
     QString m_listFileName;
+
+    void constructFileFromDB();
 
 };
 

@@ -1,24 +1,21 @@
-#include "flatinterpretationrequestbuilder.h"
-
-
-/* 
- * Tucuxi - Tucuxi-core library and command line tool. 
- * This code allows to perform prediction of drug concentration in blood 
+/*
+ * Tucuxi - Tucuxi-gui software.
+ * This software is able to perform prediction of drug concentration in blood
  * and to propose dosage adaptations.
- * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * It has been developed by HEIG-VD, in close collaboration with CHUV.
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
- * 
- * This program is free software: you can redistribute it and/or modify 
- * it under the terms of the GNU Affero General Public License as 
- * published by the Free Software Foundation, either version 3 of the 
- * License, or any later version. 
- * 
- * This program is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
- * GNU Affero General Public License for more details. 
- * 
- * You should have received a copy of the GNU Affero General Public License 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
@@ -26,23 +23,18 @@
 #include <QMessageBox>
 
 #include "flatinterpretationrequestbuilder.h"
-#include "rest/builders/drugidtranslator.h"
-#include "rest/builders/routetranslator.h"
-#include "rest/builders/formulationandroutetranslator.h"
-
 
 #include "admin/src/adminfactory.h"
-
-#include "apputils/src/apputilsfactory.h"
-#include "apputils/src/apputilsrepository.h"
+#include "admin/src/dal/patient.h"
+#include "admin/src/dal/measure.h"
 
 
 #include "core/core.h"
 #include "core/corefactory.h"
+#include "core/dal/covariate.h"
 #include "core/dal/drugtreatment.h"
 #include "core/dal/uncastedvalue.h"
-#include "rest/builders/covariateidtranslator.h"
-#include "core/dal/drug/target.h"
+
 #include "guiutils/src/appglobals.h"
 
 using namespace Tucuxi::Gui::Admin;
@@ -55,7 +47,8 @@ namespace FlatRequest {
 
 //InterpretationRequestBuilder::InterpretationRequestBuilder(const MessageContent &content) :
 FlatInterpretationRequestBuilder::FlatInterpretationRequestBuilder(const QDomDocument &content) :
-    content(content)
+    content(content),
+    flatRequestParameters(FlatRequestParameters::getInstance())
 {
     //Get the control ID
     //    content.setValue("controlId", doc.documentElement().attributeNode("controlId").value());
@@ -80,14 +73,14 @@ bool FlatInterpretationRequestBuilder::compareDosage(const Tucuxi::Gui::Core::Do
 
 Tucuxi::Gui::Core::Duration FlatInterpretationRequestBuilder::findDuration(const QDomElement &currentElement)
 {
-    QDomElement element = currentElement.nextSiblingElement("Détails");
+    QDomElement element = currentElement.nextSiblingElement(flatRequestParameters->detailsNameXml());
     Tucuxi::Gui::Core::Duration duration;
 
     // Find the first "durée" element, a duration of 0 will be rturned if no duration found
     while(!element.isNull()) {
-        if(element.attribute("donnees") == "durée") {
-            QString unit = element.attribute("unite");
-            QString duree = element.attribute("valeur");
+        if(element.attribute(flatRequestParameters->dataNameXml()) == "durée") {
+            QString unit = element.attribute(flatRequestParameters->unitNameXml());
+            QString duree = element.attribute(flatRequestParameters->valueNameXml());
 
             // Currently only minutes should be used as unit for duration
             if(unit == "min") {
@@ -95,7 +88,7 @@ Tucuxi::Gui::Core::Duration FlatInterpretationRequestBuilder::findDuration(const
             }
             break;
         } else {
-            element = element.nextSiblingElement("Détails");
+            element = element.nextSiblingElement(flatRequestParameters->detailsNameXml());
         }
     }
 
@@ -382,24 +375,30 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
     //Patient data
     Patient* patient = static_cast<Patient*>(shpatient);
 
-    QString activeSubstanceStr = reportNode.attribute("Name");
+    QString activeSubstanceStr = reportNode.attribute(flatRequestParameters->fullDataNameXml());
     QString activeSubstanceId = "";
 
     //Prediction drug
     if (activeSubstanceStr == "vanco fulldata") {
         activeSubstanceId = "vancomycin";
-    } else if (activeSubstanceStr == "cefepime fulldata") {
+    } else if (activeSubstanceStr == "cefepime fulldata" || activeSubstanceStr == "cefepime_fulldata") {
         activeSubstanceId = "cefepime";
     } else if (activeSubstanceStr == "voriconazole fulldata") {
         activeSubstanceId = "voriconazole";
     }
 
+    QDomElement detailElement;
+
     //Take the first details element
     //QDomElement detailsCollection = datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection");
-    QDomElement detailElement = reportNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection").firstChildElement("Détails");
+    if (flatRequestParameters->getIsFrenchTag()) {
+        detailElement = reportNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection").firstChildElement("Détails");
+    } else {
+        detailElement = reportNode.firstChildElement(flatRequestParameters->detailsListNameXml()).firstChildElement(flatRequestParameters->detailsNameXml());
+    }
 
     //Take the encounter id each details element have the same encounter id for the current interpretation
-    patient->externalId(detailElement.attribute("encounterid"));
+    patient->externalId(detailElement.attribute(flatRequestParameters->encounteridNameXml()));
 
     //Build dosages to be filled when parsing the file
     Tucuxi::Gui::Core::DosageHistory* dosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO);
@@ -413,20 +412,20 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
     //Iterate through all details element to built an interpretation request
     QString dataType;
     while (!detailElement.isNull()) {
-        dataType = detailElement.attribute("donnees");
+        dataType = detailElement.attribute(flatRequestParameters->dataNameXml());
 
         if (dataType == "Sexe") {
 
-            patient->person()->gender(detailElement.attribute("valeur").toLower() == "masculin" ? Person::Male : Person::Female);
+            patient->person()->gender(detailElement.attribute(flatRequestParameters->valueNameXml()).toLower() == "masculin" ? Person::Male : Person::Female);
 
         } else if (dataType == "DDN") {
 
-            QString dateString = detailElement.attribute("valeur");
+            QString dateString = detailElement.attribute(flatRequestParameters->valueNameXml());
             QDate date;
 
             if (activeSubstanceStr == "vanco fulldata") {
                 date = QDateTime::fromString(dateString, "MMM dd yyyy").date();
-            } else if (activeSubstanceStr == "cefepime fulldata" || activeSubstanceStr == "voriconazole fulldata") {
+            } else if (activeSubstanceStr == "cefepime fulldata" || activeSubstanceStr == "cefepime_fulldata"|| activeSubstanceStr == "voriconazole fulldata") {
                 date = QDateTime::fromString(dateString, "MM-dd-yyyy hh:mm:ss").date();
             }
 
@@ -438,12 +437,12 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             QString covariateId = "bodyweight";
             covariate->setCovariateId(covariateId);
 
-            QString dateString = detailElement.attribute("horaire");
+            QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
             QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
             covariate->setDate(date);
 
-            QString valueString = detailElement.attribute("valeur");
-            QString unit = detailElement.attribute("unite", "kg");
+            QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
+            QString unit = detailElement.attribute(flatRequestParameters->unitNameXml(), "kg");
             double value = valueString.toDouble();
             covariate->getQuantity()->setValue(value);
             covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(unit));
@@ -458,12 +457,12 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             QString covariateId = "creatinine";
             covariate->setCovariateId(covariateId);
 
-            QString dateString = detailElement.attribute("horaire");
+            QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
             QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
             covariate->setDate(date);
 
-            QString valueString = detailElement.attribute("valeur");
-            QString unit = detailElement.attribute("unite", "µmol/l");
+            QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
+            QString unit = detailElement.attribute(flatRequestParameters->unitNameXml(), "µmol/l");
             double value = valueString.toDouble();
             covariate->getQuantity()->setValue(value);
             covariate->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(unit));
@@ -478,13 +477,13 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             measure->setSdrug(activeSubstanceId);
 
-            QString dateString = detailElement.attribute("horaire");
+            QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
             QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
             measure->setMoment(date);
             measure->arrivalDate(date);
 
             Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
-            QString valueString = detailElement.attribute("valeur");
+            QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
             valueString.replace(',', '.');
             double value = valueString.toDouble();
             amt->setValue(value);
@@ -500,15 +499,15 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             measure->setSdrug(activeSubstanceId);
 
-            QString dateString = detailElement.attribute("horaire");
+            QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
             QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
             measure->setMoment(date);
             measure->arrivalDate(date);
 
             Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
-            QString valueString = detailElement.attribute("valeur");
+            QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
             valueString.replace(',', '.');
-            QString unit = detailElement.attribute("unite", "mg/l");
+            QString unit = detailElement.attribute(flatRequestParameters->unitNameXml(), "mg/l");
             unit = unit.toLower();
             double value = valueString.toDouble();
             amt->setValue(value);
@@ -524,15 +523,15 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             measure->setSdrug(activeSubstanceId);
 
-            QString dateString = detailElement.attribute("horaire");
+            QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
             QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
             measure->setMoment(date);
             measure->arrivalDate(date);
 
             Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
-            QString valueString = detailElement.attribute("valeur");
+            QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
             valueString.replace(',', '.');
-            QString unit = detailElement.attribute("unite", "mg/l");
+            QString unit = detailElement.attribute(flatRequestParameters->unitNameXml(), "mg/l");
             unit = unit.toLower();
             double value = valueString.toDouble();
             amt->setValue(value);
@@ -559,7 +558,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             dosage->setRoute(admin);
 
-            QString dateString = detailElement.attribute("horaire");
+            QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
             QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
             dosage->setApplied(appl);
 
@@ -567,7 +566,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             dosage->setEndTime(end);
 
             //TODO here we should calculate a dosage but we have flow rate, keep it like this for testing import
-            QString valueString = detailElement.attribute("valeur");
+            QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
             double value = valueString.toDouble();
             dosage->getQuantity()->setValue(value);
             dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("ml/h"));
@@ -598,7 +597,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             admin->setFormulationAndRoute(formulationAndRoute);
             dosage->setRoute(admin);
 
-            QString dateString = detailElement.attribute("horaire");
+            QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
             QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
             dosage->setApplied(appl);
 
@@ -606,9 +605,9 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             //dosage->setEndTime(end);
             dosage->setEndTime(appl);
 
-            QString valueString = detailElement.attribute("valeur");
+            QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
             valueString.replace(',', '.');
-            QString unit = detailElement.attribute("unite", "g");
+            QString unit = detailElement.attribute(flatRequestParameters->unitNameXml(), "g");
             double value = valueString.toDouble();
             dosage->getQuantity()->setValue(value);
             dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit(unit));
@@ -628,7 +627,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
         }
 
-        detailElement = detailElement.nextSiblingElement("Détails");
+        detailElement = detailElement.nextSiblingElement(flatRequestParameters->detailsNameXml());
     }
 
     //Prediction patient

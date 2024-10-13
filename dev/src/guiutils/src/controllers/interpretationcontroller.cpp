@@ -1,6 +1,6 @@
 /* 
- * Tucuxi - Tucuxi-core library and command line tool. 
- * This code allows to perform prediction of drug concentration in blood 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
  * and to propose dosage adaptations.
  * It has been developed by HEIG-VD, in close collaboration with CHUV. 
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
@@ -121,10 +121,10 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
     _currentActiveSubstance(nullptr),
     _interpretation(nullptr),
     _rawRequest(""),
-    #ifdef CONFIG_EXTERNALREPORT
-    _isDemo(false),
-    #else
+    #ifdef CONFIG_INTERNALREPORT
     _isDemo(true),
+    #else
+    _isDemo(false),
     #endif // CONFIG_DEMO
     _currentPatient(nullptr),
     root(nullptr),

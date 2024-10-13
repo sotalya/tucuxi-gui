@@ -1,6 +1,6 @@
 /* 
- * Tucuxi - Tucuxi-core library and command line tool. 
- * This code allows to perform prediction of drug concentration in blood 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
  * and to propose dosage adaptations.
  * It has been developed by HEIG-VD, in close collaboration with CHUV. 
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
@@ -20,27 +20,23 @@
  */
 
 
+#include <qmessagebox.h>
+
 #include "flatrequestsclientprocessing.h"
 #include "flatinterpretationrequestbuilder.h"
-#include "core/dal/drugresponseanalysis.h"
+#include "flatrequestparameters.h"
 #include "core/core.h"
 #include "core/corefactory.h"
 #include "admin/src/dal/partialrequest.h"
 #include "admin/src/adminfactory.h"
-#include "rest/builders/drugidtranslator.h"
 #include "apputils/src/apputilsrepository.h"
 #include "admin/src/stdadminrepository.h"
-#include "rest/model/replylistxmlmessage.h"
-#include "rest/builders/replylistmessagebuilder.h"
 
-#include <qmessagebox.h>
 
-#include "cli/rlutil.h"
 #include "core/dal/drugtreatment.h"
 
 using namespace Tucuxi::Gui::Core;
 using namespace Tucuxi::Gui::Admin;
-using namespace Tucuxi::Gui::Rest;
 using namespace Tucuxi::Gui::FlatRequest;
 
 
@@ -54,13 +50,22 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 {
     QDomDocument doc;
 
+    FlatRequestParameters* flatRequestParam = FlatRequestParameters::getInstance();
+
     if (!doc.setContent(xmlList))
         return 0;
 
-    QDomElement detailCollectionElement = doc.documentElement().firstChildElement("Tablix1").firstChildElement("Détails_Collection");
-    QDomElement detailElement = detailCollectionElement.firstChildElement("Détails");
+    QDomElement detailCollectionElement;
 
-    QString substanceStr = doc.documentElement().attribute("Name");
+    if(flatRequestParam->getIsFrenchTag()) {
+        detailCollectionElement = doc.documentElement().firstChildElement("Tablix1").firstChildElement(flatRequestParam->detailsListNameXml());
+    } else {
+        detailCollectionElement = doc.documentElement().firstChildElement(flatRequestParam->detailsListNameXml());
+    }
+
+    QDomElement detailElement = detailCollectionElement.firstChildElement(flatRequestParam->detailsNameXml());
+
+    QString substanceStr = doc.documentElement().attribute(flatRequestParam->fullDataNameXml());
     QString substanceID = "";
     QString measureTagName = "";
 
@@ -68,7 +73,7 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
     if (substanceStr == "vanco fulldata") {
         substanceID = "vancomycin";
         measureTagName = "Dosage vanco";
-    } else if (substanceStr == "cefepime fulldata") {
+    } else if (substanceStr == "cefepime fulldata" || substanceStr == "cefepime_fulldata") {
         substanceID = "cefepime";
         measureTagName = "Dosage cefepime"; //"Dosage Residuel cefepime";
     } else if (substanceStr == "voriconazole fulldata") {
@@ -84,7 +89,7 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
     QString lastPatientID = "None";
 
     while (!detailElement.isNull()) {
-        patientID = detailElement.attribute("encounterid");
+        patientID = detailElement.attribute(flatRequestParam->encounteridNameXml());
 
         // Verify if patient already have been parsed. Also imply that patient details are grouped by encouderid in the XML.
         if (patientID != lastPatientID) {
@@ -119,24 +124,24 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 
             // Find first concentration element for measure (if any)
             while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID/* && !sampleFound*/) {
-                if (detailElementCurrentPatient.attribute("donnees").startsWith(measureTagName) ||
-                    detailElementCurrentPatient.attribute("donnees").startsWith("Dosage Residuel cefepime")) {
-                    QString valueString = detailElementCurrentPatient.attribute("valeur");
+                if (detailElementCurrentPatient.attribute(flatRequestParam->dataNameXml()).startsWith(measureTagName) ||
+                    detailElementCurrentPatient.attribute(flatRequestParam->dataNameXml()).startsWith("Dosage Residuel cefepime")) {
+                    QString valueString = detailElementCurrentPatient.attribute(flatRequestParam->valueNameXml());
                     valueString.replace(',', '.');
                     concentration = valueString.toDouble();
-                    unit = detailElementCurrentPatient.attribute("unite", "mg/l");
+                    unit = detailElementCurrentPatient.attribute(flatRequestParam->unitNameXml(), "mg/l");
                     unit = unit.toLower();
-                    sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute("horaire"), Qt::ISODate);
+                    sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute(flatRequestParam->timeNameXml()), Qt::ISODate);
                     sampleID = currentPatientID;
                     // sampleFound = true;
                 }
 
-                detailElementCurrentPatient = detailElementCurrentPatient.nextSiblingElement("Détails");
+                detailElementCurrentPatient = detailElementCurrentPatient.nextSiblingElement(flatRequestParam->detailsNameXml());
                 if (!detailElementCurrentPatient.isNull())
-                    currentPatientID = detailElementCurrentPatient.attribute("encounterid");
+                    currentPatientID = detailElementCurrentPatient.attribute(flatRequestParam->encounteridNameXml());
             }
 
-            Measure* measure = static_cast<Measure*>(request->sample());
+            auto measure = static_cast<Measure*>(request->sample());
             measure->sampleID(sampleID);
             measure->setMoment(sampleDate);
             measure->arrivalDate(sampleDate);
@@ -148,7 +153,7 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
             ADMINREPO->setPartialRequest(request);
         }
 
-        detailElement = detailElement.nextSiblingElement("Détails");
+        detailElement = detailElement.nextSiblingElement(flatRequestParam->detailsNameXml());
     }
 
     emit requestListReady(requests);

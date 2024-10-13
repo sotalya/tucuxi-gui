@@ -1,6 +1,6 @@
 /* 
- * Tucuxi - Tucuxi-core library and command line tool. 
- * This code allows to perform prediction of drug concentration in blood 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
  * and to propose dosage adaptations.
  * It has been developed by HEIG-VD, in close collaboration with CHUV. 
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
@@ -52,6 +52,7 @@ public:
     void setRequestFile(QString _requestFile);
 
     void setIccaFile(QString _iccaFile);
+    void setIccaImport(bool enable);
 
     void setGroupIntake(bool enable);
 
@@ -60,6 +61,7 @@ public:
     const QString getRequestFile();
 
     const QString getIccaFile();
+    bool getIccaImport();
 
     bool getGroupIntake();
 
@@ -96,6 +98,7 @@ private:
     bool m_percentileCalculation;
 
     bool m_groupIntake;
+    bool m_iccaImport;
 };
 
 }

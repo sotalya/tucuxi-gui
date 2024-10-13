@@ -1,6 +1,6 @@
 /* 
- * Tucuxi - Tucuxi-core library and command line tool. 
- * This code allows to perform prediction of drug concentration in blood 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
  * and to propose dosage adaptations.
  * It has been developed by HEIG-VD, in close collaboration with CHUV. 
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
@@ -115,13 +115,13 @@
 
 #include "core/utils/logging.h"
 
-#ifndef NOLICENSE
+#ifdef WITHLICENSE
 #ifdef COMPILE_WITH_TUCUCORE
 #include "tucucrypto/licensemanager.h"
 #else
 #include "src/fromtucuxi/licensemanager.h"
 #endif // COMPILE_WITH_TUCUCORE
-#endif // NOLICENSE
+#endif // WITHLICENSE
 
 #ifdef COMPILE_WITH_TUCUCORE
 #include "tucucore/version.h"
@@ -476,7 +476,7 @@ int main(int argc, char *argv[])
     //QtWebEngine::initialize();
 
     std::string path = QCoreApplication::applicationDirPath().toLatin1().data();
-#ifndef NOLICENSE
+#ifdef WITHLICENSE
     path += "/license.txt";
     Tucuxi::Common::LicenseError licResult = Tucuxi::Common::LicenseManager::checkLicenseFile(path);
     if (licResult != Tucuxi::Common::LicenseError::VALID_LICENSE) {
@@ -651,6 +651,7 @@ void parseOptions()
 
     appGlobals->setListFile(parser.value(listFileOption));
     appGlobals->setRequestFile(parser.value(requestFileOption));
+    appGlobals->setIccaImport(parser.isSet(iccaFileOption));
     appGlobals->setIccaFile(parser.value(iccaFileOption));
 
     if (parser.isSet(noGroupIntakeOption)) {

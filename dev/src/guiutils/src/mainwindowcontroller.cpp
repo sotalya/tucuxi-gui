@@ -1,6 +1,6 @@
 /* 
- * Tucuxi - Tucuxi-core library and command line tool. 
- * This code allows to perform prediction of drug concentration in blood 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
  * and to propose dosage adaptations.
  * It has been developed by HEIG-VD, in close collaboration with CHUV. 
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
@@ -77,8 +77,7 @@ MainWindowController::MainWindowController(QObject *parent) :
 
 AppGlobals* appGlobals = AppGlobals::getInstance();
 
-QString iccaFile = appGlobals->getIccaFile();
-if (iccaFile.isEmpty()) {
+if (!appGlobals->getIccaImport()) {
     #ifdef CONFIG_CONNECTED
         QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
         QString listFile = appGlobals->getListFile();
@@ -101,6 +100,7 @@ if (iccaFile.isEmpty()) {
 
     #endif
 } else {
+    QString iccaFile = appGlobals->getIccaFile();
     Tucuxi::Gui::FlatRequest::FlatRequestFileClient *client = new Tucuxi::Gui::FlatRequest::FlatRequestFileClient(this);
     client->setListFile(iccaFile);
     requestsController->setClient(client);

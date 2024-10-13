@@ -1,6 +1,6 @@
 /* 
- * Tucuxi - Tucuxi-core library and command line tool. 
- * This code allows to perform prediction of drug concentration in blood 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
  * and to propose dosage adaptations.
  * It has been developed by HEIG-VD, in close collaboration with CHUV. 
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
@@ -67,7 +67,7 @@ public:
      * Only the non-empty fields are compared.
      * If all the fields are empty in one but not on both, returns false.
      */
-    bool operator== (const Descriptor& other);
+    bool operator== (const Descriptor& other) const;
 };
 
 /** Descriptor for a model.
@@ -91,7 +91,7 @@ public:
     QString toString();
 
     //! Same as Descriptor.
-    bool operator== (const ModelDescriptor& other);
+    bool operator== (const ModelDescriptor& other) const;
 };
 
 // YTA: Hack

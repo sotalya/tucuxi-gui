@@ -79,7 +79,8 @@ void FlatRequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
         flatRequestParam->setFrenchTag(false);
         constructFileFromDB();
     } else {
-        flatRequestParam->setFrenchTag(true);
+        //flatRequestParam->setFrenchTag(true);
+        flatRequestParam->setFrenchTag(false);
     }
 
     QFile source(m_listFileName);

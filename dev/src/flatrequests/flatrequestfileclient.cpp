@@ -76,11 +76,7 @@ void FlatRequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 
     // If no file is already set then construc a file from a DB request
     if(m_listFileName.isEmpty()) {
-        flatRequestParam->setFrenchTag(false);
         constructFileFromDB();
-    } else {
-        //flatRequestParam->setFrenchTag(true);
-        flatRequestParam->setFrenchTag(false);
     }
 
     QFile source(m_listFileName);

@@ -380,12 +380,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
     QDomElement detailElement;
 
     //Take the first details element
-    //QDomElement detailsCollection = datasetNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection");
-    if (flatRequestParameters->getIsFrenchTag()) {
-        detailElement = reportNode.firstChildElement("Tablix1").firstChildElement("Détails_Collection").firstChildElement("Détails");
-    } else {
-        detailElement = reportNode.firstChildElement(flatRequestParameters->detailsListNameXml()).firstChildElement(flatRequestParameters->detailsNameXml());
-    }
+    detailElement = reportNode.firstChildElement(flatRequestParameters->detailsListNameXml()).firstChildElement(flatRequestParameters->detailsNameXml());
 
     //Take the encounter id each details element have the same encounter id for the current interpretation
     patient->externalId(detailElement.attribute(flatRequestParameters->encounteridNameXml()));

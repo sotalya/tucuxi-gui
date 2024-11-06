@@ -31,9 +31,6 @@ class FlatRequestParameters
 public:
     static FlatRequestParameters *getInstance();
 
-    void setFrenchTag(bool enable);
-    bool getIsFrenchTag();
-
     QString reportNameXml();
     QString reportsNameXml();
     QString fullDataNameXml();
@@ -51,8 +48,6 @@ public:
 private:
     FlatRequestParameters();
     static FlatRequestParameters* instance;
-
-    bool m_frenchTags;
 };
 
 #endif // FLATREQUESTPARAMETERS_H

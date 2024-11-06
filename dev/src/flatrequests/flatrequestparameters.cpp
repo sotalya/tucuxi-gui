@@ -25,7 +25,7 @@
 
 FlatRequestParameters* FlatRequestParameters::instance = nullptr;
 
-FlatRequestParameters::FlatRequestParameters():m_frenchTags(false) {
+FlatRequestParameters::FlatRequestParameters() {
 }
 
 FlatRequestParameters* FlatRequestParameters::getInstance()
@@ -39,28 +39,20 @@ FlatRequestParameters* FlatRequestParameters::getInstance()
     }
 }
 
-void FlatRequestParameters::setFrenchTag(bool enable) {
-    m_frenchTags = enable;
-}
-
-bool FlatRequestParameters::getIsFrenchTag() {
-    return m_frenchTags;
-}
-
 QString FlatRequestParameters::reportsNameXml() {
     return "reports";
 }
 
 QString FlatRequestParameters::reportNameXml() {
-    return m_frenchTags ? "Report" : "report";
+    return "report";
 }
 
 QString FlatRequestParameters::fullDataNameXml() {
-    return m_frenchTags ? "Name" : "name";
+    return "name";
 }
 
 QString FlatRequestParameters::detailsListNameXml() {
-    return m_frenchTags ? "Détails_Collection" : "details_list";
+    return "details_list";
 }
 
 QString FlatRequestParameters::siteNameXmls() {
@@ -68,23 +60,23 @@ QString FlatRequestParameters::siteNameXmls() {
 }
 
 QString FlatRequestParameters::drugNameXml() {
-    return m_frenchTags ? "nom_medicament" : "drug_name";
+    return "drug_name";
 }
 
 QString FlatRequestParameters::timeNameXml() {
-    return m_frenchTags ? "horaire" : "time";
+    return "time";
 }
 
 QString FlatRequestParameters::unitNameXml() {
-    return m_frenchTags ? "unite" : "unit";
+    return "unit";
 }
 
 QString FlatRequestParameters::valueNameXml() {
-    return m_frenchTags ? "valeur" : "value";
+    return "value";
 }
 
 QString FlatRequestParameters::dataNameXml() {
-    return m_frenchTags ? "donnees" : "data";
+    return "data";
 }
 
 QString FlatRequestParameters::encounteridNameXml() {
@@ -92,5 +84,5 @@ QString FlatRequestParameters::encounteridNameXml() {
 }
 
 QString FlatRequestParameters::detailsNameXml() {
-    return m_frenchTags ? "Détails" : "details";
+    return "details";
 }

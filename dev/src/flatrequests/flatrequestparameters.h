@@ -35,6 +35,7 @@ public:
     bool getIsFrenchTag();
 
     QString reportNameXml();
+    QString reportsNameXml();
     QString fullDataNameXml();
     QString detailsListNameXml();
     QString siteNameXmls();

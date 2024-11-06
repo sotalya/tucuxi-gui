@@ -375,17 +375,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
     //Patient data
     Patient* patient = static_cast<Patient*>(shpatient);
 
-    QString activeSubstanceStr = reportNode.attribute(flatRequestParameters->fullDataNameXml());
-    QString activeSubstanceId = "";
-
-    //Prediction drug
-    if (activeSubstanceStr == "vanco fulldata") {
-        activeSubstanceId = "vancomycin";
-    } else if (activeSubstanceStr == "cefepime fulldata" || activeSubstanceStr == "cefepime_fulldata") {
-        activeSubstanceId = "cefepime";
-    } else if (activeSubstanceStr == "voriconazole fulldata") {
-        activeSubstanceId = "voriconazole";
-    }
+    QString activeSubstanceId = reportNode.attribute(flatRequestParameters->fullDataNameXml());
 
     QDomElement detailElement;
 
@@ -423,9 +413,9 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             QString dateString = detailElement.attribute(flatRequestParameters->valueNameXml());
             QDate date;
 
-            if (activeSubstanceStr == "vanco fulldata") {
+            if (activeSubstanceId == "vancomycin") {
                 date = QDateTime::fromString(dateString, "MMM dd yyyy").date();
-            } else if (activeSubstanceStr == "cefepime fulldata" || activeSubstanceStr == "cefepime_fulldata"|| activeSubstanceStr == "voriconazole fulldata") {
+            } else if (activeSubstanceId == "cefepime" || activeSubstanceId == "voriconazole") {
                 date = QDateTime::fromString(dateString, "MM-dd-yyyy hh:mm:ss").date();
             }
 

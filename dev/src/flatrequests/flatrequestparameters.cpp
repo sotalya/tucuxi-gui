@@ -47,6 +47,10 @@ bool FlatRequestParameters::getIsFrenchTag() {
     return m_frenchTags;
 }
 
+QString FlatRequestParameters::reportsNameXml() {
+    return "reports";
+}
+
 QString FlatRequestParameters::reportNameXml() {
     return m_frenchTags ? "Report" : "report";
 }

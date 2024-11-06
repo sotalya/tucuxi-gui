@@ -108,29 +108,29 @@ void FlatRequestFileClient::queryRequest(const QString &requestId, const QString
     if (!doc.setContent(&reqFile))
         return;
 
-    QDomElement detailCollectionElement;
+    QDomElement reportElement = doc.documentElement().firstChildElement(flatRequestParam->reportNameXml());
+    QString reportName;
 
-    if(flatRequestParam->getIsFrenchTag()) {
-        detailCollectionElement = doc.documentElement().firstChildElement("Tablix1").firstChildElement(flatRequestParam->detailsListNameXml());
-    } else {
-        detailCollectionElement = doc.documentElement().firstChildElement(flatRequestParam->detailsListNameXml());
+    //Find the correct report for the selected drugId
+    while (!reportElement.isNull()) {
+        reportName = reportElement.attribute(flatRequestParam->fullDataNameXml());
+        if (reportName == drugId) {
+            break;
+        }
+
+        reportElement = reportElement.nextSiblingElement(flatRequestParam->reportNameXml());
     }
-    QDomElement detailElement = detailCollectionElement.firstChildElement(flatRequestParam->detailsNameXml());
 
-    QString reportName = doc.documentElement().attribute(flatRequestParam->fullDataNameXml());
+    QDomElement detailCollectionElement = reportElement.firstChildElement(flatRequestParam->detailsListNameXml());
+
+    QDomElement detailElement = detailCollectionElement.firstChildElement(flatRequestParam->detailsNameXml());
 
     // Construct a filtred xml doc containing only the seleted patient, by using patienId as criteria
     QDomElement filtredRootElement = filtredDoc.createElement(flatRequestParam->reportNameXml());
     filtredRootElement.setAttribute(flatRequestParam->fullDataNameXml(), reportName);
     filtredDoc.appendChild(filtredRootElement);
 
-    QDomElement filtredTabElement;
-    if(flatRequestParam->getIsFrenchTag()) {
-        filtredTabElement = filtredDoc.createElement("Tablix1");
-        filtredRootElement.appendChild(filtredTabElement);
-    } else {
-        filtredTabElement = filtredRootElement;
-    }
+    QDomElement filtredTabElement = filtredRootElement;
 
     QDomElement filtredDetailCollectionElement = filtredDoc.createElement(flatRequestParam->detailsListNameXml());
     filtredTabElement.appendChild(filtredDetailCollectionElement);

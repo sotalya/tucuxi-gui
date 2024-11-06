@@ -175,8 +175,10 @@ if (!appGlobals->getIccaImport()) {
     getRootContext()->setContextProperty("mainWindowController", this);
     getRootContext()->setContextProperty("appPath", QApplication::applicationDirPath());
 
-//    AppGlobals* appGlobals = AppGlobals::getInstance();
-//    QString requestFile = appGlobals->getRequestFile();
+    QString requestFile = appGlobals->getRequestFile();
+    if (!requestFile.isEmpty()) {
+        loadRequestFile(requestFile);
+    }
 
 //    QString requestFile = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "requestFile").toString();
 //    loadRequestFile(requestFile);

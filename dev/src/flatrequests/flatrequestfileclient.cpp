@@ -41,7 +41,7 @@ void FlatRequestFileClient::constructFileFromDB()
     QString username;
     QString password;
 
-    // TODO (JRP) : Currently deactivated, to be removed when we can assert that will be never needed
+    // Currently deactivated, can be use if we need a login
 #if 0
     LoginDialog dialog;
     if (dialog.exec() == QDialog::Accepted) {
@@ -142,7 +142,7 @@ void FlatRequestFileClient::queryRequest(const QString &requestId, const QString
 
     QTextStream informer(stdout);
 
-    // TODO JRP : For debug, to be removed
+    //Print the imported XML
     informer << filtredDoc.toString();
     informer << Qt::endl;
     informer.flush();

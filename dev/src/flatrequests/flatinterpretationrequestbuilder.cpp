@@ -50,14 +50,7 @@ FlatInterpretationRequestBuilder::FlatInterpretationRequestBuilder(const QDomDoc
     content(content),
     flatRequestParameters(FlatRequestParameters::getInstance())
 {
-    //Get the control ID
-    //    content.setValue("controlId", doc.documentElement().attributeNode("controlId").value());
     reportNode = content.documentElement();
-
-    //Get request data
-    //    content.setValue("request.id",    datasetNode.firstChildElement("requestId").firstChild().toText().data());
-    //    content.setValue("request.state", datasetNode.firstChildElement("requestState").firstChild().toText().data());
-
 }
 
 
@@ -317,7 +310,6 @@ void FlatInterpretationRequestBuilder::setDosageEndDateInterval(Tucuxi::Gui::Cor
                 createUncastedIntervalValue(*it, interval_sec);
             }
         }
-        //else { TODO (JRP) : What to do if only one dosage ?
     }
 }
 
@@ -550,18 +542,16 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             QDateTime end = appl.addSecs(3599);
             dosage->setEndTime(end);
 
-            //TODO here we should calculate a dosage but we have flow rate, keep it like this for testing import
+            //Calculate a dosage but we have flow rate
             QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
             double value = valueString.toDouble();
             dosage->getQuantity()->setValue(value);
             dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("ml/h"));
 
-            // TODO (JRP) : Set 60 minutes infusion and interval time for testing
+            //Set 60 minutes infusion and interval
             dosage->setInterval(Tucuxi::Gui::Core::Duration(0,60));
             dosage->setTinf(Tucuxi::Gui::Core::Duration(0,60));
 
-            //TODO (JRP) : Set at steady state or not ?
-            //TODO : To be checked
             dosage->setIsAtSteadyState(false);
 
             dosages->append(dosage);

@@ -29,6 +29,7 @@
 #include "core/dal/dosage.h"
 #include "admin/src/dal/interpretationrequest.h"
 #include "flatrequestparameters.h"
+#include "flatrequestnametranslator.h"
 
 
 namespace Tucuxi {
@@ -51,6 +52,7 @@ private:
     QDomElement reportNode;
 
     FlatRequestParameters* flatRequestParameters;
+    FlatrequestNameTranslator* nameTranslator;
 
     static bool compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b);
     Tucuxi::Gui::Core::Duration findDuration(const QDomElement &currentElement);

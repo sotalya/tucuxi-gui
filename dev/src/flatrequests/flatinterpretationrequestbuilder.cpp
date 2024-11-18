@@ -48,7 +48,8 @@ namespace FlatRequest {
 //InterpretationRequestBuilder::InterpretationRequestBuilder(const MessageContent &content) :
 FlatInterpretationRequestBuilder::FlatInterpretationRequestBuilder(const QDomDocument &content) :
     content(content),
-    flatRequestParameters(FlatRequestParameters::getInstance())
+    flatRequestParameters(FlatRequestParameters::getInstance()),
+    nameTranslator(FlatrequestNameTranslator::getInstance())
 {
     reportNode = content.documentElement();
 }
@@ -391,11 +392,11 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
     while (!detailElement.isNull()) {
         dataType = detailElement.attribute(flatRequestParameters->dataNameXml());
 
-        if (dataType == "Sexe") {
+        if (dataType == nameTranslator->nameToInternalId("SEX")) {
 
             patient->person()->gender(detailElement.attribute(flatRequestParameters->valueNameXml()).toLower() == "masculin" ? Person::Male : Person::Female);
 
-        } else if (dataType == "DDN") {
+        } else if (dataType == nameTranslator->nameToInternalId("BIRTH_DATE")) {
 
             QString dateString = detailElement.attribute(flatRequestParameters->valueNameXml());
             QDate date;
@@ -408,7 +409,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             patient->person()->birthday(date);
 
-        } else if (dataType == "poids") {
+        } else if (dataType == nameTranslator->nameToInternalId("BODY_WEIGHT")) {
 
             Tucuxi::Gui::Core::PatientVariate* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
             QString covariateId = "bodyweight";
@@ -428,7 +429,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             covariates->append(covariate);
 
-        } else if (dataType == "Dosage creat") {
+        } else if (dataType == nameTranslator->nameToInternalId("CREATININE_DOSAGE")) {
 
             Tucuxi::Gui::Core::PatientVariate* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
             QString covariateId = "creatinine";

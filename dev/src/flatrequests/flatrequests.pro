@@ -14,6 +14,7 @@ HEADERS	+= \
     LoginDialog.h \
     flatinterpretationrequestbuilder.h \
     flatrequestfileclient.h \
+    flatrequestnametranslator.h \
     flatrequestparameters.h \
     flatrequestsclientprocessing.h
 
@@ -27,6 +28,7 @@ SOURCES += \
     LoginDialog.cpp \
     flatinterpretationrequestbuilder.cpp \
     flatrequestfileclient.cpp \
+    flatrequestnametranslator.cpp \
     flatrequestparameters.cpp \
     flatrequestsclientprocessing.cpp
 

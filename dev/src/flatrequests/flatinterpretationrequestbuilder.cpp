@@ -447,54 +447,8 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             covariate->setType(QMetaType::Double);
 
             covariates->append(covariate);
-
-        } else if (dataType == "Dosage vanco") {
-
-            Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
-
-            measure->setSdrug(activeSubstanceId);
-
-            QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
-            QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
-            measure->setMoment(date);
-            measure->arrivalDate(date);
-
-            Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
-            QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
-            valueString.replace(',', '.');
-            double value = valueString.toDouble();
-            amt->setValue(value);
-            amt->setUnit(Tucuxi::Gui::Core::Unit("mg/l"));
-
-            measure->setConcentration(amt);
-
-            measures->append(measure);
-
-        } else if (dataType == "Dosage cefepime" || dataType == "Dosage Residuel cefepime") {
-
-            Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
-
-            measure->setSdrug(activeSubstanceId);
-
-            QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
-            QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
-            measure->setMoment(date);
-            measure->arrivalDate(date);
-
-            Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
-            QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
-            valueString.replace(',', '.');
-            QString unit = detailElement.attribute(flatRequestParameters->unitNameXml(), "mg/l");
-            unit = unit.toLower();
-            double value = valueString.toDouble();
-            amt->setValue(value);
-            amt->setUnit(Tucuxi::Gui::Core::Unit(unit));
-
-            measure->setConcentration(amt);
-
-            measures->append(measure);
-
-        } else if (dataType.startsWith("Tx Vorico")) {
+        } else if (dataType == "Dosage vanco" || dataType == "Dosage cefepime" || dataType == "Dosage Residuel cefepime" ||
+                   dataType.startsWith("Tx Vorico")) {
 
             Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 

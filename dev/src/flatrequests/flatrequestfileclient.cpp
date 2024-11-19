@@ -50,7 +50,7 @@ void FlatRequestFileClient::constructFileFromDB()
     }
 #endif
 
-    QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime -u " + username + " -p " + password;
+    QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime,vanco,vorico -u " + username + " -p " + password;
     // QString pythonCommand = "python main.py -r -o import.xml -d cefepime -u " + username + " -p " + password;
 
     process.startCommand(pythonCommand);

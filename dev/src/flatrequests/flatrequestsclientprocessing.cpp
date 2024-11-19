@@ -25,6 +25,7 @@
 #include "flatrequestsclientprocessing.h"
 #include "flatinterpretationrequestbuilder.h"
 #include "flatrequestparameters.h"
+#include "flatrequestnametranslator.h"
 #include "core/core.h"
 #include "core/corefactory.h"
 #include "admin/src/dal/partialrequest.h"
@@ -52,6 +53,7 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
     QDomElement reportElement;
     QList<SharedPartialRequest> requests;
     FlatRequestParameters* flatRequestParam = FlatRequestParameters::getInstance();
+    FlatrequestNameTranslator* nameTranslator = FlatrequestNameTranslator::getInstance();
 
     if (!doc.setContent(xmlList))
         return 0;
@@ -74,11 +76,11 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
         SharedPartialRequest request;
 
         if (substanceID == "vancomycin") {
-            measureTagName = "Dosage vanco";
+            measureTagName = nameTranslator->nameToInternalId("VANCOMICINE_DOSAGE");
         } else if (substanceID == "cefepime") {
-            measureTagName = "Dosage cefepime";
+            measureTagName = nameTranslator->nameToInternalId("CEFEPIME_DOSAGE");
         } else if (substanceID == "voriconazole") {
-            measureTagName = "Tx Vorico";
+            measureTagName = nameTranslator->nameToInternalId("VORICONAZOLE_DOSAGE");
         }
 
         // Go through elements to identify each patien and search for a first dosage (for each patient)

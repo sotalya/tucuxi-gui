@@ -32,8 +32,10 @@ FlatrequestNameTranslator::FlatrequestNameTranslator()
     map.insert("VANCOMICINE_DOSAGE","Dosage vanco");
     map.insert("CEFEPIME_DOSAGE", "Dosage cefepime");
     map.insert("RESIDUAL_CEFEPIME_DOSAGE", "Dosage Residuel cefepime");
+    map.insert("VORICONAZOLE_DOSAGE", "Tx Vorico");
     map.insert("FLOW_RATE", "debit");
     map.insert("DOSAGE", "dose");
+    map.insert("DURATION", "durée");
 }
 
 FlatrequestNameTranslator* FlatrequestNameTranslator::getInstance()

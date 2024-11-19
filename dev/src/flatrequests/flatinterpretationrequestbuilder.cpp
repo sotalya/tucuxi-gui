@@ -72,7 +72,7 @@ Tucuxi::Gui::Core::Duration FlatInterpretationRequestBuilder::findDuration(const
 
     // Find the first "durée" element, a duration of 0 will be rturned if no duration found
     while(!element.isNull()) {
-        if(element.attribute(flatRequestParameters->dataNameXml()) == "durée") {
+        if(element.attribute(flatRequestParameters->dataNameXml()) == nameTranslator->nameToInternalId("DURATION")) {
             QString unit = element.attribute(flatRequestParameters->unitNameXml());
             QString duree = element.attribute(flatRequestParameters->valueNameXml());
 
@@ -448,8 +448,8 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             covariate->setType(QMetaType::Double);
 
             covariates->append(covariate);
-        } else if (dataType == "Dosage vanco" || dataType == "Dosage cefepime" || dataType == "Dosage Residuel cefepime" ||
-                   dataType.startsWith("Tx Vorico")) {
+        } else if (dataType == nameTranslator->nameToInternalId("VANCOMICINE_DOSAGE") || dataType == nameTranslator->nameToInternalId("CEFEPIME_DOSAGE") || dataType == nameTranslator->nameToInternalId("RESIDUAL_CEFEPIME_DOSAGE") ||
+                   dataType.startsWith(nameTranslator->nameToInternalId("VORICONAZOLE_DOSAGE"))) {
 
             Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 
@@ -473,7 +473,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             measures->append(measure);
 
-        } else if (dataType == "debit") {
+        } else if (dataType == nameTranslator->nameToInternalId("FLOW_RATE")) {
 
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
@@ -511,7 +511,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             dosages->append(dosage);
 
-        } else if (dataType == "dose") {
+        } else if (dataType == nameTranslator->nameToInternalId("DOSAGE")) {
 
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
@@ -531,8 +531,6 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
             dosage->setApplied(appl);
 
-            //QDateTime end = appl.addSecs(10800);
-            //dosage->setEndTime(end);
             dosage->setEndTime(appl);
 
             QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());

@@ -42,11 +42,8 @@ FlatrequestNameTranslator* FlatrequestNameTranslator::getInstance()
 {
     if(instance == nullptr) {
         instance = new FlatrequestNameTranslator();
-        return instance;
     }
-    else {
-        return instance;
-    }
+    return instance;
 }
 
 QString FlatrequestNameTranslator::nameToInternalId(QString name)

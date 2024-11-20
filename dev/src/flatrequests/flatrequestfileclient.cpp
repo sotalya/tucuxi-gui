@@ -41,7 +41,7 @@ void FlatRequestFileClient::constructFileFromDB()
     QString username;
     QString password;
 
-    // TODO (JRP) : Currently deactivated, to be removed when we can assert that will be never needed
+    // Currently deactivated, can be use if we need a login
 #if 0
     LoginDialog dialog;
     if (dialog.exec() == QDialog::Accepted) {
@@ -50,7 +50,7 @@ void FlatRequestFileClient::constructFileFromDB()
     }
 #endif
 
-    QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime -u " + username + " -p " + password;
+    QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime,vanco,vorico -u " + username + " -p " + password;
     // QString pythonCommand = "python main.py -r -o import.xml -d cefepime -u " + username + " -p " + password;
 
     process.startCommand(pythonCommand);
@@ -76,10 +76,7 @@ void FlatRequestFileClient::queryList(QDateTime from, QDateTime to, bool state)
 
     // If no file is already set then construc a file from a DB request
     if(m_listFileName.isEmpty()) {
-        flatRequestParam->setFrenchTag(false);
         constructFileFromDB();
-    } else {
-        flatRequestParam->setFrenchTag(true);
     }
 
     QFile source(m_listFileName);
@@ -107,29 +104,29 @@ void FlatRequestFileClient::queryRequest(const QString &requestId, const QString
     if (!doc.setContent(&reqFile))
         return;
 
-    QDomElement detailCollectionElement;
+    QDomElement reportElement = doc.documentElement().firstChildElement(flatRequestParam->reportNameXml());
+    QString reportName;
 
-    if(flatRequestParam->getIsFrenchTag()) {
-        detailCollectionElement = doc.documentElement().firstChildElement("Tablix1").firstChildElement(flatRequestParam->detailsListNameXml());
-    } else {
-        detailCollectionElement = doc.documentElement().firstChildElement(flatRequestParam->detailsListNameXml());
+    //Find the correct report for the selected drugId
+    while (!reportElement.isNull()) {
+        reportName = reportElement.attribute(flatRequestParam->fullDataNameXml());
+        if (reportName == drugId) {
+            break;
+        }
+
+        reportElement = reportElement.nextSiblingElement(flatRequestParam->reportNameXml());
     }
-    QDomElement detailElement = detailCollectionElement.firstChildElement(flatRequestParam->detailsNameXml());
 
-    QString reportName = doc.documentElement().attribute(flatRequestParam->fullDataNameXml());
+    QDomElement detailCollectionElement = reportElement.firstChildElement(flatRequestParam->detailsListNameXml());
+
+    QDomElement detailElement = detailCollectionElement.firstChildElement(flatRequestParam->detailsNameXml());
 
     // Construct a filtred xml doc containing only the seleted patient, by using patienId as criteria
     QDomElement filtredRootElement = filtredDoc.createElement(flatRequestParam->reportNameXml());
     filtredRootElement.setAttribute(flatRequestParam->fullDataNameXml(), reportName);
     filtredDoc.appendChild(filtredRootElement);
 
-    QDomElement filtredTabElement;
-    if(flatRequestParam->getIsFrenchTag()) {
-        filtredTabElement = filtredDoc.createElement("Tablix1");
-        filtredRootElement.appendChild(filtredTabElement);
-    } else {
-        filtredTabElement = filtredRootElement;
-    }
+    QDomElement filtredTabElement = filtredRootElement;
 
     QDomElement filtredDetailCollectionElement = filtredDoc.createElement(flatRequestParam->detailsListNameXml());
     filtredTabElement.appendChild(filtredDetailCollectionElement);
@@ -145,7 +142,7 @@ void FlatRequestFileClient::queryRequest(const QString &requestId, const QString
 
     QTextStream informer(stdout);
 
-    // TODO JRP : For debug, to be removed
+    //Print the imported XML
     informer << filtredDoc.toString();
     informer << Qt::endl;
     informer.flush();

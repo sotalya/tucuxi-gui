@@ -53,8 +53,8 @@ private:
 
     FlatRequestParameters* flatRequestParameters;
     FlatrequestNameTranslator* nameTranslator;
-
-    static bool compareDosage(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b);
+    
+    static bool compareDosageAppliedDate(const Tucuxi::Gui::Core::Dosage* a, const Tucuxi::Gui::Core::Dosage* b);
     Tucuxi::Gui::Core::Duration findDuration(const QDomElement &currentElement);
     void createUncastedIntervalValue(Tucuxi::Gui::Core::Dosage* dosage, int interval_sec);
     void createUncastedDosageValue(Tucuxi::Gui::Core::Dosage *dosage, QString field, QString text, QString comment);

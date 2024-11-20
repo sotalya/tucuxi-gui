@@ -67,21 +67,12 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 
         QString substanceID = reportElement.attribute(flatRequestParam->fullDataNameXml());
         Tucuxi::Gui::Core::ActiveSubstance* substance = nullptr;
-        QString measureTagName = "";
 
         Patient* patient;
         QString patientID;
         QString lastPatientID = "None";
 
         SharedPartialRequest request;
-
-        if (substanceID == "vancomycin") {
-            measureTagName = nameTranslator->nameToInternalId("VANCOMICINE_DOSAGE");
-        } else if (substanceID == "cefepime") {
-            measureTagName = nameTranslator->nameToInternalId("CEFEPIME_DOSAGE");
-        } else if (substanceID == "voriconazole") {
-            measureTagName = nameTranslator->nameToInternalId("VORICONAZOLE_DOSAGE");
-        }
 
         // Go through elements to identify each patien and search for a first dosage (for each patient)
         while (!detailElement.isNull()) {
@@ -118,9 +109,8 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
                 QDateTime sampleDate = QDateTime::currentDateTime();
 
                 // Find first concentration element for measure (if any)
-                while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID/* && !sampleFound*/) {
-                    if (detailElementCurrentPatient.attribute(flatRequestParam->dataNameXml()).startsWith(measureTagName) ||
-                        detailElementCurrentPatient.attribute(flatRequestParam->dataNameXml()).startsWith("Dosage Residuel cefepime")) {
+                while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID) {
+                    if (nameTranslator->nameToInternalId(detailElementCurrentPatient.attribute(flatRequestParam->dataNameXml())) == "DRUG_MEASURE") {
                         QString valueString = detailElementCurrentPatient.attribute(flatRequestParam->valueNameXml());
                         valueString.replace(',', '.');
                         concentration = valueString.toDouble();

@@ -25,17 +25,17 @@ FlatrequestNameTranslator* FlatrequestNameTranslator::instance = nullptr;
 
 FlatrequestNameTranslator::FlatrequestNameTranslator()
 {
-    map.insert("SEX", "Sexe");
-    map.insert("BIRTH_DATE", "DDN");
-    map.insert("BODY_WEIGHT", "poids");
-    map.insert("CREATININE_DOSAGE", "Dosage creat");
-    map.insert("VANCOMICINE_DOSAGE","Dosage vanco");
-    map.insert("CEFEPIME_DOSAGE", "Dosage cefepime");
-    map.insert("RESIDUAL_CEFEPIME_DOSAGE", "Dosage Residuel cefepime");
-    map.insert("VORICONAZOLE_DOSAGE", "Tx Vorico");
-    map.insert("FLOW_RATE", "debit");
-    map.insert("DOSAGE", "dose");
-    map.insert("DURATION", "durée");
+    map.insert("Sexe", "SEX");
+    map.insert("DDN", "BIRTH_DATE");
+    map.insert("poids", "BODY_WEIGHT");
+    map.insert("Dosage creat", "CREATININE_MEASURE");
+    map.insert("Dosage vanco", "DRUG_MEASURE");
+    map.insert("Dosage cefepime", "DRUG_MEASURE");
+    map.insert("Dosage Residuel cefepime", "DRUG_MEASURE");
+    map.insert("Tx Vorico", "DRUG_MEASURE");
+    map.insert("debit", "FLOW_RATE");
+    map.insert("dose", "DOSAGE");
+    map.insert("durée", "DURATION");
 }
 
 FlatrequestNameTranslator* FlatrequestNameTranslator::getInstance()

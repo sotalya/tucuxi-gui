@@ -69,7 +69,7 @@ Tucuxi::Gui::Core::Duration FlatInterpretationRequestBuilder::findDuration(const
 
     // Find the first "durée" element, a duration of 0 will be rturned if no duration found
     while(!element.isNull()) {
-        if(element.attribute(flatRequestParameters->dataNameXml()) == nameTranslator->nameToInternalId("DURATION")) {
+        if(nameTranslator->nameToInternalId(element.attribute(flatRequestParameters->dataNameXml())) == "DURATION") {
             QString unit = element.attribute(flatRequestParameters->unitNameXml());
             QString duree = element.attribute(flatRequestParameters->valueNameXml());
 
@@ -389,11 +389,11 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
     while (!detailElement.isNull()) {
         dataType = detailElement.attribute(flatRequestParameters->dataNameXml());
 
-        if (dataType == nameTranslator->nameToInternalId("SEX")) {
+        if (nameTranslator->nameToInternalId(dataType) == "SEX") {
 
             patient->person()->gender(detailElement.attribute(flatRequestParameters->valueNameXml()).toLower() == "masculin" ? Person::Male : Person::Female);
 
-        } else if (dataType == nameTranslator->nameToInternalId("BIRTH_DATE")) {
+        } else if (nameTranslator->nameToInternalId(dataType) == "BIRTH_DATE") {
 
             QString dateString = detailElement.attribute(flatRequestParameters->valueNameXml());
             QDate date;
@@ -406,7 +406,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             patient->person()->birthday(date);
 
-        } else if (dataType == nameTranslator->nameToInternalId("BODY_WEIGHT")) {
+        } else if (nameTranslator->nameToInternalId(dataType) == "BODY_WEIGHT") {
 
             Tucuxi::Gui::Core::PatientVariate* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
             QString covariateId = "bodyweight";
@@ -426,7 +426,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             covariates->append(covariate);
 
-        } else if (dataType == nameTranslator->nameToInternalId("CREATININE_DOSAGE")) {
+        } else if (nameTranslator->nameToInternalId(dataType) == "CREATININE_MEASURE") {
 
             Tucuxi::Gui::Core::PatientVariate* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
             QString covariateId = "creatinine";
@@ -445,8 +445,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             covariate->setType(QMetaType::Double);
 
             covariates->append(covariate);
-        } else if (dataType == nameTranslator->nameToInternalId("VANCOMICINE_DOSAGE") || dataType == nameTranslator->nameToInternalId("CEFEPIME_DOSAGE") || dataType == nameTranslator->nameToInternalId("RESIDUAL_CEFEPIME_DOSAGE") ||
-                   dataType.startsWith(nameTranslator->nameToInternalId("VORICONAZOLE_DOSAGE"))) {
+        } else if (nameTranslator->nameToInternalId(dataType) == "DRUG_MEASURE") {
 
             Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 
@@ -470,7 +469,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             measures->append(measure);
 
-        } else if (dataType == nameTranslator->nameToInternalId("FLOW_RATE")) {
+        } else if (nameTranslator->nameToInternalId(dataType) == "FLOW_RATE") {
 
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
@@ -508,7 +507,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             dosages->append(dosage);
 
-        } else if (dataType == nameTranslator->nameToInternalId("DOSAGE")) {
+        } else if (nameTranslator->nameToInternalId(dataType) == "DOSAGE") {
 
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 

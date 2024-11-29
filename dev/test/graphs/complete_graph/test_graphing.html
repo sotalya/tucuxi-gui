@@ -1,0 +1,91 @@
+<html>
+<head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <script type="text/javascript" src="../../../src/guiutils/qml/controls/graphing.js"></script>
+      <script type="text/javascript" src="graphdata.js"></script>
+      <script type="text/javascript" src="test_graphing.js"></script>
+</head>
+<body>
+
+    <div id="alltests"></div>
+    <script>
+
+
+    class Mod {};
+    module = new Mod();
+
+    img_covariates_disabled_mini = new Image();
+    img_covariates_disabled_mini.src = "file:///home/ythoma/docs/2_Projets/tucuxi/tucuxi-gui/dev/src/guiutils/qml/controls/covariates_disabled_mini.png";
+    img_covariates_disabled_mini.onload = function() {
+    img_dosages_disabled_mini = new Image();
+    img_dosages_disabled_mini.src = "file:///home/ythoma/docs/2_Projets/tucuxi/tucuxi-gui/dev/src/guiutils/qml/controls/dosages_disabled_mini.png";
+    img_dosages_disabled_mini.onload = function() {
+            
+    function runTest(testFunction, testnb, scale, width, height)
+    {
+        testsdiv = document.getElementById("alltests");
+        test = document.createElement("div");
+        test.setAttribute("style", "border-style: solid;border-width:1px;margin:3px");
+        message = document.createElement("div");
+        test.appendChild(message);
+        can = document.createElement("canvas");
+        can.setAttribute("id", "myCanvas" + testnb);
+        can.setAttribute("width", width);
+        can.setAttribute("height", height);
+        can.setAttribute("style", "height:400px; width:600px;border-style: solid;border-width:1px;margin:3px;");
+        test.appendChild(can);
+
+        testsdiv.appendChild(test);
+        
+
+        let {obj, expected} = testFunction();
+        obj.scale = scale;
+
+        var canvas = document.getElementById("myCanvas" + testnb);
+
+        obj.updateChartDimensions(canvas);
+        obj.canvas = canvas;
+        obj.annotationsCanvas = canvas;
+        obj.clockCanvas = canvas;
+
+        //document.getElementById("expectedMessage" + testnb).innerHTML = expected;
+        message.innerHTML = expected + "<br/>Scale : " + scale + ", width : " + width + ", height: " + height;
+    
+        obj.img_covariates_disabled_mini = img_covariates_disabled_mini;
+        obj.img_dosages_disabled_mini = img_dosages_disabled_mini;
+        
+        drawGraph(obj);
+        drawAnnotations(obj);
+
+    }
+
+    allTests = [test1,
+                test1,
+                test1,
+                test2,
+                testempty,
+                testtarget0,
+                testtarget1,
+                testtarget2,
+                testtarget3,
+                testtarget5,
+                testtarget6,
+                testtarget7,
+                testtarget8,
+                testtarget9,
+                testtarget10,
+                testtarget11,
+                testtarget12];
+    
+    runTest(allTests[0], 0, 1, 600, 400);
+    runTest(allTests[1], 1, 2, 1200, 800);
+    runTest(allTests[2], 2, 4, 2400, 1600);
+    for(var i = 3; i < allTests.length; i++) {
+        runTest(allTests[i], i, 2, 1200, 800);
+    }
+
+}
+}
+    </script>
+</body>
+</html>

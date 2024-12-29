@@ -17,6 +17,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_definitions(-DUNICODE)
 add_definitions(-D_UNICODE)
 
+# In core.cpp, to set the folder for ephemeraldb. Could be modified in the future
+add_definitions(-DTUCU_CMAKE_COMPILE)
+
 ### Configuration
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)

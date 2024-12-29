@@ -405,7 +405,11 @@ void Core::initPaths()
 #ifdef Q_OS_ANDROID
     _paths[ApplicationData] = "assets:";
 #endif
+#ifdef TUCU_CMAKE_COMPILE
+    _paths[Databases]    = _paths[ApplicationData];
+#else // TUCU_CMAKE_COMPILE
     _paths[Databases]    = _paths[ApplicationData] + "/dbs";
+#endif // TUCU_CMAKE_COMPILE
     _paths[Drugs]        = _paths[ApplicationData] + "/drugs";
     _paths[Drugs2]       = _paths[ApplicationData] + "/drugfiles";
     _paths[Plugins]      = _paths[ApplicationData] + "/plugins";

@@ -217,6 +217,7 @@ class GraphMeasure {
     constructor(moment, value, multiplier, unit) {
         this.moment = moment;
         this.concentration = new GraphIdentifiableAmount(value, multiplier, unit);
+        this.enable = true;
     }
 }
 

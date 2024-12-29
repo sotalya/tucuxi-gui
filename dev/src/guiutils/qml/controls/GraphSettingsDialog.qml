@@ -185,13 +185,22 @@ DialogBase {
                     ColumnLayout {
                         width: parent.width
                         height: parent.height
+
                         CheckBox {
                             id: popPCB
                             text: populationText
                             onCheckedChanged: { graphInformationSelection.setAvailable(0, this.checked) }
 
-                            TooltipArea {
-                                text : ToolTips.chart.popVisible
+                            ToolTip.visible: (show_tooltip) ? popPCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.popVisible
+
+                            MouseArea {
+                                id: popPCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
 
@@ -199,8 +208,17 @@ DialogBase {
                             id: popPerCB
                             text: popPercText
                             onClicked: { graphInformationSelection.setAvailable(1, this.checked) }
-                            TooltipArea {
-                                text : ToolTips.chart.popPercVisible
+
+                            ToolTip.visible: (show_tooltip) ? popPerCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.popPercVisible
+
+                            MouseArea {
+                                id: popPerCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
 
@@ -208,24 +226,51 @@ DialogBase {
                             id: aprPCB
                             text: aprioriText
                             onClicked: { graphInformationSelection.setAvailable(2, this.checked) }
-                            TooltipArea {
-                                text : ToolTips.chart.aprioriVisible
+
+                            ToolTip.visible: (show_tooltip) ? aprPCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.aprioriVisible
+
+                            MouseArea {
+                                id: aprPCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                         CheckBox {
                             id: aprPerCB
                             text: aprPercText
                             onClicked: { graphInformationSelection.setAvailable(3, this.checked) }
-                            TooltipArea {
-                                text : ToolTips.chart.aprioriPercVisible
+
+                            ToolTip.visible: (show_tooltip) ? aprPerCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.aprioriPercVisible
+
+                            MouseArea {
+                                id: aprPerCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                         CheckBox {
                             id: apoPCB
                             text: aposterioriText
                             onClicked: { graphInformationSelection.setAvailable(4, this.checked) }
-                            TooltipArea {
-                                text : ToolTips.chart.apostVisible
+
+                            ToolTip.visible: (show_tooltip) ? apoPCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.apostVisible
+
+                            MouseArea {
+                                id: apoPCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                     }
@@ -236,40 +281,85 @@ DialogBase {
                             id: apoPerCB
                             text: apoPercText
                             onClicked: { graphInformationSelection.setAvailable(5, this.checked) }
-                            TooltipArea {
-                                text : ToolTips.chart.apostPercVisible
+
+                            ToolTip.visible: (show_tooltip) ? apoPerCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.apostPercVisible
+
+                            MouseArea {
+                                id: apoPerCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                         CheckBox {
                             id: measureCB
                             text: measureText
                             onClicked: { graphInformationSelection.setAvailable(6, this.checked) }
-                            TooltipArea {
-                                text : ToolTips.chart.apostVisible
+
+                            ToolTip.visible: (show_tooltip) ? measureCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.measuresVisible
+
+                            MouseArea {
+                                id: measureCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                         CheckBox {
                             id: targetCB
                             text: targetText
                             onClicked: { graphInformationSelection.setAvailable(7, this.checked) }
-                            TooltipArea {
-                                text : ToolTips.chart.apostVisible
+
+                            ToolTip.visible: (show_tooltip) ? targetCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.targetsVisible
+
+                            MouseArea {
+                                id: targetCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                         CheckBox {
                             id: revCB
                             text: reverseText
                             onClicked: { graphInformationSelection.setAvailable(8, this.checked) }
-                            TooltipArea {
-                                text : ToolTips.chart.revVisible
+
+                            ToolTip.visible: (show_tooltip) ? revCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.revVisible
+
+                            MouseArea {
+                                id: revCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                         CheckBox {
                             id: adjCB
                             text: adjustmentText
                             onClicked: { graphInformationSelection.setAvailable(9, this.checked) }
-                            TooltipArea {
-                                text : ToolTips.chart.adjVisible
+
+                            ToolTip.visible: (show_tooltip) ? adjCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.adjVisible
+
+                            MouseArea {
+                                id: adjCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                     }
@@ -329,24 +419,51 @@ DialogBase {
                             id: currentTimeCB
                             text: currentTimeText
                             onClicked: { graphInformationSelection.displayCurrentTime = this.checked; }
-                            TooltipArea {
-                                text : ToolTips.chart.displayCurrentTime
+
+                            ToolTip.visible: (show_tooltip) ? currentTimeCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.displayCurrentTime
+
+                            MouseArea {
+                                id: currentTimeCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                         CheckBox {
                             id: covariateChangeCB
                             text: covariateChangeText
                             onClicked: { graphInformationSelection.displayCovariateChange = this.checked; }
-                            TooltipArea {
-                                text : ToolTips.chart.displayCovariateChange
+
+                            ToolTip.visible: (show_tooltip) ? covariateChangeCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.displayCovariateChange
+
+                            MouseArea {
+                                id: covariateChangeCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                         CheckBox {
                             id: liveAnnotationsCB
                             text: liveAnnotationsText
                             onClicked: { graphInformationSelection.displayLiveAnnotations = this.checked; }
-                            TooltipArea {
-                                text : ToolTips.chart.displayLiveAnnotations
+
+                            ToolTip.visible: (show_tooltip) ? liveAnnotationsCBMousearea.containsMouse : false
+                            ToolTip.text: ToolTips.chart.displayLiveAnnotations
+
+                            MouseArea {
+                                id: liveAnnotationsCBMousearea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                width: parent.width - 30
+                                hoverEnabled: true
                             }
                         }
                     }

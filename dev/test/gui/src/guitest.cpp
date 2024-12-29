@@ -1,4 +1,24 @@
-//@@license@@
+/* 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
+ * and to propose dosage adaptations.
+ * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU Affero General Public License as 
+ * published by the Free Software Foundation, either version 3 of the 
+ * License, or any later version. 
+ * 
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * GNU Affero General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License 
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 
 #include <QQuickWindow>
 
@@ -879,6 +899,202 @@ void SpixGTest::editAdjustments(AdjustmentsData adjustmentsData1, int editIndex)
 
 }
 
+bool SpixGTest::addGlobalSentencePalette(QString sentence, QString shortcutModifier, QString shortcutKey, QString section)
+{
+    auto sentenceShortcutDialogItem = srv->m_mainWindowController->getRootObject()->findChild<QObject*>(section + "SentenceShortcutDialog");
+
+    srv->synchronize();
+    std::string PaletteButton = "mainWindow/flowView/" + section.toStdString() + "PaletteButton";
+    srv->mouseClick(spix::ItemPath(PaletteButton));
+    srv->waitPeriod(waitTime1);
+
+    srv->synchronize();
+    std::string addSentenceButton = section.toStdString() + "Palette/addGlobalListButton";
+    srv->mouseClick(spix::ItemPath(addSentenceButton));
+    srv->waitPeriod(waitTime1);
+
+    // Insert sentence
+    srv->synchronize();
+
+    QMetaObject::invokeMethod(sentenceShortcutDialogItem,
+                              "setText",
+                              Q_ARG(QVariant, QVariant::fromValue(sentence)));
+    srv->waitPeriod(waitTime1);
+
+    // Select shortcut modifiers
+    if(shortcutModifier.contains("CTRL", Qt::CaseInsensitive)){
+        srv->synchronize();
+        QMetaObject::invokeMethod(sentenceShortcutDialogItem,
+                                  "setModifier",
+                                  Q_ARG(QVariant, QVariant("CTRL")));
+        srv->waitPeriod(waitTime1);
+    }
+    if(shortcutModifier.contains("SHIFT", Qt::CaseInsensitive)){
+        srv->synchronize();
+        QMetaObject::invokeMethod(sentenceShortcutDialogItem,
+                                  "setModifier",
+                                  Q_ARG(QVariant, QVariant("SHIFT")));
+        srv->waitPeriod(waitTime1);
+    }
+    if(shortcutModifier.contains("ALT", Qt::CaseInsensitive)){
+        srv->synchronize();
+        QMetaObject::invokeMethod(sentenceShortcutDialogItem,
+                                  "setModifier",
+                                  Q_ARG(QVariant, QVariant("ALT")));
+        srv->waitPeriod(waitTime1);
+    }
+
+    // Input shortcut key
+    srv->synchronize();
+    // Insert sentence
+    QMetaObject::invokeMethod(sentenceShortcutDialogItem,
+                              "setKey",
+                              Q_ARG(QVariant, QVariant::fromValue(shortcutKey)));
+    srv->waitPeriod(waitTime1);
+
+    // Get save button status
+    srv->synchronize();
+    QVariant saveBtnStatus;
+    QMetaObject::invokeMethod(sentenceShortcutDialogItem,
+                              "getSaveButtonStatus",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, saveBtnStatus));
+    srv->waitPeriod(waitTime1);
+
+    std::string closeButton = section.toStdString() + "Palette/validationCloseButton";
+    if(saveBtnStatus.toBool()){
+        srv->synchronize();
+        srv->mouseClick(spix::ItemPath(section.toStdString() + "SentenceShortcutDialog/sentencesSaveButton"));
+        srv->waitPeriod(waitTime1);
+        srv->synchronize();
+        srv->mouseClick(spix::ItemPath(closeButton));
+        srv->waitPeriod(waitTime1);
+        return true;
+    }
+    else{
+        srv->synchronize();
+        srv->mouseClick(spix::ItemPath(section.toStdString() + "SentenceShortcutDialog/sentencesCancelButton"));
+        srv->waitPeriod(waitTime1);
+        srv->synchronize();
+        srv->mouseClick(spix::ItemPath(closeButton));
+        srv->waitPeriod(waitTime1);
+        return false;
+    }
+}
+
+bool SpixGTest::addSpecificSentencePalette(QString sentence, QString shortcutModifier, QString shortcutKey, QString section)
+{
+    srv->synchronize();
+    std::string PaletteButton = "mainWindow/flowView/" + section.toStdString() + "PaletteButton";
+    srv->mouseClick(spix::ItemPath(PaletteButton));
+    srv->waitPeriod(waitTime1);
+
+    srv->synchronize();
+    std::string addSentenceButton = section.toStdString() + "Palette/addSpecificListButton";
+    srv->mouseClick(spix::ItemPath(addSentenceButton));
+    srv->waitPeriod(waitTime1);
+
+    srv->synchronize();
+    std::string sentenceInput = section.toStdString() + "Palette/sentenceShortcutDialog/sentenceInput";
+        // Insert sentence
+    for(auto const &_char : sentence){
+        srv->enterKey(spix::ItemPath(sentenceInput), QKeySequence(_char)[0], Qt::NoModifier);
+        srv->waitPeriod(waitTime1);
+    }
+    srv->waitPeriod(waitTime1);
+
+    // Select shortcut modifiers
+    if(shortcutModifier.contains("CTRL", Qt::CaseInsensitive)){
+        srv->synchronize();
+        srv->mouseClick(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/controlCheckBox"));
+        srv->waitPeriod(waitTime1);
+    }
+    if(shortcutModifier.contains("SHIFT", Qt::CaseInsensitive)){
+        srv->synchronize();
+        srv->mouseClick(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/shiftCheckBox"));
+        srv->waitPeriod(waitTime1);
+    }
+    if(shortcutModifier.contains("ALT", Qt::CaseInsensitive)){
+        srv->synchronize();
+        srv->mouseClick(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/altCheckBox"));
+        srv->waitPeriod(waitTime1);
+    }
+
+    // Input shortcut key
+    srv->synchronize();
+    srv->enterKey(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/keyShortcut"), QKeySequence(shortcutKey)[0], Qt::NoModifier);
+    srv->waitPeriod(waitTime1);
+
+    // Get save button status
+    auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>("sentenceShortcutDialog");
+    QVariant saveBtnStatus;
+    QMetaObject::invokeMethod(item,
+                              "getSaveButtonStatus",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(QVariant, saveBtnStatus));
+
+
+    if(saveBtnStatus.toBool()){
+        srv->mouseClick(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/sentencesSaveButton"));
+        srv->synchronize();
+        std::string closeButton = section.toStdString() + "Palette/validationCloseButton";
+        srv->mouseClick(spix::ItemPath(closeButton));
+        srv->waitPeriod(waitTime1);
+        return true;
+    }
+    else{
+        srv->mouseClick(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/sentencesCancelButton"));
+        srv->synchronize();
+        std::string closeButton = section.toStdString() + "Palette/validationCloseButton";
+        srv->mouseClick(spix::ItemPath(closeButton));
+        srv->waitPeriod(waitTime1);
+        return false;
+    }
+}
+
+void SpixGTest::removeAllSentences(){
+    static const std::vector<QString> sectionObjectsNames = {
+        "expectednessPalette",
+        "suitabilityPalette",
+        "predictionPalette",
+        "remonitoringPalette",
+        "warningPalette"
+    };
+
+    for(auto const &_sectionObjectName : sectionObjectsNames){
+        srv->synchronize();
+        srv->mouseClick(spix::ItemPath("mainWindow/flowView/" + _sectionObjectName.toStdString()));
+        srv->waitPeriod(waitTime1);
+        // Get global list element count
+        auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>(_sectionObjectName);
+        QVariant globalSentenceCount;
+        QMetaObject::invokeMethod(item,
+                                  "getGlobalSentencesCount",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(QVariant, globalSentenceCount));
+        QVariant specificSentenceCount;
+        QMetaObject::invokeMethod(item,
+                                  "getSpecificSentencesCount",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(QVariant, specificSentenceCount));
+
+        // Remove global sentences
+        for(int i=0; i<globalSentenceCount.toInt(); i++){
+            srv->synchronize();
+            std::string removeSentenceButton = _sectionObjectName.toStdString() + "/globalDeleteButton_0";
+            srv->mouseClick(spix::ItemPath(removeSentenceButton));
+            srv->waitPeriod(waitTime1);
+        }
+
+        // Remove specific sentences
+        for(int i=0; i<specificSentenceCount.toInt(); i++){
+            srv->synchronize();
+            std::string removeSentenceButton = _sectionObjectName.toStdString() + "/specificDeleteButton_0";
+            srv->mouseClick(spix::ItemPath(removeSentenceButton));
+            srv->waitPeriod(waitTime1);
+        }
+    }
+}
 
 void SpixGTest::fillInValidationData(ValidationData validationData1)
 {

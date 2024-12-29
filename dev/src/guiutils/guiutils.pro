@@ -12,7 +12,7 @@ CONFIG(debug) {
 
 QT += gui printsupport quick quickwidgets printsupport svg network webchannel websockets
 
-config_externalreport {
+!config_internalreport {
     #Install the report files
     unix {
         reportsource = $$PWD/reports

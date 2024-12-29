@@ -1,4 +1,24 @@
-//@@license@@
+/* 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
+ * and to propose dosage adaptations.
+ * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU Affero General Public License as 
+ * published by the Free Software Foundation, either version 3 of the 
+ * License, or any later version. 
+ * 
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * GNU Affero General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License 
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 
 #include "core/utils/ezutils.h"
 
@@ -45,7 +65,7 @@ QString Descriptor::toString()
 }
 
 //Check only the non-empty fields
-bool Descriptor::operator ==(const Descriptor &other)
+bool Descriptor::operator ==(const Descriptor &other) const
 {
     bool allEmpty = id.isEmpty() && name.isEmpty() && description.isEmpty();
     bool allOtherEmpty = other.id.isEmpty() && other.name.isEmpty() && other.description.isEmpty();
@@ -71,7 +91,7 @@ QString ModelDescriptor::toString()
     return QString("%1, Known Model Id: %2, Intake : %3").arg(Descriptor::toString(), modelId, intake);
 }
 
-bool ModelDescriptor::operator ==(const ModelDescriptor &other)
+bool ModelDescriptor::operator ==(const ModelDescriptor &other) const
 {
     bool allEmpty = id.isEmpty() && modelId.isEmpty() && name.isEmpty() && description.isEmpty() && intake.isEmpty();
     bool allOtherEmpty = other.id.isEmpty() && other.modelId.isEmpty() && other.name.isEmpty() && other.description.isEmpty() && intake.isEmpty();

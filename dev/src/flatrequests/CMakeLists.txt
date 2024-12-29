@@ -4,13 +4,19 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(FLATREQUESTS_HEADER_FILES
         flatinterpretationrequestbuilder.h
         flatrequestfileclient.h
+        flatrequestnametranslator.h
+        flatrequestparameters.h
         flatrequestsclientprocessing.h
+        LoginDialog.h
 )
 
 set(FLATREQUESTS_SOURCE_FILES
         flatinterpretationrequestbuilder.cpp
         flatrequestfileclient.cpp
+        flatrequestnametranslator.cpp
+        flatrequestparameters.cpp
         flatrequestsclientprocessing.cpp
+        LoginDialog.cpp
 )
 
 add_library(flatrequests

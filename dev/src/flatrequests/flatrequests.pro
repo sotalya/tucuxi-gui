@@ -11,8 +11,11 @@ QT -= gui
 INCLUDEPATH += ..
 
 HEADERS	+= \
+    LoginDialog.h \
     flatinterpretationrequestbuilder.h \
     flatrequestfileclient.h \
+    flatrequestnametranslator.h \
+    flatrequestparameters.h \
     flatrequestsclientprocessing.h
 
 CODECFORTR      += UTF-8
@@ -22,8 +25,11 @@ CODECFORTR      += UTF-8
 include(../translation.pri)
 
 SOURCES += \
+    LoginDialog.cpp \
     flatinterpretationrequestbuilder.cpp \
     flatrequestfileclient.cpp \
+    flatrequestnametranslator.cpp \
+    flatrequestparameters.cpp \
     flatrequestsclientprocessing.cpp
 
 #Libraries that must be linked into the project (LIBS) and that the target depends on (PRE_TARGETDEPS)

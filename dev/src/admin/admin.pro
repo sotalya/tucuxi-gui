@@ -5,7 +5,7 @@ TEMPLATE    = lib
 DESTDIR     = $${OUT_PWD}/../$${DIST_DIR}
 
 include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
-include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
+#include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
 
 # To solve issues with namespaces
 # QMAKE_CXXFLAGS += -fpermissive

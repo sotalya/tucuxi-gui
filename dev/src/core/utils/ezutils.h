@@ -1,4 +1,24 @@
-//@@license@@
+/* 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
+ * and to propose dosage adaptations.
+ * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU Affero General Public License as 
+ * published by the Free Software Foundation, either version 3 of the 
+ * License, or any later version. 
+ * 
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * GNU Affero General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License 
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 
 #ifndef UTILS_H
 #define UTILS_H
@@ -47,7 +67,7 @@ public:
      * Only the non-empty fields are compared.
      * If all the fields are empty in one but not on both, returns false.
      */
-    bool operator== (const Descriptor& other);
+    bool operator== (const Descriptor& other) const;
 };
 
 /** Descriptor for a model.
@@ -71,7 +91,7 @@ public:
     QString toString();
 
     //! Same as Descriptor.
-    bool operator== (const ModelDescriptor& other);
+    bool operator== (const ModelDescriptor& other) const;
 };
 
 // YTA: Hack

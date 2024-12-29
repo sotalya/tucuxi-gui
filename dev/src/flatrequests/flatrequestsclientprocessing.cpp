@@ -1,26 +1,43 @@
-//@@license@@
+/* 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
+ * and to propose dosage adaptations.
+ * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU Affero General Public License as 
+ * published by the Free Software Foundation, either version 3 of the 
+ * License, or any later version. 
+ * 
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * GNU Affero General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License 
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+
+#include <qmessagebox.h>
 
 #include "flatrequestsclientprocessing.h"
 #include "flatinterpretationrequestbuilder.h"
-#include "core/dal/drugresponseanalysis.h"
+#include "flatrequestparameters.h"
+#include "flatrequestnametranslator.h"
 #include "core/core.h"
 #include "core/corefactory.h"
 #include "admin/src/dal/partialrequest.h"
 #include "admin/src/adminfactory.h"
-#include "rest/builders/drugidtranslator.h"
 #include "apputils/src/apputilsrepository.h"
 #include "admin/src/stdadminrepository.h"
-#include "rest/model/replylistxmlmessage.h"
-#include "rest/builders/replylistmessagebuilder.h"
 
-#include <qmessagebox.h>
 
-#include "cli/rlutil.h"
 #include "core/dal/drugtreatment.h"
 
 using namespace Tucuxi::Gui::Core;
 using namespace Tucuxi::Gui::Admin;
-using namespace Tucuxi::Gui::Rest;
 using namespace Tucuxi::Gui::FlatRequest;
 
 
@@ -33,102 +50,97 @@ FlatRequestsClientProcessing::FlatRequestsClientProcessing(QObject *parent) :
 int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &controlId)
 {
     QDomDocument doc;
+    QDomElement reportElement;
+    QList<SharedPartialRequest> requests;
+    FlatRequestParameters* flatRequestParam = FlatRequestParameters::getInstance();
+    FlatrequestNameTranslator* nameTranslator = FlatrequestNameTranslator::getInstance();
 
     if (!doc.setContent(xmlList))
         return 0;
 
-    QDomElement detailCollectionElement = doc.documentElement().firstChildElement("Tablix1").firstChildElement("Détails_Collection");
-    QDomElement detailElement = detailCollectionElement.firstChildElement("Détails");
+    reportElement = doc.documentElement().firstChildElement(flatRequestParam->reportNameXml());
 
-    QString substanceStr = doc.documentElement().attribute("Name");
-    QString substanceID = "";
-    QString measureTagName = "";
+    // XML file can have more than one report, one report is for one specific drug
+    while(!reportElement.isNull()) {
+        QDomElement detailCollectionElement = reportElement.firstChildElement(flatRequestParam->detailsListNameXml());
+        QDomElement detailElement = detailCollectionElement.firstChildElement(flatRequestParam->detailsNameXml());
 
-    // TODO (JRP) : use a dictionay (cf INI files)
-    if (substanceStr == "vanco fulldata") {
-        substanceID = "vancomycin";
-        measureTagName = "Dosage vanco";
-    } else if (substanceStr == "cefepime fulldata") {
-        substanceID = "cefepime";
-        measureTagName = "Dosage cefepime"; //"Dosage Residuel cefepime";
-    } else if (substanceStr == "voriconazole fulldata") {
-        substanceID = "voriconazole";
-        measureTagName = "Tx Vorico";
-    }
+        QString substanceID = reportElement.attribute(flatRequestParam->fullDataNameXml());
+        Tucuxi::Gui::Core::ActiveSubstance* substance = nullptr;
 
-    QList<SharedPartialRequest> requests;
-    SharedPartialRequest request;
-    Patient* patient;
-    Tucuxi::Gui::Core::ActiveSubstance* substance = nullptr;
-    QString patientID;
-    QString lastPatientID = "None";
+        Patient* patient;
+        QString patientID;
+        QString lastPatientID = "None";
 
-    while (!detailElement.isNull()) {
-        patientID = detailElement.attribute("encounterid");
+        SharedPartialRequest request;
 
-        // Verify if patient already have been parsed. Also imply that patient details are grouped by encouderid in the XML.
-        if (patientID != lastPatientID) {
-            lastPatientID = patientID;
+        // Go through elements to identify each patien and search for a first dosage (for each patient)
+        while (!detailElement.isNull()) {
+            patientID = detailElement.attribute(flatRequestParam->encounteridNameXml());
 
-            request = AdminFactory::createEntity<PartialRequest>(ABSTRACTREPO);
-            request->requestId(patientID);
+            // Verify if patient already have been parsed. Also imply that patient details are grouped by encouderid in the XML.
+            if (patientID != lastPatientID) {
+                lastPatientID = patientID;
 
-            patient = static_cast<Patient*>(request->patient());
-            patient->externalId(patientID);
-            patient->person()->name(patient->externalId());
+                request = AdminFactory::createEntity<PartialRequest>(ABSTRACTREPO);
+                request->requestId(patientID);
 
-            substance = nullptr;
-            APPUTILSREPO->getActiveSubstanceOfId(substanceID, substance);
+                patient = static_cast<Patient*>(request->patient());
+                patient->externalId(patientID);
+                patient->person()->name(patient->externalId());
 
-            //If no substance found, certainly mean that the drug modes is missing
-            if(substance == nullptr) {
-                QMessageBox::warning(nullptr, "Error while loading file", "The active substance (" + substanceID + ") cannot be found, drug model is certainly missing");
-                return 0;
-            }
+                substance = nullptr;
+                APPUTILSREPO->getActiveSubstanceOfId(substanceID, substance);
 
-            request->drug(substance);
-
-            // Init measure default, useful if no measure found
-            QDomElement detailElementCurrentPatient = detailElement;
-            QString currentPatientID = patientID;
-            QString sampleID = "nosample";
-            double concentration = 0.0;
-            QString unit = "µmol/l";
-            // bool sampleFound = false;
-            QDateTime sampleDate = QDateTime::currentDateTime();
-
-            // Find first concentration element for measure (if any)
-            while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID/* && !sampleFound*/) {
-                if (detailElementCurrentPatient.attribute("donnees").startsWith(measureTagName) ||
-                    detailElementCurrentPatient.attribute("donnees").startsWith("Dosage Residuel cefepime")) {
-                    QString valueString = detailElementCurrentPatient.attribute("valeur");
-                    valueString.replace(',', '.');
-                    concentration = valueString.toDouble();
-                    unit = detailElementCurrentPatient.attribute("unite", "mg/l");
-                    unit = unit.toLower();
-                    sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute("horaire"), Qt::ISODate);
-                    sampleID = currentPatientID;
-                    // sampleFound = true;
+                //If no substance found, certainly mean that the drug modes is missing
+                if(substance == nullptr) {
+                    QMessageBox::warning(nullptr, "Error while loading file", "The active substance (" + substanceID + ") cannot be found, drug model is certainly missing");
+                    return 0;
                 }
 
-                detailElementCurrentPatient = detailElementCurrentPatient.nextSiblingElement("Détails");
-                if (!detailElementCurrentPatient.isNull())
-                    currentPatientID = detailElementCurrentPatient.attribute("encounterid");
+                request->drug(substance);
+
+                // Init measure default, useful if no measure found
+                QDomElement detailElementCurrentPatient = detailElement;
+                QString currentPatientID = patientID;
+                QString sampleID = "nosample";
+                double concentration = 0.0;
+                QString unit = "µmol/l";
+                QDateTime sampleDate = QDateTime::currentDateTime();
+
+                // Find first concentration element for measure (if any)
+                while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID) {
+                    if (nameTranslator->nameToInternalId(detailElementCurrentPatient.attribute(flatRequestParam->dataNameXml())) == "DRUG_MEASURE") {
+                        QString valueString = detailElementCurrentPatient.attribute(flatRequestParam->valueNameXml());
+                        valueString.replace(',', '.');
+                        concentration = valueString.toDouble();
+                        unit = detailElementCurrentPatient.attribute(flatRequestParam->unitNameXml(), "mg/l");
+                        unit = unit.toLower();
+                        sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute(flatRequestParam->timeNameXml()), Qt::ISODate);
+                        sampleID = currentPatientID;
+                    }
+
+                    detailElementCurrentPatient = detailElementCurrentPatient.nextSiblingElement(flatRequestParam->detailsNameXml());
+                    if (!detailElementCurrentPatient.isNull())
+                        currentPatientID = detailElementCurrentPatient.attribute(flatRequestParam->encounteridNameXml());
+                }
+
+                auto measure = static_cast<Measure*>(request->sample());
+                measure->sampleID(sampleID);
+                measure->setMoment(sampleDate);
+                measure->arrivalDate(sampleDate);
+                measure->setConcentration(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure));
+                measure->getConcentration()->setValue(concentration);
+                measure->getConcentration()->setUnit(Unit(unit));
+
+                requests.append(request);
+                ADMINREPO->setPartialRequest(request);
             }
 
-            Measure* measure = static_cast<Measure*>(request->sample());
-            measure->sampleID(sampleID);
-            measure->setMoment(sampleDate);
-            measure->arrivalDate(sampleDate);
-            measure->setConcentration(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure));
-            measure->getConcentration()->setValue(concentration);
-            measure->getConcentration()->setUnit(Unit(unit));
-
-            requests.append(request);
-            ADMINREPO->setPartialRequest(request);
+            detailElement = detailElement.nextSiblingElement(flatRequestParam->detailsNameXml());
         }
 
-        detailElement = detailElement.nextSiblingElement("Détails");
+        reportElement = reportElement.nextSiblingElement(flatRequestParam->reportNameXml());
     }
 
     emit requestListReady(requests);

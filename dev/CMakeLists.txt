@@ -37,8 +37,9 @@ add_definitions(-DNOLICENSE=${NOLICENSE})
 add_definitions(-DNOSTARTUPSCREEN=${NOSTARTUPSCREEN})
 
 ### Qt set configs and find components
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Core5Compat Xml Network Svg Qml Core5Compat Widgets LinguistTools Gui PrintSupport Quick QuickWidgets PrintSupport WebChannel WebSockets WebEngineCore)
 
+if (config_guitest)
+    find_package(Qt6 6.5 REQUIRED COMPONENTS Core Core5Compat Xml Network Svg Qml Core5Compat Widgets LinguistTools Gui PrintSupport Quick QuickWidgets PrintSupport Test WebChannel WebSockets WebEngineCore)
 set(QT_COMPONENTS Qt::Core
                   Qt::Core5Compat
                   Qt::Network
@@ -51,11 +52,30 @@ set(QT_COMPONENTS Qt::Core
                   Qt::Quick
                   Qt::QuickWidgets
                   Qt::PrintSupport
+                  Qt::Test
                   Qt::WebChannel
                   Qt::WebSockets
                   Qt::WebEngineCore
 )
-
+else()
+    find_package(Qt6 6.5 REQUIRED COMPONENTS Core Core5Compat Xml Network Svg Qml Core5Compat Widgets LinguistTools Gui PrintSupport Quick QuickWidgets PrintSupport WebChannel WebSockets WebEngineCore)
+    set(QT_COMPONENTS Qt::Core
+                      Qt::Core5Compat
+                      Qt::Network
+                      Qt::Qml
+                      Qt::Svg
+                      Qt::Widgets
+                      Qt::Xml
+                      Qt::Gui
+                      Qt::PrintSupport
+                      Qt::Quick
+                      Qt::QuickWidgets
+                      Qt::PrintSupport
+                      Qt::WebChannel
+                      Qt::WebSockets
+                      Qt::WebEngineCore
+    )
+endif()
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -147,5 +167,6 @@ add_subdirectory(src/)
 ### Tests
 if(config_guitest)
     ## TODO Add test libraries
-    add_subdirectory(tests/)
+    enable_testing(true)
+    add_subdirectory(test/gui)
 endif(config_guitest)

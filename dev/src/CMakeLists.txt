@@ -108,19 +108,56 @@ if(WIN32)
     set_target_properties(tucuxi PROPERTIES WIN32_EXECUTABLE true)
 endif()
 
-target_link_libraries(tucuxi
-    PRIVATE
-        admin
-        apputils
-        core
-        databases
-        flatrequests
-        guiutils
-        processingtucucore
-        rest
-        ${QT_COMPONENTS}
-)
 
+if (config_guitest)
+    if (WIN32)
+        target_link_libraries(tucuxi
+        PRIVATE
+            admin
+            apputils
+            core
+            databases
+            flatrequests
+            guiutils
+            processingtucucore
+            rest
+            guitest
+            gtest
+            "C:\Program Files\Spix\lib\Spix.lib"
+            ${QT_COMPONENTS}
+        )
+    else()
+        target_link_libraries(tucuxi
+            PRIVATE
+                admin
+                apputils
+                core
+                databases
+                flatrequests
+                guiutils
+                processingtucucore
+                rest
+                guitest
+                gtest
+                /usr/local/lib/libSpix.a
+                ${QT_COMPONENTS}
+            )
+
+    endif()
+else()
+    target_link_libraries(tucuxi
+        PRIVATE
+            admin
+            apputils
+            core
+            databases
+            flatrequests
+            guiutils
+            processingtucucore
+            rest
+            ${QT_COMPONENTS}
+    )
+endif()
 target_include_directories(tucuxi
     PRIVATE
         ${ADMIN_INCLUDES}

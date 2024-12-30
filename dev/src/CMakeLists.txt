@@ -113,7 +113,6 @@ target_link_libraries(tucuxi
         admin
         apputils
         core
-        databases
         flatrequests
         guiutils
         processingtucucore

@@ -206,6 +206,7 @@ qt_add_translations(core TS_FILES ${translation_files})
 
 target_link_libraries(core
                 PRIVATE
+                    xerces
                     ${QT_COMPONENTS}
 )
 

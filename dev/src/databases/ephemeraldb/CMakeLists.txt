@@ -34,10 +34,12 @@ qt_add_translations(ephemeraldb TS_FILES ${translation_files})
 
 target_link_libraries(ephemeraldb
                 PRIVATE
-                    xerces
+                    #xerces
                     apputils
                     admin
                     core
+                    tucucore
+                    tucucommon
                     ${QT_COMPONENTS}
 )
 

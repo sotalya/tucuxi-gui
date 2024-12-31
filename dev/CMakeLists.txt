@@ -39,7 +39,7 @@ add_definitions(-DNOSTARTUPSCREEN=${NOSTARTUPSCREEN})
 ### Qt set configs and find components
 
 if (config_guitest)
-    find_package(Qt6 6.5 REQUIRED COMPONENTS Core Core5Compat Xml Network Svg Qml Core5Compat Widgets LinguistTools Gui PrintSupport Quick QuickWidgets PrintSupport Test WebChannel WebSockets WebEngineCore)
+    find_package(Qt6 6.5 REQUIRED COMPONENTS Core Core5Compat Xml Network Svg Qml Widgets LinguistTools Gui Quick QuickWidgets PrintSupport Test WebChannel WebSockets WebEngineCore)
 set(QT_COMPONENTS Qt::Core
                   Qt::Core5Compat
                   Qt::Network
@@ -58,7 +58,7 @@ set(QT_COMPONENTS Qt::Core
                   Qt::WebEngineCore
 )
 else()
-    find_package(Qt6 6.5 REQUIRED COMPONENTS Core Core5Compat Xml Network Svg Qml Core5Compat Widgets LinguistTools Gui PrintSupport Quick QuickWidgets PrintSupport WebChannel WebSockets WebEngineCore)
+    find_package(Qt6 6.5 REQUIRED COMPONENTS Core Core5Compat Xml Network Svg Qml Widgets LinguistTools Gui Quick QuickWidgets PrintSupport WebChannel WebSockets WebEngineCore)
     set(QT_COMPONENTS Qt::Core
                       Qt::Core5Compat
                       Qt::Network

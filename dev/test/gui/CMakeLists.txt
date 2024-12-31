@@ -7,8 +7,27 @@ set(GUITEST_HEADER_FILES
 )
 
 set(GUITEST_SOURCE_FILES
-    src/adjustmenttest.cpp
     src/guitest.cpp
+    src/addeditremovetest.cpp
+    src/adjustmenttest.cpp
+    src/cachetest.cpp
+    src/daylightsavingtest.cpp
+    src/flatrequeststest.cpp
+    src/functionstester.cpp
+    src/guidedstresstest.cpp
+    src/issueshighlighter.cpp
+    src/minimaldatatest.cpp
+    src/pendingrequesttest.cpp
+    src/randomtest.cpp
+    src/reporttest.cpp
+    src/savedtestcomparison.cpp
+    src/sentencesshortcutstest.cpp
+    src/signaturetest.cpp
+    src/stresstest.cpp
+    src/targettest.cpp
+    src/validationloadfile.cpp
+    src/validationtest.cpp
+    src/voriconazoletest.cpp
 )
 
 add_library(guitest

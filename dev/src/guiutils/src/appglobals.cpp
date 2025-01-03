@@ -1,4 +1,24 @@
-//@@license@@
+/* 
+ * Tucuxi - Tucuxi-gui software. 
+ * This software is able to perform prediction of drug concentration in blood 
+ * and to propose dosage adaptations.
+ * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU Affero General Public License as 
+ * published by the Free Software Foundation, either version 3 of the 
+ * License, or any later version. 
+ * 
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * GNU Affero General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License 
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 
 #include "appglobals.h"
 
@@ -16,7 +36,8 @@ AppGlobals::AppGlobals() :
     m_requestFile(),
     m_iccaFile(),
     m_analyst(nullptr),
-    m_groupIntake(true)
+    m_groupIntake(true),
+    m_iccaImport(false)
 {
 
     m_showProcessingTime = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "showProcessingTime" ,true).toBool();
@@ -76,6 +97,10 @@ const QString AppGlobals::getIccaFile(){
     return m_iccaFile;
 }
 
+bool AppGlobals::getIccaImport(){
+    return m_iccaImport;
+}
+
 bool AppGlobals::getGroupIntake(){
     return m_groupIntake;
 }
@@ -90,6 +115,10 @@ void AppGlobals::setRequestFile(QString _requestFile){
 
 void AppGlobals::setIccaFile(QString _iccaFile){
     m_iccaFile = _iccaFile;
+}
+
+void AppGlobals::setIccaImport(bool enable){
+    m_iccaImport = enable;
 }
 
 void AppGlobals::setGroupIntake(bool enable){

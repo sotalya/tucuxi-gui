@@ -1,2 +1,0 @@
-# Tucuxi-gui
-

@@ -31,7 +31,7 @@ rest.depends                 = core admin
 databases.depends            = core apputils admin
 config_rest {
 guiutils.depends             = core apputils admin rest
-gui.depends                  = core apputils admin rest guiutils
+gui.depends                  = core apputils admin rest guiutils flatrequests
 cli.depends                  = core apputils admin cliutils rest
 cliutils.depends             = core apputils admin rest
 }

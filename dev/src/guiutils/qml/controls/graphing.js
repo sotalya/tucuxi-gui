@@ -498,7 +498,7 @@ function extents(cdata)
 
     maxYData = cdata.maxY;
 
-    cdata.maxY = maxYDisplayedValue(yFactor, minX, maxYData);
+    cdata.maxY = maxYDisplayedValue(cdata.yFactor, cdata.minX, maxYData);
 
     cdata.xRatio = cdata.plotWidth  / (cdata.maxX - cdata.minX);
     cdata.yRatio = cdata.plotHeight / (cdata.maxY - cdata.minY);

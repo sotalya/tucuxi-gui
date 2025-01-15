@@ -398,11 +398,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             QString dateString = detailElement.attribute(flatRequestParameters->valueNameXml());
             QDate date;
 
-            if (activeSubstanceId == "vancomycin") {
-                date = QDateTime::fromString(dateString, "MMM dd yyyy").date();
-            } else if (activeSubstanceId == "cefepime" || activeSubstanceId == "voriconazole") {
-                date = QDateTime::fromString(dateString, "MM-dd-yyyy hh:mm:ss").date();
-            }
+            date = QDateTime::fromString(dateString, "MM-dd-yyyy hh:mm:ss").date();
 
             patient->person()->birthday(date);
 

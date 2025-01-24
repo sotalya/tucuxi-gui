@@ -32,16 +32,27 @@ set(translation_files
 )
 qt_add_translations(ephemeraldb TS_FILES ${translation_files})
 
-target_link_libraries(ephemeraldb
-                PRIVATE
-                    #xerces
-                    apputils
-                    admin
-                    core
-                    tucucore
-                    tucucommon
-                    ${QT_COMPONENTS}
-)
+if (WIN32)
+    target_link_libraries(ephemeraldb
+                    PRIVATE
+                        #xerces
+                        apputils
+                        admin
+                        core
+                        tucucore
+                        tucucommon
+                        ${QT_COMPONENTS}
+    )
+else()
+    target_link_libraries(ephemeraldb
+                    PRIVATE
+                        #xerces
+                        apputils
+                        admin
+                        core
+                        ${QT_COMPONENTS}
+    )
+endif(WIN32)
 
 # Install rules
 include(GNUInstallDirs)

@@ -126,11 +126,13 @@ void ValidationStatus::copyFrom(ValidationStatus *other)
     }
 }
 
-bool ValidationStatus::operator==(ValidationStatus& other)
+bool ValidationStatus::operator==(const ValidationStatus &other)
 {
     for (int i=StepType::first; i<=StepType::last; i++) {
         StepType::Enum stepType = StepType::convert(i);
         if (getStatus(stepType) != other.getStatus(stepType)) { return false; }
         if (_enable[i] != other.getEnable(stepType)) { return false; }
     }
+    return true;
 }
+

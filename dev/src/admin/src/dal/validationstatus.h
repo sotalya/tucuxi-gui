@@ -82,7 +82,7 @@ public:
 
     void copyFrom(ValidationStatus *other);
 
-    bool operator==(ValidationStatus& other);
+    bool operator==(const ValidationStatus& other);
 
 signals:
     void statusChanged(StatusType);

@@ -46,14 +46,14 @@ TEST(FlatRequestsTest, Test1)
     int waitTime1       = 2;
     int waitTimeLong    = 6;
 
-    QString iccaFile = "test1_cefepime.xml"; //"test2_cefepime.xml";
+    QString flatFile = "test1_cefepime.xml"; //"test2_cefepime.xml";
 
     std::cout << "\033[1;36m" << "Test name : FlatRequestsTest.Test1" << "\033[0m" << std::endl;
 
     srv->waitPeriod(waitTimeLong);
 
     Tucuxi::Gui::FlatRequest::FlatRequestFileClient *client = new Tucuxi::Gui::FlatRequest::FlatRequestFileClient(srv->m_mainWindowController);
-    client->setListFile(iccaFile);
+    client->setListFile(flatFile);
     srv->m_mainWindowController->getRequestController()->setClient(client);
 
     srv->mouseClickIfPathOk("mainWindow/launchView/pendingRequests/mouseArea");

@@ -51,8 +51,8 @@ public:
 
     void setRequestFile(QString _requestFile);
 
-    void setIccaFile(QString _iccaFile);
-    void setIccaImport(bool enable);
+    void setFlatFile(QString _flatFile);
+    void setFlatImport(bool enable);
 
     void setGroupIntake(bool enable);
 
@@ -60,8 +60,8 @@ public:
 
     const QString getRequestFile();
 
-    const QString getIccaFile();
-    bool getIccaImport();
+    const QString getFlatFile();
+    bool getFlatImport();
 
     bool getGroupIntake();
 
@@ -92,7 +92,7 @@ private:
 
     QString m_listFile;
     QString m_requestFile;
-    QString m_iccaFile;
+    QString m_flatFile;
 
     Tucuxi::Gui::Admin::Practician *m_analyst;
 
@@ -101,7 +101,7 @@ private:
     bool m_percentileCalculation;
 
     bool m_groupIntake;
-    bool m_iccaImport;
+    bool m_flatImport;
     bool m_cdssOnly;
 };
 

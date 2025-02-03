@@ -569,9 +569,9 @@ void parseOptions()
                                     QCoreApplication::translate("main", "Set the file containing a list of pending requests. This option allows to try pending requests stored locally instead of by connecting to a REST server."),
                                     "listfile",
                                     "");
-    const QCommandLineOption iccaFileOption(QStringList() << "i" << "iccafile",
+    const QCommandLineOption flatFileOption(QStringList() << "i" << "flatfile",
                                     QCoreApplication::translate("main", "Set the file containing flat request. This option allows to start the software with flat requests"),
-                                    "iccafile",
+                                    "flatfile",
                                     "");
     const QCommandLineOption logRestOption(QStringList() << "l" << "logrest",
                                     QCoreApplication::translate("main", "Set the path in which the REST logs will be stored."),
@@ -612,7 +612,7 @@ void parseOptions()
     const QCommandLineOption helpOption = parser.addHelpOption();
     parser.addOption(listFileOption);
     parser.addOption(requestFileOption);
-    parser.addOption(iccaFileOption);
+    parser.addOption(flatFileOption);
     parser.addOption(hostOption);
     parser.addOption(portOption);
     parser.addOption(schemeOption);
@@ -658,8 +658,8 @@ void parseOptions()
 
     appGlobals->setListFile(parser.value(listFileOption));
     appGlobals->setRequestFile(parser.value(requestFileOption));
-    appGlobals->setIccaImport(parser.isSet(iccaFileOption));
-    appGlobals->setIccaFile(parser.value(iccaFileOption));
+    appGlobals->setFlatImport(parser.isSet(flatFileOption));
+    appGlobals->setFlatFile(parser.value(flatFileOption));
 
     if (parser.isSet(noGroupIntakeOption)) {
         appGlobals->setGroupIntake(false);

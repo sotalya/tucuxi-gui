@@ -34,10 +34,10 @@ AppGlobals* AppGlobals::m_instance = nullptr;
 AppGlobals::AppGlobals() :
     m_listFile(),
     m_requestFile(),
-    m_iccaFile(),
+    m_flatFile(),
     m_analyst(nullptr),
     m_groupIntake(true),
-    m_iccaImport(false),
+    m_flatImport(false),
     m_cdssOnly(false)
 {
 
@@ -104,12 +104,12 @@ const QString AppGlobals::getRequestFile(){
     return m_requestFile;
 }
 
-const QString AppGlobals::getIccaFile(){
-    return m_iccaFile;
+const QString AppGlobals::getFlatFile(){
+    return m_flatFile;
 }
 
-bool AppGlobals::getIccaImport(){
-    return m_iccaImport;
+bool AppGlobals::getFlatImport(){
+    return m_flatImport;
 }
 
 bool AppGlobals::getGroupIntake(){
@@ -124,12 +124,12 @@ void AppGlobals::setRequestFile(QString _requestFile){
     m_requestFile = _requestFile;
 }
 
-void AppGlobals::setIccaFile(QString _iccaFile){
-    m_iccaFile = _iccaFile;
+void AppGlobals::setFlatFile(QString _flatFile){
+    m_flatFile = _flatFile;
 }
 
-void AppGlobals::setIccaImport(bool enable){
-    m_iccaImport = enable;
+void AppGlobals::setFlatImport(bool enable){
+    m_flatImport = enable;
 }
 
 void AppGlobals::setGroupIntake(bool enable){

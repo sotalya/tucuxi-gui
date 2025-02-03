@@ -10,7 +10,7 @@ CONFIG(debug) {
     CONFIG += qml_debug
 }
 
-QT += gui printsupport quick quickwidgets printsupport svg network webchannel websockets
+QT += gui printsupport quick quickwidgets printsupport svg network webchannel websockets # webenginecore webenginewidgets
 
 !config_internalreport {
     #Install the report files

@@ -33,7 +33,6 @@
 #include <QFileDialog>
 
 
-
 #include "interpretationcontroller.h"
 #include "errors_guiutils.h"
 
@@ -152,7 +151,6 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
     targetsView(nullptr),
     validationView(nullptr),
     reportView(nullptr),
-    _webchannel(nullptr),
     shouldPercentilesBeComputed(true),
     printer(),
     exportFileDialog()
@@ -162,9 +160,6 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
     _activeSubstances = CoreFactory::createEntity<LightActiveSubstanceList>(ABSTRACTREPO, this);
     _privateActiveSubstances = CoreFactory::createEntity<LightActiveSubstanceList>(ABSTRACTREPO, this);
     _patients = CoreFactory::createEntity<CorePatientList>(ABSTRACTREPO, this);
-
-    _webchannel = new QQmlWebChannel(this);
-
 
     flowController = new FlowController(this);
 
@@ -366,7 +361,6 @@ void InterpretationController::bindModelsToRootContext(QQmlContext *rootContext)
 
 }
 
-
 void Tucuxi::Gui::GuiUtils::InterpretationController::retrieveViewsFromQml()
 {
     adjustmentsView = root->findChild<QObject *>("adjustmentsView");
@@ -477,8 +471,6 @@ bool Tucuxi::Gui::GuiUtils::InterpretationController::acceptAndQuit()
 
     // Stop every calculation
     calculationController->abortAll();
-
-    //_webchannel->deregisterObject(_interpretation);
 
     // TODO:  Clean the interpretation
     // Currently deleting the request has an issue. To be checked on Windows.
@@ -1850,9 +1842,6 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::validateInterpretation(boo
 #endif // CONFIG_DEMO
 
         flowController->validateInterpretation();
-
-        // We got an issue with this predictionData
-        //_webchannel->registerObject("some", _interpretation->getAnalysis()->getChartData()->getAdjPred()->getPredictive()->getPredictionData());
 
         emit interpretationValidated();
     }

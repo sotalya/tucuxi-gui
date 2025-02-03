@@ -126,11 +126,18 @@ Rectangle {
             property string fullJson: "";
         }
 
+        // The web channel to send the Json to the HTML report
+        WebChannel {
+            id: channel
+        }
+
         WebEngineView {
             id: daweb
             Layout.fillWidth: true;
             Layout.fillHeight: true;
-            webChannel: interpretationController.webchannel;
+
+            // We simply reference the WebChannel declared above
+            webChannel: channel;
 
             function update()
             {

@@ -1,21 +1,21 @@
-/* 
- * Tucuxi - Tucuxi-gui software. 
- * This software is able to perform prediction of drug concentration in blood 
+/*
+ * Tucuxi - Tucuxi-gui software.
+ * This software is able to perform prediction of drug concentration in blood
  * and to propose dosage adaptations.
- * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * It has been developed by HEIG-VD, in close collaboration with CHUV.
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
- * 
- * This program is free software: you can redistribute it and/or modify 
- * it under the terms of the GNU Affero General Public License as 
- * published by the Free Software Foundation, either version 3 of the 
- * License, or any later version. 
- * 
- * This program is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
- * GNU Affero General Public License for more details. 
- * 
- * You should have received a copy of the GNU Affero General Public License 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
@@ -351,7 +351,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::TargetEvaluationResults>("ezechiel", 1, 0, "TargetEvaluationResults", QObject::tr("Cannot instantiate type 'TargetEvaluationResults'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::CoreMeasure>("ezechiel", 1, 0, "CoreMeasure", QObject::tr("Cannot instantiate type 'CoreMeasure'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::PatientVariate>("ezechiel", 1, 0, "PatientVariate", QObject::tr("Cannot instantiate type 'PatientVariate'"));
-    qmlRegisterUncreatableType<Tucuxi::Gui::Core::DrugVariate>("ezechiel", 1, 0, "DrugVariate", QObject::tr("Cannot instantiate type 'DrugVariate'"));    
+    qmlRegisterUncreatableType<Tucuxi::Gui::Core::DrugVariate>("ezechiel", 1, 0, "DrugVariate", QObject::tr("Cannot instantiate type 'DrugVariate'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::GuiUtils::DrugVariateInfo>("ezechiel", 1, 0, "DrugVariateInfo", QObject::tr("Cannot instantiate type 'DrugVariateInfo'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::Adjustment>("ezechiel", 1, 0, "Adjustment", QObject::tr("Cannot instantiate type 'Adjustment'"));
     qmlRegisterUncreatableType<Tucuxi::Gui::Core::DrugTreatment>("ezechiel", 1, 0, "DrugTreatment", QObject::tr("Cannot instantiate type 'Treatment'"));
@@ -446,7 +446,7 @@ int main(int argc, char *argv[])
 //#endif // CONFIG_CONNECTED
     qmlRegisterType(QUrl("qrc:/controls/TargetTab.qml"), "guiutils.qml.controls", 1, 0, "TargetTab");
     qmlRegisterType(QUrl("qrc:/controls/TimePicker.qml"), "guiutils.qml.controls", 1, 0, "TimePicker");
-    qmlRegisterType(QUrl("qrc:/controls/ValidationTab.qml"), "guiutils.qml.controls", 1, 0, "ValidationTab");	
+    qmlRegisterType(QUrl("qrc:/controls/ValidationTab.qml"), "guiutils.qml.controls", 1, 0, "ValidationTab");
 
 
     Q_INIT_RESOURCE(core);
@@ -559,22 +559,33 @@ void parseOptions()
                                     QCoreApplication::translate("main", "Set the base path of the medical institution's server from which interpretion request can be retrieved."),
                                     "path",
                                     "/services");
+    const QCommandLineOption cdssOnlyOption(QStringList() << "c" << "cdssonly",
+                                            QCoreApplication::translate("main", "Run Tucuxi in CDSS-only mode."));
+    const QCommandLineOption drugsPathOption(QStringList() << "d" << "drugspath",
+                                             QCoreApplication::translate("main", "Drug files path."),
+                                             "drugspath",
+                                             CORE->path(Tucuxi::Gui::Core::Core::Drugs2));
     const QCommandLineOption listFileOption(QStringList() << "f" << "listfile",
                                     QCoreApplication::translate("main", "Set the file containing a list of pending requests. This option allows to try pending requests stored locally instead of by connecting to a REST server."),
                                     "listfile",
-                                    "");
-    const QCommandLineOption requestFileOption(QStringList() << "r" << "requestfile",
-                                    QCoreApplication::translate("main", "Set the file containing single request. This option allows to start the software with a single request."),
-                                    "requestfile",
                                     "");
     const QCommandLineOption iccaFileOption(QStringList() << "i" << "iccafile",
                                     QCoreApplication::translate("main", "Set the file containing flat request. This option allows to start the software with flat requests"),
                                     "iccafile",
                                     "");
+    const QCommandLineOption logRestOption(QStringList() << "l" << "logrest",
+                                    QCoreApplication::translate("main", "Set the path in which the REST logs will be stored."),
+                                    "logrest",
+                                    QApplication::applicationDirPath());
+
     const QCommandLineOption portOption(QStringList() << "p" << "port",
                                     QCoreApplication::translate("main", "Set the port number of the medical institution's server from which interpretion request can be retrieved."),
                                     "port",
                                     QString::number(8889));
+    const QCommandLineOption requestFileOption(QStringList() << "r" << "requestfile",
+                                    QCoreApplication::translate("main", "Set the file containing single request. This option allows to start the software with a single request."),
+                                    "requestfile",
+                                    "");
     const QCommandLineOption schemeOption(QStringList() << "s" << "scheme",
                                     QCoreApplication::translate("main", "Set the scheme of the medical institution's server from which interpretion request can be retrieved."),
                                     "scheme",
@@ -583,20 +594,12 @@ void parseOptions()
                                     QCoreApplication::translate("main", "Set the host name of the medical institution's server from which interpretion request can be retrieved."),
                                     "host",
                                     "ezecs1");
-    const QCommandLineOption logRestOption(QStringList() << "l" << "logrest",
-                                    QCoreApplication::translate("main", "Set the path in which the REST logs will be stored."),
-                                    "logrest",
-                                    QApplication::applicationDirPath());
     const QCommandLineOption logMessagesInFileOption("logfile",
                                     QCoreApplication::translate("main", "Save application's log messages into a file"));
     const QCommandLineOption certificateFileOption(QStringList() << "certificate",
                                     QCoreApplication::translate("main", "Set the file containing the SSL certificate."),
                                     "certificate",
                                     "");
-    const QCommandLineOption drugsPathOption(QStringList() << "d" << "drugspath",
-                                             QCoreApplication::translate("main", "Drug files path."),
-                                             "drugspath",
-                                             CORE->path(Tucuxi::Gui::Core::Core::Drugs2));
     const QCommandLineOption tqfLoggerOption(QStringList() << "logtqf",
                                     QCoreApplication::translate("main", "Sets a folder to log the computing requests files."),
                                     "logtqf",
@@ -605,6 +608,7 @@ void parseOptions()
                                                  QCoreApplication::translate("main", "Do not group intake when imported from flat request file"));
 
     parser.addOption(basePathOption);
+    parser.addOption(cdssOnlyOption);
     const QCommandLineOption helpOption = parser.addHelpOption();
     parser.addOption(listFileOption);
     parser.addOption(requestFileOption);
@@ -621,12 +625,15 @@ void parseOptions()
     const QCommandLineOption versionOption = parser.addVersionOption();
 
     parser.parse(QCoreApplication::arguments());
-    if (parser.isSet(helpOption))
+    if (parser.isSet(helpOption)) {
         parser.showHelp();
-    if (parser.isSet(versionOption))
+    }
+    if (parser.isSet(versionOption)) {
         parser.showVersion();
-    if (parser.isSet(logMessagesInFileOption))
+    }
+    if (parser.isSet(logMessagesInFileOption)) {
         Tucuxi::logging::Logger::initLogFile(QCoreApplication::applicationDirPath());
+    }
     if (parser.isSet(certificateFileOption)) {
 #ifdef CONFIG_CONNECTED
         Tucuxi::Gui::Rest::NetworkAccessManager::setType(Tucuxi::Gui::Rest::NetworkAccessManager::ManagerType::Unique);
@@ -656,6 +663,9 @@ void parseOptions()
 
     if (parser.isSet(noGroupIntakeOption)) {
         appGlobals->setGroupIntake(false);
+    }
+    if (parser.isSet(cdssOnlyOption)) {
+        appGlobals->setCdssOnly(true);
     }
 
 

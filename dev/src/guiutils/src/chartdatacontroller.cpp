@@ -1,21 +1,21 @@
-/* 
- * Tucuxi - Tucuxi-gui software. 
- * This software is able to perform prediction of drug concentration in blood 
+/*
+ * Tucuxi - Tucuxi-gui software.
+ * This software is able to perform prediction of drug concentration in blood
  * and to propose dosage adaptations.
- * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * It has been developed by HEIG-VD, in close collaboration with CHUV.
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
- * 
- * This program is free software: you can redistribute it and/or modify 
- * it under the terms of the GNU Affero General Public License as 
- * published by the Free Software Foundation, either version 3 of the 
- * License, or any later version. 
- * 
- * This program is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
- * GNU Affero General Public License for more details. 
- * 
- * You should have received a copy of the GNU Affero General Public License 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
@@ -51,6 +51,11 @@ ChartDataController::ChartDataController(QObject *parent) : QObject(parent),
 void ChartDataController::launchCompute()
 {
     QSet<computationType>::ConstIterator computation;
+
+    if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
+        toComputeSet.clear();
+        return;
+    }
 
     // Iterate to launch the selected computations
     for (computation = toComputeSet.begin(); computation != toComputeSet.end(); ++computation) {
@@ -97,7 +102,7 @@ void ChartDataController::launchCompute()
         }
     }
 
-    // Comutation launched, reset the list
+    // Computation launched, reset the list
     toComputeSet.clear();
 }
 
@@ -127,6 +132,10 @@ void ChartDataController::setCurrentTab(Tucuxi::Gui::Admin::StepType::Enum step)
 
 void ChartDataController::initiateUpdatePopPred()
 {
+    if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
+        return;
+    }
+
     if (!isPopulationValid()) {
         chartData->setPopPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
@@ -146,6 +155,10 @@ void ChartDataController::receiveResultsPopPred(Tucuxi::Gui::Core::PredictionRes
 }
 
 void ChartDataController::initiateUpdatePopPerc() {
+    if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
+        return;
+    }
+
 #ifdef CONFIG_DISABLEPERCS
     return;
 #endif
@@ -167,6 +180,10 @@ void ChartDataController::receiveResultsPopPerc(Tucuxi::Gui::Core::PredictionRes
 
 void ChartDataController::initiateUpdateApoPred()
 {
+    if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
+        return;
+    }
+
     if (!isAPosterioriValid()) {
         chartData->setApoPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
@@ -184,6 +201,10 @@ void ChartDataController::receiveResultsApoPred(Tucuxi::Gui::Core::PredictionRes
 }
 
 void ChartDataController::initiateUpdateApoPerc() {
+    if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
+        return;
+    }
+
 #ifdef CONFIG_DISABLEPERCS
     return;
 #endif
@@ -206,6 +227,10 @@ void ChartDataController::receiveResultsApoPerc(Tucuxi::Gui::Core::PredictionRes
 
 void ChartDataController::initiateUpdateAprPred()
 {
+    if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
+        return;
+    }
+
     if (!isAPrioriValid()) {
         chartData->setAprPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
@@ -223,6 +248,10 @@ void ChartDataController::receiveResultsAprPred(Tucuxi::Gui::Core::PredictionRes
 }
 
 void ChartDataController::initiateUpdateAprPerc() {
+    if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
+        return;
+    }
+
 #ifdef CONFIG_DISABLEPERCS
     return;
 #endif
@@ -244,6 +273,10 @@ void ChartDataController::receiveResultsAprPerc(Tucuxi::Gui::Core::PredictionRes
 
 void ChartDataController::initiateUpdateRevPred()
 {
+    if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
+        return;
+    }
+
     if (!isReverseValid()) {
         chartData->setRevPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
@@ -257,6 +290,10 @@ void ChartDataController::initiateUpdateRevPred()
 
 void ChartDataController::initiateUpdateAdjPred()
 {
+    if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
+        return;
+    }
+
     if (!isAdjustedValid()) {
         chartData->setAdjPred(Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionResult>(ABSTRACTREPO, chartData));
         return;
@@ -275,6 +312,10 @@ void ChartDataController::initiateUpdateAdjPred()
 
 void ChartDataController::initiateUpdateAdjPerc()
 {
+    if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
+        return;
+    }
+
     if (!isAdjustedValid()) {
         return;
     }
@@ -473,7 +514,7 @@ void ChartDataController::viewRangeUpdated(bool bShowPerc, bool computeRev)
 }
 
 void ChartDataController::dosageUpdated(bool bShowPerc, bool computeRev)
-{    
+{
     initiateUpdatePopPred();
     initiateUpdateAprPred();
     initiateUpdateApoPred();
@@ -512,4 +553,3 @@ void ChartDataController::covariateUpdated(bool bShowPerc)
         initiateUpdateApoPerc();
     }
 }
-

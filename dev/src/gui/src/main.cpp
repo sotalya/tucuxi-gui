@@ -577,7 +577,6 @@ void parseOptions()
                                     QCoreApplication::translate("main", "Set the path in which the REST logs will be stored."),
                                     "logrest",
                                     QApplication::applicationDirPath());
-
     const QCommandLineOption portOption(QStringList() << "p" << "port",
                                     QCoreApplication::translate("main", "Set the port number of the medical institution's server from which interpretion request can be retrieved."),
                                     "port",

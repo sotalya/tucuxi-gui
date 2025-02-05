@@ -2372,7 +2372,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
         exportCdss();
 
         QString cmd = execPath + " ";
-        cmd += "-d ./drugfiles ";
+        cmd += "-d ./dist/drugfiles ";
         cmd += "-i " + _cdssQtfPath + " ";
         cmd += "-c " + configPath + " ";
         cmd += "-l " + languagePath + " ";
@@ -2381,6 +2381,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
         cmd += "-o " + _cdssOutputPath;
 
         std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.toStdString().c_str(), "r"), pclose);
+
         if (!pipe) {
             QMessageBox msgError;
             msgError.setText("An error occured while report generation");
@@ -2389,8 +2390,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
             msgError.exec();
         } else {
             QMessageBox msgSuccess;
-            msgSuccess.setText(cmd);
-            // msgSuccess.setText("Successfuly save report at " +  _cdssOutputPath);
+            msgSuccess.setText("Successfuly save report at " +  _cdssOutputPath);
             msgSuccess.setIcon(QMessageBox::Information);
             msgSuccess.setWindowTitle("Success");
             msgSuccess.exec();

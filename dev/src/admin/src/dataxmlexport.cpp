@@ -1,21 +1,21 @@
-/* 
- * Tucuxi - Tucuxi-gui software. 
- * This software is able to perform prediction of drug concentration in blood 
+/*
+ * Tucuxi - Tucuxi-gui software.
+ * This software is able to perform prediction of drug concentration in blood
  * and to propose dosage adaptations.
- * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * It has been developed by HEIG-VD, in close collaboration with CHUV.
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
- * 
- * This program is free software: you can redistribute it and/or modify 
- * it under the terms of the GNU Affero General Public License as 
- * published by the Free Software Foundation, either version 3 of the 
- * License, or any later version. 
- * 
- * This program is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
- * GNU Affero General Public License for more details. 
- * 
- * You should have received a copy of the GNU Affero General Public License 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
@@ -23,6 +23,7 @@
 #include <iostream>
 
 #include <QBuffer>
+#include <QSettings>
 
 #include "dataxmlexport.h"
 #include "dal/interpretation.h"
@@ -142,9 +143,167 @@ QString DataXmlExport::toXml(Interpretation *interpretation)
     return QString(byteArray);
 }
 
+QString DataXmlExport::toCdssXml(Interpretation *interpretation, QString substanceId, QString drugId)
+{
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    buffer.open(QIODevice::WriteOnly);
+
+    writer.setDevice(&buffer);
+    writer.setAutoFormatting(true);
+    writer.writeStartDocument("1.0", false);
+
+    QString namespaceUri = "http://www.w3.org/2001/XMLSchema-instance";
+    writer.writeStartElement("query");
+    writer.writeNamespace(namespaceUri,"xsi");
+    writer.writeAttribute("type", "data");
+    writer.writeAttribute("version", "0.2");
+    writer.writeTextElement("date", writeDate(QDateTime::currentDateTime()));
+
+    if (interpretation->getDrugResponseAnalysis()->getTreatment() != nullptr) {
+        saveAdminData(interpretation);
+        save(interpretation->getDrugResponseAnalysis());
+
+        // Save the request.
+        writer.writeStartElement("requests");
+        writer.writeStartElement("xpertRequest");
+        writer.writeTextElement("drugId", substanceId);
+        writer.writeTextElement("configId", drugId);
+
+        writer.writeStartElement("output");
+        writer.writeTextElement("format", "html");
+        writer.writeTextElement("language", "en");
+        writer.writeEndElement(); // End of output
+
+        writer.writeTextElement("adjustmentDate", interpretation->getAdjustmentDate().toString(Qt::ISODate));
+
+        writer.writeStartElement("options");
+
+        if (interpretation->getAdjustmentWithLoadingDose()) {
+            writer.writeTextElement("loadingOption", "loadingDoseAllowed");
+        } else {
+            writer.writeTextElement("loadingOption", "noLoadingDose");
+        }
+        if (interpretation->getAdjustmentWithRestPeriod()) {
+            writer.writeTextElement("restPeriodOption", "restPeriodAllowed");
+        } else {
+            writer.writeTextElement("restPeriodOption", "noRestPeriod");
+        }
+        writer.writeEndElement(); // End of options
+        writer.writeEndElement(); // End of xpertRequest
+        writer.writeEndElement(); // End of requests
+    }
+
+    writer.writeEndElement(); // End of query
+    writer.writeEndDocument();
+
+    return QString(byteArray);
+}
+
 bool DataXmlExport::save(Patient *patient)
 {
     writer.writeTextElement("clientId", patient->externalId());
+    return true;
+}
+
+bool DataXmlExport::saveAdminData(Interpretation *interpretation)
+{
+    writer.writeStartElement("admin");
+    writer.writeStartElement("mandator");
+    Practician *practician = static_cast<Practician* >(interpretation->getAnalyst());
+    if (practician != nullptr) {
+        writer.writeStartElement("person");
+        writer.writeTextElement("id", practician->externalId());
+        writer.writeTextElement("title", practician->title());
+        if (practician->person() != nullptr) {
+            writer.writeTextElement("firstName", practician->person()->firstname());
+            writer.writeTextElement("lastName", practician->person()->name());
+        }
+        writer.writeEndElement(); // End of person
+        writer.writeStartElement("institute");
+        if (practician->institute() != nullptr) {
+            writer.writeTextElement("id", practician->institute()->externalId());
+            writer.writeTextElement("name", practician->institute()->name());
+            if (practician->institute()->location() != nullptr) {
+                writer.writeTextElement("address", practician->institute()->location()->address());
+                writer.writeTextElement("postalCode", practician->institute()->location()->postcode());
+                writer.writeTextElement("city", practician->institute()->location()->city());
+                writer.writeTextElement("state", practician->institute()->location()->state());
+                writer.writeTextElement("country", practician->institute()->location()->country());
+            }
+        }
+        writer.writeEndElement(); // End of institute
+    }
+    writer.writeEndElement(); // End of mandator
+
+    Patient *patient = static_cast<Patient* >(interpretation->getDrugResponseAnalysis()->getTreatment()->getPatient());
+    writer.writeStartElement("patient");
+    if (interpretation->getDrugResponseAnalysis()->getTreatment()->getPatient() != nullptr) {
+        Person *person = static_cast<Person* >(patient->person());
+        if (person != nullptr) {
+            writer.writeStartElement("person");
+            writer.writeTextElement("id", patient->externalId());
+
+            Person::GenderType gender = person->gender();
+            if (gender == Person::GenderType::Female)
+                writer.writeTextElement("title", "Mme");
+            else {
+                if (gender == Person::GenderType::Male) {
+                    writer.writeTextElement("title", "Mr");
+                } else {
+                    writer.writeTextElement("title", "Ind");
+                }
+            }
+
+            writer.writeTextElement("firstName", person->firstname());
+            writer.writeTextElement("lastName", person->name());
+            writer.writeStartElement("address");
+            if (person->location() != nullptr) {
+                writer.writeTextElement("street", person->location()->address());
+                writer.writeTextElement("postalCode", person->location()->postcode());
+                writer.writeTextElement("city", person->location()->city());
+                writer.writeTextElement("state", person->location()->state());
+                writer.writeTextElement("country", person->location()->country());
+            }
+            writer.writeEndElement(); // End of address
+
+            // writer.writeStartElement("phone");
+            // writer.writeTextElement("number", person->getPhones()->at(0)->getNumber());
+            // PhoneType phoneType(person->getPhones()->at(0)->getType());
+            // if (phoneType == PhoneType::Private) {
+            //     writer.writeTextElement("type", "private");
+            // } else {
+            //     if (phoneType == PhoneType::Professional) {
+            //         writer.writeTextElement("type", "professional");
+            //     } else {
+            //         if (phoneType == PhoneType::Cell) {
+            //             writer.writeTextElement("type", "cellphone");
+            //         } else {
+            //             writer.writeTextElement("type", "unknown");
+            //         }
+            //     }
+            // }
+            // writer.writeEndElement(); // End of phone
+
+            // writer.writeStartElement("email");
+            // writer.writeTextElement("address", person->emails().at(0)->getEmail());
+            // Type emailType(person->emails().at(0)->getType());
+            // if (emailType == Type::Private) {
+            //     writer.writeTextElement("type", "private");
+            // } else {
+            //     if (emailType == Type::Professional) {
+            //         writer.writeTextElement("type", "professional");
+            //     } else {
+            //         writer.writeTextElement("type", "unknown");
+            //     }
+            // }
+            // writer.writeEndElement(); // End of email
+            writer.writeEndElement(); // End of person
+        }
+    }
+    writer.writeEndElement(); // End of patient
+    writer.writeEndElement(); // End of admin
+
     return true;
 }
 
@@ -194,8 +353,11 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::PatientVariateList *list)
         writer.writeTextElement("covariateId", variate->getCovariateId());
         writer.writeTextElement("date", writeDate(variate->getDate()));
         if (variate->getCovariateId() != "birthdate") {
-            writer.writeTextElement("unit", variate->getQuantity()->getUnitstring());
-            writer.writeTextElement("value", QString("%1").arg(variate->getQuantity()->getDbvalue()));
+            if (variate->getCovariateId() != "age") {
+                // 'age' must not be in the covariates.
+                writer.writeTextElement("unit", variate->getQuantity()->getUnitstring());
+                writer.writeTextElement("value", QString("%1").arg(variate->getQuantity()->getDbvalue()));
+            }
         } else {
             writer.writeTextElement("value", variate->getValueAsString());
         }

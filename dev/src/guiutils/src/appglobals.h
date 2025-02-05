@@ -78,8 +78,12 @@ public:
     Q_INVOKABLE bool percentileCalculation();
     Q_INVOKABLE void setPercentileCalculation(bool enable);
 
-    Q_INVOKABLE bool cdssOnly();
-    Q_INVOKABLE void setCdssOnly(bool cdssOnly);
+    bool cdssOnly();
+    void setCdssOnly(bool cdssOnly);
+    Q_PROPERTY(bool cdssOnly READ cdssOnly WRITE setCdssOnly NOTIFY cdssOnlyChanged);
+
+signals:
+    void cdssOnlyChanged();
 
 private:
     Q_OBJECT

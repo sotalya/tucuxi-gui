@@ -69,9 +69,10 @@ DialogBase {
             }
 
             if (cdssOnly.checkState == Qt.Checked) {
-                appGlobals.setCdssOnly(true);
-            } else {
-                appGlobals.setCdssOnly(false);
+                appGlobals.cdssOnly = true;
+            }
+            else {
+                appGlobals.cdssOnly = false;
             }
         }
     }
@@ -105,7 +106,7 @@ DialogBase {
         else
             percentileCalculation.checkState = Qt.Unchecked;
 
-        if (appGlobals.cdssOnly())
+        if (appGlobals.cdssOnly)
             cdssOnly.checkState = Qt.Checked;
         else
             cdssOnly.checkState = Qt.Unchecked;
@@ -427,7 +428,7 @@ DialogBase {
 
                         CheckBox {
                             id: cdssOnly
-                            text: "Enable only cdss usage?"
+                            text: "Cdss-only interface"
                             checked: false // true
                             enabled: !appMode.isDemo()
                         }

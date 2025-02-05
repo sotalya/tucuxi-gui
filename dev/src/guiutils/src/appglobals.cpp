@@ -97,6 +97,7 @@ void AppGlobals::setCdssOnly(bool cdssOnly)
     if (cdssOnly != m_cdssOnly) {
         m_cdssOnly = cdssOnly;
         SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "cdssOnly", cdssOnly);
+        emit cdssOnlyChanged();
     }
 }
 

@@ -296,7 +296,7 @@ ColumnLayout {
         FlowMenuButton {
             id: adjustmentButton
             objectName: "adjustmentButton"
-            isLast : appGlobals.cdssOnly()
+            isLast : appGlobals.cdssOnly
             Layout.preferredWidth: menu.buttonWidth
             legend: (width > 100) ? "Adjustments" : "Adj."
             icon:          "qrc:/icons/flow/adjustments.png"
@@ -335,14 +335,14 @@ ColumnLayout {
             onDoublePressed: {
                 validateTab(index);
             }
-            visible : !appGlobals.cdssOnly()
+            visible : !appGlobals.cdssOnly
             tooltipText : ToolTips.flowButtons.validation
         }
         FlowMenuButton {
             id: reportButton
             objectName: "reportButton"
             Layout.preferredWidth: menu.buttonWidth
-            isLast : !appGlobals.cdssOnly() // This is the last button, so don't draw the arrow
+            isLast : !appGlobals.cdssOnly // This is the last button, so don't draw the arrow
             legend: (width > 100) ? "Reports" : "Rep."
             icon:          "qrc:/icons/toolbar/file.png"
             icon_disabled: "qrc:/icons/toolbar/file_disabled.png"
@@ -358,7 +358,7 @@ ColumnLayout {
             onDoublePressed: {
                 validateTab(index);
             }
-            visible : !appGlobals.cdssOnly()
+            visible : !appGlobals.cdssOnly
             tooltipText : ToolTips.flowButtons.report
         }
     }
@@ -465,7 +465,7 @@ ColumnLayout {
             Chart {
                 id: chart
                 anchors.fill: parent
-                visible: !patientButton.isCurrent && !drugButton.isCurrent && !appGlobals.cdssOnly()
+                visible: !patientButton.isCurrent && !drugButton.isCurrent && !appGlobals.cdssOnly
             }
 
             WelcomeInfo {

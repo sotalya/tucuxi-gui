@@ -2380,12 +2380,21 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
         cmd += "-p " + templatePath + " ";
         cmd += "-o " + _cdssOutputPath;
 
-        QMessageBox msgError;
-        msgError.setText(cmd);
-        msgError.setIcon(QMessageBox::Critical);
-        msgError.setWindowTitle("Error encountered exporting CDSS data");
-        msgError.exec();
-
+        std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.toStdString().c_str(), "r"), pclose);
+        if (!pipe) {
+            QMessageBox msgError;
+            msgError.setText("An error occured while report generation");
+            msgError.setIcon(QMessageBox::Critical);
+            msgError.setWindowTitle("Error");
+            msgError.exec();
+        } else {
+            QMessageBox msgSuccess;
+            msgSuccess.setText(cmd);
+            // msgSuccess.setText("Successfuly save report at " +  _cdssOutputPath);
+            msgSuccess.setIcon(QMessageBox::Information);
+            msgSuccess.setWindowTitle("Success");
+            msgSuccess.exec();
+        }
     }
 }
 

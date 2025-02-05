@@ -203,6 +203,7 @@ Rectangle {
                                 Layout.preferredHeight: adjustmentSettings.rowHeight / 2
                                 Layout.minimumHeight:   adjustmentSettings.rowHeight / 2
                                 spacing: 2
+                                visible: !appGlobals.cdssOnly()
 
                                 CheckBox {
                                     id: withLoadingDose
@@ -267,13 +268,14 @@ Rectangle {
             id: suggestedExpandHeader
             expanded: true
             tooltipText : ToolTips.adjustmentTab.suggestedListTitle
+            visible: !appGlobals.cdssOnly()
         }
 
         //AdjustmentList
         EntityList {
             id: adjustmentList
 
-            visible : suggestedExpandHeader.expanded
+            visible : suggestedExpandHeader.expanded && !appGlobals.cdssOnly()
 
             Layout.preferredHeight: adjustmentList.headerHeight + 10 + (adjustmentList.rowHeight + adjustmentList.spacing) * adjustmentListView.count
 
@@ -433,7 +435,7 @@ Rectangle {
 
 
         EntityBlockEnd {
-            visible : suggestedExpandHeader.expanded
+            visible : suggestedExpandHeader.expanded && !appGlobals.cdssOnly()
         }
 
         /*******************************************************************************
@@ -444,12 +446,13 @@ Rectangle {
             id: manualExpandHeader
             expanded: true
             tooltipText: ToolTips.adjustmentTab.adjustmentListTitle
+            visible: !appGlobals.cdssOnly()
         }
 
         EntityList {
             id: manualAdjustmentList
 
-            visible: manualExpandHeader.expanded
+            visible: manualExpandHeader.expanded && !appGlobals.cdssOnly()
 
             columnlayout.children: [
 

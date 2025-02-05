@@ -44,6 +44,7 @@ AppGlobals::AppGlobals() :
     m_showProcessingTime = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "showProcessingTime" ,true).toBool();
     m_autoCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "autoCalculation" ,true).toBool();
     m_percentileCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "percentileCalculation" ,true).toBool();
+    m_cdssOnly = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "cdssOnly", false).toBool();
 
 }
 
@@ -93,7 +94,10 @@ bool AppGlobals::cdssOnly()
 
 void AppGlobals::setCdssOnly(bool cdssOnly)
 {
-    m_cdssOnly = cdssOnly;
+    if (cdssOnly != m_cdssOnly) {
+        m_cdssOnly = cdssOnly;
+        SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "cdssOnly", cdssOnly);
+    }
 }
 
 const QString AppGlobals::getListFile(){

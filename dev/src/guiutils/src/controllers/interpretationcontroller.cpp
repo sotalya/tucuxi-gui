@@ -2354,6 +2354,41 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchUpdate()
     _chartDataController->launchCompute();
 }
 
+void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
+    if (!QFileInfo::exists(QCoreApplication::applicationDirPath() + "/cdss-exec.ini")) {
+        QMessageBox msgError;
+        msgError.setText("File cdss-exec.ini is missing from the executable folder!");
+        msgError.setIcon(QMessageBox::Critical);
+        msgError.setWindowTitle("Error encountered exporting CDSS data");
+        msgError.exec();
+    } else {
+        QSettings settingsFile(QCoreApplication::applicationDirPath() + "/cdss-exec.ini",
+                               QSettings::IniFormat);
+        QString execPath = settingsFile.value("exec", "exec").toString();
+        QString configPath = settingsFile.value("config", "config").toString();
+        QString templatePath = settingsFile.value("template", "template").toString();
+        QString languagePath = settingsFile.value("language", "language").toString();
+
+        exportCdss();
+
+        QString cmd = execPath + " ";
+        cmd += "-d ./drugfiles ";
+        cmd += "-i " + _cdssQtfPath + " ";
+        cmd += "-c " + configPath + " ";
+        cmd += "-l " + languagePath + " ";
+        cmd += "-t chuv_imatinib_comp ";
+        cmd += "-p " + templatePath + " ";
+        cmd += "-o " + _cdssOutputPath;
+
+        QMessageBox msgError;
+        msgError.setText(cmd);
+        msgError.setIcon(QMessageBox::Critical);
+        msgError.setWindowTitle("Error encountered exporting CDSS data");
+        msgError.exec();
+
+    }
+}
+
 void Tucuxi::Gui::GuiUtils::InterpretationController::setRefreshButtonVisible(bool visible)
 {
     if (visible) {
@@ -2440,6 +2475,9 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCdss()
             QTextStream out(&dataFile);
             out << xml;
             dataFile.close();
+
+            _cdssQtfPath = fileName;
+            _cdssOutputPath = QFileInfo(fileName).absolutePath();
         }
     }
 }

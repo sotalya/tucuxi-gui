@@ -298,6 +298,8 @@ public:
     ///
     void exportCdss();
 
+    Q_INVOKABLE void launchCdss();
+
     Q_INVOKABLE void launchUpdate();
 
     Q_INVOKABLE void setRefreshButtonVisible(bool visible);
@@ -451,6 +453,9 @@ private:
     Tucuxi::Gui::Core::LightActiveSubstanceList* _activeSubstances;
     Tucuxi::Gui::Core::LightActiveSubstanceList* _privateActiveSubstances;
     Tucuxi::Gui::Core::CorePatientList* _patients;
+
+    QString _cdssOutputPath;
+    QString _cdssQtfPath;
 
     Tucuxi::Gui::Admin::GraphInformationSelection *_graphInformationSelection;
 

@@ -202,9 +202,9 @@ Rectangle {
                             Button {
                                 id: launchCdssButton
                                 Layout.alignment: Qt.AlignTop
-                                text: "Refresh"
-                                implicitWidth: 100
-                                onClicked: interpretationController.launchUpdate()
+                                text: "Launch Report Generation"
+                                implicitWidth: 200
+                                onClicked: interpretationController.launchCdss()
                                 visible: appGlobals.cdssOnly
                             }
 

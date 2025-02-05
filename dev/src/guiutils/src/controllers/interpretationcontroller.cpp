@@ -2371,31 +2371,29 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
 
         exportCdss();
 
-        QString cmd = execPath + " ";
-        cmd += "-d ./dist/drugfiles ";
-        cmd += "-i " + _cdssQtfPath + " ";
-        cmd += "-c " + configPath + " ";
-        cmd += "-l " + languagePath + " ";
-        cmd += "-t chuv_imatinib_comp ";
-        cmd += "-p " + templatePath + " ";
-        cmd += "-o " + _cdssOutputPath;
+        QString program = execPath;
+        QStringList arguments;
+        arguments << "-d" << "./dist/drugfiles"
+                  << "-i" << _cdssQtfPath
+                  << "-c" << configPath
+                  << "-l" << languagePath
+                  << "-t" << "chuv_imatinib_comp"
+                  << "-p" << templatePath
+                  << "-o" << _cdssOutputPath;
 
-        std::cout << cmd.toStdString() << std::endl;
-
-        std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.toStdString().c_str(), "r"), pclose);
-
-        if (!pipe) {
-            QMessageBox msgError;
-            msgError.setText("An error occured while report generation");
-            msgError.setIcon(QMessageBox::Critical);
-            msgError.setWindowTitle("Error");
-            msgError.exec();
-        } else {
+        qint64 pid;
+        if (QProcess::startDetached(program, arguments, QString(), &pid)) {
             QMessageBox msgSuccess;
             msgSuccess.setText("Successfuly save report at " +  _cdssOutputPath);
             msgSuccess.setIcon(QMessageBox::Information);
             msgSuccess.setWindowTitle("Success");
             msgSuccess.exec();
+        } else {
+            QMessageBox msgError;
+            msgError.setText("An error occured while report generation");
+            msgError.setIcon(QMessageBox::Critical);
+            msgError.setWindowTitle("Error");
+            msgError.exec();
         }
     }
 }

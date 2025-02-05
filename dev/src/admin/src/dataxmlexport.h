@@ -75,7 +75,7 @@ public:
     DataXmlExport();
 
     QString toXml(Interpretation *interpretation);
-    QString toCdssXml(Interpretation *interpretation);
+    QString toCdssXml(Interpretation *interpretation, QString substanceId, QString drugId);
 
 protected:
     QString writeDate(QDateTime date);

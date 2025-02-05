@@ -143,7 +143,7 @@ QString DataXmlExport::toXml(Interpretation *interpretation)
     return QString(byteArray);
 }
 
-QString DataXmlExport::toCdssXml(Interpretation *interpretation)
+QString DataXmlExport::toCdssXml(Interpretation *interpretation, QString substanceId, QString drugId)
 {
     QByteArray byteArray;
     QBuffer buffer(&byteArray);
@@ -167,11 +167,6 @@ QString DataXmlExport::toCdssXml(Interpretation *interpretation)
         // Save the request.
         writer.writeStartElement("requests");
         writer.writeStartElement("xpertRequest");
-        QString substanceId = interpretation->getDrugResponseAnalysis()->getTreatment()->getActiveSubstanceId();
-        // Try to find it in the file, else return the initial restId
-        QSettings settingsFile(QCoreApplication::applicationDirPath() + "/cdss-config.ini",
-                               QSettings::IniFormat);
-        QString drugId = settingsFile.value(substanceId, substanceId).toString();
         writer.writeTextElement("drugId", substanceId);
         writer.writeTextElement("configId", drugId);
 

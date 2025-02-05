@@ -2395,31 +2395,51 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentData()
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::exportCdss()
 {
-    // Open a dialog window to choose where to save CDSS data
-    QString dirPath;
-    QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(),
-                                                    tr("Save Data"),
-                                                    dirPath,
-                                                    tr("tqf File (*.tqf)"));
-    // Create exporter
-    DataXmlExport exporter;
-    QString xml = exporter.toCdssXml(getInterpretation());
+    if (!QFileInfo::exists(QCoreApplication::applicationDirPath() + "/cdss-config.ini")) {
+        QMessageBox msgError;
+        msgError.setText("File cdss-config.ini is missing from the executable folder!");
+        msgError.setIcon(QMessageBox::Critical);
+        msgError.setWindowTitle("Error encountered exporting CDSS data");
+        msgError.exec();
+    } else {
+        QString substanceId = getInterpretation()->getDrugResponseAnalysis()->getTreatment()->getActiveSubstanceId();
+        QSettings settingsFile(QCoreApplication::applicationDirPath() + "/cdss-config.ini",
+                               QSettings::IniFormat);
+        QString drugId = settingsFile.value(substanceId, substanceId).toString();
+        if (drugId == substanceId) {
+            QMessageBox msgError;
+            msgError.setText("Missing drug ID in configuration file for substance " + substanceId);
+            msgError.setIcon(QMessageBox::Critical);
+            msgError.setWindowTitle("Error encountered exporting CDSS data");
+            msgError.exec();
+        } else {
+            // Open a dialog window to choose where to save CDSS data
+            QString dirPath;
+            QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(),
+                                                            tr("Save Data"),
+                                                            dirPath,
+                                                            tr("tqf File (*.tqf)"));
+            // Create exporter
+            DataXmlExport exporter;
+            QString xml = exporter.toCdssXml(getInterpretation(), substanceId, drugId);
 
-    // Check a filename is given
-    if (fileName.isEmpty())
-        return;
+            // Check a filename is given
+            if (fileName.isEmpty())
+                return;
 
-    // Check extension is correct
-    if (!fileName.endsWith(".tqf"))
-        fileName += ".tqf";
+            // Check extension is correct
+            if (!fileName.endsWith(".tqf"))
+                fileName += ".tqf";
 
-    // Create and save file
-    QFile dataFile(fileName);
-    if (!dataFile.open(QFile::WriteOnly)) {
-        exit(0);
+            // Create and save file
+            QFile dataFile(fileName);
+            if (!dataFile.open(QFile::WriteOnly)) {
+                exit(0);
+            }
+
+            QTextStream out(&dataFile);
+            out << xml;
+            dataFile.close();
+        }
     }
-
-    QTextStream out(&dataFile);
-    out << xml;
-    dataFile.close();
 }

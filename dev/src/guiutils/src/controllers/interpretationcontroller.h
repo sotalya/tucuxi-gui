@@ -287,10 +287,16 @@ public:
     void saveGraph();
 
     ///
-    /// \brief exportCurrentDatas
-    /// Exports useful datas of current patient, in XML format
+    /// \brief exportCurrentData
+    /// Exports useful data of current patient, in XML format
     ///
-    void exportCurrentDatas();
+    void exportCurrentData();
+
+    ///
+    /// \brief exportCdss
+    /// Exports CDSS data, in XML format
+    ///
+    void exportCdss();
 
     Q_INVOKABLE void launchUpdate();
 

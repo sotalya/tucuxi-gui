@@ -1,21 +1,21 @@
-/* 
- * Tucuxi - Tucuxi-gui software. 
- * This software is able to perform prediction of drug concentration in blood 
+/*
+ * Tucuxi - Tucuxi-gui software.
+ * This software is able to perform prediction of drug concentration in blood
  * and to propose dosage adaptations.
- * It has been developed by HEIG-VD, in close collaboration with CHUV. 
+ * It has been developed by HEIG-VD, in close collaboration with CHUV.
  * Copyright (C) 2024 HEIG-VD, maintained by Yann Thoma  <yann.thoma@heig-vd.ch>
- * 
- * This program is free software: you can redistribute it and/or modify 
- * it under the terms of the GNU Affero General Public License as 
- * published by the Free Software Foundation, either version 3 of the 
- * License, or any later version. 
- * 
- * This program is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
- * GNU Affero General Public License for more details. 
- * 
- * You should have received a copy of the GNU Affero General Public License 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
@@ -1630,14 +1630,14 @@ bool Tucuxi::Gui::GuiUtils::InterpretationController::updateInterpretationRange(
     bool hasNoEnd = false;
     bool hasDosage = false;
     QDateTime currentStartDate = predictionspec->getStartDate();
-    QDateTime currentEndDate = predictionspec->getEndDate();    
+    QDateTime currentEndDate = predictionspec->getEndDate();
     QDateTime startDate;
     QDateTime endDate;
 
     // 1. Get relevant dates for computing the start and end dates
 
     // Get dates of first and last doses
-    const QList<Dosage*> &dosages = _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->getList();    
+    const QList<Dosage*> &dosages = _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->getList();
     foreach (Dosage *dosage, dosages) {
         if (dateOfFirstDose.isNull() || dateOfFirstDose > dosage->getApplied()) {
             dateOfFirstDose = dosage->getApplied();
@@ -1689,7 +1689,7 @@ bool Tucuxi::Gui::GuiUtils::InterpretationController::updateInterpretationRange(
                 return false;
             }
             break;
-        }        
+        }
         case EViewRangeUpdateContext::AdjustmentDate:
         {
             // Recompute the view range only if the adjustment date is not part of it
@@ -2363,9 +2363,9 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setRefreshButtonVisible(bo
     }
 }
 
-void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()
+void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentData()
 {
-    // Open a dialog window to choose where to save datas
+    // Open a dialog window to choose where to save data
     QString dirPath;
     QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(), tr("Save Data"),
                                                     dirPath,
@@ -2373,6 +2373,37 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentDatas()
     // Create exporter
     DataXmlExport exporter;
     QString xml = exporter.toXml(getInterpretation());
+
+    // Check a filename is given
+    if (fileName.isEmpty())
+        return;
+
+    // Check extension is correct
+    if (!fileName.endsWith(".tqf"))
+        fileName += ".tqf";
+
+    // Create and save file
+    QFile dataFile(fileName);
+    if (!dataFile.open(QFile::WriteOnly)) {
+        exit(0);
+    }
+
+    QTextStream out(&dataFile);
+    out << xml;
+    dataFile.close();
+}
+
+void Tucuxi::Gui::GuiUtils::InterpretationController::exportCdss()
+{
+    // Open a dialog window to choose where to save CDSS data
+    QString dirPath;
+    QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(),
+                                                    tr("Save Data"),
+                                                    dirPath,
+                                                    tr("tqf File (*.tqf)"));
+    // Create exporter
+    DataXmlExport exporter;
+    QString xml = exporter.toCdssXml(getInterpretation());
 
     // Check a filename is given
     if (fileName.isEmpty())

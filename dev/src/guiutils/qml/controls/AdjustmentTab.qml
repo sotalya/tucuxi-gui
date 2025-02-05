@@ -199,6 +199,15 @@ Rectangle {
 
                             RowLayout {} //Spacer
 
+                            Button {
+                                id: launchCdssButton
+                                Layout.alignment: Qt.AlignTop
+                                text: "Refresh"
+                                implicitWidth: 100
+                                onClicked: interpretationController.launchUpdate()
+                                visible: appGlobals.cdssOnly()
+                            }
+
                             RowLayout {
                                 Layout.preferredHeight: adjustmentSettings.rowHeight / 2
                                 Layout.minimumHeight:   adjustmentSettings.rowHeight / 2

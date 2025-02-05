@@ -154,7 +154,7 @@ QString DataXmlExport::toCdssXml(Interpretation *interpretation)
     writer.writeStartDocument("1.0", false);
 
     QString namespaceUri = "http://www.w3.org/2001/XMLSchema-instance";
-    writer.writeStartElement("data");
+    writer.writeStartElement("query");
     writer.writeNamespace(namespaceUri,"xsi");
     writer.writeAttribute("type", "data");
     writer.writeAttribute("version", "0.2");
@@ -199,7 +199,7 @@ QString DataXmlExport::toCdssXml(Interpretation *interpretation)
         writer.writeEndElement(); // End of requests
     }
 
-    writer.writeEndElement(); // End of data
+    writer.writeEndElement(); // End of query
     writer.writeEndDocument();
 
     return QString(byteArray);

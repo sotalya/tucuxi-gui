@@ -247,7 +247,6 @@ ColumnLayout {
             onDoublePressed: {
                 validateTab(index);
             }
-
             tooltipText : ToolTips.flowButtons.covariates
         }
         FlowMenuButton {
@@ -335,7 +334,7 @@ ColumnLayout {
             onDoublePressed: {
                 validateTab(index);
             }
-
+            visible : !appGlobals.cdssOnly()
             tooltipText : ToolTips.flowButtons.validation
         }
         FlowMenuButton {
@@ -358,7 +357,7 @@ ColumnLayout {
             onDoublePressed: {
                 validateTab(index);
             }
-
+            visible : !appGlobals.cdssOnly()
             tooltipText : ToolTips.flowButtons.report
         }
     }
@@ -465,7 +464,7 @@ ColumnLayout {
             Chart {
                 id: chart
                 anchors.fill: parent
-                visible: !patientButton.isCurrent && !drugButton.isCurrent
+                visible: !patientButton.isCurrent && !drugButton.isCurrent && !appGlobals.cdssOnly()
             }
 
             WelcomeInfo {

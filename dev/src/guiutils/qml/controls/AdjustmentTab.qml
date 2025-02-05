@@ -205,7 +205,7 @@ Rectangle {
                                 text: "Refresh"
                                 implicitWidth: 100
                                 onClicked: interpretationController.launchUpdate()
-                                visible: appGlobals.cdssOnly()
+                                visible: appGlobals.cdssOnly
                             }
 
                             RowLayout {

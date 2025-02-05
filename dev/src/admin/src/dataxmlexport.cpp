@@ -218,18 +218,44 @@ bool DataXmlExport::saveAdminData(Interpretation *interpretation)
         if (practician->person() != nullptr) {
             writer.writeTextElement("firstName", practician->person()->firstname());
             writer.writeTextElement("lastName", practician->person()->name());
+            writer.writeStartElement("address");
+            writer.writeTextElement("street", practician->person()->location()->address());
+            writer.writeTextElement("postalCode", practician->person()->location()->postcode());
+            writer.writeTextElement("city", practician->person()->location()->city());
+            writer.writeTextElement("state", practician->person()->location()->state());
+            writer.writeTextElement("country", practician->person()->location()->country());
+            writer.writeEndElement(); // End of address
+            writer.writeStartElement("phone");
+            writer.writeTextElement("number", "practician->person()->getPhones()->at(0)->getNumber()");
+            writer.writeEmptyElement("type");
+            writer.writeEndElement(); // End of phone
+            writer.writeStartElement("email");
+            writer.writeTextElement("address", "practician->person()->emails().at(0)->getEmail()");
+            writer.writeEmptyElement("type");
+            writer.writeEndElement(); // End of email
         }
         writer.writeEndElement(); // End of person
+
         writer.writeStartElement("institute");
         if (practician->institute() != nullptr) {
             writer.writeTextElement("id", practician->institute()->externalId());
             writer.writeTextElement("name", practician->institute()->name());
             if (practician->institute()->location() != nullptr) {
-                writer.writeTextElement("address", practician->institute()->location()->address());
+                writer.writeStartElement("address");
+                writer.writeTextElement("street", practician->institute()->location()->address());
                 writer.writeTextElement("postalCode", practician->institute()->location()->postcode());
                 writer.writeTextElement("city", practician->institute()->location()->city());
                 writer.writeTextElement("state", practician->institute()->location()->state());
                 writer.writeTextElement("country", practician->institute()->location()->country());
+                writer.writeEndElement(); // End of address
+                writer.writeStartElement("phone");
+                writer.writeTextElement("number", "practician->institute()->phones().at(0)->getNumber()");
+                writer.writeEmptyElement("type");
+                writer.writeEndElement(); // End of phone
+                writer.writeStartElement("email");
+                writer.writeTextElement("address", "practician->institute()->emails().at(0)->getEmail()");
+                writer.writeEmptyElement("type");
+                writer.writeEndElement(); // End of email
             }
         }
         writer.writeEndElement(); // End of institute

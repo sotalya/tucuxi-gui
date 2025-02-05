@@ -2380,6 +2380,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
         cmd += "-p " + templatePath + " ";
         cmd += "-o " + _cdssOutputPath;
 
+        std::cout << cmd.toStdString() << std::endl;
+
         std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.toStdString().c_str(), "r"), pclose);
 
         if (!pipe) {

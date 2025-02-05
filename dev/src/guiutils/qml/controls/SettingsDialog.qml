@@ -67,6 +67,12 @@ DialogBase {
             } else {
                appGlobals.setPercentileCalculation(false);
             }
+
+            if (cdssOnly.checkState == Qt.Checked) {
+                appGlobals.setCdssOnly(true);
+            } else {
+                appGlobals.setCdssOnly(false);
+            }
         }
     }
 
@@ -98,6 +104,11 @@ DialogBase {
             percentileCalculation.checkState = Qt.Checked;
         else
             percentileCalculation.checkState = Qt.Unchecked;
+
+        if (appGlobals.cdssOnly())
+            cdssOnly.checkState = Qt.Checked;
+        else
+            cdssOnly.checkState = Qt.Unchecked;
 
         pathChanged = false
     }
@@ -410,6 +421,13 @@ DialogBase {
                         CheckBox {
                             id: percentileCalculation
                             text: "Enable percentile computation?"
+                            checked: false // true
+                            enabled: !appMode.isDemo()
+                        }
+
+                        CheckBox {
+                            id: cdssOnly
+                            text: "Enable only cdss usage?"
                             checked: false // true
                             enabled: !appMode.isDemo()
                         }

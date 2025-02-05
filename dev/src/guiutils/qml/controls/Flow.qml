@@ -296,6 +296,7 @@ ColumnLayout {
         FlowMenuButton {
             id: adjustmentButton
             objectName: "adjustmentButton"
+            isLast : appGlobals.cdssOnly()
             Layout.preferredWidth: menu.buttonWidth
             legend: (width > 100) ? "Adjustments" : "Adj."
             icon:          "qrc:/icons/flow/adjustments.png"
@@ -341,7 +342,7 @@ ColumnLayout {
             id: reportButton
             objectName: "reportButton"
             Layout.preferredWidth: menu.buttonWidth
-            isLast : true // This is the last button, so don't draw the arrow
+            isLast : !appGlobals.cdssOnly() // This is the last button, so don't draw the arrow
             legend: (width > 100) ? "Reports" : "Rep."
             icon:          "qrc:/icons/toolbar/file.png"
             icon_disabled: "qrc:/icons/toolbar/file_disabled.png"

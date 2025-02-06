@@ -2354,7 +2354,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchUpdate()
     _chartDataController->launchCompute();
 }
 
-void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
+void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(QString _path){
     if (!QFileInfo::exists(QCoreApplication::applicationDirPath() + "/cdss-exec.ini")) {
         QMessageBox msgError;
         msgError.setText("File cdss-exec.ini is missing from the executable folder!");

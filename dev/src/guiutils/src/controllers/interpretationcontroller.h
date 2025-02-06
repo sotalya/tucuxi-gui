@@ -298,7 +298,7 @@ public:
     ///
     void exportCdss();
 
-    Q_INVOKABLE void launchCdss();
+    Q_INVOKABLE void launchCdss(QString _path);
 
     Q_INVOKABLE void launchUpdate();
 

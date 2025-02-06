@@ -26,6 +26,15 @@
 
 #include "admin/src/dal/practician.h"
 
+#ifdef WIN32
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <sys/stat.h>
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
 using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::GuiUtils;
 
@@ -166,7 +175,10 @@ QString AppGlobals::loadCDSSReportPath(){
 }
 
 QString AppGlobals::getDefaultPath(){
-    return "QString::fromStdString(current_working_dir);";
+    char buff[FILENAME_MAX];
+    GetCurrentDir( buff, FILENAME_MAX );
+    std::string current_working_dir(buff);
+    return QString::fromStdString(current_working_dir);
 }
 
 void AppGlobals::loadAnalystSettings()

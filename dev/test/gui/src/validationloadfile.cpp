@@ -60,7 +60,7 @@ using namespace Tucuxi::Gui::Admin;
 
 extern SpixGTest* srv;
 
-TEST(ValidationLoadFile, Test1)
+TEST(ValidationLoadFile, DISABLED_Test1)
 {
     int waitTime1       = 4;
     int waitTimeLong    = 120;

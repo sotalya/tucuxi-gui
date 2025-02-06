@@ -53,11 +53,17 @@ endif(config_demo)
 ## TODO Config gui tests
 if(config_guitest)
     ### TODO
+
+    set(GUI_INCLUDES_DIRS
+            ${CMAKE_CURRENT_SOURCE_DIR}/gui
+            ${CMAKE_CURRENT_SOURCE_DIR}/gui/src
+            "C:/Program Files (x86)/Spix/include")
+else()
+    set(GUI_INCLUDES_DIRS
+            ${CMAKE_CURRENT_SOURCE_DIR}/gui
+            ${CMAKE_CURRENT_SOURCE_DIR}/gui/src)
 endif(config_guitest)
 
-set(GUI_INCLUDES_DIRS
-        ${CMAKE_CURRENT_SOURCE_DIR}/gui
-        ${CMAKE_CURRENT_SOURCE_DIR}/gui/src)
 
 ## Sources
 set(GUI_SOURCE_FILES
@@ -108,6 +114,7 @@ if(WIN32)
     set_target_properties(tucuxi PROPERTIES WIN32_EXECUTABLE true)
 endif()
 
+set(spixwin "C:/Program Files (x86)/Spix/lib/Spix.lib")
 
 if (config_guitest)
     if (WIN32)
@@ -121,8 +128,8 @@ if (config_guitest)
             processingtucucore
             rest
             guitest
-            gtest
-            "C:\Program Files\Spix\lib\Spix.lib"
+            "C:/Program Files (x86)/googletest-distribution/lib/gtest.lib"
+            ${spixwin}
             ${QT_COMPONENTS}
         )
     else()

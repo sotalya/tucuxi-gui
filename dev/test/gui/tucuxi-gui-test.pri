@@ -28,9 +28,9 @@ HEADERS += \
     $$PWD/src/guitest.h
 
 win32 {
-    LIBS += "C:\Program Files\googletest-distribution\lib\gtest.lib"
-    INCLUDEPATH += "C:\Program Files\googletest-distribution\include"
-    INCLUDEPATH += "C:\Program Files\Spix\include"
+    LIBS += "C:\Program Files (x86)\googletest-distribution\lib\gtest.lib"
+    INCLUDEPATH += "C:\Program Files (x86)\googletest-distribution\include"
+    INCLUDEPATH += "C:\Program Files (x86)\Spix\include"
 }
 else {
     LIBS += -lgtest

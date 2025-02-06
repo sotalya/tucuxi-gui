@@ -45,7 +45,7 @@ AppGlobals::AppGlobals() :
     m_autoCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "autoCalculation" ,true).toBool();
     m_percentileCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "percentileCalculation" ,true).toBool();
     m_cdssOnly = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "cdssOnly", false).toBool();
-
+    m_cdssReportPath = loadCDSSReportPath();
 }
 
 bool AppGlobals::showProcessingTime()
@@ -149,6 +149,24 @@ Practician* AppGlobals::getAnalyst()
         loadAnalystSettings();
     }
     return m_analyst;
+}
+
+void AppGlobals::saveCDSSReportPath(){
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "cdssReportPath" , m_cdssReportPath);
+}
+
+void AppGlobals::updateCDSSReportPath(QString path){
+    m_cdssReportPath = path;
+}
+
+QString AppGlobals::loadCDSSReportPath(){
+    QString cdssReportPath = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "cdssReportPath").toString();
+
+    return (cdssReportPath.isEmpty()) ? getDefaultPath() : cdssReportPath;
+}
+
+QString AppGlobals::getDefaultPath(){
+    return "QString::fromStdString(current_working_dir);";
 }
 
 void AppGlobals::loadAnalystSettings()

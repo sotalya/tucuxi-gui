@@ -78,6 +78,10 @@ public:
     Q_INVOKABLE bool percentileCalculation();
     Q_INVOKABLE void setPercentileCalculation(bool enable);
 
+    Q_INVOKABLE QString loadCDSSReportPath();
+    Q_INVOKABLE void saveCDSSReportPath();
+    Q_INVOKABLE void updateCDSSReportPath(QString path);
+
     bool cdssOnly();
     void setCdssOnly(bool cdssOnly);
     Q_PROPERTY(bool cdssOnly READ cdssOnly WRITE setCdssOnly NOTIFY cdssOnlyChanged);
@@ -91,9 +95,11 @@ private:
 
     // Declared private as it is automatically called when we get the analyst the first time
     void loadAnalystSettings();
+    QString getDefaultPath();
 
     static AppGlobals* m_instance;
 
+    QString m_cdssReportPath;
     QString m_listFile;
     QString m_requestFile;
     QString m_flatFile;

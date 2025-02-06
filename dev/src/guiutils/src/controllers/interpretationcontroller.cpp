@@ -2373,7 +2373,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
 
         QString program = execPath;
         QStringList arguments;
-        arguments << "-d" << "./dist/drugfiles"
+        arguments << "-d" << "drugfiles"
                   << "-i" << _cdssQtfPath
                   << "-c" << configPath
                   << "-l" << languagePath
@@ -2390,7 +2390,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
             msgSuccess.exec();
         } else {
             QMessageBox msgError;
-            msgError.setText("An error occured while report generation");
+            msgError.setText("An error occured during report generation");
             msgError.setIcon(QMessageBox::Critical);
             msgError.setWindowTitle("Error");
             msgError.exec();

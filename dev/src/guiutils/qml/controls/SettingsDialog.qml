@@ -49,7 +49,7 @@ DialogBase {
             sentencesPalettes.exportToXml();
             sentencesPalettes.saveXMLPath()
 
-            appGlobals.updateCDSSReportPath(cdssReportPath)
+            appGlobals.updateCDSSReportPath(cdssReportPath.text)
             appGlobals.saveCDSSReportPath()
 
             if (showProcessingTime.checkState == Qt.Checked)

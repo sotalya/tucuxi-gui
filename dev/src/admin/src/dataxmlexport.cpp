@@ -450,7 +450,9 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::CoreMeasureList *list)
         writer.writeStartElement("sample");
         writer.writeTextElement("sampleId", measure->sampleID());
         writer.writeTextElement("sampleDate", writeDate(measure->getMoment()));
+        writer.writeStartElement("concentrations");
         saveIdentifiableAmount("concentration", measure->getConcentration());
+        writer.writeEndElement(); // End of concentrations
         writer.writeEndElement(); // End of sample
     }
     writer.writeEndElement(); // End of samples
@@ -504,7 +506,7 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::DosageHistory *history)
 bool DataXmlExport::saveIdentifiableAmount(const QString &tagName, Tucuxi::Gui::Core::IdentifiableAmount *amount)
 {
     writer.writeStartElement(tagName);
-    writer.writeTextElement("amountId", amount->getAmountId());
+    writer.writeTextElement("analyteId", amount->getAmountId());
     writer.writeTextElement("value", QString("%1").arg(amount->getDbvalue()));
     writer.writeTextElement("unit", amount->getUnitstring());
     writer.writeEndElement();

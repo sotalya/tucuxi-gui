@@ -71,8 +71,8 @@ DataXmlExport::DataXmlExport()
 QString _toString(Tucuxi::Core::Formulation _formulation) {
     static std::map<Tucuxi::Core::Formulation, std::string> map = {
         {Tucuxi::Core::Formulation::Undefined, "undefined"},
-        {Tucuxi::Core::Formulation::ParenteralSolution,"parenteral solution"},
-        {Tucuxi::Core::Formulation::OralSolution, "oral solution"},
+        {Tucuxi::Core::Formulation::ParenteralSolution,"parenteralSolution"},
+        {Tucuxi::Core::Formulation::OralSolution, "oralSolution"},
         {Tucuxi::Core::Formulation::Test, "test"}
     };
     return QString::fromStdString(map.at(_formulation));
@@ -359,6 +359,8 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::DrugResponseAnalysis *drugResponseAn
 bool DataXmlExport::save(Tucuxi::Gui::Core::ActiveSubstance *substance)
 {
     writer.writeTextElement("drugId", substance->getSubstanceId());
+    writer.writeTextElement("activePrinciple", substance->getSubstanceId());
+    writer.writeTextElement("brandName", "somebrand");
     writer.writeTextElement("atc", substance->getAtc()[0]);
     return true;
 }
@@ -375,20 +377,21 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::PatientVariateList *list)
 {
     writer.writeStartElement("covariates");
     foreach(Tucuxi::Gui::Core::PatientVariate *variate, list->getList()) {
-        writer.writeStartElement("covariate");
-        writer.writeTextElement("covariateId", variate->getCovariateId());
-        writer.writeTextElement("date", writeDate(variate->getDate()));
-        if (variate->getCovariateId() != "birthdate") {
-            if (variate->getCovariateId() != "age") {
-                // 'age' must not be in the covariates.
+        if (variate->getCovariateId() != "age") {
+            writer.writeStartElement("covariate");
+            writer.writeTextElement("covariateId", variate->getCovariateId());
+            writer.writeTextElement("date", writeDate(variate->getDate()));
+            if (variate->getCovariateId() != "birthdate") {
                 writer.writeTextElement("unit", variate->getQuantity()->getUnitstring());
                 writer.writeTextElement("value", QString("%1").arg(variate->getQuantity()->getDbvalue()));
+                writer.writeTextElement("dataType", QMetaType::typeName(variate->getType()));
+            } else {
+                writer.writeTextElement("value", variate->getValueAsString());
+                writer.writeTextElement("dataType", "date");
             }
-        } else {
-            writer.writeTextElement("value", variate->getValueAsString());
+            writer.writeTextElement("nature", "discrete");
+            writer.writeEndElement(); // End of covariate
         }
-        writer.writeTextElement("dataType", QMetaType::typeName(variate->getType()));
-        writer.writeEndElement(); // End of covariate
     }
     writer.writeEndElement(); // End of covariates
     return true;
@@ -415,7 +418,8 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::Dosage *dosage)
     writer.writeStartElement("dosageLoop");
     writer.writeStartElement("lastingDosage");
 
-    writer.writeTextElement("interval", QString("%1").arg(dosage->getDbinterval()));
+    // TODO : That's wrong, just a test here
+    writer.writeTextElement("interval", QString("%1:00:00").arg(dosage->getDbinterval()));
 
     writer.writeStartElement("dose");
     writer.writeTextElement("value", QString("%1").arg(dosage->getQuantity()->getDbvalue()));

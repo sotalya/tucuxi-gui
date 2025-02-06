@@ -226,12 +226,35 @@ bool DataXmlExport::saveAdminData(Interpretation *interpretation)
             writer.writeTextElement("country", practician->person()->location()->country());
             writer.writeEndElement(); // End of address
             writer.writeStartElement("phone");
-            writer.writeTextElement("number", "practician->person()->getPhones()->at(0)->getNumber()");
-            writer.writeEmptyElement("type");
+            if (!practician->person()->getPhones()->isEmpty()){
+                writer.writeTextElement("number", practician->person()->getPhones()->at(0)->getNumber());
+                if (practician->person()->getPhones()->at(0)->getType() == PhoneType::Private) {
+                    writer.writeTextElement("type", "private");
+                } else if (practician->person()->getPhones()->at(0)->getType() == PhoneType::Professional) {
+                    writer.writeTextElement("type", "professional");
+                } else {
+                    writer.writeEmptyElement("type");
+                }
+
+            } else {
+                writer.writeEmptyElement("number");
+                writer.writeEmptyElement("type");
+            }
             writer.writeEndElement(); // End of phone
             writer.writeStartElement("email");
-            writer.writeTextElement("address", "practician->person()->emails().at(0)->getEmail()");
-            writer.writeEmptyElement("type");
+            if(!practician->person()->emails().empty()) {
+                writer.writeTextElement("address", practician->person()->emails().at(0)->getEmail());
+                if (practician->person()->emails().at(0)->getType() == Type::Private) {
+                    writer.writeTextElement("type", "private");
+                } else if (practician->person()->emails().at(0)->getType() == Type::Professional) {
+                    writer.writeTextElement("type", "professional");
+                } else {
+                    writer.writeEmptyElement("type");
+                }
+            } else {
+                writer.writeEmptyElement("address");
+                writer.writeEmptyElement("type");
+            }
             writer.writeEndElement(); // End of email
         }
         writer.writeEndElement(); // End of person
@@ -249,12 +272,34 @@ bool DataXmlExport::saveAdminData(Interpretation *interpretation)
                 writer.writeTextElement("country", practician->institute()->location()->country());
                 writer.writeEndElement(); // End of address
                 writer.writeStartElement("phone");
-                writer.writeTextElement("number", "practician->institute()->phones().at(0)->getNumber()");
-                writer.writeEmptyElement("type");
+                if (!practician->institute()->phones().empty()){
+                    writer.writeTextElement("number", practician->institute()->phones().at(0)->getNumber());
+                    if (practician->institute()->phones().at(0)->getType() == PhoneType::Private) {
+                        writer.writeTextElement("type", "private");
+                    } else if (practician->institute()->phones().at(0)->getType() == PhoneType::Professional) {
+                        writer.writeTextElement("type", "professional");
+                    } else {
+                        writer.writeEmptyElement("type");
+                    }
+                } else {
+                    writer.writeEmptyElement("number");
+                    writer.writeEmptyElement("type");
+                }
                 writer.writeEndElement(); // End of phone
                 writer.writeStartElement("email");
-                writer.writeTextElement("address", "practician->institute()->emails().at(0)->getEmail()");
-                writer.writeEmptyElement("type");
+                if(!practician->institute()->emails().empty()){
+                    writer.writeTextElement("address", practician->institute()->emails().at(0)->getEmail());
+                    if(practician->institute()->emails().at(0)->getType() == Type::Private){
+                        writer.writeTextElement("type", "private");
+                    } else if (practician->institute()->emails().at(0)->getType() == Type::Professional) {
+                        writer.writeTextElement("type", "professional");
+                    } else {
+                        writer.writeEmptyElement("type");
+                    }
+                } else {
+                    writer.writeEmptyElement("address");
+                    writer.writeEmptyElement("type");
+                }
                 writer.writeEndElement(); // End of email
             }
         }

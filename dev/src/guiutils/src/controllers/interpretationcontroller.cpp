@@ -2367,6 +2367,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
         QString execPath = settingsFile.value("exec", "exec").toString();
         QString configPath = settingsFile.value("config", "config").toString();
         QString templatePath = settingsFile.value("template", "template").toString();
+        QString templateName = settingsFile.value("templateName", "templateName").toString();
         QString languagePath = settingsFile.value("language", "language").toString();
 
         exportCdss();
@@ -2377,7 +2378,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
                   << "-i" << _cdssQtfPath
                   << "-c" << configPath
                   << "-l" << languagePath
-                  << "-t" << "chuv_imatinib_comp"
+                  << "-t" << templateName
                   << "-p" << templatePath
                   << "-o" << _cdssOutputPath;
 

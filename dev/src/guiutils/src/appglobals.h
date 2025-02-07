@@ -81,6 +81,7 @@ public:
     Q_INVOKABLE QString loadCDSSReportPath();
     Q_INVOKABLE void saveCDSSReportPath();
     Q_INVOKABLE void updateCDSSReportPath(QString path);
+    QString getCDSSReportPath();
 
     bool cdssOnly();
     void setCdssOnly(bool cdssOnly);

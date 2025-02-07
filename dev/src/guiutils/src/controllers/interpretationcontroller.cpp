@@ -2354,7 +2354,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchUpdate()
     _chartDataController->launchCompute();
 }
 
-void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(QString _path){
+void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
     if (!QFileInfo::exists(QCoreApplication::applicationDirPath() + "/cdss-exec.ini")) {
         QMessageBox msgError;
         msgError.setText("File cdss-exec.ini is missing from the executable folder!");
@@ -2380,12 +2380,12 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(QString _path){
                   << "-l" << languagePath
                   << "-t" << templateName
                   << "-p" << templatePath
-                  << "-o" << _cdssOutputPath;
+                  << "-o" << AppGlobals::getInstance()->getCDSSReportPath();
 
         qint64 pid;
         if (QProcess::startDetached(program, arguments, QString(), &pid)) {
             QMessageBox msgSuccess;
-            msgSuccess.setText("Successfuly save report at " +  _cdssOutputPath);
+            msgSuccess.setText("Successfuly save report at " +  AppGlobals::getInstance()->getCDSSReportPath());
             msgSuccess.setIcon(QMessageBox::Information);
             msgSuccess.setWindowTitle("Success");
             msgSuccess.exec();
@@ -2459,11 +2459,15 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCdss()
             msgError.exec();
         } else {
             // Open a dialog window to choose where to save CDSS data
-            QString dirPath;
-            QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(),
-                                                            tr("Save Data"),
-                                                            dirPath,
-                                                            tr("tqf File (*.tqf)"));
+            QString dirPath = AppGlobals::getInstance()->getCDSSReportPath();
+            QString fileName = QString("%1/%2_%3.tqf")
+                                    .arg(dirPath)
+                                    .arg(drugId)
+                                   .arg(QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss"));
+            // QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(),
+            //                                                 tr("Save Data"),
+            //                                                 dirPath,
+            //                                                 tr("tqf File (*.tqf)"));
             // Create exporter
             DataXmlExport exporter;
             QString xml = exporter.toCdssXml(getInterpretation(), substanceId, drugId);

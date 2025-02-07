@@ -168,6 +168,10 @@ void AppGlobals::updateCDSSReportPath(QString path){
     m_cdssReportPath = path;
 }
 
+QString AppGlobals::getCDSSReportPath(){
+    return m_cdssReportPath;
+}
+
 QString AppGlobals::loadCDSSReportPath(){
     QString cdssReportPath = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "cdssReportPath").toString();
 

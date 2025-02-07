@@ -22,6 +22,8 @@
 #include <qmessagebox.h>
 #include <QProcess>
 #include <QDir>
+#include <QSettings>
+#include <QCoreApplication>
 
 #include "flatrequestfileclient.h"
 #include "flatrequestparameters.h"
@@ -50,7 +52,25 @@ void FlatRequestFileClient::constructFileFromDB()
     }
 #endif
 
-    QString pythonCommand = "dbConnect.exe -o import.xml -d cefepime,vanco,vorico -u " + username + " -p " + password;
+    QString configFilename = QCoreApplication::applicationDirPath() + "/flatrequest.ini";
+
+    // Display a warning and return if config file don't exist
+    if (!QFile::exists(configFilename)) {
+        QMessageBox::warning(nullptr, "Error while loading configuration file", "The flatrequest .ini configuration file could not be loaded");
+        return;
+    }
+
+    QSettings settings(configFilename, QSettings::IniFormat);
+
+    QString drugsString = settings.value("drugs_query", "").toString();
+
+    // Split the string into a QStringList, skip if there is empty elements
+    QStringList drugsList = drugsString.split(",", Qt::SkipEmptyParts);
+
+    // Put the drug in correct parameter format
+    QString drugsParameter = drugsList.join(",");
+
+    QString pythonCommand = "dbConnect.exe -o import.xml -d " + drugsParameter + " -u " + username + " -p " + password;
     // QString pythonCommand = "python main.py -r -o import.xml -d cefepime -u " + username + " -p " + password;
 
     process.startCommand(pythonCommand);

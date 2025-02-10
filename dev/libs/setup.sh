@@ -9,7 +9,7 @@ cd $SCRIPTPATH/xerces-c
 mkdir build
 cd build
 cmake -Dnetwork:BOOL=OFF -Dtranscoder=iconv -DBUILD_SHARED_LIBS:BOOL=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON  ..
-make -j$(nproc)
+make -j 12
 
 $SCRIPTPATH/tucuxi-core/setup.sh
 

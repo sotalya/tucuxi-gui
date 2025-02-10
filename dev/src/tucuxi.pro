@@ -20,6 +20,12 @@ SUBDIRS += rest
 #SUBDIRS += restclient restserver
 #}
 
+macx {
+    QMAKE_CXXFLAGS += -arch arm64
+    QMAKE_LFLAGS += -arch arm64
+    QMAKE_MACOSX_DEPLOYMENT_TARGET=15.3
+}
+
 #Drug editor has its own sub-project
 #xmleditor.depends = core
 

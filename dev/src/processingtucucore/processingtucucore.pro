@@ -7,9 +7,10 @@ unix {
 win32 {
     include ($${TUCUXIROOTDIR}/make/qtcreator/includepaths.pri)
 }
+include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
 include ($${TUCUXIROOTDIR}/make/qtcreator/tucucore.pri)
 include ($${TUCUXIROOTDIR}/make/qtcreator/tucucrypto.pri)
-include ($${TUCUXIROOTDIR}/make/qtcreator/tucucommon.pri)
+
 config_sign {
     include ($${TUCUXIROOTDIR}/make/qtcreator/tucusign.pri)
 }

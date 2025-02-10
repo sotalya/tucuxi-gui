@@ -29,7 +29,7 @@ QT += gui printsupport quick quickwidgets printsupport svg network webchannel we
     android {
         reportpath = /assets
     }
-    copydata.commands = $$quote($(COPY_DIR) $${reportsource} $${reportpath}$$escape_expand(\n\t))
+    copydata.commands = $$quote(mkdir -p $${reportpath}; $(COPY_DIR) $${reportsource} $${reportpath}$$escape_expand(\n\t))
     win32 {
         reportpath ~= s,/,\\,g
         reportsource ~= s,/,\\,g

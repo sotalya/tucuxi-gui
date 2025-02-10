@@ -445,12 +445,28 @@ DialogBase {
 
                             EntityLabel {
                                 Layout.preferredWidth: 180
-                                text: "Saving Report Path"
+                                text: "CDSS Reports Path"
                             }
                             EntityTextField {
                                 id: cdssReportPath
                                 Layout.fillWidth:  true
                             }
+
+
+                            Button {
+                                text: qsTr("Browse...")
+                                onClicked: {
+                                    folderDialog.currentFolder = "file://" + cdssReportPath.text;
+                                    folderDialog.open()
+                                }
+                            }
+
+                            FolderDialog {
+                                id: folderDialog
+                                onAccepted: cdssReportPath.text = currentFolder.toString().substring(7)
+                            }
+
+
                         }
                     }
 

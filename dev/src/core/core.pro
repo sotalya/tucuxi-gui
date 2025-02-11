@@ -68,6 +68,7 @@ HEADERS	+= \
     core.h \
     definitionmanager.h \
     distributor.h \
+    ephemeraldb.h \
     pluginmanager.h \
     stdparamnames.h \
     settings.h \
@@ -136,6 +137,7 @@ SOURCES	+= \
     core.cpp \
 #    core_errors.cpp \
     definitionmanager.cpp \
+    ephemeraldb.cpp \
     distributor.cpp \
     pluginmanager.cpp \
     stdparamnames.cpp \

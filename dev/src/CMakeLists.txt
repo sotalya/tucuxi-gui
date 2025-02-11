@@ -20,9 +20,6 @@ get_target_property(APPUTILS_INCLUDES apputils INTERFACE_INCLUDE_DIRECTORIES)
 add_subdirectory(core/)
 get_target_property(CORE_INCLUDES core INTERFACE_INCLUDE_DIRECTORIES)
 
-add_subdirectory(databases/)
-get_target_property(DATABASES_INCLUDES databases INTERFACE_INCLUDE_DIRECTORIES)
-
 add_subdirectory(flatrequests/)
 get_target_property(FLATREQUESTS_INCLUDES flatrequests INTERFACE_INCLUDE_DIRECTORIES)
 
@@ -138,7 +135,6 @@ if (config_guitest)
                 admin
                 apputils
                 core
-                databases
                 flatrequests
                 guiutils
                 processingtucucore
@@ -156,7 +152,6 @@ else()
             admin
             apputils
             core
-            databases
             flatrequests
             guiutils
             processingtucucore
@@ -169,7 +164,6 @@ target_include_directories(tucuxi
         ${ADMIN_INCLUDES}
         ${APPUTILS_INCLUDES}
         ${CORE_INCLUDES}
-        ${DATABASES_INCLUDES}
         ${FLATREQUESTS_INCLUDES}
         ${GUI_INCLUDES_DIRS}
         ${GUIUTILS_INCLUDES}

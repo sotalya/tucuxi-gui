@@ -262,6 +262,8 @@ AbstractRepository * PluginManager::loadDatabase(const DATABASEENGINE &engine) {
             }
         }
     }
+    LOG(QtFatalMsg, Tucuxi::Gui::Core::NODATABASE, QObject::tr("Could not load the db plugin"));
+    return nullptr;
 }
 
 //For each plugins directories, search for plugins, load the factories and save them

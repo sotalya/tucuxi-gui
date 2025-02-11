@@ -22,6 +22,7 @@ DialogBase {
     property var stdTreatment
 
     property var pathChanged
+    property var cdssPathChanged
 
     function applyToAnalyst(analyst) {
         analyst.person.firstname = analystFirstname.text
@@ -47,6 +48,9 @@ DialogBase {
             sentencesPalettes.filename = xmlPathETF.text
             sentencesPalettes.exportToXml();
             sentencesPalettes.saveXMLPath()
+
+            appGlobals.updateCDSSReportPath(cdssReportPath.text)
+            appGlobals.saveCDSSReportPath()
 
             if (showProcessingTime.checkState == Qt.Checked)
                 appGlobals.setShowProcessingTime(true);
@@ -84,6 +88,7 @@ DialogBase {
                 messageDialog.open()
             }
         }
+
         return true;
     }
 
@@ -112,6 +117,7 @@ DialogBase {
             cdssOnly.checkState = Qt.Unchecked;
 
         pathChanged = false
+        cdssPathChanged = false
     }
 
     function loadAnalyst()
@@ -134,7 +140,7 @@ DialogBase {
             analystAffiliation.text = analyst.institute.name
 
         xmlPathETF.text = sentencesPalettes.loadXMLPath()
-
+        cdssReportPath.text = appGlobals.loadCDSSReportPath()
     }
 
     ColumnLayout {
@@ -431,6 +437,36 @@ DialogBase {
                             text: "Cdss-only interface"
                             checked: false // true
                             enabled: !appMode.isDemo()
+                        }
+
+                        RowLayout {
+                            width: parent.width
+                            spacing: 2
+
+                            EntityLabel {
+                                Layout.preferredWidth: 180
+                                text: "CDSS Reports Path"
+                            }
+                            EntityTextField {
+                                id: cdssReportPath
+                                Layout.fillWidth:  true
+                            }
+
+
+                            Button {
+                                text: qsTr("Browse...")
+                                onClicked: {
+                                    folderDialog.currentFolder = "file://" + cdssReportPath.text;
+                                    folderDialog.open()
+                                }
+                            }
+
+                            FolderDialog {
+                                id: folderDialog
+                                onAccepted: cdssReportPath.text = currentFolder.toString().substring(7)
+                            }
+
+
                         }
                     }
 

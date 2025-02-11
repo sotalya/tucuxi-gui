@@ -62,7 +62,7 @@ void FlatRequestFileClient::constructFileFromDB()
 
     QSettings settings(configFilename, QSettings::IniFormat);
 
-    QString drugsString = settings.value("drugs_query", "").toString();
+    QString drugsString = settings.value("Settings/drugs_query", "").toString();
 
     // Split the string into a QStringList, skip if there is empty elements
     QStringList drugsList = drugsString.split(",", Qt::SkipEmptyParts);

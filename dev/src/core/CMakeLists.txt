@@ -85,6 +85,7 @@ set(CORE_HEADER_FILES
     definitionmanager.h
     distributor.h
     drugxmldescriptor.h
+    ephemeraldb.h
     errors_core.h
     errors_processing.h
     pluginmanager.h
@@ -160,6 +161,7 @@ set(CORE_SOURCE_FILES
     definitionmanager.cpp
     distributor.cpp
     drugxmldescriptor.cpp
+    ephemeraldb.cpp
     pluginmanager.cpp
     processingfactory.cpp
     settings.cpp

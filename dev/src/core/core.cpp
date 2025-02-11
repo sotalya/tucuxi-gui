@@ -39,7 +39,7 @@
 #include "../current_version.h"
 #include "core/interfaces/database.h"
 
-#include "databases/ephemeraldb/ephemeraldb.h"
+#include "ephemeraldb.h"
 #include "core/errors_core.h"
 #include "core/utils/logging.h"
 
@@ -265,7 +265,7 @@ Tucuxi::Gui::Core::AbstractRepository *Core::repository()
 {
     if (_repository == nullptr) {
         LOG(QtDebugMsg, Tucuxi::Gui::Core::NOEZERROR, QObject::tr("loading db"));
-        _repository = pluginManager()->loadDatabase(SQLITE3);
+        _repository = static_cast<AbstractRepository*>(static_cast<CoreRepository*>(new EphemeralDB())); // pluginManager()->loadDatabase(SQLITE3);
     }
     return _repository;
 }

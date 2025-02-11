@@ -455,7 +455,7 @@ private:
     Tucuxi::Gui::Core::CorePatientList* _patients;
 
     QString _cdssOutputPath;
-    QString _cdssQtfPath;
+    QString _cdssTqfPath;
 
     Tucuxi::Gui::Admin::GraphInformationSelection *_graphInformationSelection;
 

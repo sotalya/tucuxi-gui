@@ -602,7 +602,13 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startNewPatient()
 
     populateMultipleActiveSubstance();
     setRawRequest("");
-    FakePatientsCreator().createFakePatients(_patients);
+    // FakePatientsCreator().createFakePatients(_patients);
+
+    // Create an empty patient
+    auto patient = AdminFactory::createEntity<Patient>(ABSTRACTREPO, _patients);
+    static_cast<Patient*>(patient)->person()->birthday(QDate(1960, 1, 1));
+    static_cast<Patient*>(patient)->person()->gender(Person::GenderType::Unknown);
+    _patients->append(patient);
 
     auto analyst = interpretation->getAnalyst();
     auto globalAnalyst = AppGlobals::getInstance()->getAnalyst();

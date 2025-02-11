@@ -2381,7 +2381,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
         QString program = execPath;
         QStringList arguments;
         arguments << "-d" << "drugfiles"
-                  << "-i" << _cdssQtfPath
+                  << "-i" << _cdssTqfPath
                   << "-c" << configPath
                   << "-l" << languagePath
                   << "-t" << templateName
@@ -2496,7 +2496,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCdss()
             out << xml;
             dataFile.close();
 
-            _cdssQtfPath = fileName;
+            _cdssTqfPath = fileName;
             _cdssOutputPath = QFileInfo(fileName).absolutePath();
         }
     }

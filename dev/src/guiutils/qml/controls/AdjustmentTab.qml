@@ -204,7 +204,7 @@ Rectangle {
                                 Layout.alignment: Qt.AlignTop
                                 text: "Launch Report Generation"
                                 implicitWidth: 200
-                                onClicked: interpretationController.launchCdss(appGlobals.loadCDSSReportPath)
+                                onClicked: interpretationController.launchCdss()
                                 visible: appGlobals.cdssOnly
                             }
 

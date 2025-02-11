@@ -24,20 +24,21 @@ QT += gui printsupport quick quickwidgets printsupport svg network webchannel we
     }
 
     macx {
-        reportpath = $${DESTDIR}/$${TARGET}.app/Contents/Resources
+        reportpath = $${DESTDIR}/tucuxi.app/Contents/Resources
+        createreportpath.commands = $$quote(mkdir -p $${reportpath}$$escape_expand(\n\t))
     }
     android {
         reportpath = /assets
     }
-    copydata.commands = $$quote(mkdir -p $${reportpath}; $(COPY_DIR) $${reportsource} $${reportpath}$$escape_expand(\n\t))
+    copydata.commands = $$$(COPY_DIR) $${reportsource} $${reportpath}$$escape_expand(\n\t))
     win32 {
         reportpath ~= s,/,\\,g
         reportsource ~= s,/,\\,g
         copydata.commands = $(COPY_DIR) $$shell_quote($${reportsource}) $$shell_quote($${reportpath})$$escape_expand(\n\t))
     }
 
-    unix {
-        first.depends = $(first) copydata
+    macx {
+        first.depends = $(first) createreportpath copydata
     }
     else {
         first.depends = $(first) copydata
@@ -45,8 +46,9 @@ QT += gui printsupport quick quickwidgets printsupport svg network webchannel we
     export(first.depends)
 
     export(copydata.commands)
-    unix {
-        QMAKE_EXTRA_TARGETS += first copydata
+    macx {
+        export(createreportpath.commands)
+        QMAKE_EXTRA_TARGETS += first createreportpath copydata
     }
     else {
         QMAKE_EXTRA_TARGETS += first copydata
@@ -167,4 +169,3 @@ include(../translation.pri)
 #Third party shared libraries
 #include(../qwt.pri)
 include(../botan.pri)
-

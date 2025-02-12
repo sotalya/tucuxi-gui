@@ -62,6 +62,12 @@ INCLUDEPATH+=$$PWD/../libs/xerces-c/build/src
 # TODO -> Check on other OS
 # qt taken out of the configs because otherwise it didnt compile on windows
 CONFIG += thread rtti silent c++20 warn_off embed_manifest_dll embed_manifest_exe
+macx {
+     QMAKE_CXXFLAGS += -arch arm64
+     QMAKE_LFLAGS += -arch arm64
+     QMAKE_MACOSX_DEPLOYMENT_TARGET = 15.3
+     CXXFLAGS += -arch arm64
+}
 
 CXXFLAGS += -Wwrite-strings -fexceptions -Wall
 CFLAGS += -fexceptions

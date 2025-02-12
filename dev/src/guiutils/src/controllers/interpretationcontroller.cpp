@@ -2376,11 +2376,43 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
         QString templateName = settingsFile.value("templateName", "templateName").toString();
         QString languagePath = settingsFile.value("language", "language").toString();
 
+        QDir templatesDir(templatePath);
+        QString tPath = templatesDir.filePath(templateName);
+        // Handle the fact that Macs incorporate the required data into the .app by prepending the application directory.
+#ifdef __APPLE__
+        execPath = QCoreApplication::applicationDirPath() + "/" + execPath;
+        configPath = QCoreApplication::applicationDirPath() + "/" + configPath;
+        templatePath = tPath;
+        languagePath = QCoreApplication::applicationDirPath() + "/" + languagePath;
+#endif
+
+        // Validate the paths in the configuration file.
+        QList<QString> paramList({execPath, configPath, templatePath, tPath, languagePath});
+        QList<QString> paramExpl({"executable file path", "configuration file path",
+                    "templates directory path", "template name", "languages directory path"});
+
+        bool ok = true;
+        for (size_t i = 0; i < paramList.size(); ++i) {
+            if (!QFileInfo::exists(paramList.at(i))) {
+                ok = false;
+                QMessageBox msgError;
+                msgError.setText("Invalid CDSS " + paramExpl.at(i) + " in configuration file: " + paramList.at(i));
+                msgError.setIcon(QMessageBox::Critical);
+                msgError.setWindowTitle("Error encountered generating CDSS report");
+                msgError.exec();
+            }
+        }
+
+        if (!ok) {
+            return;
+        }
+
         exportCdss();
 
         QString program = execPath;
         QStringList arguments;
-        arguments << "-d" << "drugfiles"
+        QProcess process;
+        arguments << "-d" << CORE->path(Tucuxi::Gui::Core::Core::PathType::Drugs2)
                   << "-i" << _cdssTqfPath
                   << "-c" << configPath
                   << "-l" << languagePath
@@ -2388,18 +2420,34 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
                   << "-p" << templatePath
                   << "-o" << AppGlobals::getInstance()->getCDSSReportPath();
 
-        qint64 pid;
-        if (QProcess::startDetached(program, arguments, QString(), &pid)) {
-            QMessageBox msgSuccess;
-            msgSuccess.setText("Successfuly save report at " +  AppGlobals::getInstance()->getCDSSReportPath());
-            msgSuccess.setIcon(QMessageBox::Information);
-            msgSuccess.setWindowTitle("Success");
-            msgSuccess.exec();
+        // Start the process with the given program and arguments
+        process.start(program, arguments);
+
+        // Wait for the process to finish and handle the output
+        if (process.waitForStarted()) {
+            qDebug() << "Process started successfully!";
+
+            // Wait for the process to finish and get the result
+            process.waitForFinished();
+
+            // Print the output of the process (standard output)
+            QByteArray output = process.readAllStandardOutput();
+            qDebug() << "Process output:\n" << output;
+
+            // Optionally, print any error from the process
+            QByteArray error = process.readAllStandardError();
+            if (!error.isEmpty()) {
+                QMessageBox msgError;
+                msgError.setText("CDSS generation error: " + error);
+                msgError.setIcon(QMessageBox::Critical);
+                msgError.setWindowTitle("Error encountered generating CDSS report");
+                msgError.exec();
+            }
         } else {
             QMessageBox msgError;
-            msgError.setText("An error occured during report generation");
+            msgError.setText("Failed to start CDSS generation!");
             msgError.setIcon(QMessageBox::Critical);
-            msgError.setWindowTitle("Error");
+            msgError.setWindowTitle("Error encountered generating CDSS report");
             msgError.exec();
         }
     }

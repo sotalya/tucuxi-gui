@@ -36,6 +36,12 @@ add_definitions(-DDRUGSPATH=${DRUGSPATH})
 add_definitions(-DNOLICENSE=${NOLICENSE})
 add_definitions(-DNOSTARTUPSCREEN=${NOSTARTUPSCREEN})
 
+# Target arm64 architecture
+set(CMAKE_OSX_ARCHITECTURES "arm64")
+
+# Set the minimum macOS version (e.g., macOS 15.3)
+set(CMAKE_OSX_DEPLOYMENT_TARGET "15.3")
+
 ### Qt set configs and find components
 
 if (config_guitest)

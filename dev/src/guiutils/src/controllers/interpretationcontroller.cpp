@@ -2386,7 +2386,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
 
         // Validate the paths in the configuration file.
         QList<QString> paramList({execPath, configPath, templatePath, templatePath+templateName, languagePath});
-        QList<QString> paramExpl({"executable file", "configuration file", "templates directory", "template file", "languages directory"});
+        QList<QString> paramExpl({"executable file path", "configuration file path",
+                    "templates directory path", "template name", "languages directory path"});
 
         bool ok = true;
         for (size_t i = 0; i < paramList.size(); ++i) {

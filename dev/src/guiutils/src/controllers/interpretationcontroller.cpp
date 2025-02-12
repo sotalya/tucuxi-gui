@@ -2370,22 +2370,24 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
     } else {
         QSettings settingsFile(QCoreApplication::applicationDirPath() + "/cdss-exec.ini",
                                QSettings::IniFormat);
-        QString execPath = "/" + settingsFile.value("exec", "exec").toString();
-        QString configPath = "/" + settingsFile.value("config", "config").toString();
-        QString templatePath = "/" + settingsFile.value("template", "template").toString() + "/";
+        QString execPath = settingsFile.value("exec", "exec").toString();
+        QString configPath = settingsFile.value("config", "config").toString();
+        QString templatePath = settingsFile.value("template", "template").toString();
         QString templateName = settingsFile.value("templateName", "templateName").toString();
-        QString languagePath = "/" + settingsFile.value("language", "language").toString();
+        QString languagePath = settingsFile.value("language", "language").toString();
 
+        QDir templatesDir(templatePath);
+        QString tPath = templatesDir.filePath(templateName);
         // Handle the fact that Macs incorporate the required data into the .app by prepending the application directory.
 #ifdef __APPLE__
-        execPath = QCoreApplication::applicationDirPath() + execPath;
-        configPath = QCoreApplication::applicationDirPath() + configPath;
-        templatePath = QCoreApplication::applicationDirPath() + templatePath;
-        languagePath = QCoreApplication::applicationDirPath() + languagePath;
+        execPath = QCoreApplication::applicationDirPath() + "/" + execPath;
+        configPath = QCoreApplication::applicationDirPath() + "/" + configPath;
+        templatePath = tPath;
+        languagePath = QCoreApplication::applicationDirPath() + "/" + languagePath;
 #endif
 
         // Validate the paths in the configuration file.
-        QList<QString> paramList({execPath, configPath, templatePath, templatePath+templateName, languagePath});
+        QList<QString> paramList({execPath, configPath, templatePath, tPath, languagePath});
         QList<QString> paramExpl({"executable file path", "configuration file path",
                     "templates directory path", "template name", "languages directory path"});
 

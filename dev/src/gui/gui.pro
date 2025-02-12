@@ -115,6 +115,12 @@ INSTALLS    += def
     }
 }
 
+macx {
+    copydata.commands = $$quote(cp $${DESTDIR}/../../cdss-exec.ini $${DESTDIR}/../../cdss-config.ini $${DESTDIR}/$${TARGET}.app/Contents/MacOS$$escape_expand(\n\t))
+    export(copyconfig.commands)
+    QMAKE_EXTRA_TARGETS += copyconfig
+}
+
 #    QMAKE_EXTRA_TARGETS += copydata2
 #    ezechiel.depends += copydata2
 

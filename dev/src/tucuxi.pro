@@ -23,7 +23,7 @@ SUBDIRS += rest
 macx {
     QMAKE_CXXFLAGS += -arch arm64
     QMAKE_LFLAGS += -arch arm64
-    QMAKE_MACOSX_DEPLOYMENT_TARGET=15.3
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 15.3
 }
 
 #Drug editor has its own sub-project
@@ -95,4 +95,3 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../../build/Debug/dist/android-source
     # Because of macros and clang:
     QMAKE_CXXFLAGS += -Wno-extra-semi-stmt
 }
-

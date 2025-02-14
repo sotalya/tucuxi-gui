@@ -2376,20 +2376,23 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
         QString templateName = settingsFile.value("templateName", "templateName").toString();
         QString languagePath = settingsFile.value("language", "language").toString();
 
-        QDir templatesDir(templatePath);
-        QString tPath = templatesDir.filePath(templateName);
+
         // Handle the fact that Macs incorporate the required data into the .app by prepending the application directory.
 #ifdef __APPLE__
         execPath = QCoreApplication::applicationDirPath() + "/" + execPath;
         configPath = QCoreApplication::applicationDirPath() + "/" + configPath;
-        templatePath = tPath;
+        templatePath = QCoreApplication::applicationDirPath() + "/" + templatePath;
         languagePath = QCoreApplication::applicationDirPath() + "/" + languagePath;
 #endif
+        QDir templatesDir(templatePath);
+        QString tPath = templatesDir.filePath(templateName);
+        qDebug() << tPath;
 
+        
         // Validate the paths in the configuration file.
         QList<QString> paramList({execPath, configPath, templatePath, tPath, languagePath});
         QList<QString> paramExpl({"executable file path", "configuration file path",
-                    "templates directory path", "template name", "languages directory path"});
+                    "templates directory path", "template directory path", "languages directory path"});
 
         bool ok = true;
         for (size_t i = 0; i < paramList.size(); ++i) {

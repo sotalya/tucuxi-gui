@@ -616,6 +616,10 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startNewPatient()
     analyst->institute()->name(globalAnalyst->institute()->name());
     analyst->person()->firstname(globalAnalyst->person()->firstname());
     analyst->person()->name(globalAnalyst->person()->name());
+    analyst->person()->location()->address(globalAnalyst->person()->location()->address());
+    analyst->person()->location()->city(globalAnalyst->person()->location()->city());
+    analyst->person()->location()->country(globalAnalyst->person()->location()->country());
+    analyst->person()->location()->postcode(globalAnalyst->person()->location()->postcode());
     analyst->role(globalAnalyst->role());
     auto phone = CoreFactory::createEntity<Phone>(ABSTRACTREPO,analyst->person()->getPhones());
     if (globalAnalyst->person()->getPhones()->size() > 0) {

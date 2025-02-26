@@ -165,10 +165,10 @@ DialogBase {
                 width: implicitWidth
             }
 
-            TabButton {
-                text: qsTr("Connectivity")
-                width: implicitWidth
-            }
+            //TabButton {
+            //    text: qsTr("Connectivity")
+            //    width: implicitWidth
+            //}
             /*
             TabButton {
                 text: qsTr("Activity")
@@ -268,6 +268,7 @@ DialogBase {
 
                             EntityLabel {
                                 text: "Phone number:"
+                                Layout.preferredWidth: 100
                             }
                             EntityTextField {
                                 id: analystPhone
@@ -529,10 +530,10 @@ DialogBase {
                 }
             }
 
-            Item {
-                id: connectivityTab
-                width: parent.width
-                                }
+            // Item {
+            //    id: connectivityTab
+            //    width: parent.width
+            //                    }
             /*
             Item {
                 id: activityTab

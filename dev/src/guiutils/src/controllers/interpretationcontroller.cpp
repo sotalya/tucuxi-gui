@@ -2390,9 +2390,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::launchCdss(){
 #endif
         QDir templatesDir(templatePath);
         QString tPath = templatesDir.filePath(templateName);
-        qDebug() << tPath;
 
-        
         // Validate the paths in the configuration file.
         QList<QString> paramList({execPath, configPath, templatePath, tPath, languagePath});
         QList<QString> paramExpl({"executable file path", "configuration file path",

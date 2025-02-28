@@ -28,7 +28,7 @@ DialogBase {
         analyst.person.firstname = analystFirstname.text
         analyst.person.name = analystLastname.text
         analyst.role = analystRole.text
-        analyst.institute.location.address = analystAddress.text
+        analyst.person.location.address = analystAddress.text
         analyst.person.location.city = analystCity.text
         analyst.person.location.postcode = analystPostcode.text
         analyst.person.location.state = analystState.text
@@ -126,8 +126,7 @@ DialogBase {
         analystLastname.text = analyst.person.name
         analystFirstname.text = analyst.person.firstname
 
-        if (analyst.institute)
-            analystAddress.text = analyst.institute.location.address
+        analystAddress.text = analyst.person.location.address
         analystCity.text = analyst.person.location.city
         analystPostcode.text = analyst.person.location.postcode
         analystState.text = analyst.person.location.state
@@ -254,7 +253,6 @@ DialogBase {
                             //Layout.minimumHeight:   physicianInCharge.rowHeight
                             Layout.minimumWidth: 400
                             spacing: 2
-
 
                             EntityLabel {
                                 text: "Role:"

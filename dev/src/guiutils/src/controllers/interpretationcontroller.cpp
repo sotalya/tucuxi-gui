@@ -584,6 +584,27 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::populateSingleActiveSubsta
     _activeSubstances->update();
 }
 
+void Tucuxi::Gui::GuiUtils::InterpretationController::setAnalystFromGlobals()
+{
+    auto analyst = _interpretation->getAnalyst();
+    auto globalAnalyst = AppGlobals::getInstance()->getAnalyst();
+    analyst->title(globalAnalyst->title());
+    analyst->institute()->name(globalAnalyst->institute()->name());
+    analyst->person()->firstname(globalAnalyst->person()->firstname());
+    analyst->person()->name(globalAnalyst->person()->name());
+    analyst->person()->location()->address(globalAnalyst->person()->location()->address());
+    analyst->person()->location()->city(globalAnalyst->person()->location()->city());
+    analyst->person()->location()->state(globalAnalyst->person()->location()->state());
+    analyst->person()->location()->country(globalAnalyst->person()->location()->country());
+    analyst->person()->location()->postcode(globalAnalyst->person()->location()->postcode());
+    analyst->role(globalAnalyst->role());
+    auto phone = CoreFactory::createEntity<Phone>(ABSTRACTREPO,analyst->person()->getPhones());
+    if (globalAnalyst->person()->getPhones()->size() > 0) {
+        phone->setNumber(globalAnalyst->person()->getPhones()->at(0)->getNumber());
+    }
+    analyst->person()->getPhones()->append(phone);
+}
+
 void Tucuxi::Gui::GuiUtils::InterpretationController::startNewPatient()
 {
 
@@ -610,34 +631,10 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startNewPatient()
     static_cast<Patient*>(patient)->person()->gender(Person::GenderType::Unknown);
     _patients->append(patient);
 
-    auto analyst = interpretation->getAnalyst();
-    auto globalAnalyst = AppGlobals::getInstance()->getAnalyst();
-    analyst->title(globalAnalyst->title());
-    analyst->institute()->name(globalAnalyst->institute()->name());
-    analyst->person()->firstname(globalAnalyst->person()->firstname());
-    analyst->person()->name(globalAnalyst->person()->name());
-    analyst->person()->location()->address(globalAnalyst->person()->location()->address());
-    analyst->person()->location()->city(globalAnalyst->person()->location()->city());
-    analyst->person()->location()->country(globalAnalyst->person()->location()->country());
-    analyst->person()->location()->postcode(globalAnalyst->person()->location()->postcode());
-    analyst->role(globalAnalyst->role());
-    auto phone = CoreFactory::createEntity<Phone>(ABSTRACTREPO,analyst->person()->getPhones());
-    if (globalAnalyst->person()->getPhones()->size() > 0) {
-        phone->setNumber(globalAnalyst->person()->getPhones()->at(0)->getNumber());
-    }
-    interpretation->getAnalyst()->person()->getPhones()->append(phone);
-  /*
-    interpretation->getAnalyst()->title("Dr.");
-    interpretation->getAnalyst()->institute()->name("The institute");
-    interpretation->getAnalyst()->person()->firstname("ThePrenom");
-    interpretation->getAnalyst()->person()->name("TheNom");
-    interpretation->getAnalyst()->role("Division head");
-    auto phone = CoreFactory::createEntity<Phone>(ABSTRACTREPO,interpretation->getAnalyst()->person()->getPhones());
-    phone->setNumber("+41 21 123456");
-    interpretation->getAnalyst()->person()->getPhones()->append(phone);
-*/
     // Set it to the controller
     setNewInterpretation(interpretation, true);
+
+    setAnalystFromGlobals();
 
     _interpretation->getDrugResponseAnalysis()->getTreatment()->setActiveSubstanceId("");
     _interpretation->getDrugResponseAnalysis()->setDrugModel(nullptr);
@@ -666,6 +663,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
     interpretation->getDrugResponseAnalysis()->setTreatment(dt);
     dt->setParent(_interpretation->getAnalysis());
     interpretation->setRequest(interpretationRequest);
+
+
 /*
     foreach (CoreMeasure* cm, interpretation->getDrugResponseAnalysis()->getTreatment()->getMeasures()->getList()) {
         cm->getConcentration()->setUnitstring(_defaultUnit);
@@ -685,6 +684,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
     }
 
     setNewInterpretation(interpretation, true);
+
+    setAnalystFromGlobals();
 
 
     populateSingleActiveSubstance(dt->getActiveSubstanceId());
@@ -853,6 +854,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::loadInterpretation(Interpr
         interpretationRequest->setTreatment(dt);
 
     setNewInterpretation(interpretation, false);
+
+    setAnalystFromGlobals();
 
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(patientsView, "reset"));
 

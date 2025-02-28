@@ -192,6 +192,7 @@ void AppGlobals::loadAnalystSettings()
     m_analyst->person()->name(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/name" ,"").toString());
     m_analyst->person()->firstname(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/firstname" ,"").toString());
 
+    m_analyst->person()->location()->address(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/address/address" ,"").toString());
     m_analyst->person()->location()->city(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/address/city" ,"").toString());
     m_analyst->person()->location()->postcode(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/address/postcode" ,"").toString());
     m_analyst->person()->location()->state(SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "analyst/address/state" ,"").toString());
@@ -214,6 +215,7 @@ void AppGlobals::saveAnalystSettings()
     SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/name" ,m_analyst->person()->name());
     SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/firstname" ,m_analyst->person()->firstname());
 
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/address/address" ,m_analyst->person()->location()->address());
     SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/address/city" ,m_analyst->person()->location()->city());
     SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/address/postcode" ,m_analyst->person()->location()->postcode());
     SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "analyst/address/state" ,m_analyst->person()->location()->state());

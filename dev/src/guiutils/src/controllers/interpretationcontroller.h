@@ -304,6 +304,8 @@ public:
 
     Q_INVOKABLE void setRefreshButtonVisible(bool visible);
 
+    void setAnalystFromGlobals();
+
 signals:
     void drugsChanged(Tucuxi::Gui::Core::DrugModelList*);
     void drugModelsChanged(Tucuxi::Gui::Core::DrugModelList*);

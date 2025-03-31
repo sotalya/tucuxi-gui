@@ -209,6 +209,10 @@ class GraphIdentifiableAmount {
         this.multiplier = multiplier;
         this.unitstring = unit;
     }
+
+    valueInUnit(unit) {
+        return this.dbvalue;
+    }
 }
 
 // This class represents a measure, being a date and a concentration.

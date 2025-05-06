@@ -1304,12 +1304,19 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
     }
 
     // If the new active substance is actually the current one, then no need to update anything
-    if (_currentDrugModel == drugModel)
+    if (_currentDrugModel == drugModel) {
+        // We need to display the right info, as the display could have been used just for displaying an
+        // activesubstance, and not a drug model
+        drugTabController->setDrugModelInfo(drugModel);
         return;
+    }
     // TODO I don't know why but the previous test could fail even with identical models.
     // We have to figure out why there are two pointers...
     if (_currentDrugModel != nullptr) {
         if (_currentDrugModel->getDrugModelId() == drugModel->getDrugModelId()) {
+            // We need to display the right info, as the display could have been used just for displaying an
+            // activesubstance, and not a drug model
+            drugTabController->setDrugModelInfo(drugModel);
             return;
         }
     }

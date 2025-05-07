@@ -31,6 +31,7 @@ FlatrequestNameTranslator::FlatrequestNameTranslator()
     map.insert("Dosage creat", "CREATININE_MEASURE");
     map.insert("Dosage vanco", "DRUG_MEASURE");
     map.insert("Dosage cefepime", "DRUG_MEASURE");
+    map.insert("Dosage tacrolimus", "DRUG_MEASURE");
     map.insert("Dosage Residuel cefepime", "DRUG_MEASURE");
     map.insert("Tx Vorico", "DRUG_MEASURE");
     map.insert("debit", "FLOW_RATE");

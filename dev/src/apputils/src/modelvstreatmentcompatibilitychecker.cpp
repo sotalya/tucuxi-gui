@@ -47,7 +47,12 @@ bool ModelVsTreatmentCompatibilityChecker::check(Tucuxi::Gui::Core::DrugModel *m
         else {
             foreach (Tucuxi::Gui::Core::Admin *possibleRoute, possibleRouteList->getList()) {
                 // We need at least a possible route for each dosage
+                // TODO: Check if this check is relevant after all. The next one seems more apropriate
                 if (dosage->getRoute()->getRoute() == possibleRoute->getRoute() ) {
+                    ok = true;
+                }
+
+                if (dosage->getRoute()->getAdministrationRoute() == possibleRoute->getAdministrationRoute()) {
                     ok = true;
                 }
             }

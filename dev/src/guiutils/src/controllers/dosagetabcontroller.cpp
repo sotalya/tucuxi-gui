@@ -162,7 +162,13 @@ void Tucuxi::Gui::GuiUtils::DosageTabController::setAtSteadyState(int index, boo
     _dosages->at(index)->setIsAtSteadyState(isAtSteadyState);
     if (isAtSteadyState) {
         _dosages->at(index)->setApplied(lastDoseTime.addMonths(-2));
-        _dosages->at(index)->setEndTime(lastDoseTime.addMonths(12));
+#ifdef CONFIG_STOPSTEADY
+        // The last dose is really the last dose
+        _dosages->at(index)->setEndTime(lastDoseTime.addSecs(_dosages->at(index)->getDbinterval() * 3600));
+#else // CONFIG_STOPSTEADY
+        // The last dose is not the true last, just one of the doses
+    _dosages->at(index)->setEndTime(lastDoseTime.addMonths(12));
+#endif // CONFIG_STOPSTEADY
         // Because of changing clock, the two next lines are better than the two previous
         // Well, that was true previously, but now it is not
 //        _dosages->at(index)->setApplied(lastDoseTime.addSecs(-2*30*24*3600));

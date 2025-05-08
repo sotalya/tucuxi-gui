@@ -1474,6 +1474,13 @@ bool Tucuxi::Gui::GuiUtils::InterpretationController::associateFormulationToRout
         bool found = false;
         for (int j = 0; j < adminList->size(); j++) {
             Tucuxi::Gui::Core::Admin *a = adminList->at(j);
+
+            if (a->getAdministrationRoute() == d->getAdministrationRoute()) {
+                found = true;
+                d->setFormulationAndRoute(a->getFormulationAndRoute());
+            }
+
+/*
             if (a->getFormulationAndRoute().getAbsorptionModel() == Tucuxi::Core::AbsorptionModel::Infusion) {
                 if (d->getRoute() == Tucuxi::Gui::Core::Admin::Route::INFUSION) {
                     found = true;
@@ -1500,10 +1507,20 @@ bool Tucuxi::Gui::GuiUtils::InterpretationController::associateFormulationToRout
                     found = true;
                     d->setFormulationAndRoute(a->getFormulationAndRoute());
                 }
-            }
-
+            }*/
         }
+/*
+        if (!found) {
+            for (int j = 0; j < adminList->size(); j++) {
+                Tucuxi::Gui::Core::Admin *a = adminList->at(j);
 
+                if (a->getAdministrationRoute() == d->getAdministrationRoute()) {
+                    found = true;
+                    d->setFormulationAndRoute(a->getFormulationAndRoute());
+                }
+            }
+        }
+*/
         if (!found) {
             std::cout << "Can not create a formulation and route";
             return false;

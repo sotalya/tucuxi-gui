@@ -1965,7 +1965,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::saveInterpretation(const Q
     QString xml = exporter.toXml(getInterpretation());
     QFile interpretationFile(fileName);
     if (!interpretationFile.open(QFile::WriteOnly)) {
-        exit(0);
+        QMessageBox::warning(nullptr, "Error", QString("Can not open file %1 for saving.").arg(fileName));
+        return;
     }
     QTextStream out(&interpretationFile);
     // Necessary for Windows, else wrong codec selected
@@ -2016,7 +2017,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::saveStatistics()
     QString content = exporter.exportData(_chartDataController->chartData, EXPORT_ALL);
     QFile statisticsFile(fileName);
     if (!statisticsFile.open(QFile::WriteOnly)) {
-        exit(0);
+        QMessageBox::warning(nullptr, "Error", QString("Can not open file %1 for saving.").arg(fileName));
+        return;
     }
     QTextStream out(&statisticsFile);
     out << content;
@@ -2516,7 +2518,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCurrentData()
     // Create and save file
     QFile dataFile(fileName);
     if (!dataFile.open(QFile::WriteOnly)) {
-        exit(0);
+        QMessageBox::warning(nullptr, "Error", QString("Can not open file %1 for saving.").arg(fileName));
+        return;
     }
 
     QTextStream out(&dataFile);
@@ -2569,7 +2572,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCdss()
             // Create and save file
             QFile dataFile(fileName);
             if (!dataFile.open(QFile::WriteOnly)) {
-                exit(0);
+                QMessageBox::warning(nullptr, "Error", QString("Can not open file %1 for saving .tqf").arg(fileName));
+                return;
             }
 
             QTextStream out(&dataFile);

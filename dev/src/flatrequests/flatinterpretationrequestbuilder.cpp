@@ -457,6 +457,10 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             valueString.replace(',', '.');
             QString unit = detailElement.attribute(flatRequestParameters->unitNameXml(), "mg/l");
             unit = unit.toLower();
+            // Only for tacrolimus. To be checked and done differently
+            if (unit == "none") {
+                unit = "ug/l";
+            }
             double value = valueString.toDouble();
             amt->setValue(value);
             amt->setUnit(Tucuxi::Gui::Core::Unit(unit));
@@ -472,7 +476,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
             admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
 
-            Tucuxi::Core::FormulationAndRoute formulationAndRoute(
+            Tucuxi::Core::DMFormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,
                     Tucuxi::Core::AdministrationRoute::IntravenousDrip,
                     Tucuxi::Core::AbsorptionModel::Infusion,
@@ -508,19 +512,12 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-            admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
 
-            Tucuxi::Core::FormulationAndRoute formulationAndRoute(
-                    Tucuxi::Core::Formulation::ParenteralSolution,
-                    Tucuxi::Core::AdministrationRoute::IntravenousDrip,
-                    Tucuxi::Core::AbsorptionModel::Infusion,
-                    "");
-
-            admin->setFormulationAndRoute(formulationAndRoute);
-            dosage->setRoute(admin);
 
             QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
             QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
+            // Get rid of millisecondes, else it generates issues during computation
+            appl.setSecsSinceEpoch(appl.toSecsSinceEpoch());
             dosage->setApplied(appl);
 
             dosage->setEndTime(appl);
@@ -534,12 +531,38 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             // Find duration (Tinf corresponding to dosage)
             Tucuxi::Gui::Core::Duration tinf = findDuration(detailElement);
-            dosage->setTinf(tinf);
+            if (tinf.isEmpty()) {
+                // Oral with lag time
+                admin->setRoute(Tucuxi::Gui::Core::Admin::EXTRA);
 
-            // If no tinf found add a warning
-            if(tinf.isEmpty()) {
-                createUncastedDosageValue(dosage, "Infusion", dosage->getTinf().toString(), "No correct infusion time found");
+                Tucuxi::Core::DMFormulationAndRoute formulationAndRoute(
+                    Tucuxi::Core::Formulation::ParenteralSolution,
+                    Tucuxi::Core::AdministrationRoute::Oral,
+                    Tucuxi::Core::AbsorptionModel::Extravascular,
+                    "");
+
+                admin->setFormulationAndRoute(formulationAndRoute);
+                dosage->setRoute(admin);
             }
+            else {
+                // Infusion
+                admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION);
+
+                Tucuxi::Core::DMFormulationAndRoute formulationAndRoute(
+                    Tucuxi::Core::Formulation::ParenteralSolution,
+                    Tucuxi::Core::AdministrationRoute::IntravenousDrip,
+                    Tucuxi::Core::AbsorptionModel::Infusion,
+                    "");
+
+                admin->setFormulationAndRoute(formulationAndRoute);
+                dosage->setRoute(admin);
+                dosage->setTinf(tinf);
+                // If no tinf found add a warning
+                if(tinf.isEmpty()) {
+                    createUncastedDosageValue(dosage, "Infusion", dosage->getTinf().toString(), "No correct infusion time found");
+                }
+            }
+
 
             dosage->setIsAtSteadyState(false);
 

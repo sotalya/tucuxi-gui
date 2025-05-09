@@ -155,7 +155,12 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
                 dosage->getQuantity()->setValue(lasting->getDose() );
                 Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
                 admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
-                admin->setFormulationAndRoute(lasting->getLastFormulationAndRoute());
+                Tucuxi::Core::DMFormulationAndRoute dmf(
+                    lasting->getLastFormulationAndRoute().getFormulation(),
+                    lasting->getLastFormulationAndRoute().getAdministrationRoute(),
+                    lasting->getLastFormulationAndRoute().getAbsorptionModel(),
+                    lasting->getLastFormulationAndRoute().getAdministrationName());
+                admin->setFormulationAndRoute(dmf);
                 admin->setDescription(description(lasting->getLastFormulationAndRoute()));
                 dosage->setRoute(admin);
                 // TODO : Deal with units
@@ -181,7 +186,12 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
                 dosage->getQuantity()->setValue(lasting->getDose() );
                 Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
                 admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
-                admin->setFormulationAndRoute(lasting->getLastFormulationAndRoute());
+                Tucuxi::Core::DMFormulationAndRoute dmf(
+                    lasting->getLastFormulationAndRoute().getFormulation(),
+                    lasting->getLastFormulationAndRoute().getAdministrationRoute(),
+                    lasting->getLastFormulationAndRoute().getAbsorptionModel(),
+                    lasting->getLastFormulationAndRoute().getAdministrationName());
+                admin->setFormulationAndRoute(dmf);
                 admin->setDescription(description(lasting->getLastFormulationAndRoute()));
                 dosage->setRoute(admin);
                 // TODO : Deal with units
@@ -270,7 +280,7 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
     Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adme);
     admin->setRoute(translateAbsorptionModel(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute().getAbsorptionModel()));
     admin->setFormulationAndRoute(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute());
-    admin->setDescription(description(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute()));
+    admin->setDescription(description(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute().getTreatmentFormulationAndRoute()));
     admin->setFormulationAndRoute(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute());
     adme->setDefaultIntake(admin);
 
@@ -279,7 +289,15 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adminList);
         admin->setRoute(translateAbsorptionModel(formulation->getFormulationAndRoute().getAbsorptionModel()));
         admin->setFormulationAndRoute(formulation->getFormulationAndRoute());
-        admin->setDescription(description(formulation->getFormulationAndRoute()));
+        auto f = formulation->getFormulationAndRoute();
+        Tucuxi::Core::DMFormulationAndRoute dmf(
+            f.getFormulation(),
+            f.getAdministrationRoute(),
+            f.getAbsorptionModel(),
+            f.getAdministrationName());
+        admin->setFormulationAndRoute(dmf);
+
+        admin->setDescription(description(formulation->getFormulationAndRoute().getTreatmentFormulationAndRoute()));
         admin->setFormulationAndRoute(formulation->getFormulationAndRoute());
         adminList->append(admin);
     }

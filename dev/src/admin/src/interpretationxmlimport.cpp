@@ -855,7 +855,7 @@ Tucuxi::Gui::Core::Admin *InterpretationXmlImport::loadAdmin(const QString &tagN
     }
     checkReaderError();
 
-    admin->setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute(formulation, administrationRoute, absorptionModel, administrationName));
+    admin->setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute(formulation, administrationRoute, absorptionModel, administrationName));
 
     return admin;
 }

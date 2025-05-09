@@ -62,7 +62,7 @@ bool ADME::isValid()
 }
 
 
-QString formulationAndRoutedescription(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
+QString formulationAndRoutedescription(const Tucuxi::Core::DMFormulationAndRoute& _formulationAndRoute)
 {
     QString result;
     switch(_formulationAndRoute.getAdministrationRoute()) {
@@ -81,7 +81,7 @@ QString formulationAndRoutedescription(const Tucuxi::Core::FormulationAndRoute& 
 }
 
 
-void Admin::setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute formulationAndRoute) {
+void Admin::setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute formulationAndRoute) {
     _formulationAndRoute = formulationAndRoute;
 
     // Here we update the route. Important for a correct display by the QML DialogTab

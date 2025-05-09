@@ -119,8 +119,8 @@ class Admin : public Entity
 
     bool isValid() { return _route != Route::UNVALID;}
 
-    Tucuxi::Core::FormulationAndRoute getFormulationAndRoute() const { return _formulationAndRoute;}
-    void setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute formulationAndRoute);
+    Tucuxi::Core::DMFormulationAndRoute getFormulationAndRoute() const { return _formulationAndRoute;}
+    void setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute formulationAndRoute);
 
     Q_INVOKABLE QString getAdministrationName() const { return QString::fromStdString(_formulationAndRoute.getAdministrationName());}
     Q_INVOKABLE QString getFormulationString() const {
@@ -156,7 +156,7 @@ private:
     Route _route;
     QString _description;
 
-    Tucuxi::Core::FormulationAndRoute _formulationAndRoute;
+    Tucuxi::Core::DMFormulationAndRoute _formulationAndRoute;
 };
 
 QML_POINTERLIST_CLASS_DECL(AdminList, Admin)

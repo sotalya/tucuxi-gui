@@ -193,7 +193,9 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
         } break;
         }
 
-        admin->setFormulationAndRoute(formulationAndRoute);
+        Tucuxi::Core::DMFormulationAndRoute dmf(formulationAndRoute.getFormulation(),formulationAndRoute.getAdministrationRoute(), formulationAndRoute.getAbsorptionModel(), formulationAndRoute.getAdministrationName());
+
+        admin->setFormulationAndRoute(dmf);
         dosage->setRoute(admin);
 
         {

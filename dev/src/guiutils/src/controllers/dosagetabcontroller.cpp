@@ -120,6 +120,7 @@ void Tucuxi::Gui::GuiUtils::DosageTabController::setDbInterval(int index, double
     _dosages->at(index)->setDbinterval(interval);
 }
 
+/*
 int Tucuxi::Gui::GuiUtils::DosageTabController::getRelativeRouteValue(int index)
 {
     if (!isIndexValid(index)) return 0;
@@ -149,6 +150,7 @@ void Tucuxi::Gui::GuiUtils::DosageTabController::setRouteValue(int index, int ro
     _dosages->at(index)->getRoute()->setRoute(route);
     _dosages->at(index)->getRoute()->setFormulationAndRoute(adminList->at(routeValue)->getFormulationAndRoute());
 }
+*/
 
 void Tucuxi::Gui::GuiUtils::DosageTabController::setHasEndDate(int index, bool hasEndDate)
 {
@@ -190,7 +192,7 @@ void Tucuxi::Gui::GuiUtils::DosageTabController::addDosage()
     drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
 
     Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, _dosages);
-    dosage->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
+    //dosage->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
     dosage->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute());
     dosage->getRoute()->setDescription(drugModel->getAdme()->getDefaultIntake()->getDescription());
     dosage->getQuantity()->setDbvalue(drugModel->getDoses()->getQuantity()->value());

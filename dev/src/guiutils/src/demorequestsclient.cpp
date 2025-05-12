@@ -226,7 +226,7 @@ Tucuxi::Gui::Core::DosageHistory* DemoInterpretationRequestBuilder::buildDosages
         Tucuxi::Gui::Core::Dosage* dosage = CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
         //Dosage data
-        dosage->getRoute()->setRoute(toDosageRoute("extra"));
+        //dosage->getRoute()->setRoute(toDosageRoute("extra"));
 //        dosage->setTaken(true);
 
         //Dosage date

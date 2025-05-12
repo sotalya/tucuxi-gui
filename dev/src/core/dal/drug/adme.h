@@ -168,29 +168,29 @@ class Admin : public Entity
 {
     Q_OBJECT
     ENTITY_UTILS(Admin)
-    Q_PROPERTY(DMAdmin::Route route READ getRoute WRITE setRoute NOTIFY routeChanged)
+    // Q_PROPERTY(DMAdmin::Route route READ getRoute WRITE setRoute NOTIFY routeChanged)
 
-    Q_PROPERTY(QString label READ getLabel WRITE setLabel NOTIFY labelChanged)
-    Q_PROPERTY(int value READ getValue WRITE setValue NOTIFY valueChanged)
+    //Q_PROPERTY(QString label READ getLabel WRITE setLabel NOTIFY labelChanged)
+    //Q_PROPERTY(int value READ getValue WRITE setValue NOTIFY valueChanged)
 
     Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
     public:
 
     Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent = nullptr)
         : Entity(repository, parent),
-            _route(DMAdmin::EXTRA),
+            //_route(DMAdmin::EXTRA),
           _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
     {
     }
 
     Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent, Admin* admin)
         : Entity(repository, parent),
-          _route(admin->getRoute()),
+          //_route(admin->getRoute()),
           _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
     {
         setFormulationAndRoute(admin->_formulationAndRoute);
     }
-
+/*
     QString getLabel () const {
         return QMetaEnum::fromType<DMAdmin::Route>().key(_route);
     }
@@ -199,17 +199,6 @@ class Admin : public Entity
         _route = static_cast<DMAdmin::Route>(menum.keyToValue(&label.toStdString()[0]));
         emit valueChanged(menum.keyToValue(menum.key(_route)));
         emit labelChanged(menum.key(_route));
-    }
-
-    QString getLabelString() const {
-        switch (_route) {
-        case DMAdmin::BOLUS : return "Bolus";
-        case DMAdmin::INFUSION: return "Infusion";
-        case DMAdmin::EXTRA: return "Extravascular";
-        case DMAdmin::EXTRALAG: return "Extravascular with lag time";
-        case DMAdmin::DEFAULT: return "Default route";
-        case DMAdmin::UNVALID: return "Invalid";
-        }
     }
 
     int getValue () const {
@@ -227,18 +216,19 @@ class Admin : public Entity
             emit labelChanged(menum.key(_route));
         }
     }
-
+*/
     void setDescription(QString description) { _description = description; emit descriptionChanged(description);}
     QString getDescription() const {return _description;}
 
-    void setRoute(DMAdmin::Route route) { _route = route; emit routeChanged(_route); }
-    DMAdmin::Route getRoute() const { return _route; }
+//    void setRoute(DMAdmin::Route route) { _route = route; emit routeChanged(_route); }
+//    DMAdmin::Route getRoute() const { return _route; }
     Q_SIGNAL void labelChanged (QString value);
-    Q_SIGNAL void valueChanged (int value);
-    Q_SIGNAL void routeChanged (DMAdmin::Route route);
+//    Q_SIGNAL void valueChanged (int value);
+//    Q_SIGNAL void routeChanged (DMAdmin::Route route);
     Q_SIGNAL void descriptionChanged(QString description);
 
-    bool isValid() { return _route != DMAdmin::Route::UNVALID;}
+    // bool isValid() { return _route != DMAdmin::Route::UNVALID;}
+    bool isValid() { return _formulationAndRoute.getAdministrationRoute() != Tucuxi::Core::AdministrationRoute::Undefined;}
 
     Tucuxi::Core::DMFormulationAndRoute getFormulationAndRoute() const { return _formulationAndRoute;}
     void setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute formulationAndRoute);
@@ -274,10 +264,10 @@ class Admin : public Entity
     }
 
 private:
-    DMAdmin::Route _route;
+    // DMAdmin::Route _route;
     QString _description;
 
-    Tucuxi::Core::DMFormulationAndRoute _formulationAndRoute;
+    Tucuxi::Core::FormulationAndRoute _formulationAndRoute;
 };
 
 QML_POINTERLIST_CLASS_DECL(AdminList, Admin)

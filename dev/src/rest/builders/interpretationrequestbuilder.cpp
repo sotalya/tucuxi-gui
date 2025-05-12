@@ -176,7 +176,7 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
 
         Tucuxi::Core::FormulationAndRoute formulationAndRoute = translatorFormulationAndRoute->restToInternalFormulationAndRoute(drugId, restRoute);
         delete translatorFormulationAndRoute;
-
+/*
         switch (formulationAndRoute.getAbsorptionModel()) {
         case Tucuxi::Core::AbsorptionModel::Extravascular: admin->setRoute(Tucuxi::Gui::Core::DMAdmin::EXTRA); break;
         case Tucuxi::Core::AbsorptionModel::ExtravascularLag: admin->setRoute(Tucuxi::Gui::Core::DMAdmin::EXTRALAG); break;
@@ -192,7 +192,7 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
             dosage->getUncastedValues()->append(uncasted);
         } break;
         }
-
+*/
         Tucuxi::Core::DMFormulationAndRoute dmf(formulationAndRoute.getFormulation(),formulationAndRoute.getAdministrationRoute(), formulationAndRoute.getAbsorptionModel(), formulationAndRoute.getAdministrationName());
 
         admin->setFormulationAndRoute(dmf);
@@ -379,7 +379,7 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
         }
 
         //Dosage infusion time, only do it in case of infusion
-        if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::DMAdmin::INFUSION)
+        if (dosage->getRoute()->getFormulationAndRoute().getAdministrationRoute() == Tucuxi::Core::AdministrationRoute::IntravenousDrip)
         {
             bool ok;
             QString valueString = dosageNode.firstChildElement("infusion").firstChildElement("value").firstChild().toText().data();

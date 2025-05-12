@@ -140,7 +140,9 @@ bool InterpretationToRequestXmlExport::saveDosages(Tucuxi::Gui::Core::DosageHist
         writer.writeTextElement("value", QString::number(dosage->getTinf().toMinutes()));
         writer.writeTextElement("unit", "m");
         writer.writeEndElement(); // infusion
-        writer.writeTextElement("intake", dosage->getRoute()->getLabel());
+        // TODO: Rewrite with FormulationAndRoute
+        // However not used
+        // writer.writeTextElement("intake", dosage->getRoute()->getLabel());
         writer.writeEmptyElement("comments");
         writer.writeEndElement(); // dosage
     }

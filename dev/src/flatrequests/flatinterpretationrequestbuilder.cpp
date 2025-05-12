@@ -474,7 +474,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-            admin->setRoute(Tucuxi::Gui::Core::DMAdmin::INFUSION);
+            //admin->setRoute(Tucuxi::Gui::Core::DMAdmin::INFUSION);
 
             Tucuxi::Core::DMFormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,
@@ -533,7 +533,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             Tucuxi::Gui::Core::Duration tinf = findDuration(detailElement);
             if (tinf.isEmpty()) {
                 // Oral with lag time
-                admin->setRoute(Tucuxi::Gui::Core::DMAdmin::EXTRA);
+                //admin->setRoute(Tucuxi::Gui::Core::DMAdmin::EXTRA);
 
                 Tucuxi::Core::DMFormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,
@@ -546,7 +546,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             }
             else {
                 // Infusion
-                admin->setRoute(Tucuxi::Gui::Core::DMAdmin::INFUSION);
+                //admin->setRoute(Tucuxi::Gui::Core::DMAdmin::INFUSION);
 
                 Tucuxi::Core::DMFormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,

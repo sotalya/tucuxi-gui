@@ -384,7 +384,8 @@ Rectangle {
                 dosageTabController.setDbValue(dosageListView.currentIndex, this.getQuantity());
                 dosageTabController.setDbInterval(dosageListView.currentIndex, this.getInterval());
                 dosageTabController.setDbTinf(dosageListView.currentIndex, this.getInfusion());
-                dosageTabController.setRouteValue(dosageListView.currentIndex, this.getRoute());
+                // TODO: Replace that by formulation and route
+                // dosageTabController.setRouteValue(dosageListView.currentIndex, this.getRoute());
                 dosageTabController.setAppliedTime(dosageListView.currentIndex, appliedDate);
                 dosageTabController.setEndTime(dosageListView.currentIndex, endDate);
                 dosageTabController.setHasEndDate(dosageListView.currentIndex, !this.isAtSteadyState() && this.hasEndDate());

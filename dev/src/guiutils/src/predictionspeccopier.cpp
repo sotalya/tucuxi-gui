@@ -142,8 +142,8 @@ Tucuxi::Gui::Core::Admin* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Admin* a
 {
     Tucuxi::Gui::Core::Admin *newAdmin;
     newAdmin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO,parent);
-    newAdmin->setRoute(admin->getRoute());
-    newAdmin->setValue(admin->getValue());
+    //newAdmin->setRoute(admin->getRoute());
+    //newAdmin->setValue(admin->getValue());
     newAdmin->setFormulationAndRoute(admin->getFormulationAndRoute());
 
     return newAdmin;

@@ -186,7 +186,7 @@ void PredictionSpecExporter::save(Tucuxi::Gui::Core::DosageHistory *history)
         writer->writeStartElement("dosage");
         writer->writeTextElement("dbinterval", QString("%1").arg(dose->getDbinterval()));
         writer->writeTextElement("dbtinf", QString("%1").arg(dose->getDbtinf()));
-        writer->writeTextElement("route", dose->getRoute()->getLabel());
+        // writer->writeTextElement("route", dose->getRoute()->getLabel());
         saveIdentifiableAmount("quantity", dose->getQuantity());
         writer->writeTextElement("applied", writeDate(dose->getApplied()));
         writer->writeTextElement("endTime", writeDate(dose->getEndTime()));
@@ -306,7 +306,7 @@ void PredictionSpecExporter::save(Tucuxi::Gui::Core::ValidDoses *doses)
     for (int i=0; i< doses->size() ; i++) {
         Tucuxi::Gui::Core::ValidDose *dose = doses->at(i);
         writer->writeStartElement("dose");
-        writer->writeTextElement("route", dose->getRoute()->getLabel());
+        // writer->writeTextElement("route", dose->getRoute()->getLabel());
         saveIdentifiableAmount("quantity", dose->getQuantity());
         writer->writeEndElement();
     }

@@ -384,9 +384,9 @@ Tucuxi::Gui::Core::Dosage *PredictionSpecImporter::loadDosage(const QString &tag
             else if (name == "dbtinf")
                 dosage->setDbtinf(extractDouble());
             else if (name == "route") {
-                Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-                admin->setLabel(extractor());
-                dosage->setRoute(admin);
+                //Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
+                //admin->setLabel(extractor());
+                //dosage->setRoute(admin);
             }
             else if (name == "quantity") {
                 dosage->setQuantity(loadIdentifiableAmount("quantity", dosage));
@@ -583,9 +583,9 @@ Tucuxi::Gui::Core::ValidDoses *PredictionSpecImporter::loadValidDoses(const QStr
                                 if(reader.readNextStartElement() ){
                                     name = reader.name().toString();
                                     if (name == "route") {
-                                        Tucuxi::Gui::Core::Admin* admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO,dose);
-                                        admin->setLabel(extractor());
-                                        dose->setRoute(admin);
+                                        //Tucuxi::Gui::Core::Admin* admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO,dose);
+                                        //admin->setLabel(extractor());
+                                        //dose->setRoute(admin);
                                     }
                                     else if (name == "quantity")
                                         dose->setQuantity(loadIdentifiableAmount("quantity", dose));

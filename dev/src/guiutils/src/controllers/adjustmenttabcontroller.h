@@ -90,7 +90,7 @@ public:
      * of the route in the entire routes supported by the software, but the
      * index of the route in the availables ones for the selected drug model.
      */
-    Q_INVOKABLE void setRouteValue(int index, int routeValue);
+    // Q_INVOKABLE void setRouteValue(int index, int routeValue);
     Q_INVOKABLE void setDbTinf(int index, double value);
     Q_INVOKABLE void setAppliedTime(int index, QDateTime time);
     Q_INVOKABLE void setEndTime(int index, QDateTime time);

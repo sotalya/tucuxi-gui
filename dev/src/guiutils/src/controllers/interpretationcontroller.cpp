@@ -770,13 +770,14 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
         }
         else {
             for (auto dosage : _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->getList()) {
-                if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::DMAdmin::Route::DEFAULT) {
-                    Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(APPUTILSREPO, nullptr);
-                    admin->setRoute(defaultRoutes[0]);
-                    admin->setFormulationAndRoute(defaultAdmins[0]->getFormulationAndRoute());
-                    admin->setDescription(defaultAdmins[0]->getDescription());
-                    dosage->setRoute(admin);
-                }
+                // TODO : Check if the following code should be there or not
+                //if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::DMAdmin::Route::DEFAULT) {
+                //    Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(APPUTILSREPO, nullptr);
+                //    admin->setRoute(defaultRoutes[0]);
+                //    admin->setFormulationAndRoute(defaultAdmins[0]->getFormulationAndRoute());
+                //    admin->setDescription(defaultAdmins[0]->getDescription());
+                //    dosage->setRoute(admin);
+                //}
             }
         }
     }

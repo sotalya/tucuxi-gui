@@ -583,7 +583,7 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ValidDoses *doses)
     for (int i=0; i< doses->size() ; i++) {
         Tucuxi::Gui::Core::ValidDose *dose = doses->at(i);
         writer.writeStartElement("dose");
-        writer.writeTextElement("route", dose->getRoute()->getLabel());
+        // writer.writeTextElement("route", dose->getRoute()->getLabel());
         saveIdentifiableAmount("quantity", dose->getQuantity());
         writer.writeEndElement();
     }

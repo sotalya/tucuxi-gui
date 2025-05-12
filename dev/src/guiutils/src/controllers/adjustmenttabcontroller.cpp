@@ -193,6 +193,7 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setDbInterval(int index, do
     adjustment->setDbinterval(interval);
 }
 
+/*
 void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setRouteValue(int index, int routeValue)
 {
     if (!isIndexValid(index)) {
@@ -209,6 +210,7 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setRouteValue(int index, in
     adjustment->getRoute()->setRoute(route);
     adjustment->getRoute()->setFormulationAndRoute(adme->getIntakes()->at(routeValue)->getFormulationAndRoute());
 }
+*/
 
 void Tucuxi::Gui::GuiUtils::AdjustmentTabController::addAdjustment()
 {    
@@ -218,7 +220,7 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::addAdjustment()
     Tucuxi::Gui::Core::AdjustmentDosage* adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
     adjustment->setApplied(getAdjustmentDate());
     adjustment->setEndTime(getAdjustmentDate().addDays(1));
-    adjustment->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
+//    adjustment->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
     adjustment->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute());
     adjustment->getRoute()->setDescription(drugModel->getAdme()->getDefaultIntake()->getDescription());
     adjustment->getQuantity()->setDbvalue(drugModel->getDoses()->getQuantity()->value());
@@ -274,7 +276,7 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::selectAdjustment(int index)
         Tucuxi::Gui::Core::AdjustmentDosage* adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
         adjustment->setApplied(suggestedAdjustment->getApplied());
         adjustment->setEndTime(suggestedAdjustment->getEndTime());
-        adjustment->getRoute()->setRoute(suggestedAdjustment->getRoute()->getRoute());
+//        adjustment->getRoute()->setRoute(suggestedAdjustment->getRoute()->getRoute());
         adjustment->getRoute()->setFormulationAndRoute(suggestedAdjustment->getRoute()->getFormulationAndRoute());
         adjustment->getRoute()->setDescription(suggestedAdjustment->getRoute()->getDescription());
         adjustment->getQuantity()->setDbvalue(suggestedAdjustment->getQuantity()->value());

@@ -154,7 +154,7 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
                 dosage->setDbtinf(lasting->getInfusionTime().toMinutes());
                 dosage->getQuantity()->setValue(lasting->getDose() );
                 Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-                admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
+                //admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
                 Tucuxi::Core::DMFormulationAndRoute dmf(
                     lasting->getLastFormulationAndRoute().getFormulation(),
                     lasting->getLastFormulationAndRoute().getAdministrationRoute(),
@@ -185,7 +185,7 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
                 dosage->setDbtinf(lasting->getInfusionTime().toMinutes());
                 dosage->getQuantity()->setValue(lasting->getDose() );
                 Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-                admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
+                //admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
                 Tucuxi::Core::DMFormulationAndRoute dmf(
                     lasting->getLastFormulationAndRoute().getFormulation(),
                     lasting->getLastFormulationAndRoute().getAdministrationRoute(),

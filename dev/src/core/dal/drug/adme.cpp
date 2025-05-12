@@ -83,7 +83,7 @@ QString formulationAndRoutedescription(const Tucuxi::Core::DMFormulationAndRoute
 
 void Admin::setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute formulationAndRoute) {
     _formulationAndRoute = formulationAndRoute;
-
+/*
     // Here we update the route. Important for a correct display by the QML DialogTab
     switch (formulationAndRoute.getAbsorptionModel()) {
     case Tucuxi::Core::AbsorptionModel::Extravascular : {
@@ -102,7 +102,7 @@ void Admin::setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute formulati
         setRoute(DMAdmin::Route::UNVALID);
     }
     }
-
+*/
     setDescription(formulationAndRoutedescription(_formulationAndRoute));
 }
 

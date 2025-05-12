@@ -467,7 +467,8 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::AdjustmentDosage *dosage, 
     writer.writeTextElement("formulation", toString(dosage->getRoute()->getFormulationAndRoute().getFormulation()));
     writer.writeTextElement("administrationName", QString::fromStdString(dosage->getRoute()->getFormulationAndRoute().getAdministrationName()));
     writer.writeTextElement("administrationRoute", toString(dosage->getRoute()->getFormulationAndRoute().getAdministrationRoute()));
-    writer.writeTextElement("absorptionModel", toString(dosage->getRoute()->getFormulationAndRoute().getAbsorptionModel()));
+    // No more need for AbsorptionModel in FormulationAndRoute
+    // writer.writeTextElement("absorptionModel", toString(dosage->getRoute()->getFormulationAndRoute().getAbsorptionModel()));
     writer.writeEndElement();
     saveIdentifiableAmount("quantity", dosage->getQuantity());
     writer.writeTextElement("applied", writeDate(dosage->getApplied()));
@@ -489,7 +490,8 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::Dosage *dosage, const QStr
     writer.writeTextElement("formulation", toString(dosage->getRoute()->getFormulationAndRoute().getFormulation()));
     writer.writeTextElement("administrationName", QString::fromStdString(dosage->getRoute()->getFormulationAndRoute().getAdministrationName()));
     writer.writeTextElement("administrationRoute", toString(dosage->getRoute()->getFormulationAndRoute().getAdministrationRoute()));
-    writer.writeTextElement("absorptionModel", toString(dosage->getRoute()->getFormulationAndRoute().getAbsorptionModel()));
+    // No more need for AbsorptionModel in FormulationAndRoute
+    // writer.writeTextElement("absorptionModel", toString(dosage->getRoute()->getFormulationAndRoute().getAbsorptionModel()));
     writer.writeEndElement();
     saveIdentifiableAmount("quantity", dosage->getQuantity());
     writer.writeTextElement("applied", writeDate(dosage->getApplied()));

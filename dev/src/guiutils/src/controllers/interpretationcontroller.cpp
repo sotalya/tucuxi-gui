@@ -1478,7 +1478,7 @@ bool Tucuxi::Gui::GuiUtils::InterpretationController::associateFormulationToRout
 
             if (a->getAdministrationRoute() == d->getAdministrationRoute()) {
                 found = true;
-                d->setFormulationAndRoute(a->getFormulationAndRoute());
+                d->setFormulationAndRoute(a->getFormulationAndRoute().getTreatmentFormulationAndRoute());
             }
 
 /*

@@ -106,7 +106,6 @@ ChuvFormulationAndRouteTranslator::ChuvFormulationAndRouteTranslator()
         Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                 Tucuxi::Core::Formulation::ParenteralSolution,
                 Tucuxi::Core::AdministrationRoute::IntravenousDrip,
-                Tucuxi::Core::AbsorptionModel::Infusion,
                 "");
 
         mapIntake.insert("i.v.", formulationAndRoute);
@@ -117,7 +116,6 @@ ChuvFormulationAndRouteTranslator::ChuvFormulationAndRouteTranslator()
         Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                 Tucuxi::Core::Formulation::ParenteralSolution,
                 Tucuxi::Core::AdministrationRoute::Oral,
-                Tucuxi::Core::AbsorptionModel::Extravascular,
                 "");
 
         mapIntake.insert("p.o", formulationAndRoute);
@@ -128,7 +126,6 @@ ChuvFormulationAndRouteTranslator::ChuvFormulationAndRouteTranslator()
         Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                 Tucuxi::Core::Formulation::ParenteralSolution,
                 Tucuxi::Core::AdministrationRoute::IntravenousDrip,
-                Tucuxi::Core::AbsorptionModel::Infusion,
                 "");
 
         mapIntake.insert("injection iv", formulationAndRoute);
@@ -139,7 +136,6 @@ ChuvFormulationAndRouteTranslator::ChuvFormulationAndRouteTranslator()
         Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                 Tucuxi::Core::Formulation::ParenteralSolution,
                 Tucuxi::Core::AdministrationRoute::IntravenousDrip,
-                Tucuxi::Core::AbsorptionModel::Infusion,
                 "");
 
         mapIntake.insert("i.v.", formulationAndRoute);
@@ -150,7 +146,6 @@ ChuvFormulationAndRouteTranslator::ChuvFormulationAndRouteTranslator()
         Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                 Tucuxi::Core::Formulation::ParenteralSolution,
                 Tucuxi::Core::AdministrationRoute::IntravenousDrip,
-                Tucuxi::Core::AbsorptionModel::Infusion,
                 "");
 
         mapIntake.insert("manque", formulationAndRoute);
@@ -163,7 +158,6 @@ Tucuxi::Core::FormulationAndRoute ChuvFormulationAndRouteTranslator::restToInter
     Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                 Tucuxi::Core::Formulation::Undefined,
                 Tucuxi::Core::AdministrationRoute::Undefined,
-                Tucuxi::Core::AbsorptionModel::Undefined,
                 "");
 
     mapIntake = map.value(drugId);
@@ -201,6 +195,7 @@ Tucuxi::Core::FormulationAndRoute ExternalFormulationAndRouteTranslator::restToI
         else if (childKey == "administrationRoute")
             administrationRoute = extractAdministrationRoute(settingsFile.value(childKey).toString());
         else if (childKey == "absorptionModel")
+            // Not used anymore
             absorptionModel = extractAbsorptionModel(settingsFile.value(childKey).toString());
     }
 
@@ -209,7 +204,6 @@ Tucuxi::Core::FormulationAndRoute ExternalFormulationAndRouteTranslator::restToI
     return Tucuxi::Core::FormulationAndRoute(
                 formulation,
                 administrationRoute,
-                absorptionModel,
                 administrationName);
 }
 

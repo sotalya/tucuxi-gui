@@ -179,14 +179,14 @@ class Admin : public Entity
     Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent = nullptr)
         : Entity(repository, parent),
             //_route(DMAdmin::EXTRA),
-          _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
+          _formulationAndRoute()
     {
     }
 
     Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent, Admin* admin)
         : Entity(repository, parent),
           //_route(admin->getRoute()),
-          _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
+          _formulationAndRoute()
     {
         setFormulationAndRoute(admin->_formulationAndRoute);
     }
@@ -230,8 +230,8 @@ class Admin : public Entity
     // bool isValid() { return _route != DMAdmin::Route::UNVALID;}
     bool isValid() { return _formulationAndRoute.getAdministrationRoute() != Tucuxi::Core::AdministrationRoute::Undefined;}
 
-    Tucuxi::Core::DMFormulationAndRoute getFormulationAndRoute() const { return _formulationAndRoute;}
-    void setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute formulationAndRoute);
+    Tucuxi::Core::FormulationAndRoute getFormulationAndRoute() const { return _formulationAndRoute;}
+    void setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute formulationAndRoute);
 
     Q_INVOKABLE QString getAdministrationName() const { return QString::fromStdString(_formulationAndRoute.getAdministrationName());}
     Q_INVOKABLE QString getFormulationString() const {

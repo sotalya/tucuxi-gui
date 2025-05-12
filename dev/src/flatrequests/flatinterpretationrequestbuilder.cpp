@@ -476,10 +476,9 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
             //admin->setRoute(Tucuxi::Gui::Core::DMAdmin::INFUSION);
 
-            Tucuxi::Core::DMFormulationAndRoute formulationAndRoute(
+            Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,
                     Tucuxi::Core::AdministrationRoute::IntravenousDrip,
-                    Tucuxi::Core::AbsorptionModel::Infusion,
                     "");
 
             admin->setFormulationAndRoute(formulationAndRoute);
@@ -535,10 +534,9 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
                 // Oral with lag time
                 //admin->setRoute(Tucuxi::Gui::Core::DMAdmin::EXTRA);
 
-                Tucuxi::Core::DMFormulationAndRoute formulationAndRoute(
+                Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,
                     Tucuxi::Core::AdministrationRoute::Oral,
-                    Tucuxi::Core::AbsorptionModel::Extravascular,
                     "");
 
                 admin->setFormulationAndRoute(formulationAndRoute);
@@ -548,10 +546,9 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
                 // Infusion
                 //admin->setRoute(Tucuxi::Gui::Core::DMAdmin::INFUSION);
 
-                Tucuxi::Core::DMFormulationAndRoute formulationAndRoute(
+                Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,
                     Tucuxi::Core::AdministrationRoute::IntravenousDrip,
-                    Tucuxi::Core::AbsorptionModel::Infusion,
                     "");
 
                 admin->setFormulationAndRoute(formulationAndRoute);

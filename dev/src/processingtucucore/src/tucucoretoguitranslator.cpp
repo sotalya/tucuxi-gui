@@ -106,7 +106,7 @@ QString TucucoreToGuiTranslator::description(const Tucuxi::Core::FormulationAndR
 }
 }
 }
-
+/*
 Tucuxi::Gui::Core::DMAdmin::Route TucucoreToGuiTranslator::translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
 {
     switch (_formulationAndRoute.getAbsorptionModel()) {
@@ -118,7 +118,7 @@ Tucuxi::Gui::Core::DMAdmin::Route TucucoreToGuiTranslator::translateFormulationA
     }
     return Tucuxi::Gui::Core::DMAdmin::Route::UNVALID;
 }
-
+*/
 
 Tucuxi::Gui::Core::DMAdmin::Route TucucoreToGuiTranslator::translateAbsorptionModel(Tucuxi::Core::AbsorptionModel _absorptionModel)
 {
@@ -155,10 +155,9 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
                 dosage->getQuantity()->setValue(lasting->getDose() );
                 Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
                 //admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
-                Tucuxi::Core::DMFormulationAndRoute dmf(
+                Tucuxi::Core::FormulationAndRoute dmf(
                     lasting->getLastFormulationAndRoute().getFormulation(),
                     lasting->getLastFormulationAndRoute().getAdministrationRoute(),
-                    lasting->getLastFormulationAndRoute().getAbsorptionModel(),
                     lasting->getLastFormulationAndRoute().getAdministrationName());
                 admin->setFormulationAndRoute(dmf);
                 admin->setDescription(description(lasting->getLastFormulationAndRoute()));
@@ -186,10 +185,9 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
                 dosage->getQuantity()->setValue(lasting->getDose() );
                 Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
                 //admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
-                Tucuxi::Core::DMFormulationAndRoute dmf(
+                Tucuxi::Core::FormulationAndRoute dmf(
                     lasting->getLastFormulationAndRoute().getFormulation(),
                     lasting->getLastFormulationAndRoute().getAdministrationRoute(),
-                    lasting->getLastFormulationAndRoute().getAbsorptionModel(),
                     lasting->getLastFormulationAndRoute().getAdministrationName());
                 admin->setFormulationAndRoute(dmf);
                 admin->setDescription(description(lasting->getLastFormulationAndRoute()));

@@ -193,7 +193,7 @@ void Tucuxi::Gui::GuiUtils::DosageTabController::addDosage()
 
     Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, _dosages);
     //dosage->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
-    dosage->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute());
+    dosage->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute().getTreatmentFormulationAndRoute());
     dosage->getRoute()->setDescription(drugModel->getAdme()->getDefaultIntake()->getDescription());
     dosage->getQuantity()->setDbvalue(drugModel->getDoses()->getQuantity()->value());
     dosage->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("mg"));

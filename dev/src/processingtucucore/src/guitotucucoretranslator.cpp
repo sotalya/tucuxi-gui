@@ -84,10 +84,10 @@ Tucuxi::Core::PredictionParameterType GuiToTucucoreTranslator::buildParameterTyp
 
 Tucuxi::Core::DosageTimeRange *GuiToTucucoreTranslator::buildTimeRange(const Tucuxi::Gui::Core::Dosage *guiDosage)
 {
-    Tucuxi::Core::DMFormulationAndRoute formulationAndRoute = guiDosage->getRoute()->getFormulationAndRoute();
+    Tucuxi::Core::FormulationAndRoute formulationAndRoute = guiDosage->getRoute()->getFormulationAndRoute();
     Tucuxi::Core::LastingDose lastingDose(guiDosage->getQuantity()->getDbvalue(),
                                           Tucuxi::Common::TucuUnit(guiDosage->getQuantity()->getUnitstring().toStdString()),
-                                          formulationAndRoute.getTreatmentFormulationAndRoute(),
+                                          formulationAndRoute,
                                           std::chrono::seconds(static_cast<int>(guiDosage->getDbtinf()*60.0)),
                                           std::chrono::seconds(static_cast<int>(guiDosage->getDbinterval()*3600.0)));
 

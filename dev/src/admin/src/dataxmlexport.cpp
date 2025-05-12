@@ -478,7 +478,8 @@ bool DataXmlExport::save(Tucuxi::Gui::Core::Dosage *dosage)
     writer.writeTextElement("formulation", _toString(dosage->getRoute()->getFormulationAndRoute().getFormulation()));
     writer.writeTextElement("administrationName", QString::fromStdString(dosage->getRoute()->getFormulationAndRoute().getAdministrationName()));
     writer.writeTextElement("administrationRoute", _toString(dosage->getRoute()->getFormulationAndRoute().getAdministrationRoute()));
-    writer.writeTextElement("absorptionModel", _toString(dosage->getRoute()->getFormulationAndRoute().getAbsorptionModel()));
+    // AbsorptionModel is not part of FormulationAndRoute anymore
+    // writer.writeTextElement("absorptionModel", _toString(dosage->getRoute()->getFormulationAndRoute().getAbsorptionModel()));
     writer.writeEndElement(); // End of formulationAndRoute
 
     writer.writeEndElement(); // End of lastingDosage

@@ -221,7 +221,7 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::addAdjustment()
     adjustment->setApplied(getAdjustmentDate());
     adjustment->setEndTime(getAdjustmentDate().addDays(1));
 //    adjustment->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
-    adjustment->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute());
+    adjustment->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute().getTreatmentFormulationAndRoute());
     adjustment->getRoute()->setDescription(drugModel->getAdme()->getDefaultIntake()->getDescription());
     adjustment->getQuantity()->setDbvalue(drugModel->getDoses()->getQuantity()->value());
     adjustment->getQuantity()->setUnit(Tucuxi::Gui::Core::Unit("mg"));

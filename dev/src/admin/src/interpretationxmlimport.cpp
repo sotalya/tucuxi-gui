@@ -849,13 +849,14 @@ Tucuxi::Gui::Core::Admin *InterpretationXmlImport::loadAdmin(const QString &tagN
             else if (name == "administrationRoute")
                 administrationRoute = extractAdministrationRoute(extractor());
             else if (name == "absorptionModel") {
+                // No more need for the absorptionModel
                 absorptionModel = extractAbsorptionModel(extractor());
             }
         }
     }
     checkReaderError();
 
-    admin->setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute(formulation, administrationRoute, absorptionModel, administrationName));
+    admin->setFormulationAndRoute(Tucuxi::Core::FormulationAndRoute(formulation, administrationRoute, administrationName));
 
     return admin;
 }

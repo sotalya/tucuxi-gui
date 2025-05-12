@@ -83,7 +83,7 @@ public:
     bool buildDosageHistory(const Tucuxi::Core::DosageHistory & dosageHistory,
                                                       Tucuxi::Gui::Core::DosageHistory *newHistory);
 
-    Tucuxi::Gui::Core::DMAdmin::Route translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute);
+    // Tucuxi::Gui::Core::DMAdmin::Route translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute);
     Core::DMAdmin::Route translateAbsorptionModel(Tucuxi::Core::AbsorptionModel _absorptionModel);
 
     QString description(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute);

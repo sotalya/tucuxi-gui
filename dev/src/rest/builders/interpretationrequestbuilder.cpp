@@ -178,12 +178,12 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
         delete translatorFormulationAndRoute;
 
         switch (formulationAndRoute.getAbsorptionModel()) {
-        case Tucuxi::Core::AbsorptionModel::Extravascular: admin->setRoute(Tucuxi::Gui::Core::Admin::EXTRA); break;
-        case Tucuxi::Core::AbsorptionModel::ExtravascularLag: admin->setRoute(Tucuxi::Gui::Core::Admin::EXTRALAG); break;
-        case Tucuxi::Core::AbsorptionModel::Infusion: admin->setRoute(Tucuxi::Gui::Core::Admin::INFUSION); break;
-        case Tucuxi::Core::AbsorptionModel::Intravascular: admin->setRoute(Tucuxi::Gui::Core::Admin::BOLUS); break;
+        case Tucuxi::Core::AbsorptionModel::Extravascular: admin->setRoute(Tucuxi::Gui::Core::DMAdmin::EXTRA); break;
+        case Tucuxi::Core::AbsorptionModel::ExtravascularLag: admin->setRoute(Tucuxi::Gui::Core::DMAdmin::EXTRALAG); break;
+        case Tucuxi::Core::AbsorptionModel::Infusion: admin->setRoute(Tucuxi::Gui::Core::DMAdmin::INFUSION); break;
+        case Tucuxi::Core::AbsorptionModel::Intravascular: admin->setRoute(Tucuxi::Gui::Core::DMAdmin::BOLUS); break;
         case Tucuxi::Core::AbsorptionModel::Undefined: {
-            admin->setRoute(Tucuxi::Gui::Core::Admin::UNVALID);
+            admin->setRoute(Tucuxi::Gui::Core::DMAdmin::UNVALID);
             EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The applied intake: %1 was not parsed into a valid intake").arg(restRoute));
             Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
             uncasted->setField("intake");
@@ -379,7 +379,7 @@ Tucuxi::Gui::Core::DosageHistory* InterpretationRequestBuilder::buildDosages(con
         }
 
         //Dosage infusion time, only do it in case of infusion
-        if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::Admin::INFUSION)
+        if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::DMAdmin::INFUSION)
         {
             bool ok;
             QString valueString = dosageNode.firstChildElement("infusion").firstChildElement("value").firstChild().toText().data();

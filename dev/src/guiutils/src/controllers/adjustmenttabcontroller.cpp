@@ -199,7 +199,7 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setRouteValue(int index, in
         return;
     }
     Tucuxi::Gui::Core::ADME* adme = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme();
-    Tucuxi::Gui::Core::Admin::Route route = adme->getIntakes()->at(routeValue)->getRoute();
+    Tucuxi::Gui::Core::DMAdmin::Route route = adme->getIntakes()->at(routeValue)->getRoute();
 
     Tucuxi::Gui::Core::Dosage* adjustment = _adjustments->at(index);
     if (adjustment->getRoute()->getRoute() == route) {

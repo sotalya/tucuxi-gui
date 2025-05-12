@@ -494,14 +494,14 @@ QList<Email*> DemoInterpretationRequestBuilder::buildEmails(const QString &rootK
     return emails;
 }
 
-Tucuxi::Gui::Core::Admin::Route DemoInterpretationRequestBuilder::toDosageRoute(const QString &route)
+DMAdmin::Route DemoInterpretationRequestBuilder::toDosageRoute(const QString &route)
 {
     if (route == "bolus")
-        return Tucuxi::Gui::Core::Admin::BOLUS;
+        return Tucuxi::Gui::Core::DMAdmin::BOLUS;
     if (route == "infu")
-        return Tucuxi::Gui::Core::Admin::INFUSION;
+        return Tucuxi::Gui::Core::DMAdmin::INFUSION;
     if (route == "extra")
-        return Tucuxi::Gui::Core::Admin::EXTRA;
+        return Tucuxi::Gui::Core::DMAdmin::EXTRA;
 
     Q_UNREACHABLE();
 }

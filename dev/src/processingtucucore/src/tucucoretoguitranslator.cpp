@@ -107,29 +107,29 @@ QString TucucoreToGuiTranslator::description(const Tucuxi::Core::FormulationAndR
 }
 }
 
-Tucuxi::Gui::Core::Admin::Route TucucoreToGuiTranslator::translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
+Tucuxi::Gui::Core::DMAdmin::Route TucucoreToGuiTranslator::translateFormulationAndRoute(const Tucuxi::Core::FormulationAndRoute& _formulationAndRoute)
 {
     switch (_formulationAndRoute.getAbsorptionModel()) {
-    case Tucuxi::Core::AbsorptionModel::Extravascular: return Tucuxi::Gui::Core::Admin::Route::EXTRA;
-    case Tucuxi::Core::AbsorptionModel::ExtravascularLag: return Tucuxi::Gui::Core::Admin::Route::EXTRALAG;
-    case Tucuxi::Core::AbsorptionModel::Infusion: return Tucuxi::Gui::Core::Admin::Route::INFUSION;
-    case Tucuxi::Core::AbsorptionModel::Intravascular: return Tucuxi::Gui::Core::Admin::Route::BOLUS;
-    case Tucuxi::Core::AbsorptionModel::Undefined: return Tucuxi::Gui::Core::Admin::Route::UNVALID;
+    case Tucuxi::Core::AbsorptionModel::Extravascular: return Tucuxi::Gui::Core::DMAdmin::Route::EXTRA;
+    case Tucuxi::Core::AbsorptionModel::ExtravascularLag: return Tucuxi::Gui::Core::DMAdmin::Route::EXTRALAG;
+    case Tucuxi::Core::AbsorptionModel::Infusion: return Tucuxi::Gui::Core::DMAdmin::Route::INFUSION;
+    case Tucuxi::Core::AbsorptionModel::Intravascular: return Tucuxi::Gui::Core::DMAdmin::Route::BOLUS;
+    case Tucuxi::Core::AbsorptionModel::Undefined: return Tucuxi::Gui::Core::DMAdmin::Route::UNVALID;
     }
-    return Tucuxi::Gui::Core::Admin::Route::UNVALID;
+    return Tucuxi::Gui::Core::DMAdmin::Route::UNVALID;
 }
 
 
-Tucuxi::Gui::Core::Admin::Route TucucoreToGuiTranslator::translateAbsorptionModel(Tucuxi::Core::AbsorptionModel _absorptionModel)
+Tucuxi::Gui::Core::DMAdmin::Route TucucoreToGuiTranslator::translateAbsorptionModel(Tucuxi::Core::AbsorptionModel _absorptionModel)
 {
     switch (_absorptionModel) {
-    case Tucuxi::Core::AbsorptionModel::Extravascular: return Tucuxi::Gui::Core::Admin::Route::EXTRA;
-    case Tucuxi::Core::AbsorptionModel::ExtravascularLag: return Tucuxi::Gui::Core::Admin::Route::EXTRALAG;
-    case Tucuxi::Core::AbsorptionModel::Infusion: return Tucuxi::Gui::Core::Admin::Route::INFUSION;
-    case Tucuxi::Core::AbsorptionModel::Intravascular: return Tucuxi::Gui::Core::Admin::Route::BOLUS;
-    case Tucuxi::Core::AbsorptionModel::Undefined: return Tucuxi::Gui::Core::Admin::Route::UNVALID;
+    case Tucuxi::Core::AbsorptionModel::Extravascular: return Tucuxi::Gui::Core::DMAdmin::Route::EXTRA;
+    case Tucuxi::Core::AbsorptionModel::ExtravascularLag: return Tucuxi::Gui::Core::DMAdmin::Route::EXTRALAG;
+    case Tucuxi::Core::AbsorptionModel::Infusion: return Tucuxi::Gui::Core::DMAdmin::Route::INFUSION;
+    case Tucuxi::Core::AbsorptionModel::Intravascular: return Tucuxi::Gui::Core::DMAdmin::Route::BOLUS;
+    case Tucuxi::Core::AbsorptionModel::Undefined: return Tucuxi::Gui::Core::DMAdmin::Route::UNVALID;
     }
-    return Tucuxi::Gui::Core::Admin::Route::UNVALID;
+    return Tucuxi::Gui::Core::DMAdmin::Route::UNVALID;
 }
 
 bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHistory & dosageHistory,
@@ -277,16 +277,16 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
     //
 
     Tucuxi::Gui::Core::ADME *adme = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ADME>(ABSTRACTREPO, newModel);
-    Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adme);
+    Tucuxi::Gui::Core::DMAdmin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO, adme);
     admin->setRoute(translateAbsorptionModel(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute().getAbsorptionModel()));
     admin->setFormulationAndRoute(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute());
     admin->setDescription(description(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute().getTreatmentFormulationAndRoute()));
     admin->setFormulationAndRoute(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute());
     adme->setDefaultIntake(admin);
 
-    Tucuxi::Gui::Core::AdminList *adminList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdminList>(ABSTRACTREPO, adme);
+    Tucuxi::Gui::Core::DMAdminList *adminList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdminList>(ABSTRACTREPO, adme);
     for(auto & formulation : drugModel->getFormulationAndRoutes()) {
-        Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adminList);
+        Tucuxi::Gui::Core::DMAdmin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO, adminList);
         admin->setRoute(translateAbsorptionModel(formulation->getFormulationAndRoute().getAbsorptionModel()));
         admin->setFormulationAndRoute(formulation->getFormulationAndRoute());
         auto f = formulation->getFormulationAndRoute();

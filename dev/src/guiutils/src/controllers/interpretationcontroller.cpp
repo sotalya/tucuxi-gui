@@ -740,8 +740,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
 
     bool foundDrugModel = false;
 
-    QList<Tucuxi::Gui::Core::Admin::Route> defaultRoutes;
-    QList<Tucuxi::Gui::Core::Admin*> defaultAdmins;
+    QList<Tucuxi::Gui::Core::DMAdmin::Route> defaultRoutes;
+    QList<Tucuxi::Gui::Core::DMAdmin*> defaultAdmins;
 
     for (int i = 0; i < _drugs->size(); ++i) {
         if (_drugs->at(i)->getActiveSubstance()->getSubstanceId().compare(dt->getActiveSubstanceId()) == 0) {
@@ -770,7 +770,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
         }
         else {
             for (auto dosage : _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->getList()) {
-                if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::Admin::Route::DEFAULT) {
+                if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::DMAdmin::Route::DEFAULT) {
                     Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(APPUTILSREPO, nullptr);
                     admin->setRoute(defaultRoutes[0]);
                     admin->setFormulationAndRoute(defaultAdmins[0]->getFormulationAndRoute());
@@ -1466,14 +1466,14 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
 
 }
 
-bool Tucuxi::Gui::GuiUtils::InterpretationController::associateFormulationToRoute(DosageHistory *dosageHistory, AdminList *adminList)
+bool Tucuxi::Gui::GuiUtils::InterpretationController::associateFormulationToRoute(DosageHistory *dosageHistory, DMAdminList *adminList)
 {
     for (int i = 0; i < dosageHistory->size(); i++) {
         Tucuxi::Gui::Core::Admin *d = dosageHistory->at(i)->getRoute();
 
         bool found = false;
         for (int j = 0; j < adminList->size(); j++) {
-            Tucuxi::Gui::Core::Admin *a = adminList->at(j);
+            Tucuxi::Gui::Core::DMAdmin *a = adminList->at(j);
 
             if (a->getAdministrationRoute() == d->getAdministrationRoute()) {
                 found = true;

@@ -289,7 +289,7 @@ void PredictionSpecExporter::save(Tucuxi::Gui::Core::ADME *adme)
     writer->writeTextElement("distribution", adme->getDistribution());
     writer->writeTextElement("elimination", adme->getElimination());
     writer->writeStartElement("intakes");
-    foreach(Tucuxi::Gui::Core::Admin *admin, adme->getIntakes()->getList()) {
+    foreach(Tucuxi::Gui::Core::DMAdmin *admin, adme->getIntakes()->getList()) {
         writer->writeTextElement("intake", admin->getLabel());
     }
     writer->writeEndElement();

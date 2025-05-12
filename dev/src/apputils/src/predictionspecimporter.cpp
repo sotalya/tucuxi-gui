@@ -526,19 +526,19 @@ Tucuxi::Gui::Core::ADME *PredictionSpecImporter::loadAdme(const QString &tagName
         if(reader.readNextStartElement() ){
             QString name = reader.name().toString();
             if (name == "defaultIntake") {
-                Tucuxi::Gui::Core::Admin* def = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adme);
+                Tucuxi::Gui::Core::DMAdmin* def = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO, adme);
                 def->setLabel(extractor());
                 adme->setDefaultIntake(def);
             }
             else if (name == "intakes") {
-                Tucuxi::Gui::Core::AdminList* intakes = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdminList>(ABSTRACTREPO, adme);
+                Tucuxi::Gui::Core::DMAdminList* intakes = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdminList>(ABSTRACTREPO, adme);
 
 
                 WHILE_NOT_END_ELEM("intakes"){
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "intake"){
-                            Tucuxi::Gui::Core::Admin* def = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adme);
+                            Tucuxi::Gui::Core::DMAdmin* def = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO, adme);
                             def->setLabel(extractor());
                             intakes->append(def);
                         }

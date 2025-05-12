@@ -964,7 +964,7 @@ Tucuxi::Gui::Core::Dosage *InterpretationXmlImport::loadDosage(const QString &ta
 }
 
 
-
+/*
 Tucuxi::Gui::Core::DrugModel *InterpretationXmlImport::loadDrugModel(const QString &tagName, QObject *parent)
 {
 
@@ -1058,7 +1058,7 @@ Tucuxi::Gui::Core::ADME *InterpretationXmlImport::loadAdme(const QString &tagNam
 
     return adme;
 }
-
+*/
 
 
 Tucuxi::Gui::Core::ValidDoses *InterpretationXmlImport::loadValidDoses(const QString &tagName, QObject *parent)

@@ -76,6 +76,7 @@ class LightActiveSubstanceList;
 class LightActiveSubstance;
 class ActiveSubstance;
 class AdminList;
+class DMAdminList;
 class DosageHistory;
 }
 }
@@ -276,7 +277,7 @@ public:
     /// Show statistics in a dialog
     void showStatistics(int what);
 
-    bool associateFormulationToRoute(Tucuxi::Gui::Core::DosageHistory *dosageHistory, Tucuxi::Gui::Core::AdminList *adminList);
+    bool associateFormulationToRoute(Tucuxi::Gui::Core::DosageHistory *dosageHistory, Tucuxi::Gui::Core::DMAdminList *adminList);
 
     Q_INVOKABLE QByteArray interpretationToJson();
 

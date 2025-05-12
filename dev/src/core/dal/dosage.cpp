@@ -55,7 +55,7 @@ Dosage::Dosage(AbstractRepository *repository, QObject* parent)
       _steadyStateLastDoseDate(QDateTime(QDate::currentDate(), QTime(8, 0))),
       _uncastedValues(CoreFactory::createEntity<UncastedValueList>(repository, this))
 {
-    _route->setRoute(Admin::EXTRA);
+    _route->setRoute(DMAdmin::EXTRA);
     _quantity->setValue(0.5);
     _quantity->setUnit(Unit("mg"));
     setId(-1);

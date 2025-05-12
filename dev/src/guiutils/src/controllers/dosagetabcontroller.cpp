@@ -124,8 +124,8 @@ int Tucuxi::Gui::GuiUtils::DosageTabController::getRelativeRouteValue(int index)
 {
     if (!isIndexValid(index)) return 0;
 
-    Tucuxi::Gui::Core::AdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
-    Tucuxi::Gui::Core::Admin::Route route = _dosages->at(index)->getRoute()->getRoute();
+    Tucuxi::Gui::Core::DMAdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
+    Tucuxi::Gui::Core::DMAdmin::Route route = _dosages->at(index)->getRoute()->getRoute();
 
     for (int i=0; i<adminList->size(); i++)
     {
@@ -139,8 +139,8 @@ void Tucuxi::Gui::GuiUtils::DosageTabController::setRouteValue(int index, int ro
 {
     if (!isIndexValid(index)) return;
 
-    Tucuxi::Gui::Core::Admin::Route route;
-    Tucuxi::Gui::Core::AdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
+    Tucuxi::Gui::Core::DMAdmin::Route route;
+    Tucuxi::Gui::Core::DMAdminList* adminList = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme()->getIntakes();
     if (routeValue > adminList->size()) return;
 
     route = adminList->at(routeValue)->getRoute();

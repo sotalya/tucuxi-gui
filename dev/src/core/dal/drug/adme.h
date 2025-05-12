@@ -39,33 +39,35 @@ namespace Core {
 class CommentSet;
 class TranslatableString;
 
-class Admin : public Entity
+
+
+class DMAdmin : public Entity
 {
     Q_OBJECT
-    ENTITY_UTILS(Admin)
+    ENTITY_UTILS(DMAdmin)
     Q_PROPERTY(Route route READ getRoute WRITE setRoute NOTIFY routeChanged)
 
     Q_PROPERTY(QString label READ getLabel WRITE setLabel NOTIFY labelChanged)
     Q_PROPERTY(int value READ getValue WRITE setValue NOTIFY valueChanged)
 
     Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
-    public:
-        enum Route {
-                 BOLUS = 0, INFUSION, EXTRA, EXTRALAG, DEFAULT, UNVALID
-        };
+public:
+    enum Route {
+        BOLUS = 0, INFUSION, EXTRA, EXTRALAG, DEFAULT, UNVALID
+    };
     Q_ENUM(Route)
 
-    Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent = nullptr)
+    Q_INVOKABLE DMAdmin(AbstractRepository *repository, QObject *parent = nullptr)
         : Entity(repository, parent),
-          _route(EXTRA),
-          _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
+        _route(EXTRA),
+        _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
     {
     }
 
-    Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent, Admin* admin)
+    Q_INVOKABLE DMAdmin(AbstractRepository *repository, QObject *parent, DMAdmin* admin)
         : Entity(repository, parent),
-          _route(admin->getRoute()),
-          _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
+        _route(admin->getRoute()),
+        _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
     {
         setFormulationAndRoute(admin->_formulationAndRoute);
     }
@@ -136,6 +138,125 @@ class Admin : public Entity
     Q_INVOKABLE QString getAdministrationRoute() const {
 
         static std::map<Tucuxi::Core::AdministrationRoute, std::string> m =
+            {
+                {Tucuxi::Core::AdministrationRoute::Undefined, "undefined"},
+                {Tucuxi::Core::AdministrationRoute::Intramuscular, "intramuscular"},
+                {Tucuxi::Core::AdministrationRoute::IntravenousBolus, "intravenous bolus"},
+                {Tucuxi::Core::AdministrationRoute::IntravenousDrip, "intravenous drip"},
+                {Tucuxi::Core::AdministrationRoute::Nasal, "nasal"},
+                {Tucuxi::Core::AdministrationRoute::Oral, "oral"},
+                {Tucuxi::Core::AdministrationRoute::Rectal, "rectal"},
+                {Tucuxi::Core::AdministrationRoute::Subcutaneous, "subcutaneous"},
+                {Tucuxi::Core::AdministrationRoute::Sublingual, "sublingual"},
+                {Tucuxi::Core::AdministrationRoute::Transdermal, "transdermal"},
+                {Tucuxi::Core::AdministrationRoute::Vaginal, "vaginal"}
+            };
+        return QString::fromStdString(m.at(_formulationAndRoute.getAdministrationRoute()));
+    }
+
+private:
+    Route _route;
+    QString _description;
+
+    Tucuxi::Core::DMFormulationAndRoute _formulationAndRoute;
+};
+
+QML_POINTERLIST_CLASS_DECL(DMAdminList, DMAdmin)
+
+
+class Admin : public Entity
+{
+    Q_OBJECT
+    ENTITY_UTILS(Admin)
+    Q_PROPERTY(DMAdmin::Route route READ getRoute WRITE setRoute NOTIFY routeChanged)
+
+    Q_PROPERTY(QString label READ getLabel WRITE setLabel NOTIFY labelChanged)
+    Q_PROPERTY(int value READ getValue WRITE setValue NOTIFY valueChanged)
+
+    Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
+    public:
+
+    Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent = nullptr)
+        : Entity(repository, parent),
+            _route(DMAdmin::EXTRA),
+          _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
+    {
+    }
+
+    Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent, Admin* admin)
+        : Entity(repository, parent),
+          _route(admin->getRoute()),
+          _formulationAndRoute(Tucuxi::Core::AbsorptionModel::Undefined)
+    {
+        setFormulationAndRoute(admin->_formulationAndRoute);
+    }
+
+    QString getLabel () const {
+        return QMetaEnum::fromType<DMAdmin::Route>().key(_route);
+    }
+    void setLabel(QString label) {
+        QMetaEnum menum = QMetaEnum::fromType<DMAdmin::Route>();
+        _route = static_cast<DMAdmin::Route>(menum.keyToValue(&label.toStdString()[0]));
+        emit valueChanged(menum.keyToValue(menum.key(_route)));
+        emit labelChanged(menum.key(_route));
+    }
+
+    QString getLabelString() const {
+        switch (_route) {
+        case DMAdmin::BOLUS : return "Bolus";
+        case DMAdmin::INFUSION: return "Infusion";
+        case DMAdmin::EXTRA: return "Extravascular";
+        case DMAdmin::EXTRALAG: return "Extravascular with lag time";
+        case DMAdmin::DEFAULT: return "Default route";
+        case DMAdmin::UNVALID: return "Invalid";
+        }
+    }
+
+    int getValue () const {
+        QMetaEnum menum = QMetaEnum::fromType<DMAdmin::Route>();
+        return menum.keyToValue(menum.key(_route));
+    }
+
+    void setValue(int value) {
+        DMAdmin::Route newRoute = static_cast<DMAdmin::Route>(value);
+        if (newRoute != _route) {
+            _route = newRoute;
+            QMetaEnum menum = QMetaEnum::fromType<DMAdmin::Route>();
+            emit valueChanged(value);
+            //                emit valueChanged(menum.keyToValue(menum.key(_route)));
+            emit labelChanged(menum.key(_route));
+        }
+    }
+
+    void setDescription(QString description) { _description = description; emit descriptionChanged(description);}
+    QString getDescription() const {return _description;}
+
+    void setRoute(DMAdmin::Route route) { _route = route; emit routeChanged(_route); }
+    DMAdmin::Route getRoute() const { return _route; }
+    Q_SIGNAL void labelChanged (QString value);
+    Q_SIGNAL void valueChanged (int value);
+    Q_SIGNAL void routeChanged (DMAdmin::Route route);
+    Q_SIGNAL void descriptionChanged(QString description);
+
+    bool isValid() { return _route != DMAdmin::Route::UNVALID;}
+
+    Tucuxi::Core::DMFormulationAndRoute getFormulationAndRoute() const { return _formulationAndRoute;}
+    void setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute formulationAndRoute);
+
+    Q_INVOKABLE QString getAdministrationName() const { return QString::fromStdString(_formulationAndRoute.getAdministrationName());}
+    Q_INVOKABLE QString getFormulationString() const {
+        static std::map<Tucuxi::Core::Formulation, std::string> map = {
+            {Tucuxi::Core::Formulation::Undefined, "undefined"},
+            {Tucuxi::Core::Formulation::ParenteralSolution,"parenteral solution"},
+            {Tucuxi::Core::Formulation::OralSolution, "oral solution"},
+            {Tucuxi::Core::Formulation::Test, "test"}
+        };
+        return QString::fromStdString(map.at(_formulationAndRoute.getFormulation()));
+    }
+
+    Q_INVOKABLE QString getAdministrationRoute() const {
+
+        static std::map<Tucuxi::Core::AdministrationRoute, std::string> m =
         {
             {Tucuxi::Core::AdministrationRoute::Undefined, "undefined"},
             {Tucuxi::Core::AdministrationRoute::Intramuscular, "intramuscular"},
@@ -153,7 +274,7 @@ class Admin : public Entity
     }
 
 private:
-    Route _route;
+    DMAdmin::Route _route;
     QString _description;
 
     Tucuxi::Core::DMFormulationAndRoute _formulationAndRoute;
@@ -161,13 +282,22 @@ private:
 
 QML_POINTERLIST_CLASS_DECL(AdminList, Admin)
 
+
+
+
+
+
 } // namespace Core
 } // namespace Gui
 } // namespace Tucuxi
 
 Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Admin*)
-Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Admin::Route)
+//Q_DECLARE_METATYPE(Tucuxi::Gui::Core::Admin::Route)
 Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::Admin*>)
+
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::DMAdmin*)
+Q_DECLARE_METATYPE(Tucuxi::Gui::Core::DMAdmin::Route)
+Q_DECLARE_METATYPE(QList<Tucuxi::Gui::Core::DMAdmin*>)
 
 namespace Tucuxi {
 namespace Gui {
@@ -182,10 +312,10 @@ class ADME : public Entity
 
     public:
 
-        AUTO_PROPERTY_DECL(Admin*, defaultIntake, DefaultIntake)
+        AUTO_PROPERTY_DECL(DMAdmin*, defaultIntake, DefaultIntake)
       AUTO_PROPERTY_DECL(QString, distribution, Distribution)
       AUTO_PROPERTY_DECL(QString, elimination, Elimination)
-      AUTO_PROPERTY_DECL(AdminList*, intakes, Intakes)
+      AUTO_PROPERTY_DECL(DMAdminList*, intakes, Intakes)
 
       AUTO_PROPERTY_DECL(TranslatableString*, comments, Comments)
 
@@ -198,7 +328,7 @@ class ADME : public Entity
       protected:
 
       Q_INVOKABLE ADME(AbstractRepository *repository, QObject *parent = nullptr) : Entity(repository, parent),
-        _defaultIntake(CoreFactory::createEntity<Admin>(repository, this)), _intakes(nullptr), _comments(nullptr) {}
+        _defaultIntake(CoreFactory::createEntity<DMAdmin>(repository, this)), _intakes(nullptr), _comments(nullptr) {}
     //    Q_INVOKABLE ADME(AbstractRepository *repository, QObject * parent, const QString &intake, const QString &distribution, const QString &elimination)
     //        : Entity(repository, parent), _intake(intake), _distribution(distribution), _elimination(elimination) {}
 public:

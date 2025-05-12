@@ -149,6 +149,17 @@ Tucuxi::Gui::Core::Admin* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Admin* a
     return newAdmin;
 }
 
+Tucuxi::Gui::Core::DMAdmin* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DMAdmin* admin, QObject *parent)
+{
+    Tucuxi::Gui::Core::DMAdmin *newAdmin;
+    newAdmin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO,parent);
+    newAdmin->setRoute(admin->getRoute());
+    newAdmin->setValue(admin->getValue());
+    newAdmin->setFormulationAndRoute(admin->getFormulationAndRoute());
+
+    return newAdmin;
+}
+
 Tucuxi::Gui::Core::Dosage* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Dosage* dosage, QObject *parent)
 {
     Tucuxi::Gui::Core::Dosage *newDosage;
@@ -183,6 +194,16 @@ Tucuxi::Gui::Core::AdminList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Admi
     Tucuxi::Gui::Core::AdminList *newList;
     newList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdminList>(ABSTRACTREPO,parent);
     foreach(Tucuxi::Gui::Core::Admin* admin, list->getList())
+        newList->append(copy(admin, newList));
+
+    return newList;
+}
+
+Tucuxi::Gui::Core::DMAdminList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DMAdminList* list, QObject *parent)
+{
+    Tucuxi::Gui::Core::DMAdminList *newList;
+    newList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdminList>(ABSTRACTREPO,parent);
+    foreach(Tucuxi::Gui::Core::DMAdmin* admin, list->getList())
         newList->append(copy(admin, newList));
 
     return newList;

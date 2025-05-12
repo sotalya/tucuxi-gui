@@ -34,10 +34,10 @@ namespace Gui {
 namespace Core {
 
 
-AUTO_PROPERTY_IMPL(ADME, Admin*, defaultIntake, DefaultIntake)
+AUTO_PROPERTY_IMPL(ADME, DMAdmin*, defaultIntake, DefaultIntake)
 AUTO_PROPERTY_IMPL(ADME, QString, distribution, Distribution)
 AUTO_PROPERTY_IMPL(ADME, QString, elimination, Elimination)
-AUTO_PROPERTY_IMPL(ADME, AdminList*, intakes, Intakes)
+AUTO_PROPERTY_IMPL(ADME, DMAdminList*, intakes, Intakes)
 
 AUTO_PROPERTY_IMPL(ADME, TranslatableString*, comments, Comments)
 
@@ -87,19 +87,44 @@ void Admin::setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute formulati
     // Here we update the route. Important for a correct display by the QML DialogTab
     switch (formulationAndRoute.getAbsorptionModel()) {
     case Tucuxi::Core::AbsorptionModel::Extravascular : {
-        setRoute(Route::EXTRA);
+        setRoute(DMAdmin::Route::EXTRA);
     } break;
     case Tucuxi::Core::AbsorptionModel::ExtravascularLag : {
-        setRoute(Route::EXTRALAG);
+        setRoute(DMAdmin::Route::EXTRALAG);
     } break;
     case Tucuxi::Core::AbsorptionModel::Infusion : {
-        setRoute(Route::INFUSION);
+        setRoute(DMAdmin::Route::INFUSION);
     } break;
     case Tucuxi::Core::AbsorptionModel::Intravascular : {
-        setRoute(Route::BOLUS);
+        setRoute(DMAdmin::Route::BOLUS);
     } break;
     case Tucuxi::Core::AbsorptionModel::Undefined : {
-        setRoute(Route::UNVALID);
+        setRoute(DMAdmin::Route::UNVALID);
+    }
+    }
+
+    setDescription(formulationAndRoutedescription(_formulationAndRoute));
+}
+
+void DMAdmin::setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute formulationAndRoute) {
+    _formulationAndRoute = formulationAndRoute;
+
+    // Here we update the route. Important for a correct display by the QML DialogTab
+    switch (formulationAndRoute.getAbsorptionModel()) {
+    case Tucuxi::Core::AbsorptionModel::Extravascular : {
+        setRoute(DMAdmin::Route::EXTRA);
+    } break;
+    case Tucuxi::Core::AbsorptionModel::ExtravascularLag : {
+        setRoute(DMAdmin::Route::EXTRALAG);
+    } break;
+    case Tucuxi::Core::AbsorptionModel::Infusion : {
+        setRoute(DMAdmin::Route::INFUSION);
+    } break;
+    case Tucuxi::Core::AbsorptionModel::Intravascular : {
+        setRoute(DMAdmin::Route::BOLUS);
+    } break;
+    case Tucuxi::Core::AbsorptionModel::Undefined : {
+        setRoute(DMAdmin::Route::UNVALID);
     }
     }
 
@@ -107,6 +132,7 @@ void Admin::setFormulationAndRoute(Tucuxi::Core::DMFormulationAndRoute formulati
 }
 
 QML_POINTERLIST_CLASS_IMPL(AdminList, Admin)
+QML_POINTERLIST_CLASS_IMPL(DMAdminList, DMAdmin)
 
 } // namespace Core
 } // namespace Gui

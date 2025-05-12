@@ -270,7 +270,10 @@ int main(int argc, char *argv[])
     qRegisterMetaType<Tucuxi::Gui::Core::ADME*>("ADME*");
     qRegisterMetaType<Tucuxi::Gui::Core::Admin*>("Admin*");
     qRegisterMetaType<Tucuxi::Gui::Core::AdminList*>("AdminList*");
-    qRegisterMetaType<Tucuxi::Gui::Core::Admin::Route>("ADME::Route");
+    qRegisterMetaType<Tucuxi::Gui::Core::DMAdmin*>("DMAdmin*");
+    qRegisterMetaType<Tucuxi::Gui::Core::DMAdminList*>("DMAdminList*");
+    //qRegisterMetaType<Tucuxi::Gui::Core::Admin::Route>("ADME::Route");
+    qRegisterMetaType<Tucuxi::Gui::Core::DMAdmin::Route>("ADME::Route");
     qRegisterMetaType<Tucuxi::Gui::Core::Amount>("Amount");
     qRegisterMetaType<Tucuxi::Gui::Core::Reference*>("Reference*");
     qRegisterMetaType<Tucuxi::Gui::Core::ReferenceList*>("ReferenceList*");
@@ -315,7 +318,8 @@ int main(int argc, char *argv[])
     qRegisterMetaType<Tucuxi::Gui::Core::OperationList*>("OperationList*");
     qRegisterMetaType<Tucuxi::Gui::Core::UncastedValue*>("UncastedValue*");
     qRegisterMetaType<Tucuxi::Gui::Core::UncastedValueList*>("UncastedValueList*");
-    qRegisterMetaType<Tucuxi::Gui::Core::Admin::Route>("Route");
+    //qRegisterMetaType<Tucuxi::Gui::Core::Admin::Route>("Route");
+    qRegisterMetaType<Tucuxi::Gui::Core::DMAdmin::Route>("Route");
     qRegisterMetaType<Tucuxi::Gui::Admin::ValidationStatus::StatusType>("StatusType");
     qRegisterMetaType<Tucuxi::Gui::Admin::ClinicalSet*>("ClinicalSet*");
     qRegisterMetaType<Tucuxi::Gui::Admin::Interpretation*>("Interpretation*");

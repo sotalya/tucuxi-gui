@@ -37,15 +37,15 @@ bool ModelVsTreatmentCompatibilityChecker::check(Tucuxi::Gui::Core::DrugModel *m
     Tucuxi::Gui::Core::DosageHistory *history = treatment->getDosages();
     foreach (Tucuxi::Gui::Core::Dosage *dosage, history->getList()) {
         ok = false;
-        Tucuxi::Gui::Core::AdminList *possibleRouteList = model->getAdme()->getIntakes();
+        Tucuxi::Gui::Core::DMAdminList *possibleRouteList = model->getAdme()->getIntakes();
 
         // This check with DEFAULT is meant to be a bit laxist in case the information system connected
         // through the REST interface does not embed the route of administration
-        if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::Admin::Route::DEFAULT) {
+        if (dosage->getRoute()->getRoute() == Tucuxi::Gui::Core::DMAdmin::Route::DEFAULT) {
             ok = true;
         }
         else {
-            foreach (Tucuxi::Gui::Core::Admin *possibleRoute, possibleRouteList->getList()) {
+            foreach (Tucuxi::Gui::Core::DMAdmin *possibleRoute, possibleRouteList->getList()) {
                 // We need at least a possible route for each dosage
                 // TODO: Check if this check is relevant after all. The next one seems more apropriate
                 if (dosage->getRoute()->getRoute() == possibleRoute->getRoute() ) {

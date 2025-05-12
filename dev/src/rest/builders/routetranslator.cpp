@@ -37,34 +37,34 @@ DummyRouteTranslator::DummyRouteTranslator()
 {
 }
 
-Tucuxi::Gui::Core::Admin::Route DummyRouteTranslator::restToInternalRoute(QString restRoute)
+Tucuxi::Gui::Core::DMAdmin::Route DummyRouteTranslator::restToInternalRoute(QString restRoute)
 {
-    return Tucuxi::Gui::Core::Admin::UNVALID;
+    return Tucuxi::Gui::Core::DMAdmin::UNVALID;
 }
 
 ChuvRouteTranslator::ChuvRouteTranslator()
 {
-    map.insert("", Tucuxi::Gui::Core::Admin::DEFAULT);
+    map.insert("", Tucuxi::Gui::Core::DMAdmin::DEFAULT);
     // Internal values
-    map.insert("BOLUS", Tucuxi::Gui::Core::Admin::BOLUS);
-    map.insert("INFUSION", Tucuxi::Gui::Core::Admin::INFUSION);
-    map.insert("EXTRA", Tucuxi::Gui::Core::Admin::EXTRA);
+    map.insert("BOLUS", Tucuxi::Gui::Core::DMAdmin::BOLUS);
+    map.insert("INFUSION", Tucuxi::Gui::Core::DMAdmin::INFUSION);
+    map.insert("EXTRA", Tucuxi::Gui::Core::DMAdmin::EXTRA);
 
     // External values
-    map.insert("i.v", Tucuxi::Gui::Core::Admin::INFUSION);
-    map.insert("i.v.", Tucuxi::Gui::Core::Admin::INFUSION);
-    map.insert("injection iv", Tucuxi::Gui::Core::Admin::INFUSION);
-    map.insert("perfusion i.v. continue", Tucuxi::Gui::Core::Admin::INFUSION);
-    map.insert("perfusion iv continue", Tucuxi::Gui::Core::Admin::INFUSION);
-    map.insert("orale", Tucuxi::Gui::Core::Admin::EXTRA);
-    map.insert("per os", Tucuxi::Gui::Core::Admin::EXTRA);
-    map.insert("p.o", Tucuxi::Gui::Core::Admin::EXTRA);
-    map.insert("intravenousDrip", Tucuxi::Gui::Core::Admin::INFUSION);
+    map.insert("i.v", Tucuxi::Gui::Core::DMAdmin::INFUSION);
+    map.insert("i.v.", Tucuxi::Gui::Core::DMAdmin::INFUSION);
+    map.insert("injection iv", Tucuxi::Gui::Core::DMAdmin::INFUSION);
+    map.insert("perfusion i.v. continue", Tucuxi::Gui::Core::DMAdmin::INFUSION);
+    map.insert("perfusion iv continue", Tucuxi::Gui::Core::DMAdmin::INFUSION);
+    map.insert("orale", Tucuxi::Gui::Core::DMAdmin::EXTRA);
+    map.insert("per os", Tucuxi::Gui::Core::DMAdmin::EXTRA);
+    map.insert("p.o", Tucuxi::Gui::Core::DMAdmin::EXTRA);
+    map.insert("intravenousDrip", Tucuxi::Gui::Core::DMAdmin::INFUSION);
 }
 
-Tucuxi::Gui::Core::Admin::Route ChuvRouteTranslator::restToInternalRoute(QString restRoute)
+Tucuxi::Gui::Core::DMAdmin::Route ChuvRouteTranslator::restToInternalRoute(QString restRoute)
 {
-    return map.value(restRoute,Tucuxi::Gui::Core::Admin::UNVALID);
+    return map.value(restRoute,Tucuxi::Gui::Core::DMAdmin::UNVALID);
 }
 
 }

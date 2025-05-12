@@ -70,7 +70,7 @@ private:
     Tucuxi::Gui::Admin::PhoneList* buildPhoneList(const QString &rootKey);
     QList<Tucuxi::Gui::Admin::Email*> buildEmails(const QString &rootKey);
 
-    Tucuxi::Gui::Core::Admin::Route toDosageRoute(const QString &route);
+    Tucuxi::Gui::Core::DMAdmin::Route toDosageRoute(const QString &route);
 
     Tucuxi::Gui::Admin::PhoneType toPhoneType(const QString &type);
     Tucuxi::Gui::Admin::Type toEmailType(const QString &type);

@@ -121,6 +121,10 @@ void FlatRequestFileClient::queryRequest(const QString &requestId, const QString
 
     FlatRequestParameters* flatRequestParam = FlatRequestParameters::getInstance();
 
+    if (!reqFile.open(QFile::ReadOnly)) {
+        return;
+    }
+
     if (!doc.setContent(&reqFile))
         return;
 

@@ -69,26 +69,21 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
         QString substanceID = reportElement.attribute(flatRequestParam->fullDataNameXml());
         Tucuxi::Gui::Core::ActiveSubstance* substance = nullptr;
 
-        Patient* patient;
-        QString patientID;
-        QString lastPatientID = "None";
-
-        SharedPartialRequest request;
-
         std::set<QString> notFound;
+        std::set<QString> patientsVisited;
 
         // Go through elements to identify each patient and search for a first dosage (for each patient)
         while (!detailElement.isNull()) {
-            patientID = detailElement.attribute(flatRequestParam->encounteridNameXml());
+            QString patientID = detailElement.attribute(flatRequestParam->encounteridNameXml());
 
             // Verify if patient already have been parsed. Also imply that patient details are grouped by encouderid in the XML.
-            if (patientID != lastPatientID) {
-                lastPatientID = patientID;
+            if (!patientsVisited.contains(patientID)) {
+                patientsVisited.insert(patientID);
 
-                request = AdminFactory::createEntity<PartialRequest>(ABSTRACTREPO);
+                SharedPartialRequest request = AdminFactory::createEntity<PartialRequest>(ABSTRACTREPO);
                 request->requestId(patientID);
 
-                patient = static_cast<Patient*>(request->patient());
+                Patient* patient = static_cast<Patient*>(request->patient());
                 patient->externalId(patientID);
                 patient->person()->name(patient->externalId());
 
@@ -109,27 +104,31 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
 
                 // Init measure default, useful if no measure found
                 QDomElement detailElementCurrentPatient = detailElement;
-                QString currentPatientID = patientID;
                 QString sampleID = "nosample";
                 double concentration = 0.0;
                 QString unit = "µmol/l";
                 QDateTime sampleDate = QDateTime::currentDateTime();
+                QDateTime lastSampleDate = QDateTime::currentDateTime().addYears(-50);
 
                 // Find first concentration element for measure (if any)
-                while (!detailElementCurrentPatient.isNull() && currentPatientID == patientID) {
-                    if (nameTranslator->nameToInternalId(detailElementCurrentPatient.attribute(flatRequestParam->dataNameXml())) == "DRUG_MEASURE") {
-                        QString valueString = detailElementCurrentPatient.attribute(flatRequestParam->valueNameXml());
-                        valueString.replace(',', '.');
-                        concentration = valueString.toDouble();
-                        unit = detailElementCurrentPatient.attribute(flatRequestParam->unitNameXml(), "mg/l");
-                        unit = unit.toLower();
-                        sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute(flatRequestParam->timeNameXml()), Qt::ISODate);
-                        sampleID = currentPatientID;
+                while (!detailElementCurrentPatient.isNull()) { // && currentPatientID == patientID) {
+                    if (detailElementCurrentPatient.attribute(flatRequestParam->encounteridNameXml()) == patientID) {
+                        if (nameTranslator->nameToInternalId(detailElementCurrentPatient.attribute(flatRequestParam->dataNameXml())) == "DRUG_MEASURE") {
+                            sampleDate = QDateTime::fromString(detailElementCurrentPatient.attribute(flatRequestParam->timeNameXml()), Qt::ISODate);
+                            if (sampleDate > lastSampleDate) {
+                                lastSampleDate = sampleDate;
+                                QString valueString = detailElementCurrentPatient.attribute(flatRequestParam->valueNameXml());
+                                valueString.replace(',', '.');
+                                concentration = valueString.toDouble();
+                                unit = detailElementCurrentPatient.attribute(flatRequestParam->unitNameXml(), "mg/l");
+                                unit = unit.toLower();
+                                sampleID = patientID;
+                            }
+                        }
                     }
 
+
                     detailElementCurrentPatient = detailElementCurrentPatient.nextSiblingElement(flatRequestParam->detailsNameXml());
-                    if (!detailElementCurrentPatient.isNull())
-                        currentPatientID = detailElementCurrentPatient.attribute(flatRequestParam->encounteridNameXml());
                 }
 
                 auto measure = static_cast<Measure*>(request->sample());

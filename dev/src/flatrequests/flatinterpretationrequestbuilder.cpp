@@ -67,7 +67,7 @@ Tucuxi::Gui::Core::Duration FlatInterpretationRequestBuilder::findDuration(const
     QDomElement element = currentElement.nextSiblingElement(flatRequestParameters->detailsNameXml());
     Tucuxi::Gui::Core::Duration duration;
 
-    // Find the first "durée" element, a duration of 0 will be rturned if no duration found
+    // Find the first "durée" element, a duration of 0 will be returned if no duration found
     while(!element.isNull()) {
         if(nameTranslator->nameToInternalId(element.attribute(flatRequestParameters->dataNameXml())) == "DURATION") {
             QString unit = element.attribute(flatRequestParameters->unitNameXml());
@@ -185,8 +185,8 @@ void FlatInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core:
                 // End of dosage are not the same
                 } else {
                     // Find the dosage that end the first
-                    Tucuxi::Gui::Core::Dosage* firstDosage;
-                    Tucuxi::Gui::Core::Dosage* secondDosage;
+                    Tucuxi::Gui::Core::Dosage* firstDosage = nullptr;
+                    Tucuxi::Gui::Core::Dosage* secondDosage = nullptr;
                     QDateTime firstDosageEnd;
                     QDateTime secondDosageEnd;
 

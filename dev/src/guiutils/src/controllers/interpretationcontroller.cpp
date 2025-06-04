@@ -263,9 +263,6 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setNewInterpretation(Tucux
     _chartDataController->predictionspec = predictionspec;
     adjustmentTabController->setChartData(chartData);
 
-    // Rebinds the interpretation
-    rootContext->setContextProperty("interpretation", _interpretation);
-    rootContext->setContextProperty("chartData", chartData);
     flowController->setInterpretation(interpretation);
     if (newInterpretation)
         flowController->startNewInterpretation();
@@ -323,6 +320,11 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setNewInterpretation(Tucux
     if (oldInterpretation != nullptr) {
         //delete oldInterpretation;
     }
+
+
+    // Rebinds the interpretation
+    rootContext->setContextProperty("interpretation", _interpretation);
+    rootContext->setContextProperty("chartData", chartData);
 
 }
 
@@ -684,6 +686,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
     }
 
     setNewInterpretation(interpretation, true);
+
 
     setAnalystFromGlobals();
 
@@ -2165,6 +2168,8 @@ QByteArray Tucuxi::Gui::GuiUtils::InterpretationController::interpretationToJson
     interpretation.insert("graphPath", "file://" + QApplication::applicationDirPath() + "/graph.png");
     interpretation.insert("validationDate", _interpretation->getValidateInterpretationTime().toString());
 
+    interpretation.insert("drugModelId", _interpretation->getDrugResponseAnalysis()->getDrugModel()->getDrugModelId());
+
     QJsonArray drugCovariates;
     auto drugCovs = _interpretation->getDrugResponseAnalysis()->getDrugModel()->getCovariates();
     for (int i = 0; i < drugCovs->size(); i++) {
@@ -2204,12 +2209,20 @@ QByteArray Tucuxi::Gui::GuiUtils::InterpretationController::interpretationToJson
 
     QJsonArray measures;
     auto ms = _interpretation->getDrugResponseAnalysis()->getTreatment()->getMeasures();
+    auto pointsAtMeasure = _interpretation->getAnalysis()->getChartData()->getApoPred()->getPredictive()->getPointsAtMeasures();
     for (int i = 0; i < ms->size(); i++) {
         auto m = dynamic_cast<Measure*>(ms->at(i));
         QJsonObject measure;
         measure.insert("sampleId", m->sampleID());
         measure.insert("sampleDate", m->getMoment().toString(Qt::ISODate));
         measure.insert("sampleValue", QString("%1 %2").arg(m->getConcentration()->getDbvalue()).arg(unitStringModifier(m->getConcentration()->getUnitstring())));
+        for (int i = 0; i < pointsAtMeasure->size(); i++) {
+            if (pointsAtMeasure->at(i)->getTime() == (m->getMoment().toMSecsSinceEpoch() / 1000.0)) {
+                int val = static_cast<int>(pointsAtMeasure->at(i)->getValue() * 100.0);
+                double dbValue = static_cast<double>(val) / 100.0;
+                measure.insert("predictedValue", QString("%1 %2").arg(dbValue).arg(unitStringModifier(m->getConcentration()->getUnitstring())));
+            }
+        }
         measures.insert(i, measure);
     }
     interpretation.insert("measures", measures);
@@ -2283,6 +2296,17 @@ QByteArray Tucuxi::Gui::GuiUtils::InterpretationController::interpretationToJson
     interpretation.insert("nextControl", _interpretation->getAnalysis()->getNextControl().toString(Qt::ISODate));
     interpretation.insert("validationDate", _interpretation->getValidateInterpretationTime().toString(Qt::ISODate));
     interpretation.insert("proposedDosage", _interpretation->getAnalysis()->getDosageDescription());
+
+
+    Dosage *lastDosage = _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->lastDosage();
+    if (lastDosage != nullptr) {
+        interpretation.insert("currentRoute", lastDosage->getRoute()->getAdministrationRoute());
+    }
+    else {
+        interpretation.insert("currentRoute", "");
+    }
+
+
 
     {
         QJsonArray adjustments;

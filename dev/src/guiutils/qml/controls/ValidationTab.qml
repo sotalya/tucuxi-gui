@@ -511,7 +511,7 @@ Rectangle {
                                     anchors.margins:1
                                     wrapMode: TextArea.Wrap
                                     text: analysisFrame.model.expectedness
-                                    onTextChanged: analysisFrame.model.expectedness = text
+                                    onTextChanged: { if (analysisFrame.model) analysisFrame.model.expectedness = text;}
                                     font.family:    analysis.inputFontFamily
                                     font.pixelSize: analysis.inputFontSize
                                     verticalAlignment:   analysis.inputVAlign
@@ -600,7 +600,7 @@ Rectangle {
                                     clip: true
                                     wrapMode: TextEdit.WordWrap
                                     text: analysisFrame.model.suitability
-                                    onTextChanged: analysisFrame.model.suitability = text
+                                    onTextChanged: { if (analysisFrame.model) analysisFrame.model.suitability = text;}
                                     font.family:    analysis.inputFontFamily
                                     font.pixelSize: analysis.inputFontSize
                                     verticalAlignment:   analysis.inputVAlign
@@ -689,7 +689,7 @@ Rectangle {
                                     clip: true
                                     wrapMode: TextEdit.WordWrap
                                     text: analysisFrame.model.prediction
-                                    onTextChanged: analysisFrame.model.prediction = text
+                                    onTextChanged: { if (analysisFrame.model) analysisFrame.model.prediction = text;}
                                     font.family:    analysis.inputFontFamily
                                     font.pixelSize: analysis.inputFontSize
                                     verticalAlignment:   analysis.inputVAlign
@@ -776,7 +776,7 @@ Rectangle {
                                     clip: true
                                     wrapMode: TextEdit.WordWrap
                                     text: analysisFrame.model.remonitoring
-                                    onTextChanged: analysisFrame.model.remonitoring = text
+                                    onTextChanged: { if (analysisFrame.model) analysisFrame.model.remonitoring = text;}
                                     font.family:    analysis.inputFontFamily
                                     font.pixelSize: analysis.inputFontSize
                                     verticalAlignment:   analysis.inputVAlign
@@ -863,7 +863,7 @@ Rectangle {
                                     clip: true
                                     wrapMode: TextEdit.WordWrap
                                     text: analysisFrame.model.warning
-                                    onTextChanged: analysisFrame.model.warning = text
+                                    onTextChanged: { if (analysisFrame.model) analysisFrame.model.warning = text;}
                                     font.family:    analysis.inputFontFamily
                                     font.pixelSize: analysis.inputFontSize
                                     verticalAlignment:   analysis.inputVAlign

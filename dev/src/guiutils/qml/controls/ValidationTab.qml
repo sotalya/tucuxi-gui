@@ -12,7 +12,7 @@ Rectangle {
     property int status: Status.invalid
     property bool enabled: false;
 
-    signal reset()    
+    signal reset()
 
     function toggleShow(index, value)
     {
@@ -518,9 +518,9 @@ Rectangle {
                                     horizontalAlignment: analysis.inputHAlign
 
                                     Keys.onPressed: function(event) {
-                                        var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
-                                        var drugId =  interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId : ""
 
+                                        var modifiers = event.modifiers & (~Qt.KeypadModifier)   // Maskout the numpad modifier
+                                        var drugId = interpretationController.currentActiveSubstance ? interpretationController.currentActiveSubstance.substanceId : ""
                                         if ((modifiers & Qt.ControlModifier || modifiers & Qt.AltModifier || modifiers & Qt.ShiftModifier || modifiers & Qt.MetaModifier) &&
                                               event.key !== Qt.Key_Control && event.key !== Qt.Key_Alt && event.key !== Qt.Key_Shift && event.key !== Qt.Key_Meta){
                                             var t = validationTabController.getShortCutText(0, event.key, modifiers, drugId);

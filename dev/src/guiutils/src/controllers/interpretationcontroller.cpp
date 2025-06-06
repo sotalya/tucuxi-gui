@@ -2300,12 +2300,21 @@ QByteArray Tucuxi::Gui::GuiUtils::InterpretationController::interpretationToJson
 
     Dosage *lastDosage = _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->lastDosage();
     if (lastDosage != nullptr) {
+        interpretation.insert("currentInfusionTime", lastDosage->getTinf().toHours());
         interpretation.insert("currentRoute", lastDosage->getRoute()->getAdministrationRoute());
     }
     else {
         interpretation.insert("currentRoute", "");
+        interpretation.insert("currentInfusionTime", "NA");
     }
 
+    if (!_interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->isEmpty()) {
+        QDateTime firstIntake = _interpretation->getDrugResponseAnalysis()->getTreatment()->getDosages()->firsttake();
+        interpretation.insert("treatmentStart", firstIntake.toString(Qt::ISODate));
+    }
+    else {
+        interpretation.insert("treatmentStart", "-");
+    }
 
 
     {

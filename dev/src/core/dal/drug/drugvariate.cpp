@@ -49,6 +49,7 @@ AUTO_PROPERTY_IMPL(DrugVariate, TranslatableString*, comments, Comments)
 DrugVariate::DrugVariate(AbstractRepository *repository, QObject* parent, const QString &covariateId, const QDateTime &date) :
    Entity(repository, parent),
 //   _date(date),
+    _covariateType(CovariateType::Standard),
    _quantity(CoreFactory::createEntity<OperableAmount>(repository, this)),
    _description(""),
    _type(QMetaType::Int),

@@ -74,7 +74,32 @@ enum class CovariateType
 
     /// \brief Automatic calculation of the dose, based on the intakes.
     /// The unit of the covariate will be used to convert the actual dose to the covariate.
-    Dose
+    Dose,
+
+    /// \brief Time from the start of the treatment, in hours.
+    /// Automatic calculation based on the treatment start date, use default
+    /// from drug model if not available.
+    TimeFromStartInHours,
+
+    /// \brief Time from the start of the treatment, in days.
+    /// Automatic calculation based on the treatment start date, use default
+    /// from drug model if not available.
+    TimeFromStartInDays,
+
+    /// \brief Time from the start of the treatment, in weeks.
+    /// Automatic calculation based on the treatment start date, use default
+    /// from drug model if not available.
+    TimeFromStartInWeeks,
+
+    /// \brief Time from the start of the treatment, in months.
+    /// Automatic calculation based on the treatment start date, use default
+    /// from drug model if not available.
+    TimeFromStartInMonths,
+
+    /// \brief Time from the start of the treatment, in years.
+    /// Automatic calculation based on the treatment start date, use default
+    /// from drug model if not available.
+    TimeFromStartInYears
 };
 
 

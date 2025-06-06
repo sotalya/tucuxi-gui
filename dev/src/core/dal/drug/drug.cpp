@@ -64,8 +64,6 @@ Analyte::Analyte(AbstractRepository *repository, QObject *parent) :
 
 
 
-
-
 AUTO_PROPERTY_IMPL(ActiveSubstance, QString, substanceId, SubstanceId)
 AUTO_PROPERTY_IMPL(ActiveSubstance, TranslatableString*, name, Name)
 TRANSLATABLE_STRING_PROPERTY_IMPL(ActiveSubstance, description, Description)

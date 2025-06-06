@@ -403,7 +403,7 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         amount->setUnit(Tucuxi::Gui::Core::Unit(uString));
         variate->setQuantity(amount);
 
-        Tucuxi::Gui::Core::CovariateType cType;
+        Tucuxi::Gui::Core::CovariateType cType = Tucuxi::Gui::Core::CovariateType::Standard;
         switch (covariate->getType()) {
         case Tucuxi::Core::CovariateType::Standard: cType = Tucuxi::Gui::Core::CovariateType::Standard; break;
         case Tucuxi::Core::CovariateType::AgeInYears: cType = Tucuxi::Gui::Core::CovariateType::AgeInYears; break;
@@ -412,6 +412,11 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         case Tucuxi::Core::CovariateType::AgeInMonths: cType = Tucuxi::Gui::Core::CovariateType::AgeInMonths; break;
         case Tucuxi::Core::CovariateType::Sex: cType = Tucuxi::Gui::Core::CovariateType::Sex; break;
         case Tucuxi::Core::CovariateType::Dose: cType = Tucuxi::Gui::Core::CovariateType::Dose; break;
+        case Tucuxi::Core::CovariateType::TimeFromStartInDays: cType = Tucuxi::Gui::Core::CovariateType::TimeFromStartInDays; break;
+        case Tucuxi::Core::CovariateType::TimeFromStartInWeeks: cType = Tucuxi::Gui::Core::CovariateType::TimeFromStartInWeeks; break;
+        case Tucuxi::Core::CovariateType::TimeFromStartInMonths: cType = Tucuxi::Gui::Core::CovariateType::TimeFromStartInMonths; break;
+        case Tucuxi::Core::CovariateType::TimeFromStartInYears: cType = Tucuxi::Gui::Core::CovariateType::TimeFromStartInYears; break;
+        case Tucuxi::Core::CovariateType::TimeFromStartInHours: cType = Tucuxi::Gui::Core::CovariateType::TimeFromStartInHours; break;
         }
         variate->setCovariateType(cType);
 

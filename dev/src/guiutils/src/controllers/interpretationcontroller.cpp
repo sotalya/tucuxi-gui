@@ -291,7 +291,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setNewInterpretation(Tucux
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(patientsView, "reset"));
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(covariatesView, "reset"));
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(chartView, "reset"));
-
+    CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(validationView, "reset"));
 
     if (interpretation->getInterpretationType() == Interpretation::InterpretationType::FromRequest)
     {
@@ -571,14 +571,15 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::populateSingleActiveSubsta
     // We just add the corresponding active substance
     for (int i = 0; i < _drugs->size(); ++i) {
         if (activeSubstanceId == _drugs->at(i)->getActiveSubstance()->getSubstanceId()) {
-            LightActiveSubstance *light = CoreFactory::createEntity<LightActiveSubstance>(ABSTRACTREPO, nullptr);
+            LightActiveSubstance *light = CoreFactory::createEntity<LightActiveSubstance>(ABSTRACTREPO, _activeSubstances);
             light->setName(_drugs->at(i)->getActiveSubstance()->getName());
             light->setSubstanceId(_drugs->at(i)->getActiveSubstance()->getSubstanceId());
             _activeSubstances->append(light);
-            LightActiveSubstance *light2 = CoreFactory::createEntity<LightActiveSubstance>(ABSTRACTREPO, nullptr);
-            light2->setName(_drugs->at(i)->getActiveSubstance()->getName());
-            light2->setSubstanceId(_drugs->at(i)->getActiveSubstance()->getSubstanceId());
-            _privateActiveSubstances->append(light2);
+//            LightActiveSubstance *light2 = CoreFactory::createEntity<LightActiveSubstance>(ABSTRACTREPO, nullptr);
+//            light2->setName(_drugs->at(i)->getActiveSubstance()->getName());
+//            light2->setSubstanceId(_drugs->at(i)->getActiveSubstance()->getSubstanceId());
+//            _privateActiveSubstances->append(light2);
+            _privateActiveSubstances->append(light);
             break;
         }
     }
@@ -687,11 +688,10 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
 
     setNewInterpretation(interpretation, true);
 
+    populateSingleActiveSubstance(dt->getActiveSubstanceId());
+
 
     setAnalystFromGlobals();
-
-
-    populateSingleActiveSubstance(dt->getActiveSubstanceId());
 
     CHECK_INVOKEMETHOD(QMetaObject::invokeMethod(patientsView, "reset"));
 

@@ -244,6 +244,10 @@ class Admin : public Entity
         return QString::fromStdString(map.at(_formulationAndRoute.getFormulation()));
     }
 
+    Q_INVOKABLE bool hasInfusion() const {
+        return _formulationAndRoute.getAdministrationRoute() == Tucuxi::Core::AdministrationRoute::IntravenousDrip;
+    }
+
     Q_INVOKABLE QString getAdministrationRoute() const {
 
         static std::map<Tucuxi::Core::AdministrationRoute, std::string> m =

@@ -74,7 +74,7 @@ DialogBase {
         routeText.text = route.description
 
         // infusions
-        infusionRow.visible = route.label === "INFUSION"
+        infusionRow.visible = route.hasInfusion();
 //        infusionSpinBox.decimals = 2;   // 2
         infusionSpinBox.setRealValue(tinf);
         infusionSpinBox.valuesList = drugmodel.infusions.infusionsList

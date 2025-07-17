@@ -174,6 +174,8 @@ class Admin : public Entity
     //Q_PROPERTY(int value READ getValue WRITE setValue NOTIFY valueChanged)
 
     Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
+    Q_PROPERTY(double hasInfusion READ hasInfusion NOTIFY hasInfusionChanged)
+
     public:
 
     Q_INVOKABLE Admin(AbstractRepository *repository, QObject *parent = nullptr)
@@ -244,9 +246,11 @@ class Admin : public Entity
         return QString::fromStdString(map.at(_formulationAndRoute.getFormulation()));
     }
 
-    Q_INVOKABLE bool hasInfusion() const {
+    bool hasInfusion() const {
         return _formulationAndRoute.getAdministrationRoute() == Tucuxi::Core::AdministrationRoute::IntravenousDrip;
     }
+
+    Q_SIGNAL void hasInfusionChanged(bool infusion);
 
     Q_INVOKABLE QString getAdministrationRoute() const {
 

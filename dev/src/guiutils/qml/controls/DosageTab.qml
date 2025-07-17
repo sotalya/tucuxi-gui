@@ -146,7 +146,7 @@ Rectangle {
                             EntityListDelegateItem {
                                 Layout.preferredWidth:85
                                 color: dosageListDelegate.mousearea.hovered ? dosageList.rowBackgroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowBackgroundSelected : dosageList.rowBackground)
-                                label.text: modelData.route.label === "INFUSION" ? modelData.dbtinf + " min" : "-"
+                                label.text: modelData.route.hasInfusion ? modelData.dbtinf + " min" : "-"
                                 label.color: dosageListDelegate.mousearea.hovered ? dosageList.rowForegroundHover : (dosageListDelegate.ListView.isCurrentItem ? dosageList.rowForegroundSelected : dosageList.rowForeground)
                             },
                             EntityListImage {

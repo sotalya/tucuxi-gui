@@ -296,7 +296,7 @@ Rectangle {
                     EntityListHeaderItem { Layout.preferredWidth: 115; Layout.fillWidth: true; label.text: "To"; tooltipText : ToolTips.adjustmentTab.to }
                     EntityListHeaderItem { Layout.preferredWidth: 85; label.text: "Dose"; tooltipText : ToolTips.adjustmentTab.dose }
                     EntityListHeaderItem { Layout.preferredWidth: 85; label.text: "Interval"; tooltipText : ToolTips.adjustmentTab.interval }
-                    EntityListHeaderItem { Layout.preferredWidth: 85; label.text: "Duration"; tooltipText : ToolTips.adjustmentTab.infusion }
+                    EntityListHeaderItem { Layout.preferredWidth: 85; label.text: "Infusion"; tooltipText : ToolTips.adjustmentTab.infusion }
                     /*
                     EntityListHeaderItem { Layout.preferredWidth: 85; label.text: "Value" }
                     EntityListHeaderItem { Layout.preferredWidth: 85; label.text: "Score" }
@@ -364,7 +364,7 @@ Rectangle {
                             EntityListDelegateItem {
                                 Layout.preferredWidth:85
                                 color: adjustmentListDelegate.mousearea.hovered ? adjustmentList.rowBackgroundHover : (adjustmentListDelegate.ListView.isCurrentItem ? adjustmentList.rowBackgroundSelected : adjustmentList.rowBackground)
-                                label.text: dosage.route.label === "INFUSION" ? dosage.dbtinf + " min" : "-"
+                                label.text: dosage.route.hasInfusion ? dosage.dbtinf + " min" : "-"
                                 label.color: adjustmentListDelegate.mousearea.hovered ? adjustmentList.rowForegroundHover : (adjustmentListDelegate.ListView.isCurrentItem ? adjustmentList.rowForegroundSelected : adjustmentList.rowForeground)
                             },/*
                             EntityListDelegateItem {

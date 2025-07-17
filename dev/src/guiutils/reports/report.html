@@ -162,16 +162,21 @@
 
         var samplesLineElement = $("#measures");
         samplesLineElement.empty();
+        
+            samplesLineElement.append("<tr class='section'>" +
+            "<td class='label'>Sample from:</td>" +
+            "<td class='label'>ID</td>" +
+            "<td class='label'>Value</td>" +
+            "<td class='label'>Predicted</td>" +
+            "</tr>");
 
         function extractMeasure(value, index, array) {
 
             samplesLineElement.append("<tr class='section'>" +
-            "<td class='label'>Sample from:</td>" +
             "<td class='data'><span id='sampleDate'>" + formatDateTime(value.sampleDate) + "</span></td>" +
-            "<td class='label'>ID</td>" +
             "<td class='data'><span id='sampleId'>" + value.sampleId + "</span></td>" +
-            "<td class='label'>Result</td>" +
             "<td class='data'><span id='sampleValue'>" + value.sampleValue + "</span></td>" +
+            "<td class='data'><span id='samplePredicted'>" + value.predictedValue + "</span></td>" +
             "</tr>");
         }
 

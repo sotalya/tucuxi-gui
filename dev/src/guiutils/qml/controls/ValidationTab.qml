@@ -232,6 +232,7 @@ Rectangle {
                     EntityListHeaderItem {
                         Layout.minimumHeight: 20;
                         Layout.preferredWidth: 120;
+                        Layout.fillWidth: true
                         label.text: "Typical patient"
 
                         MouseArea {
@@ -247,11 +248,13 @@ Rectangle {
                                 visible : (show_tooltip) ? (popMousearea.containsMouse && (tooltipText != "")) : false
                                 text : tooltipText
                             }
-                        }}
+                        }
+                    }
 
                     EntityListHeaderItem {
                         Layout.minimumHeight: 20;
                         Layout.preferredWidth: 120;
+                        Layout.fillWidth: true
                         label.text: "A priori"
 
                         MouseArea {
@@ -273,6 +276,7 @@ Rectangle {
                     EntityListHeaderItem {
                         Layout.minimumHeight: 20;
                         Layout.preferredWidth: 120;
+                        Layout.fillWidth: true
                         label.text: "A posteriori"
 
                         MouseArea {
@@ -311,17 +315,17 @@ Rectangle {
                                 label.text: modelData.pk
                             },
                             EntityListDelegateItem {
-
+                                Layout.preferredWidth: 120
                                 Layout.fillWidth: true
                                 label.text: modelData.pop
                             },
                             EntityListDelegateItem {
-
+                                Layout.preferredWidth: 120
                                 Layout.fillWidth: true
                                 label.text: modelData.apr
                             },
                             EntityListDelegateItem {
-
+                                Layout.preferredWidth: 120
                                 Layout.fillWidth: true
                                 label.text: modelData.apo
                             }

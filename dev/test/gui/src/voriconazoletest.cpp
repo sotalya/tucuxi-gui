@@ -98,9 +98,9 @@ TEST(VoriconazoleTest, Test1)
 
     //_____Add dosage_______________________________________________
 
-    dosageData1.dosage      = 20000;
-    dosageData1.infusion    = 60;
-    dosageData1.interval    = 12;
+    dosageData1.dose      = 20000;
+    dosageData1.infusionTimeInMinutes    = 60;
+    dosageData1.intervalInHours    = 12;
     dosageData1.steadyState = true;                                // if steadyState = false -> start date & end date needed
     // Use default date and time
     // dosageData1.dateTimeDos1.setDate(QDate(2022, 12, 16));            // start date(n)
@@ -124,9 +124,9 @@ TEST(VoriconazoleTest, Test1)
     srv->mouseClickIfPathOk("mainWindow/flowView/dosageButton");
     srv->waitForSync();
 
-    dosageData1.dosage      = 20000;
-    dosageData1.infusion    = 60;
-    dosageData1.interval    = 12;
+    dosageData1.dose      = 20000;
+    dosageData1.infusionTimeInMinutes    = 60;
+    dosageData1.intervalInHours    = 12;
     dosageData1.steadyState = false;                                // if steadyState = false -> start date & end date needed
     // Use default date and time
     dosageData1.dateTimeDos2 = dosageData1.dateTimeDos1.addDays(3);
@@ -148,9 +148,9 @@ TEST(VoriconazoleTest, Test1)
     srv->mouseClickIfPathOk("mainWindow/flowView/dosageButton");
 
 
-    dosageData1.dosage      = 20000;
-    dosageData1.infusion    = 60;
-    dosageData1.interval    = 12;
+    dosageData1.dose      = 20000;
+    dosageData1.infusionTimeInMinutes    = 60;
+    dosageData1.intervalInHours    = 12;
     dosageData1.steadyState = true;                                // if steadyState = false -> start date & end date needed
 
 

@@ -71,9 +71,9 @@ TEST(ValidationTest, Test1)
 
 
     DosageData dosageData1;
-    dosageData1.dosage      = 7500;
-    dosageData1.infusion    = 900;
-    dosageData1.interval    = 4800;
+    dosageData1.dose      = 7500;
+    dosageData1.infusionTimeInMinutes    = 900;
+    dosageData1.intervalInHours    = 4800;
     dosageData1.steadyState = false;
     dosageData1.dateTimeDos1.setDate(QDate(2022, 05, 07));
     dosageData1.dateTimeDos1.setTime(QTime(15,23));

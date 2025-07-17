@@ -68,14 +68,14 @@ TEST(DaylightSavingTest, Test1)
     srv->waitForSync();
 
     DosageData dosageData1;
-    dosageData1.dosage = 2500;
+    dosageData1.dose = 2500;
     dosageData1.steadyState = false;
     dosageData1.dateTimeDos1.setDate(QDate(2022, 3, 24));
     dosageData1.dateTimeDos1.setTime(QTime(8, 0));
     dosageData1.dateTimeDos2.setDate(QDate(2022, 4, 15));
     dosageData1.dateTimeDos2.setTime(QTime(9, 0));
-    dosageData1.interval = 24;
-    dosageData1.infusion = 30;
+    dosageData1.intervalInHours = 24;
+    dosageData1.infusionTimeInMinutes = 30;
     srv->addDosage(dosageData1);
     srv->waitForSync();
 

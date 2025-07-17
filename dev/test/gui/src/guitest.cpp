@@ -475,10 +475,10 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
 
     // fills in Dose value, in [µg]
     srv->waitPeriod(waitTime1);
-    findObjectAndSetValue("doseSpinBox", dosageData1.dosage);
+    findObjectAndSetValue("doseSpinBox", dosageData1.dose);
 
     // fills in Interval value, in [h]
-    findObjectAndSetValue("intervalSpinBox", dosageData1.interval);
+    findObjectAndSetValue("intervalSpinBox", dosageData1.intervalInHours);
 
     //srv->synchronize();
     QVariant routeText;
@@ -492,7 +492,7 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
     {
         // Infusion parameter only to be filled if Route = Intravenous drip != Oral
 //        qInfo() << "Infusion value to be filled in";
-        findObjectAndSetValue("infusionSpinBox", dosageData1.infusion);
+        findObjectAndSetValue("infusionSpinBox", dosageData1.infusionTimeInMinutes);
 
     }
     else if (routeText.toString() == "Oral")

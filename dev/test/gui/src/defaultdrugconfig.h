@@ -69,9 +69,9 @@ struct PatientData {
 };
 
 struct DosageData {
-    double dosage;
-    double interval;
-    double infusion;
+    double dose;
+    double intervalInHours;
+    double infusionTimeInMinutes;
     bool steadyState       = false;
     QDateTime dateTimeDos1 = QDateTime::currentDateTime().addMonths(-6);
     QDateTime dateTimeDos2 = QDateTime::currentDateTime().addMonths(6);
@@ -190,8 +190,8 @@ class DrugApixaban : DrugDefault {
 public:
     QString drugName = "Apixaban";
     DrugApixaban(){
-        dosageData.dosage   = 2.5;  // mg
-        dosageData.interval = 12.0; // h
+        dosageData.dose   = 2.5;  // mg
+        dosageData.intervalInHours = 12.0; // h
 
         covariateData.dayNightDosing                     = 0.0;
         covariateData.weight                             = 65.8; // kg
@@ -199,7 +199,7 @@ public:
         covariateData.nonValvularAtrialFibriliation      = 0.0;
         covariateData.acuteCoronarySyndrome              = 0.0;
         covariateData.strongModerateCytochromeInhibitors = 0.0;
-        covariateData.dose                               = dosageData.dosage;
+        covariateData.dose                               = dosageData.dose;
         covariateData.glomerularFiltrationRate           = 80.0; // ml/min
 
         covarTypeIndex.sex                                = 0;
@@ -225,8 +225,8 @@ class DrugBictegravir : DrugDefault {
 public:
     QString drugName = "Bictegravir";
     DrugBictegravir(){
-        dosageData.dosage   = 50.0; // mg
-        dosageData.interval = 24.0; // h
+        dosageData.dose   = 50.0; // mg
+        dosageData.intervalInHours = 24.0; // h
 
         covariateData;
         covarTypeIndex;
@@ -243,9 +243,9 @@ public:
     DrugBusulfan(){
         patientData.birthDate = QDate::currentDate().addYears(-10);
 
-        dosageData.dosage   = 10.0;  // mg
-        dosageData.interval = 6.0;   // h
-        dosageData.infusion = 120.0; // min
+        dosageData.dose   = 10.0;  // mg
+        dosageData.intervalInHours = 6.0;   // h
+        dosageData.infusionTimeInMinutes = 120.0; // min
 
         covariateData.weight = 9.0; // kg
 
@@ -268,8 +268,8 @@ class DrugCaffeine : DrugDefault {
 public:
     QString drugName = "Caffeine";
     DrugCaffeine(){
-        dosageData.dosage   = 400.0; // mg
-        dosageData.interval = 24.0;  // h
+        dosageData.dose   = 400.0; // mg
+        dosageData.intervalInHours = 24.0;  // h
 
         covariateData;
         covarTypeIndex;
@@ -284,9 +284,9 @@ class DrugCefepime : DrugDefault {
 public:
     QString drugName = "Cefepime";
     DrugCefepime(){
-        dosageData.dosage   = 2000.0; // mg
-        dosageData.interval = 8;      // h
-        dosageData.infusion = 30;     // min
+        dosageData.dose   = 2000.0; // mg
+        dosageData.intervalInHours = 8;      // h
+        dosageData.infusionTimeInMinutes = 30;     // min
 
         covariateData.weight = 65.0; // kg
         covariateData.scc    = 80.0; // umol/l
@@ -307,9 +307,9 @@ class DrugDaptomycin : DrugDefault {
 public:
     QString drugName = "Daptomycin";
     DrugDaptomycin(){
-        dosageData.dosage = 500.0;  // mg
-        dosageData.interval = 24.0; // h
-        dosageData.infusion = 30.0; // min
+        dosageData.dose = 500.0;  // mg
+        dosageData.intervalInHours = 24.0; // h
+        dosageData.infusionTimeInMinutes = 30.0; // min
 
         covariateData.weight                = 75.0; // kg
         covariateData.clearanceOfCreatinine = 91.2; // ml/min
@@ -334,8 +334,8 @@ class DrugDarunavir : DrugDefault {
 public:
     QString drugName = "Darunavir";
     DrugDarunavir(){
-        dosageData.dosage   = 400.0; // mg
-        dosageData.interval = 24.0;   // h
+        dosageData.dose   = 400.0; // mg
+        dosageData.intervalInHours = 24.0;   // h
 
         covariateData.weight = 70.0;  //kg
         covariateData.height = 152.0; // cm

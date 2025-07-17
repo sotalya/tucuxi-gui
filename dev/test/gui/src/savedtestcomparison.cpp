@@ -92,9 +92,9 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;            // modelIndex : 0 = only model available
         srv->selectDrugInList(drugName, modelIndex);
 
-        dosageData.dosage = 12.5;
-        dosageData.interval = 8;
-        dosageData.infusion = 100;
+        dosageData.dose = 12.5;
+        dosageData.intervalInHours = 8;
+        dosageData.infusionTimeInMinutes = 100;
         srv->addDosage(dosageData);
 
         int covariateType = 1; // Weight
@@ -124,7 +124,7 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;            // modelIndex : 0  = only model available
         srv->selectDrugInList(drugName, modelIndex);
 
-        dosageData.dosage = 2250;
+        dosageData.dose = 2250;
         srv->addDosage(dosageData);
 
         covariatesData.scc = 85;
@@ -206,9 +206,9 @@ TEST(SavedTestComparison, Test1)
         srv->waitPeriod(waitTime1);
 
 
-        dosageData.dosage       = 1;
-        dosageData.interval     = 100;
-        dosageData.infusion     = 30;
+        dosageData.dose       = 1;
+        dosageData.intervalInHours     = 100;
+        dosageData.infusionTimeInMinutes     = 30;
         dosageData.steadyState  = true;
         dosageData.dateTimeDos1 = QDateTime::currentDateTime();
         dosageData.dateTimeDos2 = QDateTime::currentDateTime();
@@ -235,8 +235,8 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;            // modelIndex : 0
         srv->selectDrugInList(drugName, modelIndex);
 
-        dosageData.dosage       = 2.5;
-        dosageData.interval     = 12;
+        dosageData.dose       = 2.5;
+        dosageData.intervalInHours     = 12;
         dosageData.steadyState  = true;
         srv->addDosage(dosageData);
 
@@ -254,8 +254,8 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;                // modelIndex : 0
         srv->selectDrugInList(drugName, modelIndex);
 
-        dosageData.dosage       = 62.0;
-        dosageData.interval     = 16;
+        dosageData.dose       = 62.0;
+        dosageData.intervalInHours     = 16;
         dosageData.steadyState  = true;
         srv->addDosage(dosageData);
 
@@ -273,9 +273,9 @@ TEST(SavedTestComparison, Test1)
         int modelIndex  = 0;              // modelIndex : 0
         srv->selectDrugInList(drugName, modelIndex);
 
-        dosageData.dosage       = 1122.0;
-        dosageData.interval     = 8;
-        dosageData.infusion     = 100;
+        dosageData.dose       = 1122.0;
+        dosageData.intervalInHours     = 8;
+        dosageData.infusionTimeInMinutes     = 100;
         srv->addDosage(dosageData);
 
         covariatesData.scc = 76.60;
@@ -298,8 +298,8 @@ TEST(SavedTestComparison, Test1)
         {
 
             //_____Add dosage_______________________________________________
-            dosageData.dosage      = n*0.5 + n*0.1;
-            dosageData.interval    = n*8;                                  // interval(n) = {1200, 2400, 3600, 4800, ...}
+            dosageData.dose      = n*0.5 + n*0.1;
+            dosageData.intervalInHours    = n*8;                                  // interval(n) = {1200, 2400, 3600, 4800, ...}
             dosageData.steadyState = false;                                // if steadyState = false -> start date & end date needed
             dosageData.dateTimeDos1.setDate(QDate(2022, 05, 18+n));            // start date(n)
             dosageData.dateTimeDos1.setTime(QTime(n, n));                  // start time(n)

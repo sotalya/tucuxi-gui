@@ -80,14 +80,14 @@ TEST(FunctionsTester, Test1)
     srv->waitPeriod(waitTime1);
 
     DosageData dosageData1;
-    dosageData1.dosage = 2001;
+    dosageData1.dose = 2001;
     dosageData1.steadyState = false;
     dosageData1.dateTimeDos1.setDate(QDate(2022, 3, 25));
     dosageData1.dateTimeDos1.setTime(QTime(8, 0));
     dosageData1.dateTimeDos2.setDate(QDate(2022, 3, 30));
     dosageData1.dateTimeDos2.setTime(QTime(8, 0));
-    dosageData1.interval = 8;
-    dosageData1.infusion = 60;
+    dosageData1.intervalInHours = 8;
+    dosageData1.infusionTimeInMinutes = 60;
     srv->addDosage(dosageData1);
     srv->waitForSync();
 

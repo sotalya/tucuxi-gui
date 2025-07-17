@@ -97,9 +97,9 @@ TEST(AddEditRemoveTest, Test1)
 
         //_____Add dosage_______________________________________________
 
-        dosageData1.dosage      = n*200 + n*10;                         // dosage(n) = {210, 420, 630, 840, ...}
-        dosageData1.infusion    = n*100;                                // infusion(n) = {100, 200, 300, 400, ...}
-        dosageData1.interval    = n*12;                                 // interval(n) = {12, 24, 36, 48, ...}
+        dosageData1.dose      = n*200 + n*10;                         // dosage(n) = {210, 420, 630, 840, ...}
+        dosageData1.infusionTimeInMinutes    = n*100;                                // infusion(n) = {100, 200, 300, 400, ...}
+        dosageData1.intervalInHours    = n*12;                                 // interval(n) = {12, 24, 36, 48, ...}
         dosageData1.steadyState = false;                                // if steadyState = false -> start date & end date needed
         dosageData1.dateTimeDos1.setDate(QDate(2022, n, n));            // start date(n)
         dosageData1.dateTimeDos1.setTime(QTime(n, n));                  // start time(n)
@@ -156,9 +156,9 @@ TEST(AddEditRemoveTest, Test1)
     //_____Edit dosage__________________________________________________
 
 
-        dosageData1.dosage      = 432;
-        dosageData1.infusion    = 18;
-        dosageData1.interval    = 24;
+        dosageData1.dose      = 432;
+        dosageData1.infusionTimeInMinutes    = 18;
+        dosageData1.intervalInHours    = 24;
         dosageData1.steadyState = true;
         dosageData1.dateTimeDos1.setDate(QDate(2022, 6, 6));
         dosageData1.dateTimeDos1.setTime(QTime(5, 30));
@@ -168,7 +168,7 @@ TEST(AddEditRemoveTest, Test1)
         srv->editDosage(dosageData1, editDosageIndex);
         srv->waitPeriod(waitTime1);
 
-        dosageData1.dosage = 543;
+        dosageData1.dose = 543;
         dosageData1.steadyState = false;
         dosageData1.dateTimeDos1.setDate(QDate(2023, 7, 8));
         dosageData1.dateTimeDos1.setTime(QTime(7, 8));

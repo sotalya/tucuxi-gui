@@ -87,9 +87,9 @@ TEST(IssuesHighlighter, Test1)
 
     //_____Add dosage_______________________________________________
 
-    dosageData1.dosage      = 2000 + (m-1)*1000 + m*100 + m*30 + m*1;   // dosage(n) = {2234, 3345, 4456, 5567, ...}
-    dosageData1.infusion    = m*100;                                    // infusion(i) = {100, 200, 300, 400, ...}
-    dosageData1.interval    = m*12;                                     // interval(i) = {12, 24, 36, 48, ...}
+    dosageData1.dose      = 2000 + (m-1)*1000 + m*100 + m*30 + m*1;   // dosage(n) = {2234, 3345, 4456, 5567, ...}
+    dosageData1.infusionTimeInMinutes    = m*100;                                    // infusion(i) = {100, 200, 300, 400, ...}
+    dosageData1.intervalInHours    = m*12;                                     // interval(i) = {12, 24, 36, 48, ...}
     dosageData1.steadyState = false;                                    // if steadyState = false -> start date & end date needed
     dosageData1.dateTimeDos1.setDate(QDate(2022, m, m));                // start date(i)
     dosageData1.dateTimeDos1.setTime(QTime(m, m));                      // start time(i)

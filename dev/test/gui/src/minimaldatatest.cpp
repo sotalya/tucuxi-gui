@@ -75,7 +75,7 @@ TEST(MinimalDataTest, Test1)
     srv->selectDrugInList("Cefepime", 0);
     srv->waitPeriod(waitTime1);
 
-    dosageData1.dosage = 2345;
+    dosageData1.dose = 2345;
 
     srv->addDosage(dosageData1);
     srv->waitPeriod(waitTime1);

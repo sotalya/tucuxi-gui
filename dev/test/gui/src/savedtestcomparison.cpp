@@ -39,7 +39,6 @@
 #include "guitest.h"
 
 #include "guiutils/src/controllers/interpretationcontroller.h"
-#include "guiutils/src/controllers/targettabcontroller.h"
 #include "admin/src/dal/interpretation.h"
 
 #include <QDebug>
@@ -49,8 +48,6 @@
 #include "admin/src/interpretationtorequestxmlexport.h"
 #include "admin/src/interpretationxmlimport.h"
 
-#include "core/corefactory.h"
-#include "core/core.h"
 
 using namespace Tucuxi::Gui::Admin;
 
@@ -75,7 +72,7 @@ TEST(SavedTestComparison, Test1)
     // initier test (créer patient, selectionner substance)
     // save fichier
     // load fichier
-    srand(time(0));
+    srand(time(nullptr));
     int nbScenario = 8;
     int scenario = (rand() % nbScenario) + 1;
     qInfo() << "Scenario :" << scenario;
@@ -211,13 +208,14 @@ TEST(SavedTestComparison, Test1)
 
         dosageData.dosage       = 1;
         dosageData.interval     = 100;
-        dosageData.steadyState  = 1;
+        dosageData.infusion     = 30;
+        dosageData.steadyState  = true;
         dosageData.dateTimeDos1 = QDateTime::currentDateTime();
         dosageData.dateTimeDos2 = QDateTime::currentDateTime();
 
         adjustmentsData.dateTimeAdj     = QDateTime::currentDateTime();
-        adjustmentsData.loadingDose     = 0;
-        adjustmentsData.restPeriod      = 0;
+        adjustmentsData.loadingDose     = false;
+        adjustmentsData.restPeriod      = false;
         adjustmentsData.suggestAdjIndex = 0;
         adjustmentsData.dose            = 0;
         adjustmentsData.interval        = 0;

@@ -40,14 +40,8 @@
 #include "guitest.h"
 
 #include "guiutils/src/controllers/interpretationcontroller.h"
-#include "guiutils/src/controllers/targettabcontroller.h"
 #include "guiutils/src/chartdatacontroller.h"
 #include <QQmlApplicationEngine>
-
-#include "admin/src/dal/interpretation.h"
-#include "core/dal/drugresponseanalysis.h"
-#include "core/dal/drugtreatment.h"
-#include "core/dal/drug/target.h"
 
 #include "core/dal/chartdata.h"
 
@@ -81,6 +75,7 @@ TEST(DaylightSavingTest, Test1)
     dosageData1.dateTimeDos2.setDate(QDate(2022, 4, 15));
     dosageData1.dateTimeDos2.setTime(QTime(9, 0));
     dosageData1.interval = 24;
+    dosageData1.infusion = 30;
     srv->addDosage(dosageData1);
     srv->waitForSync();
 

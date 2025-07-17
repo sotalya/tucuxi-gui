@@ -1395,7 +1395,8 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
     map["dosageAdministrationRoute"]  = dosageRoute->getAdministrationRoute();
     map["dosageAdministrationName"]   = dosageRoute->getAdministrationName();
     map["dosageFormulation"]          = dosageRoute->getFormulationString();
-    map["dosageLabel"]                = dosageRoute->getLabelString();
+    // map["dosageLabel"]                = dosageRoute->getLabelString();
+
     //End of Dosages informations
 
     //----------------------------------------
@@ -1470,7 +1471,7 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
     map["adjustmentsAdministrationRoute"]  = adjustmentsRoute->getAdministrationRoute();
     map["adjustmentsAdministrationName"]   = adjustmentsRoute->getAdministrationName();
     map["adjustmentsFormulation"]          = adjustmentsRoute->getFormulationString();
-    map["adjustmentsLabel"]                = adjustmentsRoute->getLabelString();
+    // map["adjustmentsLabel"]                = adjustmentsRoute->getLabelString();
 
     //----------------------------------------
     //  Validation informations

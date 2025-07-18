@@ -40,23 +40,23 @@ TEST(ReportTest, TestCefepime1)
     srv->startNewPatient();
 
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugList_Cefepime"));
-    srv->waitPeriod(waitTime1);
-
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
-    srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
-    srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
-
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugList_Cefepime"));
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
+    srv->waitPeriod(waitTime1);
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
+    srv->waitPeriod(waitTime1);
+    srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
+
+    srv->waitPeriod(waitTime1);
+
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->waitPeriod(waitTimeLong);
 /*
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
     }
@@ -65,7 +65,7 @@ TEST(ReportTest, TestCefepime1)
     srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Enter, 0); // Enter
     srv->waitPeriod(waitTimeLong);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
     }
@@ -74,7 +74,7 @@ TEST(ReportTest, TestCefepime1)
     srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Enter, 0); // Enter
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"), spix::KeyCodes::Backspace, 0);
     }
@@ -85,15 +85,15 @@ TEST(ReportTest, TestCefepime1)
     srv->waitPeriod(waitTimeLong);
     */
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
 
 
 
     srv->waitPeriod(waitTimeLong);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
     srv->waitPeriod(waitTime1);
     srv->synchronize();
     srv->printReport("report_cefepime1.pdf");
@@ -108,23 +108,23 @@ TEST(ReportTest, TestImatinib1)
     srv->startNewPatient();
 
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugList_Imatinib"));
-    srv->waitPeriod(waitTime1);
-
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
-    srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
-    srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
-
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugList_Imatinib"));
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
+    srv->waitPeriod(waitTime1);
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
+    srv->waitPeriod(waitTime1);
+    srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
+
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->waitPeriod(waitTime1);
+
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
     }
@@ -133,7 +133,7 @@ TEST(ReportTest, TestImatinib1)
     srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Enter, 0); // Enter
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
     }
@@ -142,7 +142,7 @@ TEST(ReportTest, TestImatinib1)
     srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Enter, 0); // Enter
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"), spix::KeyCodes::Backspace, 0);
     }
@@ -152,13 +152,13 @@ TEST(ReportTest, TestImatinib1)
 
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
 
     srv->waitPeriod(waitTimeLong);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
     srv->waitPeriod(waitTime1);
 
     srv->printReport("report_imatinib1.pdf");
@@ -174,22 +174,22 @@ TEST(ReportTest, TestImatinibMeasures)
     srv->startNewPatient();
 
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugList_Apixaban"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugList_Apixaban"));
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+    srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
 
     srv->waitPeriod(waitTimeLong);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/measureButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/measuresView/addMeasure"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/measuresView/addMeasure"));
     srv->waitPeriod(waitTime1);
 
 //    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
@@ -203,11 +203,11 @@ TEST(ReportTest, TestImatinibMeasures)
     valueItem->setProperty("text", 100000.0);
     srv->waitPeriod(waitTimeLong);
 
-    srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
+    srv->mouseClickCheck(spix::ItemPath("measureDialog/okMeasure"));
     srv->waitPeriod(waitTime1);
 
 
-    srv->mouseClick(spix::ItemPath("mainWindow/measuresView/addMeasure"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/measuresView/addMeasure"));
     srv->waitPeriod(waitTime1);
 
 //    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
@@ -223,12 +223,12 @@ TEST(ReportTest, TestImatinibMeasures)
     }
     srv->waitPeriod(waitTimeLong);
 
-    srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
+    srv->mouseClickCheck(spix::ItemPath("measureDialog/okMeasure"));
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->waitPeriod(waitTimeLong);
 /*
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
     }
@@ -237,7 +237,7 @@ TEST(ReportTest, TestImatinibMeasures)
     srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Enter, 0); // Enter
     srv->waitPeriod(waitTimeLong);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
     }
@@ -246,7 +246,7 @@ TEST(ReportTest, TestImatinibMeasures)
     srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Enter, 0); // Enter
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"), spix::KeyCodes::Backspace, 0);
     }
@@ -257,13 +257,13 @@ TEST(ReportTest, TestImatinibMeasures)
     srv->waitPeriod(waitTimeLong);
     */
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
 
     srv->waitPeriod(waitTimeLong);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
     srv->waitPeriod(waitTime1);
 
     srv->printReport("report_imatinib_measures.pdf");
@@ -279,26 +279,26 @@ void testReportDrugModel(QString drugName)
     srv->startNewPatient();
 
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod(waitTime1);
     srv->selectDrugInList(drugName, 0);
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+    srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
 
 
     // Now let's add a measure
     srv->waitPeriod(waitTimeLong);
     srv->synchronize();
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/measureButton"));
     srv->waitPeriod(waitTimeLong);
     return;
-    srv->mouseClick(spix::ItemPath("mainWindow/measuresView/addMeasure"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/measuresView/addMeasure"));
     srv->waitPeriod(waitTime1);
 
 //    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
@@ -310,15 +310,15 @@ void testReportDrugModel(QString drugName)
     item->setProperty("value", 10000.0);
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
+    srv->mouseClickCheck(spix::ItemPath("measureDialog/okMeasure"));
     srv->waitPeriod(waitTime1);
 
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->waitPeriod(waitTimeLong);
     /*
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
     }
@@ -327,7 +327,7 @@ void testReportDrugModel(QString drugName)
     srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Enter, 0); // Enter
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
     }
@@ -336,7 +336,7 @@ void testReportDrugModel(QString drugName)
     srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Enter, 0); // Enter
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"));
     for(int i = 0; i < 10; i++) {
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"), spix::KeyCodes::Backspace, 0);
     }
@@ -346,13 +346,13 @@ void testReportDrugModel(QString drugName)
 
     srv->waitPeriod(waitTime1);
     */
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
 
     srv->waitPeriod(waitTimeLong);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
     srv->waitPeriod(waitTime1);
 
     QString reportName = QString("report_%1.pdf").arg(drugName.data());
@@ -381,10 +381,10 @@ protected:
         srv->startNewPatient();
 
         srv->waitPeriod(waitTime1);
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
         srv->waitPeriod(waitTime1);
 //        QString selectDrug = QString("mainWindow/flowView/drugList_%1").arg(drugName.data());
-//        srv->mouseClick(spix::ItemPath(selectDrug.toUtf8().constData()));
+//        srv->mouseClickCheck(spix::ItemPath(selectDrug.toUtf8().constData()));
         srv->synchronize();
 
 //        auto rootContext = srv->m_mainWindowController->getRootContext();
@@ -397,13 +397,13 @@ protected:
         srv->selectDrugInList(std::get<0>(param), std::get<1>(param));
         srv->waitPeriod(waitTime1);
 
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
         srv->waitPeriod(waitTime1);
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
         srv->waitPeriod(waitTime1);
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+        srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
         srv->waitPeriod(waitTime1);
 
         QDateTime dateTime;
@@ -412,8 +412,8 @@ protected:
 //        srv->addMeasure(100.0, dateTime);
 //        srv->waitPeriod(waitTime1);
 
-//        srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
-//        srv->mouseClick(spix::ItemPath("mainWindow/measuresView/addMeasure"));
+//        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/measureButton"));
+//        srv->mouseClickCheck(spix::ItemPath("mainWindow/measuresView/addMeasure"));
 //        srv->waitPeriod(waitTime1);
 
 //    //    srv->enterKey(spix::ItemPath("measureDialog/valueInput"), spix::KeyCodes::Num_1, 0);
@@ -425,16 +425,16 @@ protected:
 //        item->setProperty("value", 100000.0);
 //        srv->waitPeriod(waitTime1);
 
-//        srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
+//        srv->mouseClickCheck(spix::ItemPath("measureDialog/okMeasure"));
 //        srv->waitPeriod(waitTime1);
 
 
 //        srv->waitPeriod(waitTime1);
 
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
         srv->waitPeriod(waitTime1);
         /*
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
         for(int i = 0; i < 10; i++) {
             srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
         }
@@ -443,7 +443,7 @@ protected:
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Enter, 0); // Enter
         srv->waitPeriod(waitTime1);
 
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"));
         for(int i = 0; i < 10; i++) {
             srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Backspace, 0);
         }
@@ -452,7 +452,7 @@ protected:
         srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atDateSettingInput/wholeDate"), spix::KeyCodes::Enter, 0); // Enter
         srv->waitPeriod(waitTime1);
 
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"));
         for(int i = 0; i < 10; i++) {
             srv->enterKey(spix::ItemPath("mainWindow/flowView/adjustmentsView/atMinutesSettingInput"), spix::KeyCodes::Backspace, 0);
         }
@@ -466,16 +466,16 @@ protected:
         srv->synchronize();
         int nbAdjs = srv->getNbProposedAdjustments();
         if (nbAdjs > 0) {
-            srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
+            srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentsView/selectAdjustment_0"));
         }
         else {
-            srv->mouseClick(spix::ItemPath("mainWindow/flowView/addAdjustment"));
+            srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addAdjustment"));
         }
         srv->waitForSync();
 
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
         srv->waitPeriod(waitTime1);
-        srv->mouseClick(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/validationView/validateInterpretation"));
         srv->waitPeriod(waitTime1);
 
         srv->waitForSync();

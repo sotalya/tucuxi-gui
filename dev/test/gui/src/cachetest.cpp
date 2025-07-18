@@ -40,16 +40,16 @@ TEST(CacheTest, Test1)
         srv->startNewPatient();
 
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
         srv->waitPeriod();
         srv->selectDrugInList("Cefepime", 0);
         srv->waitPeriod();
 
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+        srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
 
         srv->waitPeriod(20);
 
@@ -74,16 +74,16 @@ TEST(CacheTest, TestFarAway)
     srv->startNewPatient();
 
     srv->waitPeriod();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod();
     srv->selectDrugInList("Cefepime", 0);
     srv->waitPeriod();
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
     srv->waitPeriod();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
     srv->waitPeriod();
-    srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+    srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
 
     srv->waitPeriod(20);
 

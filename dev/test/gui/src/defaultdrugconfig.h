@@ -263,6 +263,30 @@ public:
     }
 };
 
+
+class DrugImatinib : public DrugDefault {
+public:
+    QString drugName = "Imatinib";
+    DrugImatinib(){
+        patientData.birthDate = QDate::currentDate().addYears(-10);
+
+        dosageData.dose   = 400.0;  // mg
+        dosageData.intervalInHours = 24.0;   // h
+        dosageData.infusionTimeInMinutes = 0.0; // min
+
+        covariateData.weight = 9.0; // kg
+
+        covarTypeIndex.weight = 1;
+
+        measureData.measure = 0.65; // mg/l
+
+        targetData.targetType = TargetType::ResidualTarget;
+        targetData.cMinInput  = 750.0;   // mg/l
+        targetData.cBestInput = 1000.0;   // mg/l
+        targetData.cMaxInput  = 1500.0;   // mg/l
+    }
+};
+
 // TODO -> TO COMPLETE terget and covariate
 class DrugCaffeine : DrugDefault {
 public:

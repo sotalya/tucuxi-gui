@@ -40,16 +40,16 @@ TEST(StressTest, Test1)
         srv->startNewPatient();
 
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugList_Cefepime"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugList_Cefepime"));
         srv->waitPeriod();
 
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+        srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
 
         srv->waitPeriod(2);
     }
@@ -66,16 +66,16 @@ TEST(StressTest, TestPercentiles)
         srv->startNewPatient();
 
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugList_Cefepime"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugList_Cefepime"));
         srv->waitPeriod();
 
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
         srv->waitPeriod();
-        srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+        srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
 
         srv->waitPeriod(20);
     }

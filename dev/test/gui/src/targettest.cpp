@@ -64,22 +64,22 @@ TEST(TargetTest, Test1)
     srv->startNewPatient();
 
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod(waitTime1);
     srv->selectDrugInList("Cefepime", 0);
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/targetButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/targetButton"));
     srv->waitPeriod(waitTime1);
 
     // First remove the existing targets
     while (srv->existsAndVisible(removeTarget_0)) {
-        srv->mouseClick(removeTarget_0);
+        srv->mouseClickCheck(removeTarget_0);
         srv->waitPeriod(waitTime1);
     }
 
-    srv->mouseClick(addTarget);
+    srv->mouseClickCheck(addTarget);
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(cancelTarget);
+    srv->mouseClickCheck(cancelTarget);
     srv->waitPeriod(waitTime1);
 
     srv->synchronize();
@@ -90,9 +90,9 @@ TEST(TargetTest, Test1)
 
     EXPECT_EQ(targets->size(), 0);
 
-    srv->mouseClick(addTarget);
+    srv->mouseClickCheck(addTarget);
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(okTarget);
+    srv->mouseClickCheck(okTarget);
     srv->waitPeriod(waitTime1);
 
     srv->synchronize();
@@ -101,16 +101,16 @@ TEST(TargetTest, Test1)
 
     EXPECT_EQ(targets->size(), 1);
 
-    srv->mouseClick(addTarget);
+    srv->mouseClickCheck(addTarget);
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick("targetDialog/typeInput");
+    srv->mouseClickCheck("targetDialog/typeInput");
     srv->waitPeriod(waitTime1);
     srv->synchronize();
 
     selectTargetType(2);
 
-    srv->mouseClick(okTarget);
+    srv->mouseClickCheck(okTarget);
     srv->waitPeriod(waitTime1);
     srv->synchronize();
 
@@ -127,21 +127,21 @@ TEST(TargetTest, Test1)
 
     // First remove the existing targets
     while (srv->existsAndVisible(removeTarget_0)) {
-        srv->mouseClick(removeTarget_0);
+        srv->mouseClickCheck(removeTarget_0);
         srv->waitPeriod(waitTime1);
     }
 
     for (int targetIndex = 0; targetIndex < 12; targetIndex ++) {
-        srv->mouseClick(addTarget);
+        srv->mouseClickCheck(addTarget);
         srv->waitPeriod(waitTime1);
 
-        srv->mouseClick("targetDialog/typeInput");
+        srv->mouseClickCheck("targetDialog/typeInput");
         srv->waitPeriod(waitTime1);
         srv->synchronize();
 
         selectTargetType(targetIndex);
 
-        srv->mouseClick(okTarget);
+        srv->mouseClickCheck(okTarget);
         srv->waitPeriod(waitTime1);
         srv->synchronize();
 

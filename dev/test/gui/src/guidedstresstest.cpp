@@ -56,7 +56,7 @@ TEST(GuidedStressTest, DrugsTab)
 
     srv->startNewPatient();
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
 
     //_____Drug tab_______________________________________________________________________________________________________________________
 
@@ -165,7 +165,7 @@ TEST(GuidedStressTest, DosagesTab)
     srv->startNewPatient();
     srv->waitPeriod(waitTime1);
     srv->selectDrugInList("Imatinib", 0);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
 
     //_____Dosage tab____________________________________________________________________________________________________________________
 
@@ -198,14 +198,14 @@ TEST(GuidedStressTest, DosagesTab)
         if (srv->existsAndVisible(clickPath))
         {
             std::cout << "Path OK : " << clickPath << std::endl;
-            srv->mouseClick(spix::ItemPath(clickPath));
+            srv->mouseClickCheck(spix::ItemPath(clickPath));
 
             if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod(waitTime1);
                 srv->findObjectAndSetValue("doseSpinBox", 200+loopIndex);
                 srv->waitPeriod(waitTime1);
-                srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+                srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
             }
         }
         else std::cout << "Path not found : " << clickPath << std::endl;
@@ -227,10 +227,11 @@ TEST(GuidedStressTest, CovariatesTab)
     srv->waitPeriod(waitTime1);
     srv->selectDrugInList("Imatinib", 0);
     srv->waitPeriod(waitTime1);
-    DosageData dosageData1;
+    DrugImatinib drug;
+    DosageData dosageData1 = drug.dosageData;
     srv->addDosage(dosageData1);
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/covariateButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/covariateButton"));
 
     //_____Covariate tab________________________________________________________________________________________________________________
 
@@ -262,14 +263,14 @@ TEST(GuidedStressTest, CovariatesTab)
         if (srv->existsAndVisible(clickPath))
         {
             std::cout << "Path OK : " << clickPath << std::endl;
-            srv->mouseClick(spix::ItemPath(clickPath));
+            srv->mouseClickCheck(spix::ItemPath(clickPath));
 
             if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod(waitTime1);
                 srv->findEntityTextValueFieldAndSetValue("covarValueEntry", 55+loopIndex);
                 srv->waitPeriod(waitTime1);
-                srv->mouseClick(spix::ItemPath("covariateDialog/okCovariate"));
+                srv->mouseClickCheck(spix::ItemPath("covariateDialog/okCovariate"));
             }
         }
         else std::cout << "Path not found : " << clickPath << std::endl;
@@ -295,7 +296,7 @@ TEST(GuidedStressTest, MeasuresTab)
     DosageData dosageData1;
     srv->addDosage(dosageData1);
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/measureButton"));
 
     //_____Measure tab___________________________________________________________________________________________________________________
 
@@ -328,14 +329,14 @@ TEST(GuidedStressTest, MeasuresTab)
         if (srv->existsAndVisible(clickPath))
         {
             std::cout << "Path OK : " << clickPath << std::endl;
-            srv->mouseClick(spix::ItemPath(clickPath));
+            srv->mouseClickCheck(spix::ItemPath(clickPath));
 
             if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod(waitTime1);
                 srv->findEntityTextValueFieldAndSetValue("measureValueEntry", 400+loopIndex);
                 srv->waitPeriod(waitTime1);
-                srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
+                srv->mouseClickCheck(spix::ItemPath("measureDialog/okMeasure"));
             }
         }
         else std::cout << "Path not found : " << clickPath << std::endl;
@@ -360,7 +361,7 @@ TEST(GuidedStressTest, TargetsTab)
     DosageData dosageData1;
     srv->addDosage(dosageData1);
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/targetButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/targetButton"));
 
     //_____Target Tab_______________________________________________________________________________________________________________________
 
@@ -393,14 +394,14 @@ TEST(GuidedStressTest, TargetsTab)
         if (srv->existsAndVisible(clickPath))
         {
             std::cout << "Path OK : " << clickPath << std::endl;
-            srv->mouseClick(spix::ItemPath(clickPath));
+            srv->mouseClickCheck(spix::ItemPath(clickPath));
 
             if ((clickPath.find("add") != std::string::npos) || (clickPath.find("edit") != std::string::npos))
             {
                 srv->waitPeriod(waitTime1);
                 srv->findObjectAndSetValue("cMaxInput", 1500+loopIndex);
                 srv->waitPeriod(waitTime1);
-                srv->mouseClick(spix::ItemPath("targetDialog/okTarget"));
+                srv->mouseClickCheck(spix::ItemPath("targetDialog/okTarget"));
             }
         }
         else std::cout << "Path not found : " << clickPath << std::endl;
@@ -426,7 +427,7 @@ TEST(GuidedStressTest, AdjustmentsTab)
 //    TargetData targetData1;
 //    srv->addTarget(targetData1);
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->waitForSync();
 
 
@@ -463,7 +464,7 @@ TEST(GuidedStressTest, AdjustmentsTab)
         if (srv->existsAndVisible(clickPath))
         {
             std::cout << "Path OK : " << clickPath << std::endl;
-            srv->mouseClick(spix::ItemPath(clickPath));
+            srv->mouseClickCheck(spix::ItemPath(clickPath));
 
             if (clickPath.find("edit") != std::string::npos)
             {

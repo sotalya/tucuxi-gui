@@ -39,7 +39,6 @@
 #include "admin/src/dal/interpretationanalysis.h"
 #include "core/dal/drugresponseanalysis.h"
 #include "core/dal/drugtreatment.h"
-#include "core/dal/corepatient.h"
 #include "admin/src/dal/patient.h"
 #include "admin/src/dal/practician.h"
 #include "admin/src/dal/person.h"
@@ -167,10 +166,10 @@ void SpixGTest::startNewPatient()
     bool isOnLaunchScreen = existsAndVisible(spix::ItemPath("mainWindow/launchView"));
 
     if (!isOnLaunchScreen) {
-        srv->mouseClick(spix::ItemPath("mainWindow/applicationBarView/newAction"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/applicationBarView/newAction"));
         srv->waitPeriod(waitTime1);
     }
-    mouseClick(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
+    mouseClickCheck(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
     srv->waitPeriod(waitTime1);
 }
 
@@ -211,10 +210,27 @@ void SpixGTest::mouseClickIfPathOk(std::string clickPath)
     {
         std::cout << "Path exists : " << clickPath << std::endl;
 
-        srv->mouseClick(spix::ItemPath(clickPath));
+        srv->mouseClickCheck(spix::ItemPath(clickPath));
         srv->synchronize();
     }
     else std::cout << "Path does not exists : " << clickPath << std::endl;
+}
+
+/*
+void SpixGTest::mouseClickCheck(std::string clickPath)
+{
+    mouseClickCheck(spix::ItemPath(clickPath));
+}
+*/
+
+void SpixGTest::mouseClickCheck(const spix::ItemPath& clickPath)
+{
+    bool exist = srv->existsAndVisible(clickPath);
+    ASSERT_TRUE(exist) << "Unexisting path : " << clickPath.string();
+    if (exist)
+    {
+        srv->mouseClick(clickPath);
+    }
 }
 
 //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
@@ -270,7 +286,7 @@ void SpixGTest::removeFromList(std::string removeFrom, int removeIndex = 0)     
     std::string removePath = "mainWindow/flowView/remove";
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath(buttonPath));
+    srv->mouseClickCheck(spix::ItemPath(buttonPath));
     srv->waitPeriod(waitTime1);
 
     removeFrom[0] = toupper(removeFrom[0]);             // caps 1st letter
@@ -280,14 +296,14 @@ void SpixGTest::removeFromList(std::string removeFrom, int removeIndex = 0)     
         removePath = removePath + removeFrom + "_" + std::to_string(removeIndex);
 
         if (srv->existsAndVisible(spix::ItemPath(removePath)))
-            srv->mouseClick(spix::ItemPath(removePath));
+            srv->mouseClickCheck(spix::ItemPath(removePath));
     }
     else
     {
         removePath = removePath + removeFrom + "_" + std::to_string(removeIndex*(-1));
 
         while (srv->existsAndVisible(spix::ItemPath(removePath))) {
-            srv->mouseClick(spix::ItemPath(removePath));
+            srv->mouseClickCheck(spix::ItemPath(removePath));
             srv->waitPeriod(waitTime1*2);
         }
     }
@@ -299,7 +315,7 @@ void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
 
     auto drugItemName = "drugList_" + drugName;
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->waitPeriod(waitTime1);
 
     srv->synchronize();
@@ -314,7 +330,7 @@ void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
     // Parse the drug list until the wanted one is found
     // First check outside while to speed up search
     QVariant currentItem;
-    srv->mouseClick("mainWindow/flowView/" + drugItemName.toStdString());
+    srv->mouseClickCheck("mainWindow/flowView/" + drugItemName.toStdString());
     srv->waitPeriod(waitTime1);
     QMetaObject::invokeMethod(drugListView,
                               "getCurrentItemName",
@@ -326,7 +342,7 @@ void SpixGTest::selectDrugInList(QString drugName, int modelIndex)
                                   "setPositionAtIndex",
                                   Q_ARG(QVariant, QVariant::fromValue(listViewIndex)));
         srv->waitPeriod(waitTime1);
-        srv->mouseClick("mainWindow/flowView/" + drugItemName.toStdString());
+        srv->mouseClickCheck("mainWindow/flowView/" + drugItemName.toStdString());
         srv->waitPeriod(waitTime1);
         QMetaObject::invokeMethod(drugListView,
                                   "getCurrentItemName",
@@ -359,13 +375,13 @@ void SpixGTest::fillInPatientData(PatientData patientData1)
     QString dayPat     = patientData1.birthDate.toString("dd");
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/patientButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/patientButton"));
     srv->waitPeriod(waitTime1*2);
 
     if (patientData1.gender == 0)
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/femaleRadioInput"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/femaleRadioInput"));
     else
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/maleRadioInput"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/maleRadioInput"));
 
     srv->synchronize();
 
@@ -402,7 +418,7 @@ void SpixGTest::fillInPatientData(PatientData patientData1)
                               Q_ARG(QVariant, QVariant::fromValue(patientData1.countryPhy)));
 
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/patientButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/patientButton"));
     srv->synchronize();
 }
 
@@ -410,11 +426,11 @@ void SpixGTest::addDosage(DosageData dosageData1)
 {
     // clicks on Dosage tab
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
     srv->waitPeriod(waitTime1);
 
     // adds new Dose (will open Dosage dialog window)audi a3 2016
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
     srv->waitPeriod(waitTime1);
 
     setSteadyStateDosage(dosageData1.steadyState);
@@ -429,13 +445,13 @@ void SpixGTest::editDosage(DosageData dosageData1, int editIndex)
     std::string editPath = "mainWindow/flowView/editDosage_" + std::to_string(editIndex);
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
     srv->waitPeriod(waitTime1);
 
     if (srv->existsAndVisible(spix::ItemPath(editPath)))
     {
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(editPath));
+        srv->mouseClickCheck(spix::ItemPath(editPath));
         srv->waitPeriod(waitTime1);
 
         setSteadyStateDosage(dosageData1.steadyState);
@@ -468,12 +484,13 @@ QVariant SpixGTest::getSteadyStateDosage()
     return steadyStateDosage.toBool();
 }
 
-void SpixGTest::fillInDosageData(DosageData dosageData1)
+void SpixGTest::fillInDosageData(DosageData dosageData1, bool checkData)
 {
+    if (checkData) {
+        ASSERT_GT(dosageData1.dose, 0.0);
+        ASSERT_GT(dosageData1.intervalInHours, 0.0);
+    }
     // fills in Dose, Interval, reads Route, fills in Infusion, ...
-
-    QString dateDos = dosageData1.dateTimeDos1.date().toString("dd.MM.yyyy");
-    QString timeDos = dosageData1.dateTimeDos1.time().toString("HH:mm:ss");
 
     // fills in Dose value, in [µg]
     srv->waitPeriod(waitTime1);
@@ -517,11 +534,11 @@ void SpixGTest::fillInDosageData(DosageData dosageData1)
 //    else qInfo() << "At steady state? YES";
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("dosageDialog/applyDosage"));
+    srv->mouseClickCheck(spix::ItemPath("dosageDialog/applyDosage"));
 
     // closes Dosage dialog window when editing is done
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+    srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
     srv->waitPeriod(waitTime1);
     srv->synchronize();
     // Runs ok
@@ -532,7 +549,7 @@ void SpixGTest::addCovariates(CovariatesData covariatesData1, int covariateType)
 {
     srv->synchronize();
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/covariateButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/covariateButton"));
 
     srv->synchronize();
 
@@ -541,7 +558,7 @@ void SpixGTest::addCovariates(CovariatesData covariatesData1, int covariateType)
                               "setCovariateType",
                               Q_ARG(QVariant, QVariant::fromValue(covariateType)));
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addCovariate"));      // will open Covariate dialog
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addCovariate"));      // will open Covariate dialog
     srv->waitPeriod(waitTime1*4);
 
     fillInCovariatesData(covariatesData1, covariateType);
@@ -556,7 +573,7 @@ void SpixGTest::editCovariates(CovariatesData covariatesData1, int covariateType
     srv->synchronize();
     srv->waitPeriod();
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/covariateButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/covariateButton"));
 
     // selects covariate (index) to edit {Sex, Weight, ...}
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->covariatesView,
@@ -567,7 +584,7 @@ void SpixGTest::editCovariates(CovariatesData covariatesData1, int covariateType
 
     if (srv->existsAndVisible(spix::ItemPath(editPath)))
     {
-        srv->mouseClick(spix::ItemPath(editPath));
+        srv->mouseClickCheck(spix::ItemPath(editPath));
         srv->waitPeriod(waitTime1);
         fillInCovariatesData(covariatesData1, covariateType);
     }
@@ -592,7 +609,7 @@ void SpixGTest::fillInCovariatesData(CovariatesData covariatesData1, int covaria
     findDateObjectAndSetValue("dateInputCovar", "timeInputCovar", covariatesData1.dateTimeCovar);
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("covariateDialog/okCovariate"));
+    srv->mouseClickCheck(spix::ItemPath("covariateDialog/okCovariate"));
     srv->waitPeriod(waitTime1);
 
 
@@ -603,7 +620,7 @@ void SpixGTest::addCovariatesByDrug(CovariatesData covariatesData1, int covariat
 {
     srv->synchronize();
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/covariateButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/covariateButton"));
 
     srv->synchronize();
 
@@ -612,7 +629,7 @@ void SpixGTest::addCovariatesByDrug(CovariatesData covariatesData1, int covariat
                               "setCovariateType",
                               Q_ARG(QVariant, QVariant::fromValue(covariateType)));
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addCovariate"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addCovariate"));
     srv->waitPeriod(waitTime1*4);
 
     fillInCovariatesDataByDrug(covariatesData1, covariateType, drugName);
@@ -690,7 +707,7 @@ void SpixGTest::fillInCovariatesDataByDrug(CovariatesData covariatesData1, int c
     findDateObjectAndSetValue("dateInputCovar", "timeInputCovar", covariatesData1.dateTimeCovar);
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("covariateDialog/okCovariate"));
+    srv->mouseClickCheck(spix::ItemPath("covariateDialog/okCovariate"));
 
     srv->waitPeriod(waitTime1);
 
@@ -702,9 +719,9 @@ void SpixGTest::fillInCovariatesDataByDrug(CovariatesData covariatesData1, int c
 void SpixGTest::addMeasure(MeasureData measureData1)
 {    
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/measureButton"));
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/measuresView/addMeasure"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/measuresView/addMeasure"));
     srv->waitPeriod(waitTime1);
 
     fillInMeasureData(measureData1);
@@ -715,13 +732,13 @@ void SpixGTest::editMeasure(MeasureData measureData1, int editIndex)
     std::string editPath = "mainWindow/flowView/editMeasure_" + std::to_string(editIndex);
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/measureButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/measureButton"));
     srv->waitPeriod(waitTime1);
 
     if (srv->existsAndVisible(spix::ItemPath(editPath)))
     {
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(editPath));
+        srv->mouseClickCheck(spix::ItemPath(editPath));
         srv->waitPeriod(waitTime1);
         fillInMeasureData(measureData1);
     }
@@ -738,7 +755,7 @@ void SpixGTest::fillInMeasureData(MeasureData measureData1)
     findDateObjectAndSetValue("sampleDateInput", "sampleTimeInput", measureData1.dateTimeMeas);
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("measureDialog/okMeasure"));
+    srv->mouseClickCheck(spix::ItemPath("measureDialog/okMeasure"));
 
     srv->waitPeriod(waitTime1);
 
@@ -749,12 +766,12 @@ void SpixGTest::addTarget(TargetData targetData1)
 {
     srv->synchronize();
     if (existsAndVisible(spix::ItemPath("mainWindow/flowView/addTarget")) == false)
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/targetButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/targetButton"));
 
     srv->waitPeriod(waitTime1);
 
     // adds new Dose (will open Dosage dialog window)
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addTarget"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addTarget"));
     srv->waitPeriod(waitTime1);
 
     fillInTargetData(targetData1);
@@ -766,14 +783,14 @@ void SpixGTest::editTarget(TargetData targetData1, int editIndex)
     std::string editPath = "mainWindow/flowView/editTarget_" + std::to_string(editIndex);
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/targetButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/targetButton"));
     srv->waitPeriod(waitTime1);
 
     // edits Dose (will open Dosage dialog window)
     if(srv->existsAndVisible(spix::ItemPath(editPath)))
     {
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(editPath));
+        srv->mouseClickCheck(spix::ItemPath(editPath));
         srv->waitPeriod(waitTime1);
         fillInTargetData(targetData1);
     }
@@ -784,7 +801,7 @@ void SpixGTest::fillInTargetData(TargetData targetData1)
     srv->synchronize();
     srv->waitPeriod(waitTime1);
 
-//    srv->mouseClick(spix::ItemPath("targetDialog/typeInput"));        // to click on combobox, not used anymore
+//    srv->mouseClickCheck(spix::ItemPath("targetDialog/typeInput"));        // to click on combobox, not used anymore
 //    srv->waitPeriod(waitTime1);
 
     QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->targetDialog,
@@ -811,7 +828,7 @@ void SpixGTest::fillInTargetData(TargetData targetData1)
     }
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("targetDialog/okTarget"));
+    srv->mouseClickCheck(spix::ItemPath("targetDialog/okTarget"));
 
     srv->waitPeriod(waitTime1);
 
@@ -829,7 +846,7 @@ void SpixGTest::addAdjustments(AdjustmentsData adjustmentsData1)
     QString minuteAdj = adjustmentsData1.dateTimeAdj.time().toString("mm");
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->waitPeriod(waitTime1);
 
     // can't pass arg type QDate to QML function, string type also allows to segregate years, months, ...
@@ -843,13 +860,13 @@ void SpixGTest::addAdjustments(AdjustmentsData adjustmentsData1)
 
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addAdjustment"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addAdjustment"));
     srv->waitPeriod(waitTime1);
 
-//    srv->mouseClick(spix::ItemPath("mainWindow/flowView/editAdjustments_0"));
+//    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/editAdjustments_0"));
 //    srv->waitPeriod(waitTime1);
 
-//    srv->mouseClick(spix::ItemPath("mainWindow/flowView/selectAdjustment_3"));    // Runs ok
+//    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/selectAdjustment_3"));    // Runs ok
     srv->waitPeriod(waitTime1);
     srv->synchronize();
 
@@ -860,13 +877,13 @@ void SpixGTest::selectAdjustments(int selectIndex)
     std::string selectPath = "mainWindow/flowView/selectAdjustment_" + std::to_string(selectIndex);
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->waitPeriod(waitTime1);
 
     if (srv->existsAndVisible(spix::ItemPath(selectPath)))
     {
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(selectPath));
+        srv->mouseClickCheck(spix::ItemPath(selectPath));
         srv->waitPeriod(waitTime1);
     }
 }
@@ -876,13 +893,13 @@ void SpixGTest::editAdjustments(AdjustmentsData adjustmentsData1, int editIndex)
     std::string editPath = "mainWindow/flowView/editAdjustment_" + std::to_string(editIndex);
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->waitPeriod(waitTime1);
 
     if (srv->existsAndVisible(spix::ItemPath(editPath)))
     {
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(editPath));
+        srv->mouseClickCheck(spix::ItemPath(editPath));
         srv->waitPeriod(waitTime1);
 
 //        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->adjustmentsView, "extInputData",
@@ -893,8 +910,8 @@ void SpixGTest::editAdjustments(AdjustmentsData adjustmentsData1, int editIndex)
 
         srv->waitPeriod(waitTimeLong);
 
-        srv->mouseClick(spix::ItemPath("adjustmentDialog/applyAdj"));
-        srv->mouseClick(spix::ItemPath("adjustmentDialog/okAdj"));
+        srv->mouseClickCheck(spix::ItemPath("adjustmentDialog/applyAdj"));
+        srv->mouseClickCheck(spix::ItemPath("adjustmentDialog/okAdj"));
         srv->synchronize();
 
     }
@@ -907,12 +924,12 @@ bool SpixGTest::addGlobalSentencePalette(QString sentence, QString shortcutModif
 
     srv->synchronize();
     std::string PaletteButton = "mainWindow/flowView/" + section.toStdString() + "PaletteButton";
-    srv->mouseClick(spix::ItemPath(PaletteButton));
+    srv->mouseClickCheck(spix::ItemPath(PaletteButton));
     srv->waitPeriod(waitTime1);
 
     srv->synchronize();
     std::string addSentenceButton = section.toStdString() + "Palette/addGlobalListButton";
-    srv->mouseClick(spix::ItemPath(addSentenceButton));
+    srv->mouseClickCheck(spix::ItemPath(addSentenceButton));
     srv->waitPeriod(waitTime1);
 
     // Insert sentence
@@ -966,19 +983,19 @@ bool SpixGTest::addGlobalSentencePalette(QString sentence, QString shortcutModif
     std::string closeButton = section.toStdString() + "Palette/validationCloseButton";
     if(saveBtnStatus.toBool()){
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(section.toStdString() + "SentenceShortcutDialog/sentencesSaveButton"));
+        srv->mouseClickCheck(spix::ItemPath(section.toStdString() + "SentenceShortcutDialog/sentencesSaveButton"));
         srv->waitPeriod(waitTime1);
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(closeButton));
+        srv->mouseClickCheck(spix::ItemPath(closeButton));
         srv->waitPeriod(waitTime1);
         return true;
     }
     else{
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(section.toStdString() + "SentenceShortcutDialog/sentencesCancelButton"));
+        srv->mouseClickCheck(spix::ItemPath(section.toStdString() + "SentenceShortcutDialog/sentencesCancelButton"));
         srv->waitPeriod(waitTime1);
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(closeButton));
+        srv->mouseClickCheck(spix::ItemPath(closeButton));
         srv->waitPeriod(waitTime1);
         return false;
     }
@@ -988,12 +1005,12 @@ bool SpixGTest::addSpecificSentencePalette(QString sentence, QString shortcutMod
 {
     srv->synchronize();
     std::string PaletteButton = "mainWindow/flowView/" + section.toStdString() + "PaletteButton";
-    srv->mouseClick(spix::ItemPath(PaletteButton));
+    srv->mouseClickCheck(spix::ItemPath(PaletteButton));
     srv->waitPeriod(waitTime1);
 
     srv->synchronize();
     std::string addSentenceButton = section.toStdString() + "Palette/addSpecificListButton";
-    srv->mouseClick(spix::ItemPath(addSentenceButton));
+    srv->mouseClickCheck(spix::ItemPath(addSentenceButton));
     srv->waitPeriod(waitTime1);
 
     srv->synchronize();
@@ -1008,17 +1025,17 @@ bool SpixGTest::addSpecificSentencePalette(QString sentence, QString shortcutMod
     // Select shortcut modifiers
     if(shortcutModifier.contains("CTRL", Qt::CaseInsensitive)){
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/controlCheckBox"));
+        srv->mouseClickCheck(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/controlCheckBox"));
         srv->waitPeriod(waitTime1);
     }
     if(shortcutModifier.contains("SHIFT", Qt::CaseInsensitive)){
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/shiftCheckBox"));
+        srv->mouseClickCheck(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/shiftCheckBox"));
         srv->waitPeriod(waitTime1);
     }
     if(shortcutModifier.contains("ALT", Qt::CaseInsensitive)){
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/altCheckBox"));
+        srv->mouseClickCheck(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/altCheckBox"));
         srv->waitPeriod(waitTime1);
     }
 
@@ -1037,18 +1054,18 @@ bool SpixGTest::addSpecificSentencePalette(QString sentence, QString shortcutMod
 
 
     if(saveBtnStatus.toBool()){
-        srv->mouseClick(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/sentencesSaveButton"));
+        srv->mouseClickCheck(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/sentencesSaveButton"));
         srv->synchronize();
         std::string closeButton = section.toStdString() + "Palette/validationCloseButton";
-        srv->mouseClick(spix::ItemPath(closeButton));
+        srv->mouseClickCheck(spix::ItemPath(closeButton));
         srv->waitPeriod(waitTime1);
         return true;
     }
     else{
-        srv->mouseClick(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/sentencesCancelButton"));
+        srv->mouseClickCheck(spix::ItemPath(section.toStdString() + "Palette/sentenceShortcutDialog/sentencesCancelButton"));
         srv->synchronize();
         std::string closeButton = section.toStdString() + "Palette/validationCloseButton";
-        srv->mouseClick(spix::ItemPath(closeButton));
+        srv->mouseClickCheck(spix::ItemPath(closeButton));
         srv->waitPeriod(waitTime1);
         return false;
     }
@@ -1065,7 +1082,7 @@ void SpixGTest::removeAllSentences(){
 
     for(auto const &_sectionObjectName : sectionObjectsNames){
         srv->synchronize();
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/" + _sectionObjectName.toStdString()));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/" + _sectionObjectName.toStdString()));
         srv->waitPeriod(waitTime1);
         // Get global list element count
         auto item = srv->m_mainWindowController->getRootObject()->findChild<QObject*>(_sectionObjectName);
@@ -1084,7 +1101,7 @@ void SpixGTest::removeAllSentences(){
         for(int i=0; i<globalSentenceCount.toInt(); i++){
             srv->synchronize();
             std::string removeSentenceButton = _sectionObjectName.toStdString() + "/globalDeleteButton_0";
-            srv->mouseClick(spix::ItemPath(removeSentenceButton));
+            srv->mouseClickCheck(spix::ItemPath(removeSentenceButton));
             srv->waitPeriod(waitTime1);
         }
 
@@ -1092,7 +1109,7 @@ void SpixGTest::removeAllSentences(){
         for(int i=0; i<specificSentenceCount.toInt(); i++){
             srv->synchronize();
             std::string removeSentenceButton = _sectionObjectName.toStdString() + "/specificDeleteButton_0";
-            srv->mouseClick(spix::ItemPath(removeSentenceButton));
+            srv->mouseClickCheck(spix::ItemPath(removeSentenceButton));
             srv->waitPeriod(waitTime1);
         }
     }
@@ -1101,7 +1118,7 @@ void SpixGTest::removeAllSentences(){
 void SpixGTest::fillInValidationData(ValidationData validationData1)
 {
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
     srv->waitPeriod(waitTime1);
 
     findDateObjectAndSetValue("nextControlDate", "nextControlTime", validationData1.dateTimeVal);
@@ -1126,13 +1143,13 @@ void SpixGTest::saveValidationComment(QString commentType, int globalSpecificInd
     // globalSpecificIndex : 0 = global, 1 = specific, 2 = both
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
 
     srv->synchronize();
 
     //std::string saveButtonPath = "mainWindow/flowView/" + commentType.toStdString() + "SaveButton";
     std::string saveButtonPath = "mainWindow/flowView/" + commentType.toStdString() + "PaletteButton";
-    srv->mouseClick(spix::ItemPath(saveButtonPath));
+    srv->mouseClickCheck(spix::ItemPath(saveButtonPath));
     srv->waitPeriod(waitTime1);
 
     // Runs ok
@@ -1142,14 +1159,14 @@ void SpixGTest::saveValidationComment(QString commentType, int globalSpecificInd
     switch (globalSpecificIndex) {
 
     case 0:
-        srv->mouseClick(spix::ItemPath(addCommentPath + "addGlobalListButton"));
+        srv->mouseClickCheck(spix::ItemPath(addCommentPath + "addGlobalListButton"));
         break;
     case 1:
-        srv->mouseClick(spix::ItemPath(addCommentPath + "addSpecificListButton"));
+        srv->mouseClickCheck(spix::ItemPath(addCommentPath + "addSpecificListButton"));
         break;
     case 2:
-        srv->mouseClick(spix::ItemPath(addCommentPath + "addGlobalListButton"));
-        srv->mouseClick(spix::ItemPath(addCommentPath + "addSpecificListButton"));
+        srv->mouseClickCheck(spix::ItemPath(addCommentPath + "addGlobalListButton"));
+        srv->mouseClickCheck(spix::ItemPath(addCommentPath + "addSpecificListButton"));
         break;
     default:
         break;
@@ -1157,7 +1174,7 @@ void SpixGTest::saveValidationComment(QString commentType, int globalSpecificInd
 
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath(commentType.toStdString() + "Palette/validationCloseButton"));
+    srv->mouseClickCheck(spix::ItemPath(commentType.toStdString() + "Palette/validationCloseButton"));
 
     // Runs ok
 }
@@ -1165,12 +1182,12 @@ void SpixGTest::saveValidationComment(QString commentType, int globalSpecificInd
 void SpixGTest::deleteValidationComment(QString commentType, int globalSpecificIndex, int commentIndex)
 {
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
 
     srv->synchronize();
 
     std::string deleteButtonPath = "mainWindow/flowView/" + commentType.toStdString() + "PaletteButton";
-    srv->mouseClick(spix::ItemPath(deleteButtonPath));
+    srv->mouseClickCheck(spix::ItemPath(deleteButtonPath));
     srv->waitPeriod(waitTime1);
 
     std::string deleteCommentPath = commentType.toStdString() + "Palette/";
@@ -1179,13 +1196,13 @@ void SpixGTest::deleteValidationComment(QString commentType, int globalSpecificI
 
         if (globalSpecificIndex == (0) || globalSpecificIndex == (2)) {
             while (srv->existsAndVisible(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(0)))) {
-                srv->mouseClick(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(0)));
+                srv->mouseClickCheck(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(0)));
                 srv->waitPeriod();
             }
         }
         if (globalSpecificIndex == (1) || globalSpecificIndex == (2)) {
             while (srv->existsAndVisible(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(0)))) {
-                srv->mouseClick(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(0)));
+                srv->mouseClickCheck(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(0)));
                 srv->waitPeriod();
             }
         }
@@ -1195,14 +1212,14 @@ void SpixGTest::deleteValidationComment(QString commentType, int globalSpecificI
         switch (globalSpecificIndex) {
 
         case 0:
-            srv->mouseClick(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(commentIndex)));
+            srv->mouseClickCheck(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(commentIndex)));
             break;
         case 1:
-            srv->mouseClick(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(commentIndex)));
+            srv->mouseClickCheck(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(commentIndex)));
             break;
         case 2:
-            srv->mouseClick(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(commentIndex)));
-            srv->mouseClick(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(commentIndex)));
+            srv->mouseClickCheck(spix::ItemPath(deleteCommentPath + "globalDeleteButton_" + std::to_string(commentIndex)));
+            srv->mouseClickCheck(spix::ItemPath(deleteCommentPath + "specificDeleteButton_" + std::to_string(commentIndex)));
             break;
         default:
             break;
@@ -1212,17 +1229,17 @@ void SpixGTest::deleteValidationComment(QString commentType, int globalSpecificI
     srv->waitPeriod(waitTime1);
     srv->synchronize();
 
-    srv->mouseClick(spix::ItemPath(commentType.toStdString() + "Palette/validationCloseButton"));
+    srv->mouseClickCheck(spix::ItemPath(commentType.toStdString() + "Palette/validationCloseButton"));
 }
 
 void SpixGTest::validateInterpretation()
 {
     srv->synchronize();
     if (existsAndVisible(spix::ItemPath("mainWindow/flowView/validateInterpretation")) == false)
-        srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validateInterpretation"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validateInterpretation"));
     srv->waitPeriod(waitTime1);
     srv->synchronize();
 
@@ -1237,13 +1254,13 @@ void SpixGTest::validateInterpretation()
 
 void SpixGTest::printReport(QString reportFileName)
 {
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/reportButton"));
     srv->waitPeriod();
     srv->synchronize();
     std::cout << "Printing report: " << reportFileName.toStdString() << std::endl;
 
     srv->m_mainWindowController->getInterpretationController()->setReportFileName(reportFileName);
-    srv->mouseClick(spix::ItemPath("mainWindow/reportView/printButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/reportView/printButton"));
 
     srv->waitPeriod(10);
     srv->synchronize();
@@ -1505,7 +1522,7 @@ QMap<QString, QString> SpixGTest::fillMapWithInterpretation(Interpretation *inte
 void SpixGTest::fillInAnalystData(AnalystData analystData1)
 {
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("mainWindow/applicationBarView/settingsAction"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/applicationBarView/settingsAction"));
     srv->waitPeriod(waitTime1);
 
     findEntityTextFieldAndSetValue("analystTitle", analystData1.analystTitle);
@@ -1521,10 +1538,10 @@ void SpixGTest::fillInAnalystData(AnalystData analystData1)
     findEntityTextFieldAndSetValue("analystCountry", analystData1.analystCountry);
 
     srv->synchronize();
-    srv->mouseClick(spix::ItemPath("settingsDialog/applySettings"));
+    srv->mouseClickCheck(spix::ItemPath("settingsDialog/applySettings"));
     srv->waitPeriod(waitTime1);
 
-    srv->mouseClick(spix::ItemPath("settingsDialog/okSettings"));
+    srv->mouseClickCheck(spix::ItemPath("settingsDialog/okSettings"));
     srv->waitPeriod(waitTime1);
 }
 
@@ -1547,22 +1564,22 @@ TEST(GTestExample, AdvancedUITest)
     ok = srv->existsAndVisible(spix::ItemPath("mainWindow/launchView"));
     ok = srv->existsAndVisible(spix::ItemPath("mainWindow/launchView/newPatient"));
     ok = srv->existsAndVisible(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
-    srv->mouseClick(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
 
     spix::ItemPath path1("mainWindow/launchView/newPatient");
     std::string root1 = path.rootComponent();
     const std::vector<std::string> children1 = path.components();
 
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugListItem_3"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugListItem_3"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
     srv->wait(std::chrono::milliseconds(1500));
-    srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+    srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
     srv->wait(std::chrono::milliseconds(1500));
     srv->takeScreenshot("mainWindow/flowView", "screen.png");
 
@@ -1574,13 +1591,13 @@ TEST(GTestExample, AdvancedUITest)
     QTest::keyClick(srv->m_window, Qt::Key_Right);
     srv->wait(std::chrono::milliseconds(1500));
     srv->takeScreenshot("mainWindow/flowView", "screen3.png");
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/selectAdjustment_0"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/selectAdjustment_0"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validateInterpretation"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validateInterpretation"));
     srv->wait(std::chrono::milliseconds(500));
 
     srv->existsAndVisible(spix::ItemPath("fake"));
@@ -1588,11 +1605,11 @@ TEST(GTestExample, AdvancedUITest)
     QTest::keyClick(qApp->activeWindow(), Qt::Key_Enter);
 
 
-    //srv->mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
+    //srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/reportButton"));
     srv->wait(std::chrono::milliseconds(20000));
-    //srv->mouseClick(spix::ItemPath("mainWindow/flowView/printButton"));
+    //srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/printButton"));
     //srv->wait(std::chrono::milliseconds(2000));
-    //srv->mouseClick(spix::ItemPath("mainWindow/applicationBarView/shutDownAction"));
+    //srv->mouseClickCheck(spix::ItemPath("mainWindow/applicationBarView/shutDownAction"));
 
     srv->existsAndVisible(spix::ItemPath("fake"));
     EXPECT_EQ(true, false);
@@ -1615,22 +1632,22 @@ TEST(GTestExample, BasicUITest)
     ok = srv->existsAndVisible(spix::ItemPath("mainWindow/launchView"));
     ok = srv->existsAndVisible(spix::ItemPath("mainWindow/launchView/newPatient"));
     ok = srv->existsAndVisible(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
-    srv->mouseClick(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
 
     spix::ItemPath path1("mainWindow/launchView/newPatient");
     std::string root1 = path.rootComponent();
     const std::vector<std::string> children1 = path.components();
 
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugListItem_3"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugListItem_3"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
     srv->wait(std::chrono::milliseconds(1500));
-    srv->mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+    srv->mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
     srv->wait(std::chrono::milliseconds(1500));
     srv->takeScreenshot("mainWindow/flowView", "screen.png");
 
@@ -1642,13 +1659,13 @@ TEST(GTestExample, BasicUITest)
     QTest::keyClick(srv->m_window, Qt::Key_Right);
     srv->wait(std::chrono::milliseconds(1500));
     srv->takeScreenshot("mainWindow/flowView", "screen3.png");
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/selectAdjustment_0"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/selectAdjustment_0"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
     srv->wait(std::chrono::milliseconds(500));
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/validateInterpretation"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validateInterpretation"));
     srv->wait(std::chrono::milliseconds(500));
 
     srv->existsAndVisible(spix::ItemPath("fake"));
@@ -1656,11 +1673,11 @@ TEST(GTestExample, BasicUITest)
     QTest::keyClick(qApp->activeWindow(), Qt::Key_Enter);
 
 
-//    srv->mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
+//    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/reportButton"));
     srv->wait(std::chrono::milliseconds(20000));
-//    srv->mouseClick(spix::ItemPath("mainWindow/flowView/printButton"));
+//    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/printButton"));
 //    srv->wait(std::chrono::milliseconds(2000));
-//    srv->mouseClick(spix::ItemPath("mainWindow/applicationBarView/shutDownAction"));
+//    srv->mouseClickCheck(spix::ItemPath("mainWindow/applicationBarView/shutDownAction"));
 
     srv->existsAndVisible(spix::ItemPath("fake"));
     EXPECT_EQ(true, true);
@@ -1693,22 +1710,22 @@ protected:
         ok = existsAndVisible(spix::ItemPath("mainWindow/launchView"));
         ok = existsAndVisible(spix::ItemPath("mainWindow/launchView/newPatient"));
         ok = existsAndVisible(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
-        mouseClick(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
+        mouseClickCheck(spix::ItemPath("mainWindow/launchView/newPatient/mouseArea"));
 
         spix::ItemPath path1("mainWindow/launchView/newPatient");
         std::string root1 = path.rootComponent();
         const std::vector<std::string> children1 = path.components();
 
         wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+        mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/drugListItem_3"));
+        mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugListItem_3"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));
+        mouseClickCheck(spix::ItemPath("mainWindow/flowView/dosageButton"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/addDosage"));
+        mouseClickCheck(spix::ItemPath("mainWindow/flowView/addDosage"));
         wait(std::chrono::milliseconds(1500));
-        mouseClick(spix::ItemPath("dosageDialog/okDosage"));
+        mouseClickCheck(spix::ItemPath("dosageDialog/okDosage"));
         wait(std::chrono::milliseconds(1500));
         this->takeScreenshot("mainWindow/flowView", "screen.png");
 
@@ -1720,13 +1737,13 @@ protected:
         QTest::keyClick(m_window, Qt::Key_Right);
         wait(std::chrono::milliseconds(1500));
         takeScreenshot("mainWindow/flowView", "screen3.png");
-        mouseClick(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
+        mouseClickCheck(spix::ItemPath("mainWindow/flowView/adjustmentButton"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/selectAdjustment_0"));
+        mouseClickCheck(spix::ItemPath("mainWindow/flowView/selectAdjustment_0"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+        mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
         wait(std::chrono::milliseconds(500));
-        mouseClick(spix::ItemPath("mainWindow/flowView/validateInterpretation"));
+        mouseClickCheck(spix::ItemPath("mainWindow/flowView/validateInterpretation"));
         wait(std::chrono::milliseconds(500));
 
         existsAndVisible(spix::ItemPath("fake"));
@@ -1734,11 +1751,11 @@ protected:
         QTest::keyClick(qApp->activeWindow(), Qt::Key_Enter);
 
 
-        mouseClick(spix::ItemPath("mainWindow/flowView/reportButton"));
+        mouseClickCheck(spix::ItemPath("mainWindow/flowView/reportButton"));
         wait(std::chrono::milliseconds(20000));
-        mouseClick(spix::ItemPath("mainWindow/flowView/printButton"));
+        mouseClickCheck(spix::ItemPath("mainWindow/flowView/printButton"));
         wait(std::chrono::milliseconds(2000));
-        mouseClick(spix::ItemPath("mainWindow/applicationBarView/shutDownAction"));
+        mouseClickCheck(spix::ItemPath("mainWindow/applicationBarView/shutDownAction"));
 
 //        QTest::keyClick(qApp->activeModalWidget(), Qt::Key_A);
 //        QTest::keyClick(qApp->activeModalWidget(), Qt::Key_B);

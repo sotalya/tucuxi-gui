@@ -79,6 +79,8 @@ public:
     void findEntityTextValueFieldAndSetValue(QString objectName, double value);
 
     void mouseClickIfPathOk(std::string clickPath);
+    // void mouseClickCheck(std::string clickPath);
+    void mouseClickCheck(const spix::ItemPath& clickPath);
 
     void selectDrugInList(QString drugName, int modelIndex);
 
@@ -88,7 +90,7 @@ public:
     void editDosage(struct DosageData, int editIndex);
     QVariant getSteadyStateDosage();
     void setSteadyStateDosage(bool value);
-    void fillInDosageData(struct DosageData);
+    void fillInDosageData(struct DosageData, bool checkData = true);
 
     void addCovariates(struct CovariatesData, int covariateType);
     void editCovariates(struct CovariatesData, int covariateType, int editIndex);

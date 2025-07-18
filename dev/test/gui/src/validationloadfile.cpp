@@ -71,7 +71,7 @@ TEST(ValidationLoadFile, DISABLED_Test1)
 //    if (status == "validated")
 //    {
 //        srv->synchronize();
-//        srv->mouseClick(spix::ItemPath("mainWindow/flowView/validationButton"));
+//        srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/validationButton"));
 //        srv->waitPeriod(waitTime1);
 //        srv->synchronize();
 //        srv->waitForSync();
@@ -80,7 +80,7 @@ TEST(ValidationLoadFile, DISABLED_Test1)
 
 //--------------------------------------------------
     srv->waitPeriod(waitTime1);
-    srv->mouseClick(spix::ItemPath("mainWindow/flowView/drugButton"));
+    srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/drugButton"));
 
     // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 

@@ -178,7 +178,7 @@ TEST(RandomTest, Test1)
             if (srv->existsAndVisible(item)) {
                 notFound = false;
                 std::cout << "Item : " << item << std::endl;
-                srv->mouseClick(item);
+                srv->mouseClickCheck(item);
                 srv->waitPeriod();
             }
         }

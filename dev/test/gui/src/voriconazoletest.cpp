@@ -38,13 +38,6 @@
 
 #include "guitest.h"
 
-#include "guiutils/src/controllers/interpretationcontroller.h"
-#include "guiutils/src/controllers/targettabcontroller.h"
-#include "admin/src/dal/interpretation.h"
-#include "core/dal/drugresponseanalysis.h"
-#include "core/dal/drugtreatment.h"
-#include "core/dal/drug/target.h"
-
 #include <QDebug>                       // allows to print text in console : qInfo() << "text", or qDebug()"
 
 extern SpixGTest* srv;

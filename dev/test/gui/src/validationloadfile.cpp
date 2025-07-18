@@ -36,15 +36,10 @@
 #include <Spix/QtQmlBot.h>
 #include <Spix/Events/Identifiers.h>
 
-#include "core/dal/drug/drug.h"
 #include "guitest.h"
 
 #include "guiutils/src/controllers/interpretationcontroller.h"
-#include "guiutils/src/controllers/targettabcontroller.h"
 #include "admin/src/dal/interpretation.h"
-#include "core/dal/drugresponseanalysis.h"
-#include "core/dal/drugtreatment.h"
-#include "core/dal/drug/target.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -52,9 +47,6 @@
 #include "admin/src/interpretationxmlexport.h"
 #include "admin/src/interpretationtorequestxmlexport.h"
 #include "admin/src/interpretationxmlimport.h"
-
-#include "core/corefactory.h"
-#include "core/core.h"
 
 using namespace Tucuxi::Gui::Admin;
 

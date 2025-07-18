@@ -38,20 +38,9 @@
 
 #include "guitest.h"
 
-#include "guiutils/src/controllers/interpretationcontroller.h"
-#include "guiutils/src/controllers/targettabcontroller.h"
-#include "admin/src/dal/interpretation.h"
-
 #include <QDebug>
 #include <QMessageBox>
 
-#include "admin/src/interpretationxmlexport.h"
-#include "admin/src/interpretationtorequestxmlexport.h"
-#include "admin/src/interpretationxmlimport.h"
-
-#include "core/corefactory.h"
-#include "core/core.h"
-#include "processingtucucore/src/drugs2manager.h"
 
 using namespace Tucuxi::Gui::Admin;
 

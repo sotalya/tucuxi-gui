@@ -40,11 +40,7 @@
 
 #include "guiutils/src/controllers/interpretationcontroller.h"
 #include "guiutils/src/requestscontroller.h"
-#include "guiutils/src/controllers/targettabcontroller.h"
-#include "admin/src/dal/interpretation.h"
-#include "core/dal/drugresponseanalysis.h"
 #include "core/dal/drugtreatment.h"
-#include "core/dal/drug/target.h"
 #include "core/dal/drug/drug.h"
 #include "admin/src/dal/partialrequest.h"
 
@@ -108,7 +104,7 @@ TEST(PendingRequestTest, Test1)
         std::cout << "Starting request " << request->requestId().toStdString() << " . Patient " << request->patient()->externalId().toStdString()
                   << " . Drug " << request->drug()->getSubstanceId().toStdString() << std::endl;
 
-        srv->m_mainWindowController->getRequestController()->queryRequestByIdSignal(currentRequestIndex);
+        emit srv->m_mainWindowController->getRequestController()->queryRequestByIdSignal(currentRequestIndex);
 
 
         //--------------------------------------------------------------------------------------------------------------------

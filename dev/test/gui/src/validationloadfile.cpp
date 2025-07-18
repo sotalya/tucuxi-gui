@@ -71,10 +71,10 @@ TEST(ValidationLoadFile, DISABLED_Test1)
 
     srv->loadInterpretation(loadName);
 
-    InterpretationXmlExport *interpretationXmlExport;
+    InterpretationXmlExport interpretationXmlExport;
     Interpretation *interpretationLoad = srv->m_mainWindowController->getInterpretationController()->getInterpretation();
 
-    QString status = interpretationXmlExport->toStringValidation(interpretationLoad->getValidationStatus()->getValidationStatus(StepType::Validation));
+    QString status = interpretationXmlExport.toStringValidation(interpretationLoad->getValidationStatus()->getValidationStatus(StepType::Validation));
 
 //    if (status == "validated")
 //    {

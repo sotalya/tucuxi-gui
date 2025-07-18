@@ -151,7 +151,7 @@ TEST(ValidationTest, Test1)
 
     for (int a = 0; a <= 7; a++) {
         validationData1.prediction = QString::number(a);                // comment text = loop index (for clarity if deletion)
-        srv->fillInValidationData(validationData1);                     // fills in commentts in expectedness, suitabilty, prediction, remonitoring & warning text fields
+        srv->fillInValidationData(validationData1);                     // fills in comments in expectedness, suitabilty, prediction, remonitoring & warning text fields
         srv->saveValidationComment("prediction", globalSpecific);       // saves prediction comments in both global and specific registries
     }
 

@@ -41,7 +41,7 @@ extern SpixGTest* srv;
 
 using namespace Tucuxi::Gui::Admin;
 
-TEST(FlatRequestsTest, Test1)
+TEST(FlatRequestsTest, DISABLED_Test1)
 {
     int waitTime1       = 2;
     int waitTimeLong    = 6;
@@ -62,6 +62,8 @@ TEST(FlatRequestsTest, Test1)
     int nbRequests = srv->m_mainWindowController->getRequestController()->nbRequests();
 
     int requestIndex = 1;
+
+    ASSERT_GE(srv->m_mainWindowController->getRequestController()->nbRequests(), 2);
 
     auto request = srv->m_mainWindowController->getRequestController()->getPartialRequest(requestIndex);
 

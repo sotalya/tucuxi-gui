@@ -401,16 +401,8 @@ protected:
 //        std::cout << "Root : " << root->objectName().toStdString() << std::endl;
 //        QObject *list = srv->getObjectByName(root, "drugListView");
 
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
-                                  "setExtCurrentActiveSubstance",
-                                  Q_ARG(QVariant, QVariant::fromValue(std::get<0>(param))));
-        srv->synchronize();
-        srv->waitPeriod(waitTime1);
 
-        QMetaObject::invokeMethod(srv->m_mainWindowController->getInterpretationController()->drugsView,
-                                  "setExtCurrentDrugModel",
-                                  Q_ARG(QVariant, QVariant::fromValue(std::get<1>(param))));
-        srv->synchronize();
+        srv->selectDrugInList(std::get<0>(param), std::get<1>(param));
         srv->waitPeriod(waitTime1);
 
         srv->mouseClick(spix::ItemPath("mainWindow/flowView/dosageButton"));

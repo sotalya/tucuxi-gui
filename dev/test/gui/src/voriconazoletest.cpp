@@ -56,7 +56,7 @@ extern SpixGTest* srv;
 /// \brief TEST of Voriconazole percentiles
 /// This test was meant to be ran with only voriconazole in the drug models folder.
 /// It helped discover and debug issues with percentiles calculations for voriconazole.
-TEST(VoriconazoleTest, Test1)
+TEST(VoriconazoleTest, DISABLED_Test1)
 {
 
     int waitTime1       = 1;                                                  // wait time in [s/2]

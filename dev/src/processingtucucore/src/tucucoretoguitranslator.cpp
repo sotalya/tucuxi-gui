@@ -353,12 +353,14 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         QString uString = QString::fromStdString(defaultFormulation->getValidInfusionTimes()->getUnit().toString());
         QList<double> infusionsList;
         for(const auto &value : defaultFormulation->getValidInfusionTimes()->getValues()){
-            infusionsList.append(value);
+            infusionsList.append(Common::UnitManager::convertToUnit(value, TucuUnit(uString.toStdString()), TucuUnit("min")));
         }
 
         validInfusions->setInfusionsList(infusionsList);
-        amount->setUnit(Tucuxi::Gui::Core::Unit(uString));
-        amount->setDbvalue(defaultFormulation->getValidInfusionTimes()->getDefaultValue());
+        amount->setUnit(Tucuxi::Gui::Core::Unit("min"));
+        amount->setDbvalue(Common::UnitManager::convertToUnit(defaultFormulation->getValidInfusionTimes()->getDefaultValue(), TucuUnit(uString.toStdString()), TucuUnit("min")));
+        //amount->setUnit(Tucuxi::Gui::Core::Unit(uString));
+        //amount->setDbvalue(defaultFormulation->getValidInfusionTimes()->getDefaultValue());
         validInfusions->setQuantity(amount);
 
         newModel->setInfusions(validInfusions);
@@ -373,12 +375,14 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         QString uString = QString::fromStdString(defaultFormulation->getValidIntervals()->getUnit().toString());
         QList<double> intervalsList;
         for(const auto &value : defaultFormulation->getValidIntervals()->getValues()){
-            intervalsList.append(value);
+            intervalsList.append(Common::UnitManager::convertToUnit(value, TucuUnit(uString.toStdString()), TucuUnit("h")));
         }
 
         validIntervals->setIntervalsList(intervalsList);
-        amount->setUnit(Tucuxi::Gui::Core::Unit(uString));
-        amount->setDbvalue(defaultFormulation->getValidIntervals()->getDefaultValue());
+        amount->setUnit(Tucuxi::Gui::Core::Unit("h"));
+        amount->setDbvalue(Common::UnitManager::convertToUnit(defaultFormulation->getValidIntervals()->getDefaultValue(), TucuUnit(uString.toStdString()), TucuUnit("h")));
+        //amount->setUnit(Tucuxi::Gui::Core::Unit(uString));
+        //amount->setDbvalue(defaultFormulation->getValidIntervals()->getDefaultValue());
         validIntervals->setQuantity(amount);
 
         newModel->setIntervals(validIntervals);

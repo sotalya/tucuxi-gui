@@ -41,7 +41,7 @@ DialogBase {
         //routeComboBox.currentIndex = route.value;
         routeText.text = route.description
 
-        infusionRow.visible = route.label === "INFUSION"
+        infusionRow.visible = route.hasInfusion
         infusionSpinBox.setRealValue(tinf);
 
         var validateStartDate = function() {

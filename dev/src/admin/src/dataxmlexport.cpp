@@ -244,9 +244,9 @@ bool DataXmlExport::saveAdminData(Interpretation *interpretation)
             writer.writeStartElement("email");
             if(!practician->person()->emails().empty()) {
                 writer.writeTextElement("address", practician->person()->emails().at(0)->getEmail());
-                if (practician->person()->emails().at(0)->getType() == Type::Private) {
+                if (practician->person()->emails().at(0)->getType() == EmailType::Private) {
                     writer.writeTextElement("type", "private");
-                } else if (practician->person()->emails().at(0)->getType() == Type::Professional) {
+                } else if (practician->person()->emails().at(0)->getType() == EmailType::Professional) {
                     writer.writeTextElement("type", "professional");
                 } else {
                     writer.writeEmptyElement("type");
@@ -289,9 +289,9 @@ bool DataXmlExport::saveAdminData(Interpretation *interpretation)
                 writer.writeStartElement("email");
                 if(!practician->institute()->emails().empty()){
                     writer.writeTextElement("address", practician->institute()->emails().at(0)->getEmail());
-                    if(practician->institute()->emails().at(0)->getType() == Type::Private){
+                    if(practician->institute()->emails().at(0)->getType() == EmailType::Private){
                         writer.writeTextElement("type", "private");
-                    } else if (practician->institute()->emails().at(0)->getType() == Type::Professional) {
+                    } else if (practician->institute()->emails().at(0)->getType() == EmailType::Professional) {
                         writer.writeTextElement("type", "professional");
                     } else {
                         writer.writeEmptyElement("type");

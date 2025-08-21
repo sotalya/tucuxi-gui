@@ -128,7 +128,7 @@ SharedPhone Institute::phone(const PhoneType &type) const
     return 0;
 }
 
-Email* Institute::email(const Type &type) const
+Email* Institute::email(const EmailType &type) const
 {
     for (int i = 0; i < _emails.count(); ++i)
         if (_emails.at(i)->getType() == type)

@@ -54,7 +54,7 @@ public:
     void setEmails(const QList<Email*> &emails);
 
     SharedPhone phone(const PhoneType &type) const;
-    Email* email(const Type &type) const;
+    Email* email(const EmailType &type) const;
 
     Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
     {

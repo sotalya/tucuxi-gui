@@ -73,7 +73,7 @@ private:
     Tucuxi::Gui::Core::DMAdmin::Route toDosageRoute(const QString &route);
 
     Tucuxi::Gui::Admin::PhoneType toPhoneType(const QString &type);
-    Tucuxi::Gui::Admin::Type toEmailType(const QString &type);
+    Tucuxi::Gui::Admin::EmailType toEmailType(const QString &type);
 
     QString requestId;
 };

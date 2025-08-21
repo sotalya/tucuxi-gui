@@ -68,7 +68,7 @@ private:
     QList<Tucuxi::Gui::Admin::Email*> buildEmails(const QString &rootKey, const QString&);
 
     Tucuxi::Gui::Admin::PhoneType toPhoneType(const QString &type);
-    Tucuxi::Gui::Admin::Type toEmailType(const QString &type);
+    Tucuxi::Gui::Admin::EmailType toEmailType(const QString &type);
 
 //    MessageContent content;
     QDomDocument content;

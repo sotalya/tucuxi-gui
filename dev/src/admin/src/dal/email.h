@@ -30,16 +30,17 @@ namespace Tucuxi {
 namespace Gui {
 namespace Admin {
 
-enum class Type {
+enum class EmailType {
     Private,
-    Professional
+    Professional,
+    Unknown
 };
 
 class Email : public Tucuxi::Gui::Core::Entity
 {
     Q_OBJECT
     AUTO_PROPERTY_DECL(QString, email, Email)
-    AUTO_PROPERTY_DECL(Type, type, Type)
+    AUTO_PROPERTY_DECL(EmailType, type, Type)
 
 public:
 

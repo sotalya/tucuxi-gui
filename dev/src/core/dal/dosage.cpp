@@ -182,7 +182,7 @@ Dosage* DosageHistory::dosage(const Duration &duration)
             return _d;
         }
     }
-    return 0;
+    return nullptr;
 }
 
 void DosageHistory::setList(QList<Dosage*> data)
@@ -312,7 +312,7 @@ Dosage* DosageHistory::lastDosage() const
 bool DosageHistory::getNextIntake(const QDateTime& fromTime, QDateTime &nextTime)
 {
     bool found = false;
-    Dosage* nextDosage = NULL;
+    Dosage* nextDosage = nullptr;
     foreach (Dosage* dosage, getList())
     {
         // Look for the closest next intake from all dosages active at the given "fromTime"

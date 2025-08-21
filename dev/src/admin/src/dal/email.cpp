@@ -27,12 +27,12 @@ namespace Gui {
 namespace Admin {
 
 AUTO_PROPERTY_IMPL(Email, QString, email, Email)
-AUTO_PROPERTY_IMPL(Email, Type, type, Type)
+AUTO_PROPERTY_IMPL(Email, EmailType, type, Type)
 
 Email::Email(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent) :
     Entity(repository,parent),
     _email(),
-    _type(Type::Professional)
+    _type(EmailType::Professional)
 {
     setId(-1);
 }
@@ -40,7 +40,7 @@ Email::Email(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent)
 Email::Email(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent) :
     Entity(repository,id, parent),
     _email(),
-    _type(Type::Professional)
+    _type(EmailType::Professional)
 {
     setId(-1);
 }

@@ -105,6 +105,9 @@ InterpretationRequest* InterpretationRequestBuilder::buildInterpretationRequest(
 
     interpretationRequest->setClinicals(buildClinical("clinicals"));
 
+    auto mandator = buildPractician("mandator");
+    interpretationRequest->setPractician(mandator);
+
     //targets
 
 
@@ -566,16 +569,18 @@ SharedPatient InterpretationRequestBuilder::buildPatient(const QString &rootKey)
 
     SharedPatient shpatient = AdminFactory::createEntity<Patient>(ABSTRACTREPO);
 
+    auto patientNode = datasetNode.firstChildElement("patient");
+
     //Patient data
     Patient* patient = static_cast<Patient*>(shpatient);
-    patient->externalId(datasetNode.firstChildElement("patient").firstChildElement("patientId").firstChild().toText().data());
-    patient->stayNumber(datasetNode.firstChildElement("patient").firstChildElement("stayNumber").firstChild().toText().data());
-    patient->person()->firstname(datasetNode.firstChildElement("patient").firstChildElement("name").firstChildElement("firstName").firstChild().toText().data());
-    patient->person()->name(datasetNode.firstChildElement("patient").firstChildElement("name").firstChildElement("lastName").firstChild().toText().data());
-    patient->person()->gender(datasetNode.firstChildElement("patient").firstChildElement("gender").firstChild().toText().data() == "male" ? Person::Male : Person::Female);
+    patient->externalId(patientNode.firstChildElement("patientId").firstChild().toText().data());
+    patient->stayNumber(patientNode.firstChildElement("stayNumber").firstChild().toText().data());
+    patient->person()->firstname(patientNode.firstChildElement("name").firstChildElement("firstName").firstChild().toText().data());
+    patient->person()->name(patientNode.firstChildElement("name").firstChildElement("lastName").firstChild().toText().data());
+    patient->person()->gender(patientNode.firstChildElement("gender").firstChild().toText().data() == "male" ? Person::Male : Person::Female);
 
     //date
-    QString dateString = datasetNode.firstChildElement("patient").firstChildElement("birthdate").firstChild().toText().data();
+    QString dateString = patientNode.firstChildElement("birthdate").firstChild().toText().data();
     QDate date = QDateTime::fromString(dateString, Qt::ISODate).date();
     if (date.isValid()) {
         patient->person()->birthday(date);
@@ -589,11 +594,11 @@ SharedPatient InterpretationRequestBuilder::buildPatient(const QString &rootKey)
 
 
     //Patient contact
-    patient->person()->location()->address(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("address").firstChild().toText().data());
-    patient->person()->location()->postcode(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("postcode").firstChild().toText().data());
-    patient->person()->location()->city(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("city").firstChild().toText().data());
-    patient->person()->location()->state(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("state").firstChild().toText().data());
-    patient->person()->location()->country(datasetNode.firstChildElement("patient").firstChildElement("contact").firstChildElement("country").firstChild().toText().data());
+    patient->person()->location()->address(patientNode.firstChildElement("contact").firstChildElement("address").firstChild().toText().data());
+    patient->person()->location()->postcode(patientNode.firstChildElement("contact").firstChildElement("postcode").firstChild().toText().data());
+    patient->person()->location()->city(patientNode.firstChildElement("contact").firstChildElement("city").firstChild().toText().data());
+    patient->person()->location()->state(patientNode.firstChildElement("contact").firstChildElement("state").firstChild().toText().data());
+    patient->person()->location()->country(patientNode.firstChildElement("contact").firstChildElement("country").firstChild().toText().data());
 
     //Patient phones
     patient->person()->setPhones(buildPhoneList(rootKey, ""));
@@ -602,7 +607,7 @@ SharedPatient InterpretationRequestBuilder::buildPatient(const QString &rootKey)
     patient->person()->setEmails(buildEmails(rootKey, ""));
 
     //Get patient data
-    //    content.setValue("patient.name.middle", datasetNode.firstChildElement("patient").firstChildElement("name").firstChildElement("middleName").firstChild().toText().data());
+    //    content.setValue("patient.name.middle", patientNode.firstChildElement("name").firstChildElement("middleName").firstChild().toText().data());
     return shpatient;
 }
 
@@ -612,15 +617,17 @@ SharedPractician InterpretationRequestBuilder::buildPractician(const QString &ro
 
     SharedPractician practician = AdminFactory::createEntity<Practician>(ABSTRACTREPO);
 
+    auto mandatorNode = datasetNode.firstChildElement("mandator");
+
     //Practician data
-    practician->externalId(datasetNode.firstChildElement("mandator").firstChildElement("practicianId").firstChild().toText().data());
-    practician->title(datasetNode.firstChildElement("mandator").firstChildElement("title").firstChild().toText().data());
-    practician->person()->firstname(datasetNode.firstChildElement("mandator").firstChildElement("name").firstChildElement("firstName").firstChild().toText().data());
-    practician->person()->name(datasetNode.firstChildElement("mandator").firstChildElement("name").firstChildElement("lastName").firstChild().toText().data());
-    practician->person()->gender(datasetNode.firstChildElement("mandator").firstChildElement("gender").firstChild().toText().data() == "male" ? Person::Male : Person::Female);
+    practician->externalId(mandatorNode.firstChildElement("practicianId").firstChild().toText().data());
+    practician->title(mandatorNode.firstChildElement("title").firstChild().toText().data());
+    practician->person()->firstname(mandatorNode.firstChildElement("name").firstChildElement("firstName").firstChild().toText().data());
+    practician->person()->name(mandatorNode.firstChildElement("name").firstChildElement("lastName").firstChild().toText().data());
+    practician->person()->gender(mandatorNode.firstChildElement("gender").firstChild().toText().data() == "male" ? Person::Male : Person::Female);
 
     //date
-    QString dateString = datasetNode.firstChildElement("mandator").firstChildElement("birthdate").firstChild().toText().data();
+    QString dateString = mandatorNode.firstChildElement("birthdate").firstChild().toText().data();
     QDate date = QDateTime::fromString(dateString, Qt::ISODate).date();
     if (date.isValid()) {
         practician->person()->birthday(date);
@@ -634,11 +641,11 @@ SharedPractician InterpretationRequestBuilder::buildPractician(const QString &ro
 
 
     //Practician contact
-    practician->person()->location()->address(datasetNode.firstChildElement("mandator").firstChildElement("contact").firstChildElement("address").firstChild().toText().data());
-    practician->person()->location()->postcode(datasetNode.firstChildElement("mandator").firstChildElement("contact").firstChildElement("postcode").firstChild().toText().data());
-    practician->person()->location()->city(datasetNode.firstChildElement("mandator").firstChildElement("contact").firstChildElement("city").firstChild().toText().data());
-    practician->person()->location()->state(datasetNode.firstChildElement("mandator").firstChildElement("contact").firstChildElement("state").firstChild().toText().data());
-    practician->person()->location()->country(datasetNode.firstChildElement("mandator").firstChildElement("contact").firstChildElement("country").firstChild().toText().data());
+    practician->person()->location()->address(mandatorNode.firstChildElement("contact").firstChildElement("address").firstChild().toText().data());
+    practician->person()->location()->postcode(mandatorNode.firstChildElement("contact").firstChildElement("postcode").firstChild().toText().data());
+    practician->person()->location()->city(mandatorNode.firstChildElement("contact").firstChildElement("city").firstChild().toText().data());
+    practician->person()->location()->state(mandatorNode.firstChildElement("contact").firstChildElement("state").firstChild().toText().data());
+    practician->person()->location()->country(mandatorNode.firstChildElement("contact").firstChildElement("country").firstChild().toText().data());
 
     //Practician phones
     practician->person()->setPhones(buildPhoneList(rootKey, ""));
@@ -650,7 +657,7 @@ SharedPractician InterpretationRequestBuilder::buildPractician(const QString &ro
     practician->institute(buildInstitute(rootKey));
 
     //Get mandator data
-    //    content.setValue("mandator.name.middle", datasetNode.firstChildElement("mandator").firstChildElement("name").firstChildElement("middleName").firstChild().toText().data());
+    //    content.setValue("mandator.name.middle", mandatorNode.firstChildElement("name").firstChildElement("middleName").firstChild().toText().data());
     return practician;
 }
 
@@ -678,7 +685,7 @@ SharedInstitute InterpretationRequestBuilder::buildInstitute(const QString &root
     institute->setEmails(buildEmails(rootKey, "institute"));
 
     //Get patient institute contact
-    //    content.setValue("patient.institute.contact.postcode", datasetNode.firstChildElement("patient").firstChildElement("institute").firstChildElement("contact").firstChildElement("postcode").firstChild().toText().data());
+    //    content.setValue("patient.institute.contact.postcode", patientNode.firstChildElement("institute").firstChildElement("contact").firstChildElement("postcode").firstChild().toText().data());
     return institute;
 }
 
@@ -740,7 +747,7 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
         while (!concentrationNode.isNull()) {
             Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
 
-            //Dosage value
+            //Concentration value
             {
                 bool ok;
                 QString valueString = concentrationNode.firstChildElement("value").firstChild().toText().data();
@@ -752,6 +759,7 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
                     Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
                     uncasted->setField("concentration value");
                     uncasted->setText(valueString);
+                    uncasted->setComment(QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
                     measure->getUncastedValues()->append(uncasted);
                 }
             }
@@ -759,7 +767,18 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
             /*********************************************************************
              * TODO: If the unit is not recognized, should be handled correctly
              *********************************************************************/
-            amt->setUnit(Tucuxi::Gui::Core::Unit(concentrationNode.firstChildElement("unit").firstChild().toText().data()));
+            auto sUnit = concentrationNode.firstChildElement("unit").firstChild().toText().data();
+            if (Common::UnitManager::isKnown(TucuUnit(sUnit.toStdString()))) {
+                amt->setUnit(Tucuxi::Gui::Core::Unit(sUnit));
+            }
+            else {
+                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The unit: %1 is not tolerated by Tucuxi").arg(sUnit));
+                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+                uncasted->setField("unit value");
+                uncasted->setText(sUnit);
+                uncasted->setComment(QObject::tr("The unit: %1 is not tolerated by Tucuxi").arg(sUnit));
+                measure->getUncastedValues()->append(uncasted);
+            }
 
             amts.append(amt);
             concentrationNode = concentrationNode.nextSiblingElement("concentration");
@@ -780,15 +799,21 @@ QList<SharedPhone> InterpretationRequestBuilder::buildPhones(const QString &root
 
     QDomElement patientPhoneNode;
     if (rootKey2 != "") {
-        patientPhoneNode = datasetNode.firstChildElement(rootKey).firstChildElement(rootKey2).firstChildElement("contact").firstChildElement("phones").firstChildElement("email");
+        patientPhoneNode = datasetNode.firstChildElement(rootKey).firstChildElement(rootKey2).firstChildElement("contact").firstChildElement("phones").firstChildElement("phone");
     } else {
-        patientPhoneNode = datasetNode.firstChildElement(rootKey).firstChildElement("contact").firstChildElement("emails").firstChildElement("phones");
+        patientPhoneNode = datasetNode.firstChildElement(rootKey).firstChildElement("contact").firstChildElement("phones").firstChildElement("phone");
     }
     //Get patient phones
     while (!patientPhoneNode.isNull()) {
         SharedPhone phone = AdminFactory::createEntity<Phone>(ABSTRACTREPO);
-        phone->setNumber(patientPhoneNode.firstChild().toText().data());
-        phone->setType(toPhoneType(patientPhoneNode.attributeNode("type").value()));
+        if (patientPhoneNode.hasAttribute("type")) {
+            phone->setNumber(patientPhoneNode.firstChild().toText().data());
+            phone->setType(toPhoneType(patientPhoneNode.attributeNode("type").value()));
+        }
+        else {
+            phone->setNumber(patientPhoneNode.firstChildElement("number").firstChild().toText().data());
+            phone->setType(toPhoneType(patientPhoneNode.firstChildElement("type").firstChild().toText().data()));
+        }
         phones.append(phone);
 
         patientPhoneNode = patientPhoneNode.nextSiblingElement("phone");
@@ -804,15 +829,21 @@ PhoneList *InterpretationRequestBuilder::buildPhoneList(const QString &rootKey, 
 
     QDomElement patientPhoneNode;
     if (rootKey2 != "") {
-        patientPhoneNode = datasetNode.firstChildElement(rootKey).firstChildElement(rootKey2).firstChildElement("contact").firstChildElement("phones").firstChildElement("email");
+        patientPhoneNode = datasetNode.firstChildElement(rootKey).firstChildElement(rootKey2).firstChildElement("contact").firstChildElement("phones").firstChildElement("phone");
     } else {
-        patientPhoneNode = datasetNode.firstChildElement(rootKey).firstChildElement("contact").firstChildElement("emails").firstChildElement("phones");
+        patientPhoneNode = datasetNode.firstChildElement(rootKey).firstChildElement("contact").firstChildElement("phones").firstChildElement("phone");
     }
     //Get patient phones
     while (!patientPhoneNode.isNull()) {
         SharedPhone phone = AdminFactory::createEntity<Phone>(ABSTRACTREPO);
-        phone->setNumber(patientPhoneNode.firstChild().toText().data());
-        phone->setType(toPhoneType(patientPhoneNode.attributeNode("type").value()));
+        if (patientPhoneNode.hasAttribute("type")) {
+            phone->setNumber(patientPhoneNode.firstChild().toText().data());
+            phone->setType(toPhoneType(patientPhoneNode.attributeNode("type").value()));
+        }
+        else {
+            phone->setNumber(patientPhoneNode.firstChildElement("number").firstChild().toText().data());
+            phone->setType(toPhoneType(patientPhoneNode.firstChildElement("type").firstChild().toText().data()));
+        }
         phones->append(phone);
 
         patientPhoneNode = patientPhoneNode.nextSiblingElement("phone");
@@ -834,8 +865,14 @@ QList<Email*> InterpretationRequestBuilder::buildEmails(const QString &rootKey, 
     }
     while (!patientEmailNode.isNull()) {
         Email* email = AdminFactory::createEntity<Email>(ABSTRACTREPO);
-        email->setEmail(patientEmailNode.firstChild().toText().data());
-        email->setType(toEmailType(patientEmailNode.attributeNode("type").value()));
+        if (patientEmailNode.hasAttribute("type")) {
+            email->setEmail(patientEmailNode.firstChild().toText().data());
+            email->setType(toEmailType(patientEmailNode.attributeNode("type").value()));
+        }
+        else {
+            email->setEmail(patientEmailNode.firstChildElement("address").firstChild().toText().data());
+            email->setType(toEmailType(patientEmailNode.firstChildElement("type").firstChild().toText().data()));
+        }
         emails.append(email);
 
         patientEmailNode = patientEmailNode.nextSiblingElement("email");
@@ -856,14 +893,16 @@ PhoneType InterpretationRequestBuilder::toPhoneType(const QString &type)
     return PhoneType::UnknownPhoneType;
 }
 
-Type InterpretationRequestBuilder::toEmailType(const QString &type)
+EmailType InterpretationRequestBuilder::toEmailType(const QString &type)
 {
     if (type == "work")
-        return Type::Professional;
+        return EmailType::Professional;
     if (type == "home")
-        return Type::Private;
+        return EmailType::Private;
+    if (type == "personal")
+        return EmailType::Private;
 
-    Q_UNREACHABLE();
+    return EmailType::Unknown;
 }
 
 }

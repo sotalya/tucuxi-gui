@@ -487,7 +487,7 @@ QList<Email*> DemoInterpretationRequestBuilder::buildEmails(const QString &rootK
     for (int i = 0; i < 2; ++i) {
         Email* email = AdminFactory::createEntity<Email>(ABSTRACTREPO);
         email->setEmail("email@mail.com");
-        email->setType(Type::Professional);
+        email->setType(EmailType::Professional);
         emails.append(email);
     }
 
@@ -518,12 +518,12 @@ PhoneType DemoInterpretationRequestBuilder::toPhoneType(const QString &type)
     return PhoneType::UnknownPhoneType;
 }
 
-Type DemoInterpretationRequestBuilder::toEmailType(const QString &type)
+EmailType DemoInterpretationRequestBuilder::toEmailType(const QString &type)
 {
     if (type == "work")
-        return Type::Professional;
+        return EmailType::Professional;
     if (type == "home")
-        return Type::Private;
+        return EmailType::Private;
 
     Q_UNREACHABLE();
 }

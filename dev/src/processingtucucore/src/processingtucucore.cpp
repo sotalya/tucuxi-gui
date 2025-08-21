@@ -241,7 +241,7 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
             const Tucuxi::Core::SinglePredictionData* pSinglePred = dynamic_cast<const Tucuxi::Core::SinglePredictionData*>(response->getData());
             if (pSinglePred != nullptr) {
 
-                for (Tucuxi::Core::CycleData cycleData: pSinglePred->getData()) {
+                for (const Tucuxi::Core::CycleData& cycleData: pSinglePred->getData()) {
                     for (size_t i=0; i<cycleData.m_concentrations[0].size(); i++) {
 
                         // Create the FancyPoint
@@ -251,10 +251,10 @@ Tucuxi::ProcessingResult ProcessingTucucore::points(
                         Tucuxi::Gui::Core::ParameterSet* parameterSet = fpt->getPset();
 
                         // Populate the parameters list from the one of cycleData
-                        for(size_t param = 0; param < cycleData.m_parameters.size(); param++) {
+                        for(const auto& parameter : cycleData.m_parameters) {
                             Tucuxi::Gui::Core::Parameter* p = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameter>(ABSTRACTREPO, parameterSet);
-                            p->getQuantity()->setValue(cycleData.m_parameters[param].m_value);
-                            p->setName(QString::fromStdString(cycleData.m_parameters[param].m_parameterId));
+                            p->getQuantity()->setValue(parameter.m_value);
+                            p->setName(QString::fromStdString(parameter.m_parameterId));
                             parameterSet->getParameters()->append(p);
                         }
                         fpt->setPset(parameterSet);

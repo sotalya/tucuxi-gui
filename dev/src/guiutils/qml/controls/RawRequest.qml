@@ -18,7 +18,7 @@ Item {
             textFormat: TextEdit.RichText
             font.family: "Arial"
             font.pointSize: 11
-            text: (interpretationController.clinicalsHtml !== "") ? interpretationController.clinicalsHtml : "Weird. The request file seems empty. Well, if you are dealing with the demo version that's kind of normal :-)" ;
+            text: interpretationController.clinicalsHtml;
         }
 
         Button {

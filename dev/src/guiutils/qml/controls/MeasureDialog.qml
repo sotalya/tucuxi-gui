@@ -121,8 +121,8 @@ DialogBase {
         ColumnLayout {
             Layout.row: 1
             Layout.column:1
-            width: parent.parent.width - 100
-            height: parent.parent.width - 50
+            //width: parent.parent.width - 100
+            //height: parent.parent.height - 50
 
             RowLayout {
                 spacing: 2

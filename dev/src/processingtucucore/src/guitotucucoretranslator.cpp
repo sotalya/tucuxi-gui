@@ -200,6 +200,7 @@ Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucux
         newTreatment->addSample(std::make_unique<Tucuxi::Core::Sample>(
             buildDateTime(sample->getMoment()),                     // date,
             Tucuxi::Core::AnalyteId(analyteId),                     // analyteId,
+            //Tucuxi::Core::AnalyteId(sample->getAnalyteId().toStdString()),                     // analyteId,
             sample->getConcentration()->getDbvalue(),               // value,
             buildUnit(sample->getConcentration()->getUnitstring())  // unit
         ));

@@ -48,7 +48,7 @@ Measure::Measure(Tucuxi::Gui::Core::AbstractRepository *repository,
 {
     this->setMoment(moment);
     this->setConcentration(amount);
-    this->setSdrug(drug);
+    this->setAnalyteId(drug);
     this->sampleID(sampleID);
     this->arrivalDate(arrivalDate);
     this->setId(dbid);

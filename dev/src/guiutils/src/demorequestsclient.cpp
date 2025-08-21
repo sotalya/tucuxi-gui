@@ -420,7 +420,7 @@ CoreMeasureList * DemoInterpretationRequestBuilder::buildSamples(const QString &
         sample->sampleID(QString("sample id %1").arg(i));
         //sample->patient_id(patient->id());
         //sample->patient(patient);
-        sample->setSdrug(drug);
+        sample->setAnalyteId(drug);
         //sample->setDrug(drug);
 
         //Measure dates

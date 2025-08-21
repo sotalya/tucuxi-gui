@@ -459,7 +459,7 @@ Tucuxi::Gui::Core::CoreMeasure* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Co
     Tucuxi::Gui::Core::CoreMeasure *target;
     target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasure>(ABSTRACTREPO,parent);
     target->setConcentration(copy(source->getConcentration(), target));
-    target->setSdrug(source->getSdrug());
+    target->setAnalyteId(source->getAnalyteId());
     target->setMoment(source->getMoment());
 
     return target;

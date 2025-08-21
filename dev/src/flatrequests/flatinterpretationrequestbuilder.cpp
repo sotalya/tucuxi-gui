@@ -445,7 +445,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
             Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 
-            measure->setSdrug(activeSubstanceId);
+            measure->setAnalyteId(activeSubstanceId);
 
             QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
             QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);

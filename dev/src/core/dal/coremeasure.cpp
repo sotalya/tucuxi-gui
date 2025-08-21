@@ -30,7 +30,7 @@ namespace Core {
 
 AUTO_PROPERTY_IMPL(CoreMeasure, IdentifiableAmount*, concentration, Concentration)
 AUTO_PROPERTY_IMPL(CoreMeasure, QDateTime, moment, Moment)
-AUTO_PROPERTY_IMPL(CoreMeasure, QString, sdrug, Sdrug)
+AUTO_PROPERTY_IMPL(CoreMeasure, QString, analyteId, AnalyteId)
 AUTO_PROPERTY_IMPL(CoreMeasure, UncastedValueList*, uncastedValues, UncastedValues)
 AUTO_PROPERTY_IMPL(CoreMeasure, bool, enable, Enable)
 
@@ -47,11 +47,11 @@ CoreMeasure::CoreMeasure(AbstractRepository *repository, QObject* parent) :
     _concentration->setUnit(Unit("mg/l"));
 }
 
-CoreMeasure::CoreMeasure(AbstractRepository *repository, QDateTime moment, IdentifiableAmount* amount, QString drug, bool enable, ident dbid) :
+CoreMeasure::CoreMeasure(AbstractRepository *repository, QDateTime moment, IdentifiableAmount* amount, QString analyteId, bool enable, ident dbid) :
     Entity(repository),
     _concentration(amount),
     _moment(moment),
-    _sdrug(drug),
+    _analyteId(analyteId),
     _enable(enable)
 {
     this->setId(dbid);
@@ -64,14 +64,14 @@ void CoreMeasure::convert(const Unit &unit)
 
 //bool CoreMeasure::isValid()
 //{
-//    return _moment.isValid() && getConcentration()->isValid() && !getSdrug().isEmpty();
+//    return _moment.isValid() && getConcentration()->isValid() && !getAnalyteId().isEmpty();
 //}
 
 bool CoreMeasure::operator ==(CoreMeasure* other)
 {
     return (_moment == other->getMoment() &&
             getConcentration() == other->getConcentration() &&
-            getSdrug() == other->getSdrug()
+            getAnalyteId() == other->getAnalyteId()
             );
 }
 

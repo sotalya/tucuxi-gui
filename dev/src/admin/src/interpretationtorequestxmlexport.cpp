@@ -163,7 +163,7 @@ bool InterpretationToRequestXmlExport::saveSamples(Tucuxi::Gui::Core::CoreMeasur
         writer.writeStartElement("concentrations");
         // We only support one analyte now...
         writer.writeStartElement("concentration");
-        writer.writeTextElement("analyte", sample->getSdrug());
+        writer.writeTextElement("analyte", sample->getAnalyteId());
         writer.writeTextElement("value", QString::number(sample->getConcentration()->value()));
         writer.writeTextElement("unit", sample->getConcentration()->unit().name());
 

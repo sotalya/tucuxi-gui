@@ -48,7 +48,7 @@ class Measure : public Tucuxi::Gui::Core::CoreMeasure
 
 public:
     Q_INVOKABLE explicit Measure(Tucuxi::Gui::Core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
-    Q_INVOKABLE Measure(Tucuxi::Gui::Core::AbstractRepository *repository, QDateTime moment, Tucuxi::Gui::Core::IdentifiableAmount* amount, QString getSdrug, int dbid = -1, QString sampleID = QString(), QDateTime arrivalDate = QDateTime(), bool enable = true);
+    Q_INVOKABLE Measure(Tucuxi::Gui::Core::AbstractRepository *repository, QDateTime moment, Tucuxi::Gui::Core::IdentifiableAmount* amount, QString getAnalyteId, int dbid = -1, QString sampleID = QString(), QDateTime arrivalDate = QDateTime(), bool enable = true);
 };
 
 //class MeasureList: public Tucuxi::Gui::Core::Entity {

@@ -707,7 +707,8 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
          * TODO: When DAL is refactored, then the substance should
          * be checked to match form the XML to the substanceID or analyteID
          *******************************************************/
-        measure->setSdrug(activeSubstance);
+        //measure->setAnalyteId(activeSubstance);
+        measure->setAnalyteId(sampleNode.firstChildElement("analyte").firstChild().toText().data());
 
         //Measure dates
 

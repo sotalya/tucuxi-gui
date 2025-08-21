@@ -50,7 +50,7 @@ class Patient : public Tucuxi::Gui::Core::CorePatient
     }
 
 public:
-    Q_INVOKABLE Patient(Tucuxi::Gui::Core::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE Patient(Tucuxi::Gui::Core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
     Q_INVOKABLE Patient(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };

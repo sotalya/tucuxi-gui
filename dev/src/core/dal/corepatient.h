@@ -37,14 +37,14 @@ class CorePatient : public Entity
     ENTITY_UTILS(CorePatient)
 
 protected:
-    Q_INVOKABLE CorePatient(AbstractRepository *repository = 0, QObject *parent = nullptr) : Entity(repository, parent) {}
+    Q_INVOKABLE CorePatient(AbstractRepository *repository = nullptr, QObject *parent = nullptr) : Entity(repository, parent) {}
     Q_INVOKABLE CorePatient(AbstractRepository *repository, const int &id, QObject *parent = nullptr) : Entity(repository, parent) {setId(id);}
 };
 
 class CorePatientSet : public QList<CorePatient*>
 {
 public :
-    CorePatientSet(AbstractRepository *repository = 0, QObject* parent = 0) {}
+    CorePatientSet(AbstractRepository *repository = nullptr, QObject* parent = 0) {}
     CorePatientSet(AbstractRepository *repository, QObject* parent, const CorePatientSet* &other);
 };
 

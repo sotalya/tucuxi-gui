@@ -67,7 +67,7 @@ class Prediction : public Entity
 protected:
 
 
-    Q_INVOKABLE Prediction(AbstractRepository *repository = 0, QObject* parent = 0);
+    Q_INVOKABLE Prediction(AbstractRepository *repository = nullptr, QObject* parent = 0);
     Q_INVOKABLE Prediction(AbstractRepository *repository, QObject* parent, DrugResponseAnalysis*);
 
 public:

@@ -53,7 +53,7 @@ class CoreMeasure : public Entity
 
 protected:
 
-    Q_INVOKABLE explicit CoreMeasure(AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE explicit CoreMeasure(AbstractRepository *repository = nullptr, QObject *parent = nullptr);
     Q_INVOKABLE CoreMeasure(AbstractRepository *repository, QDateTime moment, IdentifiableAmount* amount, QString getSdrug, bool enable, ident dbid = -1);
 
 public:

@@ -59,7 +59,7 @@ class PartialRequest : public Tucuxi::Gui::Core::Entity
     AUTO_PROPERTY(Measure*, sample)
 
 public:
-    Q_INVOKABLE PartialRequest(Tucuxi::Gui::Core::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE PartialRequest(Tucuxi::Gui::Core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
     Q_INVOKABLE PartialRequest(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };

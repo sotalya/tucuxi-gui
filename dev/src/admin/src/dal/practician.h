@@ -51,7 +51,7 @@ class Practician : public Tucuxi::Gui::Core::Entity
 //    void copyTo(Practician *other);
 
 public:
-    Q_INVOKABLE Practician(Tucuxi::Gui::Core::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE Practician(Tucuxi::Gui::Core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
     Q_INVOKABLE Practician(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 };

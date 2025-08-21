@@ -42,7 +42,7 @@ class Location : public Tucuxi::Gui::Core::Entity
     AUTO_PROPERTY(QString, country)
 
 public:
-    Q_INVOKABLE Location(Tucuxi::Gui::Core::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE Location(Tucuxi::Gui::Core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
     Q_INVOKABLE Location(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
     Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE

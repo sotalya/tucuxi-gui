@@ -65,7 +65,7 @@ class PatientVariate : public Entity {
 
 protected:
 
-    Q_INVOKABLE PatientVariate(AbstractRepository *repository = 0, QObject *parent = nullptr, const QString &id = "", const QDateTime &date = QDateTime());
+    Q_INVOKABLE PatientVariate(AbstractRepository *repository = nullptr, QObject *parent = nullptr, const QString &id = "", const QDateTime &date = QDateTime());
     Q_INVOKABLE PatientVariate(AbstractRepository *repository, QObject *parent, const QString &id, const QDateTime &date, double value);
 
 public:

@@ -70,7 +70,7 @@ class InterpretationRequest : public Tucuxi::Gui::Core::Entity
 
 protected:
 
-    Q_INVOKABLE InterpretationRequest(Tucuxi::Gui::Core::AbstractRepository *repository = 0, QObject *parent = nullptr);
+    Q_INVOKABLE InterpretationRequest(Tucuxi::Gui::Core::AbstractRepository *repository = nullptr, QObject *parent = nullptr);
     Q_INVOKABLE InterpretationRequest(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
 private:

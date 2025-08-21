@@ -63,7 +63,6 @@ DialogBase {
 
         var rNames = [];
         for (var i = 0; i < routes.objlist.length; ++i) {
-            //                    console.log("route at (" + i + "): " + routeobjs[i].label);
             rNames[i] = routes.objlist[i].description;
             if (routes.objlist[i].description === route.description) {
                 routeComboBox.currentIndex = i;
@@ -204,8 +203,8 @@ DialogBase {
         ColumnLayout {
             Layout.row: 1
             Layout.column:1
-            width: parent.parent.width - 100
-            height: parent.parent.height - 50
+            // width: parent.parent.width - 100
+            // height: parent.parent.height - 50
 
             RowLayout {
                 spacing: 2

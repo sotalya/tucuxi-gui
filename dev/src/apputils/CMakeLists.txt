@@ -11,8 +11,6 @@ set(APPUTILS_HEADER_FILES
     src/chartdataexporter.h
     src/druglister.h
     src/drugmanager.h
-    src/drugxmlexport.h
-    src/drugxmlimport.h
     src/modelvstreatmentcompatibilitychecker.h
     src/predictionspecexporter.h
     src/predictionspecimporter.h
@@ -27,8 +25,6 @@ set(APPUTILS_SOURCE_FILES
     src/chartdataexporter.cpp
     src/druglister.cpp
     src/drugmanager.cpp
-    src/drugxmlexport.cpp
-    src/drugxmlimport.cpp
     src/modelvstreatmentcompatibilitychecker.cpp
     src/predictionspecexporter.cpp
     src/predictionspecimporter.cpp

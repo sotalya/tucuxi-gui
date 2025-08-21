@@ -13,8 +13,6 @@ QT -= gui
 INCLUDEPATH += ..
 
 HEADERS += \
-    src/drugxmlimport.h \
-    src/drugxmlexport.h \
     ../current_version.h \
     src/appcore.h \
     src/user.h \
@@ -35,8 +33,6 @@ android {
 }
 
 SOURCES += \
-    src/drugxmlimport.cpp \
-    src/drugxmlexport.cpp \
     src/appcore.cpp \
     src/user.cpp \
     src/druglister.cpp \

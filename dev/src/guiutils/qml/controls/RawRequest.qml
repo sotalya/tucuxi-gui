@@ -5,9 +5,6 @@ import QtQuick.Layouts
 Item {
     id: flick
 
-    width: parent.width
-    height: parent.height
-
     ColumnLayout {
         TextArea {
             id: clinicals

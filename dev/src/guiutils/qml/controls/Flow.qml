@@ -455,7 +455,7 @@ ColumnLayout {
         Item {
             Layout.fillWidth: true
          //   Layout.preferredWidth:  480
-            Layout.minimumWidth: 480
+            Layout.minimumWidth: rawRequest.visible ? 370 : 480
             Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
             Layout.fillHeight: true
           //  anchors.right: parent.right
@@ -474,6 +474,7 @@ ColumnLayout {
             }
 
             RawRequest {
+                id: rawRequest
                 anchors.fill: parent
                 visible: patientButton.isCurrent && (interpretationController.rawRequest !== "")
             }

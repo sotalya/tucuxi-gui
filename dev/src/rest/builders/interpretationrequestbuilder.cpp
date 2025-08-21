@@ -764,9 +764,6 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
                 }
             }
 
-            /*********************************************************************
-             * TODO: If the unit is not recognized, should be handled correctly
-             *********************************************************************/
             auto sUnit = concentrationNode.firstChildElement("unit").firstChild().toText().data();
             if (Common::UnitManager::isKnown(TucuUnit(sUnit.toStdString()))) {
                 amt->setUnit(Tucuxi::Gui::Core::Unit(sUnit));

@@ -298,20 +298,23 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setNewInterpretation(Tucux
         InterpretationRequest *interpretationRequest = interpretation->getRequest();
         QString toDisplay;
 
-        toDisplay = "<style> \
-            .oldPM {color: #333333}\
-            .spec {color: blue;}\
-            .newPM {color: #333333}\
-            table, td, th {border-style : solid; border-color: black;border-width:1px;} \
-        </style>";
+        if (!interpretationRequest->getClinicals()->empty()) {
+            toDisplay = "<style> \
+                .oldPM {color: #333333}\
+                .spec {color: blue;}\
+                .newPM {color: #333333}\
+                table, td, th {border-style : solid; border-color: black;border-width:1px;} \
+            </style>";
 
-        toDisplay += "<table width=100% cellpadding=4 cellspacing=0>";
-        toDisplay += "<tr><th>Clinical</th><th>Date</th><th>Text</th></tr>";
-        for(int i = 0; i < interpretationRequest->getClinicals()->size(); i++) {
-            Clinical *clinical = interpretationRequest->getClinicals()->at(i);
-            toDisplay += "<tr><td>" + clinical->getName() + "</td><td>" + clinical->getDate().toString() + "</td><td>" + clinical->getValue() + "</td></tr>";
+            toDisplay += "<table width=100% cellpadding=4 cellspacing=0>";
+            toDisplay += "<tr><th>Clinical</th><th>Date</th><th>Text</th></tr>";
+            for(int i = 0; i < interpretationRequest->getClinicals()->size(); i++) {
+                Clinical *clinical = interpretationRequest->getClinicals()->at(i);
+                toDisplay += "<tr><td>" + clinical->getName() + "</td><td>" + clinical->getDate().toString() + "</td><td>" + clinical->getValue() + "</td></tr>";
+            }
+            toDisplay += "</table>";
         }
-        toDisplay += "</table>";
+
         setClinicalsHtml(toDisplay);
 
         setRawRequest(interpretationRequest->getSource());

@@ -10,7 +10,6 @@ import ezechiel
 
 import Qt.labs.platform
 
-
 Rectangle {
     id: adjustmentPanel
     property int status: Status.invalid;
@@ -403,7 +402,8 @@ Rectangle {
                                             message += "Score : " + (targetEvaluation.at(i).score).toFixed(2) + "\n";
 
                                         }
-                                        messageDialog.setText(message);
+
+                                        messageDialog.text = message;
                                         messageDialog.open();
                                     }
                                 }
@@ -425,8 +425,6 @@ Rectangle {
                          id: messageDialog
                          title: "Target details"
                          text: ""
-                         visible: false
-//                         Component.onCompleted: visible = true
                      }
 
                     onCountChanged: currentIndex = count > 0 ? 0 : -1

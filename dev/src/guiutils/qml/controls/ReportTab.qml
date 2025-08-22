@@ -182,7 +182,7 @@ Rectangle {
                     url = "qrc:/report/report.html"
                 }
                 else {
-                    url = "file:" + appPath + "/reports/report.html"
+                    url = "file:" + appGlobals.getTemplateReportPath()
                 }
             }
 

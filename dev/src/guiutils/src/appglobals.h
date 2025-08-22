@@ -78,6 +78,11 @@ public:
     Q_INVOKABLE bool percentileCalculation();
     Q_INVOKABLE void setPercentileCalculation(bool enable);
 
+    Q_INVOKABLE QString loadTemplateReportPath();
+    Q_INVOKABLE void saveTemplateReportPath();
+    Q_INVOKABLE void updateTemplateReportPath(QString path);
+    Q_INVOKABLE QString getTemplateReportPath();
+
     Q_INVOKABLE QString loadCDSSReportPath();
     Q_INVOKABLE void saveCDSSReportPath();
     Q_INVOKABLE void updateCDSSReportPath(QString path);
@@ -100,6 +105,7 @@ private:
 
     static AppGlobals* m_instance;
 
+    QString m_templateReportPath;
     QString m_cdssReportPath;
     QString m_listFile;
     QString m_requestFile;

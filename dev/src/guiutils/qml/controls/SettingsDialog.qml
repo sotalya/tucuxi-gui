@@ -47,7 +47,10 @@ DialogBase {
 
             sentencesPalettes.filename = xmlPathETF.text
             sentencesPalettes.exportToXml();
-            sentencesPalettes.saveXMLPath()
+            sentencesPalettes.saveXMLPath();
+
+            appGlobals.updateTemplateReportPath(templateReportPath.text)
+            appGlobals.saveTemplateReportPath()
 
             appGlobals.updateCDSSReportPath(cdssReportPath.text)
             appGlobals.saveCDSSReportPath()
@@ -139,6 +142,7 @@ DialogBase {
             analystAffiliation.text = analyst.institute.name
 
         xmlPathETF.text = sentencesPalettes.loadXMLPath()
+        templateReportPath.text = appGlobals.loadTemplateReportPath()
         cdssReportPath.text = appGlobals.loadCDSSReportPath()
     }
 
@@ -444,13 +448,39 @@ DialogBase {
 
                             EntityLabel {
                                 Layout.preferredWidth: 180
+                                text: "Template Report File Path"
+                            }
+                            EntityTextField {
+                                id: templateReportPath
+                                Layout.fillWidth:  true
+                            }
+
+                            Button {
+                                text: qsTr("Browse...")
+                                onClicked: {
+                                    tFileDialog.currentFile = "file://" + templateReportPath.text;
+                                    tFileDialog.open()
+                                }
+                            }
+
+                            FileDialog {
+                                id: tFileDialog
+                                onAccepted: templateReportPath.text = currentFile.toString().substring(7)
+                            }
+                        }
+
+                        RowLayout {
+                            width: parent.width
+                            spacing: 2
+
+                            EntityLabel {
+                                Layout.preferredWidth: 180
                                 text: "CDSS Reports Path"
                             }
                             EntityTextField {
                                 id: cdssReportPath
                                 Layout.fillWidth:  true
                             }
-
 
                             Button {
                                 text: qsTr("Browse...")
@@ -464,8 +494,6 @@ DialogBase {
                                 id: folderDialog
                                 onAccepted: cdssReportPath.text = currentFolder.toString().substring(7)
                             }
-
-
                         }
                     }
 

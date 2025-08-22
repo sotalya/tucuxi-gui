@@ -54,6 +54,7 @@ AppGlobals::AppGlobals() :
     m_autoCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "autoCalculation" ,true).toBool();
     m_percentileCalculation = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "percentileCalculation" ,true).toBool();
     m_cdssOnly = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "cdssOnly", false).toBool();
+    m_templateReportPath = loadTemplateReportPath();
     m_cdssReportPath = loadCDSSReportPath();
 }
 
@@ -158,6 +159,31 @@ Practician* AppGlobals::getAnalyst()
         loadAnalystSettings();
     }
     return m_analyst;
+}
+
+void AppGlobals::saveTemplateReportPath(){
+    SETTINGS.set(Tucuxi::Gui::Core::Module::GUI, "templateReportPath" , m_templateReportPath);
+}
+
+void AppGlobals::updateTemplateReportPath(QString path){
+    m_templateReportPath = path;
+}
+
+QString AppGlobals::getTemplateReportPath(){
+    return m_templateReportPath;
+}
+
+#include <QCoreApplication>
+
+static QString getDefaultTemplatePath(){
+    QString path = QCoreApplication::applicationDirPath() + "/reports";
+    return path;
+}
+
+QString AppGlobals::loadTemplateReportPath(){
+    QString templateReportPath = SETTINGS.get(Tucuxi::Gui::Core::Module::GUI, "templateReportPath").toString();
+
+    return (templateReportPath.isEmpty()) ? getDefaultTemplatePath() : templateReportPath;
 }
 
 void AppGlobals::saveCDSSReportPath(){

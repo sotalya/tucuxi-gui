@@ -409,6 +409,12 @@ private:
 
     Tucuxi::Gui::Core::ActiveSubstance *findRealActiveSubstance(const Tucuxi::Gui::Core::LightActiveSubstance *activeSubstance);
 
+    ///
+    /// \brief checkMeasuresAgainstDrugModel
+    /// This method checks the analyteIds of the measures against the drug model. It adds UncastedValues in case,
+    /// to let the user this measure will not be used
+    void checkMeasuresAgainstDrugModel();
+
 #ifdef CONFIG_GUITEST
     QObject *root;
 #else

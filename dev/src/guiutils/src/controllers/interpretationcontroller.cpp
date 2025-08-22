@@ -800,6 +800,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
 
         auto drugModel = _drugModelsForCurrentSubstance->at(0);
 
+        checkMeasuresAgainstDrugModel();
+
         TargetList* targets = _interpretation->getDrugResponseAnalysis()->getTreatment()->getTargets();
         TargetList* drugTargets            = drugModel->getTargets();
 
@@ -1470,6 +1472,8 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::switchDrugModel(int index)
 
         _chartDataController->dosageUpdated(AppGlobals::getInstance()->percentileCalculation() && shouldPercentilesBeComputed, true);
     }
+
+    checkMeasuresAgainstDrugModel();
 
 }
 
@@ -2622,4 +2626,47 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCdss()
             _cdssOutputPath = QFileInfo(fileName).absolutePath();
         }
     }
+}
+
+#include <set>
+
+#include "core/dal/uncastedvalue.h"
+
+void InterpretationController::checkMeasuresAgainstDrugModel()
+{
+    if (_currentDrugModel == nullptr) {
+        return;
+    }
+    auto drugModel = _currentDrugModel;
+    std::set<QString> modelAnalytes;
+    // For the multianalytes, later on
+    /*
+    auto analytes = _currentDrugModel->getActiveSubstance()->getAnalytes();
+    for (int i = 0; i < analytes->size(); i++) {
+        modelAnalytes.insert(analytes->at(i)->getAnalyteId());
+    }
+    */
+    modelAnalytes.insert(_currentDrugModel->getActiveSubstance()->getSubstanceId());
+
+    auto measures = _interpretation->getDrugResponseAnalysis()->getTreatment()->getMeasures();
+    for (int i = 0; i < measures->size(); i++) {
+        if (!modelAnalytes.contains(measures->at(i)->getAnalyteId())) {
+            auto measure = measures->at(i);
+            bool alreadyHere = false;
+            for (int j = 0; j < measure->getUncastedValues()->size(); j++) {
+                if (measure->getUncastedValues()->at(j)->getField() == "analyteId") {
+                    alreadyHere = true;
+                }
+            }
+            if (!alreadyHere) {
+                auto *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+                uncasted->setField("analyteId");
+                uncasted->setText(measure->getAnalyteId());
+                uncasted->setComment("The analyte ID is not compatible with the selected drug model. The measure value will not be used for a posteriori computations.");
+                measure->getUncastedValues()->append(uncasted);
+                measure->setEnable(false);
+            }
+        }
+    }
+
 }

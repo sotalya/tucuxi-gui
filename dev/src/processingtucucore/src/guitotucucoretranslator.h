@@ -57,7 +57,7 @@ class Dosage;
 class GuiToTucucoreTranslator
 {
 public:
-    GuiToTucucoreTranslator();
+    GuiToTucucoreTranslator() = default;
 
     Tucuxi::Common::DateTime buildDateTime(const QDateTime &qDate);
 

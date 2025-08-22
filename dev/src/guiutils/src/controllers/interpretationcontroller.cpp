@@ -2218,6 +2218,7 @@ QByteArray Tucuxi::Gui::GuiUtils::InterpretationController::interpretationToJson
         QJsonObject measure;
         measure.insert("sampleId", m->sampleID());
         measure.insert("sampleDate", m->getMoment().toString(Qt::ISODate));
+        measure.insert("analyteId", m->getAnalyteId());
         measure.insert("sampleValue", QString("%1 %2").arg(m->getConcentration()->getDbvalue()).arg(unitStringModifier(m->getConcentration()->getUnitstring())));
         for (int i = 0; i < pointsAtMeasure->size(); i++) {
             if (pointsAtMeasure->at(i)->getTime() == (m->getMoment().toMSecsSinceEpoch() / 1000.0)) {

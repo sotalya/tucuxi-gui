@@ -30,6 +30,8 @@
 #include "core/utils/units.h"
 #include "admin/src/dal/interpretation.h"
 #include "interpretationcontroller.h"
+#include "core/dal/drugresponseanalysis.h"
+#include "core/dal/drug/drug.h"
 
 using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::GuiUtils;
@@ -106,6 +108,9 @@ void MeasureTabController::addMeasure()
     Measure* measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, _measures);
     measure->getConcentration()->setUnitstring(masterController->getDefaultUnit());
     measure->getConcentration()->setUnit(Tucuxi::Gui::Core::Unit(masterController->getDefaultUnit()));
+    auto active = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getActiveSubstance();
+    //measure->setAnalyteId(active->getAnalytes()->at(0)->getAnalyteId());
+    measure->setAnalyteId(active->getSubstanceId());
     _measures->append(measure);
 }
 

@@ -44,10 +44,9 @@
 #include "tucucore/drugmodelrepository.h"
 #include "tucucore/drugmodel/formulationandroute.h"
 
+#include "core/utils/logging.h"
 
-GuiToTucucoreTranslator::GuiToTucucoreTranslator()
-{
-}
+
 
 
 DateTime GuiToTucucoreTranslator::buildDateTime(const QDateTime &qDate)
@@ -128,7 +127,6 @@ Tucuxi::Core::DosageTimeRange *GuiToTucucoreTranslator::buildTimeRange(const Tuc
     }
 }
 
-
 Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucuxi::Gui::Core::DrugTreatment *guiTreatment, QDateTime adjTime)
 {
 
@@ -197,10 +195,17 @@ Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucux
     QList<Tucuxi::Gui::Core::CoreMeasure*>::iterator itSamples = sampleList.begin();
     while (itSamples != sampleList.end()) {
         Tucuxi::Gui::Core::CoreMeasure *sample = *itSamples++;
+
+        QString mess = QString("AnalyteId: %1").arg(sample->getAnalyteId());
+
+#define LLOG(ERRTYPE, ERROR, MSG) { Tucuxi::logging::Logger::log<ERROR>(ERRTYPE, MSG, __FILE__, __LINE__, __FUNCTION__); }
+
+        LLOG(QtWarningMsg, Tucuxi::Gui::Core::NOEZERROR, mess)
+
         newTreatment->addSample(std::make_unique<Tucuxi::Core::Sample>(
             buildDateTime(sample->getMoment()),                     // date,
-            Tucuxi::Core::AnalyteId(analyteId),                     // analyteId,
-            //Tucuxi::Core::AnalyteId(sample->getAnalyteId().toStdString()),                     // analyteId,
+            //Tucuxi::Core::AnalyteId(analyteId),                     // analyteId,
+            Tucuxi::Core::AnalyteId(sample->getAnalyteId().toStdString()),                     // analyteId,
             sample->getConcentration()->getDbvalue(),               // value,
             buildUnit(sample->getConcentration()->getUnitstring())  // unit
         ));
@@ -210,7 +215,7 @@ Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucux
     QList<Tucuxi::Gui::Core::Target*>::iterator itTargets = targetList.begin();
     while (itTargets != targetList.end()) {
         Tucuxi::Gui::Core::Target *target = *itTargets++;
-        Tucuxi::Core::TargetType targetType;
+        Tucuxi::Core::TargetType targetType = Tucuxi::Core::TargetType::UnknownTarget;
         switch (target->getType()->getTargetType()) {
         case Tucuxi::Gui::Core::TargetMethod::TargetType::ResidualTarget:             targetType = Tucuxi::Core::TargetType::Residual; break;
         case Tucuxi::Gui::Core::TargetMethod::TargetType::PeakTarget:                 targetType = Tucuxi::Core::TargetType::Peak;     break;
@@ -243,7 +248,7 @@ Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucux
                                         std::chrono::seconds(static_cast<int>(60*60*target->getTbest()->getDbvalue())),
                                         std::chrono::seconds(static_cast<int>(60*60*target->getTmax()->getDbvalue()))));
         }
-        else if (target->getTbest()->getUnitstring() == "m") {
+        else if ((target->getTbest()->getUnitstring() == "m") || (target->getTbest()->getUnitstring() == "min")) {
             newTreatment->addTarget(std::make_unique<Tucuxi::Core::Target>(
                                         activeMoietyId,
                                         targetType,

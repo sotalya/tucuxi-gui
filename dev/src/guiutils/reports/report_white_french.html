@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="jquery-3.1.1.js"></script>
+    <script src="qwebchannel.js"></script>
+    <script src="moment.js"></script>
+<!--    <script src="new_test.js"></script> -->
+    <title>Rapport</title>
+    <style>
+      .header-title {
+                font-size:12pt;
+                font-family:Arial;
+        color:black;
+        font-weight:bold;
+      }
+      .header {
+                font-size:12pt;
+                font-family:Arial;
+        color:black;
+      }
+      .title {
+                font-size:18.0pt;
+        font-family:Arial;
+        color:black;
+      }
+      .title-drug {
+                font-size:14.0pt;
+        font-family:Arial;
+        color:black;
+                font-weight:bold;
+      }
+      tr.section {
+           //background-color: lightgrey;
+      }
+      tr.section>td.label {
+                font-size:12.0pt;
+                font-family:Arial;
+        font-weight:bold;
+             //   color: grey;
+      }
+      .measurelabel {
+                font-size:12.0pt;
+                font-family:Arial;
+        font-weight:bold;
+             //   color: grey;
+             border-bottom: 1px solid #000;
+             padding-left: 25px;
+             text-align: right;
+      }
+      tr.section>td.data {
+                font-size:12.0pt;
+                font-family:Arial;
+        font-weight:bold;
+                color: black;
+      }
+      .label {
+                font-size:12.0pt;
+                font-family:Arial;
+        font-weight:bold;
+            //    color: grey;
+      }
+      .data {
+                font-size:12.0pt;
+                font-family:Arial;
+        color: black;
+      }
+      .measuredata {
+                font-size:12.0pt;
+                font-family:Arial;
+        color: black;
+             border-bottom: 1px solid #ddd;
+             padding-left: 25px;
+             text-align: right;
+      }
+      .databold {
+                font-size:12.0pt;
+                font-family:Arial;
+                font-family:Arial;
+        font-weight:bold;
+        color: black;
+      }
+      .dataPop {
+                font-size:12.0pt;
+                font-family:Arial;
+        color: grey;
+      }
+      .labelcovariates {
+                font-size:12.0pt;
+                font-family:Arial;
+                font-weight:bold;
+                color: grey;
+                background-color: lightgrey;
+       }
+      .ref {
+                font-size:9.0pt;
+                font-family:Arial;
+      }
+      .lastnote {
+                font-size:9.0pt;
+                font-family:Arial;
+      }
+      .sectiontitle {
+                font-size:14.0pt;
+                font-family:Arial;
+                text-decoration: underline;
+      }
+      table {
+        width: 95%;
+        border: 0;
+                margin-left:auto;
+            margin-right:auto;
+      }
+    </style>
+
+    <script type="text/javascript">
+      function updateFields(channel) {
+        updateFieldsFromJson(channel.objects.info.fullJson);
+        }
+
+        function formatDate(d) {
+            return moment(d).format("DD/MM/YYYY");
+        }
+
+        function formatDateTime(d) {
+            return moment(d).format("DD/MM/YYYY HH:mm");
+        }
+        function formatTime(d) {
+            return moment(d).format("HH:mm");
+        }
+      function updateFieldsFromJson(fullJson)
+      {
+        var data = JSON.parse(fullJson);
+        $("#version").html(data.tucuxiVersion);
+        $("#creationDate").html(formatDate(data.creationDate));
+        $("#creationDate2").html(formatDate(data.creationDate));
+        
+        $("#drugModelId").html(data.drugModelId);
+
+        $("#drugName").html(data.drugName);
+        $("#patientId").html(data.patient.externalId);
+        $("#patientName").html(data.patient.firstName + " " + data.patient.lastName);
+        $("#patientDOB").html(formatDate(data.patient.birthday));
+
+        $("#expectedness").html(data.analysis.expectedness);
+        $("#warning").html(data.analysis.warning);
+        $("#remonitoring").html(data.analysis.remonitoring);
+        $("#prediction").html(data.analysis.prediction);
+        $("#suitability").html(data.analysis.suitability);
+
+        $("#steadyStateAUC24").html(data.steadyStateAUC24);
+        $("#steadyStateMin").html(data.steadyStateMin);
+        $("#steadyStateMax").html(data.steadyStateMax);
+
+        var date = moment(data.lastDosageDate)
+        $("#lastDosage").html(data.lastDosage);
+        $("#lastDosageDate").html(date.isValid() ? formatDateTime(data.lastDosageDate) : "--");
+        $("#lastDosageInterval").html(data.lastDosageInterval);
+        $("#currentRoute").html(data.currentRoute);
+        $("#currentInfusionTime").html(data.currentInfusionTime);
+        $("#treatmentStart").html(date.isValid() ? formatDateTime(data.treatmentStart) : "--");
+        
+//        $("#proposedDosage").html(data.proposedDosage.replace("\r\n", "<br>"));
+        $("#nextControl").html(formatDateTime(data.nextControl));
+        $("#validationDate").html(formatDateTime(data.validationDate));
+        $("#analystTitle").html(data.analyst.title);
+        $("#analystFirstName").html(data.analyst.firstName);
+
+        $("#analystLastName").html(data.analyst.lastName);
+        $("#analystInstituteName").html(data.analyst.instituteName);
+        $("#analystInstituteAddresse").html(data.analyst.instituteAddresse);
+        $("#analystRole").html(data.analyst.role);
+        
+        $("#analystFirstName1").html(data.analyst.firstName);
+
+        $("#analystLastName1").html(data.analyst.lastName);
+
+        $("#mandatorTitle").html(data.mandator.title);
+        $("#mandatorFirstName").html(data.mandator.firstName);
+        $("#mandatorLastName").html(data.mandator.lastName);
+        $("#mandatorInstituteName").html(data.mandator.instituteName);
+        $("#mandatorInstituteAddresse").html(data.mandator.instituteAddresse);
+        if (data.mandator.phones.length > 0) {
+            //$("#mandatorPhone").html(data.mandator.phones[0]);
+        }
+
+        var proposedDosages = $("#proposedDosages");
+
+        function extractAdjustments(value, index, array) {
+            var proposed = "<tr><td>From " + formatDate(value.date) + " at " + formatTime(value.date) +
+            " : " + value.dose + " " + value.doseUnit + " every " + value.interval;
+            if (value.infusion != "0h00") {
+                proposed += ". Infusion time : " + value.infusion + " ";
+            }
+            proposed += " ( " + value.route + ")</td></tr>";
+
+            proposedDosages.append(proposed);
+        }
+        data.adjustments.forEach(extractAdjustments);
+
+        //$("#proposedDosage").html(proposedDosages);
+
+        $("#chartImage").attr("src", data.graphPath);
+
+        var samplesLineElement = $("#measures");
+        samplesLineElement.empty();
+        
+            samplesLineElement.append("<tr class='section'>" +
+            "<td class='measurelabel'>Date et heure du<br/> prélèvement</td>" +
+            "<td class='measurelabel'>Concentration<br/> observée</td>" +
+            "<td class='measurelabel'>Concentration<br/> estimée</td>" +
+            "</tr>");
+
+        function extractMeasure(value, index, array) {
+
+            samplesLineElement.append("<tr>" +
+            "<td class='measuredata'><span id='sampleDate'>" + formatDateTime(value.sampleDate) + "</span></td>" +
+            "<td class='measuredata'><span id='sampleValue'>" + value.sampleValue + "</span></td>" +
+            "<td class='measuredata'><span id='samplePredicted'>" + value.predictedValue + "</span></td>" +
+            "</tr>");
+        }
+
+        data.measures.forEach(extractMeasure);
+
+
+        var phoneElement = $("#analystPhones");
+        phoneElement.empty();
+        function extractAnalystPhones(value, index, array) {
+            phoneElement.append("<span id='analystPhones'>" + "Tel. " + value.number + "</span>");
+        }
+
+        data.analyst.phones.forEach(extractAnalystPhones);
+
+        var parametersLineElement = $("#parameters");
+        parametersLineElement.empty();
+
+        parametersLineElement.append("<thead><tr><td></td><td></td><td class='label'>typical p.</td><td class='label'>a priori</td><td class='label'>a post.</td></tr></thead>");
+        parametersLineElement.append("<tbody>");
+
+        for (let param of data.parameters) {
+            //var param = parameter;
+          parametersLineElement.append("<tr><td class='label'>" + param.id + "</td><td class='label'>[" + param.unit + "]" + "</td>" +
+                                       "<td class='data'>" + param.popValue + "</td>" +
+                                       "<td class='data'>" + param.aprioriValue + "</td>" +
+                                       "<td class='data'>" + param.aposterioriValue + "</td></tr>");
+        }
+
+        parametersLineElement.append("</tbody>");
+
+        var patientVariates = {};
+        for (let patientVariate of data.covariates) {
+            patientVariates[patientVariate.id] = patientVariate.value;
+        }
+        hasPatientCovariates = (data.covariates.length > 0);
+
+        var hasDefaultCovariates = false;
+
+        if (hasPatientCovariates) {
+            var patientCovariateslineElement = $("#patientcovariates tr:first");
+            patientCovariateslineElement.empty();
+
+            for (let drugVariate of data.drugCovariates) {
+                var value = drugVariate.value;
+                var isPatientValue = false;
+                for (const key in patientVariates) {
+                    if (key === drugVariate.id) {
+                        isPatientValue = true;
+                        value = patientVariates[key];
+                    }
+                }
+                if (!isPatientValue) {
+                    hasDefaultCovariates = true;
+                }
+                if (drugVariate.id === "sex") {
+                  if (value == 1) value = "Male";
+                  if (value == 0) value = "Female";
+                  if (value == 0.5) value = "???";
+                }
+                if (isPatientValue) {
+                  patientCovariateslineElement.append("<tr><td><span class='label'>" + drugVariate.name + " : </span><span class='data'>" + value + "</span></td></tr>");
+                }
+                else {
+                  //patientCovariateslineElement.append("<td class='dataPop'>" + value + "</td>");
+                }
+            }
+        }
+
+
+        if (hasDefaultCovariates) {
+            covariateslineElement = $("#defaultcovariates tr:first");
+            covariateslineElement.empty();
+
+            for (let drugVariate of data.drugCovariates) {
+                var value = drugVariate.value;
+                var isPatientValue = false;
+                for (const key in patientVariates) {
+                    if (key === drugVariate.id) {
+                        isPatientValue = true;
+                        value = patientVariates[key];
+                    }
+                }
+                if (drugVariate.id === "sex") {
+                    if (value == 1) value = "Male";
+                    if (value == 0) value = "Female";
+                    if (value == 0.5) value = "???";
+                }
+                if (isPatientValue) {
+                }
+                else {
+                    covariateslineElement.append("<tr><td><span class='label'>" + drugVariate.name + " : </span><span class='data'>" + value + "</span></td></tr>");
+                }
+
+             }
+         }
+
+
+
+
+      }
+
+      document.addEventListener("DOMContentLoaded", function ()
+      {
+//        if (testFileContent) {
+//        updateFieldsFromJson(testFileContent);
+//        }
+        new QWebChannel(qt.webChannelTransport, function (channel) {
+            channel.objects.info.dataUpdated.connect(function() {
+                updateFields(channel);
+            });
+            updateFields(channel);
+        });
+      });
+
+    </script>
+
+  </head>
+  <body>
+    <p> </p>
+    <table>
+      <tbody>
+        <tr>
+          <td style="width: 110px;">
+            <img style="height: 100px;" src="logo.png">
+          </td>
+          <td><span class="header-title">Tucuxi</span><br>
+            
+            <table class="data" style="float:left;width:auto;">
+            <tr><td>Une belle équipe</td><td> tel. 123 45 67 89</td></tr>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--
+    <table class="header">
+      <tbody>
+        <tr>
+          <td><span class="header-title">Drug laboratory</span><br>
+            Dr. John Doe, laboratory manager<br>
+            Tel. +41 (0) 11 222 3333<br>
+            Fax +41 (0) 11 222 3334<br>
+            <br>
+            <span class="header-title"><span id="analystInstituteName">???</span><br>
+            </span>
+            <span id="analystTitle">???</span> <span id="analystFirstName">???</span> <span id="analystLastName">???</span>,  <span id="analystRole">???</span><br>
+            <span id="analystPhones">???</span>
+          </td>
+          <td>
+
+                <span class="header-title"><span id="mandatorInstituteName">???</span><br>
+                </span>
+                <span id="mandatorInstituteAddresse"></span><br>
+                <span id="mandatorTitle">???</span> <span id="mandatorFirstName">???</span> <span id="mandatorLastName">???</span><br>
+                <span id="mandatorPhones"></span>
+          </td>
+        </tr>
+        <tr>
+        </tr>
+      </tbody>
+    </table>
+    -->
+    <hr>
+    <table align="center">
+      <tbody>
+        <tr align="center">
+          <td class="title" style="width: 280px;">Adaptation pharmacocinétique des posologies de <span id="drugName">???</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <span class="sectiontitle">Identité du Patient</span>
+    <table>
+      <tbody>
+      <tr><td>
+    <table>
+        <tr class="section">
+          <td><span class="label">Patient : </span>
+          <span class="data"><span id="patientName">???</span></span></td></tr>
+        <tr class="section">
+          <td><span class="label">ID : </span>
+          <span class="data"><span id="patientId">???</span></span></td></tr>
+        <tr class="section">
+          <td><span class="label">Date of birth : </span>
+          <span class="data"><span id="patientDOB">???</span></span></td></tr>
+          </table>
+        </td>
+        <td>
+    <table id="patientcovariates">
+      <tr></tr>
+    </table>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <span class="sectiontitle">Covariables par défaut (liées au modèle)</span>
+    <table id="defaultcovariates">
+      <tr></tr>
+    </table>
+    <hr>
+    <span class="sectiontitle">Renseignements relatifs au traitement</span>
+
+    <table>
+        <tr class="section">
+          <td><span class="label">Début du traitement : </span>
+          <span class="data"><span id="treatmentStart">???</span></span></td></tr>
+        <tr class="section">
+          <td><span class="label">Dernière prise : </span>
+          <span class="data"><span id="lastDosageDate">???</span></span></td></tr>
+        <tr class="section">
+          <td><span class="label">Voie d'administration : </span>
+          <span class="data"><span id="currentRoute">???</span></span></td></tr>
+          <td><span class="label">Posologie: </span>
+          <span class="data"><span id="lastDosage">???</span> / <span id="lastDosageInterval">???</span></span></td></tr>
+          <td><span class="label">Durée perfusion (h) : </span>
+          <span class="data"><span id="currentInfusionTime">???</span></span></td></tr>
+          </table>
+        </td>
+        <td>
+    </table>
+
+    
+    <hr>
+    <span class="sectiontitle">Concentrations estimées par le modèle</span>
+    
+    
+    <table>
+        <tr class="section">
+          <td><span class="label">Modèle utilisé : </span>
+          <span class="data"><span id="drugModelId">???</span></span></td></tr>
+    </table>
+
+    <table style="width:auto;">
+      <tbody id="measures">
+      </tbody>
+    </table>
+
+    <hr>
+    <span class="sectiontitle">Modélisation pharmacocinétique</span>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <img class="image" id="chartImage" style="width:auto;height:400px">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <span class="sectiontitle">Simulation de posologie</span>
+ 
+    <table>
+      <tbody>
+        <tr>
+          <td class="label">Dose recommandée : </td>
+          <td class="data">
+          <table>
+            <tbody id="proposedDosages">
+            </tbody>
+          </table>
+      </td>
+        </tr>
+<!--        <tr>
+          <td class="label">Next control:</td>
+          <td class="data"><span id="nextControl">???</span></td>
+        </tr>
+        -->
+      </tbody>
+    </table>
+
+    <table>
+      <tbody>
+        <tr class="section">
+          <td class="label">AUC24 à l'équilibre</td>
+          <td class="label">Valeur de pic à l'équilibre</td>
+          <td class="label">Valeur résiduelle à l'équilibre</td>
+          </tr>
+          <td class="data" id="steadyStateAUC24">???</td>
+          <td class="data" id="steadyStateMax">???</td>
+          <td class="data" id="steadyStateMin">???</td>
+          <tr>
+          </tr>
+          <!--
+          <td class="label">Extrapolated trough:</td>
+          <td class="data">???</td>
+          <td class="label">Target trough:</td>
+          <td class="data">???</td>
+          -->
+        </tr>
+      </tbody>
+    </table>
+    
+    
+    <hr>
+        <span class="sectiontitle">Proposition thérapeutique</span>
+<br/>
+<br/>
+<tr><span id="warning" class="data" style="white-space: pre;text-wrap: wrap;">???</span>
+<br/>
+<br/>
+	<span id="prediction" class="databold" style="white-space: pre;text-wrap: wrap;">???</span>
+	
+    <br/>
+    <br/>
+    
+          <span class="data">Avis rendu le : </span><span class="data"><span id="validationDate">???</span>
+          <br/>
+          <span class="data">Par : </span><span class="data" id="analystFirstName1">???</span> <span class="data" id="analystLastName1">???</span>
+    <br/>
+    <br/>
+          
+    <span class="lastnote">Généré grâce à Tucuxi (version <span id="version">???</span>)</span>
+  </body>
+</html>

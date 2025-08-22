@@ -203,7 +203,7 @@ void FlowController::generateEnables()
     // Validation
     bool isAdjustmentValid = (currentStatus->getStatus(StepType::Adjustment) != StatusType::Invalid);
     bool isAdjustmentDefined = !drugTreatment->getAdjustments()->isEmpty();
-    currentStatus->setEnable(StepType::Validation, isAdjustmentValid && isAdjustmentDefined);
+    currentStatus->setEnable(StepType::Validation, isAdjustmentValid); //&& isAdjustmentDefined);
 
     // Report
     currentStatus->setEnable(StepType::Report, _isInterpretationValidated);
@@ -310,7 +310,7 @@ void FlowController::generateStatuses()
 
     // Adjustments
     Tucuxi::Gui::Core::DosageHistory *adjustments = drugTreatment->getAdjustments();
-    ValidationStatusType adjValidated = ValidationStatus::UnValidated;
+    ValidationStatusType adjValidated = currentStatus->getValidationStatus(StepType::Adjustment); // ValidationStatus::UnValidated;
     if (adjustments != nullptr) {
         if (adjustments->isValid()) {
             propagateStatus(DataStatusType::ValidData, StepType::Adjustment);

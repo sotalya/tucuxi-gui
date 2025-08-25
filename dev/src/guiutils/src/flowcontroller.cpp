@@ -202,7 +202,8 @@ void FlowController::generateEnables()
 
     // Validation
     bool isAdjustmentValid = (currentStatus->getStatus(StepType::Adjustment) != StatusType::Invalid);
-    bool isAdjustmentDefined = !drugTreatment->getAdjustments()->isEmpty();
+    // We do not need an adjustment, the user should be able to go to the report without adjustment
+    // bool isAdjustmentDefined = !drugTreatment->getAdjustments()->isEmpty();
     currentStatus->setEnable(StepType::Validation, isAdjustmentValid); //&& isAdjustmentDefined);
 
     // Report

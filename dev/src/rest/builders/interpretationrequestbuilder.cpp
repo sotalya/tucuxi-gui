@@ -708,7 +708,28 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
          * be checked to match form the XML to the substanceID or analyteID
          *******************************************************/
         //measure->setAnalyteId(activeSubstance);
-        measure->setAnalyteId(sampleNode.firstChildElement("analyte").firstChild().toText().data());
+
+#ifdef CONFIG_DEMO
+        DummyDrugIdTranslator *translator = new DummyDrugIdTranslator();
+#else
+        ExternalDrugIdTranslator *translator = new ExternalDrugIdTranslator();
+        translator->setFileName(QCoreApplication::applicationDirPath() + "/drugidtranslations.ini");
+#endif // CONFIG_DEMO
+        QString restDrugId = sampleNode.firstChildElement("analyte").firstChild().toText().data();
+        QString drugId = translator->restToInternalId(restDrugId);
+
+        delete translator;
+        if (drugId.isEmpty())
+        {
+            EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The drug corresponding to ID %1 is not available").arg(restDrugId));
+            Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+            uncasted->setField("analyte");
+            uncasted->setText(restDrugId);
+            uncasted->setComment(QObject::tr("The drug corresponding to ID %1 is not available").arg(restDrugId));
+            measure->getUncastedValues()->append(uncasted);
+        }
+
+        measure->setAnalyteId(drugId);
 
         //Measure dates
 

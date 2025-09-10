@@ -721,6 +721,7 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
                     uncasted->setField("sampleDate");
                     uncasted->setText(dateString);
                     measure->getUncastedValues()->append(uncasted);
+                    measure->setEnable(false);
                 }
             }
 
@@ -736,6 +737,7 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
                     uncasted->setField("arrivalDate");
                     uncasted->setText(dateString);
                     measure->getUncastedValues()->append(uncasted);
+                    measure->setEnable(false);
                 }
             }
 
@@ -755,6 +757,7 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
                     uncasted->setText(valueString);
                     uncasted->setComment(QObject::tr("The value: %1 was not parsed into a valid double").arg(valueString));
                     measure->getUncastedValues()->append(uncasted);
+                    measure->setEnable(false);
                 }
             }
 
@@ -779,6 +782,7 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
                     uncasted->setText(restDrugId);
                     uncasted->setComment(QObject::tr("The drug corresponding to ID %1 is not available").arg(restDrugId));
                     measure->getUncastedValues()->append(uncasted);
+                    measure->setEnable(false);
                 }
 
                 measure->setAnalyteId(drugId);
@@ -795,6 +799,7 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
                 uncasted->setText(sUnit);
                 uncasted->setComment(QObject::tr("The unit: %1 is not tolerated by Tucuxi").arg(sUnit));
                 measure->getUncastedValues()->append(uncasted);
+                measure->setEnable(false);
             }
 
 

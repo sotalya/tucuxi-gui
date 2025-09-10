@@ -698,46 +698,47 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
     Tucuxi::Gui::Core::CoreMeasureList* measures = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO);
     QDomElement sampleNode = datasetNode.firstChildElement("samples").firstChildElement("sample");
     while (!sampleNode.isNull()) {
-        Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 
-        //Measure data
-        measure->sampleID(sampleNode.firstChildElement("id").firstChild().toText().data());
-
-        //Measure dates
-        {
-            //date
-            QString dateString = sampleNode.firstChildElement("sampleDate").firstChild().toText().data();
-            QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
-            if (date.isValid()) {
-                measure->setMoment(date);
-            } else {
-                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
-                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
-                uncasted->setField("sampleDate");
-                uncasted->setText(dateString);
-                measure->getUncastedValues()->append(uncasted);
-            }
-        }
-
-        {
-            //date
-            QString dateString = sampleNode.firstChildElement("arrivalDate").firstChild().toText().data();
-            QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
-            if (date.isValid()) {
-                measure->arrivalDate(date);
-            } else {
-                EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
-                Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
-                uncasted->setField("arrivalDate");
-                uncasted->setText(dateString);
-                measure->getUncastedValues()->append(uncasted);
-            }
-        }
-
-        QList<Tucuxi::Gui::Core::IdentifiableAmount*> amts;
-
+        // We iterate over the concentrations to build a Measure for each concentration
         QDomElement concentrationNode = sampleNode.firstChildElement("concentrations").firstChildElement("concentration");
         while (!concentrationNode.isNull()) {
+
+            Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
+
+            //Measure data
+            measure->sampleID(sampleNode.firstChildElement("id").firstChild().toText().data());
+
+            //Measure dates
+            {
+                //date
+                QString dateString = sampleNode.firstChildElement("sampleDate").firstChild().toText().data();
+                QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
+                if (date.isValid()) {
+                    measure->setMoment(date);
+                } else {
+                    EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
+                    Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+                    uncasted->setField("sampleDate");
+                    uncasted->setText(dateString);
+                    measure->getUncastedValues()->append(uncasted);
+                }
+            }
+
+            {
+                //date
+                QString dateString = sampleNode.firstChildElement("arrivalDate").firstChild().toText().data();
+                QDateTime date = QDateTime::fromString(dateString, Qt::ISODate);
+                if (date.isValid()) {
+                    measure->arrivalDate(date);
+                } else {
+                    EXLOG(QtWarningMsg, Tucuxi::Gui::Core::DATAERROR, QObject::tr("The date: %1 was not parsed into a valid QDateTime").arg(dateString));
+                    Tucuxi::Gui::Core::UncastedValue *uncasted = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::UncastedValue>(ABSTRACTREPO, measure->getUncastedValues());
+                    uncasted->setField("arrivalDate");
+                    uncasted->setText(dateString);
+                    measure->getUncastedValues()->append(uncasted);
+                }
+            }
+
             Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
 
             //Concentration value
@@ -796,13 +797,14 @@ Tucuxi::Gui::Core::CoreMeasureList* InterpretationRequestBuilder::buildSamples(c
                 measure->getUncastedValues()->append(uncasted);
             }
 
-            amts.append(amt);
+
+            //Measure value
+            measure->setConcentration(amt);
+            measures->append(measure);
+
             concentrationNode = concentrationNode.nextSiblingElement("concentration");
         }
 
-        //Measure value
-        measure->setConcentration(amts.at(0));
-        measures->append(measure);
         sampleNode = sampleNode.nextSiblingElement("sample");
     }
 

@@ -35,76 +35,77 @@ const TARGET_CODE_MAP = {
   residualDividedByMic: 12,
 };
 
-const toEpochSeconds = (d) => Math.floor(d.getTime() / 1000);
 const toArray = (x) => (Array.isArray(x) ? x : x ? [x] : []);
 const parseDate = (s) => new Date(String(s).replace(" ", "T"));
 
 function buildPredictionDataFromCycles(cycles) {
-  const t = [];
-  const v = [];
-
-  for (const c of cycles) {
+  const t = [],
+    v = [];
+  for (const c of toArray(cycles)) {
     const start = parseDate(c.start);
-    const baseSec = toEpochSeconds(start);
+    const baseSec = Math.floor(start.getTime() / 1000);
 
-    const times = String(c.times || "")
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean)
-      .map(Number);
+    const times = Array.isArray(c.times)
+      ? c.times.map(Number)
+      : String(c.times || "")
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean)
+          .map(Number);
 
-    const values = String(c.values || "")
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean)
-      .map(Number);
+    const values = Array.isArray(c.values)
+      ? c.values.map(Number)
+      : String(c.values || "")
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean)
+          .map(Number);
 
     const len = Math.min(times.length, values.length);
     for (let i = 0; i < len; i++) {
-      const epochSec = baseSec + times[i] * 3600;
-      t.push(epochSec);
+      t.push(baseSec + times[i] * 3600);
       v.push(values[i]);
     }
   }
-
   const data = new GraphPredictionData(t, v);
+  if (t.length > 1) {
+    const idx = t.map((_, i) => i).sort((i, j) => t[i] - t[j]);
+    data.time = idx.map((i) => t[i]);
+    data.value = idx.map((i) => v[i]);
+  }
   data.isValid = t.length > 0;
   return data;
 }
 
 function buildAdjustments(adjustmentsContainer) {
   const rev = new GraphAdjustments();
-
   const list = adjustmentsContainer?.adjustment
     ? toArray(adjustmentsContainer.adjustment)
     : toArray(adjustmentsContainer);
 
   let bestIdx = -1,
-    bestScore = -Infinity;
+    bestScore = -Infinity,
+    anySelected = false;
 
-  const built = list
-    .map((adj) => {
-      const cycles = toArray(adj?.cycleDatas?.cycleData);
-      const pd = buildPredictionDataFromCycles(cycles);
-      if (!pd.isValid) return null;
+  list.forEach((adj, idx) => {
+    const cycles = toArray(adj?.cycleDatas?.cycleData);
+    const pd = buildPredictionDataFromCycles(cycles);
+    if (!pd.isValid) return;
 
-      const g = new GraphAdjustment();
-      g.predictionData = pd;
+    const g = new GraphAdjustment();
+    g.predictionData = pd;
+    if (adj.selected) {
+      g.predictionData.selected = true;
+      anySelected = true;
+    }
+    const s = Number(adj?.score);
+    if (Number.isFinite(s) && s > bestScore) {
+      bestScore = s;
+      bestIdx = rev.size; // index après append
+    }
+    rev.append(g);
+  });
 
-      const s = Number(adj?.score);
-      if (Number.isFinite(s) && s > bestScore) {
-        bestScore = s;
-        bestIdx = rev.size;
-      }
-
-      if (adj.selected) g.predictionData.selected = true;
-      return g;
-    })
-    .filter(Boolean);
-
-  built.forEach((g) => rev.append(g));
-
-  const anySelected = built.some((g) => g.predictionData.selected);
   if (!anySelected && rev.size > 0) {
     const idx = bestIdx >= 0 ? bestIdx : 0;
     rev.get(idx).predictionData.selected = true;
@@ -180,17 +181,24 @@ function buildGraphFullData(json) {
   );
   if (rev?.isValid) obj.revP = rev;
 
-  // --- Souris / Tooltips ---
-  obj.mArea = new GraphMouseArea();
-  obj.mArea.mouseX = 300 * obj.scale;
-  obj.mArea.mouseY = 200 * obj.scale;
-  obj.mArea.containsMouse = true;
-  obj.mArea.isMouseOver = true;
-  obj.mArea.tooltipX = 300 * obj.scale;
-  obj.mArea.tooltipY = 200 * obj.scale;
-
   console.log(obj);
   return obj;
+}
+
+function computeTimeBounds(obj) {
+  const ts = [];
+  const pushPD = (pd) => {
+    if (pd?.isValid && Array.isArray(pd.time) && pd.time.length)
+      ts.push(...pd.time);
+  };
+  pushPD(obj?.popP?.predictive?.predictionData);
+  if (obj?.revP?.size)
+    for (let i = 0; i < obj.revP.size; i++)
+      pushPD(obj.revP.get(i)?.predictionData);
+
+  if (!ts.length) return;
+  obj.timestart = new Date(Math.min(...ts) * 1000);
+  obj.timeend = new Date(Math.max(...ts) * 1000);
 }
 
 export async function renderFromJson(
@@ -206,6 +214,16 @@ export async function renderFromJson(
 ) {
   const obj = buildGraphFullData(json);
   obj.scale = scale;
+
+  obj.mArea = new GraphMouseArea();
+  obj.mArea.mouseX = 300 * obj.scale;
+  obj.mArea.mouseY = 200 * obj.scale;
+  obj.mArea.containsMouse = true;
+  obj.mArea.isMouseOver = true;
+  obj.mArea.tooltipX = 300 * obj.scale;
+  obj.mArea.tooltipY = 200 * obj.scale;
+
+  computeTimeBounds(obj);
 
   const canvas = createCanvas(width, height);
   obj.updateChartDimensions(canvas);

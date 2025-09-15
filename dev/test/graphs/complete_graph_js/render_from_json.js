@@ -37,13 +37,14 @@ const TARGET_CODE_MAP = {
 
 const toEpochSeconds = (d) => Math.floor(d.getTime() / 1000);
 const toArray = (x) => (Array.isArray(x) ? x : x ? [x] : []);
+const parseDate = (s) => new Date(String(s).replace(' ', 'T'));
 
 function buildPredictionDataFromCycles(cycles) {
   const t = [];
   const v = [];
 
   for (const c of cycles) {
-    const start = new Date(c.start);
+    const start = parseDate(c.start);
     const baseSec = toEpochSeconds(start);
 
     const times = String(c.times || "")
@@ -110,7 +111,7 @@ function buildGraphFullData(json) {
     [];
   for (const c of cycles) {
     if (c.start && c.covariates) {
-      obj.pvars.push(new GraphCovariate(new Date(c.start)));
+      obj.pvars.push(new GraphCovariate(parseDate(c.start)));
     }
   }
 
@@ -231,6 +232,6 @@ if (
       outPath: "output_from_json.png",
     });
 
-    console.log("✅ Rendu sauvegardé :", out);
+    console.log("Rendu sauvegardé :", out);
   })();
 }

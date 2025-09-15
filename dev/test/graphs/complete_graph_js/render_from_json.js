@@ -37,7 +37,7 @@ const TARGET_CODE_MAP = {
 
 const toEpochSeconds = (d) => Math.floor(d.getTime() / 1000);
 const toArray = (x) => (Array.isArray(x) ? x : x ? [x] : []);
-const parseDate = (s) => new Date(String(s).replace(' ', 'T'));
+const parseDate = (s) => new Date(String(s).replace(" ", "T"));
 
 function buildPredictionDataFromCycles(cycles) {
   const t = [];
@@ -79,21 +79,38 @@ function buildAdjustments(adjustmentsContainer) {
     ? toArray(adjustmentsContainer.adjustment)
     : toArray(adjustmentsContainer);
 
-  let count = 0;
-  for (const adj of list) {
-    const cycles = adj?.cycleDatas?.cycleData || [];
-    const pd = buildPredictionDataFromCycles(cycles);
-    if (!pd.isValid) continue;
+  let bestIdx = -1,
+    bestScore = -Infinity;
 
-    const g = new GraphAdjustment();
-    g.predictionData = pd;
-    if (adj.selected) g.predictionData.selected = true;
+  const built = list
+    .map((adj) => {
+      const cycles = toArray(adj?.cycleDatas?.cycleData);
+      const pd = buildPredictionDataFromCycles(cycles);
+      if (!pd.isValid) return null;
 
-    rev.append(g);
-    count++;
+      const g = new GraphAdjustment();
+      g.predictionData = pd;
+
+      const s = Number(adj?.score);
+      if (Number.isFinite(s) && s > bestScore) {
+        bestScore = s;
+        bestIdx = rev.size;
+      }
+
+      if (adj.selected) g.predictionData.selected = true;
+      return g;
+    })
+    .filter(Boolean);
+
+  built.forEach((g) => rev.append(g));
+
+  const anySelected = built.some((g) => g.predictionData.selected);
+  if (!anySelected && rev.size > 0) {
+    const idx = bestIdx >= 0 ? bestIdx : 0;
+    rev.get(idx).predictionData.selected = true;
   }
-  console.log("Adjustments found:", count);
-  rev.isValid = count > 0;
+
+  rev.isValid = rev.size > 0;
   return rev;
 }
 

@@ -67,7 +67,7 @@ export class GraphFancyPoint {
 // stored in the object.
 //
 export class GraphPredictionData {
-    constructor(time, value) {
+    constructor(time = [], value = []) {
         this.time = time;
         this.value = value;
         // The indexes at which there are trough concentrations

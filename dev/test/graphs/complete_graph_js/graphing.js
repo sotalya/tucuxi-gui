@@ -2,7 +2,6 @@
 export function drawGraph(cdata)   //eslint-disable-line @typescript-eslint/no-unused-vars
 {
     var ctx = cdata.canvas.getContext('2d');
-
     //the min max is restricted to the window after scaling. We have to apply the scale to the values
     //then project the values onto the drawn space. So you have to know and use the scale and offset first.
     //console.log("painting!")
@@ -24,30 +23,30 @@ export function drawGraph(cdata)   //eslint-disable-line @typescript-eslint/no-u
                     drawPercentiles(cdata, ctx, cdata.popercsP, cdata.colors[7], cdata.popcolors);
                 }
             }
-            
+        }
+    }
             //draw apriori if indicated in show
-            if (cdata.aprP) {
-                if (cdata.aprP.predictive.predictionData.isValid) {
-                    if (cdata.gInformationSelection.displayAprioriPercentiles || adjTabShowApr) {
-                        if (cdata.aprpercsP.isValid) {
-                            drawPercentiles(cdata, ctx, cdata.aprpercsP, cdata.colors[8], cdata.aprcolors);
-                        }
-                    }
-                }
-            }
-
-            //draw aposteriori if indicated in show and we have measures
-            if (cdata.apoP) {
-                if (cdata.apoP.predictive.predictionData.isValid) {
-                    if (cdata.gInformationSelection.displayAposterioriPercentiles && cdata.hasMeasures) {
-                        if (cdata.apopercsP.isValid) {
-                            drawPercentiles(cdata, ctx, cdata.apopercsP, cdata.colors[6], cdata.apocolors);
-                        }
-                    }
+    if (cdata.aprP) {
+        if (cdata.aprP.predictive.predictionData.isValid) {
+            if (cdata.gInformationSelection.displayAprioriPercentiles || adjTabShowApr) {
+                if (cdata.aprpercsP.isValid) {
+                    drawPercentiles(cdata, ctx, cdata.aprpercsP, cdata.colors[8], cdata.aprcolors);
                 }
             }
         }
     }
+
+            //draw aposteriori if indicated in show and we have measures
+    if (cdata.apoP) {
+        if (cdata.apoP.predictive.predictionData.isValid) {
+            if (cdata.gInformationSelection.displayAposterioriPercentiles && cdata.hasMeasures) {
+                if (cdata.apopercsP.isValid) {
+                    drawPercentiles(cdata, ctx, cdata.apopercsP, cdata.colors[6], cdata.apocolors);
+                }
+            }
+        }
+    }
+
 
 
     //Draw the content
@@ -59,25 +58,25 @@ export function drawGraph(cdata)   //eslint-disable-line @typescript-eslint/no-u
             if (cdata.gInformationSelection.displayPopulationPrediction || adjTabShowPop) {
                 drawPop(cdata, ctx, cdata.colors);
             }
+        }
+    }
 
-            //draw apriori if indicated in show
-            if (cdata.aprP) {
-                if (cdata.aprP.predictive.predictionData.isValid) {
+    //draw apriori if indicated in show
+    if (cdata.aprP) {
+        if (cdata.aprP.predictive.predictionData.isValid) {
 
-                    if (cdata.gInformationSelection.displayAprioriPrediction || adjTabShowApr) {
-                        drawApr(cdata, ctx, cdata.colors);
-                    }
-                }
+            if (cdata.gInformationSelection.displayAprioriPrediction || adjTabShowApr) {
+                drawApr(cdata, ctx, cdata.colors);
             }
+        }
+    }
 
-            //draw aposteriori if indicated in show and we have measures
-            if (cdata.apoP) {
-                if (cdata.apoP.predictive.predictionData.isValid) {
+    //draw aposteriori if indicated in show and we have measures
+    if (cdata.apoP) {
+        if (cdata.apoP.predictive.predictionData.isValid) {
 
-                    if (cdata.gInformationSelection.displayAposterioriPrediction && cdata.hasMeasures){
-                        drawApo(cdata, ctx, cdata.colors);
-                    }
-                }
+            if (cdata.gInformationSelection.displayAposterioriPrediction && cdata.hasMeasures){
+                drawApo(cdata, ctx, cdata.colors);
             }
         }
     }
@@ -125,23 +124,27 @@ export function drawGraph(cdata)   //eslint-disable-line @typescript-eslint/no-u
         ctx.save();
     }
 
-    //draw targets if have, and indicated in show
+    // draw targets if have, and indicated in show
+   
     if (cdata.hasTargets && cdata.gInformationSelection.displayTargets) {
         if (cdata.apoP && cdata.apoP.predictive.predictionData.isValid) {
             drawTargets(cdata, ctx, cdata.apoP.X, cdata.apoP.predictive.predictionData);
-        } else if (cdata.aprP && cdata.aprP.predictive.predictionData.isValid) {
+        }
+        if (cdata.aprP && cdata.aprP.predictive.predictionData.isValid) {
             drawTargets(cdata, ctx, cdata.aprP.X, cdata.aprP.predictive.predictionData);
-        } else if (cdata.popP && cdata.popP.predictive.predictionData.isValid) {
+        }
+        if (cdata.popP && cdata.popP.predictive.predictionData.isValid) {
             drawTargets(cdata, ctx, cdata.popP.X, cdata.popP.predictive.predictionData);
-        } else if (cdata.adjP && cdata.adjP.predictive.predictionData.isValid) {
+        }
+        if (cdata.adjP && cdata.adjP.predictive.predictionData.isValid) {
             drawTargets(cdata, ctx, cdata.adjP.X, cdata.adjP.predictive.predictionData);
-        } else if (cdata.revP && cdata.revP.size()>0) {
+        }
+        if (cdata.revP && cdata.revP.size()>0) {
             var predData = cdata.revP.objat(0);
             if (predData.predictionData.isValid) {
                 drawTargets(cdata, ctx, predData.X, predData.predictionData);
             }
-        }
-        else {
+        } else {
             var tmin = ascreen2time(cdata, cdata.bottomLeftX)
             var tmax = ascreen2time(cdata, cdata.bottomRightX)
             drawTargets(cdata, ctx, [tmin, tmax], null);
@@ -149,6 +152,29 @@ export function drawGraph(cdata)   //eslint-disable-line @typescript-eslint/no-u
         ctx.restore();
         ctx.save();
     }
+    // if (cdata.hasTargets && cdata.gInformationSelection.displayTargets) {
+    //     if (cdata.apoP && cdata.apoP.predictive.predictionData.isValid) {
+    //         drawTargets(cdata, ctx, cdata.apoP.time, cdata.apoP.predictive.predictionData);
+    //     } else if (cdata.aprP && cdata.aprP.predictive.predictionData.isValid) {
+    //         drawTargets(cdata, ctx, cdata.aprP.time, cdata.aprP.predictive.predictionData);
+    //     } else if (cdata.popP && cdata.popP.predictive.predictionData.isValid) {
+    //         drawTargets(cdata, ctx, cdata.popP.time, cdata.popP.predictive.predictionData);
+    //     } else if (cdata.adjP && cdata.adjP.predictive.predictionData.isValid) {
+    //         drawTargets(cdata, ctx, cdata.adjP.time, cdata.adjP.predictive.predictionData);
+    //     } else if (cdata.revP && cdata.revP.size()>0) {
+    //         var predData = cdata.revP.objat(0);
+    //         if (predData.predictionData.isValid) {
+    //             drawTargets(cdata, ctx, predData.predictionData.time, predData.predictionData);
+    //         }
+    //     }
+    //     else {
+    //         var tmin = ascreen2time(cdata, cdata.bottomLeftX)
+    //         var tmax = ascreen2time(cdata, cdata.bottomRightX)
+    //         drawTargets(cdata, ctx, [tmin, tmax], null);
+    //     }
+    //     ctx.restore();
+    //     ctx.save();
+    // }
 
     //clear the border to draw non plot area
     clearBorder(cdata, ctx);

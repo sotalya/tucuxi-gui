@@ -15,6 +15,8 @@ import {
   GraphMouseArea,
   preparePrediction,
   preparePercs,
+  GraphPredictionResult,
+  GraphPredictive,
 } from "./graphdata.js";
 
 import { drawGraph, drawAnnotations } from "./graphing.js";
@@ -36,170 +38,401 @@ const TARGET_CODE_MAP = {
 };
 
 const toArray = (x) => (Array.isArray(x) ? x : x ? [x] : []);
+
 const parseDate = (s) => new Date(String(s).replace(" ", "T"));
 
-function buildPredictionDataFromCycles(cycles) {
-  const t = [],
-    v = [];
-  for (const c of toArray(cycles)) {
-    const start = parseDate(c.start);
-    const baseSec = Math.floor(start.getTime() / 1000);
+const toNum = (v, fallback = NaN) => {
+  const n = typeof v === 'string' ? Number(v) : (typeof v === 'number' ? v : NaN);
+  return Number.isFinite(n) ? n : fallback;
+};
 
-    const times = Array.isArray(c.times)
-      ? c.times.map(Number)
-      : String(c.times || "")
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean)
-          .map(Number);
+const parseNums = (raw) => {
+  if (raw == null) return [];
+  if (typeof raw === 'string') return raw.split(',').map(s => s.trim()).filter(Boolean).map(Number);
+  if (Array.isArray(raw)) return raw.map(Number);
+  return [];
+};
 
-    const values = Array.isArray(c.values)
-      ? c.values.map(Number)
-      : String(c.values || "")
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean)
-          .map(Number);
-
-    const len = Math.min(times.length, values.length);
-    for (let i = 0; i < len; i++) {
-      t.push(baseSec + times[i] * 3600);
-      v.push(values[i]);
-    }
-  }
-  const data = new GraphPredictionData(t, v);
-  if (t.length > 1) {
-    const idx = t.map((_, i) => i).sort((i, j) => t[i] - t[j]);
-    data.time = idx.map((i) => t[i]);
-    data.value = idx.map((i) => v[i]);
-  }
-  data.isValid = t.length > 0;
-  return data;
+function addPredictionData(a, d, c, e) {
+  for (var b = 0; b < c.length; b++)
+    a.predictionData.time.push(3600 * c[b] + d.getTime() / 1e3),
+      a.predictionData.value.push(e[b]);
+  return a.predictionData.troughs.push(a.predictionData.value.length - 1), a;
 }
 
-function buildAdjustments(adjustmentsContainer) {
-  const rev = new GraphAdjustments();
-  const list = adjustmentsContainer?.adjustment
-    ? toArray(adjustmentsContainer.adjustment)
-    : toArray(adjustmentsContainer);
+function processAdjData(graphFullData, adjData) {
+  adjData.forEach((adjGroup, index) => {
+    let e = new GraphAdjustment();
+    
+    adjGroup.forEach(adj => {
+      if (!Array.isArray(adj) || adj.length < 3) {
+        console.warn("Invalid adjustment data", adj);
+        return;
+      }
+      e = addPredictionData(e, parseDate(adj[0]), adj[1], adj[2]);
+    });
+    
+    e.predictionData.isValid = true;
+    graphFullData.revP.append(e);
+    
+    // if (index === 0) {
+    //   let f = document.getElementById("canBestAdj");
+    //   if (f) {
+    //     graphFullData.updateChartDimensions(f);
+    //     graphFullData.canvas = f;
+    //     graphFullData.annotationsCanvas = f;
+    //     graphFullData.clockCanvas = f;
+    //   }
+    // }
+  });
+}
 
-  let bestIdx = -1,
-    bestScore = -Infinity,
-    anySelected = false;
+function processAprioriPercentiles(graphFullData, aprioriPercentiles) {
+  const percentileMap = {};
 
-  list.forEach((adj, idx) => {
-    const cycles = toArray(adj?.cycleDatas?.cycleData);
-    const pd = buildPredictionDataFromCycles(cycles);
-    if (!pd.isValid) return;
+  aprioriPercentiles.forEach(percentile => {
 
-    const g = new GraphAdjustment();
-    g.predictionData = pd;
-    if (adj.selected) {
-      g.predictionData.selected = true;
-      anySelected = true;
+    if (!aprioriPercentiles || !Array.isArray(aprioriPercentiles) || aprioriPercentiles.length === 0) {
+      console.warn("Invalid apriori percentiles", aprioriPercentiles);
+      return;
     }
-    const s = Number(adj?.score);
-    if (Number.isFinite(s) && s > bestScore) {
-      bestScore = s;
-      bestIdx = rev.size; // index après append
+
+    const rank = Number(percentile[0]);
+    if (![5, 10, 25, 50, 75, 90, 95].includes(rank)) {
+      console.warn("Invalid percentile rank", percentile[0]);
+      return;
     }
-    rev.append(g);
+
+    const startTime = new Date(percentile[1].replace(" ", "T"));
+    if (isNaN(startTime.getTime())) {
+      console.warn("Invalid percentile start date", percentile[1]);
+      return;
+    }
+
+    const rawTimes = typeof percentile[2] === "string" 
+      ? percentile[2].split(',').map(Number) 
+      : percentile[2];
+
+    const values = typeof percentile[3] === "string" 
+      ? percentile[3].split(',').map(Number) 
+      : percentile[3];
+
+    const computedTimes = rawTimes.map(t => 3600 * t + startTime.getTime() / 1e3);
+
+    if (!percentileMap[rank]) {
+      percentileMap[rank] = {
+        predictionData: new GraphPredictionData([], []),
+        rank: rank
+      };
+    }
+
+    percentileMap[rank].predictionData.time.push(...computedTimes);
+    percentileMap[rank].predictionData.value.push(...values);
   });
 
-  if (!anySelected && rev.size > 0) {
-    const idx = bestIdx >= 0 ? bestIdx : 0;
-    rev.get(idx).predictionData.selected = true;
+  for (const rank in percentileMap) {
+    const entry = percentileMap[rank];
+
+    entry.predictionData.isValid = true;
+
+    const p = new GraphPercentileData();
+    p.percentile = entry.rank;
+    p.predictionData = entry.predictionData;
+    p.isValid = true;
+
+    graphFullData.aprpercsP.append(p);
   }
 
-  rev.isValid = rev.size > 0;
-  return rev;
+  graphFullData.aprpercsP.isValid = true;
+  preparePercs(graphFullData.aprpercsP);
 }
 
-function buildGraphFullData(json) {
+function processPredictionData(graphFullData, predictionData, key) {
+  if (!predictionData || !Array.isArray(predictionData) || predictionData.length === 0) {
+    console.warn("Invalid prediction data", predictionData);
+    return;
+  }
+  let graphPredictionResult = new GraphPredictionResult();
+  let graphPredictive = new GraphPredictive();
+
+  predictionData.forEach(predictions => {
+    let [dateStr, xValues, yValues] = predictions;
+    let date = parseDate(dateStr);
+
+    if (isNaN(date.getTime())) {
+      console.warn("Invalid date in prediction set", dateStr, key);
+      return;
+    }
+
+    xValues.forEach((x, idx) => {
+      graphPredictive.predictionData.time.push(3600 * x + date.getTime() / 1e3);
+      graphPredictive.predictionData.value.push(yValues[idx]);
+    });
+  });
+
+  graphPredictive.predictionData.isValid = true;
+  graphPredictionResult.predictive = graphPredictive;
+  graphFullData[key] = graphPredictionResult;
+
+  preparePrediction(graphFullData[key]);
+}
+
+function buildAdjustments(data) {
+  const responses = toArray(data?.tucuxiComputation?.responses?.response);
+  const adjustments = responses
+    .filter(r => r?.requestType === 'adjustment')
+    .flatMap(r => toArray(r?.dataAdjustment?.adjustments?.adjustment));
+
+
+  if (adjustments.length === 0) {
+    return { adjData: [], adjStartDate: null, adjEndDate: null };
+  }
+
+  const getAdjScore = (adj) => {
+    const primary = toNum(adj?.score, NaN);
+    if (Number.isFinite(primary)) return primary;
+  };
+
+  const bestAdjustment = adjustments.reduce((best, curr) =>
+    getAdjScore(curr) > getAdjScore(best) ? curr : best
+  );
+
+  let adjdates = [];
+
+  const range = bestAdjustment?.dosageHistory?.dosageTimeRange;
+  const s = range?.start;
+  const e = range?.end;
+  if (s) adjdates.push(parseDate(s));
+  if (e) adjdates.push(parseDate(e));
+
+  const adjData = toArray(bestAdjustment?.cycleDatas?.cycleData).map(cycle => {
+    const rawTimes =
+      cycle?.times;
+
+    const rawValues =
+      cycle?.values;
+
+    const times_list = parseNums(rawTimes);
+    const values_list = parseNums(rawValues);
+
+    return [
+      cycle?.start ?? null,
+      times_list,
+      values_list
+    ];
+  });
+
+  return { adjData, adjdates };
+}
+
+
+function buildTargets(json) {
+  const responses = toArray(json?.tucuxiComputation?.responses?.response)
+    .filter(r => r?.requestType === 'adjustment');
+
+  const targets = responses.flatMap(r => {
+    const fromTargets =
+      toArray(r?.dataAdjustment?.targets?.target ?? r?.dataAdjustment?.targets);
+
+    const all = [...fromTargets];
+
+    return all.map(t => {
+      const type = t?.type ?? t?.targetType ?? null;
+
+      const min  = toNum(t?.min  ?? t?.lower    ?? t?.minValue);
+      const best = toNum(t?.best ?? t?.value    ?? t?.target ?? t?.aim);
+      const max  = toNum(t?.max  ?? t?.upper    ?? t?.maxValue);
+
+      return [type, min, best, max];
+    });
+  });
+
+  return targets;
+}
+
+function buildSamples(json) {
+  return [];
+}
+
+function buildPecentiles(json) {
+  const responses = toArray(json?.tucuxiComputation?.responses?.response)
+    .filter(r => r?.requestType === 'percentiles');
+
+  const percentilesDates = [];
+  const percentilesData = [];
+
+  for (const resp of responses) {
+    const plist = toArray(resp?.dataPercentiles?.percentile);
+
+    for (const p of plist) {
+      const rank = toNum?.(p?.rank, NaN) ?? (() => {
+        const n = parseFloat(p?.rank);
+        return Number.isFinite(n) ? n : NaN;
+      })();
+
+      const cycles = toArray(p?.cycleDatas?.cycleData);
+
+      for (const cycle of cycles) {
+        const start = cycle?.start ?? null
+        const end = cycle?.end ?? null
+
+        if (start) percentilesDates.push(parseDate(start));
+        if (end)   percentilesDates.push(parseDate(end));
+
+        const rawTimes =
+          cycle?.times;
+
+        const rawValues =
+          cycle?.values;
+
+        const times_list = parseNums(rawTimes);
+        const values_list = parseNums(rawValues);
+
+        percentilesData.push([
+          rank,
+          start,
+          times_list,
+          values_list
+        ]);
+      }
+    }
+
+  }
+
+  return { percentilesData, percentilesDates };
+}
+
+
+function buildPredictions(json) {
+  const responses = toArray(json?.tucuxiComputation?.responses?.response)
+    .filter(r => r?.requestType === 'prediction');
+
+  const cycles = responses.flatMap(r =>
+    toArray(r?.dataPrediction?.cycleDatas?.cycleData)
+  );
+
+  if (cycles.length === 0) {
+    return { predictionData: [], dates: [] };
+  }
+
+  let predDates = [];
+  const predictionData = cycles.map(cycle => {
+    if (cycle?.start) predDates.push(parseDate(cycle.start));
+    if (cycle?.end)   predDates.push(parseDate(cycle.end));
+
+    const rawTimes =
+      cycle?.times ??
+      cycle?.timePoints?.time ??
+      cycle?.points?.times ?? null;
+
+    const rawValues =
+      cycle?.values ??
+      cycle?.concentrations?.value ??
+      cycle?.points?.values ?? null;
+
+    const times_list = parseNums(rawTimes);
+    const values_list = parseNums(rawValues);
+
+    return [
+      cycle?.start ?? null,
+      times_list,
+      values_list
+    ];
+  });
+
+  return { predictionData, predDates } ;
+}
+
+
+function manageDates(adjDates, predDates, percentilesDates) {
+  const all = [...(adjDates || []), ...(predDates || []), ...(percentilesDates || [])];
+
+  const toTime = (d) => {
+    if (!d) return NaN;
+    if (d instanceof Date) return d.getTime();
+    if (typeof d === 'number') return Number.isFinite(d) ? d : NaN;
+    if (typeof d === 'string') {
+      const dt = new Date(d);             // "2023-01-20T12:00:00" = heure locale ; "2023-01-20T12:00:00Z" = UTC
+      const t = dt.getTime();
+      return Number.isNaN(t) ? NaN : t;
+    }
+    return NaN;
+  };
+
+  let minT = Infinity, maxT = -Infinity;
+
+  for (const d of all) {
+    const t = toTime(d);
+    if (!Number.isFinite(t)) continue;
+    if (t < minT) minT = t;
+    if (t > maxT) maxT = t;
+  }
+
+  return {
+    earliest: Number.isFinite(minT) ? new Date(minT) : null,
+    latest:   Number.isFinite(maxT) ? new Date(maxT) : null,
+  };
+}
+
+function buildGraphFullData2(json) {
   const obj = new GraphFullData();
 
-  obj.dosages.push(new GraphDosage());
-  obj.currentDosage = obj.dosages[0];
+  // --- Prepare data ---
+  const { adjData, adjdates } = buildAdjustments(json);
 
-  // --- Covariates (A voir si on enlève) ---
-  const cycles =
-    json?.tucuxiComputation?.responses?.response?.[0]?.dataAdjustment
-      ?.cycleDatas?.cycleData ||
-    json?.cycleDatas ||
-    [];
-  for (const c of cycles) {
-    if (c.start && c.covariates) {
-      obj.pvars.push(new GraphCovariate(parseDate(c.start)));
-    }
-  }
+  const { predictionData, predDates } = buildPredictions(json);
 
-  // --- Measures (A voir si on enlève) ---
-  // Mais acutellement il n'y a pas de "measures" ou de samples dans le JSON
+  const { percentilesData, percentilesDates } = buildPecentiles(json);
 
-  // --- Targets ---
-  // Actuellement on a que les targetEvaluation sans aucune information sur les best min et max des targets
-  //   On a juste la targetEvaluation.value, donc pour le moent je fais juste un * pour le min et max pour estimer
-  const evalRaw =
-    json?.tucuxiComputation?.responses?.response?.[0]?.dataAdjustment
-      ?.adjustments?.adjustment?.targetEvaluations?.targetEvaluation ||
-    json?.targets ||
-    null;
+  const { earliest, latest } = manageDates(adjdates, predDates);
 
-  const evalArray = Array.isArray(evalRaw) ? evalRaw : evalRaw ? [evalRaw] : [];
+  const targets = buildTargets(json);
 
-  for (const te of evalArray) {
-    const key = te.targetType;
-    const code = TARGET_CODE_MAP[key];
-    if (code == null) continue;
-    const tgt = te.value;
-    if (tgt == null) continue;
+  // -- GraphFullData Data --
+  obj.timestart = earliest;
+  obj.timeend = latest;
+  obj.revP.isValid = true;
+  obj.apoP.isValid = true;
+  obj.aprP.isValid = true;
+  obj.scale = 1;
 
-    const min = tgt * 0.8; // Hasardous, but we don't have min/max in the JSON
-    const max = tgt * 1.2; // Hasardous, but we don't have min/max in the JSON
+  // --- Samples if any ---
 
-    obj.targets.push(new GraphTarget(code, min, tgt, max));
-  }
+  // --- AprP percentiles if any ---
+  processAprioriPercentiles(obj, percentilesData);
 
-  // --- Prediction (Population) ---
-  const mainPrediction = buildPredictionDataFromCycles(cycles);
-  obj.popP.predictive.predictionData = mainPrediction;
-  preparePrediction(obj.popP);
+  // --- ApoP percentiles if any ---
 
-  // --- Percentiles (if any) ---
-  // Actuellement aucun dans le json
-  // const percList = buildPercentiles(json?.percentiles || []);
-  // for (const p of percList) obj.popercsP.append(p);
-  // if (obj.popercsP.size) {
-  //     obj.popercsP.isValid = true;
-  //     preparePercs(obj.popercsP);
-  // }
+  // --- AprP prediction if any ---
+  processPredictionData(obj, predictionData, 'aprP');
 
-  // --- Adjustments ---
-  const rev = buildAdjustments(
-    json?.tucuxiComputation?.responses?.response?.[0]?.dataAdjustment
-      ?.adjustments
-  );
-  if (rev?.isValid) obj.revP = rev;
+  // --- ApoP prediction if any ---
 
-  console.log(obj);
+  // --- Adjustments if any ---
+  processAdjData(obj, adjData);
+
+  // --- Targets if any ---
+
+
+  console.log("GraphFullData", obj);
   return obj;
 }
 
-function computeTimeBounds(obj) {
-  const ts = [];
-  const pushPD = (pd) => {
-    if (pd?.isValid && Array.isArray(pd.time) && pd.time.length)
-      ts.push(...pd.time);
-  };
-  pushPD(obj?.popP?.predictive?.predictionData);
-  if (obj?.revP?.size)
-    for (let i = 0; i < obj.revP.size; i++)
-      pushPD(obj.revP.get(i)?.predictionData);
+// function computeTimeBounds(obj) {
+//   const ts = [];
+//   const pushPD = (pd) => {
+//     if (pd?.isValid && Array.isArray(pd.time) && pd.time.length)
+//       ts.push(...pd.time);
+//   };
+//   pushPD(obj?.popP?.predictive?.predictionData);
+//   if (obj?.revP?.size)
+//     for (let i = 0; i < obj.revP.size; i++)
+//       pushPD(obj.revP.get(i)?.predictionData);
 
-  if (!ts.length) return;
-  obj.timestart = new Date(Math.min(...ts) * 1000);
-  obj.timeend = new Date(Math.max(...ts) * 1000);
-}
+//   if (!ts.length) return;
+//   obj.timestart = new Date(Math.min(...ts) * 1000);
+//   obj.timeend = new Date(Math.max(...ts) * 1000);
+// }
 
 export async function renderFromJson(
   json,
@@ -212,7 +445,7 @@ export async function renderFromJson(
     iconDosagesPath = "dosages_disabled_mini.png",
   } = {}
 ) {
-  const obj = buildGraphFullData(json);
+  const obj = buildGraphFullData2(json);
   obj.scale = scale;
 
   obj.mArea = new GraphMouseArea();
@@ -222,8 +455,6 @@ export async function renderFromJson(
   obj.mArea.isMouseOver = true;
   obj.mArea.tooltipX = 300 * obj.scale;
   obj.mArea.tooltipY = 200 * obj.scale;
-
-  computeTimeBounds(obj);
 
   const canvas = createCanvas(width, height);
   obj.updateChartDimensions(canvas);

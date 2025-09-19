@@ -1,4 +1,3 @@
-
 export function drawGraph(cdata)   //eslint-disable-line @typescript-eslint/no-unused-vars
 {
     var ctx = cdata.canvas.getContext('2d');
@@ -10,6 +9,7 @@ export function drawGraph(cdata)   //eslint-disable-line @typescript-eslint/no-u
     ctx.save();
     extents(cdata);
     //    console.log(maxX + " " + minX);
+
 
     var adjTabShowPop = cdata.gInformationSelection.displayAposterioriPrediction && !cdata.hasPatientVariates && !cdata.hasMeasures;
     var adjTabShowApr = cdata.gInformationSelection.displayAposterioriPrediction && cdata.hasPatientVariates && !cdata.hasMeasures;
@@ -84,7 +84,7 @@ export function drawGraph(cdata)   //eslint-disable-line @typescript-eslint/no-u
 
     //verify compatibility between drugmodel constraint and covariate
     if (cdata.aprP.predictive.predictionData.isValid){
-        checkAndDisplayDomain(cdata, ctx, cdata.aprP)
+        // checkAndDisplayDomain(cdata, ctx, cdata.aprP) <-- Ignoré parce qu'écrit undefined sur le graph...
     }
 
     if (cdata.adjP) {
@@ -1603,8 +1603,8 @@ export function drawAnnotations(cdata)     //eslint-disable-line @typescript-esl
     annotatePrediction(cdata, ctx, cdata.apoP, cdata.apo, cdata.colors[4]);
     annotatePrediction(cdata, ctx, cdata.adjP, cdata.adj, cdata.adjcolors[1]);
 
-
     if (cdata.revP !== null && cdata.revP.isValid) {
+        
         if (cdata.gInformationSelection.displayPossibleAdjustments) {
             var pairs = cdata.revP;
             for (i = 0; i < pairs.size(); ++i) {

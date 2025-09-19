@@ -490,10 +490,7 @@ function buildGraphFullData2(json) {
 
   // --- Targets if any ---
   processTargets(obj, targets);
-  console.log("Targets processed", obj.targets);
-  console.log("Has Target", obj.hasTargets)
 
-  // console.log("GraphFullData", obj);
   return obj;
 }
 
@@ -510,14 +507,6 @@ export async function renderFromJson(
 ) {
   const obj = buildGraphFullData2(json);
   obj.scale = scale;
-
-  obj.mArea = new GraphMouseArea();
-  obj.mArea.mouseX = 300 * obj.scale;
-  obj.mArea.mouseY = 200 * obj.scale;
-  obj.mArea.containsMouse = false;
-  obj.mArea.isMouseOver = false;
-  obj.mArea.tooltipX = 300 * obj.scale;
-  obj.mArea.tooltipY = 200 * obj.scale;
 
   const canvas = createCanvas(width, height);
   obj.updateChartDimensions(canvas);

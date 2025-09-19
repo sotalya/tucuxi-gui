@@ -60,6 +60,50 @@ function addPredictionData(a, d, c, e) {
   return a.predictionData.troughs.push(a.predictionData.value.length - 1), a;
 }
 
+// function processAdjData(graphFullData, adjData) {
+//   if (!Array.isArray(adjData) || adjData.length === 0) return;
+
+//   const isTuple = (x) =>
+//     Array.isArray(x) &&
+//     (typeof x[0] === "string" || x[0] instanceof Date) &&
+//     Array.isArray(x[1]) && Array.isArray(x[2]);
+
+//   const isGroup = (x) => Array.isArray(x) && Array.isArray(x[0]) && isTuple(x[0]);
+
+//   const pushCycle = (adj, start, times, values) => {
+//     if (!start || !Array.isArray(times) || !Array.isArray(values)) return;
+//     if (times.length !== values.length) {
+//       console.warn("Adjustment times/values length mismatch:", { start, times: times.length, values: values.length });
+//       return;
+//     }
+//     addPredictionData(adj, parseDate(start), times, values);
+//   };
+
+//   for (const entry of adjData) {
+//     const adj = new GraphAdjustment();
+
+//     // entry peut être un triplet ou un groupe de triplets
+//     if (isGroup(entry)) {
+//       for (const [start, times, values] of entry) {
+//         pushCycle(adj, start, times, values);
+//       }
+//     } else if (isTuple(entry)) {
+//       const [start, times, values] = entry;
+//       pushCycle(adj, start, times, values);
+//     } else {
+//       console.warn("Adjustment entry mal formé:", entry);
+//       continue;
+//     }
+
+//     if (adj.predictionData.time.length > 0) {
+//       adj.predictionData.isValid = true;
+//       graphFullData.revP.append(adj);
+//     }
+//   }
+
+//   graphFullData.revP.isValid = graphFullData.revP.size() > 0;
+// }
+
 function processAdjData(graphFullData, adjData) {
   if (!Array.isArray(adjData) || adjData.length === 0) return;
 
@@ -84,6 +128,46 @@ function processAdjData(graphFullData, adjData) {
   });
 
   graphFullData.revP.isValid = true;
+}
+
+function processTargets(obj, targets) {
+  if (!obj || !Array.isArray(targets)) return;
+
+  for (const t of targets) {
+    if (!Array.isArray(t) || t.length < 4) {
+      console.warn("Target invalid (Wanted: [type,min,best,max]) :", t);
+      continue;
+    }
+
+    let [type, min, best, max] = t;
+
+    let code = undefined;
+    if (typeof type === "string") {
+      code = TARGET_CODE_MAP[type.trim()];
+    } else if (Number.isFinite(type)) {
+      code = type | 0;
+    }
+
+    if (!Number.isFinite(code)) {
+      console.warn("Target type unknown :", type, "(skipped)");
+      continue;
+    }
+
+    const nmin  = Number(min);
+    const nbest = Number(best);
+    const nmax  = Number(max);
+    if (![nmin, nbest, nmax].every(Number.isFinite)) {
+      console.warn("Non numerical limits", t);
+      continue;
+    }
+
+    let lo = nmin, mid = nbest, hi = nmax;
+    if (lo > hi) { const tmp = lo; lo = hi; hi = tmp; }
+    if (mid < lo) mid = lo;
+    if (mid > hi) mid = hi;
+
+    obj.targets.push(new GraphTarget(code, lo, mid, hi));
+  }
 }
 
 
@@ -225,14 +309,13 @@ function buildAdjustments(data) {
   return { adjData, adjdates };
 }
 
-
 function buildTargets(json) {
   const responses = toArray(json?.tucuxiComputation?.responses?.response)
-    .filter(r => r?.requestType === 'adjustment');
+    .filter(r => r?.requestType === 'target');
 
   const targets = responses.flatMap(r => {
     const fromTargets =
-      toArray(r?.dataAdjustment?.targets?.target ?? r?.dataAdjustment?.targets);
+      toArray(r?.dataTarget?.targets?.target ?? r?.dataTarget?.targets);
 
     const all = [...fromTargets];
 
@@ -344,6 +427,8 @@ function buildPredictions(json) {
 }
 
 
+
+
 function manageDates(adjDates, predDates, percentilesDates) {
   const all = [...(adjDates || []), ...(predDates || []), ...(percentilesDates || [])];
 
@@ -376,19 +461,12 @@ function manageDates(adjDates, predDates, percentilesDates) {
 
 function buildGraphFullData2(json) {
   const obj = new GraphFullData();
-  // obj.dosages.push(new GraphDosage());
-    
-  // obj.currentDosage = obj.dosages[0];
 
   // --- Prepare data ---
   const { adjData, adjdates } = buildAdjustments(json);
-
   const { predictionData, predDates } = buildPredictions(json);
-
   const { percentilesData, percentilesDates } = buildPecentiles(json);
-
   const { earliest, latest } = manageDates(adjdates, predDates, percentilesDates);
-
   const targets = buildTargets(json);
 
   // -- GraphFullData Data --
@@ -411,9 +489,11 @@ function buildGraphFullData2(json) {
   processAdjData(obj, adjData);
 
   // --- Targets if any ---
+  processTargets(obj, targets);
+  console.log("Targets processed", obj.targets);
+  console.log("Has Target", obj.hasTargets)
 
-
-  console.log("GraphFullData", obj);
+  // console.log("GraphFullData", obj);
   return obj;
 }
 
@@ -434,8 +514,8 @@ export async function renderFromJson(
   obj.mArea = new GraphMouseArea();
   obj.mArea.mouseX = 300 * obj.scale;
   obj.mArea.mouseY = 200 * obj.scale;
-  obj.mArea.containsMouse = true;
-  obj.mArea.isMouseOver = true;
+  obj.mArea.containsMouse = false;
+  obj.mArea.isMouseOver = false;
   obj.mArea.tooltipX = 300 * obj.scale;
   obj.mArea.tooltipY = 200 * obj.scale;
 

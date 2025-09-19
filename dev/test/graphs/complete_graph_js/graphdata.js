@@ -280,6 +280,8 @@ export class GraphTarget {
 export class GraphAdjustment {
     constructor() {
         this.predictionData = new GraphPredictionData();
+        this.X = this.predictionData.times();
+        this.Y = this.predictionData.values();
     }
 
 }

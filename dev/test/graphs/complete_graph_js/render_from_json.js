@@ -61,31 +61,31 @@ function addPredictionData(a, d, c, e) {
 }
 
 function processAdjData(graphFullData, adjData) {
-  adjData.forEach((adjGroup, index) => {
-    let e = new GraphAdjustment();
-    
-    adjGroup.forEach(adj => {
-      if (!Array.isArray(adj) || adj.length < 3) {
-        console.warn("Invalid adjustment data", adj);
-        return;
+  if (!Array.isArray(adjData) || adjData.length === 0) return;
+
+  adjData.forEach((entry) => {
+  
+    const e = new GraphAdjustment();
+
+    if (Array.isArray(entry[0])) {
+      entry.forEach(([start, times, values]) => {
+        if (!start || !Array.isArray(times) || !Array.isArray(values)) return;
+        addPredictionData(e, parseDate(start), times, values);
+      });
+    } else {
+      const [start, times, values] = entry;
+      if (start && Array.isArray(times) && Array.isArray(values)) {
+        addPredictionData(e, parseDate(start), times, values);
       }
-      e = addPredictionData(e, parseDate(adj[0]), adj[1], adj[2]);
-    });
-    
+    }
+
     e.predictionData.isValid = true;
     graphFullData.revP.append(e);
-    
-    // if (index === 0) {
-    //   let f = document.getElementById("canBestAdj");
-    //   if (f) {
-    //     graphFullData.updateChartDimensions(f);
-    //     graphFullData.canvas = f;
-    //     graphFullData.annotationsCanvas = f;
-    //     graphFullData.clockCanvas = f;
-    //   }
-    // }
   });
+
+  graphFullData.revP.isValid = true;
 }
+
 
 function processAprioriPercentiles(graphFullData, aprioriPercentiles) {
   const percentileMap = {};
@@ -376,6 +376,9 @@ function manageDates(adjDates, predDates, percentilesDates) {
 
 function buildGraphFullData2(json) {
   const obj = new GraphFullData();
+  // obj.dosages.push(new GraphDosage());
+    
+  // obj.currentDosage = obj.dosages[0];
 
   // --- Prepare data ---
   const { adjData, adjdates } = buildAdjustments(json);
@@ -384,17 +387,13 @@ function buildGraphFullData2(json) {
 
   const { percentilesData, percentilesDates } = buildPecentiles(json);
 
-  const { earliest, latest } = manageDates(adjdates, predDates);
+  const { earliest, latest } = manageDates(adjdates, predDates, percentilesDates);
 
   const targets = buildTargets(json);
 
   // -- GraphFullData Data --
   obj.timestart = earliest;
   obj.timeend = latest;
-  obj.revP.isValid = true;
-  obj.apoP.isValid = true;
-  obj.aprP.isValid = true;
-  obj.scale = 1;
 
   // --- Samples if any ---
 
@@ -417,22 +416,6 @@ function buildGraphFullData2(json) {
   console.log("GraphFullData", obj);
   return obj;
 }
-
-// function computeTimeBounds(obj) {
-//   const ts = [];
-//   const pushPD = (pd) => {
-//     if (pd?.isValid && Array.isArray(pd.time) && pd.time.length)
-//       ts.push(...pd.time);
-//   };
-//   pushPD(obj?.popP?.predictive?.predictionData);
-//   if (obj?.revP?.size)
-//     for (let i = 0; i < obj.revP.size; i++)
-//       pushPD(obj.revP.get(i)?.predictionData);
-
-//   if (!ts.length) return;
-//   obj.timestart = new Date(Math.min(...ts) * 1000);
-//   obj.timeend = new Date(Math.max(...ts) * 1000);
-// }
 
 export async function renderFromJson(
   json,
@@ -468,6 +451,12 @@ export async function renderFromJson(
   try {
     obj.img_dosages_disabled_mini = await loadImage(iconDosagesPath);
   } catch (_) {}
+
+  const start = obj.timestart?.getTime() / 1000;
+  const end   = obj.timeend?.getTime() / 1000;
+
+  obj.getViewRangeMin = () => start ?? (Date.now()/1000 - 24*3600);
+  obj.getViewRangeMax = () => end   ?? (Date.now()/1000);
 
   drawGraph(obj);
   drawAnnotations(obj);

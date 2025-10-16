@@ -425,6 +425,7 @@ function extents(cdata)
     var adjustmentpercmin = 0;
     var reversepercmax = 0;
     var reversepercmin = 0;
+    var measuresmax = 0;
 
     if (cdata.popercsP) {
         if (!cdata.popercsP.isEmpty()) {
@@ -473,6 +474,10 @@ function extents(cdata)
         }
     }
 
+    //Iterate over the samples
+    for (i = 0; i < cdata.measures.length; ++i) {
+        measuresmax = Math.max(measuresmax, cdata.measures[i].concentration.valueInUnit("ug/l"));
+    }
 
     // Find the maximum Y value. Could be a function of ChartData...
     var maxY = 0;
@@ -484,7 +489,7 @@ function extents(cdata)
         maxY = Math.max(maxY, Math.max.apply(Math, cdata.apoP.Y));
     if (cdata.adjP)
         maxY = Math.max(maxY, Math.max.apply(Math, cdata.adjP.Y));
-    cdata.maxY = Math.max(maxY, populationpercmax, aprioripercmax, aposterioripercmax, adjustmentpercmax, reversepercmax);
+    cdata.maxY = Math.max(maxY, populationpercmax, aprioripercmax, aposterioripercmax, adjustmentpercmax, reversepercmax, measuresmax);
 
     // In case we have no other data, use target data to define the Y range...
     if (cdata.maxY == 0) {

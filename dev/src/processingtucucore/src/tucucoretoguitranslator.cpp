@@ -268,6 +268,16 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         activeSubstance->setAtc(atcs);
     }
 
+
+    // Create analyte list and populate it
+    auto analyteList = Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AnalyteList>(ABSTRACTREPO);
+    for (const auto& analytePtr : activeMoiety->getAnalyteIds()) {
+        auto analyte = Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Analyte>(ABSTRACTREPO);
+        analyte->setAnalyteId(QString::fromStdString(analytePtr.toString()));
+        analyteList->append(analyte);
+    }
+    activeSubstance->setAnalytes(analyteList);
+
     newModel->setActiveSubstance(activeSubstance);
 
     //

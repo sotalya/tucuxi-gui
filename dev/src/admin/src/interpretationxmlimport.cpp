@@ -546,7 +546,11 @@ Tucuxi::Gui::Core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(co
                                 if(isOk && reader.readNextStartElement()){
                                     QString name = reader.name().toString();
 
-                                    if (name == "enable") {
+                                    if (name == "analyteId") {
+                                        auto value = extractor();
+                                        measure->setAnalyteId(value);
+                                    }
+                                    else if (name == "enable") {
                                         measure->setEnable(extractBool());
                                     }
                                     else if (name == "sampleId") {
@@ -565,6 +569,11 @@ Tucuxi::Gui::Core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(co
 
                                     }
                                 }
+                            }
+
+                            // This should not happen. It is here for backward compatibility
+                            if (measure->getAnalyteId().isEmpty()) {
+                                measure->setAnalyteId(treatment->getActiveSubstanceId());
                             }
 
                             list->append(measure);

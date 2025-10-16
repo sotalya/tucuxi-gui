@@ -2639,14 +2639,11 @@ void InterpretationController::checkMeasuresAgainstDrugModel()
     }
     auto drugModel = _currentDrugModel;
     std::set<QString> modelAnalytes;
-    // For the multianalytes, later on
-    /*
+
     auto analytes = _currentDrugModel->getActiveSubstance()->getAnalytes();
     for (int i = 0; i < analytes->size(); i++) {
         modelAnalytes.insert(analytes->at(i)->getAnalyteId());
     }
-    */
-    modelAnalytes.insert(_currentDrugModel->getActiveSubstance()->getSubstanceId());
 
     auto measures = _interpretation->getDrugResponseAnalysis()->getTreatment()->getMeasures();
     for (int i = 0; i < measures->size(); i++) {

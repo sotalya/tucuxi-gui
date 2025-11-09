@@ -1915,11 +1915,12 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::updateSexAndAgeCovariates(
     covariateTabController->setSinglePatientVariate("sex", sex);
 
     QDate birthday = _currentPatient->person()->birthday();
-    // TODO -> Check that this way of setting the date doesnt brake the core :S
-    QDateTime realBirthdate(birthday, QTime(0, 0), QTimeZone(QTimeZone::LocalTime));
-    covariateTabController->setBirthdate(realBirthdate);
+    if (birthday.isValid()) {
+        // TODO -> Check that this way of setting the date doesnt brake the core :S
+        QDateTime realBirthdate(birthday, QTime(0, 0), QTimeZone(QTimeZone::LocalTime));
+        covariateTabController->setBirthdate(realBirthdate);
 //    covariateTabController->setSinglePatientVariate("birthdate", realBirthdate.toMSecsSinceEpoch() / (qint64)1000);
-
+    }
     // Trigger a new calculation
     covariateUpdated();
 }

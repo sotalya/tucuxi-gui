@@ -23,10 +23,10 @@
 #ifndef INTERPRETATIONXMLEXPORT_H
 #define INTERPRETATIONXMLEXPORT_H
 
-
-#include "admin/src/dal/validationstatus.h"
 #include <QString>
 #include <QXmlStreamWriter>
+
+#include "admin/src/dal/validationstatus.h"
 
 namespace Tucuxi {
 namespace Gui {
@@ -43,11 +43,6 @@ class DrugTreatment;
 class TargetList;
 class UncastedValueList;
 class ADME;
-class ValidDoses;
-class ValidInfusions;
-class ValidIntervals;
-class DrugVariateList;
-class ParameterSet;
 class OperationList;
 class IdentifiableAmount;
 class OperableAmount;
@@ -65,7 +60,6 @@ class InterpretationRequest;
 class Practician;
 class ValidationStatus;
 class PhoneList;
-
 class ClinicalSet;
 class Patient;
 class Person;
@@ -91,9 +85,6 @@ protected:
     bool save(Person *person, QString name);
     bool save(ClinicalSet *clinicals);
     bool save(PhoneList *list);
-
-
-    QString writeDate(QDateTime date);
     bool save(Tucuxi::Gui::Core::Dosage *dosage, const QString &tagName = "dosage");
     bool save(Tucuxi::Gui::Core::AdjustmentDosage *dosage, const QString &tagName = "dosage");
     bool save(Tucuxi::Gui::Core::DosageHistory *history, const QString &tagName = "dosageHistory");
@@ -102,17 +93,12 @@ protected:
     bool save(Tucuxi::Gui::Core::CoreMeasureList *list);
     bool save(Tucuxi::Gui::Core::UncastedValueList *list);
     bool save(Tucuxi::Gui::Core::ADME *adme);
-    /*
-    bool save(Tucuxi::Gui::Core::ValidDoses *doses);
-    bool save(Tucuxi::Gui::Core::ValidInfusions *infusions);
-    bool save(Tucuxi::Gui::Core::ValidIntervals *intervals);
-    bool save(Tucuxi::Gui::Core::DrugVariateList *list);
-    bool save(Tucuxi::Gui::Core::ParameterSet *set);
-*/
     bool save(Tucuxi::Gui::Core::OperationList *list);
 
     bool saveIdentifiableAmount(const QString &tagName, Tucuxi::Gui::Core::IdentifiableAmount *amount);
     bool saveOperableAmount(const QString &tagName, Tucuxi::Gui::Core::OperableAmount *amount);
+
+    QString writeDate(QDateTime date);
 
     QXmlStreamWriter writer;
 

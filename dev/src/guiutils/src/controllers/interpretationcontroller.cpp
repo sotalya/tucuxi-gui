@@ -22,6 +22,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <set>
 
 #include <QtWidgets>
 #include <QQmlContext>
@@ -53,6 +54,7 @@
 #include "core/utils/logging.h"
 #include "core/settings.h"
 #include "core/dal/drug/translatablestring.h"
+#include "core/dal/uncastedvalue.h"
 
 #include "apputils/src/apputilsrepository.h"
 #include "apputils/src/modelvstreatmentcompatibilitychecker.h"
@@ -213,7 +215,7 @@ Tucuxi::Gui::GuiUtils::InterpretationController::InterpretationController(QObjec
     // The following lines are necessary to avoid warnings from QML.
     // However these objects will be replaced by new ones when starting an interpretation
     // Let's create an empty interperation and assign it
-    Tucuxi::Gui::Admin::Interpretation *interpretation = CoreFactory::createEntity<Tucuxi::Gui::Admin::Interpretation>(ADMINREPO, this);
+    auto* interpretation = CoreFactory::createEntity<Tucuxi::Gui::Admin::Interpretation>(ADMINREPO, this);
     predictionspec = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionSpec>(REPO, this);
     setInterpretation(interpretation);
     predictionspec->setAnalysis(_interpretation->getDrugResponseAnalysis());
@@ -308,8 +310,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setNewInterpretation(Tucux
 
             toDisplay += "<table width=100% cellpadding=4 cellspacing=0>";
             toDisplay += "<tr><th>Clinical</th><th>Date</th><th>Text</th></tr>";
-            for(int i = 0; i < interpretationRequest->getClinicals()->size(); i++) {
-                Clinical *clinical = interpretationRequest->getClinicals()->at(i);
+            for(auto clinical : std::as_const(*interpretationRequest->getClinicals())) {
                 toDisplay += "<tr><td>" + clinical->getName() + "</td><td>" + clinical->getDate().toString() + "</td><td>" + clinical->getValue() + "</td></tr>";
             }
             toDisplay += "</table>";
@@ -549,7 +550,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::populateMultipleActiveSubs
         }
         // Then add
         if (canAdd) {
-            LightActiveSubstance *light = CoreFactory::createEntity<LightActiveSubstance>(ABSTRACTREPO, _activeSubstances);
+            auto* light = CoreFactory::createEntity<LightActiveSubstance>(ABSTRACTREPO, _activeSubstances);
             light->setName(_drugs->at(i)->getActiveSubstance()->getName());
             light->setSubstanceId(_drugs->at(i)->getActiveSubstance()->getSubstanceId());
             _activeSubstances->append(light);
@@ -574,7 +575,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::populateSingleActiveSubsta
     // We just add the corresponding active substance
     for (int i = 0; i < _drugs->size(); ++i) {
         if (activeSubstanceId == _drugs->at(i)->getActiveSubstance()->getSubstanceId()) {
-            LightActiveSubstance *light = CoreFactory::createEntity<LightActiveSubstance>(ABSTRACTREPO, _activeSubstances);
+            auto* light = CoreFactory::createEntity<LightActiveSubstance>(ABSTRACTREPO, _activeSubstances);
             light->setName(_drugs->at(i)->getActiveSubstance()->getName());
             light->setSubstanceId(_drugs->at(i)->getActiveSubstance()->getSubstanceId());
             _activeSubstances->append(light);
@@ -615,12 +616,12 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startNewPatient()
 {
 
     // Inialize the new interpretation
-    Interpretation *interpretation = CoreFactory::createEntity<Interpretation>(ABSTRACTREPO, this);
+    auto* interpretation = CoreFactory::createEntity<Interpretation>(ABSTRACTREPO, this);
 
     interpretation->setStartInterpretationTime(QDateTime::currentDateTime());
 
     // Create a new treatment and assigns it to both objects
-    Tucuxi::Gui::Core::DrugTreatment *newTreatment = CoreFactory::createEntity<DrugTreatment>(ABSTRACTREPO, _interpretation->getDrugResponseAnalysis());
+    auto* newTreatment = CoreFactory::createEntity<DrugTreatment>(ABSTRACTREPO, _interpretation->getDrugResponseAnalysis());
 
     interpretation->getDrugResponseAnalysis()->setTreatment(newTreatment);
     interpretation->getRequest()->setTreatment(newTreatment);
@@ -660,7 +661,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startNewPatient()
 void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest(InterpretationRequest *interpretationRequest)
 {
     // First build the interpretation
-    Interpretation *interpretation = CoreFactory::createEntity<Interpretation>(ABSTRACTREPO, this);
+    auto* interpretation = CoreFactory::createEntity<Interpretation>(ABSTRACTREPO, this);
 
     interpretation->setStartInterpretationTime(QDateTime::currentDateTime());
 
@@ -807,7 +808,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::startInterpretationRequest
 
         targets->clear();
         for (int i = 0; i < drugTargets->size(); ++i) {
-            Tucuxi::Gui::Core::Target* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
+            auto* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Target>(APPUTILSREPO, targets);
             target->copyFrom(drugTargets->at(i));
             targets->append(target);
         }
@@ -983,7 +984,7 @@ Tucuxi::Gui::GuiUtils::InterpretationController::~InterpretationController()
 
 
 void Tucuxi::Gui::GuiUtils::InterpretationController::setReportTabShow(QVariant vecin) {
-    QObject* canvas = chartView->findChild<QObject*>("canvas");
+    auto* canvas = chartView->findChild<QObject*>("canvas");
     canvas->setProperty("reportshow", vecin);
     canvas->setProperty("show", vecin);
 }
@@ -1552,9 +1553,9 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::goToNextEvent()
 {
     QList<QDateTime> eventList = buildEventsList();
     QDateTime eventDate;
-    for (int i = 0; i < eventList.size(); i++) {
-        if (eventList[i] > _maxX) {
-            eventDate = eventList[i];
+    for (const auto & eDate : std::as_const(eventList)) {
+        if (eDate > _maxX) {
+            eventDate = eDate;
             break;
         }
     }
@@ -1879,7 +1880,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::validateInterpretation(boo
             messageBox.setWindowTitle("Processing time");
             messageBox.setText(QString("Interpretation total processing time from last data was : <br/><b>%1</b> "
                                                           "<br/><br/>Processing time from starting the interpretation was :  <br/><b>%2</b>"
-                                       "<br/><br/>Go to settings if you wish to disable this dialog.").arg(processingTimeFromData.toLongString()).arg(processingTime.toLongString()));
+                                       "<br/><br/>Go to settings if you wish to disable this dialog.").arg(processingTimeFromData.toLongString(), processingTime.toLongString()));
             messageBox.setTextFormat(Qt::TextFormat::RichText);
             messageBox.setWindowModality(Qt::NonModal);     // make window non modal (allows interaction with other windows)
             messageBox.show();                              // creates non modal window
@@ -2049,7 +2050,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::addPatient()
 {
 #ifndef CONFIG_DEMO
 
-    Patient* patient = AdminFactory::createEntity<Patient>(ABSTRACTREPO, _patients);
+    auto* patient = AdminFactory::createEntity<Patient>(ABSTRACTREPO, _patients);
     //static_cast<Patient*>(patient)->externalId(QString("P%1").arg(i + 1, 3, 10, QChar('0')));
     //static_cast<Patient*>(patient)->stayNumber(QString("S%1").arg(i + 1, 3, 10, QChar('0')));
     //static_cast<Patient*>(patient)->statOk(i % 2);
@@ -2101,12 +2102,12 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::removePatient(int index)
 
 
         // Inialize the new interpretation
-        Interpretation *interpretation = CoreFactory::createEntity<Interpretation>(ABSTRACTREPO, this);
+        auto* interpretation = CoreFactory::createEntity<Interpretation>(ABSTRACTREPO, this);
 
         interpretation->setStartInterpretationTime(QDateTime::currentDateTime());
 
         // Create a new treatment and assigns it to both objects
-        Tucuxi::Gui::Core::DrugTreatment *newTreatment = CoreFactory::createEntity<DrugTreatment>(ABSTRACTREPO, _interpretation->getDrugResponseAnalysis());
+        auto* newTreatment = CoreFactory::createEntity<DrugTreatment>(ABSTRACTREPO, _interpretation->getDrugResponseAnalysis());
 
         interpretation->getDrugResponseAnalysis()->setTreatment(newTreatment);
         interpretation->getRequest()->setTreatment(newTreatment);
@@ -2171,7 +2172,7 @@ QByteArray Tucuxi::Gui::GuiUtils::InterpretationController::interpretationToJson
     QJsonDocument doc;
     QJsonObject interpretation;
 
-    interpretation.insert("tucuxiVersion", QString("%1.%2").arg(GIT_REVISION).arg(QString::fromStdString(Tucuxi::Core::Version::getGitRevision())));
+    interpretation.insert("tucuxiVersion", QString("%1.%2").arg(GIT_REVISION, QString::fromStdString(Tucuxi::Core::Version::getGitRevision())));
 
     interpretation.insert("graphPath", "file://" + QApplication::applicationDirPath() + "/graph.png");
     interpretation.insert("validationDate", _interpretation->getValidateInterpretationTime().toString());
@@ -2593,9 +2594,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCdss()
             // Open a dialog window to choose where to save CDSS data
             QString dirPath = AppGlobals::getInstance()->getCDSSReportPath();
             QString fileName = QString("%1/%2_%3.tqf")
-                                    .arg(dirPath)
-                                    .arg(drugId)
-                                   .arg(QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss"));
+                                    .arg(dirPath, drugId, QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss"));
             // QString fileName = QFileDialog::getSaveFileName(QApplication::activeWindow(),
             //                                                 tr("Save Data"),
             //                                                 dirPath,
@@ -2628,10 +2627,6 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::exportCdss()
         }
     }
 }
-
-#include <set>
-
-#include "core/dal/uncastedvalue.h"
 
 void InterpretationController::checkMeasuresAgainstDrugModel()
 {

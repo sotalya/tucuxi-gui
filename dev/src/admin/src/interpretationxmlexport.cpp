@@ -439,18 +439,6 @@ QString toString(Tucuxi::Core::AdministrationRoute _admin) {
     return QString::fromStdString(m.at(_admin));
 }
 
-QString toString(Tucuxi::Core::AbsorptionModel _model) {
-    static std::map<Tucuxi::Core::AbsorptionModel, std::string> m =
-    {
-        {Tucuxi::Core::AbsorptionModel::Undefined, "undefined"},
-        {Tucuxi::Core::AbsorptionModel::Intravascular, "bolus"},
-        {Tucuxi::Core::AbsorptionModel::Extravascular, "extra"},
-        {Tucuxi::Core::AbsorptionModel::ExtravascularLag, "extra.lag"},
-        {Tucuxi::Core::AbsorptionModel::Infusion, "infusion"}
-    };
-    return QString::fromStdString(m.at(_model));
-}
-
 bool InterpretationXmlExport::save(Tucuxi::Gui::Core::AdjustmentDosage *dosage, const QString &tagName)
 {
     writer.writeStartElement(tagName);
@@ -462,8 +450,6 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::AdjustmentDosage *dosage, 
     writer.writeTextElement("formulation", toString(dosage->getRoute()->getFormulationAndRoute().getFormulation()));
     writer.writeTextElement("administrationName", QString::fromStdString(dosage->getRoute()->getFormulationAndRoute().getAdministrationName()));
     writer.writeTextElement("administrationRoute", toString(dosage->getRoute()->getFormulationAndRoute().getAdministrationRoute()));
-    // No more need for AbsorptionModel in FormulationAndRoute
-    // writer.writeTextElement("absorptionModel", toString(dosage->getRoute()->getFormulationAndRoute().getAbsorptionModel()));
     writer.writeEndElement();
     saveIdentifiableAmount("quantity", dosage->getQuantity());
     writer.writeTextElement("applied", writeDate(dosage->getApplied()));
@@ -485,8 +471,6 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::Dosage *dosage, const QStr
     writer.writeTextElement("formulation", toString(dosage->getRoute()->getFormulationAndRoute().getFormulation()));
     writer.writeTextElement("administrationName", QString::fromStdString(dosage->getRoute()->getFormulationAndRoute().getAdministrationName()));
     writer.writeTextElement("administrationRoute", toString(dosage->getRoute()->getFormulationAndRoute().getAdministrationRoute()));
-    // No more need for AbsorptionModel in FormulationAndRoute
-    // writer.writeTextElement("absorptionModel", toString(dosage->getRoute()->getFormulationAndRoute().getAbsorptionModel()));
     writer.writeEndElement();
     saveIdentifiableAmount("quantity", dosage->getQuantity());
     writer.writeTextElement("applied", writeDate(dosage->getApplied()));
@@ -569,109 +553,3 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ADME *adme)
     writer.writeEndElement();
     return true;
 }
-
-/*
-bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ValidDoses *doses)
-{
-    writer.writeStartElement("validDoses");
-    writer.writeTextElement("anyDose", doses->getAnyDose() ? "true" : "false");
-    // Should be renamed "defaultDose"
-    saveIdentifiableAmount("defaultDose", doses->getQuantity());
-    writer.writeStartElement("doses");
-    for (auto dose : *doses) {
-        writer.writeStartElement("dose");
-        // writer.writeTextElement("route", dose->getRoute()->getLabel());
-        saveIdentifiableAmount("quantity", dose->getQuantity());
-        writer.writeEndElement();
-    }
-    writer.writeEndElement();
-    writer.writeEndElement();
-    return true;
-}
-
-
-bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ValidInfusions *infusions)
-{
-    writer.writeStartElement("validInfusions");
-    writer.writeTextElement("any", infusions->getAny() ? "true" : "false");
-    saveIdentifiableAmount("defaultInfusion", infusions->getQuantity());
-    writer.writeStartElement("infusions");
-    for (int i=0; i< infusions->size() ; i++) {
-        writer.writeStartElement("infusion");
-        saveIdentifiableAmount("quantity", infusions->at(i)->getQuantity());
-        writer.writeEndElement();
-    }
-    writer.writeEndElement();
-    writer.writeEndElement();
-    return true;
-}
-
-
-bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ValidIntervals *intervals)
-{
-    writer.writeStartElement("validIntervals");
-    writer.writeTextElement("any", intervals->getAny() ? "true" : "false");
-    // Should be renamed "defaultInterval"
-    saveIdentifiableAmount("defaultInterval", intervals->getQuantity());
-    writer.writeStartElement("intervals");
-    for (int i=0; i< intervals->size() ; i++) {
-        writer.writeStartElement("interval");
-        saveIdentifiableAmount("quantity", intervals->at(i)->getQuantity());
-        writer.writeEndElement();
-    }
-    writer.writeEndElement();
-    writer.writeEndElement();
-    return true;
-}
-
-bool InterpretationXmlExport::save(Tucuxi::Gui::Core::DrugVariateList *list)
-{
-    writer.writeStartElement("drugVariates");
-    foreach(Tucuxi::Gui::Core::DrugVariate *variate, list->getList()) {
-        writer.writeStartElement("drugVariate");
-        writer.writeTextElement("name", variate->getCovariateId());
-        saveOperableAmount("quantity", variate->getQuantity());
-        writer.writeTextElement("type", QMetaType::typeName(variate->getType()));
-        writer.writeEndElement();
-    }
-
-    writer.writeEndElement();
-    return true;
-}
-
-bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ParameterSet *set)
-{
-    writer.writeStartElement("parameterSet");
-    writer.writeTextElement("time", writeDate(set->getTime()));
-    writer.writeStartElement("parameters");
-    foreach(Tucuxi::Gui::Core::Parameter *p, set->getParameters()->getList()) {
-        writer.writeStartElement("parameter");
-        writer.writeTextElement("name", p->getName());
-        saveOperableAmount("quantity", p->getQuantity());
-        writer.writeStartElement("bsv");
-        writer.writeTextElement("standard", QString("%1").arg(p->getBsv()->getStandard()));
-        writer.writeTextElement("proportional", QString("%1").arg(p->getBsv()->getProportional()));
-        writer.writeEndElement();
-        writer.writeTextElement("min", QString("%1").arg(p->getMin()));
-        writer.writeTextElement("max", QString("%1").arg(p->getMax()));
-        writer.writeTextElement("step", QString("%1").arg(p->getStep()));
-        save(p->getOperations());
-        writer.writeEndElement();
-    }
-    writer.writeEndElement();
-    writer.writeStartElement("correlations");
-    foreach(QString pkey, set->correlationsKeys()) {
-        writer.writeStartElement("correlation");
-        QStringList params = pkey.split("__");
-        writer.writeTextElement("param1", params[0]);
-        writer.writeTextElement("param2", params[1]);
-        writer.writeTextElement("value", QString("%1").arg(set->correlation(params[0], params[1])));
-        writer.writeEndElement();
-    }
-
-    writer.writeEndElement();
-    writer.writeEndElement();
-    return true;
-}
-
-*/

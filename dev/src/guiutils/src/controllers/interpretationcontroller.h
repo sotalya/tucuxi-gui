@@ -34,9 +34,6 @@
 
 #include "core/utils/autoproperty.h"
 
-#include "guiutils/src/startupwindow.h"
-#include "guiutils/src/websocketclientwrapper.h"
-#include "guiutils/src/websockettransport.h"
 #include "guiutils/src/calculationcontroller.h"
 #include "admin/src/dal/sentencepalette.h"
 
@@ -193,7 +190,7 @@ class InterpretationController : public QObject
 public:
 
     // Get the flow view
-    QObject *view() const;
+    [[nodiscard]] QObject *view() const;
 
     // ToDo-MVC ///////////////////////////////////////////////////////////////
     // Probably better in a report controler, along with all the report stuff
@@ -208,14 +205,14 @@ public:
     Q_ENUM(PublicationType)
 
     explicit InterpretationController(QObject *parent = nullptr);
-    virtual ~InterpretationController() Q_DECL_OVERRIDE;
+    ~InterpretationController() Q_DECL_OVERRIDE;
 
     void initAfterQmlLoading(QObject *root, QQmlContext *rootContext);
 
     Tucuxi::Gui::Admin::Patient* _currentPatient;
 
     void setCurrentPatient(Tucuxi::Gui::Admin::Patient *patient);
-    Tucuxi::Gui::Admin::Patient * getCurrentPatient() const;
+    [[nodiscard]] Tucuxi::Gui::Admin::Patient * getCurrentPatient() const;
 
     Tucuxi::Gui::Core::DrugModelList* getDrugs() { return _drugs; }
     Tucuxi::Gui::Core::DrugModelList* getDrugModels() { return _drugModelsForCurrentSubstance; }
@@ -375,7 +372,7 @@ public:
      */
     void loadInterpretation(Tucuxi::Gui::Admin::Interpretation *interpretation);
 
-    Tucuxi::Gui::Core::PredictionSpec *getPredictionSpec() const;
+    [[nodiscard]] Tucuxi::Gui::Core::PredictionSpec *getPredictionSpec() const;
 
 
     void validateInterpretation(bool isValid);
@@ -398,8 +395,7 @@ public:
      */
     void bindModelsToRootContext(QQmlContext *rootContext);
 
-public slots:
-    bool isFlowRequest() const;
+    [[nodiscard]] Q_INVOKABLE bool isFlowRequest() const;
 
 private:
 
@@ -454,8 +450,6 @@ private:
     double _chartscale;
     QString _defaultUnit;
 
-//    Tucuxi::Gui::Core::ChartData* chartData;
-
     Tucuxi::Gui::Core::PredictionSpec* predictionspec;
     Tucuxi::Gui::Core::DrugModelList* _drugs;
     Tucuxi::Gui::Core::DrugModelList* _drugModelsForCurrentSubstance;
@@ -472,8 +466,6 @@ private:
 
     FlowController* flowController;
     CalculationController* calculationController;
-
-//    ChartDataController *_chartDataController;
 
 //    QObject *chartView;
     QObject *domainsView;

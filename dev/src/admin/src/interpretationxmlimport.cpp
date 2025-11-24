@@ -831,7 +831,6 @@ Tucuxi::Gui::Core::Admin *InterpretationXmlImport::loadAdmin(const QString &tagN
     // By default, not at steady state
 
     Tucuxi::Core::Formulation formulation = Tucuxi::Core::Formulation::Undefined;
-    Tucuxi::Core::AbsorptionModel absorptionModel = Tucuxi::Core::AbsorptionModel::Undefined;
     Tucuxi::Core::AdministrationRoute administrationRoute = Tucuxi::Core::AdministrationRoute::Undefined;
     std::string administrationName;
 
@@ -846,10 +845,6 @@ Tucuxi::Gui::Core::Admin *InterpretationXmlImport::loadAdmin(const QString &tagN
                 administrationName = extractor().toStdString();
             else if (name == "administrationRoute")
                 administrationRoute = extractAdministrationRoute(extractor());
-            else if (name == "absorptionModel") {
-                // No more need for the absorptionModel
-                absorptionModel = extractAbsorptionModel(extractor());
-            }
         }
     }
     checkReaderError();

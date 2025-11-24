@@ -244,9 +244,7 @@ void Tucuxi::Gui::GuiUtils::InterpretationController::setNewInterpretation(Tucux
     _currentPatient = nullptr;
 
     predictionspec = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionSpec>(REPO, this);
-    std::vector<double> _percv;
-    _percv.insert(_percv.begin(), {5, 10, 25, 50, 75, 90, 95});
-    predictionspec->setPercentileList(_percv);
+    predictionspec->setPercentileList({5.0, 10.0, 25.0, 50.0, 75.0, 90.0, 95.0});
     predictionspec->setNbPoints(250);
 
     predictionspec->setAdjustmentDate(interpretation->getAdjustmentDate());

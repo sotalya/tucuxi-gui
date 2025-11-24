@@ -237,7 +237,7 @@ void fromGuiTest::toMainWindowController(QString loadName)
 
 void fromGuiTest::toIntController(QDateTime startView, QDateTime endView)
 {
-        emit extSignalSetView(startView, endView);//extSetViewRange();
+        emit extSignalSetView(startView, endView);
 }
 
 void MainWindowController::extSlotSetView(const QDateTime &startView, const QDateTime &endView)//emptySlot()

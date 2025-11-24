@@ -58,7 +58,7 @@ public:
     void toIntController(QDateTime startView, QDateTime endView);
 signals:
     void loadInterpretation(QString);
-    void extSignalSetView(QDateTime, QDateTime);//extSetViewRange();
+    void extSignalSetView(QDateTime, QDateTime);
 };
 
 class MainWindowController : public QQuickView

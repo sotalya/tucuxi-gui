@@ -175,12 +175,6 @@ class InterpretationController : public QObject
     Q_PROPERTY(QString defaultUnit READ getDefaultUnit WRITE setDefaultUnit NOTIFY defaultUnitChanged)
     Q_PROPERTY(double chartscale READ getChartscale WRITE setChartscale NOTIFY chartscaleChanged)
 
-
-
-//    Q_PROPERTY(std::vector<double> percv READ getPoppv WRITE setPoppv NOTIFY percvChanged)
-//    Q_PROPERTY(std::vector<double> aprpv READ getAprpv WRITE setAprpv NOTIFY aprpvChanged)
-//    Q_PROPERTY(std::vector<double> apopv READ getApopv WRITE setApopv NOTIFY apopvChanged)
-
     STD_PROPERTY_DECL(bool, isDemo, IsDemo)
 
     //! For testing purpose.
@@ -219,12 +213,6 @@ public:
     Tucuxi::Gui::Core::LightActiveSubstanceList* getActiveSubstances() { return _activeSubstances; }
     Tucuxi::Gui::Core::CorePatientList* getPatients() { return _patients; }
 
-//    std::vector<double> getAprpv() { return _aprpv; }
-//    std::vector<double> setAprpv(std::vector<double> vec) { _aprpv = vec; emit aprpvChanged(_aprpv); }
-
-//    std::vector<double> getApopv() { return _apopv; }
-//    std::vector<double> setApopv(std::vector<double> vec) { _apopv = vec; emit apopvChanged(_apopv); }
-
     QString getDefaultUnit();
 
     void setDefaultUnit(QString unit);
@@ -261,8 +249,6 @@ public:
     // Translate a Url into a local file string
     Q_INVOKABLE QString handleFileChosen(const QString &urlString);
 
-
-    //Q_INVOKABLE void setExtCurrentActiveType(int index);
     ///
     /// \brief saveStatistics
     /// Saves statistics in a file
@@ -529,7 +515,6 @@ public slots:
     void adjustmentDateUpdated();
     void adjustmentSettingsUpdated();
     void adjustmentUpdated();
-//    void extSetViewRange();
     bool exportReport(Report *report);
     bool printReport(Report *report);
     bool sendReport(Report *report);

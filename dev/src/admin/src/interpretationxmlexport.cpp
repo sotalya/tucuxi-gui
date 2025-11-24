@@ -20,8 +20,6 @@
  */
 
 
-#include <iostream>
-
 #include <QBuffer>
 
 #include "interpretationxmlexport.h"
@@ -39,7 +37,6 @@
 #include "core/dal/drugresponseanalysis.h"
 #include "core/dal/drug/drug.h"
 #include "core/dal/coremeasure.h"
-#include "core/dal/predictionspec.h"
 #include "core/dal/drug/parameters.h"
 #include "core/dal/drugresponseanalysis.h"
 #include "core/dal/drugtreatment.h"
@@ -48,23 +45,16 @@
 #include "core/dal/drug/target.h"
 #include "core/dal/covariate.h"
 #include "core/dal/dosage.h"
-#include "core/dal/amount.h"
 #include "core/dal/uncastedvalue.h"
 #include "core/dal/drug/adme.h"
-#include "core/dal/drug/doses.h"
-#include "core/dal/drug/infusions.h"
-#include "core/dal/drug/intervals.h"
 #include "core/dal/drug/drugvariate.h"
-#include "core/dal/drug/bsv.h"
-#include "core/dal/drug/errormodel.h"
 #include "core/dal/drug/parameters.h"
 
 #include "admin/src/dal/practician.h"
 
 using namespace Tucuxi::Gui::Admin;
 
-InterpretationXmlExport::InterpretationXmlExport()
-{}
+InterpretationXmlExport::InterpretationXmlExport() = default;
 
 
 
@@ -389,7 +379,8 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::CoreMeasureList *list)
 {
     writer.writeStartElement("measures");
     foreach (Tucuxi::Gui::Core::CoreMeasure *coreMeasure, list->getList()) {
-        Measure *measure = dynamic_cast<Measure *>(coreMeasure);
+        auto* measure = dynamic_cast<Measure *>(coreMeasure);
+        // TODO : Do something in case it is not a measure?
         writer.writeStartElement("measure");
         writer.writeTextElement("analyteId", measure->getAnalyteId());
         writer.writeTextElement("enable", measure->getEnable() ? "true" : "false");
@@ -422,8 +413,8 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::UncastedValueList *list)
 QString toString(Tucuxi::Core::Formulation _formulation) {
     static std::map<Tucuxi::Core::Formulation, std::string> map = {
         {Tucuxi::Core::Formulation::Undefined, "undefined"},
-        {Tucuxi::Core::Formulation::ParenteralSolution,"parenteral solution"},
-        {Tucuxi::Core::Formulation::OralSolution, "oral solution"},
+        {Tucuxi::Core::Formulation::ParenteralSolution,"parenteralSolution"},
+        {Tucuxi::Core::Formulation::OralSolution, "oralSolution"},
         {Tucuxi::Core::Formulation::Test, "test"}
     };
     return QString::fromStdString(map.at(_formulation));
@@ -579,6 +570,7 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ADME *adme)
     return true;
 }
 
+/*
 bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ValidDoses *doses)
 {
     writer.writeStartElement("validDoses");
@@ -586,8 +578,7 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ValidDoses *doses)
     // Should be renamed "defaultDose"
     saveIdentifiableAmount("defaultDose", doses->getQuantity());
     writer.writeStartElement("doses");
-    for (int i=0; i< doses->size() ; i++) {
-        Tucuxi::Gui::Core::ValidDose *dose = doses->at(i);
+    for (auto dose : *doses) {
         writer.writeStartElement("dose");
         // writer.writeTextElement("route", dose->getRoute()->getLabel());
         saveIdentifiableAmount("quantity", dose->getQuantity());
@@ -682,3 +673,5 @@ bool InterpretationXmlExport::save(Tucuxi::Gui::Core::ParameterSet *set)
     writer.writeEndElement();
     return true;
 }
+
+*/

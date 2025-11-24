@@ -104,7 +104,6 @@ protected:
     Tucuxi::Gui::Core::DrugResponseAnalysis *loadDrugResponseAnalysis(const QString &tagName, QObject *parent);
 
     void loadAdjustment(const QString &tagName, Interpretation *interpretation);
-    //Tucuxi::Gui::Core::DrugModel *loadDrugModel(const QString &tagName, QObject *parent);
     Tucuxi::Gui::Core::DrugTreatment *loadDrugTreatment(const QString &tagName, QObject *parent);
     Tucuxi::Gui::Core::OperationList *loadOperations(const QString &tagName, QObject *parent);
     Tucuxi::Gui::Core::IdentifiableAmount *loadIdentifiableAmount(const QString &tagName, QObject *parent);
@@ -117,7 +116,6 @@ protected:
     Tucuxi::Gui::Core::DosageHistory *loadDosageHistory(const QString &tagName, QObject *parent, bool isAdjustment = false);
     Tucuxi::Gui::Core::AdjustmentDosage *loadAdjustmentDosage(const QString &tagName, QObject *parent);
     Tucuxi::Gui::Core::Dosage *loadDosage(const QString &tagName, QObject *parent);
-    //Tucuxi::Gui::Core::ADME *loadAdme(const QString &tagName, QObject *parent);
     Tucuxi::Gui::Core::TargetList *loadTargets(const QString &tagName, QObject *parent);
 
     Tucuxi::Gui::Core::Target *loadTarget(const QString &tagName, QObject *parent);

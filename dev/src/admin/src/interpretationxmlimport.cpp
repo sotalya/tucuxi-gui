@@ -31,7 +31,6 @@
 #include "dal/validationstatus.h"
 #include "dal/steptypes.h"
 
-#include "adminfactory.h"
 #include "stdadminrepository.h"
 
 #include "core/corefactory.h"
@@ -39,8 +38,6 @@
 #include "core/dal/drug/drug.h"
 #include "core/dal/drug/adme.h"
 #include "core/dal/drug/halflife.h"
-#include "core/dal/drug/concentrations.h"
-#include "core/dal/drug/results.h"
 #include "core/dal/drug/doses.h"
 #include "core/dal/drug/intervals.h"
 #include "core/dal/drug/infusions.h"
@@ -49,12 +46,9 @@
 #include "core/dal/drug/errormodel.h"
 #include "core/dal/drug/bsv.h"
 #include "core/dal/drug/operation.h"
-#include "core/dal/drug/metadata.h"
-#include "core/dal/drug/editors.h"
-#include "core/dal/drug/references.h"
 
 #include "core/dal/drug/parameters.h"
-#include "core/dal/predictionspec.h"
+#include "core/dal/drug/translatablestring.h"
 #include "core/dal/drugresponseanalysis.h"
 #include "core/dal/drugtreatment.h"
 #include "core/dal/coremeasure.h"
@@ -65,17 +59,17 @@
 
 #include "core/utils/duration.h"
 
+#include "apputils/src/appcore.h"
+#include "apputils/src/drugmanager.h"
+#include "apputils/src/apputilsrepository.h"
+
 #include <iostream>
 
 #define WHILE_NOT_END_ELEM(elem)     while(isOk && !reader.hasError() && (!reader.isEndElement() || reader.name() != QString(elem)))
 
 using namespace Tucuxi::Gui::Admin;
 
-InterpretationXmlImport::InterpretationXmlImport()
-{
-
-}
-
+InterpretationXmlImport::InterpretationXmlImport() = default;
 
 Interpretation *InterpretationXmlImport::load(const QByteArray &data)
 {
@@ -146,9 +140,8 @@ QDateTime InterpretationXmlImport::extractDate(bool essential)
 int InterpretationXmlImport::extractInt()
 {
     QString value = extractor();
-    bool ok;
-    int result;
-    result = value.toInt(&ok);
+    bool ok = true;
+    int result = value.toInt(&ok);
     checkValidity(ok);
     return result;
 }
@@ -156,9 +149,8 @@ int InterpretationXmlImport::extractInt()
 double InterpretationXmlImport::extractDouble()
 {
     QString value = extractor();
-    bool ok;
-    double result;
-    result = value.toDouble(&ok);
+    bool ok = true;
+    double result = value.toDouble(&ok);
     checkValidity(ok);
     return result;
 }
@@ -190,7 +182,7 @@ Interpretation::InterpretationType stringToInterpretationType(const QString &s)
 
 Interpretation *InterpretationXmlImport::loadInterpretation(const QString &tagName, QObject *parent)
 {
-    Interpretation *interpretation = Tucuxi::Gui::Core::CoreFactory::createEntity<Interpretation>(ADMINREPO, parent);
+    auto *interpretation = Tucuxi::Gui::Core::CoreFactory::createEntity<Interpretation>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -199,8 +191,7 @@ Interpretation *InterpretationXmlImport::loadInterpretation(const QString &tagNa
 
             if (name == "interpretationType") {
                 QString t = extractor();
-                Interpretation::InterpretationType interpretationType;
-                interpretationType = stringToInterpretationType(t);
+                Interpretation::InterpretationType interpretationType = stringToInterpretationType(t);
                 interpretation->setInterpretationType(interpretationType);
 
             } else if (name == "analysis") {
@@ -262,7 +253,7 @@ void InterpretationXmlImport::loadAdjustment(const QString &tagName, Interpretat
 
 InterpretationAnalysis *InterpretationXmlImport::loadAnalysis(const QString &tagName, QObject *parent)
 {
-    InterpretationAnalysis *analysis = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationAnalysis>(ADMINREPO, parent);
+    auto *analysis = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationAnalysis>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -308,7 +299,7 @@ InterpretationAnalysis *InterpretationXmlImport::loadAnalysis(const QString &tag
 InterpretationRequest *InterpretationXmlImport::loadRequest(const QString &tagName, QObject *parent)
 {
 
-    InterpretationRequest *request = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ADMINREPO, parent);
+    auto *request = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -328,7 +319,7 @@ InterpretationRequest *InterpretationXmlImport::loadRequest(const QString &tagNa
 ClinicalSet *InterpretationXmlImport::loadClinicals(const QString &tagName, QObject *parent)
 {
 
-    ClinicalSet *clinicals = new ClinicalSet(ADMINREPO, parent);
+    auto *clinicals = new ClinicalSet(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -345,7 +336,7 @@ ClinicalSet *InterpretationXmlImport::loadClinicals(const QString &tagName, QObj
 
 Clinical *InterpretationXmlImport::loadClinical(const QString &tagName, QObject *parent)
 {
-    Clinical *clinical = Tucuxi::Gui::Core::CoreFactory::createEntity<Clinical>(ADMINREPO, parent);
+    auto *clinical = Tucuxi::Gui::Core::CoreFactory::createEntity<Clinical>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -367,7 +358,7 @@ Clinical *InterpretationXmlImport::loadClinical(const QString &tagName, QObject 
 
 Practician *InterpretationXmlImport::loadPractician(const QString &tagName, QObject *parent)
 {
-    Practician *practician = Tucuxi::Gui::Core::CoreFactory::createEntity<Practician>(ADMINREPO, parent);
+    auto *practician = Tucuxi::Gui::Core::CoreFactory::createEntity<Practician>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -430,7 +421,7 @@ StepType::Enum validationStepFromString(const QString &step)
 
 ValidationStatus *InterpretationXmlImport::loadValidationStatus(const QString &tagName, QObject *parent)
 {
-    ValidationStatus *validationStatus = Tucuxi::Gui::Core::CoreFactory::createEntity<ValidationStatus>(ADMINREPO,parent);
+    auto *validationStatus = Tucuxi::Gui::Core::CoreFactory::createEntity<ValidationStatus>(ADMINREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -474,10 +465,6 @@ std::vector<double> InterpretationXmlImport::loadPercentiles(const QString &tagN
 
     return percentiles;
 }
-#include "apputils/src/appcore.h"
-#include "apputils/src/drugmanager.h"
-#include "apputils/src/apputilsrepository.h"
-#include "core/utils/errorenums.h"
 
 Tucuxi::Gui::Core::DrugModel *findDrugModelFromId(const QString &drugModelId)
 {
@@ -486,7 +473,7 @@ Tucuxi::Gui::Core::DrugModel *findDrugModelFromId(const QString &drugModelId)
 
 Tucuxi::Gui::Core::DrugResponseAnalysis * InterpretationXmlImport::loadDrugResponseAnalysis(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::DrugResponseAnalysis *analysis = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugResponseAnalysis>(ABSTRACTREPO, parent);
+    auto *analysis = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugResponseAnalysis>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -498,8 +485,7 @@ Tucuxi::Gui::Core::DrugResponseAnalysis * InterpretationXmlImport::loadDrugRespo
             }
             else if (name == "drugModelId") {
                 QString drugModelId = extractor();
-                Tucuxi::Gui::Core::DrugModel *drugModel;
-                drugModel = findDrugModelFromId(drugModelId);
+                Tucuxi::Gui::Core::DrugModel *drugModel = findDrugModelFromId(drugModelId);
                 if (drugModel == nullptr) {
                     // TODO : We are facing an issue here
                     // Log error
@@ -517,7 +503,7 @@ Tucuxi::Gui::Core::DrugResponseAnalysis * InterpretationXmlImport::loadDrugRespo
 Tucuxi::Gui::Core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(const QString &tagName, QObject *parent)
 {
 
-    Tucuxi::Gui::Core::DrugTreatment *treatment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugTreatment>(ABSTRACTREPO, parent);
+    auto *treatment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugTreatment>(ABSTRACTREPO, parent);
 
 
     WHILE_NOT_END_ELEM(tagName){
@@ -531,7 +517,7 @@ Tucuxi::Gui::Core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(co
             else if (name == "patient") {
                 treatment->setPatient(loadPatient("patient", treatment));
             } else if (name == "measures") {
-                Tucuxi::Gui::Core::CoreMeasureList *list =  Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO, treatment);
+                auto* list =  Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO, treatment);
 
                 WHILE_NOT_END_ELEM("measures"){
 
@@ -539,7 +525,7 @@ Tucuxi::Gui::Core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(co
                         QString name = reader.name().toString();
 
                         if (name == "measure") {
-                            Measure *measure =  Tucuxi::Gui::Core::CoreFactory::createEntity<Measure>(ADMINREPO, list);
+                            auto* measure =  Tucuxi::Gui::Core::CoreFactory::createEntity<Measure>(ADMINREPO, list);
 
                             WHILE_NOT_END_ELEM("measure"){
 
@@ -606,7 +592,7 @@ Tucuxi::Gui::Core::DrugTreatment * InterpretationXmlImport::loadDrugTreatment(co
 Patient *InterpretationXmlImport::loadPatient(const QString &tagName, QObject *parent)
 {
 
-    Patient *patient = Tucuxi::Gui::Core::CoreFactory::createEntity<Patient>(ADMINREPO, parent);
+    auto *patient = Tucuxi::Gui::Core::CoreFactory::createEntity<Patient>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -632,7 +618,7 @@ Patient *InterpretationXmlImport::loadPatient(const QString &tagName, QObject *p
 
 Person *InterpretationXmlImport::loadPerson(const QString &tagName, QObject *parent)
 {
-    Person *person = Tucuxi::Gui::Core::CoreFactory::createEntity<Person>(ADMINREPO, parent);
+    auto *person = Tucuxi::Gui::Core::CoreFactory::createEntity<Person>(ADMINREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -650,7 +636,7 @@ Person *InterpretationXmlImport::loadPerson(const QString &tagName, QObject *par
             }
             else if (name == "gender") {
                 QString value = extractor();
-                Person::GenderType gender;
+                Person::GenderType gender = Person::GenderType::Unknown;
                 if (value == "male")
                     gender = Person::Male;
                 else if (value == "female")
@@ -679,11 +665,11 @@ Person *InterpretationXmlImport::loadPerson(const QString &tagName, QObject *par
 
 PhoneList *InterpretationXmlImport::loadPhoneNumber(const QString &tagName, QObject *parent)
 {
-    PhoneList *phoneListSet = Tucuxi::Gui::Core::CoreFactory::createEntity<PhoneList>(ABSTRACTREPO, parent);
+    auto *phoneListSet = Tucuxi::Gui::Core::CoreFactory::createEntity<PhoneList>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() && isOk){
-            Phone *phone = Tucuxi::Gui::Core::CoreFactory::createEntity<Phone>(ABSTRACTREPO, phoneListSet);
+            auto* phone = Tucuxi::Gui::Core::CoreFactory::createEntity<Phone>(ABSTRACTREPO, phoneListSet);
             phone->setNumber(extractor());
             phoneListSet->append(phone);
         }
@@ -695,7 +681,7 @@ PhoneList *InterpretationXmlImport::loadPhoneNumber(const QString &tagName, QObj
 
 Tucuxi::Gui::Core::PatientVariateList *InterpretationXmlImport::loadPatientVariates(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::PatientVariateList *patientVariateSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, parent);
+    auto *patientVariateSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         /******************************************
@@ -712,7 +698,7 @@ Tucuxi::Gui::Core::PatientVariateList *InterpretationXmlImport::loadPatientVaria
 
 Tucuxi::Gui::Core::PatientVariate *InterpretationXmlImport::loadPatientVariate(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::PatientVariate *patientVariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, parent);
+    auto *patientVariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -747,7 +733,7 @@ Tucuxi::Gui::Core::PatientVariate *InterpretationXmlImport::loadPatientVariate(c
 
 Tucuxi::Gui::Core::DosageHistory *InterpretationXmlImport::loadDosageHistory(const QString &tagName, QObject *parent, bool isAdjustment)
 {
-    Tucuxi::Gui::Core::DosageHistory *history = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO, parent);
+    auto *history = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         /******************************************
@@ -774,6 +760,9 @@ Tucuxi::Core::Formulation extractFormulation(QString s)
     static std::map<std::string, Tucuxi::Core::Formulation> m =
     {
         {"undefined", Tucuxi::Core::Formulation::Undefined},
+        {"parenteralSolution", Tucuxi::Core::Formulation::ParenteralSolution},
+        {"oralSolution", Tucuxi::Core::Formulation::OralSolution},
+        // Backward compatibility
         {"parenteral solution", Tucuxi::Core::Formulation::ParenteralSolution},
         {"oral solution", Tucuxi::Core::Formulation::OralSolution},
         {"test", Tucuxi::Core::Formulation::Test}
@@ -837,13 +826,13 @@ Tucuxi::Core::AbsorptionModel extractAbsorptionModel(QString s)
 
 Tucuxi::Gui::Core::Admin *InterpretationXmlImport::loadAdmin(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, parent);
+    auto* admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, parent);
 
     // By default, not at steady state
 
-    Tucuxi::Core::Formulation formulation;
-    Tucuxi::Core::AbsorptionModel absorptionModel;
-    Tucuxi::Core::AdministrationRoute administrationRoute;
+    Tucuxi::Core::Formulation formulation = Tucuxi::Core::Formulation::Undefined;
+    Tucuxi::Core::AbsorptionModel absorptionModel = Tucuxi::Core::AbsorptionModel::Undefined;
+    Tucuxi::Core::AdministrationRoute administrationRoute = Tucuxi::Core::AdministrationRoute::Undefined;
     std::string administrationName;
 
     WHILE_NOT_END_ELEM(tagName){
@@ -872,7 +861,7 @@ Tucuxi::Gui::Core::Admin *InterpretationXmlImport::loadAdmin(const QString &tagN
 
 Tucuxi::Gui::Core::AdjustmentDosage *InterpretationXmlImport::loadAdjustmentDosage(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::AdjustmentDosage *dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, parent);
+    auto *dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, parent);
 
     // By default, not at steady state
 
@@ -926,7 +915,7 @@ Tucuxi::Gui::Core::AdjustmentDosage *InterpretationXmlImport::loadAdjustmentDosa
 
 Tucuxi::Gui::Core::Dosage *InterpretationXmlImport::loadDosage(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::Dosage *dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, parent);
+    auto *dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
 
@@ -974,106 +963,9 @@ Tucuxi::Gui::Core::Dosage *InterpretationXmlImport::loadDosage(const QString &ta
 }
 
 
-/*
-Tucuxi::Gui::Core::DrugModel *InterpretationXmlImport::loadDrugModel(const QString &tagName, QObject *parent)
-{
-
-    Tucuxi::Gui::Core::DrugModel *drugModel = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugModel>(ABSTRACTREPO, parent);
-
-    WHILE_NOT_END_ELEM(tagName){
-
-        if(isOk && reader.readNextStartElement()){
-            QString name = reader.name().toString();
-
-            if (name == "drugModelId")
-                drugModel->setDrugModelId(extractor());
-            if (name == "pkModelId")
-                drugModel->setPkModelId(extractor());
-            else if(name == "adme"){
-                drugModel->setAdme(loadAdme("adme", drugModel));
-                //            }else if(name == "halflife"){
-                //                isOk = loadHalflife(drugModel);
-                //            }else if(name == "conversions"){
-                //                isOk = loadConversions(drugModel);
-            }else if(name == "dosages"){
-
-                WHILE_NOT_END_ELEM("dosages") {
-                    if(isOk && reader.readNextStartElement()) {
-                        QString name = reader.name().toString();
-                        if(name == "validDoses") {
-                            drugModel->setDoses(loadValidDoses("validDoses", drugModel));
-                        } else if(name == "validIntervals"){
-                            drugModel->setIntervals(loadValidIntervals("validIntervals", drugModel));
-                        } else if(name == "validInfusions"){
-                            drugModel->setInfusions(loadValidInfusions("validInfusions", drugModel));
-                        }
-                    }
-                }
-
-            }else if(name == "targets"){
-                drugModel->setTargets(loadTargets("targets", drugModel));
-            }else if(name == "drugVariates"){
-                drugModel->setCovariates(loadCovariates("drugVariates", drugModel));
-            }else if(name == "errorModel"){
-                drugModel->setErrorModel(loadErrorModel("errorModel", drugModel));
-            }else if(name == "parameterSet"){
-                drugModel->setParameters(loadParameters("parameterSet", drugModel));
-                // }else if(name == "operations"){
-                //     drugModel->setOperations(loadOperations("operations", drugModel));
-            }
-        }
-    }
-
-    return drugModel;
-}
-
-
-Tucuxi::Gui::Core::ADME *InterpretationXmlImport::loadAdme(const QString &tagName, QObject *parent)
-{
-    Tucuxi::Gui::Core::ADME* adme = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ADME>(ABSTRACTREPO,parent);
-
-    WHILE_NOT_END_ELEM(tagName){
-        if(reader.readNextStartElement() ){
-            QString name = reader.name().toString();
-            if (name == "defaultIntake") {
-                Tucuxi::Gui::Core::Admin* def = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adme);
-                def->setLabel(extractor());
-                adme->setDefaultIntake(def);
-            }
-            else if (name == "intakes") {
-                Tucuxi::Gui::Core::AdminList* intakes = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdminList>(ABSTRACTREPO, adme);
-
-
-                WHILE_NOT_END_ELEM("intakes"){
-                    if(reader.readNextStartElement() ){
-                        QString name = reader.name().toString();
-                        if(name == "intake"){
-                            Tucuxi::Gui::Core::Admin* def = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, adme);
-                            def->setLabel(extractor());
-                            intakes->append(def);
-                        }
-                    }
-                }
-
-                adme->setIntakes(intakes);
-            } else if(name == "distribution"){
-                adme->setDistribution(extractor());
-            } else if(name == "elimination"){
-                adme->setElimination(extractor());
-            }
-        }
-    }
-
-    checkReaderError();
-
-    return adme;
-}
-*/
-
-
 Tucuxi::Gui::Core::ValidDoses *InterpretationXmlImport::loadValidDoses(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::ValidDoses* doses = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDoses>(ABSTRACTREPO,parent);
+    auto* doses = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDoses>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1088,7 +980,7 @@ Tucuxi::Gui::Core::ValidDoses *InterpretationXmlImport::loadValidDoses(const QSt
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "dose"){
-                            Tucuxi::Gui::Core::ValidDose* dose = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDose>(ABSTRACTREPO,doses);
+                            auto* dose = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDose>(ABSTRACTREPO,doses);
                             WHILE_NOT_END_ELEM("dose") {
                                 if(reader.readNextStartElement() ){
                                     name = reader.name().toString();
@@ -1119,7 +1011,7 @@ Tucuxi::Gui::Core::ValidDoses *InterpretationXmlImport::loadValidDoses(const QSt
 
 Tucuxi::Gui::Core::ValidIntervals *InterpretationXmlImport::loadValidIntervals(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::ValidIntervals* intervals = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidIntervals>(ABSTRACTREPO,parent);
+    auto* intervals = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidIntervals>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1134,7 +1026,7 @@ Tucuxi::Gui::Core::ValidIntervals *InterpretationXmlImport::loadValidIntervals(c
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "interval"){
-                            Tucuxi::Gui::Core::ValidInterval* interval = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInterval>(ABSTRACTREPO,intervals);
+                            auto* interval = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInterval>(ABSTRACTREPO,intervals);
                             WHILE_NOT_END_ELEM("interval") {
                                 if(reader.readNextStartElement() ){
                                     name = reader.name().toString();
@@ -1159,7 +1051,7 @@ Tucuxi::Gui::Core::ValidIntervals *InterpretationXmlImport::loadValidIntervals(c
 
 Tucuxi::Gui::Core::ValidInfusions *InterpretationXmlImport::loadValidInfusions(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::ValidInfusions* infusions = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusions>(ABSTRACTREPO,parent);
+    auto* infusions = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusions>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1174,7 +1066,7 @@ Tucuxi::Gui::Core::ValidInfusions *InterpretationXmlImport::loadValidInfusions(c
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
                         if(name == "infusion"){
-                            Tucuxi::Gui::Core::ValidInfusion* infusion = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusion>(ABSTRACTREPO,infusions);
+                            auto* infusion = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusion>(ABSTRACTREPO,infusions);
                             WHILE_NOT_END_ELEM("infusion") {
                                 if(reader.readNextStartElement() ){
                                     name = reader.name().toString();
@@ -1199,7 +1091,7 @@ Tucuxi::Gui::Core::ValidInfusions *InterpretationXmlImport::loadValidInfusions(c
 
 Tucuxi::Gui::Core::TargetList *InterpretationXmlImport::loadTargets(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::TargetList* targetSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetList>(ABSTRACTREPO, parent);
+    auto* targetSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetList>(ABSTRACTREPO, parent);
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() && isOk){
             QString name = reader.name().toString();
@@ -1216,7 +1108,7 @@ Tucuxi::Gui::Core::TargetList *InterpretationXmlImport::loadTargets(const QStrin
 
 Tucuxi::Gui::Core::Target *InterpretationXmlImport::loadTarget(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::Target* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO, parent);
+    auto* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1268,7 +1160,7 @@ Tucuxi::Gui::Core::Target *InterpretationXmlImport::loadTarget(const QString &ta
 
 Tucuxi::Gui::Core::DrugVariateList *InterpretationXmlImport::loadCovariates(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::DrugVariateList *drugVariateSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariateList>(ABSTRACTREPO, parent);
+    auto *drugVariateSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariateList>(ABSTRACTREPO, parent);
 
     /*******************************
      * TODO: Totally wrong down there
@@ -1288,12 +1180,9 @@ Tucuxi::Gui::Core::DrugVariateList *InterpretationXmlImport::loadCovariates(cons
 
 Tucuxi::Gui::Core::DrugVariate *InterpretationXmlImport::loadCovariate(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::DrugVariate* drugVariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariate>(ABSTRACTREPO, parent);
-
-    Tucuxi::Gui::Core::TranslatableString *nameTranslation, *descriptionTranslation;
-
-    nameTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drugVariate);
-    descriptionTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drugVariate);
+    auto* drugVariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariate>(ABSTRACTREPO, parent);
+    auto* nameTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drugVariate);
+    auto* descriptionTranslation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO,drugVariate);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1315,7 +1204,7 @@ Tucuxi::Gui::Core::DrugVariate *InterpretationXmlImport::loadCovariate(const QSt
 
 Tucuxi::Gui::Core::ErrorModel *InterpretationXmlImport::loadErrorModel(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::ErrorModel* errorModel = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ErrorModel>(ABSTRACTREPO,parent);
+    auto* errorModel = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ErrorModel>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1336,7 +1225,7 @@ Tucuxi::Gui::Core::ErrorModel *InterpretationXmlImport::loadErrorModel(const QSt
 Tucuxi::Gui::Core::ParameterSet *InterpretationXmlImport::loadParameters(const QString &tagName, QObject *parent)
 {
 
-    Tucuxi::Gui::Core::ParameterSet* parameterSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ParameterSet>(ABSTRACTREPO,parent);
+    auto* parameterSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ParameterSet>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1356,7 +1245,7 @@ Tucuxi::Gui::Core::ParameterSet *InterpretationXmlImport::loadParameters(const Q
             else if (name == "correlations") {
 
                 QString param1, param2;
-                double value;
+                double value = 0.0;
                 WHILE_NOT_END_ELEM("correlations"){
                     if(isOk && reader.readNextStartElement()  && reader.name() == QString("correlation")){
                         WHILE_NOT_END_ELEM("correlation"){
@@ -1396,7 +1285,7 @@ Tucuxi::Gui::Core::ParameterSet *InterpretationXmlImport::loadParameters(const Q
 
 Tucuxi::Gui::Core::Parameter *InterpretationXmlImport::loadParameter(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::Parameter* parameter = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameter>(ABSTRACTREPO,parent);
+    auto* parameter = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameter>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
@@ -1432,15 +1321,13 @@ Tucuxi::Gui::Core::Parameter *InterpretationXmlImport::loadParameter(const QStri
 
 Tucuxi::Gui::Core::OperationList *InterpretationXmlImport::loadOperations(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::OperationList *operations = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperationList>(ABSTRACTREPO,parent);
-
-    QMap<QString,Tucuxi::Gui::Core::OperationList*> mapOperationLists;
+    auto* operations = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperationList>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(reader.readNextStartElement() ){
             QString name = reader.name().toString();
             if(name == "operation"){
-                Tucuxi::Gui::Core::Operation* operation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Operation>(ABSTRACTREPO);
+                auto* operation = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Operation>(ABSTRACTREPO);
                 WHILE_NOT_END_ELEM("operation"){
                     if(reader.readNextStartElement() ){
                         QString name = reader.name().toString();
@@ -1474,7 +1361,7 @@ Tucuxi::Gui::Core::OperationList *InterpretationXmlImport::loadOperations(const 
 
 Tucuxi::Gui::Core::Bsv *InterpretationXmlImport::loadBsv(const QString &tagName, QObject *parent)
 {
-    Tucuxi::Gui::Core::Bsv* bsv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Bsv>(ABSTRACTREPO,parent);
+    auto* bsv = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Bsv>(ABSTRACTREPO,parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(isOk && reader.readNextStartElement() ){
@@ -1517,7 +1404,7 @@ QMetaType::Type InterpretationXmlImport::extractType()
 
 QMetaType::Type InterpretationXmlImport::qStringToType(QString stringType,bool &isConvertible)
 {//FIXME how many different types are there
-    QMetaType::Type type;
+    QMetaType::Type type = QMetaType::Type::UnknownType;
     if(stringType == "double"){
         type = QMetaType::Type::Double;
     } else if(stringType == "int"){
@@ -1549,8 +1436,7 @@ void InterpretationXmlImport::raiseConversionError()
 Tucuxi::Gui::Core::IdentifiableAmount * InterpretationXmlImport::loadIdentifiableAmount(const QString &tagName, QObject *parent)
 {
 
-    Tucuxi::Gui::Core::IdentifiableAmount* amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, parent);
-    QString parameter;
+    auto* amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, parent);
     WHILE_NOT_END_ELEM(tagName){
         if(isOk && reader.readNextStartElement() ){
             QString name = reader.name().toString();
@@ -1574,7 +1460,7 @@ Tucuxi::Gui::Core::IdentifiableAmount * InterpretationXmlImport::loadIdentifiabl
 Tucuxi::Gui::Core::OperableAmount *InterpretationXmlImport::loadOperableAmount(const QString &tagName, QObject *parent)
 {
 
-    Tucuxi::Gui::Core::OperableAmount* amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, parent);
+    auto* amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, parent);
 
     WHILE_NOT_END_ELEM(tagName){
         if(isOk && reader.readNextStartElement() ){

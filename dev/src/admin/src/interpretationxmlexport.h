@@ -102,12 +102,15 @@ protected:
     bool save(Tucuxi::Gui::Core::CoreMeasureList *list);
     bool save(Tucuxi::Gui::Core::UncastedValueList *list);
     bool save(Tucuxi::Gui::Core::ADME *adme);
+    /*
     bool save(Tucuxi::Gui::Core::ValidDoses *doses);
     bool save(Tucuxi::Gui::Core::ValidInfusions *infusions);
     bool save(Tucuxi::Gui::Core::ValidIntervals *intervals);
     bool save(Tucuxi::Gui::Core::DrugVariateList *list);
     bool save(Tucuxi::Gui::Core::ParameterSet *set);
+*/
     bool save(Tucuxi::Gui::Core::OperationList *list);
+
     bool saveIdentifiableAmount(const QString &tagName, Tucuxi::Gui::Core::IdentifiableAmount *amount);
     bool saveOperableAmount(const QString &tagName, Tucuxi::Gui::Core::OperableAmount *amount);
 

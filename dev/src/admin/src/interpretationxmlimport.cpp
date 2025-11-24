@@ -646,7 +646,7 @@ Person *InterpretationXmlImport::loadPerson(const QString &tagName, QObject *par
                 person->firstname(extractor());
             }
             else if (name == "birthday") {
-                person->birthday(extractDate().date());
+                person->birthday(extractDate(false).date());
             }
             else if (name == "gender") {
                 QString value = extractor();

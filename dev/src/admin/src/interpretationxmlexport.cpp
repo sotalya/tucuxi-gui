@@ -357,7 +357,10 @@ bool InterpretationXmlExport::save(Person *person, QString name)
     writer.writeTextElement("name", person->name());
     writer.writeTextElement("firstname", person->firstname());
     if (name == "patient"){
-        writer.writeTextElement("birthday", person->birthday().toString(Qt::ISODate));
+        // Only save the birthday if it is valid
+        if (person->birthday().isValid()) {
+            writer.writeTextElement("birthday", person->birthday().toString(Qt::ISODate));
+        }
         writer.writeTextElement("gender", (person->gender() == Person::Male) ? "male" : "female");
         writer.writeTextElement("address", person->location()->address());
     }

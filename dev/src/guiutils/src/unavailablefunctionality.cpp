@@ -25,10 +25,7 @@
 
 using namespace Tucuxi::Gui::GuiUtils;
 
-UnavailableFunctionality::UnavailableFunctionality()
-{
-
-}
+UnavailableFunctionality::UnavailableFunctionality() = default;
 
 void UnavailableFunctionality::displayMessage()
 {

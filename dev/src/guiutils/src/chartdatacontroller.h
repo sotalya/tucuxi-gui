@@ -26,7 +26,7 @@
 #include <QObject>
 #include <QDateTime>
 
-#include "admin/src/dal/validationstatus.h"
+#include "admin/src/dal/steptypes.h"
 
 namespace Tucuxi {
 namespace Gui {
@@ -116,11 +116,11 @@ private:
 
 protected:
 
-    bool isPopulationValid() const;
-    bool isAPrioriValid() const;
-    bool isAPosterioriValid() const;
-    bool isReverseValid() const;
-    bool isAdjustedValid() const;
+    [[nodiscard]] bool isPopulationValid() const;
+    [[nodiscard]] bool isAPrioriValid() const;
+    [[nodiscard]] bool isAPosterioriValid() const;
+    [[nodiscard]] bool isReverseValid() const;
+    [[nodiscard]] bool isAdjustedValid() const;
 
     Tucuxi::Gui::Admin::StepType::Enum _currentTab;
 

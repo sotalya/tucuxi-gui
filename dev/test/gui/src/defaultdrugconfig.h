@@ -304,7 +304,7 @@ public:
     }
 };
 
-class DrugCefepime : DrugDefault {
+class DrugCefepime : public DrugDefault {
 public:
     QString drugName = "Cefepime";
     DrugCefepime(){

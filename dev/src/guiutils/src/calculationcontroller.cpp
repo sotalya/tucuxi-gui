@@ -96,7 +96,7 @@ void LocalCalculationController::computePopPred(PredictionSpec* prediction)
                               prediction->getNbPoints(),
                               &parametersTraits);
 
-    PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
+    auto* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
 
     CORE->getProcessingInterface()->points(prediction->getAnalysis(),
                                            pointsTraits,
@@ -109,14 +109,14 @@ void LocalCalculationController::computePopPred(PredictionSpec* prediction)
 }
 
 void LocalCalculationController::preparePredResults(QVector<int> time, QVector<double> data, PredictionResult* pred) {
-    Predictive* predictive = CoreFactory::createEntity<Predictive>(ABSTRACTREPO, pred);
+    auto* predictive = CoreFactory::createEntity<Predictive>(ABSTRACTREPO, pred);
     pred->setPredictive(predictive);
-    PredictionData* pdata = CoreFactory::createEntity<PredictionData>(ABSTRACTREPO, predictive);
+    auto* pdata = CoreFactory::createEntity<PredictionData>(ABSTRACTREPO, predictive);
     predictive->setPredictionData(pdata);
-    FancyPoints* fpts = CoreFactory::createEntity<FancyPoints>(ABSTRACTREPO, pdata);
+    auto* fpts = CoreFactory::createEntity<FancyPoints>(ABSTRACTREPO, pdata);
     pdata->setPoints(fpts);
     for (int i = 0; i < time.size(); ++i) {
-        FancyPoint* fpt = CoreFactory::createEntity<FancyPoint>(ABSTRACTREPO, fpts);
+        auto* fpt = CoreFactory::createEntity<FancyPoint>(ABSTRACTREPO, fpts);
         fpt->setTime(time[i]);
         fpt->setValue(data[i]);
         fpts->append(fpt);
@@ -130,8 +130,6 @@ void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
     emit disengage();
     EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running typical patient percentiles.");
 
-    QMap<double, DataSet> percsDataSets;
-
     PopulationTraits parametersTraits;
     PercentilesTraits percentilesTraits(prediction->getNbPoints(),
                                         prediction->getPercentileList(),
@@ -144,7 +142,7 @@ void LocalCalculationController::computePopPerc(PredictionSpec* prediction)
 
     percentilesTraits.options[QString("percentile_method")] = QVariant::fromValue(2);
 
-    PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
+    auto* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
 
     ProcessingResult result = CORE->getProcessingInterface()->percentiles(prediction->getAnalysis(),
                                                 percentilesTraits,
@@ -173,7 +171,7 @@ void LocalCalculationController::computeAprPred(PredictionSpec* prediction)
                               prediction->getNbPoints(),
                               &parametersTraits);
 
-    PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
+    auto* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
 
     CORE->getProcessingInterface()->points(prediction->getAnalysis(),
                                            pointsTraits,
@@ -192,11 +190,9 @@ void LocalCalculationController::computeAprPerc(PredictionSpec* prediction)
     emit disengage();
     EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running apriori percentiles.");
 
-//    std::vector<double> percentiles = {10, 25, 75, 90};
 
     AprioriTraits parametersTraits;
     PercentilesTraits percentilesTraits(prediction->getNbPoints(),
-//                                        percentiles,
                                         prediction->getPercentileList(),
                                         prediction->getStartDate(),
                                         prediction->getEndDate(),
@@ -207,7 +203,7 @@ void LocalCalculationController::computeAprPerc(PredictionSpec* prediction)
 
     percentilesTraits.options[QString("percentile_method")] = QVariant::fromValue(2);
 
-    PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
+    auto* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
 
     ProcessingResult result = CORE->getProcessingInterface()->percentiles(prediction->getAnalysis(),
                                                 percentilesTraits,
@@ -238,7 +234,7 @@ void LocalCalculationController::computeApoPred(PredictionSpec* prediction)
                               prediction->getNbPoints(),
                               parametersTraits);
 
-    PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
+    auto* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
 
     CORE->getProcessingInterface()->points(prediction->getAnalysis(),
                                            pointsTraits,
@@ -268,7 +264,7 @@ void LocalCalculationController::computeApoPerc(PredictionSpec* prediction)
     percentilesTraits.clearCache = prediction->getClearCache();
     percentilesTraits.cacheId = 2;
 
-    PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
+    auto* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
 
     ProcessingResult result = CORE->getProcessingInterface()->calculateAposterioriPercentiles(prediction->getAnalysis(),
                                                 percentilesTraits,
@@ -294,7 +290,7 @@ void LocalCalculationController::computeAdjPerc(PredictionSpec* prediction)
     EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running adjustments percentiles.");
 
 
-    ParamTraits* parametersTraits;
+    ParamTraits* parametersTraits = nullptr;
     if (prediction->getAnalysis()->getTreatment()->getMeasures()->isEmpty()) {
         parametersTraits = new AprioriTraits(prediction->getAdjustmentDate());
     } else {
@@ -349,9 +345,9 @@ void LocalCalculationController::computeAdjPerc(PredictionSpec* prediction)
 
     percentilesTraits.cacheId = 3;
 
-    PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
+    auto* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
 
-    ProcessingResult result;
+    ProcessingResult result = ProcessingResult::Failure;
     if (prediction->getAnalysis()->getTreatment()->getMeasures()->isEmpty()) {
         result = CORE->getProcessingInterface()->percentiles(prediction->getAnalysis(),
                                                     percentilesTraits,
@@ -384,7 +380,7 @@ void LocalCalculationController::computeRevPred(PredictionSpec* prediction)
     EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running reverse prediction.");
     //Q_ASSERT_X(dateSetting.isValid());
 
-    ParamTraits* parametersTraits;
+    ParamTraits* parametersTraits = nullptr;
     if (prediction->getAnalysis()->getTreatment()->getMeasures()->isEmpty()) {
         parametersTraits = new AprioriTraits();
     } else {
@@ -439,7 +435,7 @@ void LocalCalculationController::computeRevPred(PredictionSpec* prediction)
                                 prediction->getNbPoints(),
                                 parametersTraits);
 
-    PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
+    auto* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
     CORE->getProcessingInterface()->computeSuggestedAdjustments(prediction->getAnalysis(),
                                             reverseTraits,
                                             *pred);
@@ -471,7 +467,7 @@ void LocalCalculationController::computeAdjPred(PredictionSpec* prediction)
     emit disengage();
     EXLOG(QtDebugMsg, Tucuxi::Gui::GuiUtils::NOEZERROR, "Running a priori adjustment prediction.");
 
-    ParamTraits* parametersTraits;
+    ParamTraits* parametersTraits = nullptr;
     if (prediction->getAnalysis()->getTreatment()->getMeasures()->isEmpty()) {
         parametersTraits = new AprioriTraits(prediction->getAdjustmentDate());
     } else {
@@ -502,7 +498,7 @@ void LocalCalculationController::computeAdjPred(PredictionSpec* prediction)
                               prediction->getNbPoints(),
                               parametersTraits);
 
-    PredictionResult* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
+    auto* pred = CoreFactory::createEntity<PredictionResult>(ABSTRACTREPO);
 
     CORE->getProcessingInterface()->points(prediction->getAnalysis(),
                                            pointsTraits,
@@ -544,9 +540,9 @@ void CalculationThread::run()
     setPriority(QThread::LowPriority); // So the GUI can be more responsive
 
     while (true) {
-        Tucuxi::Gui::Core::PredictionSpec *spec;
+        Tucuxi::Gui::Core::PredictionSpec *spec = nullptr;
 
-        CalculationBuffer::calculationType what;
+        CalculationBuffer::calculationType what = CalculationBuffer::calculationType::Quit;
         buffer->get(&spec, &what);
 
         logger->log(spec);
@@ -869,12 +865,10 @@ void CalculationBuffer::removeFromList(calculationType type)
 
 void CalculationBuffer::push(PredictionSpec *spec, calculationType what)
 {
-    PredictionSpec *specCopy;
-
     // We copy the entire object to be sure there is no race condition between the GUI thread
     // and the worker thread. Destruction of the specCopy should be done by the worker thread when
     // computation is finished
-    specCopy = PredictionSpecCopier().copy(spec);
+    PredictionSpec *specCopy = PredictionSpecCopier().copy(spec);
 
     QMutexLocker locker(&mutex);
 

@@ -56,7 +56,9 @@
 #include "guiutils/src/widgets/validatedrugdialog.h"
 #include "admin/src/interpretationxmlimport.h"
 
+#ifdef CONFIG_DEMO
 #include "guiutils/src/unavailablefunctionality.h"
+#endif // CONFIG_DEMO
 
 #include "guiutils/src/appglobals.h"
 
@@ -87,7 +89,7 @@ if (!appGlobals->getFlatImport()) {
         if (listFile.isEmpty())
             requestsController->setClient(new Tucuxi::Gui::Rest::RestRequestsClient(this));
         else {
-            DemoRequestFileClient *client = new DemoRequestFileClient(this);
+            auto *client = new DemoRequestFileClient(this);
             client->setListFile(listFile);
             requestsController->setClient(client);
         }
@@ -101,7 +103,7 @@ if (!appGlobals->getFlatImport()) {
     #endif
 } else {
     QString flatFile = appGlobals->getFlatFile();
-    Tucuxi::Gui::FlatRequest::FlatRequestFileClient *client = new Tucuxi::Gui::FlatRequest::FlatRequestFileClient(this);
+    auto *client = new Tucuxi::Gui::FlatRequest::FlatRequestFileClient(this);
     client->setListFile(flatFile);
     requestsController->setClient(client);
 }
@@ -356,90 +358,39 @@ bool MainWindowController::event(QEvent *event)
         }
     }
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
+        auto *e = dynamic_cast<QKeyEvent*>(event);
         if (e) {
             if ((e->key() == Qt::Key_F2) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 _validateDrug->exec();
             }
-        }
-    }
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
-        if (e) {
             if ((e->key() == Qt::Key_T) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 bool showToolTip = getRootContext()->contextProperty("show_tooltip").toBool();
                 getRootContext()->setContextProperty("show_tooltip", !showToolTip);
             }
-        }
-    }
-
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
-        if (e) {
             if ((e->key() == Qt::Key_O) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 goToLoadRequest();
             }
-        }
-    }
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
-        if (e) {
             if ((e->key() == Qt::Key_E) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 interpretationController->saveStatistics();
             }
-        }
-    }
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
-        if (e) {
             if ((e->key() == Qt::Key_A) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 interpretationController->showStatistics(EXPORT_POPULATION);
             }
-        }
-    }
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
-        if (e) {
             if ((e->key() == Qt::Key_S) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 interpretationController->showStatistics(EXPORT_APRIORI);
             }
-        }
-    }
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
-        if (e) {
             if ((e->key() == Qt::Key_D) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 interpretationController->showStatistics(EXPORT_APOSTERIORI);
             }
-        }
-    }
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
-        if (e) {
             if ((e->key() == Qt::Key_F) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 interpretationController->showStatistics(EXPORT_ADJUSTMENTS);
             }
-        }
-    }
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
-        if (e) {
             if ((e->key() == Qt::Key_G) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 interpretationController->saveGraph();
             }
-        }
-    }
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
-        if (e) {
             if ((e->key() == Qt::Key_X) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 interpretationController->exportCurrentData();
             }
-        }
-    }
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = dynamic_cast<QKeyEvent*>(event);
-        if (e) {
             if ((e->key() == Qt::Key_Y) && (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))) {
                 interpretationController->exportCdss();
             }

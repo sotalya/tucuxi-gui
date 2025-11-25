@@ -213,11 +213,10 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setRouteValue(int index, in
 */
 
 void Tucuxi::Gui::GuiUtils::AdjustmentTabController::addAdjustment()
-{    
-    Tucuxi::Gui::Core::DrugModel *drugModel;
-    drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
+{
+    auto *drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
 
-    Tucuxi::Gui::Core::AdjustmentDosage* adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
+    auto* adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
     adjustment->setApplied(getAdjustmentDate());
     adjustment->setEndTime(getAdjustmentDate().addDays(1));
 //    adjustment->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
@@ -273,7 +272,7 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::selectAdjustment(int index)
     for (int i = 0; i < adjustments->at(index)->getDosageHistory()->size(); i++) {
         Tucuxi::Gui::Core::Dosage* suggestedAdjustment = adjustments->at(index)->getDosageHistory()->at(i);
 
-        Tucuxi::Gui::Core::AdjustmentDosage* adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
+        auto* adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
         adjustment->setApplied(suggestedAdjustment->getApplied());
         adjustment->setEndTime(suggestedAdjustment->getEndTime());
 //        adjustment->getRoute()->setRoute(suggestedAdjustment->getRoute()->getRoute());
@@ -347,7 +346,7 @@ bool Tucuxi::Gui::GuiUtils::AdjustmentTabController::compareAdjustment(const Tuc
 Tucuxi::Gui::Core::AdjustmentDosage* Tucuxi::Gui::GuiUtils::AdjustmentTabController::getAdjustment(const QString &type)
 {
     for (int i=0; i<_adjustments->size(); i++) {
-        Tucuxi::Gui::Core::AdjustmentDosage* adj = static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(i));
+        auto* adj = static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(i));
         if (adj->getType() == type) {
             return adj;
         }
@@ -359,7 +358,7 @@ Tucuxi::Gui::Core::AdjustmentDosage* Tucuxi::Gui::GuiUtils::AdjustmentTabControl
 Tucuxi::Gui::Core::AdjustmentDosage* Tucuxi::Gui::GuiUtils::AdjustmentTabController::getLastAdjustment(const QString &type)
 {
     for (int i=_adjustments->size() - 1; i >= 0; i--) {
-        Tucuxi::Gui::Core::AdjustmentDosage* adj = static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(i));
+        auto* adj = static_cast<Tucuxi::Gui::Core::AdjustmentDosage*>(_adjustments->at(i));
         if (adj->getType() == type) {
             return adj;
         }

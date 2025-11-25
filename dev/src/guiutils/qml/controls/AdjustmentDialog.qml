@@ -12,23 +12,20 @@ DialogBase {
     title: "Adjustment parameters"
     width: 600
     height: 350
-
-    property var self
+    id : root
 
     // Intercept Return to validate the dialog
     Shortcut {
         sequence: "Return"
         onActivated: {
-            if (self.apply()) {
-                self.exit(true);
+            if (root.apply()) {
+                root.exit(true);
             }
         }
     }
 
     function init(quantity, interval, route, tinf, appliedDate, endDate, routeNames)
     {
-        self = this
-
         doseSpinBox.decimals = 2;
         doseSpinBox.setRealValue(quantity.dbvalue);
         doseSpinBox.suffix = " " + quantity.unitstring;
@@ -149,7 +146,7 @@ DialogBase {
                     objectName: "doseSpinBoxAdj"
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
-                    onEditingFinished: { self.validate() }
+                    onEditingFinished: { root.validate() }
                 }
             }
 
@@ -166,7 +163,7 @@ DialogBase {
                     Layout.preferredWidth: 250
                     horizontalAlignment: Text.AlignLeft
                     suffix: " hours"
-                    onEditingFinished: { self.validate() }
+                    onEditingFinished: { root.validate() }
                 }
             }
 
@@ -221,7 +218,7 @@ DialogBase {
                 }
                 DatePicker {
                     id: appliedDateInput
-                    onEditingFinished: { self.validate() }
+                    onEditingFinished: { root.validate() }
                 }
                 EntityLabel {
                     text: "at:"
@@ -230,7 +227,7 @@ DialogBase {
                 }
                 TimePicker {
                     id: appliedTimeInput
-                    onEditingFinished: { self.validate() }
+                    onEditingFinished: { root.validate() }
                 }
                 EntityLabel {
                 }
@@ -247,7 +244,7 @@ DialogBase {
                 }
                 DatePicker {
                     id: stoppedDateInput
-                    onEditingFinished: { self.validate() }
+                    onEditingFinished: { root.validate() }
                 }
                 EntityLabel {
                     text: "at:"
@@ -256,7 +253,7 @@ DialogBase {
                 }
                 TimePicker {
                     id: stoppedTimeInput
-                    onEditingFinished: { self.validate() }
+                    onEditingFinished: { root.validate() }
                 }
                 EntityLabel {
                 }
@@ -278,8 +275,8 @@ DialogBase {
                     text: "Ok"
                     Layout.preferredWidth: 125
                     onClicked: function() {
-                        if (self.apply()) {
-                            self.exit(true);
+                        if (root.apply()) {
+                            root.exit(true);
                         }
                     }
                 }
@@ -289,7 +286,7 @@ DialogBase {
                     text: "Apply"
                     Layout.preferredWidth: 125
                     onClicked: function() {
-                        self.apply()
+                        root.apply()
                     }
                 }
                 Button {
@@ -298,7 +295,7 @@ DialogBase {
                     text: "Cancel"
                     Layout.preferredWidth: 125
                     onClicked: function() {
-                        self.exit(false);
+                        root.exit(false);
                     }
                 }
             }

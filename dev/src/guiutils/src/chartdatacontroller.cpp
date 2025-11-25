@@ -20,8 +20,6 @@
  */
 
 
-#include <iostream>
-
 #include "chartdatacontroller.h"
 #include "core/dal/chartdata.h"
 #include "core/corefactory.h"
@@ -50,16 +48,14 @@ ChartDataController::ChartDataController(QObject *parent) : QObject(parent),
 
 void ChartDataController::launchCompute()
 {
-    QSet<computationType>::ConstIterator computation;
-
     if (Tucuxi::Gui::GuiUtils::AppGlobals::getInstance()->cdssOnly()) {
         toComputeSet.clear();
         return;
     }
 
     // Iterate to launch the selected computations
-    for (computation = toComputeSet.begin(); computation != toComputeSet.end(); ++computation) {
-        switch (*computation) {
+    for (const auto& computation : std::as_const(toComputeSet)) {
+        switch (computation) {
             case POP_PRED:
                 calculationController->computePopPred(predictionspec);
                 break;

@@ -67,7 +67,7 @@ class MainWindowController : public QQuickView
 
 public:
     explicit MainWindowController(QObject *parent = nullptr);
-    virtual ~MainWindowController() Q_DECL_OVERRIDE;
+    ~MainWindowController() Q_DECL_OVERRIDE;
 
     bool event(QEvent *event) Q_DECL_OVERRIDE;
 
@@ -108,6 +108,12 @@ public slots:
 
     void interpretationReady(Tucuxi::Gui::Admin::Interpretation *interpretation);
 
+    ///
+    /// \brief loadInterpretationFile Loads an interpretation file, and loads the interpretation
+    /// \param fileName Full path of the file to open
+    /// This function tries to open the interpretation file. If it succeeds, then it creates
+    /// the interpretation and emits a signal that will start the GUI interpretation
+    ///
     void loadInterpretationFile(const QString &fileName);
     void extSlotSetView(const QDateTime &startView, const QDateTime &endView);//emptySlot();
 
@@ -142,15 +148,6 @@ protected:
     /// the interpretation and emits a signal that will start the GUI interpretation
     ///
     void loadRequestFile(const QString &fileName);
-
-
-    ///
-    /// \brief loadInterpretationFile Loads an interpretation file, and loads the interpretation
-    /// \param fileName Full path of the file to open
-    /// This function tries to open the interpretation file. If it succeeds, then it creates
-    /// the interpretation and emits a signal that will start the GUI interpretation
-    ///
-//    void loadInterpretationFile(const QString &fileName);
 
     QObject *requestsView;
     RequestsController *requestsController;

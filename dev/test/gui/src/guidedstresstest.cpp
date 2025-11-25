@@ -293,7 +293,8 @@ TEST(GuidedStressTest, MeasuresTab)
     srv->waitPeriod(waitTime1);
     srv->selectDrugInList("Imatinib", 0);
     srv->waitPeriod(waitTime1);
-    DosageData dosageData1;
+    DrugImatinib drug;
+    DosageData dosageData1 = drug.dosageData;
     srv->addDosage(dosageData1);
     srv->waitPeriod(waitTime1);
     srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/measureButton"));
@@ -358,7 +359,8 @@ TEST(GuidedStressTest, TargetsTab)
     srv->waitPeriod(waitTime1);
     srv->selectDrugInList("Imatinib", 0);
     srv->waitPeriod(waitTime1);
-    DosageData dosageData1;
+    DrugImatinib drug;
+    DosageData dosageData1 = drug.dosageData;
     srv->addDosage(dosageData1);
     srv->waitPeriod(waitTime1);
     srv->mouseClickCheck(spix::ItemPath("mainWindow/flowView/targetButton"));
@@ -422,7 +424,8 @@ TEST(GuidedStressTest, AdjustmentsTab)
     srv->waitPeriod(waitTime1);
     srv->selectDrugInList("Cefepime", 0);
     srv->waitPeriod(waitTime1);
-    DosageData dosageData1;
+    DrugCefepime drug;
+    DosageData dosageData1 = drug.dosageData;
     srv->addDosage(dosageData1);
 //    TargetData targetData1;
 //    srv->addTarget(targetData1);

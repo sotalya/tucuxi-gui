@@ -557,7 +557,7 @@ Rectangle {
                                             model.dbtinf,
                                             model.applied,
                                             model.endtime,
-                                            routesName)
+                                            routesName);
                                         adjustmentDialog.open(false);
                                     }
                                 }

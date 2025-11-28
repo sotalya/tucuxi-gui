@@ -19,6 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <QCoreApplication>
 
 #include "appglobals.h"
 
@@ -173,10 +174,12 @@ QString AppGlobals::getTemplateReportPath(){
     return m_templateReportPath;
 }
 
-#include <QCoreApplication>
-
 static QString getDefaultTemplatePath(){
-    QString path = QCoreApplication::applicationDirPath() + "/reports";
+#ifdef MACOS
+    QString path = QCoreApplication::applicationDirPath() + "/../Resources/reports/report.html";
+#else // MACOS
+    QString path = QCoreApplication::applicationDirPath() + "/reports/report.html";
+#endif // MACOS
     return path;
 }
 

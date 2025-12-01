@@ -51,7 +51,7 @@
 #else //Build without cmake (qmake)
 
 //On mac OS search for the source in the ../Resource directory
-#ifdef Q_OS_MACX
+#ifdef Q_OS_MACOS
 #define APPDATA "../Resources"
 #define BUILD_ID "qmake-mac"
 #else //On the others, just search under the executable
@@ -418,7 +418,7 @@ void Core::initPaths()
 
     //Set the modules paths
     _paths[ApplicationData] = _paths[Executable];
-#ifdef Q_OS_MACX
+#ifdef Q_OS_MACOS
     _paths[ApplicationData] = _paths[Executable] + "/../Resources";
     //_paths[ApplicationData] = _paths[Executable];
 #endif

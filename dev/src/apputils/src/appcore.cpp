@@ -39,7 +39,7 @@
 #else //Build without cmake (qmake)
 
 //On mac OS search for the source in the ../Resource directory
-#ifdef Q_OS_MACX
+#ifdef Q_OS_MACOS
 #define APPDATA "../Resources"
 #define BUILD_ID "qmake-mac"
 #else //On the others, just search under the executable

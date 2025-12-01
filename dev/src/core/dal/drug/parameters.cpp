@@ -23,7 +23,6 @@
 #include <QStringList>
 
 #include "core/dal/drug/parameters.h"
-//#include "core/interfaces/drugmodelengine.h"
 #include "core/dal/drug/bsv.h"
 #include "core/dal/drug/errormodel.h"
 #include "core/core.h"
@@ -167,7 +166,6 @@ ParameterSet::ParameterSet(AbstractRepository *repository, QObject* parent)
     : Entity(repository, parent),
       _parameters(CoreFactory::createEntity<Parameters>(repository, this))
 {
-//    _errorModel = CoreFactory::createEntity<ErrorModel>(0);
 }
 
 ParameterSet::ParameterSet(ParameterType type, const QString &model) :
@@ -175,21 +173,16 @@ ParameterSet::ParameterSet(ParameterType type, const QString &model) :
     _model(model),
     _parametersmap(*(new QMap<QString,SharedParameter>()))
 {
-//    _errorModel = CoreFactory::createEntity<ErrorModel>(0);
 }
 
 ParameterSet::ParameterSet(AbstractRepository *repository, QObject* parent, ParameterSet* other) :
     _type(other->_type),
-//    _parameters(other->_parameters),
     _correlations(other->_correlations),
     _model(other->_model)
 {
-//    _errorModel = CoreFactory::createEntity<ErrorModel>(0);
-//    _errorModel->setProportional(other->globalProportional());
-//    _errorModel->setAdditive(other->globalAdditive());
     foreach (SharedParameter _p, other->_parametersmap) {
         // YTA : We should use a copy constructor here
-        SharedParameter _np = Tucuxi::Gui::Core::CoreFactory::createEntity<Parameter>(repository);
+        auto* _np = Tucuxi::Gui::Core::CoreFactory::createEntity<Parameter>(repository);
         _np->setName(_p->getName());
         _np->setQuantity(Tucuxi::Gui::Core::CoreFactory::createEntity<OperableAmount>(repository, _np));
         _np->getQuantity()->setValue(_p->getQuantity()->value());
@@ -247,7 +240,7 @@ void ParameterSet::copy(const ParameterSet* other)
 {
     _parametersmap.clear();
     foreach (SharedParameter _p, other->_parametersmap) {
-        SharedParameter _np = Tucuxi::Gui::Core::CoreFactory::createEntity<Parameter>(ABSTRACTREPO);
+        auto* _np = Tucuxi::Gui::Core::CoreFactory::createEntity<Parameter>(ABSTRACTREPO);
         _np->setName(_p->getName());
         _np->getQuantity()->setValue(_p->getQuantity()->value());
         _np->setId(_p->id());
@@ -257,10 +250,7 @@ void ParameterSet::copy(const ParameterSet* other)
         _np->getBsv()->setStandard(_p->getBsv()->getStandard());
         _parametersmap.insert(_np->getName(), _np);
     }
-//    _parameters = other->_parameters;
     _correlations = other->_correlations;
-//    _errorModel->setAdditive(other->globalAdditive());
-//    _errorModel->setProportional(other->globalProportional());
     _model = other->_model;
     _parameters->getList() = _parametersmap.values();
 }
@@ -336,23 +326,7 @@ QStringList ParameterSet::correlationsKeys() const
 {
     return _correlations.keys();
 }
-/*
-void ParameterSet::setGlobal(double additive, double proportional)
-{
-    _errorModel->setAdditive(additive);
-    _errorModel->setProportional(proportional);
-}
 
-double ParameterSet::globalAdditive() const
-{
-    return _errorModel->getAdditive();
-}
-
-double ParameterSet::globalProportional() const
-{
-    return _errorModel->getProportional();
-}
-*/
 SharedParameter &ParameterSet::operator [](const QString &pid)
 {
     return _parametersmap[pid];

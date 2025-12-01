@@ -27,7 +27,6 @@
 #include <QString>
 
 #include "core/utils/ezutils.h"
-#include "core/utils/distribution.h"
 #include "core/utils/units.h"
 #include "core/dal/entity.h"
 #include "core/utils/duration.h"
@@ -103,7 +102,7 @@ class Parameter : public Entity {
 
 protected:
 
-    Q_INVOKABLE Parameter(AbstractRepository *repository, QObject* parent = 0);
+    Q_INVOKABLE Parameter(AbstractRepository *repository, QObject* parent = nullptr);
     Q_INVOKABLE Parameter(AbstractRepository *repository, QObject* parent, QString pid,
               double value,
               double standard = 0.0,

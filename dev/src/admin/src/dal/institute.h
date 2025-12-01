@@ -47,14 +47,14 @@ public:
     Q_INVOKABLE Institute(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr);
     Q_INVOKABLE Institute(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id, QObject *parent = nullptr);
 
-    QList<SharedPhone> phones() const;
+    [[nodiscard]] QList<SharedPhone> phones() const;
     void setPhones(const QList<SharedPhone> &phones);
 
-    QList<Email*> emails() const;
+    [[nodiscard]] QList<Email*> emails() const;
     void setEmails(const QList<Email*> &emails);
 
-    SharedPhone phone(const PhoneType &type) const;
-    Email* email(const EmailType &type) const;
+    [[nodiscard]] SharedPhone phone(const PhoneType &type) const;
+    [[nodiscard]] Email* email(const EmailType &type) const;
 
     Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
     {
@@ -80,7 +80,7 @@ namespace Admin {
 class InstituteSet : public QList<Tucuxi::Gui::Admin::Institute*>
 {
 public :
-    InstituteSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = 0) {}
+    InstituteSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = nullptr) {}
     InstituteSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent, const InstituteSet* &other);
 };
 

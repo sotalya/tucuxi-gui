@@ -61,21 +61,17 @@ class Prediction : public Entity
 
     AUTO_PROPERTY_DECL(PredictionSpec*, spec, Spec)
 
-//    Q_ENUMS(CurveType)
-
-
 protected:
 
 
-    Q_INVOKABLE Prediction(AbstractRepository *repository = nullptr, QObject* parent = 0);
+    Q_INVOKABLE Prediction(AbstractRepository *repository = nullptr, QObject* parent = nullptr);
     Q_INVOKABLE Prediction(AbstractRepository *repository, QObject* parent, DrugResponseAnalysis*);
 
 public:
 
-//    QDateTime firsttake() const;
     void setFirsttake(const QDateTime &firsttake);
 
-    DrugTreatment *getTreatment() const;
+    [[nodiscard]] DrugTreatment *getTreatment() const;
 
 signals:
 

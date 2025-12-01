@@ -64,11 +64,11 @@ public:
 
     void buildAllDrugModels(std::string dirName);
 
-    const std::vector<Tucuxi::Core::DrugModel *> & getAllTucucoreDrugModels() const;
+    [[nodiscard]] const std::vector<Tucuxi::Core::DrugModel *> & getAllTucucoreDrugModels() const;
 
-    const std::vector<Tucuxi::Gui::Core::DrugModel *> & getAllGuiDrugModels() const;
+    [[nodiscard]] const std::vector<Tucuxi::Gui::Core::DrugModel *> & getAllGuiDrugModels() const;
 
-    Tucuxi::Core::DrugModel *getTucucoreById(std::string id) const;
+    [[nodiscard]] Tucuxi::Core::DrugModel *getTucucoreById(std::string id) const;
 
 #ifdef CONFIG_SIGN
     Tucuxi::Sign::Signer /*bool*/ checkSign(std::string fileName);

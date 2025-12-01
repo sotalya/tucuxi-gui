@@ -36,8 +36,8 @@ namespace Rest {
 class FormulationAndRouteTranslator
 {
 public:
-    FormulationAndRouteTranslator();
-    virtual ~FormulationAndRouteTranslator();
+    FormulationAndRouteTranslator() = default;
+    virtual ~FormulationAndRouteTranslator() = default;
 
     virtual Tucuxi::Core::FormulationAndRoute restToInternalFormulationAndRoute(QString drugId, QString intake) = 0;
 };
@@ -47,7 +47,8 @@ class ChuvFormulationAndRouteTranslator : public FormulationAndRouteTranslator
 public:
     ChuvFormulationAndRouteTranslator();
 
-    virtual Tucuxi::Core::FormulationAndRoute restToInternalFormulationAndRoute(QString drugId, QString intake);
+    Tucuxi::Core::FormulationAndRoute restToInternalFormulationAndRoute(QString drugId,
+                                                                        QString intake) override;
 
 private:
     QMap<QString, QMap<QString, Tucuxi::Core::FormulationAndRoute>> map;
@@ -58,11 +59,12 @@ private:
 class ExternalFormulationAndRouteTranslator : public FormulationAndRouteTranslator
 {
 public:
-    ExternalFormulationAndRouteTranslator();
+    ExternalFormulationAndRouteTranslator() = default;
 
     void setFileName(const QString &fileName);
 
-    virtual Tucuxi::Core::FormulationAndRoute restToInternalFormulationAndRoute(QString drugId, QString intake);
+    Tucuxi::Core::FormulationAndRoute restToInternalFormulationAndRoute(QString drugId,
+                                                                        QString intake) override;
 
 private:
     QString m_fileName;

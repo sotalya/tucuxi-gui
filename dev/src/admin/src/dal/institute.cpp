@@ -48,7 +48,7 @@ Institute::Institute(Tucuxi::Gui::Core::AbstractRepository *repository, const in
     _phones(),
     _emails()
 {
-    Location* _loc = AdminFactory::createEntity<Location>(repository);
+    auto* _loc = AdminFactory::createEntity<Location>(repository);
     location(_loc);
 }
 
@@ -125,7 +125,7 @@ SharedPhone Institute::phone(const PhoneType &type) const
         if (_phones.at(i)->getType() == type)
             return _phones.at(i);
 
-    return 0;
+    return nullptr;
 }
 
 Email* Institute::email(const EmailType &type) const
@@ -134,13 +134,13 @@ Email* Institute::email(const EmailType &type) const
         if (_emails.at(i)->getType() == type)
             return _emails.at(i);
 
-    return 0;
+    return nullptr;
 }
 
 InstituteSet::InstituteSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent, const InstituteSet* &other)
 {
     foreach (SharedInstitute _i, *other) {
-        SharedInstitute _ni = SharedInstitute(new Institute(repository, parent));
+        auto _ni = SharedInstitute(new Institute(repository, parent));
         _ni->setId(_i->id());
         _ni->location_id(_i->location_id());
         _ni->name(_i->name());

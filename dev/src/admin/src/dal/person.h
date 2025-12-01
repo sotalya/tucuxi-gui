@@ -79,10 +79,10 @@ public:
 //    Q_INVOKABLE QList<SharedPhone> phones() const {return _phones;}
 //    Q_INVOKABLE void setPhones(const QList<SharedPhone> &phones) {_phones = phones; emit phonesChanged(phones);}
 
-    QList<Email*> emails() const {return _emails;}
+    [[nodiscard]] QList<Email*> emails() const {return _emails;}
     void setEmails(const QList<Email*> &emails) {_emails = emails; emit emailsChanged(emails);}
 
-    int personId() const { return id();}
+    [[nodiscard]] int personId() const { return id();}
 
     void addEmail(Email* email) { _emails.append(email);}
     void addPhone(SharedPhone phone) { _phones->append(phone);}

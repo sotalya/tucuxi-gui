@@ -26,10 +26,7 @@
 #include "core/dal/drugtreatment.h"
 #include "core/dal/dosage.h"
 
-ModelVsTreatmentCompatibilityChecker::ModelVsTreatmentCompatibilityChecker()
-{
-
-}
+ModelVsTreatmentCompatibilityChecker::ModelVsTreatmentCompatibilityChecker() = default;
 
 bool ModelVsTreatmentCompatibilityChecker::check(Tucuxi::Gui::Core::DrugModel *model, Tucuxi::Gui::Core::DrugTreatment *treatment)
 {

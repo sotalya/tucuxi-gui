@@ -50,7 +50,7 @@ public:
         return true;
     }
 
-    QVariant toQVariant(void) const;
+    [[nodiscard]] QVariant toQVariant() const;
 };
 
 }

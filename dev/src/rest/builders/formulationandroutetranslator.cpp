@@ -90,16 +90,6 @@ Tucuxi::Core::AbsorptionModel extractAbsorptionModel(QString s)
     return Tucuxi::Core::AbsorptionModel::Undefined;
 }
 
-FormulationAndRouteTranslator::FormulationAndRouteTranslator()
-{
-
-}
-
-FormulationAndRouteTranslator::~FormulationAndRouteTranslator()
-{
-
-}
-
 ChuvFormulationAndRouteTranslator::ChuvFormulationAndRouteTranslator()
 {
     {
@@ -164,11 +154,6 @@ Tucuxi::Core::FormulationAndRoute ChuvFormulationAndRouteTranslator::restToInter
     return mapIntake.value(intake, formulationAndRoute);
 }
 
-ExternalFormulationAndRouteTranslator::ExternalFormulationAndRouteTranslator()
-{
-
-}
-
 void ExternalFormulationAndRouteTranslator::setFileName(const QString &fileName)
 {
     m_fileName = fileName;
@@ -201,10 +186,7 @@ Tucuxi::Core::FormulationAndRoute ExternalFormulationAndRouteTranslator::restToI
 
     settingsFile.endGroup();
 
-    return Tucuxi::Core::FormulationAndRoute(
-                formulation,
-                administrationRoute,
-                administrationName);
+    return {formulation, administrationRoute, administrationName};
 }
 
 }

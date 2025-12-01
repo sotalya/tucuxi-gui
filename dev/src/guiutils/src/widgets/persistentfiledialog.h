@@ -46,7 +46,7 @@ public:
     PersistentFileDialog(QWidget *parent, Qt::WindowFlags flags);
 
     //! Constructor.
-    PersistentFileDialog(QWidget *parent = 0, const QString &caption = QString(), const QString &directory = QString(), const QString &filter = QString());
+    PersistentFileDialog(QWidget *parent = nullptr, const QString &caption = QString(), const QString &directory = QString(), const QString &filter = QString());
 
 public slots:
 

@@ -179,7 +179,7 @@ public: // YTA: To be checked and put protected
     Q_INVOKABLE DrugModel(AbstractRepository *repository, const DrugXmlDescriptor *descriptor);
 
      // YTA: Needed by ApputilsFactory which is outside core. Should be solved...
-    Q_INVOKABLE DrugModel(AbstractRepository *repository = nullptr, QObject* parent = 0);
+    Q_INVOKABLE DrugModel(AbstractRepository *repository = nullptr, QObject* parent = nullptr);
 
     Q_INVOKABLE bool isValid() Q_DECL_OVERRIDE
     {

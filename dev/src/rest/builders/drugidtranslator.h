@@ -33,8 +33,9 @@ namespace Rest {
 class DrugIdTranslator
 {
 public:
-    DrugIdTranslator();
-    virtual ~DrugIdTranslator();
+    DrugIdTranslator() = default;
+
+    virtual ~DrugIdTranslator() = default;
 
     virtual QString restToInternalId(QString restId) = 0;
 };
@@ -42,9 +43,9 @@ public:
 class DummyDrugIdTranslator : public DrugIdTranslator
 {
 public:
-    DummyDrugIdTranslator();
+    DummyDrugIdTranslator() = default;
 
-    virtual QString restToInternalId(QString restId);
+    QString restToInternalId(QString restId) override;
 };
 
 class ChuvDrugIdTranslator : public DrugIdTranslator
@@ -52,7 +53,7 @@ class ChuvDrugIdTranslator : public DrugIdTranslator
 public:
     ChuvDrugIdTranslator();
 
-    virtual QString restToInternalId(QString restId);
+    QString restToInternalId(QString restId) override;
 
 private:
     QMap<QString,QString> map;
@@ -61,11 +62,11 @@ private:
 class ExternalDrugIdTranslator : public DrugIdTranslator
 {
 public:
-    ExternalDrugIdTranslator();
+    ExternalDrugIdTranslator() = default;
 
     void setFileName(const QString &fileName);
 
-    virtual QString restToInternalId(QString restId);
+    QString restToInternalId(QString restId) override;
 
 private:
     QString m_fileName;

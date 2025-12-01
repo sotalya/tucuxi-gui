@@ -33,7 +33,7 @@ class AppMode : public QObject
 private:
     Q_OBJECT
     static AppMode* m_instance;
-    AppMode();
+    AppMode() = default;
 
 public:
     static AppMode* getInstance(){

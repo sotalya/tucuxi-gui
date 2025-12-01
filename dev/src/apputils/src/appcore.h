@@ -119,8 +119,7 @@ private:
     DrugManager *_drugManager;
 
     //Destructor
-    ~AppCore();
-
+    ~AppCore() override;
 
 #ifndef CONFIG_NOBOTAN
 public:
@@ -143,6 +142,6 @@ public:
 
     Tucuxi::Gui::AppUtils::AppCore *core;
 
-    void run();
+    void run() override;
 };
 #endif //APPCORE_H

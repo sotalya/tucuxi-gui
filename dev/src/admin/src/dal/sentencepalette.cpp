@@ -26,10 +26,8 @@
 #include "qkeysequence.h"
 #include "tucucommon/xmlnode.h"
 #include "tucucommon/xmliterator.h"
-#include <sstream>
 #include <fstream>
 
-#include <stdio.h>
 #ifdef WIN32
 #include <direct.h>
 #define GetCurrentDir _getcwd
@@ -131,7 +129,6 @@ QStringList Section::getGlobalSentencesTextsList(){
     QStringList ret;
 
     for(auto sentence : _globalSentences){
-        auto a = sentence->getText();
         ret.append(sentence->getText());
     }
     return ret;

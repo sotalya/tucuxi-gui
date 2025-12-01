@@ -130,7 +130,7 @@ Tucuxi::Core::DosageTimeRange *GuiToTucucoreTranslator::buildTimeRange(const Tuc
 Tucuxi::Core::DrugTreatment *GuiToTucucoreTranslator::buildTreatment(const Tucuxi::Gui::Core::DrugTreatment *guiTreatment, QDateTime adjTime)
 {
 
-    Tucuxi::Core::DrugTreatment *newTreatment = new Tucuxi::Core::DrugTreatment();
+    auto* newTreatment = new Tucuxi::Core::DrugTreatment();
     QList<Tucuxi::Gui::Core::Dosage*> dosageList = guiTreatment->getDosages()->getList();
     QList<Tucuxi::Gui::Core::Dosage*>::iterator itDosages = dosageList.begin();
     while (itDosages != dosageList.end()) {

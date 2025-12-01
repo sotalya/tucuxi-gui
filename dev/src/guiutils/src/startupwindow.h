@@ -43,9 +43,9 @@ public:
     };
     Q_ENUM(Option)
 
-    explicit StartupWindow(QWidget *parent = 0);
-    virtual ~StartupWindow();
-
+    explicit StartupWindow(QWidget *parent = nullptr);
+    ~StartupWindow() override = default;
+    
     Q_INVOKABLE void setWidth(int width);
     Q_INVOKABLE void setHeight(int height);
 

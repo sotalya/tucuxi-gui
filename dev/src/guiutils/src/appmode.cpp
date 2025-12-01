@@ -26,8 +26,7 @@ using namespace Tucuxi::Gui::GuiUtils;
 
 AppMode* AppMode::m_instance = nullptr;
 
-AppMode::AppMode()
-{}
+
 
 bool AppMode::isDemo(){
 #ifdef CONFIG_DEMO

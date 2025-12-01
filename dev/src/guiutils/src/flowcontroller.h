@@ -37,9 +37,9 @@ class Interpretation;
 }
 }
 
-typedef Tucuxi::Gui::Admin::ValidationStatus::StatusType StatusType;
-typedef Tucuxi::Gui::Admin::ValidationStatus::DataStatusType DataStatusType;
-typedef Tucuxi::Gui::Admin::ValidationStatus::ValidationStatusType ValidationStatusType;
+using StatusType = Tucuxi::Gui::Admin::ValidationStatus::StatusType;
+using DataStatusType = Tucuxi::Gui::Admin::ValidationStatus::DataStatusType;
+using ValidationStatusType = Tucuxi::Gui::Admin::ValidationStatus::ValidationStatusType;
 
 namespace Tucuxi {
 namespace Gui {
@@ -53,7 +53,7 @@ class FlowController : public QObject
 public:
     explicit FlowController(QObject *parent = nullptr);
 
-    virtual ~FlowController();
+    ~FlowController() override;
     void setInterpretation(Tucuxi::Gui::Admin::Interpretation *interpretation);
 
     void patientChanged(int index);

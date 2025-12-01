@@ -64,17 +64,17 @@ class Clinical : public Tucuxi::Gui::Core::Entity {
 
 public:
 
-    Q_INVOKABLE Clinical(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = 0, const QString &name = "", const QDateTime &date = QDateTime());
+    Q_INVOKABLE Clinical(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = nullptr, const QString &name = "", const QDateTime &date = QDateTime());
     Q_INVOKABLE Clinical(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent, const QString &name, const QDateTime &date, QString value);
 
-    QString description() const {return _description;}
+    [[nodiscard]] QString description() const {return _description;}
     void setDescription(QString description) {_description = description;}
 
-    Tucuxi::Gui::Core::Descriptor descriptor() const {return _descriptor;}
+    [[nodiscard]] Tucuxi::Gui::Core::Descriptor descriptor() const {return _descriptor;}
     void setDescriptor(Tucuxi::Gui::Core::Descriptor descriptor) {_descriptor = descriptor;}
 
-    QString toString() const;
-    bool isValid () const;
+    [[nodiscard]] QString toString() const;
+    [[nodiscard]] bool isValid () const;
 
     void operator= (QString value);
 
@@ -102,9 +102,9 @@ class ClinicalSet : public QList<Clinical*>
 public :
     ClinicalSet(Tucuxi::Gui::Core::AbstractRepository* repository, QObject* parent) {}
     //! Find if a clinical is in the list, and return its place (or -1 if not found).
-    int find (const QString &name) const;
+    [[nodiscard]] int find (const QString &name) const;
     //! Compare the two lists, item by item.
-    bool operator== (const ClinicalSet &) const;
+    [[nodiscard]] bool operator== (const ClinicalSet &) const;
 };
 typedef ClinicalSet* SharedClinicalSet;
 

@@ -23,10 +23,6 @@
 #include "core/dal/drug/drug.h"
 #include "core/drugxmldescriptor.h"
 #include "core/core.h"
-//#include "coremessagehandler.h"
-#include "core/definitionmanager.h"
-#include "core/utils/logging.h"
-#include "core/errors_core.h"
 
 #include "core/dal/drug/parameters.h"
 #include "core/dal/drug/adme.h"
@@ -149,7 +145,7 @@ DrugModel::DrugModel(AbstractRepository *repository, QObject* parent) : Entity(r
   _headComments(CoreFactory::createEntity<TranslatableString>(repository, this)),
   _conversionsComments(CoreFactory::createEntity<TranslatableString>(repository, this)),
   _generalComments(CoreFactory::createEntity<TranslatableString>(repository, this)),
-  _metaData(0),
+  _metaData(nullptr),
   _filePath("")
 {
 
@@ -169,7 +165,7 @@ DrugModel::DrugModel(AbstractRepository *repository, const Descriptor &descripto
   _parameters(CoreFactory::createEntity<ParameterSet>(repository, this)),
   _errorModel(CoreFactory::createEntity<ErrorModel>(repository, this)),
   _name(CoreFactory::createEntity<TranslatableString>(repository, this)),
-  _metaData(0)
+  _metaData(nullptr)
 {
 
 }
@@ -187,7 +183,7 @@ DrugModel::DrugModel(AbstractRepository *repository, const DrugXmlDescriptor *de
   _targets(CoreFactory::createEntity<TargetList>(repository, this)),
   _parameters(CoreFactory::createEntity<ParameterSet>(repository, this)),
   _errorModel(CoreFactory::createEntity<ErrorModel>(repository, this)),
-  _metaData(0)
+  _metaData(nullptr)
 {
     //Check if the descriptor is valid
     if (!descriptor || !descriptor->isValid())

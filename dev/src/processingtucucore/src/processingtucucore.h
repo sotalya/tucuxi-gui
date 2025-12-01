@@ -70,28 +70,30 @@ public:
     ProcessingTucucore();
     virtual ~ProcessingTucucore();
 
-    virtual Tucuxi::ProcessingResult points(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
-                       const Tucuxi::Gui::Core::PointsTraits traits,
-                       Tucuxi::Gui::Core::PredictionResult &prediction);
+    Tucuxi::ProcessingResult points(const Tucuxi::Gui::Core::DrugResponseAnalysis *analysis,
+                                    const Tucuxi::Gui::Core::PointsTraits traits,
+                                    Tucuxi::Gui::Core::PredictionResult &prediction) override;
 
-    virtual Tucuxi::ProcessingResult point(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
-                      const Tucuxi::Gui::Core::PointTraits traits,
-                      Tucuxi::Gui::Core::Amount &amount,
-                      Tucuxi::Gui::Core::PredictionResult &prediction);
+    Tucuxi::ProcessingResult point(const Tucuxi::Gui::Core::DrugResponseAnalysis *analysis,
+                                   const Tucuxi::Gui::Core::PointTraits traits,
+                                   Tucuxi::Gui::Core::Amount &amount,
+                                   Tucuxi::Gui::Core::PredictionResult &prediction) override;
 
-    virtual Tucuxi::ProcessingResult percentiles(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
-                            const Tucuxi::Gui::Core::PercentilesTraits traits,
-                            Tucuxi::Gui::Core::PredictionResult &prediction,
-                            Tucuxi::math::ProcessingAborter *aborter);
+    Tucuxi::ProcessingResult percentiles(const Tucuxi::Gui::Core::DrugResponseAnalysis *analysis,
+                                         const Tucuxi::Gui::Core::PercentilesTraits traits,
+                                         Tucuxi::Gui::Core::PredictionResult &prediction,
+                                         Tucuxi::math::ProcessingAborter *aborter) override;
 
-    virtual Tucuxi::ProcessingResult calculateAposterioriPercentiles(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
-                               const Tucuxi::Gui::Core::PercentilesTraits traits,
-                               Tucuxi::Gui::Core::PredictionResult &prediction,
-                               Tucuxi::math::ProcessingAborter *aborter);
+    Tucuxi::ProcessingResult calculateAposterioriPercentiles(
+        const Tucuxi::Gui::Core::DrugResponseAnalysis *analysis,
+        const Tucuxi::Gui::Core::PercentilesTraits traits,
+        Tucuxi::Gui::Core::PredictionResult &prediction,
+        Tucuxi::math::ProcessingAborter *aborter) override;
 
-    virtual Tucuxi::ProcessingResult computeSuggestedAdjustments(const Tucuxi::Gui::Core::DrugResponseAnalysis* analysis,
-                                            const Tucuxi::Gui::Core::ReverseTraits spec,
-                                            Tucuxi::Gui::Core::PredictionResult &prediction);
+    Tucuxi::ProcessingResult computeSuggestedAdjustments(
+        const Tucuxi::Gui::Core::DrugResponseAnalysis *analysis,
+        const Tucuxi::Gui::Core::ReverseTraits spec,
+        Tucuxi::Gui::Core::PredictionResult &prediction) override;
 
 protected:
 

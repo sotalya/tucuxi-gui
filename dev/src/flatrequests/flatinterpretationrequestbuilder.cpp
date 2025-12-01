@@ -88,7 +88,7 @@ Tucuxi::Gui::Core::Duration FlatInterpretationRequestBuilder::findDuration(const
 
 void FlatInterpretationRequestBuilder::createUncastedIntervalValue(Tucuxi::Gui::Core::Dosage *dosage, int interval_sec)
 {
-    UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+    auto *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
     uncasted->setField("Interval");
     uncasted->setText(QString::number(interval_sec));
     uncasted->setComment("Interval was computed to 0 and therefore replaced by default value");
@@ -109,7 +109,7 @@ void FlatInterpretationRequestBuilder::createUncastedIntervalValue(Tucuxi::Gui::
 
 void FlatInterpretationRequestBuilder::createUncastedDosageValue(Tucuxi::Gui::Core::Dosage *dosage, QString field, QString text, QString comment)
 {
-    UncastedValue *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
+    auto *uncasted = CoreFactory::createEntity<UncastedValue>(ABSTRACTREPO, dosage->getUncastedValues());
     uncasted->setField(field);
     uncasted->setText(text);
     uncasted->setComment(comment);
@@ -251,7 +251,7 @@ void FlatInterpretationRequestBuilder::splitOverlappingDosage(Tucuxi::Gui::Core:
 
                 // If end date are not the same a third dosage should be added
                 if(end1 != end2) {
-                    Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
+                    auto* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
                     dosage->setRoute(overlapingDosage.last()->getRoute());
                     dosage->setIsAtSteadyState(overlapingDosage.last()->getIsAtSteadyState());
 
@@ -355,15 +355,15 @@ void FlatInterpretationRequestBuilder::groupDosage(Tucuxi::Gui::Core::DosageHist
 
 InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequest()
 {
-    InterpretationRequest* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
-    Tucuxi::Gui::Core::DrugTreatment *treatment = interpretationRequest->getTreatment();
+    auto* interpretationRequest = Tucuxi::Gui::Core::CoreFactory::createEntity<InterpretationRequest>(ABSTRACTREPO);
+    auto* treatment = interpretationRequest->getTreatment();
     treatment->setParent(interpretationRequest);
 
 
     //Build patient
     SharedPatient shpatient = AdminFactory::createEntity<Patient>(ABSTRACTREPO);
     //Patient data
-    Patient* patient = static_cast<Patient*>(shpatient);
+    auto* patient = static_cast<Patient*>(shpatient);
 
     QString activeSubstanceId = reportNode.attribute(flatRequestParameters->fullDataNameXml());
 
@@ -376,13 +376,13 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
     patient->externalId(detailElement.attribute(flatRequestParameters->encounteridNameXml()));
 
     //Build dosages to be filled when parsing the file
-    Tucuxi::Gui::Core::DosageHistory* dosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO);
+    auto* dosages = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO);
 
     //Build measure to be filled when parsing the file
-    Tucuxi::Gui::Core::CoreMeasureList* measures = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO);
+    auto* measures = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO);
 
     //Build covariate list when parsing the file
-    Tucuxi::Gui::Core::PatientVariateList * covariates = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, patient);
+    auto* covariates = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, patient);
 
     //Iterate through all details element to built an interpretation request
     QString dataType;
@@ -404,7 +404,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
         } else if (nameTranslator->nameToInternalId(dataType) == "BODY_WEIGHT") {
 
-            Tucuxi::Gui::Core::PatientVariate* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
+            auto* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
             QString covariateId = "bodyweight";
             covariate->setCovariateId(covariateId);
 
@@ -424,7 +424,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
         } else if (nameTranslator->nameToInternalId(dataType) == "CREATININE_MEASURE") {
 
-            Tucuxi::Gui::Core::PatientVariate* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
+            auto* covariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO);
             QString covariateId = "creatinine";
             covariate->setCovariateId(covariateId);
 
@@ -443,7 +443,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             covariates->append(covariate);
         } else if (nameTranslator->nameToInternalId(dataType) == "DRUG_MEASURE") {
 
-            Measure * measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
+            auto* measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, measures);
 
             measure->setAnalyteId(activeSubstanceId);
 
@@ -452,7 +452,7 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             measure->setMoment(date);
             measure->arrivalDate(date);
 
-            Tucuxi::Gui::Core::IdentifiableAmount * amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
+            auto* amt = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, measure);
             QString valueString = detailElement.attribute(flatRequestParameters->valueNameXml());
             valueString.replace(',', '.');
             QString unit = detailElement.attribute(flatRequestParameters->unitNameXml(), "mg/l");
@@ -471,10 +471,9 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
         } else if (nameTranslator->nameToInternalId(dataType) == "FLOW_RATE") {
 
-            Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
+            auto* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
-            Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-            //admin->setRoute(Tucuxi::Gui::Core::DMAdmin::INFUSION);
+            auto* admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
 
             Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,
@@ -508,10 +507,9 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
 
         } else if (nameTranslator->nameToInternalId(dataType) == "DOSAGE") {
 
-            Tucuxi::Gui::Core::Dosage* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
+            auto* dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, dosages);
 
-            Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
-
+            auto* admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
 
             QString dateString = detailElement.attribute(flatRequestParameters->timeNameXml());
             QDateTime appl = QDateTime::fromString(dateString, Qt::ISODate);
@@ -544,8 +542,6 @@ InterpretationRequest* FlatInterpretationRequestBuilder::buildInterpretationRequ
             }
             else {
                 // Infusion
-                //admin->setRoute(Tucuxi::Gui::Core::DMAdmin::INFUSION);
-
                 Tucuxi::Core::FormulationAndRoute formulationAndRoute(
                     Tucuxi::Core::Formulation::ParenteralSolution,
                     Tucuxi::Core::AdministrationRoute::IntravenousDrip,

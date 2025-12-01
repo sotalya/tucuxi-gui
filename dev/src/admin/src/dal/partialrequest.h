@@ -78,7 +78,7 @@ namespace Admin {
 class PartialRequestSet : public QList<Tucuxi::Gui::Admin::PartialRequest*>
 {
 public :
-    PartialRequestSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = 0) {}
+    PartialRequestSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = nullptr) {}
     PartialRequestSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent, const PartialRequestSet* &other);
 };
 

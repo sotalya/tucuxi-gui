@@ -47,9 +47,9 @@ Practician::Practician(Tucuxi::Gui::Core::AbstractRepository *repository, const 
     _person_id(-1),
     _institute_id(-1)
 {
-    SharedInstitute _ins = AdminFactory::createEntity<Institute>(repository);
+    auto _ins = AdminFactory::createEntity<Institute>(repository);
     institute(_ins);
-    SharedPerson _pers = AdminFactory::createEntity<Person>(repository);
+    auto _pers = AdminFactory::createEntity<Person>(repository);
     person(_pers);
 }
 
@@ -68,7 +68,7 @@ void Practician::copyTo(Practician *other)
 PracticianSet::PracticianSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent, const PracticianSet* &other)
 {
     foreach (SharedPractician _p, *other) {
-        SharedPractician _np = SharedPractician(new Practician(repository, parent));
+        auto _np = SharedPractician(new Practician(repository, parent));
         _np->setId(_p->id());
         _np->role(_p->role());
         _np->person_id(_p->person_id());

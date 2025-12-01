@@ -59,9 +59,9 @@ Person::Person(Tucuxi::Gui::Core::AbstractRepository *repository, const int &id,
     _emails(),
     _phones(AdminFactory::createEntity<PhoneList>(repository, this)),
     _gender(GenderType::Male),
-    _uncastedValues(NULL)
+    _uncastedValues(nullptr)
 {
-    Location* _loc = AdminFactory::createEntity<Location>(repository);
+    auto* _loc = AdminFactory::createEntity<Location>(repository);
     location(_loc);
     // setPhones(QList<SharedPhone>());
     setEmails(QList<Email*>());

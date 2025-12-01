@@ -39,8 +39,8 @@ using namespace Tucuxi::Gui::GuiUtils;
 STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::AdjustmentTabController, Tucuxi::Gui::Core::DosageHistory*, adjustments, Adjustments)
 STD_PROPERTY_IMPL(Tucuxi::Gui::GuiUtils::AdjustmentTabController, bool, isManualAdjustmentDefined, IsManualAdjustmentDefined)
 
-static const QString MANUAL = "Manual";
-static const QString SUGGESTED = "Suggested";
+static const char* MANUAL = "Manual";
+static const char* SUGGESTED = "Suggested";
 
 Tucuxi::Gui::GuiUtils::AdjustmentTabController::AdjustmentTabController(QObject *parent) : AbstractViewController(parent),
     _isManualAdjustmentDefined(false)
@@ -193,25 +193,6 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setDbInterval(int index, do
     adjustment->setDbinterval(interval);
 }
 
-/*
-void Tucuxi::Gui::GuiUtils::AdjustmentTabController::setRouteValue(int index, int routeValue)
-{
-    if (!isIndexValid(index)) {
-        return;
-    }
-    Tucuxi::Gui::Core::ADME* adme = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getAdme();
-    Tucuxi::Gui::Core::DMAdmin::Route route = adme->getIntakes()->at(routeValue)->getRoute();
-
-    Tucuxi::Gui::Core::Dosage* adjustment = _adjustments->at(index);
-    if (adjustment->getRoute()->getRoute() == route) {
-        return;
-    }
-
-    adjustment->getRoute()->setRoute(route);
-    adjustment->getRoute()->setFormulationAndRoute(adme->getIntakes()->at(routeValue)->getFormulationAndRoute());
-}
-*/
-
 void Tucuxi::Gui::GuiUtils::AdjustmentTabController::addAdjustment()
 {
     auto *drugModel = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel();
@@ -219,7 +200,6 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::addAdjustment()
     auto* adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
     adjustment->setApplied(getAdjustmentDate());
     adjustment->setEndTime(getAdjustmentDate().addDays(1));
-//    adjustment->getRoute()->setRoute(drugModel->getAdme()->getDefaultIntake()->getRoute());
     adjustment->getRoute()->setFormulationAndRoute(drugModel->getAdme()->getDefaultIntake()->getFormulationAndRoute().getTreatmentFormulationAndRoute());
     adjustment->getRoute()->setDescription(drugModel->getAdme()->getDefaultIntake()->getDescription());
     adjustment->getQuantity()->setDbvalue(drugModel->getDoses()->getQuantity()->value());
@@ -275,7 +255,6 @@ void Tucuxi::Gui::GuiUtils::AdjustmentTabController::selectAdjustment(int index)
         auto* adjustment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdjustmentDosage>(ABSTRACTREPO, _adjustments);
         adjustment->setApplied(suggestedAdjustment->getApplied());
         adjustment->setEndTime(suggestedAdjustment->getEndTime());
-//        adjustment->getRoute()->setRoute(suggestedAdjustment->getRoute()->getRoute());
         adjustment->getRoute()->setFormulationAndRoute(suggestedAdjustment->getRoute()->getFormulationAndRoute());
         adjustment->getRoute()->setDescription(suggestedAdjustment->getRoute()->getDescription());
         adjustment->getQuantity()->setDbvalue(suggestedAdjustment->getQuantity()->value());

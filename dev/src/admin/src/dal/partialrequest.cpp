@@ -46,7 +46,7 @@ PartialRequest::PartialRequest(Tucuxi::Gui::Core::AbstractRepository *repository
 PartialRequestSet::PartialRequestSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent, const PartialRequestSet* &other)
 {
     foreach (SharedPartialRequest _pr, *other) {
-        SharedPartialRequest _npr = SharedPartialRequest(new PartialRequest(repository, parent));
+        auto _npr = SharedPartialRequest(new PartialRequest(repository, parent));
         _npr->requestId(_pr->requestId());
         _npr->requestCpcl(_pr->requestCpcl());
         _npr->patient(_pr->patient());

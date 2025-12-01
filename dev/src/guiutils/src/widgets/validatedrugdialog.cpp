@@ -175,8 +175,6 @@ void ValidateDrugDialog::validateDrug()
     }
 
     //Scan the drug
-
-    Tucuxi::Core::DrugModel *dModel;
     std::unique_ptr<Tucuxi::Core::DrugModel> uniqueDrugModel;
 
     Tucuxi::Core::DrugModelImport importer;
@@ -186,7 +184,7 @@ void ValidateDrugDialog::validateDrug()
         return;
     }
 
-    dModel = uniqueDrugModel.release();
+    Tucuxi::Core::DrugModel *dModel = uniqueDrugModel.release();
 
     _ui->errorWidget->appendPlainText(tr(_SCAN_INIT) + " " + tr(_OK));
     _ui->errorWidget->appendPlainText(tr(_BUILD_INIT) + " " + tr(_OK));

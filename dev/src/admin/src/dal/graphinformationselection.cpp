@@ -30,17 +30,17 @@ GraphInformationSelection::GraphInformationSelection(Tucuxi::Gui::Core::Abstract
     _currentStep(StepType::Patient)
 {
 	// Initialize what curve is visible for each activity
-    //                                        Population      Apriori    Aposteriori  Measure Target   Adjustment
-    //                                       Pred   Perc   Pred   Perc   Pred   Perc                 List  Selected
-    bool patientInfo[CurveType::size] =    { false, false, false, false, false, false, false, false, false, false };
-    bool drugInfo[CurveType::size] =       { false, false, false, false, false, false, false, false, false, false };
-    bool dosageInfo[CurveType::size] =     { true,  true,  false, false, false, false, false, false, false, false };
-    bool covariateInfo[CurveType::size] =  { false, false, true,  true,  false, false, false, false, false, false };
-    bool measureInfo[CurveType::size] =    { false, false, false, false, true,  true,  true,  false, false, false };
-    bool targetInfo[CurveType::size] =     { false, false, false, false, true,  true,  true,  true,  false, false };
-    bool adjustmentInfo[CurveType::size] = { false, false, false, false, true,  true,  true,  true,  true,  true  };
-    bool validationInfo[CurveType::size] = { true,  true,  true,  true,  true,  true,  true,  true,  false, true  };
-    bool reportInfo[CurveType::size] =     { true,  true,  true,  true,  true,  true,  true,  true,  false, true  };
+    //                                                    Population      Apriori    Aposteriori  Measure Target   Adjustment
+    //                                                   Pred   Perc   Pred   Perc   Pred   Perc                 List  Selected
+    std::array<bool, CurveType::size> patientInfo =    { false, false, false, false, false, false, false, false, false, false };
+    std::array<bool, CurveType::size> drugInfo =       { false, false, false, false, false, false, false, false, false, false };
+    std::array<bool, CurveType::size> dosageInfo =     { true,  true,  false, false, false, false, false, false, false, false };
+    std::array<bool, CurveType::size> covariateInfo =  { false, false, true,  true,  false, false, false, false, false, false };
+    std::array<bool, CurveType::size> measureInfo =    { false, false, false, false, true,  true,  true,  false, false, false };
+    std::array<bool, CurveType::size> targetInfo =     { false, false, false, false, true,  true,  true,  true,  false, false };
+    std::array<bool, CurveType::size> adjustmentInfo = { false, false, false, false, true,  true,  true,  true,  true,  true  };
+    std::array<bool, CurveType::size> validationInfo = { true,  true,  true,  true,  true,  true,  true,  true,  false, true  };
+    std::array<bool, CurveType::size> reportInfo =     { true,  true,  true,  true,  true,  true,  true,  true,  false, true  };
 
     initStep(StepType::Patient, patientInfo);
     initStep(StepType::Drug, drugInfo);
@@ -79,7 +79,7 @@ QString GraphInformationSelection::getCurrentTab() const{
         return QString::fromStdString(it->second);
     }
 
-    return 0; // SHOULDN'T GO HERE
+    return ""; // SHOULDN'T GO HERE
 }
 
 void GraphInformationSelection::loadDisplayParametersSettings(){
@@ -146,7 +146,7 @@ void GraphInformationSelection::setAvailable(StepType::Enum stepType, CurveType:
     }
 }
 
-void GraphInformationSelection::initStep(StepType::Enum stepType, bool curveInfo[CurveType::size])
+void GraphInformationSelection::initStep(StepType::Enum stepType, std::array<bool, CurveType::size> curveInfo)
 {
     for (int i=CurveType::first; i<=CurveType::last; i++)
     {

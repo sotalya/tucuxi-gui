@@ -80,10 +80,10 @@ int FlatRequestsClientProcessing::analyzeList(const QString &xmlList, QString &c
             if (!patientsVisited.contains(patientID)) {
                 patientsVisited.insert(patientID);
 
-                SharedPartialRequest request = AdminFactory::createEntity<PartialRequest>(ABSTRACTREPO);
+                auto request = AdminFactory::createEntity<PartialRequest>(ABSTRACTREPO);
                 request->requestId(patientID);
 
-                Patient* patient = static_cast<Patient*>(request->patient());
+                auto* patient = static_cast<Patient*>(request->patient());
                 patient->externalId(patientID);
                 patient->person()->name(patient->externalId());
 

@@ -41,15 +41,12 @@ namespace Tucuxi {
 namespace Gui {
 namespace Processing {
 
-Drugs2Manager::Drugs2Manager()
-{
-
-}
+Drugs2Manager::Drugs2Manager() = default;
 
 
 Drugs2Manager *Drugs2Manager::getInstance()
 {
-    static Drugs2Manager *manager = new Drugs2Manager();
+    static auto *manager = new Drugs2Manager();
     return manager;
 }
 
@@ -131,8 +128,6 @@ Tucuxi::Sign::Signer Drugs2Manager::checkSign(const Tucuxi::Gui::Core::DrugModel
 Tucuxi::Core::DrugModel* Drugs2Manager::scanDrug(const QString & fileName)
 {
     Tucuxi::Core::DrugModelImport importer;
-    Tucuxi::Common::IImport::Status result;
-    Tucuxi::Core::DrugModel *pDrugModel;
 
     //result = importer.importFromFile(pDrugModel, fileName.toStdString());
 
@@ -145,8 +140,8 @@ Tucuxi::Core::DrugModel* Drugs2Manager::scanDrug(const QString & fileName)
     }
     std::string content = f.readAll().data();
     std::unique_ptr<Tucuxi::Core::DrugModel> uniqueDrugModel;
-    result = importer.importFromString(uniqueDrugModel, content);
-    pDrugModel = uniqueDrugModel.release();
+    Tucuxi::Common::IImport::Status result = importer.importFromString(uniqueDrugModel, content);
+    Tucuxi::Core::DrugModel *pDrugModel = uniqueDrugModel.release();
 
     if (result != Tucuxi::Common::IImport::Status::Ok) {
         return nullptr;
@@ -181,7 +176,7 @@ void Drugs2Manager::scanDirectory(const QDir &directory)
 
     //For each files in the directory
     foreach (QFileInfo entry, directory.entryInfoList(QDir::Files)) {
-        Tucuxi::Core::DrugModel *drug;
+        Tucuxi::Core::DrugModel *drug = nullptr;
 
         //Ignore non-XML files
         if (entry.suffix().toLower() != "tdd") {

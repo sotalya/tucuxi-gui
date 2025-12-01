@@ -38,10 +38,7 @@ namespace Tucuxi {
 namespace Gui {
 namespace Processing {
 
-TucucoreToGuiTranslator::TucucoreToGuiTranslator()
-{
-
-}
+TucucoreToGuiTranslator::TucucoreToGuiTranslator() = default;
 
 QDateTime TucucoreToGuiTranslator::buildDateTime(const Tucuxi::Common::DateTime &date)
 {
@@ -54,8 +51,10 @@ bool TucucoreToGuiTranslator::buildTargetEvaluation(
         const Tucuxi::Core::TargetEvaluationResult *target,
         Tucuxi::Gui::Core::TargetEvaluationResult *newTarget)
 {
-    Tucuxi::Gui::Core::TargetMethod *method = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetMethod>(ABSTRACTREPO, newTarget);
-    Tucuxi::Gui::Core::TargetMethod::TargetType newTargetType;
+    auto *method
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetMethod>(ABSTRACTREPO,
+                                                                                        newTarget);
+    Tucuxi::Gui::Core::TargetMethod::TargetType newTargetType = Tucuxi::Gui::Core::TargetMethod::TargetType::UnknownTarget;
     switch (target->getTargetType()) {
     case Tucuxi::Core::TargetType::Residual : newTargetType = Tucuxi::Gui::Core::TargetMethod::TargetType::ResidualTarget; break;
     case Tucuxi::Core::TargetType::Peak : newTargetType = Tucuxi::Gui::Core::TargetMethod::TargetType::PeakTarget; break;
@@ -137,15 +136,18 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
 {
 
     for (const auto & dosageRange : dosageHistory.getDosageTimeRanges()) {
-        Tucuxi::Gui::Core::Dosage *dosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO, newHistory);
+        auto *dosage
+            = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO,
+                                                                                      newHistory);
         dosage->setApplied(buildDateTime(dosageRange->getStartDate()));
         dosage->setEndTime(buildDateTime(dosageRange->getEndDate()));
         const Tucuxi::Core::Dosage * d = dosageRange->getDosage();
 
         {
-            const Tucuxi::Core::DosageRepeat *r = dynamic_cast<const Tucuxi::Core::DosageRepeat*>(d);
+            const auto *r = dynamic_cast<const Tucuxi::Core::DosageRepeat *>(d);
             if (r) {
-                const Tucuxi::Core::LastingDose *lasting = dynamic_cast<const Tucuxi::Core::LastingDose*>(r->getDosage());
+                const auto *lasting = dynamic_cast<const Tucuxi::Core::LastingDose *>(
+                    r->getDosage());
 
                 if (lasting == nullptr) {
                     std::cout << "ouch" << std::endl;
@@ -153,7 +155,8 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
                 dosage->setDbinterval(lasting->getTimeStep().toHours());
                 dosage->setDbtinf(lasting->getInfusionTime().toMinutes());
                 dosage->getQuantity()->setValue(lasting->getDose() );
-                Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
+                auto *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<
+                    Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
                 //admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
                 Tucuxi::Core::FormulationAndRoute dmf(
                     lasting->getLastFormulationAndRoute().getFormulation(),
@@ -173,9 +176,9 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
             }
         }
         {
-            const Tucuxi::Core::DosageLoop *r = dynamic_cast<const Tucuxi::Core::DosageLoop*>(d);
+            const auto *r = dynamic_cast<const Tucuxi::Core::DosageLoop *>(d);
             if (r) {
-                const Tucuxi::Core::SingleDose *lasting = dynamic_cast<const Tucuxi::Core::SingleDose*>(r->getDosage());
+                const auto *lasting = dynamic_cast<const Tucuxi::Core::SingleDose *>(r->getDosage());
 
                 if (lasting == nullptr) {
                     std::cout << "ouch" << std::endl;
@@ -183,7 +186,8 @@ bool TucucoreToGuiTranslator::buildDosageHistory(const Tucuxi::Core::DosageHisto
                 dosage->setDbinterval(lasting->getTimeStep().toHours());
                 dosage->setDbtinf(lasting->getInfusionTime().toMinutes());
                 dosage->getQuantity()->setValue(lasting->getDose() );
-                Tucuxi::Gui::Core::Admin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
+                auto *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<
+                    Tucuxi::Gui::Core::Admin>(ABSTRACTREPO, dosage);
                 //admin->setRoute(translateFormulationAndRoute(lasting->getLastFormulationAndRoute()));
                 Tucuxi::Core::FormulationAndRoute dmf(
                     lasting->getLastFormulationAndRoute().getFormulation(),
@@ -225,7 +229,9 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         return nullptr;
     }
 
-    Tucuxi::Gui::Core::DrugModel *newModel = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugModel>(ABSTRACTREPO, nullptr);
+    auto *newModel
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugModel>(ABSTRACTREPO,
+                                                                                     nullptr);
 
     //
     // General fields
@@ -250,12 +256,14 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
 
     // For the active substance we only need its Id and its name in english
 
-    Tucuxi::Gui::Core::ActiveSubstance *activeSubstance =  Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ActiveSubstance>(ABSTRACTREPO, newModel);
+    auto *activeSubstance = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::ActiveSubstance>(ABSTRACTREPO, newModel);
 
     const Tucuxi::Core::ActiveMoiety *activeMoiety = drugModel->getActiveMoieties().at(0).get();
     activeSubstance->setSubstanceId(QString::fromStdString(activeMoiety->getActiveMoietyId().toString()));
 
-    Tucuxi::Gui::Core::TranslatableString *name = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO, activeSubstance);
+    auto *name = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO, activeSubstance);
     // We only support english now
     name->insert("en", QString::fromStdString(activeMoiety->getActiveMoietyName().getString()));
     activeSubstance->setName(name);
@@ -284,17 +292,24 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
     // ADME
     //
 
-    Tucuxi::Gui::Core::ADME *adme = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ADME>(ABSTRACTREPO, newModel);
-    Tucuxi::Gui::Core::DMAdmin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO, adme);
+    auto *adme = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ADME>(ABSTRACTREPO,
+                                                                                       newModel);
+    auto *admin
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO,
+                                                                                   adme);
     admin->setRoute(translateAbsorptionModel(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute().getAbsorptionModel()));
     admin->setFormulationAndRoute(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute());
     admin->setDescription(description(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute().getTreatmentFormulationAndRoute()));
     admin->setFormulationAndRoute(drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute());
     adme->setDefaultIntake(admin);
 
-    Tucuxi::Gui::Core::DMAdminList *adminList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdminList>(ABSTRACTREPO, adme);
+    auto *adminList
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdminList>(ABSTRACTREPO,
+                                                                                       adme);
     for(auto & formulation : drugModel->getFormulationAndRoutes()) {
-        Tucuxi::Gui::Core::DMAdmin *admin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO, adminList);
+        auto *admin
+            = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO,
+                                                                                       adminList);
         admin->setRoute(translateAbsorptionModel(formulation->getFormulationAndRoute().getAbsorptionModel()));
         admin->setFormulationAndRoute(formulation->getFormulationAndRoute());
         auto f = formulation->getFormulationAndRoute();
@@ -337,8 +352,10 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
     auto defaultFormulation = drugModel->getFormulationAndRoutes().getDefault();
     {
         // All doses values found on drug model
-        Tucuxi::Gui::Core::ValidDoses *validDoses = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDoses>(ABSTRACTREPO, newModel);
-        Tucuxi::Gui::Core::IdentifiableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
+        auto *validDoses = Tucuxi::Gui::Core::CoreFactory::createEntity<
+            Tucuxi::Gui::Core::ValidDoses>(ABSTRACTREPO, newModel);
+        auto *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<
+            Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, validDoses);
 
         QString uString = QString::fromStdString(defaultFormulation->getValidDoses()->getUnit().toString());
         QList<double> doseList;
@@ -357,8 +374,10 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
     if (defaultFormulation->getValidInfusionTimes() != nullptr)
     {
         //All infusions values found on drug model
-        Tucuxi::Gui::Core::ValidInfusions *validInfusions = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusions>(ABSTRACTREPO, newModel);
-        Tucuxi::Gui::Core::IdentifiableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, validInfusions);
+        auto *validInfusions = Tucuxi::Gui::Core::CoreFactory::createEntity<
+            Tucuxi::Gui::Core::ValidInfusions>(ABSTRACTREPO, newModel);
+        auto *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<
+            Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, validInfusions);
 
         QString uString = QString::fromStdString(defaultFormulation->getValidInfusionTimes()->getUnit().toString());
         QList<double> infusionsList;
@@ -379,8 +398,10 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
 
     {
         // All intervals values found on drug model
-        Tucuxi::Gui::Core::ValidIntervals *validIntervals = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidIntervals>(ABSTRACTREPO, newModel);
-        Tucuxi::Gui::Core::IdentifiableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, validIntervals);
+        auto *validIntervals = Tucuxi::Gui::Core::CoreFactory::createEntity<
+            Tucuxi::Gui::Core::ValidIntervals>(ABSTRACTREPO, newModel);
+        auto *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<
+            Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, validIntervals);
 
         QString uString = QString::fromStdString(defaultFormulation->getValidIntervals()->getUnit().toString());
         QList<double> intervalsList;
@@ -398,7 +419,8 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         newModel->setIntervals(validIntervals);
     }
 
-    Tucuxi::Gui::Core::DrugVariateList *variateList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariateList>(ABSTRACTREPO, newModel);
+    auto *variateList = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::DrugVariateList>(ABSTRACTREPO, newModel);
     for (const auto &covariate : drugModel->getCovariates()) {
         // The GUI do not need to know about computed covariates
         if (covariate.get()->isComputed()) {
@@ -408,10 +430,12 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         if (covariate->getType() == Tucuxi::Core::CovariateType::Dose) {
             continue;
         }
-        Tucuxi::Gui::Core::DrugVariate *variate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariate>(ABSTRACTREPO, variateList);
+        auto *variate = Tucuxi::Gui::Core::CoreFactory::createEntity<
+            Tucuxi::Gui::Core::DrugVariate>(ABSTRACTREPO, variateList);
         variate->setCovariateId(QString::fromStdString(covariate->getId()));
         variate->setVisualNameTranslation(translate(covariate->getName(), variate));
-        Tucuxi::Gui::Core::OperableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, variate);
+        auto *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<
+            Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, variate);
         amount->setDbvalue(covariate->getValue());
         QString uString = QString::fromStdString(covariate->getUnit().toString());
         amount->setUnit(Tucuxi::Gui::Core::Unit(uString));
@@ -434,7 +458,7 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
         }
         variate->setCovariateType(cType);
 
-        QMetaType::Type newType;
+        QMetaType::Type newType = QMetaType::Type::UnknownType;
         switch (covariate->getDataType()) {
         case Tucuxi::Core::DataType::Bool : newType = QMetaType::Type::Bool; break;
         case Tucuxi::Core::DataType::Int : newType = QMetaType::Type::Int; break;
@@ -451,11 +475,14 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
     }
     newModel->setCovariates(variateList);
 
-
-    Tucuxi::Gui::Core::TargetList *targetList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetList>(ABSTRACTREPO, newModel);
+    auto *targetList
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetList>(ABSTRACTREPO,
+                                                                                      newModel);
     for(const auto &target : drugModel->getActiveMoieties().at(0)->getTargetDefinitions())
     {
-        Tucuxi::Gui::Core::Target *newTarget = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO, targetList);
+        auto *newTarget
+            = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO,
+                                                                                      targetList);
         newTarget->setCmin(translate(target->getCMin(), target.get(), newTarget));
         newTarget->setCmax(translate(target->getCMax(), target.get(), newTarget));
         newTarget->setCbest(translate(target->getCBest(), target.get(), newTarget));
@@ -469,7 +496,8 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
     newModel->setTargets(targetList);
 
     {
-        Tucuxi::Gui::Core::ParameterSet *parameterSet = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ParameterSet>(ABSTRACTREPO, newModel);
+        auto *parameterSet = Tucuxi::Gui::Core::CoreFactory::createEntity<
+            Tucuxi::Gui::Core::ParameterSet>(ABSTRACTREPO, newModel);
         // TODO : Be careful, only valid for a single analyteSet
         const Tucuxi::Core::AnalyteGroupId analyteGroupId = drugModel->getAnalyteSets()[0]->getId();
         const Tucuxi::Core::Formulation formulation = drugModel->getFormulationAndRoutes().getDefault()->getFormulationAndRoute().getFormulation();
@@ -479,9 +507,11 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
 
         it.reset();
         while (!it.isDone()) {
-            Tucuxi::Gui::Core::Parameter *newParameter = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameter>(ABSTRACTREPO, parameterSet);
+            auto *newParameter = Tucuxi::Gui::Core::CoreFactory::createEntity<
+                Tucuxi::Gui::Core::Parameter>(ABSTRACTREPO, parameterSet);
             newParameter->setName(QString::fromStdString((*it)->getId()));
-            Tucuxi::Gui::Core::OperableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, newParameter);
+            auto *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<
+                Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, newParameter);
             amount->setDbvalue((*it)->getValue());
             amount->setUnit(Tucuxi::Gui::Core::Unit(QString::fromStdString((*it)->getUnit().toString())));
             newParameter->setQuantity(amount);
@@ -496,7 +526,8 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
 
         const Tucuxi::Core::StandardTreatment *oldTreatment = drugModel->getFormulationAndRoutes().getDefault()->getStandardTreatment();
         if (oldTreatment != nullptr) {
-            Tucuxi::Gui::Core::StandardTreatment *standardTreatment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::StandardTreatment>(ABSTRACTREPO, newModel);
+            auto *standardTreatment = Tucuxi::Gui::Core::CoreFactory::createEntity<
+                Tucuxi::Gui::Core::StandardTreatment>(ABSTRACTREPO, newModel);
             standardTreatment->setIsFixedDuration(oldTreatment->getIsFixedDuration());
             if (oldTreatment->getIsFixedDuration()) {
                 Tucuxi::Gui::Core::Duration duration;
@@ -523,7 +554,9 @@ Tucuxi::Gui::Core::DrugModel* TucucoreToGuiTranslator::buildLightDrugModel(const
 
 Tucuxi::Gui::Core::TargetMethod* TucucoreToGuiTranslator::translate(Tucuxi::Core::TargetType targetType, Tucuxi::Gui::Core::Target *newTarget)
 {
-    Tucuxi::Gui::Core::TargetMethod *method = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetMethod>(ABSTRACTREPO, newTarget);
+    auto *method
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetMethod>(ABSTRACTREPO,
+                                                                                        newTarget);
     switch (targetType) {
     case Tucuxi::Core::TargetType::Auc : method->setTargetType(Tucuxi::Gui::Core::TargetMethod::TargetType::AUCTarget); break;
     case Tucuxi::Core::TargetType::Auc24 : method->setTargetType(Tucuxi::Gui::Core::TargetMethod::TargetType::AUC24Target); break;
@@ -546,7 +579,8 @@ Tucuxi::Gui::Core::TargetMethod* TucucoreToGuiTranslator::translate(Tucuxi::Core
 
 Tucuxi::Gui::Core::OperableAmount *TucucoreToGuiTranslator::translate(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, Tucuxi::Gui::Core::Target *newTarget)
 {
-    Tucuxi::Gui::Core::OperableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, newTarget);
+    auto *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(
+        ABSTRACTREPO, newTarget);
     amount->setDbvalue(subTarget.getValue());
     QString uString = QString::fromStdString(target->getUnit().toString());
     amount->setUnit(Tucuxi::Gui::Core::Unit(uString));
@@ -556,7 +590,8 @@ Tucuxi::Gui::Core::OperableAmount *TucucoreToGuiTranslator::translate(const Tucu
 Tucuxi::Gui::Core::OperableAmount *TucucoreToGuiTranslator::translateMic(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Common::TucuUnit micUnit,
                                                                      Tucuxi::Common::TucuUnit newUnit, Tucuxi::Gui::Core::Target *newTarget)
 {
-    Tucuxi::Gui::Core::OperableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, newTarget);
+    auto *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(
+        ABSTRACTREPO, newTarget);
     amount->setDbvalue(Tucuxi::Common::UnitManager::convertToUnit(subTarget.getValue(), micUnit, newUnit));
     amount->setUnit(Tucuxi::Gui::Core::Unit(QString(newUnit.toString().c_str())));
     return amount;
@@ -565,7 +600,8 @@ Tucuxi::Gui::Core::OperableAmount *TucucoreToGuiTranslator::translateMic(const T
 
 Tucuxi::Gui::Core::OperableAmount *TucucoreToGuiTranslator::translateTime(const Tucuxi::Core::SubTargetDefinition &subTarget, Tucuxi::Core::TargetDefinition *target, Tucuxi::Gui::Core::Target *newTarget)
 {
-    Tucuxi::Gui::Core::OperableAmount *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, newTarget);
+    auto *amount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(
+        ABSTRACTREPO, newTarget);
     amount->setDbvalue(subTarget.getValue());
     QString uString = QString::fromStdString(target->getTimeUnit().toString());
     amount->setUnit(Tucuxi::Gui::Core::Unit(uString));
@@ -574,7 +610,8 @@ Tucuxi::Gui::Core::OperableAmount *TucucoreToGuiTranslator::translateTime(const 
 
 Tucuxi::Gui::Core::TranslatableString* TucucoreToGuiTranslator::translate(const Tucuxi::Common::TranslatableString &str, Tucuxi::Gui::Core::Entity *parent)
 {
-    Tucuxi::Gui::Core::TranslatableString *newString = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO, parent);
+    auto *newString = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::TranslatableString>(ABSTRACTREPO, parent);
     // Now we only insert the english translation
     newString->insert("en", QString::fromStdString(str.getString("en")));
     return newString;

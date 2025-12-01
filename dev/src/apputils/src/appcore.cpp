@@ -69,9 +69,9 @@ Tucuxi::Gui::Core::SecurityManager *AppCore::securityManager()
 //Constructor
 AppCore::AppCore() :
 #ifndef CONFIG_NOBOTAN
-    _securityManager(0),
+    _securityManager(nullptr),
     #endif // CONFIG_NOBOTAN
-    _drugManager(0)
+    _drugManager(nullptr)
 {
     drugMutex = new QMutex();
     drugPreloadMutex = new QMutex();

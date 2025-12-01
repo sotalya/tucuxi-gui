@@ -58,7 +58,6 @@ class DrugTreatment : public Entity
     AUTO_PROPERTY_DECL(QString, name, Name)
     AUTO_PROPERTY_DECL(QString, activeSubstanceId, ActiveSubstanceId)
     AUTO_PROPERTY_DECL(CorePatient*, patient, Patient)
-//    AUTO_PROPERTY_DECL(ActiveSubstance*, drug, Drug)
     AUTO_PROPERTY_DECL(DosageHistory*, dosages, Dosages)
     AUTO_PROPERTY_DECL(DosageHistory*, adjustments, Adjustments)
     AUTO_PROPERTY_DECL(PatientVariateList*, covariates, Covariates)
@@ -71,37 +70,9 @@ class DrugTreatment : public Entity
         return true;
     }
 
-//    Q_PROPERTY(QList<PatientVariate*> *covariates READ covariates WRITE setCovariates NOTIFY covariatesChanged)
-
 protected:
 
     Q_INVOKABLE DrugTreatment(AbstractRepository *repository = nullptr, QObject* parent = nullptr);
-
-public:
-
-//    QList<PatientVariate*> *covariates() {return &_covariates;}
-//    void setCovariates(QList<PatientVariate*> *covariates) {_covariates = *covariates;}
-
-//    QList<CoreMeasure*> *measures() {return &_measures;}
-//    void setCoreMeasures(QList<CoreMeasure*> *measures) {_measures = *measures;}
-
-//    QList<Target*> *targets() {return &_targets;}
-//    void setTargets(QList<Target*> *targets) {_targets = *targets;}
-
-    int defaultRouteOfIntake();
-
-//    Unit doseUnit() const;
-
-//    Unit concentrationUnit() const;
-
-//signals:
-//    void covariatesChanged(QList<PatientVariate*>*);
-//    void measuresModified(QList<CoreMeasure*>*);
-
-protected:
-//    QList<PatientVariate*> _covariates;
-//    QList<CoreMeasure*> _measures;
-//    QList<Target*> _targets;
 
 private:    
     QDateTime _firstTake;

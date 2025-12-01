@@ -30,10 +30,7 @@
 
 using namespace Tucuxi::Gui::GuiUtils;
 
-DrugToHtml::DrugToHtml()
-{
-
-}
+DrugToHtml::DrugToHtml() = default;
 
 QString DrugToHtml::drugToHtml(const Tucuxi::Gui::Core::DrugModel *drug)
 {
@@ -230,7 +227,7 @@ QString DrugToHtml::drugToHtml(const Tucuxi::Gui::Core::DrugModel *drug)
 
         return desc;
     }
-    return QString("No drug selected");
+    return "No drug selected";
 }
 
 
@@ -261,5 +258,5 @@ QString DrugToHtml::activeSubstanceToHtml(const Tucuxi::Gui::Core::ActiveSubstan
 
         return desc;
     }
-    return QString("No active substance selected");
+    return "No active substance selected";
 }

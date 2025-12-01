@@ -38,7 +38,7 @@ class RestConfigDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RestConfigDialog(QWidget *parent = 0);
+    explicit RestConfigDialog(QWidget *parent = nullptr);
     virtual ~RestConfigDialog() Q_DECL_OVERRIDE;
 
     QString getIp() const;

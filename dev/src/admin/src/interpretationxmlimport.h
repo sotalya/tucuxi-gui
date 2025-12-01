@@ -161,7 +161,7 @@ protected:
 
     QMetaType::Type qStringToType(QString stringType,bool &isConvertible);
 
-    QString errorString() const;
+    [[nodiscard]] QString errorString() const;
 
     void raiseConversionError();
 };

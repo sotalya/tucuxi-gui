@@ -23,9 +23,6 @@
 #include "validationtabcontroller.h"
 
 
-//STD_PROPERTY_IMPL(ValidationTabController, QString, posology, Posology)
-//STD_PROPERTY_IMPL(ValidationTabController, QDateTime, nextControlDate, nextControlDate)
-
 using namespace Tucuxi::Gui::GuiUtils;
 
 ValidationTabController::ValidationTabController(QObject *parent)

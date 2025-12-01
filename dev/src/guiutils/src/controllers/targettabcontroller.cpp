@@ -148,7 +148,7 @@ void TargetTabController::setMicDbValue(int index, double value)
 void TargetTabController::addTarget()
 {
     Tucuxi::Gui::Core::TargetList* tlist = masterController->getInterpretation()->getDrugResponseAnalysis()->getTreatment()->getTargets();
-    Tucuxi::Gui::Core::Target* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO, tlist);
+    auto* target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO, tlist);
     Tucuxi::Gui::Core::Unit defaultUnit = Tucuxi::Gui::Core::Unit(masterController->getDefaultUnit());
     target->getCbest()->setUnit(defaultUnit);
     target->getCmax()->setUnit(defaultUnit);

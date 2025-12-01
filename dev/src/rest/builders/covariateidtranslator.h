@@ -36,17 +36,17 @@ namespace Rest {
 class CovariateIdTranslator
 {
 public:
-    CovariateIdTranslator();
-
+    CovariateIdTranslator() = default;
+    
     virtual QString restToInternalId(QString restId) = 0;
 };
 
 class DummyCovariateIdTranslator : public CovariateIdTranslator
 {
 public:
-    DummyCovariateIdTranslator();
-
-    virtual QString restToInternalId(QString restId);
+    DummyCovariateIdTranslator() = default;
+    
+    QString restToInternalId(QString restId) override;
 };
 
 class ChuvCovariateIdTranslator : public CovariateIdTranslator
@@ -54,7 +54,7 @@ class ChuvCovariateIdTranslator : public CovariateIdTranslator
 public:
     ChuvCovariateIdTranslator();
 
-    virtual QString restToInternalId(QString restId);
+    QString restToInternalId(QString restId) override;
 
 private:
     QMap<QString,QString> map;
@@ -63,11 +63,11 @@ private:
 class ExternalCovariateIdTranslator : public CovariateIdTranslator
 {
 public:
-    ExternalCovariateIdTranslator();
+    ExternalCovariateIdTranslator() = default;
 
     void setFileName(const QString &fileName);
 
-    virtual QString restToInternalId(QString restId);
+    QString restToInternalId(QString restId) override;
 
 private:
     QString m_fileName;

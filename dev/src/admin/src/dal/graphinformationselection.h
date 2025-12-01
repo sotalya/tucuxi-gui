@@ -102,7 +102,7 @@ class GraphInformationSelection : public Tucuxi::Gui::Core::Entity
         Q_INVOKABLE GraphInformationSelection(Tucuxi::Gui::Core::AbstractRepository *repository, QObject *parent = nullptr);
 
     private:
-        void initStep(Tucuxi::Gui::Admin::StepType::Enum stepType, bool curveInfo[CurveType::size]);
+        void initStep(Tucuxi::Gui::Admin::StepType::Enum stepType, std::array<bool, CurveType::size> curveInfo);
         void updateProperties();
         void loadDisplayParametersSettings();
 

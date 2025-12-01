@@ -116,11 +116,11 @@ StartupScreen::StartupScreen(QWidget *parent) :
 #endif // COMPILE_WITH_TUCUCORE
     mText += QString("</p>");
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    auto *layout = new QVBoxLayout(this);
     text = new QTextEdit(mText, this);
     text->setReadOnly(true);
 
-    QHBoxLayout *hLayout = new QHBoxLayout();
+    auto *hLayout = new QHBoxLayout();
     layout->addWidget(text);
     layout->addWidget(new QLabel(tr("Do you agree with the above restrictions?"), this));
     layout->addLayout(hLayout);

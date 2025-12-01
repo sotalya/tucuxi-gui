@@ -26,7 +26,6 @@
 #include <QObject>
 #include <QDateTime>
 
-#include "core/utils/autoproperty.h"
 #include "abstractviewcontroller.h"
 #include "admin/src/dal/sentencepalette.h"
 
@@ -64,10 +63,6 @@ public:
     Q_INVOKABLE bool validateText(int sectionId, QString text, QString drugId, bool isEditing, int _index);
 
     Tucuxi::Gui::Admin::SentencesPalettes *_sentencesPalettes;
-
-    // These two fields are actually not used at all.
-//    STD_PROPERTY_DECL(QString, posology, Posology)
-//    STD_PROPERTY_DECL(QDateTime, nextControlDate, nextControlDate)
 
 };
 

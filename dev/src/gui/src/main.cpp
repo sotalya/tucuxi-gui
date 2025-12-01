@@ -34,7 +34,6 @@
 #include "rest/network/mirthrequest.h"
 #include "rest/network/networkaccessmanager.h"
 
-#include "core/settings.h"
 #include "core/dal/chartdata.h"
 #include "core/dal/drug/drug.h"
 #include "core/dal/drugtreatment.h"
@@ -67,10 +66,8 @@
 
 #include "admin/src/dal/validationstatus.h"
 
-#include "admin/src/adminfactory.h"
 #include "admin/src/dal/patient.h"
 #include "admin/src/dal/practician.h"
-#include "admin/src/dal/measure.h"
 #include "admin/src/dal/interpretationrequest.h"
 #include "admin/src/dal/steptypes.h"
 #include "admin/src/dal/clinical.h"
@@ -86,7 +83,6 @@
 #endif
 
 #include "apputils/src/appcore.h"
-#include "apputils/src/apputilsfactory.h"
 
 #include "guiutils/src/mainwindowcontroller.h"
 #include "guiutils/src/controllers/interpretationcontroller.h"
@@ -512,7 +508,7 @@ int main(int argc, char *argv[])
         return 0;
 #endif // NOSTARTUPSCREEN
 
-    Tucuxi::Gui::GuiUtils::MainWindowController* mainWindow = new Tucuxi::Gui::GuiUtils::MainWindowController(&app);
+    auto* mainWindow = new Tucuxi::Gui::GuiUtils::MainWindowController(&app);
 #ifndef CONFIG_GUITEST
     mainWindow->setResizeMode(QQuickView::SizeRootObjectToView);
     mainWindow->setMinimumSize(QSize(800,680));
@@ -732,11 +728,13 @@ void initRestConfig() {
     if (true)
         return;
 
-    RestConfigDialog *restConfig = new RestConfigDialog;
+    auto *restConfig = new RestConfigDialog;
     restConfig->exec();
 
     Tucuxi::Gui::Rest::MirthRequest::updateDefaultPort(restConfig->getPort().toInt());
     Tucuxi::Gui::Rest::MirthRequest::updateDefaultScheme(restConfig->getScheme());
     Tucuxi::Gui::Rest::MirthRequest::updateDefaultHost(restConfig->getIp());
+
+    delete restConfig;
 }
 #endif // CONFIG_CONNECTED

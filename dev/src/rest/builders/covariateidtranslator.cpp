@@ -21,29 +21,15 @@
 
 
 #include "covariateidtranslator.h"
-#include "drugidtranslator.h"
-
 
 namespace Tucuxi {
 namespace Gui {
 namespace Rest {
 
-
-CovariateIdTranslator::CovariateIdTranslator()
-{
-
-}
-
-DummyCovariateIdTranslator::DummyCovariateIdTranslator()
-{
-
-}
-
 QString DummyCovariateIdTranslator::restToInternalId(QString restId)
 {
     return restId;
 }
-
 
 
 ChuvCovariateIdTranslator::ChuvCovariateIdTranslator()
@@ -62,11 +48,6 @@ QString ChuvCovariateIdTranslator::restToInternalId(QString restId)
     return map.value(restId,restId);
 }
 
-
-ExternalCovariateIdTranslator::ExternalCovariateIdTranslator()
-{
-
-}
 
 void ExternalCovariateIdTranslator::setFileName(const QString &fileName)
 {

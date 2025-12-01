@@ -25,8 +25,7 @@
 
 FlatRequestParameters* FlatRequestParameters::instance = nullptr;
 
-FlatRequestParameters::FlatRequestParameters() {
-}
+FlatRequestParameters::FlatRequestParameters() =default;
 
 FlatRequestParameters* FlatRequestParameters::getInstance()
 {

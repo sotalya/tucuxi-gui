@@ -81,7 +81,7 @@ AppGlobals* appGlobals = AppGlobals::getInstance();
 
 if (!appGlobals->getFlatImport()) {
     #ifdef CONFIG_CONNECTED
-        QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
+    // QString requestDefaultDir = QCoreApplication::applicationDirPath() + "/requests/list.xml";
         QString listFile = appGlobals->getListFile();
         //if (listFile.isEmpty()) {
         //    listFile = requestDefaultDir;
@@ -438,7 +438,7 @@ void MainWindowController::loadInterpretationFile(const QString &fileName)
         InterpretationXmlImport importer;
         Interpretation *interpretation = importer.load(fileContent);
         if (interpretation != nullptr) {
-            emit interpretationReady(interpretation);
+            interpretationReady(interpretation);
         }
         else {
             QMessageBox::warning(nullptr, "Error while loading file", "The interpretation file could not be loaded");
@@ -483,7 +483,7 @@ void MainWindowController::loadRequestFile(const QString &fileName)
         Tucuxi::Gui::Rest::SimpleBuilder requestBuilder;
         Tucuxi::Gui::Admin::InterpretationRequest *ir = requestBuilder.buildRequest(fileContent);
         if (ir != nullptr) {
-            emit requestReady(ir);
+            requestReady(ir);
         }
         else {
             QMessageBox::warning(nullptr, "Error while loading file", QString("Error while loading file %1. See the logs for details.").arg(fileName));

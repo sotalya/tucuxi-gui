@@ -30,7 +30,7 @@
 
 TqfLogger* TqfLogger::getInstance()
 {
-    static TqfLogger* tqfLogger = new TqfLogger();
+    static auto* tqfLogger = new TqfLogger();
     return tqfLogger;
 }
 

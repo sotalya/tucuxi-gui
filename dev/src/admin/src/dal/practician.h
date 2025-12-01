@@ -70,7 +70,7 @@ namespace Admin {
 class PracticianSet : public QList<Practician*>
 {
 public :
-    PracticianSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = 0) {}
+    PracticianSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent = nullptr) {}
     PracticianSet(Tucuxi::Gui::Core::AbstractRepository *repository, QObject* parent, const PracticianSet* &other);
 };
 

@@ -54,10 +54,10 @@ public:
     /** \brief Constructor.
      * @param parent An optional parent widget.
      */
-    explicit ValidateDrugDialog(QWidget *parent = 0);
+    explicit ValidateDrugDialog(QWidget *parent = nullptr);
 
     //! Destructor.
-    ~ValidateDrugDialog();
+    ~ValidateDrugDialog() override;
     
 public slots:
 
@@ -65,7 +65,7 @@ public slots:
     /** Reimplemented from QDialog::exec().
      * This function will clear any previous error or validation messages and call the parent implementation.
      */
-    virtual int exec();
+    int exec() override;
 
 private:
     //The shared strings

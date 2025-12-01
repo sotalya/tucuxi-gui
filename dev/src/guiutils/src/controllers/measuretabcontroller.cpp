@@ -47,7 +47,7 @@ void MeasureTabController::setSampleId(int index, const QString &id)
 {
     if (!isIndexValid(index)) return;
 
-    Measure *measure = static_cast<Measure*>(_measures->at(index));
+    auto* measure = static_cast<Measure*>(_measures->at(index));
     if (measure->sampleID() == id) return;
 
     measure->sampleID(id);
@@ -57,7 +57,7 @@ void MeasureTabController::setMoment(int index, QDateTime time)
 {
     if (!isIndexValid(index)) return;
 
-    Measure *measure = static_cast<Measure*>(_measures->at(index));
+    auto* measure = static_cast<Measure*>(_measures->at(index));
     if (measure->getMoment() == time) return;
 
     _measures->at(index)->setMoment(time);
@@ -74,7 +74,7 @@ void MeasureTabController::setArrivalDate(int index, QDateTime time)
 {
     if (!isIndexValid(index)) return;
 
-    Measure *measure = static_cast<Measure*>(_measures->at(index));
+    auto* measure = static_cast<Measure*>(_measures->at(index));
     if (measure->arrivalDate() == time) return;
 
     if (time < measure->getMoment())
@@ -88,7 +88,7 @@ void MeasureTabController::setEnable(int index, bool enable)
 {
     if (!isIndexValid(index)) return;
 
-    Measure *measure = static_cast<Measure*>(_measures->at(index));
+    auto* measure = static_cast<Measure*>(_measures->at(index));
 
     measure->setEnable(enable);
 }
@@ -97,7 +97,7 @@ void MeasureTabController::setDbValue(int index, double value)
 {
     if (!isIndexValid(index)) return;
 
-    Measure *measure = static_cast<Measure*>(_measures->at(index));
+    auto* measure = static_cast<Measure*>(_measures->at(index));
     if (measure->getConcentration()->getDbvalue() == value) return;
 
     measure->getConcentration()->setDbvalue(value);
@@ -105,7 +105,7 @@ void MeasureTabController::setDbValue(int index, double value)
 
 void MeasureTabController::addMeasure()
 {
-    Measure* measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, _measures);
+    auto* measure = AdminFactory::createEntity<Measure>(ABSTRACTREPO, _measures);
     measure->getConcentration()->setUnitstring(masterController->getDefaultUnit());
     measure->getConcentration()->setUnit(Tucuxi::Gui::Core::Unit(masterController->getDefaultUnit()));
     auto active = masterController->getInterpretation()->getDrugResponseAnalysis()->getDrugModel()->getActiveSubstance();

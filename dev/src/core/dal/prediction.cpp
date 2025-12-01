@@ -21,7 +21,6 @@
 
 
 #include "core/dal/prediction.h"
-//#include "core/corerepository.h"
 #include "core/core.h"
 #include "core/dal/drug/parameters.h"
 #include "core/dal/drugtreatment.h"
@@ -52,25 +51,16 @@ Prediction::Prediction(AbstractRepository *repository, QObject* parent, DrugResp
 
 Prediction::Prediction(AbstractRepository *repository, QObject* parent)
     : Entity(repository, parent), _name(""), _comment(""), _curveType(CurveType::Continous),
-      _paramsType(ParameterType::POPULATION) //,
-      //_spec(Tucuxi::Gui::Core::CoreFactory::createEntity<PredictionSpec>(repository)),
-      //_analysis(Tucuxi::Gui::Core::CoreFactory::createEntity<DrugResponseAnalysis>(repository))
+      _paramsType(ParameterType::POPULATION),
+      _spec(Tucuxi::Gui::Core::CoreFactory::createEntity<PredictionSpec>(repository)),
+      _analysis(Tucuxi::Gui::Core::CoreFactory::createEntity<DrugResponseAnalysis>(repository))
 {
-
-          _spec=(Tucuxi::Gui::Core::CoreFactory::createEntity<PredictionSpec>(repository));
-          _analysis=(Tucuxi::Gui::Core::CoreFactory::createEntity<DrugResponseAnalysis>(repository));
-//    LOG(QtDebugMsg, NOEZERROR, "Prediction Constructor");
 }
 
 DrugTreatment *Prediction::getTreatment() const
 {
     return getAnalysis()->getTreatment();
 }
-
-//QDateTime Prediction::firsttake() const
-//{
-//    return getAnalysis()->getTreatment()->getDosages()->firsttake();
-//}
 
 void Prediction::setFirsttake(const QDateTime &firsttake)
 {

@@ -45,7 +45,7 @@ Patient::Patient(Tucuxi::Gui::Core::AbstractRepository *repository, const int &i
     _stayNumber(),
     _statOk()
 {
-    SharedPerson _pers = AdminFactory::createEntity<Person>(repository);
+    auto _pers = AdminFactory::createEntity<Person>(repository);
     person(_pers);
 }
 

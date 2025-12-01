@@ -26,12 +26,6 @@ namespace Tucuxi {
 namespace Gui {
 namespace Core {
 
-
-//Percentile::Percentile(QObject *parent) : QObject(parent)
-//{
-
-//}
-
 Percentile::Percentile(int low, int high) : _low(low), _high(high)
 {
 

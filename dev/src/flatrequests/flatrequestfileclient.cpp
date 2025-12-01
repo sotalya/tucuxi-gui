@@ -27,7 +27,7 @@
 
 #include "flatrequestfileclient.h"
 #include "flatrequestparameters.h"
-#include "LoginDialog.h"
+// #include "LoginDialog.h"
 
 using namespace Tucuxi::Gui::FlatRequest;
 

@@ -137,7 +137,7 @@ class SentencesPalettes : public Tucuxi::Gui::Core::Entity
     /// \brief This object is used to convert the xml file into SentencesPalettes
     class SentencesPalettesImporter : public Tucuxi::Common::XMLImporter
     {
-        const std::vector<std::string> &ignoredTags() const override{
+        [[nodiscard]] const std::vector<std::string> &ignoredTags() const override{
             static std::vector<std::string> ignored;
             return ignored;
         }

@@ -321,21 +321,20 @@ public:
     void setAborters(PopPercAborter *pop,
         AprPercAborter *apr,
         ApoPercAborter *apo,
-                     AdjPercAborter *adj);
+                     AdjPercAborter *adj) override;
 
 
 public slots:
-    void computePopPred(Tucuxi::Gui::Core::PredictionSpec*);
-    void computePopPerc(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeAprPred(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeAprPerc(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeApoPred(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeApoPerc(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeRevPred(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeAdjPred(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeAdjPerc(Tucuxi::Gui::Core::PredictionSpec*);
-    void abortAll();
-//    void updateAdj();
+    void computePopPred(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computePopPerc(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeAprPred(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeAprPerc(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeApoPred(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeApoPerc(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeRevPred(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeAdjPred(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeAdjPerc(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void abortAll() override;
 
 private:
     void preparePredResults(QVector<int> time, QVector<double> data, Tucuxi::Gui::Core::PredictionResult* pred);
@@ -372,19 +371,19 @@ class ThreadedCalculationController : public CalculationController
     Q_OBJECT
 public:
     explicit ThreadedCalculationController(QObject *parent = nullptr);
-    virtual ~ThreadedCalculationController();
+    ~ThreadedCalculationController() override;
 
 public slots:
-    void computePopPred(Tucuxi::Gui::Core::PredictionSpec*);
-    void computePopPerc(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeAprPred(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeAprPerc(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeApoPred(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeApoPerc(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeRevPred(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeAdjPred(Tucuxi::Gui::Core::PredictionSpec*);
-    void computeAdjPerc(Tucuxi::Gui::Core::PredictionSpec*);
-    void abortAll();
+    void computePopPred(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computePopPerc(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeAprPred(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeAprPerc(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeApoPred(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeApoPerc(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeRevPred(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeAdjPred(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void computeAdjPerc(Tucuxi::Gui::Core::PredictionSpec*) override;
+    void abortAll() override;
 
 signals:
     void sig_updatePopPred(Tucuxi::Gui::Core::PredictionSpec*);
@@ -402,7 +401,6 @@ private:
     void terminateWorker();
 
     CalculationThread *workerThread;
-    //LocalCalculationController *controller;
     CalculationController *controller;
     CalculationBuffer *buffer;
 

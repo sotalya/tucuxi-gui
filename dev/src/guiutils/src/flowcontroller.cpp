@@ -23,7 +23,6 @@
 #include "flowcontroller.h"
 #include "admin/src/dal/interpretation.h"
 #include "admin/src/dal/interpretationrequest.h"
-#include "core/dal/chartdata.h"
 #include "core/dal/drugtreatment.h"
 #include "admin/src/dal/validationstatus.h"
 #include "core/dal/dosage.h"
@@ -32,9 +31,7 @@
 #include "core/dal/drugresponseanalysis.h"
 #include "core/dal/drug/drugvariate.h"
 #include "core/dal/drug/drug.h"
-#include "core/utils/logging.h"
 #include "core/dal/coremeasure.h"
-#include "guiutils/errors_guiutils.h"
 #include "core/utils/connect.h"
 #include "core/dal/uncastedvalue.h"
 
@@ -45,7 +42,7 @@
 using namespace Tucuxi::Gui::Admin;
 using namespace Tucuxi::Gui::GuiUtils;
 
-typedef ValidationStatus::StatusType StatusType;
+using StatusType = ValidationStatus::StatusType;
 
 FlowController::FlowController(QObject *parent) :
     QObject(parent),

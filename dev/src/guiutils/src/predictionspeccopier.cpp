@@ -43,15 +43,12 @@
 
 using namespace Tucuxi::Gui::GuiUtils;
 
-PredictionSpecCopier::PredictionSpecCopier()
-{
-
-}
+PredictionSpecCopier::PredictionSpecCopier() = default;
 
 Tucuxi::Gui::Core::PredictionSpec *PredictionSpecCopier::copy(Tucuxi::Gui::Core::PredictionSpec *spec, QObject *parent)
 {
-    Tucuxi::Gui::Core::PredictionSpec *newSpec;
-    newSpec = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionSpec>(ABSTRACTREPO,parent);
+    auto *newSpec = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PredictionSpec>(
+        ABSTRACTREPO, parent);
     newSpec->setCalculationType(spec->getCalculationType());
     newSpec->setAdjustmentDate(spec->getAdjustmentDate());
     newSpec->setAdjustmentWithLoadingDose(spec->getAdjustmentWithLoadingDose());
@@ -72,8 +69,8 @@ Tucuxi::Gui::Core::PredictionSpec *PredictionSpecCopier::copy(Tucuxi::Gui::Core:
 
 Tucuxi::Gui::Core::DrugResponseAnalysis *PredictionSpecCopier::copy(Tucuxi::Gui::Core::DrugResponseAnalysis *analysis, QObject *parent)
 {
-    Tucuxi::Gui::Core::DrugResponseAnalysis *newAnalysis;
-    newAnalysis = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugResponseAnalysis>(ABSTRACTREPO,parent);
+    auto *newAnalysis = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::DrugResponseAnalysis>(ABSTRACTREPO, parent);
 
     newAnalysis->setTreatment(copy(analysis->getTreatment(), newAnalysis));
     newAnalysis->setDrugModel(copy(analysis->getDrugModel(), newAnalysis));
@@ -84,8 +81,8 @@ Tucuxi::Gui::Core::DrugResponseAnalysis *PredictionSpecCopier::copy(Tucuxi::Gui:
 
 Tucuxi::Gui::Core::IdentifiableAmount *PredictionSpecCopier::copy(Tucuxi::Gui::Core::IdentifiableAmount *amount, QObject *parent)
 {
-    Tucuxi::Gui::Core::IdentifiableAmount *newAmount;
-    newAmount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO,parent);
+    auto *newAmount = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::IdentifiableAmount>(ABSTRACTREPO, parent);
 
     newAmount->setAmountId(amount->getAmountId());
     newAmount->setDbvalue(amount->getDbvalue());
@@ -97,8 +94,8 @@ Tucuxi::Gui::Core::IdentifiableAmount *PredictionSpecCopier::copy(Tucuxi::Gui::C
 
 Tucuxi::Gui::Core::OperableAmount *PredictionSpecCopier::copy(Tucuxi::Gui::Core::OperableAmount *amount, QObject *parent)
 {
-    Tucuxi::Gui::Core::OperableAmount *newAmount;
-    newAmount = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO,parent);
+    auto *newAmount = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::OperableAmount>(ABSTRACTREPO, parent);
 
     newAmount->setAmountId(amount->getAmountId());
     newAmount->setDbvalue(amount->getDbvalue());
@@ -114,8 +111,8 @@ Tucuxi::Gui::Core::OperableAmount *PredictionSpecCopier::copy(Tucuxi::Gui::Core:
 
 Tucuxi::Gui::Core::PatientVariate* PredictionSpecCopier::copy(Tucuxi::Gui::Core::PatientVariate* variate, QObject *parent)
 {
-    Tucuxi::Gui::Core::PatientVariate *newVariate;
-    newVariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO,parent);
+    auto *newVariate = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::PatientVariate>(ABSTRACTREPO, parent);
     // To be completed
     newVariate->setDate(variate->getDate());
     newVariate->setForced(variate->getForced());
@@ -129,8 +126,8 @@ Tucuxi::Gui::Core::PatientVariate* PredictionSpecCopier::copy(Tucuxi::Gui::Core:
 
 Tucuxi::Gui::Core::PatientVariateList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::PatientVariateList* list, QObject *parent)
 {
-    Tucuxi::Gui::Core::PatientVariateList *newList;
-    newList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO,parent);
+    auto *newList = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::PatientVariateList>(ABSTRACTREPO, parent);
     foreach(Tucuxi::Gui::Core::PatientVariate *variate, list->getList())
         newList->append(copy(variate, newList));
 
@@ -140,8 +137,9 @@ Tucuxi::Gui::Core::PatientVariateList* PredictionSpecCopier::copy(Tucuxi::Gui::C
 
 Tucuxi::Gui::Core::Admin* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Admin* admin, QObject *parent)
 {
-    Tucuxi::Gui::Core::Admin *newAdmin;
-    newAdmin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO,parent);
+    auto *newAdmin
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Admin>(ABSTRACTREPO,
+                                                                                 parent);
     //newAdmin->setRoute(admin->getRoute());
     //newAdmin->setValue(admin->getValue());
     newAdmin->setFormulationAndRoute(admin->getFormulationAndRoute());
@@ -151,8 +149,9 @@ Tucuxi::Gui::Core::Admin* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Admin* a
 
 Tucuxi::Gui::Core::DMAdmin* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DMAdmin* admin, QObject *parent)
 {
-    Tucuxi::Gui::Core::DMAdmin *newAdmin;
-    newAdmin = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO,parent);
+    auto *newAdmin
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdmin>(ABSTRACTREPO,
+                                                                                   parent);
     newAdmin->setRoute(admin->getRoute());
     newAdmin->setValue(admin->getValue());
     newAdmin->setFormulationAndRoute(admin->getFormulationAndRoute());
@@ -162,8 +161,9 @@ Tucuxi::Gui::Core::DMAdmin* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DMAdmi
 
 Tucuxi::Gui::Core::Dosage* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Dosage* dosage, QObject *parent)
 {
-    Tucuxi::Gui::Core::Dosage *newDosage;
-    newDosage = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO,parent);
+    auto *newDosage
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Dosage>(ABSTRACTREPO,
+                                                                                  parent);
     newDosage->setApplied(dosage->getApplied());
     newDosage->setDbinterval(dosage->getDbinterval());
     newDosage->setDbtinf(dosage->getDbtinf());
@@ -180,8 +180,8 @@ Tucuxi::Gui::Core::Dosage* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Dosage*
 
 Tucuxi::Gui::Core::DosageHistory* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DosageHistory* history, QObject *parent)
 {
-    Tucuxi::Gui::Core::DosageHistory *newHistory;
-    newHistory = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO,parent);
+    auto *newHistory = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::DosageHistory>(ABSTRACTREPO, parent);
     foreach(Tucuxi::Gui::Core::Dosage* dosage, history->getList())
         newHistory->append(copy(dosage, newHistory));
 
@@ -191,8 +191,9 @@ Tucuxi::Gui::Core::DosageHistory* PredictionSpecCopier::copy(Tucuxi::Gui::Core::
 
 Tucuxi::Gui::Core::AdminList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::AdminList* list, QObject *parent)
 {
-    Tucuxi::Gui::Core::AdminList *newList;
-    newList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdminList>(ABSTRACTREPO,parent);
+    auto *newList
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::AdminList>(ABSTRACTREPO,
+                                                                                     parent);
     foreach(Tucuxi::Gui::Core::Admin* admin, list->getList())
         newList->append(copy(admin, newList));
 
@@ -201,8 +202,9 @@ Tucuxi::Gui::Core::AdminList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Admi
 
 Tucuxi::Gui::Core::DMAdminList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DMAdminList* list, QObject *parent)
 {
-    Tucuxi::Gui::Core::DMAdminList *newList;
-    newList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdminList>(ABSTRACTREPO,parent);
+    auto *newList
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DMAdminList>(ABSTRACTREPO,
+                                                                                       parent);
     foreach(Tucuxi::Gui::Core::DMAdmin* admin, list->getList())
         newList->append(copy(admin, newList));
 
@@ -211,8 +213,8 @@ Tucuxi::Gui::Core::DMAdminList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DM
 
 Tucuxi::Gui::Core::DrugVariateList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DrugVariateList* list, QObject *parent)
 {
-    Tucuxi::Gui::Core::DrugVariateList *newList;
-    newList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariateList>(ABSTRACTREPO,parent);
+    auto *newList = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::DrugVariateList>(ABSTRACTREPO, parent);
     foreach(Tucuxi::Gui::Core::DrugVariate* variate, list->getList())
         newList->append(copy(variate, newList));
 
@@ -221,8 +223,8 @@ Tucuxi::Gui::Core::DrugVariateList* PredictionSpecCopier::copy(Tucuxi::Gui::Core
 
 Tucuxi::Gui::Core::Concentrations* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Concentrations* concentrations, QObject *parent)
 {
-    Tucuxi::Gui::Core::Concentrations *newConcentrations;
-    newConcentrations = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Concentrations>(ABSTRACTREPO,parent);
+    auto *newConcentrations = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::Concentrations>(ABSTRACTREPO, parent);
     newConcentrations->setQuantity(concentrations->getQuantity());
 
     return newConcentrations;
@@ -230,8 +232,9 @@ Tucuxi::Gui::Core::Concentrations* PredictionSpecCopier::copy(Tucuxi::Gui::Core:
 
 Tucuxi::Gui::Core::DrugVariate* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DrugVariate* variate, QObject *parent)
 {
-    Tucuxi::Gui::Core::DrugVariate *newVariate;
-    newVariate = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariate>(ABSTRACTREPO,parent);
+    auto *newVariate
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugVariate>(ABSTRACTREPO,
+                                                                                       parent);
     newVariate->setQuantity(copy(variate->getQuantity(), newVariate));
     newVariate->setCovariateId(variate->getCovariateId());
     newVariate->setType(variate->getType());
@@ -242,8 +245,9 @@ Tucuxi::Gui::Core::DrugVariate* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Dr
 
 Tucuxi::Gui::Core::ADME* PredictionSpecCopier::copy(Tucuxi::Gui::Core::ADME* adme, QObject *parent)
 {
-    Tucuxi::Gui::Core::ADME *newAdme;
-    newAdme = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ADME>(ABSTRACTREPO,parent);
+    auto *newAdme
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ADME>(ABSTRACTREPO,
+                                                                                parent);
     newAdme->setDefaultIntake(copy(adme->getDefaultIntake(), newAdme));
     newAdme->setDistribution(adme->getDistribution());
     newAdme->setElimination(adme->getElimination());
@@ -254,8 +258,9 @@ Tucuxi::Gui::Core::ADME* PredictionSpecCopier::copy(Tucuxi::Gui::Core::ADME* adm
 
 Tucuxi::Gui::Core::DrugModel* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DrugModel *drug, QObject *parent)
 {
-    Tucuxi::Gui::Core::DrugModel *newDrug;
-    newDrug = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugModel>(ABSTRACTREPO,parent);
+    auto *newDrug
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugModel>(ABSTRACTREPO,
+                                                                                     parent);
     newDrug->setAdme(copy(drug->getAdme(), newDrug));
     newDrug->setActiveSubstance(copy(drug->getActiveSubstance(), newDrug));
     newDrug->setConcentrations(copy(drug->getConcentrations(), newDrug));
@@ -282,8 +287,8 @@ Tucuxi::Gui::Core::StandardTreatment* PredictionSpecCopier::copy(Tucuxi::Gui::Co
     if (treatment == nullptr)
         return nullptr;
 
-    Tucuxi::Gui::Core::StandardTreatment *newTreatment;
-    newTreatment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::StandardTreatment>(ABSTRACTREPO,parent);
+    auto *newTreatment = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::StandardTreatment>(ABSTRACTREPO, parent);
     newTreatment->setIsFixedDuration(treatment->getIsFixedDuration());
     newTreatment->setDuration(treatment->getDuration());
     return newTreatment;
@@ -294,8 +299,8 @@ Tucuxi::Gui::Core::ActiveSubstance* PredictionSpecCopier::copy(Tucuxi::Gui::Core
     if (drug == nullptr)
         return nullptr;
 
-    Tucuxi::Gui::Core::ActiveSubstance *newDrug;
-    newDrug = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ActiveSubstance>(ABSTRACTREPO,parent);
+    auto *newDrug = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::ActiveSubstance>(ABSTRACTREPO, parent);
     newDrug->setAtc(drug->getAtc());
     newDrug->setBrands(drug->getBrands());
     newDrug->setSubstanceId(drug->getSubstanceId());
@@ -307,8 +312,8 @@ Tucuxi::Gui::Core::ActiveSubstance* PredictionSpecCopier::copy(Tucuxi::Gui::Core
 
 Tucuxi::Gui::Core::DrugTreatment* PredictionSpecCopier::copy(Tucuxi::Gui::Core::DrugTreatment *treatment, QObject *parent)
 {
-    Tucuxi::Gui::Core::DrugTreatment *newTreatment;
-    newTreatment = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::DrugTreatment>(ABSTRACTREPO,parent);
+    auto *newTreatment = Tucuxi::Gui::Core::CoreFactory::createEntity<
+        Tucuxi::Gui::Core::DrugTreatment>(ABSTRACTREPO, parent);
     newTreatment->setCovariates(copy(treatment->getCovariates(), newTreatment));
     newTreatment->setDosages(copy(treatment->getDosages(), newTreatment));
     newTreatment->setAdjustments(copy(treatment->getAdjustments(), newTreatment));
@@ -324,15 +329,16 @@ Tucuxi::Gui::Core::DrugTreatment* PredictionSpecCopier::copy(Tucuxi::Gui::Core::
 
 Tucuxi::Gui::Core::ValidDoses* PredictionSpecCopier::copy(Tucuxi::Gui::Core::ValidDoses* list, QObject *parent)
 {
-    Tucuxi::Gui::Core::ValidDoses *newList;
-    newList = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDoses>(ABSTRACTREPO,parent);
+    auto *newList
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDoses>(ABSTRACTREPO,
+                                                                                      parent);
     newList->setAnyDose(list->getAnyDose());
     newList->setQuantity(copy(list->getQuantity(), newList));
     newList->setFromDose(copy(list->getFromDose(), newList));
     newList->setToDose(copy(list->getToDose(), newList));
     newList->setStepDose(copy(list->getStepDose(), newList));
-    for(int i=0;i<list->size();i++)
-        newList->append(copy(list->at(i), newList));
+    for(auto dose : *list)
+        newList->append(copy(dose, newList));
 
     return newList;
 }
@@ -340,8 +346,9 @@ Tucuxi::Gui::Core::ValidDoses* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Val
 
 Tucuxi::Gui::Core::ErrorModel* PredictionSpecCopier::copy(Tucuxi::Gui::Core::ErrorModel *model, QObject *parent)
 {
-    Tucuxi::Gui::Core::ErrorModel *newModel;
-    newModel = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ErrorModel>(ABSTRACTREPO,parent);
+    auto *newModel
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ErrorModel>(ABSTRACTREPO,
+                                                                                      parent);
     newModel->setAdditive(model->getAdditive());
     newModel->setProportional(model->getProportional());
 
@@ -351,8 +358,7 @@ Tucuxi::Gui::Core::ErrorModel* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Err
 
 Tucuxi::Gui::Core::Halflife* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Halflife *halflife, QObject *parent)
 {
-    Tucuxi::Gui::Core::Halflife *newHalflife;
-    newHalflife = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Halflife>(ABSTRACTREPO,parent);
+    auto *newHalflife = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Halflife>(ABSTRACTREPO,parent);
     newHalflife->setMultiplier(halflife->getMultiplier());
     newHalflife->setUnit(halflife->getUnit());
     newHalflife->setValue(halflife->getValue());
@@ -363,8 +369,8 @@ Tucuxi::Gui::Core::Halflife* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Halfl
 
 Tucuxi::Gui::Core::ValidInfusion* PredictionSpecCopier::copy(Tucuxi::Gui::Core::ValidInfusion *source, QObject *parent)
 {
-    Tucuxi::Gui::Core::ValidInfusion *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusion>(ABSTRACTREPO,parent);
+    auto *target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusion>(
+        ABSTRACTREPO, parent);
     target->setQuantity(copy(source->getQuantity(), target));
 
     return target;
@@ -372,12 +378,12 @@ Tucuxi::Gui::Core::ValidInfusion* PredictionSpecCopier::copy(Tucuxi::Gui::Core::
 
 Tucuxi::Gui::Core::ValidInfusions* PredictionSpecCopier::copy(Tucuxi::Gui::Core::ValidInfusions *source, QObject *parent)
 {
-    Tucuxi::Gui::Core::ValidInfusions *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusions>(ABSTRACTREPO,parent);
+    auto *target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInfusions>(
+        ABSTRACTREPO, parent);
     target->setAny(source->getAny());
     target->setQuantity(copy(source->getQuantity(), target));
-    for(int i=0;i<source->size();i++)
-        target->append(copy(source->at(i), target));
+    for(auto validInfusion : *source)
+        target->append(copy(validInfusion, target));
 
     return target;
 }
@@ -385,8 +391,8 @@ Tucuxi::Gui::Core::ValidInfusions* PredictionSpecCopier::copy(Tucuxi::Gui::Core:
 
 Tucuxi::Gui::Core::ValidInterval* PredictionSpecCopier::copy(Tucuxi::Gui::Core::ValidInterval *source, QObject *parent)
 {
-    Tucuxi::Gui::Core::ValidInterval *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInterval>(ABSTRACTREPO,parent);
+    auto *target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidInterval>(
+        ABSTRACTREPO, parent);
     target->setQuantity(copy(source->getQuantity(), target));
 
     return target;
@@ -394,12 +400,12 @@ Tucuxi::Gui::Core::ValidInterval* PredictionSpecCopier::copy(Tucuxi::Gui::Core::
 
 Tucuxi::Gui::Core::ValidIntervals* PredictionSpecCopier::copy(Tucuxi::Gui::Core::ValidIntervals *source, QObject *parent)
 {
-    Tucuxi::Gui::Core::ValidIntervals *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidIntervals>(ABSTRACTREPO,parent);
+    auto *target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidIntervals>(
+        ABSTRACTREPO, parent);
     target->setAny(source->getAny());
     target->setQuantity(copy(source->getQuantity(), target));
-    for(int i=0;i<source->size();i++)
-        target->append(copy(source->at(i), target));
+    for(auto validInterval : *source)
+        target->append(copy(validInterval, target));
 
     return target;
 }
@@ -408,8 +414,9 @@ Tucuxi::Gui::Core::ValidIntervals* PredictionSpecCopier::copy(Tucuxi::Gui::Core:
 
 Tucuxi::Gui::Core::Target* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Target* source, QObject *parent)
 {
-    Tucuxi::Gui::Core::Target *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO,parent);
+    auto *target
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Target>(ABSTRACTREPO,
+                                                                                  parent);
     target->setCbest(copy(source->getCbest(), target));
     target->setCmax(copy(source->getCmax(), target));
     target->setCmin(copy(source->getCmin(), target));
@@ -425,8 +432,9 @@ Tucuxi::Gui::Core::Target* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Target*
 
 Tucuxi::Gui::Core::TargetList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::TargetList* source, QObject *parent)
 {
-    Tucuxi::Gui::Core::TargetList *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetList>(ABSTRACTREPO,parent);
+    auto *target
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetList>(ABSTRACTREPO,
+                                                                                      parent);
     foreach(Tucuxi::Gui::Core::Target* t, source->getList())
         target->append(copy(t, target));
 
@@ -436,8 +444,9 @@ Tucuxi::Gui::Core::TargetList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Tar
 
 Tucuxi::Gui::Core::CorePatient* PredictionSpecCopier::copy(Tucuxi::Gui::Core::CorePatient* source, QObject *parent)
 {
-    Tucuxi::Gui::Core::CorePatient *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CorePatient>(ABSTRACTREPO,parent);
+    auto *target
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CorePatient>(ABSTRACTREPO,
+                                                                                       parent);
     // No field in corepatient...
 
     return target;
@@ -445,8 +454,8 @@ Tucuxi::Gui::Core::CorePatient* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Co
 
 Tucuxi::Gui::Core::CoreMeasureList* PredictionSpecCopier::copy(Tucuxi::Gui::Core::CoreMeasureList* source, QObject *parent)
 {
-    Tucuxi::Gui::Core::CoreMeasureList *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(ABSTRACTREPO,parent);
+    auto *target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasureList>(
+        ABSTRACTREPO, parent);
     foreach(Tucuxi::Gui::Core::CoreMeasure* t, source->getList())
         if(t->getEnable())
             target->append(copy(t, target));
@@ -456,8 +465,9 @@ Tucuxi::Gui::Core::CoreMeasureList* PredictionSpecCopier::copy(Tucuxi::Gui::Core
 
 Tucuxi::Gui::Core::CoreMeasure* PredictionSpecCopier::copy(Tucuxi::Gui::Core::CoreMeasure* source, QObject *parent)
 {
-    Tucuxi::Gui::Core::CoreMeasure *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasure>(ABSTRACTREPO,parent);
+    auto *target
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::CoreMeasure>(ABSTRACTREPO,
+                                                                                       parent);
     target->setConcentration(copy(source->getConcentration(), target));
     target->setAnalyteId(source->getAnalyteId());
     target->setMoment(source->getMoment());
@@ -469,8 +479,9 @@ Tucuxi::Gui::Core::CoreMeasure* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Co
 
 Tucuxi::Gui::Core::ValidDose* PredictionSpecCopier::copy(Tucuxi::Gui::Core::ValidDose* source, QObject *parent)
 {
-    Tucuxi::Gui::Core::ValidDose *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDose>(ABSTRACTREPO,parent);
+    auto *target
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ValidDose>(ABSTRACTREPO,
+                                                                                     parent);
     target->setQuantity(copy(source->getQuantity(), target));
     target->setRoute(copy(source->getRoute(), target));
 
@@ -480,8 +491,9 @@ Tucuxi::Gui::Core::ValidDose* PredictionSpecCopier::copy(Tucuxi::Gui::Core::Vali
 
 Tucuxi::Gui::Core::TargetMethod* PredictionSpecCopier::copy(Tucuxi::Gui::Core::TargetMethod* source, QObject *parent)
 {
-    Tucuxi::Gui::Core::TargetMethod *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetMethod>(ABSTRACTREPO,parent);
+    auto *target
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::TargetMethod>(ABSTRACTREPO,
+                                                                                        parent);
     target->setTargetType(source->getTargetType());
     target->setValue(source->getValue());
 
@@ -492,8 +504,8 @@ Tucuxi::Gui::Core::TargetMethod* PredictionSpecCopier::copy(Tucuxi::Gui::Core::T
 
 Tucuxi::Gui::Core::OperationList *PredictionSpecCopier::copy(Tucuxi::Gui::Core::OperationList *source, QObject *parent)
 {
-    Tucuxi::Gui::Core::OperationList *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperationList>(ABSTRACTREPO,parent);
+    auto *target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::OperationList>(
+        ABSTRACTREPO, parent);
     foreach(Tucuxi::Gui::Core::Operation* t, source->getList())
         target->append(copy(t, target));
 
@@ -503,8 +515,9 @@ Tucuxi::Gui::Core::OperationList *PredictionSpecCopier::copy(Tucuxi::Gui::Core::
 
 Tucuxi::Gui::Core::Operation *PredictionSpecCopier::copy(Tucuxi::Gui::Core::Operation *source, QObject *parent)
 {
-    Tucuxi::Gui::Core::Operation *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Operation>(ABSTRACTREPO,parent);
+    auto *target
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Operation>(ABSTRACTREPO,
+                                                                                     parent);
     target->setFormula(source->getFormula());
     target->setType(source->getType());
 
@@ -514,12 +527,13 @@ Tucuxi::Gui::Core::Operation *PredictionSpecCopier::copy(Tucuxi::Gui::Core::Oper
 
 Tucuxi::Gui::Core::ParameterSet *PredictionSpecCopier::copy(Tucuxi::Gui::Core::ParameterSet *source, QObject *parent)
 {
-    Tucuxi::Gui::Core::ParameterSet *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ParameterSet>(ABSTRACTREPO,parent);
+    auto *target
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::ParameterSet>(ABSTRACTREPO,
+                                                                                        parent);
     target->setTime(source->getTime());
     target->setType(source->type());
-    for(int i=0;i<source->getParameters()->getList().size();i++)
-        target->set(copy(source->getParameters()->getList().at(i), target));
+    for(const auto& parameter : source->getParameters()->getList())
+        target->set(copy(parameter, target));
 
     target->copyCorrelationsFrom(*source);
 
@@ -531,8 +545,9 @@ Tucuxi::Gui::Core::ParameterSet *PredictionSpecCopier::copy(Tucuxi::Gui::Core::P
 Tucuxi::Gui::Core::Parameters *PredictionSpecCopier::copy(Tucuxi::Gui::Core::Parameters *source, QObject *parent)
 {
     return source;
-    Tucuxi::Gui::Core::Parameters *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameters>(ABSTRACTREPO,parent);
+    auto *target
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameters>(ABSTRACTREPO,
+                                                                                      parent);
     foreach(Tucuxi::Gui::Core::Parameter* t, source->getList())
         target->append(copy(t, target));
 
@@ -541,8 +556,9 @@ Tucuxi::Gui::Core::Parameters *PredictionSpecCopier::copy(Tucuxi::Gui::Core::Par
 
 Tucuxi::Gui::Core::Parameter *PredictionSpecCopier::copy(Tucuxi::Gui::Core::Parameter *source, QObject *parent)
 {
-    Tucuxi::Gui::Core::Parameter *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameter>(ABSTRACTREPO,parent);
+    auto *target
+        = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Parameter>(ABSTRACTREPO,
+                                                                                     parent);
     target->setBsv(copy(source->getBsv(), target));
     target->setMax(source->getMax());
     target->setMin(source->getMin());
@@ -558,8 +574,8 @@ Tucuxi::Gui::Core::Parameter *PredictionSpecCopier::copy(Tucuxi::Gui::Core::Para
 
 Tucuxi::Gui::Core::Bsv *PredictionSpecCopier::copy(Tucuxi::Gui::Core::Bsv *source, QObject *parent)
 {
-    Tucuxi::Gui::Core::Bsv *target;
-    target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Bsv>(ABSTRACTREPO,parent);
+    auto *target = Tucuxi::Gui::Core::CoreFactory::createEntity<Tucuxi::Gui::Core::Bsv>(ABSTRACTREPO,
+                                                                                        parent);
     target->setProportional(source->getProportional());
     target->setStandard(source->getStandard());
 

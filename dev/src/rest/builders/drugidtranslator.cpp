@@ -30,21 +30,6 @@ namespace Gui {
 namespace Rest {
 
 
-DrugIdTranslator::DrugIdTranslator()
-{
-
-}
-
-DrugIdTranslator::~DrugIdTranslator()
-{
-
-}
-
-DummyDrugIdTranslator::DummyDrugIdTranslator()
-{
-
-}
-
 QString DummyDrugIdTranslator::restToInternalId(QString restId)
 {
     return restId;
@@ -75,12 +60,6 @@ ChuvDrugIdTranslator::ChuvDrugIdTranslator()
 QString ChuvDrugIdTranslator::restToInternalId(QString restId)
 {
     return map.value(restId,"ch.heig-vd.ezechiel.unknown");
-}
-
-
-ExternalDrugIdTranslator::ExternalDrugIdTranslator()
-{
-
 }
 
 void ExternalDrugIdTranslator::setFileName(const QString &fileName)

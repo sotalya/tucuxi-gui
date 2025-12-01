@@ -44,7 +44,7 @@ protected:
 class CorePatientSet : public QList<CorePatient*>
 {
 public :
-    CorePatientSet(AbstractRepository *repository = nullptr, QObject* parent = 0) {}
+    CorePatientSet(AbstractRepository *repository = nullptr, QObject* parent = nullptr) {}
     CorePatientSet(AbstractRepository *repository, QObject* parent, const CorePatientSet* &other);
 };
 

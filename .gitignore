@@ -71,3 +71,6 @@ dev/Setup-Release-extreport-nolicense64.exe
 
 #xml sentences files
 *.xml
+
+#MacOS
+.DS_Store

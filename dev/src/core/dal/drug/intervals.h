@@ -86,11 +86,13 @@ public:
         _quantity->setUnit(unit);
         foreach( double _i, intervals) {
             ValidInterval* _vi = Tucuxi::Gui::Core::CoreFactory::createEntity<ValidInterval>(repository);
+            _vi->getQuantity()->setDbvalue(_i);
             _vi->getQuantity()->setUnit(Unit(unit.toString()));
             this->append(_vi);
         }
     }
 
+    [[nodiscard]]
     QList<Duration> durations() const {
         QList<Duration> _durations;
 
@@ -100,6 +102,7 @@ public:
          return _durations;
     }
 
+    [[nodiscard]]
     QList<double> intervals() const {
         QList<double> _intervals;
 

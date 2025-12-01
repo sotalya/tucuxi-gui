@@ -2170,7 +2170,7 @@ QByteArray Tucuxi::Gui::GuiUtils::InterpretationController::interpretationToJson
     QJsonDocument doc;
     QJsonObject interpretation;
 
-    interpretation.insert("tucuxiVersion", QString("%1.%2").arg(GIT_REVISION, QString::fromStdString(Tucuxi::Core::Version::getGitRevision())));
+    interpretation.insert("tucuxiVersion", QString("%1.%2").arg(GIT_REVISION).arg(QString::fromStdString(Tucuxi::Core::Version::getGitRevision())));
 
     interpretation.insert("graphPath", "file://" + QApplication::applicationDirPath() + "/graph.png");
     interpretation.insert("validationDate", _interpretation->getValidateInterpretationTime().toString());

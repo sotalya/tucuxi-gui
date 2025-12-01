@@ -124,6 +124,7 @@ public:
         _stepDose->setUnit(unit);
         foreach( double _d, doses) {
             ValidDose* _vd = CoreFactory::createEntity<ValidDose>(repository);
+            _vd->getQuantity()->setDbvalue(_d);
             _vd->getQuantity()->setUnit(Unit(unit.toString()));
             this->append(_vd);
         }

@@ -61,13 +61,16 @@ class Halflife : public Entity
 protected:
 
     Q_INVOKABLE explicit Halflife(AbstractRepository *repository, QObject *parent = nullptr)
-    : Entity(repository, parent), _unit(), _value(-1.0), _multiplier(-1), _comments(0) {}
+    : Entity(repository, parent), _unit(), _value(-1.0), _multiplier(-1), _comments(nullptr) {}
     Q_INVOKABLE Halflife(AbstractRepository *repository, QObject *parent, const Unit &unit, double value, int multiplier)
      : Entity(repository,parent), _unit(unit), _value(value), _multiplier(multiplier) {}
 
 public:
+
+    [[nodiscard]]
     bool isValid() const {return _unit.isValid() && _value > 0.0 && _multiplier > 0;}
 
+    [[nodiscard]]
     Duration halfLife() const {
         // ToDo ///////////////////////////////////////////////////////////////////////////////////////
         // Convert the duration using the half-life's unit.

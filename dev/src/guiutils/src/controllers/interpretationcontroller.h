@@ -224,8 +224,8 @@ public:
 
     Q_INVOKABLE QVariantHash hashToJS(QVariant);
 
-    Q_INVOKABLE double getViewRangeMin() { return _minX.toMSecsSinceEpoch() / 1000; }
-    Q_INVOKABLE double getViewRangeMax() { return _maxX.toMSecsSinceEpoch() / 1000; }
+    Q_INVOKABLE double getViewRangeMin() { return static_cast<double>(_minX.toMSecsSinceEpoch() / 1000); }
+    Q_INVOKABLE double getViewRangeMax() { return static_cast<double>(_maxX.toMSecsSinceEpoch() / 1000); }
     Q_INVOKABLE void resetViewRange();
     Q_INVOKABLE void shiftViewRange(double dX);
     Q_INVOKABLE void zoomViewRange(double f);
